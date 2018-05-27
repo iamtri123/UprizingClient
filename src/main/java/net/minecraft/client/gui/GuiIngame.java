@@ -460,6 +460,10 @@ public class GuiIngame extends Gui
                     boolean var52 = false;
                     byte var53;
 
+                    if (var48.responseTime == 0) {
+                        continue;
+                    }
+
                     if (var48.responseTime < 0)
                     {
                         var53 = 5;

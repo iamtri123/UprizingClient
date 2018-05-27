@@ -427,6 +427,10 @@ public class Block
         this.canBlockGrass = !p_i45394_1_.getCanBlockGrass();
     }
 
+    public boolean isGlassCube() {
+        return false;
+    }
+
     /**
      * Sets the footstep sound for the block. Returns the object for convenience in constructing.
      */

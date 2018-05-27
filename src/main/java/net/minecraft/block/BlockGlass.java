@@ -14,6 +14,10 @@ public class BlockGlass extends BlockBreakable
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
+    public boolean isGlassCube() {
+        return true;
+    }
+
     /**
      * Returns the quantity of items to drop on block destruction.
      */

@@ -277,6 +277,8 @@ public class RenderBlocks
 
     public boolean renderBlockByRenderType(Block par1Block, int par2, int par3, int par4)
     {
+        if (par1Block.isGlassCube() && minecraftRB.uprizing.isClearGlass()) return false;
+
         int i = par1Block.getRenderType();
 
         if (i == -1)

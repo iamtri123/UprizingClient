@@ -480,7 +480,7 @@ public class Minecraft implements IPlayerUsage
         }
 
         Display.setResizable(true);
-        Display.setTitle("Minecraft 1.7.10");
+        Display.setTitle("UprizingClient v0.0.1");
         logger.info("LWJGL Version: " + Sys.getVersion());
         Util.EnumOS var1 = Util.getOSType();
 

@@ -2,9 +2,11 @@ package uprizing;
 
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import optifine.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uprizing.mod.ModRepository;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,6 +22,9 @@ public class Uprizing {
     private transient final Minecraft minecraft;
     private final File file;
 
+    /** Mods */
+    private final ModRepository modRepository = new ModRepository();
+
     /** Options */
     public boolean scoreboardNumbers = false;
     public boolean chatBackground = false;
@@ -29,7 +34,28 @@ public class Uprizing {
         this.minecraft = minecraft;
         this.file = new File(mainDir, "uprizing.txt");
         this.loadOptions();
+        this.initMods(mainDir);
+        this.initKeyBindings();
         Config.initUprizing(this);
+    }
+
+    private void initMods(File mainDir) {}
+
+    private void initKeyBindings() { // TODO: KeyBindings object in IMod (for mod disabling)
+        KeyBinding[] gameSettings = minecraft.gameSettings.keyBindings;
+        KeyBinding[] uprizing = modRepository.getKeyBindings();
+
+        KeyBinding[] keyBindings = new KeyBinding[gameSettings.length + uprizing.length];
+        System.arraycopy(gameSettings, 0, keyBindings, 0, gameSettings.length);
+        System.arraycopy(uprizing, 0, keyBindings, gameSettings.length, uprizing.length);
+
+        minecraft.gameSettings.keyBindings = keyBindings;
+    }
+
+    public void runTick(TickType tickType) {
+        while (modRepository.hasNext())
+            modRepository.next().runTick(tickType);
+        modRepository.close();
     }
 
     private void loadOptions() {

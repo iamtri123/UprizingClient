@@ -144,6 +144,7 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
+import uprizing.TickType;
 import uprizing.Uprizing;
 
 import javax.imageio.ImageIO;
@@ -1070,6 +1071,7 @@ public class Minecraft implements IPlayerUsage
         {
             this.mcProfiler.endStartSection("gameRenderer");
             this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks);
+            this.uprizing.runTick(TickType.RENDER); // TODO: move on mcProfiler class ?
             this.mcProfiler.endSection();
         }
 

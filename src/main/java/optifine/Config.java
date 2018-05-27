@@ -29,9 +29,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
+import uprizing.Uprizing;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -69,6 +70,7 @@ public class Config
     public static String openGlRenderer = null;
     public static String openGlVendor = null;
     private static GameSettings gameSettings = null;
+    private static Uprizing uprizing = null;
     private static Minecraft minecraft = null;
     private static boolean initialized = false;
     private static Thread minecraftThread = null;
@@ -108,6 +110,12 @@ public class Config
             desktopDisplayMode = Display.getDesktopDisplayMode();
             updateAvailableProcessors();
             ReflectorForge.putLaunchBlackboard("optifine.ForgeSplashCompatible", Boolean.TRUE);
+        }
+    }
+
+    public static void initUprizing(Uprizing sexy) {
+        if (uprizing == null) {
+            uprizing = sexy;
         }
     }
 

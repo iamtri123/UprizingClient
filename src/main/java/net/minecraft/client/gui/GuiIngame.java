@@ -1,10 +1,5 @@
 package net.minecraft.client.gui;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -39,6 +34,12 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.chunk.Chunk;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import java.awt.Color;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class GuiIngame extends Gui
 {
@@ -520,7 +521,7 @@ public class GuiIngame extends Gui
             {
                 Score var9 = (Score)var8.next();
                 ScorePlayerTeam var10 = var5.getPlayersTeam(var9.getPlayerName());
-                var11 = ScorePlayerTeam.formatPlayerName(var10, var9.getPlayerName()) + ": " + EnumChatFormatting.RED + var9.getScorePoints();
+                var11 = ScorePlayerTeam.formatPlayerName(var10, var9.getPlayerName() + (mc.uprizing.scoreboardNumbers ? ": " + EnumChatFormatting.RED + var9.getScorePoints() : ""));
             }
 
             int var22 = var6.size() * p_96136_4_.FONT_HEIGHT;
@@ -541,7 +542,10 @@ public class GuiIngame extends Gui
                 int var20 = p_96136_3_ - var24 + 2;
                 drawRect(var25 - 2, var19, var20, var19 + p_96136_4_.FONT_HEIGHT, 1342177280);
                 p_96136_4_.drawString(var16, var25, var19, 553648127);
-                p_96136_4_.drawString(var17, var20 - p_96136_4_.getStringWidth(var17), var19, 553648127);
+
+                if (mc.uprizing.scoreboardNumbers) {
+                    p_96136_4_.drawString(var17, var20 - p_96136_4_.getStringWidth(var17), var19, 553648127);
+                }
 
                 if (var12 == var6.size())
                 {

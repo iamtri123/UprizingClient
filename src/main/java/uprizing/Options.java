@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum Options {
 
-    SCOREBOARD_NUMBERS("Scoreboard Numbers");
+    SCOREBOARD_NUMBERS("Scoreboard Numbers"),
+    CHAT_BACKGROUND("Chat Background");
 
     private final String name;
 

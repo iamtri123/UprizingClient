@@ -22,6 +22,7 @@ public class Uprizing {
 
     /** Options */
     public boolean scoreboardNumbers = false;
+    public boolean chatBackground = false;
 
     public Uprizing(final Minecraft minecraft, final File mainDir) {
         this.minecraft = minecraft;
@@ -43,6 +44,8 @@ public class Uprizing {
 
                     if (args[0].equals("scoreboardNumbers")) {
                         scoreboardNumbers = args[1].equals("true");
+                    } else if (args[0].equals("chatBackground")) {
+                        chatBackground = args[1].equals("true");
                     }
                 } catch (Exception var91) {
                     logger.warn("Skipping bad option: " + line);
@@ -60,6 +63,7 @@ public class Uprizing {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(file));
             writer.println("scoreboardNumbers:" + scoreboardNumbers);
+            writer.println("chatBackground:" + chatBackground);
             writer.close();
         } catch (Exception var71) {
             logger.error("Failed to save options", var71);
@@ -71,6 +75,8 @@ public class Uprizing {
 
         if (option == Options.SCOREBOARD_NUMBERS) {
             return scoreboardNumbers ? prefix + "ON" : prefix + "OFF";
+        } else if (option == Options.CHAT_BACKGROUND) {
+            return chatBackground ? prefix + "ON" : prefix + "OFF";
         } else {
             return prefix;
         }
@@ -79,6 +85,8 @@ public class Uprizing {
     public void setOptionValue(Options option) {
         if (option == Options.SCOREBOARD_NUMBERS) {
             scoreboardNumbers = !scoreboardNumbers;
+        } else if (option == Options.CHAT_BACKGROUND) {
+            chatBackground = !chatBackground;
         }
     }
 }

@@ -44,22 +44,22 @@ public abstract class EntityLiving extends EntityLivingBase
 
     /** The experience points the Entity gives. */
     protected int experienceValue;
-    private EntityLookHelper lookHelper;
-    private EntityMoveHelper moveHelper;
+    private final EntityLookHelper lookHelper;
+    private final EntityMoveHelper moveHelper;
 
     /** Entity jumping helper */
-    private EntityJumpHelper jumpHelper;
-    private EntityBodyHelper bodyHelper;
-    private PathNavigate navigator;
+    private final EntityJumpHelper jumpHelper;
+    private final EntityBodyHelper bodyHelper;
+    private final PathNavigate navigator;
     protected final EntityAITasks tasks;
     protected final EntityAITasks targetTasks;
 
     /** The active target the Task system uses for tracking */
     private EntityLivingBase attackTarget;
-    private EntitySenses senses;
+    private final EntitySenses senses;
 
     /** Equipment (armor and held item) for this entity. */
-    private ItemStack[] equipment = new ItemStack[5];
+    private final ItemStack[] equipment = new ItemStack[5];
 
     /** Chances for each equipment piece from dropping when this entity dies. */
     protected float[] equipmentDropChances = new float[5];
@@ -154,7 +154,7 @@ public abstract class EntityLiving extends EntityLivingBase
     public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
     {
         this.attackTarget = par1EntityLivingBase;
-        Reflector.callVoid(Reflector.ForgeHooks_onLivingSetAttackTarget, new Object[] {this, par1EntityLivingBase});
+        Reflector.callVoid(Reflector.ForgeHooks_onLivingSetAttackTarget, this, par1EntityLivingBase);
     }
 
     /**
@@ -575,7 +575,7 @@ public abstract class EntityLiving extends EntityLivingBase
         {
             this.entityAge = 0;
         }
-        else if ((this.entityAge & 31) == 31 && (result = Reflector.call(Reflector.ForgeEventFactory_canEntityDespawn, new Object[] {this})) != Result_DEFAULT)
+        else if ((this.entityAge & 31) == 31 && (result = Reflector.call(Reflector.ForgeEventFactory_canEntityDespawn, this)) != Result_DEFAULT)
         {
             if (result == Result_DENY)
             {
@@ -1178,7 +1178,7 @@ public abstract class EntityLiving extends EntityLivingBase
                 }
             }
 
-            return this.interact(par1EntityPlayer) ? true : super.interactFirst(par1EntityPlayer);
+            return this.interact(par1EntityPlayer) || super.interactFirst(par1EntityPlayer);
         }
     }
 

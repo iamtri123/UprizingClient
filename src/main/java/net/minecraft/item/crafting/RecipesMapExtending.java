@@ -46,7 +46,7 @@ public class RecipesMapExtending extends ShapedRecipes
             else
             {
                 MapData var6 = Items.filled_map.getMapData(var3, p_77569_2_);
-                return var6 == null ? false : var6.scale < 4;
+                return var6 != null && var6.scale < 4;
             }
         }
     }

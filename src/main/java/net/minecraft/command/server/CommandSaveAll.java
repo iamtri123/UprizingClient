@@ -25,7 +25,7 @@ public class CommandSaveAll extends CommandBase
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
     {
         MinecraftServer var3 = MinecraftServer.getServer();
-        p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.start", new Object[0]));
+        p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.start"));
 
         if (var3.getConfigurationManager() != null)
         {
@@ -52,7 +52,7 @@ public class CommandSaveAll extends CommandBase
 
             if (p_71515_2_.length > 0 && "flush".equals(p_71515_2_[0]))
             {
-                p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.flushStart", new Object[0]));
+                p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.flushStart"));
 
                 for (var4 = 0; var4 < var3.worldServers.length; ++var4)
                 {
@@ -66,15 +66,15 @@ public class CommandSaveAll extends CommandBase
                     }
                 }
 
-                p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.flushEnd", new Object[0]));
+                p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.flushEnd"));
             }
         }
         catch (MinecraftException var7)
         {
-            func_152373_a(p_71515_1_, this, "commands.save.failed", new Object[] {var7.getMessage()});
+            func_152373_a(p_71515_1_, this, "commands.save.failed", var7.getMessage());
             return;
         }
 
-        func_152373_a(p_71515_1_, this, "commands.save.success", new Object[0]);
+        func_152373_a(p_71515_1_, this, "commands.save.success");
     }
 }

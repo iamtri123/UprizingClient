@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class EntityAIEatGrass extends EntityAIBase
 {
-    private EntityLiving field_151500_b;
-    private World field_151501_c;
+    private final EntityLiving field_151500_b;
+    private final World field_151501_c;
     int field_151502_a;
     private static final String __OBFID = "CL_00001582";
 
@@ -34,7 +34,7 @@ public class EntityAIEatGrass extends EntityAIBase
             int var1 = MathHelper.floor_double(this.field_151500_b.posX);
             int var2 = MathHelper.floor_double(this.field_151500_b.posY);
             int var3 = MathHelper.floor_double(this.field_151500_b.posZ);
-            return this.field_151501_c.getBlock(var1, var2, var3) == Blocks.tallgrass && this.field_151501_c.getBlockMetadata(var1, var2, var3) == 1 ? true : this.field_151501_c.getBlock(var1, var2 - 1, var3) == Blocks.grass;
+            return this.field_151501_c.getBlock(var1, var2, var3) == Blocks.tallgrass && this.field_151501_c.getBlockMetadata(var1, var2, var3) == 1 || this.field_151501_c.getBlock(var1, var2 - 1, var3) == Blocks.grass;
         }
     }
 

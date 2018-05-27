@@ -6,7 +6,7 @@ public class SyntaxErrorException extends CommandException
 
     public SyntaxErrorException()
     {
-        this("commands.generic.snytax", new Object[0]);
+        this("commands.generic.snytax");
     }
 
     public SyntaxErrorException(String p_i1361_1_, Object ... p_i1361_2_)

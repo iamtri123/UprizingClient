@@ -95,7 +95,6 @@ public class SoundHandler implements IResourceManagerReloadListener, IUpdatePlay
             }
             catch (IOException var11)
             {
-                ;
             }
         }
     }
@@ -110,7 +109,7 @@ public class SoundHandler implements IResourceManagerReloadListener, IUpdatePlay
         }
         else
         {
-            logger.debug("Registered/replaced new sound event location {}", new Object[] {p_147693_1_});
+            logger.debug("Registered/replaced new sound event location {}", p_147693_1_);
             var3 = new SoundEventAccessorComposite(p_147693_1_, 1.0D, 1.0D, p_147693_2_.func_148573_c());
             this.field_147697_e.func_148762_a(var3);
         }
@@ -136,7 +135,7 @@ public class SoundHandler implements IResourceManagerReloadListener, IUpdatePlay
                     }
                     catch (FileNotFoundException var12)
                     {
-                        logger.warn("File {} does not exist, cannot add it to event {}", new Object[] {var10, p_147693_1_});
+                        logger.warn("File {} does not exist, cannot add it to event {}", var10, p_147693_1_);
                         continue;
                     }
                     catch (IOException var13)
@@ -287,7 +286,6 @@ public class SoundHandler implements IResourceManagerReloadListener, IUpdatePlay
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -296,7 +294,6 @@ public class SoundHandler implements IResourceManagerReloadListener, IUpdatePlay
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

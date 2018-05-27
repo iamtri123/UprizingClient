@@ -24,8 +24,8 @@ public class ComponentScatteredFeaturePieces
 
     public static class DesertPyramid extends ComponentScatteredFeaturePieces.Feature
     {
-        private boolean[] field_74940_h = new boolean[4];
-        private static final WeightedRandomChestContent[] itemsToGenerateInTemple = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
+        private final boolean[] field_74940_h = new boolean[4];
+        private static final WeightedRandomChestContent[] itemsToGenerateInTemple = {new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
         private static final String __OBFID = "CL_00000476";
 
         public DesertPyramid() {}
@@ -252,7 +252,7 @@ public class ComponentScatteredFeaturePieces
                 {
                     int var11 = Direction.offsetX[var10] * 2;
                     int var12 = Direction.offsetZ[var10] * 2;
-                    this.field_74940_h[var10] = this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 10 + var11, -11, 10 + var12, WeightedRandomChestContent.func_92080_a(itemsToGenerateInTemple, new WeightedRandomChestContent[] {Items.enchanted_book.func_92114_b(p_74875_2_)}), 2 + p_74875_2_.nextInt(5));
+                    this.field_74940_h[var10] = this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 10 + var11, -11, 10 + var12, WeightedRandomChestContent.func_92080_a(itemsToGenerateInTemple, Items.enchanted_book.func_92114_b(p_74875_2_)), 2 + p_74875_2_.nextInt(5));
                 }
             }
 
@@ -349,9 +349,9 @@ public class ComponentScatteredFeaturePieces
         private boolean field_74948_i;
         private boolean field_74945_j;
         private boolean field_74946_k;
-        private static final WeightedRandomChestContent[] junglePyramidsChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
-        private static final WeightedRandomChestContent[] junglePyramidsDispenserContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.arrow, 0, 2, 7, 30)};
-        private static ComponentScatteredFeaturePieces.JunglePyramid.Stones junglePyramidsRandomScatteredStones = new ComponentScatteredFeaturePieces.JunglePyramid.Stones(null);
+        private static final WeightedRandomChestContent[] junglePyramidsChestContents = {new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
+        private static final WeightedRandomChestContent[] junglePyramidsDispenserContents = {new WeightedRandomChestContent(Items.arrow, 0, 2, 7, 30)};
+        private static final ComponentScatteredFeaturePieces.JunglePyramid.Stones junglePyramidsRandomScatteredStones = new ComponentScatteredFeaturePieces.JunglePyramid.Stones(null);
         private static final String __OBFID = "CL_00000477";
 
         public JunglePyramid() {}
@@ -536,7 +536,7 @@ public class ComponentScatteredFeaturePieces
 
                 if (!this.field_74947_h)
                 {
-                    this.field_74947_h = this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 8, -3, 3, WeightedRandomChestContent.func_92080_a(junglePyramidsChestContents, new WeightedRandomChestContent[] {Items.enchanted_book.func_92114_b(p_74875_2_)}), 2 + p_74875_2_.nextInt(5));
+                    this.field_74947_h = this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 8, -3, 3, WeightedRandomChestContent.func_92080_a(junglePyramidsChestContents, Items.enchanted_book.func_92114_b(p_74875_2_)), 2 + p_74875_2_.nextInt(5));
                 }
 
                 this.func_151550_a(p_74875_1_, Blocks.mossy_cobblestone, 0, 9, -3, 2, p_74875_3_);
@@ -569,7 +569,7 @@ public class ComponentScatteredFeaturePieces
 
                 if (!this.field_74948_i)
                 {
-                    this.field_74948_i = this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 9, -3, 10, WeightedRandomChestContent.func_92080_a(junglePyramidsChestContents, new WeightedRandomChestContent[] {Items.enchanted_book.func_92114_b(p_74875_2_)}), 2 + p_74875_2_.nextInt(5));
+                    this.field_74948_i = this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 9, -3, 10, WeightedRandomChestContent.func_92080_a(junglePyramidsChestContents, Items.enchanted_book.func_92114_b(p_74875_2_)), 2 + p_74875_2_.nextInt(5));
                 }
 
                 return true;

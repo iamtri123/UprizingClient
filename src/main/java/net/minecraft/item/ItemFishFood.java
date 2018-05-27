@@ -104,7 +104,7 @@ public class ItemFishFood extends ItemFood
         return this.getUnlocalizedName() + "." + var2.func_150972_b() + "." + (this.field_150907_b && var2.func_150973_i() ? "cooked" : "raw");
     }
 
-    public static enum FishType
+    public enum FishType
     {
         COD("COD", 0, 0, "cod", 2, 0.1F, 5, 0.6F),
         SALMON("SALMON", 1, 1, "salmon", 2, 0.1F, 6, 0.8F),
@@ -121,10 +121,10 @@ public class ItemFishFood extends ItemFood
         private final float field_150990_m;
         private boolean field_150987_n = false;
 
-        private static final ItemFishFood.FishType[] $VALUES = new ItemFishFood.FishType[]{COD, SALMON, CLOWNFISH, PUFFERFISH};
+        private static final ItemFishFood.FishType[] $VALUES = {COD, SALMON, CLOWNFISH, PUFFERFISH};
         private static final String __OBFID = "CL_00000033";
 
-        private FishType(String p_i45336_1_, int p_i45336_2_, int p_i45336_3_, String p_i45336_4_, int p_i45336_5_, float p_i45336_6_, int p_i45336_7_, float p_i45336_8_)
+        FishType(String p_i45336_1_, int p_i45336_2_, int p_i45336_3_, String p_i45336_4_, int p_i45336_5_, float p_i45336_6_, int p_i45336_7_, float p_i45336_8_)
         {
             this.field_150980_f = p_i45336_3_;
             this.field_150981_g = p_i45336_4_;
@@ -135,7 +135,7 @@ public class ItemFishFood extends ItemFood
             this.field_150987_n = true;
         }
 
-        private FishType(String p_i45337_1_, int p_i45337_2_, int p_i45337_3_, String p_i45337_4_, int p_i45337_5_, float p_i45337_6_)
+        FishType(String p_i45337_1_, int p_i45337_2_, int p_i45337_3_, String p_i45337_4_, int p_i45337_5_, float p_i45337_6_)
         {
             this.field_150980_f = p_i45337_3_;
             this.field_150981_g = p_i45337_4_;

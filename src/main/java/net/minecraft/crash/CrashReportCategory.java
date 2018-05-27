@@ -23,7 +23,7 @@ public class CrashReportCategory
 
     public static String func_85074_a(double p_85074_0_, double p_85074_2_, double p_85074_4_)
     {
-        return String.format("%.2f,%.2f,%.2f - %s", new Object[] {Double.valueOf(p_85074_0_), Double.valueOf(p_85074_2_), Double.valueOf(p_85074_4_), getLocationInfo(MathHelper.floor_double(p_85074_0_), MathHelper.floor_double(p_85074_2_), MathHelper.floor_double(p_85074_4_))});
+        return String.format("%.2f,%.2f,%.2f - %s", Double.valueOf(p_85074_0_), Double.valueOf(p_85074_2_), Double.valueOf(p_85074_4_), getLocationInfo(MathHelper.floor_double(p_85074_0_), MathHelper.floor_double(p_85074_2_), MathHelper.floor_double(p_85074_4_)));
     }
 
     /**
@@ -35,7 +35,7 @@ public class CrashReportCategory
 
         try
         {
-            var3.append(String.format("World: (%d,%d,%d)", new Object[] {Integer.valueOf(p_85071_0_), Integer.valueOf(p_85071_1_), Integer.valueOf(p_85071_2_)}));
+            var3.append(String.format("World: (%d,%d,%d)", Integer.valueOf(p_85071_0_), Integer.valueOf(p_85071_1_), Integer.valueOf(p_85071_2_)));
         }
         catch (Throwable var16)
         {
@@ -64,7 +64,7 @@ public class CrashReportCategory
             var10 = var5 << 4;
             var11 = (var4 + 1 << 4) - 1;
             var12 = (var5 + 1 << 4) - 1;
-            var3.append(String.format("Chunk: (at %d,%d,%d in %d,%d; contains blocks %d,0,%d to %d,255,%d)", new Object[] {Integer.valueOf(var6), Integer.valueOf(var7), Integer.valueOf(var8), Integer.valueOf(var4), Integer.valueOf(var5), Integer.valueOf(var9), Integer.valueOf(var10), Integer.valueOf(var11), Integer.valueOf(var12)}));
+            var3.append(String.format("Chunk: (at %d,%d,%d in %d,%d; contains blocks %d,0,%d to %d,255,%d)", Integer.valueOf(var6), Integer.valueOf(var7), Integer.valueOf(var8), Integer.valueOf(var4), Integer.valueOf(var5), Integer.valueOf(var9), Integer.valueOf(var10), Integer.valueOf(var11), Integer.valueOf(var12)));
         }
         catch (Throwable var15)
         {
@@ -85,7 +85,7 @@ public class CrashReportCategory
             var11 = var5 << 9;
             var12 = (var4 + 1 << 9) - 1;
             int var13 = (var5 + 1 << 9) - 1;
-            var3.append(String.format("Region: (%d,%d; contains chunks %d,%d to %d,%d, blocks %d,0,%d to %d,255,%d)", new Object[] {Integer.valueOf(var4), Integer.valueOf(var5), Integer.valueOf(var6), Integer.valueOf(var7), Integer.valueOf(var8), Integer.valueOf(var9), Integer.valueOf(var10), Integer.valueOf(var11), Integer.valueOf(var12), Integer.valueOf(var13)}));
+            var3.append(String.format("Region: (%d,%d; contains chunks %d,%d to %d,%d, blocks %d,0,%d to %d,255,%d)", Integer.valueOf(var4), Integer.valueOf(var5), Integer.valueOf(var6), Integer.valueOf(var7), Integer.valueOf(var8), Integer.valueOf(var9), Integer.valueOf(var10), Integer.valueOf(var11), Integer.valueOf(var12), Integer.valueOf(var13)));
         }
         catch (Throwable var14)
         {
@@ -217,7 +217,7 @@ public class CrashReportCategory
             {
                 StackTraceElement var5 = var6[var4];
                 p_85072_1_.append("\n\tat ");
-                p_85072_1_.append(var5.toString());
+                p_85072_1_.append(var5);
             }
         }
     }
@@ -237,7 +237,7 @@ public class CrashReportCategory
             {
                 try
                 {
-                    return String.format("ID #%d (%s // %s)", new Object[] {Integer.valueOf(var6), p_147153_4_.getUnlocalizedName(), p_147153_4_.getClass().getCanonicalName()});
+                    return String.format("ID #%d (%s // %s)", Integer.valueOf(var6), p_147153_4_.getUnlocalizedName(), p_147153_4_.getClass().getCanonicalName());
                 }
                 catch (Throwable var2)
                 {
@@ -257,7 +257,7 @@ public class CrashReportCategory
                 else
                 {
                     String var1 = String.format("%4s", new Object[] {Integer.toBinaryString(p_147153_5_)}).replace(" ", "0");
-                    return String.format("%1$d / 0x%1$X / 0b%2$s", new Object[] {Integer.valueOf(p_147153_5_), var1});
+                    return String.format("%1$d / 0x%1$X / 0b%2$s", Integer.valueOf(p_147153_5_), var1);
                 }
             }
         });

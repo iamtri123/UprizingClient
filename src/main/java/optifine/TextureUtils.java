@@ -96,7 +96,7 @@ public class TextureUtils
     public static IIcon iconGlassPaneTop;
     public static IIcon iconCompass;
     public static IIcon iconClock;
-    private static IntBuffer staticBuffer = GLAllocation.createDirectIntBuffer(256);
+    private static final IntBuffer staticBuffer = GLAllocation.createDirectIntBuffer(256);
 
     public static void update()
     {
@@ -161,7 +161,6 @@ public class TextureUtils
 
         for (i = 1; i < val; i *= 2)
         {
-            ;
         }
 
         return i;
@@ -277,7 +276,7 @@ public class TextureUtils
             {
                 TextureAnimations.updateCustomAnimations();
             }
-            public void loadTexture(IResourceManager var1) throws IOException {}
+            public void loadTexture(IResourceManager var1) {}
             public int getGlTextureId()
             {
                 return 0;

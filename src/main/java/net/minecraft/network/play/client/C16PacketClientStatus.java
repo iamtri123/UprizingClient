@@ -49,7 +49,7 @@ public class C16PacketClientStatus extends Packet
         this.processPacket((INetHandlerPlayServer)p_148833_1_);
     }
 
-    public static enum EnumState
+    public enum EnumState
     {
         PERFORM_RESPAWN("PERFORM_RESPAWN", 0, 0),
         REQUEST_STATS("REQUEST_STATS", 1, 1),
@@ -57,10 +57,10 @@ public class C16PacketClientStatus extends Packet
         private final int field_151403_d;
         private static final C16PacketClientStatus.EnumState[] field_151404_e = new C16PacketClientStatus.EnumState[values().length];
 
-        private static final C16PacketClientStatus.EnumState[] $VALUES = new C16PacketClientStatus.EnumState[]{PERFORM_RESPAWN, REQUEST_STATS, OPEN_INVENTORY_ACHIEVEMENT};
+        private static final C16PacketClientStatus.EnumState[] $VALUES = {PERFORM_RESPAWN, REQUEST_STATS, OPEN_INVENTORY_ACHIEVEMENT};
         private static final String __OBFID = "CL_00001349";
 
-        private EnumState(String p_i45241_1_, int p_i45241_2_, int p_i45241_3_)
+        EnumState(String p_i45241_1_, int p_i45241_2_, int p_i45241_3_)
         {
             this.field_151403_d = p_i45241_3_;
         }

@@ -6,17 +6,17 @@ import net.minecraft.util.MathHelper;
 public class ModelSilverfish extends ModelBase
 {
     /** The body parts of the silverfish's model. */
-    private ModelRenderer[] silverfishBodyParts = new ModelRenderer[7];
+    private final ModelRenderer[] silverfishBodyParts = new ModelRenderer[7];
 
     /** The wings (dust-looking sprites) on the silverfish's model. */
-    private ModelRenderer[] silverfishWings;
-    private float[] field_78170_c = new float[7];
+    private final ModelRenderer[] silverfishWings;
+    private final float[] field_78170_c = new float[7];
 
     /** The widths, heights, and lengths for the silverfish model boxes. */
-    private static final int[][] silverfishBoxLength = new int[][] {{3, 2, 2}, {4, 3, 2}, {6, 4, 3}, {3, 3, 3}, {2, 2, 3}, {2, 1, 2}, {1, 1, 2}};
+    private static final int[][] silverfishBoxLength = {{3, 2, 2}, {4, 3, 2}, {6, 4, 3}, {3, 3, 3}, {2, 2, 3}, {2, 1, 2}, {1, 1, 2}};
 
     /** The texture positions for the silverfish's model's boxes. */
-    private static final int[][] silverfishTexturePositions = new int[][] {{0, 0}, {0, 4}, {0, 9}, {0, 16}, {0, 22}, {11, 0}, {13, 4}};
+    private static final int[][] silverfishTexturePositions = {{0, 0}, {0, 4}, {0, 9}, {0, 16}, {0, 22}, {11, 0}, {13, 4}};
     private static final String __OBFID = "CL_00000855";
 
     public ModelSilverfish()

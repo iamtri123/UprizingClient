@@ -14,7 +14,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class MapGenStronghold extends MapGenStructure
 {
-    private List field_151546_e;
+    private final List field_151546_e;
 
     /**
      * is spawned false and set true once the defined BiomeGenBases were compared with the present ones
@@ -154,7 +154,6 @@ public class MapGenStronghold extends MapGenStructure
 
         for (var3 = new MapGenStronghold.Start(this.worldObj, this.rand, p_75049_1_, p_75049_2_); var3.getComponents().isEmpty() || ((StructureStrongholdPieces.Stairs2)var3.getComponents().get(0)).strongholdPortalRoom == null; var3 = new MapGenStronghold.Start(this.worldObj, this.rand, p_75049_1_, p_75049_2_))
         {
-            ;
         }
 
         return var3;

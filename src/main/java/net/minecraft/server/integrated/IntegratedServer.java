@@ -49,7 +49,7 @@ public class IntegratedServer extends MinecraftServer
         this.func_152361_a(new IntegratedPlayerList(this));
         this.mc = par1Minecraft;
         this.theWorldSettings = par4WorldSettings;
-        Reflector.callVoid(Reflector.ModLoader_registerServer, new Object[] {this});
+        Reflector.callVoid(Reflector.ModLoader_registerServer, this);
     }
 
     protected void loadAllWorlds(String par1Str, String par2Str, long par3, WorldType par5WorldType, String par6Str)
@@ -77,7 +77,7 @@ public class IntegratedServer extends MinecraftServer
 
                 if (Reflector.EventBus.exists())
                 {
-                    Reflector.postForgeBusEvent(Reflector.WorldEvent_Load_Constructor, new Object[] {world});
+                    Reflector.postForgeBusEvent(Reflector.WorldEvent_Load_Constructor, world);
                 }
             }
 
@@ -144,9 +144,9 @@ public class IntegratedServer extends MinecraftServer
 
         if (Reflector.FMLCommonHandler_handleServerAboutToStart.exists())
         {
-            inst = Reflector.call(Reflector.FMLCommonHandler_instance, new Object[0]);
+            inst = Reflector.call(Reflector.FMLCommonHandler_instance);
 
-            if (!Reflector.callBoolean(inst, Reflector.FMLCommonHandler_handleServerAboutToStart, new Object[] {this}))
+            if (!Reflector.callBoolean(inst, Reflector.FMLCommonHandler_handleServerAboutToStart, this))
             {
                 return false;
             }
@@ -157,14 +157,14 @@ public class IntegratedServer extends MinecraftServer
 
         if (Reflector.FMLCommonHandler_handleServerStarting.exists())
         {
-            inst = Reflector.call(Reflector.FMLCommonHandler_instance, new Object[0]);
+            inst = Reflector.call(Reflector.FMLCommonHandler_instance);
 
             if (Reflector.FMLCommonHandler_handleServerStarting.getReturnType() == Boolean.TYPE)
             {
-                return Reflector.callBoolean(inst, Reflector.FMLCommonHandler_handleServerStarting, new Object[] {this});
+                return Reflector.callBoolean(inst, Reflector.FMLCommonHandler_handleServerStarting, this);
             }
 
-            Reflector.callVoid(inst, Reflector.FMLCommonHandler_handleServerStarting, new Object[] {this});
+            Reflector.callVoid(inst, Reflector.FMLCommonHandler_handleServerStarting, this);
         }
 
         return true;
@@ -191,7 +191,7 @@ public class IntegratedServer extends MinecraftServer
 
             if (this.mc.gameSettings.renderDistanceChunks != this.getConfigurationManager().getViewDistance())
             {
-                logger.info("Changing view distance to {}, from {}", new Object[] {Integer.valueOf(this.mc.gameSettings.renderDistanceChunks), Integer.valueOf(this.getConfigurationManager().getViewDistance())});
+                logger.info("Changing view distance to {}, from {}", Integer.valueOf(this.mc.gameSettings.renderDistanceChunks), Integer.valueOf(this.getConfigurationManager().getViewDistance()));
                 this.getConfigurationManager().func_152611_a(this.mc.gameSettings.renderDistanceChunks);
             }
         }
@@ -315,7 +315,6 @@ public class IntegratedServer extends MinecraftServer
             }
             catch (IOException var5)
             {
-                ;
             }
 
             if (var6 <= 0)

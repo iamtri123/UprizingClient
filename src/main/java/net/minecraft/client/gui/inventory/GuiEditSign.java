@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiEditSign extends GuiScreen
 {
-    private TileEntitySign field_146848_f;
+    private final TileEntitySign field_146848_f;
     private int field_146849_g;
     private int field_146851_h;
     private GuiButton field_146852_i;
@@ -33,7 +33,7 @@ public class GuiEditSign extends GuiScreen
     {
         this.buttonList.clear();
         Keyboard.enableRepeatEvents(true);
-        this.buttonList.add(this.field_146852_i = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(this.field_146852_i = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done")));
         this.field_146848_f.func_145913_a(false);
     }
 
@@ -110,7 +110,7 @@ public class GuiEditSign extends GuiScreen
     public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("sign.edit", new Object[0]), this.width / 2, 40, 16777215);
+        this.drawCenteredString(this.fontRendererObj, I18n.format("sign.edit"), this.width / 2, 40, 16777215);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)(this.width / 2), 0.0F, 50.0F);
         float var4 = 93.75F;

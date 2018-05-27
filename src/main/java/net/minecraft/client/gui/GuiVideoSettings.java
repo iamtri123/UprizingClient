@@ -11,11 +11,11 @@ import optifine.GuiQualitySettingsOF;
 
 public class GuiVideoSettings extends GuiScreen
 {
-    private GuiScreen field_146498_f;
+    private final GuiScreen field_146498_f;
     protected String field_146500_a = "Video Settings";
-    private GameSettings field_146499_g;
+    private final GameSettings field_146499_g;
     private boolean is64bit;
-    private static GameSettings.Options[] field_146502_i = new GameSettings.Options[] {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.ADVANCED_OPENGL, GameSettings.Options.GAMMA, GameSettings.Options.CHUNK_LOADING, GameSettings.Options.FOG_FANCY, GameSettings.Options.FOG_START, GameSettings.Options.ANAGLYPH};
+    private static final GameSettings.Options[] field_146502_i = {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.ADVANCED_OPENGL, GameSettings.Options.GAMMA, GameSettings.Options.CHUNK_LOADING, GameSettings.Options.FOG_FANCY, GameSettings.Options.FOG_START, GameSettings.Options.ANAGLYPH};
     private static final String __OBFID = "CL_00000718";
     private int lastMouseX = 0;
     private int lastMouseY = 0;
@@ -33,10 +33,10 @@ public class GuiVideoSettings extends GuiScreen
      */
     public void initGui()
     {
-        this.field_146500_a = I18n.format("options.videoTitle", new Object[0]);
+        this.field_146500_a = I18n.format("options.videoTitle");
         this.buttonList.clear();
         this.is64bit = false;
-        String[] var1 = new String[] {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
+        String[] var1 = {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
         String[] var2 = var1;
         int var3 = var1.length;
 
@@ -94,7 +94,7 @@ public class GuiVideoSettings extends GuiScreen
         this.buttonList.add(new GuiOptionButton(211, x, var16, "Animations..."));
         x = this.width / 2 - 155 + 160;
         this.buttonList.add(new GuiOptionButton(222, x, var16, "Other..."));
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, I18n.format("gui.done")));
     }
 
     protected void actionPerformed(GuiButton par1GuiButton)
@@ -197,7 +197,6 @@ public class GuiVideoSettings extends GuiScreen
 
         if (!this.is64bit && this.field_146499_g.renderDistanceChunks > 8)
         {
-            ;
         }
 
         super.drawScreen(x, y, z);

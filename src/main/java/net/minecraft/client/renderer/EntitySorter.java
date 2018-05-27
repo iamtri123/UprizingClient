@@ -6,13 +6,13 @@ import net.minecraft.entity.Entity;
 public class EntitySorter implements Comparator
 {
     /** Entity position X */
-    private double entityPosX;
+    private final double entityPosX;
 
     /** Entity position Y */
-    private double entityPosY;
+    private final double entityPosY;
 
     /** Entity position Z */
-    private double entityPosZ;
+    private final double entityPosZ;
     private static final String __OBFID = "CL_00000944";
 
     public EntitySorter(Entity p_i1242_1_)

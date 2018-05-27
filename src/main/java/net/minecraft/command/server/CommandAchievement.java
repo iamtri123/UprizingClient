@@ -45,7 +45,7 @@ public class CommandAchievement extends CommandBase
 
             if (var3 == null && !p_71515_2_[1].equals("*"))
             {
-                throw new CommandException("commands.achievement.unknownAchievement", new Object[] {p_71515_2_[1]});
+                throw new CommandException("commands.achievement.unknownAchievement", p_71515_2_[1]);
             }
 
             EntityPlayerMP var4;
@@ -71,7 +71,7 @@ public class CommandAchievement extends CommandBase
                         var4.triggerAchievement(var6);
                     }
 
-                    func_152373_a(p_71515_1_, this, "commands.achievement.give.success.all", new Object[] {var4.getCommandSenderName()});
+                    func_152373_a(p_71515_1_, this, "commands.achievement.give.success.all", var4.getCommandSenderName());
                 }
                 else
                 {
@@ -95,14 +95,14 @@ public class CommandAchievement extends CommandBase
                     }
 
                     var4.triggerAchievement(var3);
-                    func_152373_a(p_71515_1_, this, "commands.achievement.give.success.one", new Object[] {var4.getCommandSenderName(), var3.func_150955_j()});
+                    func_152373_a(p_71515_1_, this, "commands.achievement.give.success.one", var4.getCommandSenderName(), var3.func_150955_j());
                 }
 
                 return;
             }
         }
 
-        throw new WrongUsageException("commands.achievement.usage", new Object[0]);
+        throw new WrongUsageException("commands.achievement.usage");
     }
 
     /**
@@ -112,7 +112,7 @@ public class CommandAchievement extends CommandBase
     {
         if (p_71516_2_.length == 1)
         {
-            return getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"give"});
+            return getListOfStringsMatchingLastWord(p_71516_2_, "give");
         }
         else if (p_71516_2_.length != 2)
         {

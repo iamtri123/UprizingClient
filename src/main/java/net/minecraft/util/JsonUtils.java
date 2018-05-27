@@ -15,7 +15,7 @@ public class JsonUtils
      */
     public static boolean jsonObjectFieldTypeIsString(JsonObject p_151205_0_, String p_151205_1_)
     {
-        return !jsonObjectFieldTypeIsPrimitive(p_151205_0_, p_151205_1_) ? false : p_151205_0_.getAsJsonPrimitive(p_151205_1_).isString();
+        return jsonObjectFieldTypeIsPrimitive(p_151205_0_, p_151205_1_) && p_151205_0_.getAsJsonPrimitive(p_151205_1_).isString();
     }
 
     /**
@@ -23,7 +23,7 @@ public class JsonUtils
      */
     public static boolean jsonElementTypeIsString(JsonElement p_151211_0_)
     {
-        return !p_151211_0_.isJsonPrimitive() ? false : p_151211_0_.getAsJsonPrimitive().isString();
+        return p_151211_0_.isJsonPrimitive() && p_151211_0_.getAsJsonPrimitive().isString();
     }
 
     /**
@@ -31,7 +31,7 @@ public class JsonUtils
      */
     public static boolean jsonObjectFieldTypeIsArray(JsonObject p_151202_0_, String p_151202_1_)
     {
-        return !jsonObjectHasNamedField(p_151202_0_, p_151202_1_) ? false : p_151202_0_.get(p_151202_1_).isJsonArray();
+        return jsonObjectHasNamedField(p_151202_0_, p_151202_1_) && p_151202_0_.get(p_151202_1_).isJsonArray();
     }
 
     /**
@@ -40,7 +40,7 @@ public class JsonUtils
      */
     public static boolean jsonObjectFieldTypeIsPrimitive(JsonObject p_151201_0_, String p_151201_1_)
     {
-        return !jsonObjectHasNamedField(p_151201_0_, p_151201_1_) ? false : p_151201_0_.get(p_151201_1_).isJsonPrimitive();
+        return jsonObjectHasNamedField(p_151201_0_, p_151201_1_) && p_151201_0_.get(p_151201_1_).isJsonPrimitive();
     }
 
     /**
@@ -48,7 +48,7 @@ public class JsonUtils
      */
     public static boolean jsonObjectHasNamedField(JsonObject p_151204_0_, String p_151204_1_)
     {
-        return p_151204_0_ == null ? false : p_151204_0_.get(p_151204_1_) != null;
+        return p_151204_0_ != null && p_151204_0_.get(p_151204_1_) != null;
     }
 
     /**

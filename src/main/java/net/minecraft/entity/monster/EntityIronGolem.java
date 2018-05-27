@@ -155,7 +155,7 @@ public class EntityIronGolem extends EntityGolem
      */
     public boolean canAttackClass(Class p_70686_1_)
     {
-        return this.isPlayerCreated() && EntityPlayer.class.isAssignableFrom(p_70686_1_) ? false : super.canAttackClass(p_70686_1_);
+        return !this.isPlayerCreated() || !EntityPlayer.class.isAssignableFrom(p_70686_1_) && super.canAttackClass(p_70686_1_);
     }
 
     /**

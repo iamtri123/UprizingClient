@@ -29,11 +29,11 @@ public abstract class EntityCreature extends EntityLiving
 
     /** Used to make a creature speed up and wander away when hit. */
     protected int fleeingTick;
-    private ChunkCoordinates homePosition = new ChunkCoordinates(0, 0, 0);
+    private final ChunkCoordinates homePosition = new ChunkCoordinates(0, 0, 0);
 
     /** If -1 there is no maximum distance */
     private float maximumHomeDistance = -1.0F;
-    private EntityAIBase field_110178_bs = new EntityAIMoveTowardsRestriction(this, 1.0D);
+    private final EntityAIBase field_110178_bs = new EntityAIMoveTowardsRestriction(this, 1.0D);
     private boolean field_110180_bt;
     private static final String __OBFID = "CL_00001558";
 
@@ -302,7 +302,7 @@ public abstract class EntityCreature extends EntityLiving
 
     public boolean isWithinHomeDistance(int p_110176_1_, int p_110176_2_, int p_110176_3_)
     {
-        return this.maximumHomeDistance == -1.0F ? true : this.homePosition.getDistanceSquared(p_110176_1_, p_110176_2_, p_110176_3_) < this.maximumHomeDistance * this.maximumHomeDistance;
+        return this.maximumHomeDistance == -1.0F || this.homePosition.getDistanceSquared(p_110176_1_, p_110176_2_, p_110176_3_) < this.maximumHomeDistance * this.maximumHomeDistance;
     }
 
     public void setHomeArea(int p_110171_1_, int p_110171_2_, int p_110171_3_, int p_110171_4_)

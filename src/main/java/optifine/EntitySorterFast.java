@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class EntitySorterFast implements Comparator
 {
-    private Entity entity;
+    private final Entity entity;
 
     public EntitySorterFast(Entity par1Entity)
     {

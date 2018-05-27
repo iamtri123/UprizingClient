@@ -28,7 +28,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
     private final Map mapResourceLocations = Maps.newHashMap();
     private final List listTickables = Lists.newArrayList();
     private final Map mapTextureCounters = Maps.newHashMap();
-    private IResourceManager theResourceManager;
+    private final IResourceManager theResourceManager;
     private static final String __OBFID = "CL_00001064";
 
     public TextureManager(IResourceManager par1ResourceManager)
@@ -149,7 +149,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
         }
 
         this.mapTextureCounters.put(par1Str, var3);
-        ResourceLocation var4 = new ResourceLocation(String.format("dynamic/%s_%d", new Object[] {par1Str, var3}));
+        ResourceLocation var4 = new ResourceLocation(String.format("dynamic/%s_%d", par1Str, var3));
         this.loadTexture(var4, par2DynamicTexture);
         return var4;
     }

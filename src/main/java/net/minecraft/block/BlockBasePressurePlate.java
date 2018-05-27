@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public abstract class BlockBasePressurePlate extends Block
 {
-    private String field_150067_a;
+    private final String field_150067_a;
     private static final String __OBFID = "CL_00000194";
 
     protected BlockBasePressurePlate(String p_i45387_1_, Material p_i45387_2_)

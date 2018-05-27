@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderTNTPrimed extends Render
 {
-    private RenderBlocks blockRenderer = new RenderBlocks();
+    private final RenderBlocks blockRenderer = new RenderBlocks();
     private static final String __OBFID = "CL_00001030";
 
     public RenderTNTPrimed()

@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 public class EntityFireworkSparkFX extends EntityFX
 {
-    private int baseTextureIndex = 160;
+    private final int baseTextureIndex = 160;
     private boolean field_92054_ax;
     private boolean field_92048_ay;
     private final EffectRenderer field_92047_az;

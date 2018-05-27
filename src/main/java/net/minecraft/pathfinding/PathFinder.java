@@ -11,28 +11,28 @@ import net.minecraft.world.IBlockAccess;
 public class PathFinder
 {
     /** Used to find obstacles */
-    private IBlockAccess worldMap;
+    private final IBlockAccess worldMap;
 
     /** The path being generated */
-    private Path path = new Path();
+    private final Path path = new Path();
 
     /** The points in the path */
-    private IntHashMap pointMap = new IntHashMap();
+    private final IntHashMap pointMap = new IntHashMap();
 
     /** Selection of path points to add to the path */
-    private PathPoint[] pathOptions = new PathPoint[32];
+    private final PathPoint[] pathOptions = new PathPoint[32];
 
     /** should the PathFinder go through wodden door blocks */
-    private boolean isWoddenDoorAllowed;
+    private final boolean isWoddenDoorAllowed;
 
     /**
      * should the PathFinder disregard BlockMovement type materials in its path
      */
-    private boolean isMovementBlockAllowed;
+    private final boolean isMovementBlockAllowed;
     private boolean isPathingInWater;
 
     /** tells the FathFinder to not stop pathing underwater */
-    private boolean canEntityDrown;
+    private final boolean canEntityDrown;
     private static final String __OBFID = "CL_00000576";
 
     public PathFinder(IBlockAccess p_i2137_1_, boolean p_i2137_2_, boolean p_i2137_3_, boolean p_i2137_4_, boolean p_i2137_5_)

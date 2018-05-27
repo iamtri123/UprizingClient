@@ -21,7 +21,7 @@ public class IntHashMap
     private transient volatile int versionStamp;
 
     /** The set of all the keys stored in this MCHash object */
-    private Set keySet = new HashSet();
+    private final Set keySet = new HashSet();
     private static final String __OBFID = "CL_00001490";
 
     /**

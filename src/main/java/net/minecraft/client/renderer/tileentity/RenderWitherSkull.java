@@ -23,7 +23,6 @@ public class RenderWitherSkull extends Render
 
         for (var4 = p_82400_2_ - p_82400_1_; var4 < -180.0F; var4 += 360.0F)
         {
-            ;
         }
 
         while (var4 >= 180.0F)

@@ -19,7 +19,7 @@ public class TileEntityPiston extends TileEntity
     private boolean field_145872_l;
     private float field_145873_m;
     private float field_145870_n;
-    private List field_145871_o = new ArrayList();
+    private final List field_145871_o = new ArrayList();
     private static final String __OBFID = "CL_00000369";
 
     public TileEntityPiston() {}

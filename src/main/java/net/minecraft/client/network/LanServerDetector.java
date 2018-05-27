@@ -23,8 +23,8 @@ public class LanServerDetector
 
     public static class LanServer
     {
-        private String lanServerMotd;
-        private String lanServerIpPort;
+        private final String lanServerMotd;
+        private final String lanServerIpPort;
         private long timeLastSeen;
         private static final String __OBFID = "CL_00001134";
 
@@ -53,7 +53,7 @@ public class LanServerDetector
 
     public static class LanServerList
     {
-        private ArrayList listOfLanServers = new ArrayList();
+        private final ArrayList listOfLanServers = new ArrayList();
         boolean wasUpdated;
         private static final String __OBFID = "CL_00001136";
 
@@ -155,7 +155,6 @@ public class LanServerDetector
             }
             catch (IOException var4)
             {
-                ;
             }
 
             this.socket.close();

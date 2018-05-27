@@ -48,32 +48,32 @@ public class CommandWeather extends CommandBase
                 var5.setThunderTime(0);
                 var5.setRaining(false);
                 var5.setThundering(false);
-                func_152373_a(p_71515_1_, this, "commands.weather.clear", new Object[0]);
+                func_152373_a(p_71515_1_, this, "commands.weather.clear");
             }
             else if ("rain".equalsIgnoreCase(p_71515_2_[0]))
             {
                 var5.setRainTime(var3);
                 var5.setRaining(true);
                 var5.setThundering(false);
-                func_152373_a(p_71515_1_, this, "commands.weather.rain", new Object[0]);
+                func_152373_a(p_71515_1_, this, "commands.weather.rain");
             }
             else
             {
                 if (!"thunder".equalsIgnoreCase(p_71515_2_[0]))
                 {
-                    throw new WrongUsageException("commands.weather.usage", new Object[0]);
+                    throw new WrongUsageException("commands.weather.usage");
                 }
 
                 var5.setRainTime(var3);
                 var5.setThunderTime(var3);
                 var5.setRaining(true);
                 var5.setThundering(true);
-                func_152373_a(p_71515_1_, this, "commands.weather.thunder", new Object[0]);
+                func_152373_a(p_71515_1_, this, "commands.weather.thunder");
             }
         }
         else
         {
-            throw new WrongUsageException("commands.weather.usage", new Object[0]);
+            throw new WrongUsageException("commands.weather.usage");
         }
     }
 
@@ -82,6 +82,6 @@ public class CommandWeather extends CommandBase
      */
     public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"clear", "rain", "thunder"}): null;
+        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, "clear", "rain", "thunder"): null;
     }
 }

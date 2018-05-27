@@ -90,7 +90,7 @@ public class ThreadDownloadImageData extends SimpleTexture
         {
             if (this.field_152434_e != null && this.field_152434_e.isFile())
             {
-                logger.debug("Loading http texture from local cache ({})", new Object[] {this.field_152434_e});
+                logger.debug("Loading http texture from local cache ({})", this.field_152434_e);
 
                 try
                 {
@@ -124,7 +124,7 @@ public class ThreadDownloadImageData extends SimpleTexture
             public void run()
             {
                 HttpURLConnection var1 = null;
-                ThreadDownloadImageData.logger.debug("Downloading http texture from {} to {}", new Object[] {ThreadDownloadImageData.this.imageUrl, ThreadDownloadImageData.this.field_152434_e});
+                ThreadDownloadImageData.logger.debug("Downloading http texture from {} to {}", ThreadDownloadImageData.this.imageUrl, ThreadDownloadImageData.this.field_152434_e);
 
                 if (ThreadDownloadImageData.this.shouldPipeline())
                 {
@@ -197,7 +197,7 @@ public class ThreadDownloadImageData extends SimpleTexture
         else
         {
             Proxy proxy = Minecraft.getMinecraft().getProxy();
-            return proxy.type() != Type.DIRECT && proxy.type() != Type.SOCKS ? false : this.imageUrl.startsWith("http://");
+            return proxy.type() == Type.DIRECT || proxy.type() == Type.SOCKS && this.imageUrl.startsWith("http://");
         }
     }
 

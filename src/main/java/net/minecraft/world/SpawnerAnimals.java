@@ -23,9 +23,9 @@ import java.util.Random;
 public final class SpawnerAnimals
 {
     /** The 17x17 area around the player where mobs can spawn */
-    private HashMap eligibleChunksForSpawning = new HashMap();
+    private final HashMap eligibleChunksForSpawning = new HashMap();
     private static final String __OBFID = "CL_00000152";
-    private Map mapSampleEntitiesByClass = new HashMap();
+    private final Map mapSampleEntitiesByClass = new HashMap();
     private int lastPlayerChunkX = Integer.MAX_VALUE;
     private int lastPlayerChunkZ = Integer.MAX_VALUE;
 
@@ -111,7 +111,7 @@ public final class SpawnerAnimals
 
                 if (Reflector.ForgeWorld_countEntities.exists())
                 {
-                    countEntities = Reflector.callInt(par1WorldServer, Reflector.ForgeWorld_countEntities, new Object[] {var44, Boolean.valueOf(true)});
+                    countEntities = Reflector.callInt(par1WorldServer, Reflector.ForgeWorld_countEntities, var44, Boolean.valueOf(true));
                 }
                 else
                 {
@@ -207,7 +207,7 @@ public final class SpawnerAnimals
 
                                                             if (Reflector.ForgeEventFactory_canEntitySpawn.exists())
                                                             {
-                                                                Object result = Reflector.call(Reflector.ForgeEventFactory_canEntitySpawn, new Object[] {var41, par1WorldServer, Float.valueOf(var26), Float.valueOf(var27), Float.valueOf(var28)});
+                                                                Object result = Reflector.call(Reflector.ForgeEventFactory_canEntitySpawn, var41, par1WorldServer, Float.valueOf(var26), Float.valueOf(var27), Float.valueOf(var28));
                                                                 Object result_ALLOW = Reflector.getFieldValue(Reflector.Event_Result_ALLOW);
                                                                 Object result_DEFAULT = Reflector.getFieldValue(Reflector.Event_Result_DEFAULT);
                                                                 canSpawn = result == result_ALLOW || result == result_DEFAULT && var41.getCanSpawnHere();
@@ -270,7 +270,7 @@ public final class SpawnerAnimals
         else
         {
             Block var5 = par1World.getBlock(par2, par3 - 1, par4);
-            return Reflector.ForgeBlock_canCreatureSpawn.exists() && !Reflector.callBoolean(var5, Reflector.ForgeBlock_canCreatureSpawn, new Object[] {par0EnumCreatureType, par1World, Integer.valueOf(par2), Integer.valueOf(par3), Integer.valueOf(par4)}) ? false : var5 != Blocks.bedrock && !par1World.getBlock(par2, par3, par4).isNormalCube() && !par1World.getBlock(par2, par3, par4).getMaterial().isLiquid() && !par1World.getBlock(par2, par3 + 1, par4).isNormalCube();
+            return !Reflector.ForgeBlock_canCreatureSpawn.exists() || Reflector.callBoolean(var5, Reflector.ForgeBlock_canCreatureSpawn, par0EnumCreatureType, par1World, Integer.valueOf(par2), Integer.valueOf(par3), Integer.valueOf(par4)) && (var5 != Blocks.bedrock && !par1World.getBlock(par2, par3, par4).isNormalCube() && !par1World.getBlock(par2, par3, par4).getMaterial().isLiquid() && !par1World.getBlock(par2, par3 + 1, par4).isNormalCube());
         }
     }
 

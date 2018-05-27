@@ -12,10 +12,10 @@ import net.minecraft.server.MinecraftServer;
 public class WorldManager implements IWorldAccess
 {
     /** Reference to the MinecraftServer object. */
-    private MinecraftServer mcServer;
+    private final MinecraftServer mcServer;
 
     /** The WorldServer object. */
-    private WorldServer theWorldServer;
+    private final WorldServer theWorldServer;
     private static final String __OBFID = "CL_00001433";
 
     public WorldManager(MinecraftServer p_i1517_1_, WorldServer p_i1517_2_)

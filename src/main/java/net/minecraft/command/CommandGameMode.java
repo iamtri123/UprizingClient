@@ -36,20 +36,20 @@ public class CommandGameMode extends CommandBase
             EntityPlayerMP var4 = p_71515_2_.length >= 2 ? getPlayer(p_71515_1_, p_71515_2_[1]) : getCommandSenderAsPlayer(p_71515_1_);
             var4.setGameType(var3);
             var4.fallDistance = 0.0F;
-            ChatComponentTranslation var5 = new ChatComponentTranslation("gameMode." + var3.getName(), new Object[0]);
+            ChatComponentTranslation var5 = new ChatComponentTranslation("gameMode." + var3.getName());
 
             if (var4 != p_71515_1_)
             {
-                func_152374_a(p_71515_1_, this, 1, "commands.gamemode.success.other", new Object[] {var4.getCommandSenderName(), var5});
+                func_152374_a(p_71515_1_, this, 1, "commands.gamemode.success.other", var4.getCommandSenderName(), var5);
             }
             else
             {
-                func_152374_a(p_71515_1_, this, 1, "commands.gamemode.success.self", new Object[] {var5});
+                func_152374_a(p_71515_1_, this, 1, "commands.gamemode.success.self", var5);
             }
         }
         else
         {
-            throw new WrongUsageException("commands.gamemode.usage", new Object[0]);
+            throw new WrongUsageException("commands.gamemode.usage");
         }
     }
 
@@ -66,7 +66,7 @@ public class CommandGameMode extends CommandBase
      */
     public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"survival", "creative", "adventure"}): (p_71516_2_.length == 2 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getListOfPlayerUsernames()) : null);
+        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, "survival", "creative", "adventure"): (p_71516_2_.length == 2 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getListOfPlayerUsernames()) : null);
     }
 
     /**

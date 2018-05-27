@@ -215,7 +215,7 @@ public class CustomItems
                 Properties var10 = new Properties();
                 var10.put("type", "item");
                 var10.put("items", "" + potionItemId);
-                var10.put("damage", "" + bufDamage.toString());
+                var10.put("damage", "" + bufDamage);
                 var10.put("damageMask", "" + var9);
                 return var10;
             }
@@ -649,7 +649,6 @@ public class CustomItems
 
             if (cip.nbtTagValues != null)
             {
-                ;
             }
 
             return cip.textureIcon;

@@ -33,7 +33,7 @@ public class CommandEnchant extends CommandBase
     {
         if (p_71515_2_.length < 2)
         {
-            throw new WrongUsageException("commands.enchant.usage", new Object[0]);
+            throw new WrongUsageException("commands.enchant.usage");
         }
         else
         {
@@ -44,7 +44,7 @@ public class CommandEnchant extends CommandBase
 
             if (var6 == null)
             {
-                throw new CommandException("commands.enchant.noItem", new Object[0]);
+                throw new CommandException("commands.enchant.noItem");
             }
             else
             {
@@ -52,11 +52,11 @@ public class CommandEnchant extends CommandBase
 
                 if (var7 == null)
                 {
-                    throw new NumberInvalidException("commands.enchant.notFound", new Object[] {Integer.valueOf(var4)});
+                    throw new NumberInvalidException("commands.enchant.notFound", Integer.valueOf(var4));
                 }
                 else if (!var7.canApply(var6))
                 {
-                    throw new CommandException("commands.enchant.cantEnchant", new Object[0]);
+                    throw new CommandException("commands.enchant.cantEnchant");
                 }
                 else
                 {
@@ -81,7 +81,7 @@ public class CommandEnchant extends CommandBase
 
                                     if (!var11.canApplyTogether(var7))
                                     {
-                                        throw new CommandException("commands.enchant.cantCombine", new Object[] {var7.getTranslatedName(var5), var11.getTranslatedName(var8.getCompoundTagAt(var9).getShort("lvl"))});
+                                        throw new CommandException("commands.enchant.cantCombine", var7.getTranslatedName(var5), var11.getTranslatedName(var8.getCompoundTagAt(var9).getShort("lvl")));
                                     }
                                 }
                             }
@@ -89,7 +89,7 @@ public class CommandEnchant extends CommandBase
                     }
 
                     var6.addEnchantment(var7, var5);
-                    func_152373_a(p_71515_1_, this, "commands.enchant.success", new Object[0]);
+                    func_152373_a(p_71515_1_, this, "commands.enchant.success");
                 }
             }
         }

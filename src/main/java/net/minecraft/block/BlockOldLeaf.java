@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 
 public class BlockOldLeaf extends BlockLeaves
 {
-    public static final String[][] field_150130_N = new String[][] {{"leaves_oak", "leaves_spruce", "leaves_birch", "leaves_jungle"}, {"leaves_oak_opaque", "leaves_spruce_opaque", "leaves_birch_opaque", "leaves_jungle_opaque"}};
-    public static final String[] field_150131_O = new String[] {"oak", "spruce", "birch", "jungle"};
+    public static final String[][] field_150130_N = {{"leaves_oak", "leaves_spruce", "leaves_birch", "leaves_jungle"}, {"leaves_oak_opaque", "leaves_spruce_opaque", "leaves_birch_opaque", "leaves_jungle_opaque"}};
+    public static final String[] field_150131_O = {"oak", "spruce", "birch", "jungle"};
     private static final String __OBFID = "CL_00000280";
 
     /**

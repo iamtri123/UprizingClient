@@ -61,15 +61,15 @@ public class MovingObjectPosition
         return "HitResult{type=" + this.typeOfHit + ", x=" + this.blockX + ", y=" + this.blockY + ", z=" + this.blockZ + ", f=" + this.sideHit + ", pos=" + this.hitVec + ", entity=" + this.entityHit + '}';
     }
 
-    public static enum MovingObjectType
+    public enum MovingObjectType
     {
         MISS("MISS", 0),
         BLOCK("BLOCK", 1),
         ENTITY("ENTITY", 2);
 
-        private static final MovingObjectPosition.MovingObjectType[] $VALUES = new MovingObjectPosition.MovingObjectType[]{MISS, BLOCK, ENTITY};
+        private static final MovingObjectPosition.MovingObjectType[] $VALUES = {MISS, BLOCK, ENTITY};
         private static final String __OBFID = "CL_00000611";
 
-        private MovingObjectType(String p_i2302_1_, int p_i2302_2_) {}
+        MovingObjectType(String p_i2302_1_, int p_i2302_2_) {}
     }
 }

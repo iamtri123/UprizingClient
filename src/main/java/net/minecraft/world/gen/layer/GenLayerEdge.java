@@ -131,16 +131,16 @@ public class GenLayerEdge extends GenLayer
         return var6;
     }
 
-    public static enum Mode
+    public enum Mode
     {
         COOL_WARM("COOL_WARM", 0),
         HEAT_ICE("HEAT_ICE", 1),
         SPECIAL("SPECIAL", 2);
 
-        private static final GenLayerEdge.Mode[] $VALUES = new GenLayerEdge.Mode[]{COOL_WARM, HEAT_ICE, SPECIAL};
+        private static final GenLayerEdge.Mode[] $VALUES = {COOL_WARM, HEAT_ICE, SPECIAL};
         private static final String __OBFID = "CL_00000549";
 
-        private Mode(String p_i45473_1_, int p_i45473_2_) {}
+        Mode(String p_i45473_1_, int p_i45473_2_) {}
     }
 
     static final class SwitchMode
@@ -156,7 +156,6 @@ public class GenLayerEdge extends GenLayer
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             try
@@ -165,7 +164,6 @@ public class GenLayerEdge extends GenLayer
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -174,7 +172,6 @@ public class GenLayerEdge extends GenLayer
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

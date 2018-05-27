@@ -42,19 +42,19 @@ public class CommandSetSpawnpoint extends CommandBase
                 int var7 = parseIntBounded(p_71515_1_, p_71515_2_[var9++], 0, 256);
                 int var8 = parseIntBounded(p_71515_1_, p_71515_2_[var9++], -var5, var5);
                 var3.setSpawnChunk(new ChunkCoordinates(var6, var7, var8), true);
-                func_152373_a(p_71515_1_, this, "commands.spawnpoint.success", new Object[] {var3.getCommandSenderName(), Integer.valueOf(var6), Integer.valueOf(var7), Integer.valueOf(var8)});
+                func_152373_a(p_71515_1_, this, "commands.spawnpoint.success", var3.getCommandSenderName(), Integer.valueOf(var6), Integer.valueOf(var7), Integer.valueOf(var8));
             }
         }
         else
         {
             if (p_71515_2_.length > 1)
             {
-                throw new WrongUsageException("commands.spawnpoint.usage", new Object[0]);
+                throw new WrongUsageException("commands.spawnpoint.usage");
             }
 
             ChunkCoordinates var10 = var3.getPlayerCoordinates();
             var3.setSpawnChunk(var10, true);
-            func_152373_a(p_71515_1_, this, "commands.spawnpoint.success", new Object[] {var3.getCommandSenderName(), Integer.valueOf(var10.posX), Integer.valueOf(var10.posY), Integer.valueOf(var10.posZ)});
+            func_152373_a(p_71515_1_, this, "commands.spawnpoint.success", var3.getCommandSenderName(), Integer.valueOf(var10.posX), Integer.valueOf(var10.posY), Integer.valueOf(var10.posZ));
         }
     }
 

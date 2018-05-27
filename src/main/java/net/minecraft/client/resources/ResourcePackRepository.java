@@ -45,7 +45,7 @@ public class ResourcePackRepository
     private IResourcePack field_148532_f;
     private boolean field_148533_g;
     private List repositoryEntriesAll = Lists.newArrayList();
-    private List repositoryEntries = Lists.newArrayList();
+    private final List repositoryEntries = Lists.newArrayList();
     private static final String __OBFID = "CL_00001087";
 
     public ResourcePackRepository(File p_i45101_1_, File p_i45101_2_, IResourcePack p_i45101_3_, IMetadataSerializer p_i45101_4_, GameSettings p_i45101_5_)
@@ -233,7 +233,6 @@ public class ResourcePackRepository
             }
             catch (IOException var2)
             {
-                ;
             }
 
             if (this.texturePackIcon == null)
@@ -279,7 +278,7 @@ public class ResourcePackRepository
 
         public boolean equals(Object p_equals_1_)
         {
-            return this == p_equals_1_ ? true : (p_equals_1_ instanceof ResourcePackRepository.Entry ? this.toString().equals(p_equals_1_.toString()) : false);
+            return this == p_equals_1_ || (p_equals_1_ instanceof Entry && this.toString().equals(p_equals_1_.toString()));
         }
 
         public int hashCode()
@@ -289,7 +288,7 @@ public class ResourcePackRepository
 
         public String toString()
         {
-            return String.format("%s:%s:%d", new Object[] {this.resourcePackFile.getName(), this.resourcePackFile.isDirectory() ? "folder" : "zip", Long.valueOf(this.resourcePackFile.lastModified())});
+            return String.format("%s:%s:%d", this.resourcePackFile.getName(), this.resourcePackFile.isDirectory() ? "folder" : "zip", Long.valueOf(this.resourcePackFile.lastModified()));
         }
 
         Entry(File p_i1296_2_, Object p_i1296_3_)

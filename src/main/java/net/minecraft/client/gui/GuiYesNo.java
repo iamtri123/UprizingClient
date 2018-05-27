@@ -7,7 +7,7 @@ public class GuiYesNo extends GuiScreen
 {
     protected GuiYesNoCallback field_146355_a;
     protected String field_146351_f;
-    private String field_146354_r;
+    private final String field_146354_r;
     protected String field_146352_g;
     protected String field_146356_h;
     protected int field_146357_i;
@@ -20,8 +20,8 @@ public class GuiYesNo extends GuiScreen
         this.field_146351_f = p_i1082_2_;
         this.field_146354_r = p_i1082_3_;
         this.field_146357_i = p_i1082_4_;
-        this.field_146352_g = I18n.format("gui.yes", new Object[0]);
-        this.field_146356_h = I18n.format("gui.no", new Object[0]);
+        this.field_146352_g = I18n.format("gui.yes");
+        this.field_146356_h = I18n.format("gui.no");
     }
 
     public GuiYesNo(GuiYesNoCallback p_i1083_1_, String p_i1083_2_, String p_i1083_3_, String p_i1083_4_, String p_i1083_5_, int p_i1083_6_)

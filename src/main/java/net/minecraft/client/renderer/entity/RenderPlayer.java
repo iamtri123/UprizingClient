@@ -30,9 +30,9 @@ import org.lwjgl.opengl.GL11;
 public class RenderPlayer extends RendererLivingEntity
 {
     private static final ResourceLocation steveTextures = new ResourceLocation("textures/entity/steve.png");
-    private ModelBiped modelBipedMain;
-    private ModelBiped modelArmorChestplate;
-    private ModelBiped modelArmor;
+    private final ModelBiped modelBipedMain;
+    private final ModelBiped modelArmorChestplate;
+    private final ModelBiped modelArmor;
     private static final String __OBFID = "CL_00001020";
 
     public RenderPlayer()

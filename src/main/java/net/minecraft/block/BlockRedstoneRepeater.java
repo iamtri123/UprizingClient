@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 
 public class BlockRedstoneRepeater extends BlockRedstoneDiode
 {
-    public static final double[] field_149973_b = new double[] { -0.0625D, 0.0625D, 0.1875D, 0.3125D};
-    private static final int[] field_149974_M = new int[] {1, 2, 3, 4};
+    public static final double[] field_149973_b = { -0.0625D, 0.0625D, 0.1875D, 0.3125D};
+    private static final int[] field_149974_M = {1, 2, 3, 4};
     private static final String __OBFID = "CL_00000301";
 
     protected BlockRedstoneRepeater(boolean p_i45424_1_)

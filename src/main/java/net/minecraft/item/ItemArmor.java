@@ -21,9 +21,9 @@ import net.minecraft.world.World;
 public class ItemArmor extends Item
 {
     /** Holds the 'base' maxDamage that each armorType have. */
-    private static final int[] maxDamageArray = new int[] {11, 16, 15, 13};
-    private static final String[] CLOTH_OVERLAY_NAMES = new String[] {"leather_helmet_overlay", "leather_chestplate_overlay", "leather_leggings_overlay", "leather_boots_overlay"};
-    public static final String[] EMPTY_SLOT_NAMES = new String[] {"empty_armor_slot_helmet", "empty_armor_slot_chestplate", "empty_armor_slot_leggings", "empty_armor_slot_boots"};
+    private static final int[] maxDamageArray = {11, 16, 15, 13};
+    private static final String[] CLOTH_OVERLAY_NAMES = {"leather_helmet_overlay", "leather_chestplate_overlay", "leather_leggings_overlay", "leather_boots_overlay"};
+    public static final String[] EMPTY_SLOT_NAMES = {"empty_armor_slot_helmet", "empty_armor_slot_chestplate", "empty_armor_slot_leggings", "empty_armor_slot_boots"};
     private static final IBehaviorDispenseItem dispenserBehavior = new BehaviorDefaultDispenseItem()
     {
         private static final String __OBFID = "CL_00001767";
@@ -137,7 +137,7 @@ public class ItemArmor extends Item
      */
     public boolean hasColor(ItemStack p_82816_1_)
     {
-        return this.material != ItemArmor.ArmorMaterial.CLOTH ? false : (!p_82816_1_.hasTagCompound() ? false : (!p_82816_1_.getTagCompound().func_150297_b("display", 10) ? false : p_82816_1_.getTagCompound().getCompoundTag("display").func_150297_b("color", 3)));
+        return this.material == ArmorMaterial.CLOTH && (p_82816_1_.hasTagCompound() && (p_82816_1_.getTagCompound().func_150297_b("display", 10) && p_82816_1_.getTagCompound().getCompoundTag("display").func_150297_b("color", 3)));
     }
 
     /**
@@ -226,7 +226,7 @@ public class ItemArmor extends Item
      */
     public boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)
     {
-        return this.material.func_151685_b() == p_82789_2_.getItem() ? true : super.getIsRepairable(p_82789_1_, p_82789_2_);
+        return this.material.func_151685_b() == p_82789_2_.getItem() || super.getIsRepairable(p_82789_1_, p_82789_2_);
     }
 
     public void registerIcons(IIconRegister p_94581_1_)
@@ -279,21 +279,21 @@ public class ItemArmor extends Item
         }
     }
 
-    public static enum ArmorMaterial
+    public enum ArmorMaterial
     {
         CLOTH("CLOTH", 0, 5, new int[]{1, 3, 2, 1}, 15),
         CHAIN("CHAIN", 1, 15, new int[]{2, 5, 4, 1}, 12),
         IRON("IRON", 2, 15, new int[]{2, 6, 5, 2}, 9),
         GOLD("GOLD", 3, 7, new int[]{2, 5, 3, 1}, 25),
         DIAMOND("DIAMOND", 4, 33, new int[]{3, 8, 6, 3}, 10);
-        private int maxDamageFactor;
-        private int[] damageReductionAmountArray;
-        private int enchantability;
+        private final int maxDamageFactor;
+        private final int[] damageReductionAmountArray;
+        private final int enchantability;
 
-        private static final ItemArmor.ArmorMaterial[] $VALUES = new ItemArmor.ArmorMaterial[]{CLOTH, CHAIN, IRON, GOLD, DIAMOND};
+        private static final ItemArmor.ArmorMaterial[] $VALUES = {CLOTH, CHAIN, IRON, GOLD, DIAMOND};
         private static final String __OBFID = "CL_00001768";
 
-        private ArmorMaterial(String p_i1827_1_, int p_i1827_2_, int p_i1827_3_, int[] p_i1827_4_, int p_i1827_5_)
+        ArmorMaterial(String p_i1827_1_, int p_i1827_2_, int p_i1827_3_, int[] p_i1827_4_, int p_i1827_5_)
         {
             this.maxDamageFactor = p_i1827_3_;
             this.damageReductionAmountArray = p_i1827_4_;

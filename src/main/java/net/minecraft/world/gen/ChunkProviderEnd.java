@@ -17,13 +17,13 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 public class ChunkProviderEnd implements IChunkProvider
 {
-    private Random endRNG;
-    private NoiseGeneratorOctaves noiseGen1;
-    private NoiseGeneratorOctaves noiseGen2;
-    private NoiseGeneratorOctaves noiseGen3;
+    private final Random endRNG;
+    private final NoiseGeneratorOctaves noiseGen1;
+    private final NoiseGeneratorOctaves noiseGen2;
+    private final NoiseGeneratorOctaves noiseGen3;
     public NoiseGeneratorOctaves noiseGen4;
     public NoiseGeneratorOctaves noiseGen5;
-    private World endWorld;
+    private final World endWorld;
     private double[] densities;
 
     /** The biomes that are used to generate the chunk */

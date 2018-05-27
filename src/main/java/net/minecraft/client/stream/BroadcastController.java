@@ -84,7 +84,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             this.field_152885_u.data = "";
             this.func_152827_a(BroadcastController.BroadcastState.Initialized);
             String var3 = ErrorCode.getString(p_requestAuthTokenCallback_1_);
-            this.func_152820_d(String.format("RequestAuthTokenDoneCallback got failure: %s", new Object[] {var3}));
+            this.func_152820_d(String.format("RequestAuthTokenDoneCallback got failure: %s", var3));
         }
 
         try
@@ -113,7 +113,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             this.func_152827_a(BroadcastController.BroadcastState.Initialized);
             this.field_152877_m = false;
             String var3 = ErrorCode.getString(p_loginCallback_1_);
-            this.func_152820_d(String.format("LoginCallback got failure: %s", new Object[] {var3}));
+            this.func_152820_d(String.format("LoginCallback got failure: %s", var3));
         }
 
         try
@@ -152,7 +152,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         else
         {
             String var3 = ErrorCode.getString(p_getIngestServersCallback_1_);
-            this.func_152820_d(String.format("IngestListCallback got failure: %s", new Object[] {var3}));
+            this.func_152820_d(String.format("IngestListCallback got failure: %s", var3));
             this.func_152827_a(BroadcastController.BroadcastState.LoggingIn);
         }
     }
@@ -164,7 +164,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         if (ErrorCode.failed(p_getUserInfoCallback_1_))
         {
             String var3 = ErrorCode.getString(p_getUserInfoCallback_1_);
-            this.func_152820_d(String.format("UserInfoDoneCallback got failure: %s", new Object[] {var3}));
+            this.func_152820_d(String.format("UserInfoDoneCallback got failure: %s", var3));
         }
     }
 
@@ -189,7 +189,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         else
         {
             String var3 = ErrorCode.getString(p_getStreamInfoCallback_1_);
-            this.func_152832_e(String.format("StreamInfoDoneCallback got failure: %s", new Object[] {var3}));
+            this.func_152832_e(String.format("StreamInfoDoneCallback got failure: %s", var3));
         }
     }
 
@@ -199,7 +199,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
         if (ErrorCode.failed(p_getArchivingStateCallback_1_))
         {
-            ;
         }
     }
 
@@ -208,7 +207,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         if (ErrorCode.failed(p_runCommercialCallback_1_))
         {
             String var2 = ErrorCode.getString(p_runCommercialCallback_1_);
-            this.func_152832_e(String.format("RunCommercialCallback got failure: %s", new Object[] {var2}));
+            this.func_152832_e(String.format("RunCommercialCallback got failure: %s", var2));
         }
     }
 
@@ -217,7 +216,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         if (ErrorCode.failed(p_setStreamInfoCallback_1_))
         {
             String var2 = ErrorCode.getString(p_setStreamInfoCallback_1_);
-            this.func_152832_e(String.format("SetStreamInfoCallback got failure: %s", new Object[] {var2}));
+            this.func_152832_e(String.format("SetStreamInfoCallback got failure: %s", var2));
         }
     }
 
@@ -226,7 +225,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         if (ErrorCode.failed(p_getGameNameListCallback_1_))
         {
             String var3 = ErrorCode.getString(p_getGameNameListCallback_1_);
-            this.func_152820_d(String.format("GameNameListCallback got failure: %s", new Object[] {var3}));
+            this.func_152820_d(String.format("GameNameListCallback got failure: %s", var3));
         }
 
         try
@@ -273,7 +272,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             this.func_152827_a(BroadcastController.BroadcastState.ReadyToBroadcast);
             String var2 = ErrorCode.getString(p_startCallback_1_);
             this.field_152867_c.func_152892_c(p_startCallback_1_);
-            this.func_152820_d(String.format("startCallback got failure: %s", new Object[] {var2}));
+            this.func_152820_d(String.format("startCallback got failure: %s", var2));
         }
     }
 
@@ -310,7 +309,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         {
             this.func_152827_a(BroadcastController.BroadcastState.ReadyToBroadcast);
             String var2 = ErrorCode.getString(p_stopCallback_1_);
-            this.func_152820_d(String.format("stopCallback got failure: %s", new Object[] {var2}));
+            this.func_152820_d(String.format("stopCallback got failure: %s", var2));
         }
     }
 
@@ -696,7 +695,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
                 {
                     this.func_152831_M();
                     String var3 = ErrorCode.getString(var2);
-                    this.func_152820_d(String.format("Error while starting to broadcast: %s", new Object[] {var3}));
+                    this.func_152820_d(String.format("Error while starting to broadcast: %s", var3));
                     this.field_152881_q = null;
                     this.field_152882_r = null;
                     return false;
@@ -727,7 +726,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             if (ErrorCode.failed(var1))
             {
                 String var2 = ErrorCode.getString(var1);
-                this.func_152820_d(String.format("Error while stopping the broadcast: %s", new Object[] {var2}));
+                this.func_152820_d(String.format("Error while stopping the broadcast: %s", var2));
                 return false;
             }
             else
@@ -752,7 +751,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             {
                 this.func_152819_E();
                 String var2 = ErrorCode.getString(var1);
-                this.func_152820_d(String.format("Error pausing stream: %s\n", new Object[] {var2}));
+                this.func_152820_d(String.format("Error pausing stream: %s\n", var2));
             }
             else
             {
@@ -783,7 +782,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         if (ErrorCode.failed(var6))
         {
             String var7 = ErrorCode.getString(var6);
-            this.func_152820_d(String.format("Error while sending meta data: %s\n", new Object[] {var7}));
+            this.func_152820_d(String.format("Error while sending meta data: %s\n", var7));
             return false;
         }
         else
@@ -841,7 +840,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
                     if (ErrorCode.failed(var1))
                     {
                         var2 = ErrorCode.getString(var1);
-                        this.func_152820_d(String.format("Error in TTV_Login: %s\n", new Object[] {var2}));
+                        this.func_152820_d(String.format("Error in TTV_Login: %s\n", var2));
                     }
 
                     break;
@@ -854,7 +853,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
                     {
                         this.func_152827_a(BroadcastController.BroadcastState.LoggedIn);
                         var2 = ErrorCode.getString(var1);
-                        this.func_152820_d(String.format("Error in TTV_GetIngestServers: %s\n", new Object[] {var2}));
+                        this.func_152820_d(String.format("Error in TTV_GetIngestServers: %s\n", var2));
                     }
 
                     break;
@@ -866,7 +865,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
                     if (ErrorCode.failed(var1))
                     {
                         var2 = ErrorCode.getString(var1);
-                        this.func_152820_d(String.format("Error in TTV_GetUserInfo: %s\n", new Object[] {var2}));
+                        this.func_152820_d(String.format("Error in TTV_GetUserInfo: %s\n", var2));
                     }
 
                     this.func_152835_I();
@@ -875,7 +874,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
                     if (ErrorCode.failed(var1))
                     {
                         var2 = ErrorCode.getString(var1);
-                        this.func_152820_d(String.format("Error in TTV_GetArchivingState: %s\n", new Object[] {var2}));
+                        this.func_152820_d(String.format("Error in TTV_GetArchivingState: %s\n", var2));
                     }
 
                 case 4:
@@ -908,7 +907,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             if (ErrorCode.failed(var5))
             {
                 String var6 = ErrorCode.getString(var5);
-                this.func_152820_d(String.format("Error in TTV_GetStreamInfo: %s", new Object[] {var6}));
+                this.func_152820_d(String.format("Error in TTV_GetStreamInfo: %s", var6));
             }
         }
     }
@@ -943,7 +942,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
             if (!var2.getIsValid())
             {
-                this.func_152820_d(String.format("Error while allocating frame buffer", new Object[0]));
+                this.func_152820_d(String.format("Error while allocating frame buffer"));
                 return false;
             }
 
@@ -970,7 +969,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
     {
         if (this.field_152875_k.size() == 0)
         {
-            this.func_152820_d(String.format("Out of free buffers, this should never happen", new Object[0]));
+            this.func_152820_d(String.format("Out of free buffers, this should never happen"));
             return null;
         }
         else
@@ -1018,11 +1017,11 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
             if (ErrorCode.succeeded(var2))
             {
-                this.func_152832_e(String.format("Warning in SubmitTexturePointer: %s\n", new Object[] {var3}));
+                this.func_152832_e(String.format("Warning in SubmitTexturePointer: %s\n", var3));
             }
             else
             {
-                this.func_152820_d(String.format("Error in SubmitTexturePointer: %s\n", new Object[] {var3}));
+                this.func_152820_d(String.format("Error in SubmitTexturePointer: %s\n", var3));
                 this.func_152819_E();
             }
 
@@ -1052,13 +1051,13 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
     {
         this.field_152863_D = p_152820_1_;
         field_152862_C.func_152757_a("<Error> " + p_152820_1_);
-        field_152861_B.error(TwitchStream.field_152949_a, "[Broadcast controller] {}", new Object[] {p_152820_1_});
+        field_152861_B.error(TwitchStream.field_152949_a, "[Broadcast controller] {}", p_152820_1_);
     }
 
     protected void func_152832_e(String p_152832_1_)
     {
         field_152862_C.func_152757_a("<Warning> " + p_152832_1_);
-        field_152861_B.warn(TwitchStream.field_152949_a, "[Broadcast controller] {}", new Object[] {p_152832_1_});
+        field_152861_B.warn(TwitchStream.field_152949_a, "[Broadcast controller] {}", p_152832_1_);
     }
 
     public ErrorCode func_152852_P()
@@ -1091,7 +1090,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         void func_152892_c(ErrorCode p_152892_1_);
     }
 
-    public static enum BroadcastState
+    public enum BroadcastState
     {
         Uninitialized("Uninitialized", 0),
         Initialized("Initialized", 1),
@@ -1108,10 +1107,10 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         Paused("Paused", 12),
         IngestTesting("IngestTesting", 13);
 
-        private static final BroadcastController.BroadcastState[] $VALUES = new BroadcastController.BroadcastState[]{Uninitialized, Initialized, Authenticating, Authenticated, LoggingIn, LoggedIn, FindingIngestServer, ReceivedIngestServers, ReadyToBroadcast, Starting, Broadcasting, Stopping, Paused, IngestTesting};
+        private static final BroadcastController.BroadcastState[] $VALUES = {Uninitialized, Initialized, Authenticating, Authenticated, LoggingIn, LoggedIn, FindingIngestServer, ReceivedIngestServers, ReadyToBroadcast, Starting, Broadcasting, Stopping, Paused, IngestTesting};
         private static final String __OBFID = "CL_00001820";
 
-        private BroadcastState(String p_i1025_1_, int p_i1025_2_) {}
+        BroadcastState(String p_i1025_1_, int p_i1025_2_) {}
     }
 
     static final class SwitchBroadcastState
@@ -1127,7 +1126,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var12)
             {
-                ;
             }
 
             try
@@ -1136,7 +1134,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var11)
             {
-                ;
             }
 
             try
@@ -1145,7 +1142,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var10)
             {
-                ;
             }
 
             try
@@ -1154,7 +1150,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var9)
             {
-                ;
             }
 
             try
@@ -1163,7 +1158,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var8)
             {
-                ;
             }
 
             try
@@ -1172,7 +1166,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var7)
             {
-                ;
             }
 
             try
@@ -1181,7 +1174,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var6)
             {
-                ;
             }
 
             try
@@ -1190,7 +1182,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var5)
             {
-                ;
             }
 
             try
@@ -1199,7 +1190,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var4)
             {
-                ;
             }
 
             try
@@ -1208,7 +1198,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             try
@@ -1217,7 +1206,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -1226,7 +1214,6 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

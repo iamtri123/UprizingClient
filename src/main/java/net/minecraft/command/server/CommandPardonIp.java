@@ -47,16 +47,16 @@ public class CommandPardonIp extends CommandBase
             if (var3.matches())
             {
                 MinecraftServer.getServer().getConfigurationManager().getBannedIPs().func_152684_c(p_71515_2_[0]);
-                func_152373_a(p_71515_1_, this, "commands.unbanip.success", new Object[] {p_71515_2_[0]});
+                func_152373_a(p_71515_1_, this, "commands.unbanip.success", p_71515_2_[0]);
             }
             else
             {
-                throw new SyntaxErrorException("commands.unbanip.invalid", new Object[0]);
+                throw new SyntaxErrorException("commands.unbanip.invalid");
             }
         }
         else
         {
-            throw new WrongUsageException("commands.unbanip.usage", new Object[0]);
+            throw new WrongUsageException("commands.unbanip.usage");
         }
     }
 

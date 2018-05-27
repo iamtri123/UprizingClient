@@ -5,7 +5,7 @@ import net.minecraft.util.MathHelper;
 public class EntityBodyHelper
 {
     /** Instance of EntityLiving. */
-    private EntityLivingBase theLiving;
+    private final EntityLivingBase theLiving;
     private int field_75666_b;
     private float field_75667_c;
     private static final String __OBFID = "CL_00001570";

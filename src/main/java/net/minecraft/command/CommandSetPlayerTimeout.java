@@ -30,11 +30,11 @@ public class CommandSetPlayerTimeout extends CommandBase
         {
             int var3 = parseIntWithMin(p_71515_1_, p_71515_2_[0], 0);
             MinecraftServer.getServer().func_143006_e(var3);
-            func_152373_a(p_71515_1_, this, "commands.setidletimeout.success", new Object[] {Integer.valueOf(var3)});
+            func_152373_a(p_71515_1_, this, "commands.setidletimeout.success", Integer.valueOf(var3));
         }
         else
         {
-            throw new WrongUsageException("commands.setidletimeout.usage", new Object[0]);
+            throw new WrongUsageException("commands.setidletimeout.usage");
         }
     }
 }

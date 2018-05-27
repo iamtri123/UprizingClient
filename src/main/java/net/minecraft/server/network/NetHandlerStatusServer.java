@@ -48,11 +48,11 @@ public class NetHandlerStatusServer implements INetHandlerStatusServer
 
     public void processServerQuery(C00PacketServerQuery p_147312_1_)
     {
-        this.field_147313_b.scheduleOutboundPacket(new S00PacketServerInfo(this.field_147314_a.func_147134_at()), new GenericFutureListener[0]);
+        this.field_147313_b.scheduleOutboundPacket(new S00PacketServerInfo(this.field_147314_a.func_147134_at()));
     }
 
     public void processPing(C01PacketPing p_147311_1_)
     {
-        this.field_147313_b.scheduleOutboundPacket(new S01PacketPong(p_147311_1_.func_149289_c()), new GenericFutureListener[0]);
+        this.field_147313_b.scheduleOutboundPacket(new S01PacketPong(p_147311_1_.func_149289_c()));
     }
 }

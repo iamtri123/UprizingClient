@@ -40,11 +40,11 @@ public class CommandGameRule extends CommandBase
             if (var8.hasRule(var6))
             {
                 var8.setOrCreateGameRule(var6, var7);
-                func_152373_a(p_71515_1_, this, "commands.gamerule.success", new Object[0]);
+                func_152373_a(p_71515_1_, this, "commands.gamerule.success");
             }
             else
             {
-                func_152373_a(p_71515_1_, this, "commands.gamerule.norule", new Object[] {var6});
+                func_152373_a(p_71515_1_, this, "commands.gamerule.norule", var6);
             }
         }
         else if (p_71515_2_.length == 1)
@@ -59,7 +59,7 @@ public class CommandGameRule extends CommandBase
             }
             else
             {
-                func_152373_a(p_71515_1_, this, "commands.gamerule.norule", new Object[] {var6});
+                func_152373_a(p_71515_1_, this, "commands.gamerule.norule", var6);
             }
         }
         else if (p_71515_2_.length == 0)
@@ -69,7 +69,7 @@ public class CommandGameRule extends CommandBase
         }
         else
         {
-            throw new WrongUsageException("commands.gamerule.usage", new Object[0]);
+            throw new WrongUsageException("commands.gamerule.usage");
         }
     }
 
@@ -78,7 +78,7 @@ public class CommandGameRule extends CommandBase
      */
     public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getGameRules().getRules()) : (p_71516_2_.length == 2 ? getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"true", "false"}): null);
+        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getGameRules().getRules()) : (p_71516_2_.length == 2 ? getListOfStringsMatchingLastWord(p_71516_2_, "true", "false"): null);
     }
 
     /**

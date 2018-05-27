@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 
 public class BlockAnvil extends BlockFalling
 {
-    public static final String[] field_149834_a = new String[] {"intact", "slightlyDamaged", "veryDamaged"};
-    private static final String[] field_149835_N = new String[] {"anvil_top_damaged_0", "anvil_top_damaged_1", "anvil_top_damaged_2"};
+    public static final String[] field_149834_a = {"intact", "slightlyDamaged", "veryDamaged"};
+    private static final String[] field_149835_N = {"anvil_top_damaged_0", "anvil_top_damaged_1", "anvil_top_damaged_2"};
     public int field_149833_b;
     private IIcon[] field_149836_O;
     private static final String __OBFID = "CL_00000192";

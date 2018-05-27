@@ -21,7 +21,7 @@ import org.lwjgl.Sys;
 public class GuiScreenResourcePacks extends GuiScreen
 {
     private static final Logger logger = LogManager.getLogger();
-    private GuiScreen field_146965_f;
+    private final GuiScreen field_146965_f;
     private List field_146966_g;
     private List field_146969_h;
     private GuiResourcePackAvailable field_146970_i;
@@ -38,8 +38,8 @@ public class GuiScreenResourcePacks extends GuiScreen
      */
     public void initGui()
     {
-        this.buttonList.add(new GuiOptionButton(2, this.width / 2 - 154, this.height - 48, I18n.format("resourcePack.openFolder", new Object[0])));
-        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 4, this.height - 48, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiOptionButton(2, this.width / 2 - 154, this.height - 48, I18n.format("resourcePack.openFolder")));
+        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 4, this.height - 48, I18n.format("gui.done")));
         this.field_146966_g = new ArrayList();
         this.field_146969_h = new ArrayList();
         ResourcePackRepository var1 = this.mc.getResourcePackRepository();
@@ -116,7 +116,7 @@ public class GuiScreenResourcePacks extends GuiScreen
                 }
                 else if (Util.getOSType() == Util.EnumOS.WINDOWS)
                 {
-                    String var4 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {var3});
+                    String var4 = String.format("cmd.exe /C start \"Open file\" \"%s\"", var3);
 
                     try
                     {
@@ -134,8 +134,8 @@ public class GuiScreenResourcePacks extends GuiScreen
                 try
                 {
                     Class var5 = Class.forName("java.awt.Desktop");
-                    Object var6 = var5.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
-                    var5.getMethod("browse", new Class[] {URI.class}).invoke(var6, new Object[] {var2.toURI()});
+                    Object var6 = var5.getMethod("getDesktop").invoke((Object)null);
+                    var5.getMethod("browse", URI.class).invoke(var6, var2.toURI());
                 }
                 catch (Throwable var7)
                 {
@@ -205,8 +205,8 @@ public class GuiScreenResourcePacks extends GuiScreen
         this.func_146278_c(0);
         this.field_146970_i.func_148128_a(p_73863_1_, p_73863_2_, p_73863_3_);
         this.field_146967_r.func_148128_a(p_73863_1_, p_73863_2_, p_73863_3_);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.title", new Object[0]), this.width / 2, 16, 16777215);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.folderInfo", new Object[0]), this.width / 2 - 77, this.height - 26, 8421504);
+        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.title"), this.width / 2, 16, 16777215);
+        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.folderInfo"), this.width / 2 - 77, this.height - 26, 8421504);
         super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
     }
 }

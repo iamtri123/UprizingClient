@@ -235,7 +235,7 @@ public enum EnumConnectionState
     private final BiMap field_150770_i;
     private static final String __OBFID = "CL_00001245";
 
-    private EnumConnectionState(int p_i45152_3_)
+    EnumConnectionState(int p_i45152_3_)
     {
         this.field_150769_h = HashBiMap.create();
         this.field_150770_i = HashBiMap.create();

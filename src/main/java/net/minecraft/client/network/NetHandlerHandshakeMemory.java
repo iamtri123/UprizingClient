@@ -42,7 +42,7 @@ public class NetHandlerHandshakeMemory implements INetHandlerHandshakeServer
      */
     public void onConnectionStateTransition(EnumConnectionState p_147232_1_, EnumConnectionState p_147232_2_)
     {
-        Validate.validState(p_147232_2_ == EnumConnectionState.LOGIN || p_147232_2_ == EnumConnectionState.STATUS, "Unexpected protocol " + p_147232_2_, new Object[0]);
+        Validate.validState(p_147232_2_ == EnumConnectionState.LOGIN || p_147232_2_ == EnumConnectionState.STATUS, "Unexpected protocol " + p_147232_2_);
 
         switch (NetHandlerHandshakeMemory.SwitchEnumConnectionState.field_151263_a[p_147232_2_.ordinal()])
         {
@@ -76,7 +76,6 @@ public class NetHandlerHandshakeMemory implements INetHandlerHandshakeServer
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -85,7 +84,6 @@ public class NetHandlerHandshakeMemory implements INetHandlerHandshakeServer
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

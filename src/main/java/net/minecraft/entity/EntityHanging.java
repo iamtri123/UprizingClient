@@ -227,7 +227,7 @@ public abstract class EntityHanging extends Entity
      */
     public boolean hitByEntity(Entity p_85031_1_)
     {
-        return p_85031_1_ instanceof EntityPlayer ? this.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)p_85031_1_), 0.0F) : false;
+        return p_85031_1_ instanceof EntityPlayer && this.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) p_85031_1_), 0.0F);
     }
 
     public void func_145781_i(int p_145781_1_)

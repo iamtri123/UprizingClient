@@ -33,7 +33,7 @@ public class ItemRenderer
     private static final ResourceLocation RES_UNDERWATER_OVERLAY = new ResourceLocation("textures/misc/underwater.png");
 
     /** A reference to the Minecraft object. */
-    private Minecraft mc;
+    private final Minecraft mc;
     private ItemStack itemToRender;
 
     /**
@@ -41,7 +41,7 @@ public class ItemRenderer
      */
     private float equippedProgress;
     private float prevEquippedProgress;
-    private RenderBlocks renderBlocksIr = new RenderBlocks();
+    private final RenderBlocks renderBlocksIr = new RenderBlocks();
 
     /** The index of the currently held item (0-8, or -1 if not yet updated) */
     private int equippedItemSlot = -1;

@@ -322,7 +322,7 @@ public class ConnectedProperties
 
     private static boolean parseBoolean(String str)
     {
-        return str == null ? false : str.toLowerCase().equals("true");
+        return str != null && str.toLowerCase().equals("true");
     }
 
     private static int parseSymmetry(String str)

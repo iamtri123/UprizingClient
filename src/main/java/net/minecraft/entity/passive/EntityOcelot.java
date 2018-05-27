@@ -33,7 +33,7 @@ public class EntityOcelot extends EntityTameable
     /**
      * The tempt AI task for this mob, used to prevent taming while it is fleeing.
      */
-    private EntityAITempt aiTempt;
+    private final EntityAITempt aiTempt;
     private static final String __OBFID = "CL_00001646";
 
     public EntityOcelot(World p_i1688_1_)
@@ -295,7 +295,7 @@ public class EntityOcelot extends EntityTameable
         else
         {
             EntityOcelot var2 = (EntityOcelot)p_70878_1_;
-            return !var2.isTamed() ? false : this.isInLove() && var2.isInLove();
+            return var2.isTamed() && (this.isInLove() && var2.isInLove());
         }
     }
 

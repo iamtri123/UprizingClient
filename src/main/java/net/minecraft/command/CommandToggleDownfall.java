@@ -28,7 +28,7 @@ public class CommandToggleDownfall extends CommandBase
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
     {
         this.toggleDownfall();
-        func_152373_a(p_71515_1_, this, "commands.downfall.success", new Object[0]);
+        func_152373_a(p_71515_1_, this, "commands.downfall.success");
     }
 
     /**

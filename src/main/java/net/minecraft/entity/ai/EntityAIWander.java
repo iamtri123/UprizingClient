@@ -5,11 +5,11 @@ import net.minecraft.util.Vec3;
 
 public class EntityAIWander extends EntityAIBase
 {
-    private EntityCreature entity;
+    private final EntityCreature entity;
     private double xPosition;
     private double yPosition;
     private double zPosition;
-    private double speed;
+    private final double speed;
     private static final String __OBFID = "CL_00001608";
 
     public EntityAIWander(EntityCreature p_i1648_1_, double p_i1648_2_)

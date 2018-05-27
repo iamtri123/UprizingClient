@@ -85,7 +85,7 @@ public class ItemSlab extends ItemBlock
             }
             else
             {
-                return this.func_150946_a(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_) ? true : super.onItemUse(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
+                return this.func_150946_a(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_) || super.onItemUse(p_77648_1_, p_77648_2_, p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
             }
         }
     }
@@ -139,7 +139,7 @@ public class ItemSlab extends ItemBlock
             Block var15 = p_150936_1_.getBlock(p_150936_2_, p_150936_3_, p_150936_4_);
             int var16 = p_150936_1_.getBlockMetadata(p_150936_2_, p_150936_3_, p_150936_4_);
             var13 = var16 & 7;
-            return var15 == this.field_150949_c && var13 == p_150936_7_.getItemDamage() ? true : super.func_150936_a(p_150936_1_, var8, var9, var10, p_150936_5_, p_150936_6_, p_150936_7_);
+            return var15 == this.field_150949_c && var13 == p_150936_7_.getItemDamage() || super.func_150936_a(p_150936_1_, var8, var9, var10, p_150936_5_, p_150936_6_, p_150936_7_);
         }
     }
 

@@ -12,8 +12,8 @@ public class SoundEventAccessorComposite implements ISoundEventAccessor
     private final Random field_148734_b = new Random();
     private final ResourceLocation field_148735_c;
     private final SoundCategory field_148732_d;
-    private double field_148733_e;
-    private double field_148731_f;
+    private final double field_148733_e;
+    private final double field_148731_f;
     private static final String __OBFID = "CL_00001146";
 
     public SoundEventAccessorComposite(ResourceLocation p_i45120_1_, double p_i45120_2_, double p_i45120_4_, SoundCategory p_i45120_6_)

@@ -20,7 +20,7 @@ public class SoundListSerializer implements JsonDeserializer
         var5.func_148572_a(JsonUtils.getJsonObjectBooleanFieldValueOrDefault(var4, "replace", false));
         SoundCategory var6 = SoundCategory.func_147154_a(JsonUtils.getJsonObjectStringFieldValueOrDefault(var4, "category", SoundCategory.MASTER.getCategoryName()));
         var5.func_148571_a(var6);
-        Validate.notNull(var6, "Invalid category", new Object[0]);
+        Validate.notNull(var6, "Invalid category");
 
         if (var4.has("sounds"))
         {
@@ -43,7 +43,7 @@ public class SoundListSerializer implements JsonDeserializer
                     if (var11.has("type"))
                     {
                         SoundList.SoundEntry.Type var12 = SoundList.SoundEntry.Type.func_148580_a(JsonUtils.getJsonObjectStringFieldValue(var11, "type"));
-                        Validate.notNull(var12, "Invalid type", new Object[0]);
+                        Validate.notNull(var12, "Invalid type");
                         var10.func_148562_a(var12);
                     }
 
@@ -52,21 +52,21 @@ public class SoundListSerializer implements JsonDeserializer
                     if (var11.has("volume"))
                     {
                         var13 = JsonUtils.getJsonObjectFloatFieldValue(var11, "volume");
-                        Validate.isTrue(var13 > 0.0F, "Invalid volume", new Object[0]);
+                        Validate.isTrue(var13 > 0.0F, "Invalid volume");
                         var10.func_148553_a(var13);
                     }
 
                     if (var11.has("pitch"))
                     {
                         var13 = JsonUtils.getJsonObjectFloatFieldValue(var11, "pitch");
-                        Validate.isTrue(var13 > 0.0F, "Invalid pitch", new Object[0]);
+                        Validate.isTrue(var13 > 0.0F, "Invalid pitch");
                         var10.func_148559_b(var13);
                     }
 
                     if (var11.has("weight"))
                     {
                         int var14 = JsonUtils.getJsonObjectIntegerFieldValue(var11, "weight");
-                        Validate.isTrue(var14 > 0, "Invalid weight", new Object[0]);
+                        Validate.isTrue(var14 > 0, "Invalid weight");
                         var10.func_148554_a(var14);
                     }
 

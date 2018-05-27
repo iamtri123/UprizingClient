@@ -95,7 +95,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
                         if (JsonUtils.getJsonObjectBooleanFieldValue(var4, "valid"))
                         {
                             String var5 = JsonUtils.getJsonObjectStringFieldValue(var4, "user_name");
-                            TwitchStream.field_152950_b.debug(TwitchStream.field_152949_a, "Authenticated with twitch; username is {}", new Object[] {var5});
+                            TwitchStream.field_152950_b.debug(TwitchStream.field_152949_a, "Authenticated with twitch; username is {}", var5);
                             AuthToken var6 = new AuthToken();
                             var6.data = p_i46389_2_;
                             TwitchStream.this.field_152951_c.func_152818_a(var5, var6);
@@ -191,7 +191,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
         }
         else
         {
-            field_152950_b.warn("Invalid twitch chat state {}", new Object[] {var1});
+            field_152950_b.warn("Invalid twitch chat state {}", var1);
         }
     }
 
@@ -272,11 +272,11 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
 
             if (!this.field_152951_c.func_152840_a(p_152911_1_.func_152810_c(), var4 + p_152911_2_, p_152911_1_.func_152809_a(), p_152911_1_.func_152806_b()))
             {
-                field_152950_b.warn(field_152949_a, "Couldn\'t send stream metadata action at {}: {}", new Object[] {Long.valueOf(var4 + p_152911_2_), p_152911_1_});
+                field_152950_b.warn(field_152949_a, "Couldn\'t send stream metadata action at {}: {}", Long.valueOf(var4 + p_152911_2_), p_152911_1_);
             }
             else
             {
-                field_152950_b.debug(field_152949_a, "Sent stream metadata action at {}: {}", new Object[] {Long.valueOf(var4 + p_152911_2_), p_152911_1_});
+                field_152950_b.debug(field_152949_a, "Sent stream metadata action at {}: {}", Long.valueOf(var4 + p_152911_2_), p_152911_1_);
             }
         }
     }
@@ -371,7 +371,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
         this.field_152958_j = var2.targetFps;
         this.field_152957_i = var1.field_152406_P;
         this.field_152951_c.func_152836_a(var2);
-        field_152950_b.info(field_152949_a, "Streaming at {}/{} at {} kbps to {}", new Object[] {Integer.valueOf(var2.outputWidth), Integer.valueOf(var2.outputHeight), Integer.valueOf(var2.maxKbps), this.field_152951_c.func_152833_s().serverUrl});
+        field_152950_b.info(field_152949_a, "Streaming at {}/{} at {} kbps to {}", Integer.valueOf(var2.outputWidth), Integer.valueOf(var2.outputHeight), Integer.valueOf(var2.maxKbps), this.field_152951_c.func_152833_s().serverUrl);
         this.field_152951_c.func_152828_a((String)null, "Minecraft", (String)null);
     }
 
@@ -398,7 +398,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
         }
         else
         {
-            field_152950_b.warn(field_152949_a, "Login attempt unsuccessful: {} (error code {})", new Object[] {ErrorCode.getString(p_152897_1_), Integer.valueOf(p_152897_1_.getValue())});
+            field_152950_b.warn(field_152949_a, "Login attempt unsuccessful: {} (error code {})", ErrorCode.getString(p_152897_1_), Integer.valueOf(p_152897_1_.getValue()));
             this.field_152961_m = false;
         }
     }
@@ -407,7 +407,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
 
     public void func_152891_a(BroadcastController.BroadcastState p_152891_1_)
     {
-        field_152950_b.debug(field_152949_a, "Broadcast state changed to {}", new Object[] {p_152891_1_});
+        field_152950_b.debug(field_152949_a, "Broadcast state changed to {}", p_152891_1_);
 
         if (p_152891_1_ == BroadcastController.BroadcastState.Initialized)
         {
@@ -422,14 +422,14 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
 
     public void func_152894_a(StreamInfo p_152894_1_)
     {
-        field_152950_b.debug(field_152949_a, "Stream info updated; {} viewers on stream ID {}", new Object[] {Integer.valueOf(p_152894_1_.viewers), Long.valueOf(p_152894_1_.streamId)});
+        field_152950_b.debug(field_152949_a, "Stream info updated; {} viewers on stream ID {}", Integer.valueOf(p_152894_1_.viewers), Long.valueOf(p_152894_1_.streamId));
     }
 
     public void func_152896_a(IngestList p_152896_1_) {}
 
     public void func_152893_b(ErrorCode p_152893_1_)
     {
-        field_152950_b.warn(field_152949_a, "Issue submitting frame: {} (Error code {})", new Object[] {ErrorCode.getString(p_152893_1_), Integer.valueOf(p_152893_1_.getValue())});
+        field_152950_b.warn(field_152949_a, "Issue submitting frame: {} (Error code {})", ErrorCode.getString(p_152893_1_), Integer.valueOf(p_152893_1_.getValue()));
         this.field_152953_e.ingameGUI.getChatGUI().func_146234_a(new ChatComponentText("Issue streaming frame: " + p_152893_1_ + " (" + ErrorCode.getString(p_152893_1_) + ")"), 2);
     }
 
@@ -450,16 +450,16 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
 
         if (p_152892_1_ == ErrorCode.TTV_EC_SOUNDFLOWER_NOT_INSTALLED)
         {
-            var2 = new ChatComponentTranslation("stream.unavailable.soundflower.chat.link", new Object[0]);
+            var2 = new ChatComponentTranslation("stream.unavailable.soundflower.chat.link");
             var2.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://help.mojang.com/customer/portal/articles/1374877-configuring-soundflower-for-streaming-on-apple-computers"));
             var2.getChatStyle().setUnderlined(Boolean.valueOf(true));
-            ChatComponentTranslation var3 = new ChatComponentTranslation("stream.unavailable.soundflower.chat", new Object[] {var2});
+            ChatComponentTranslation var3 = new ChatComponentTranslation("stream.unavailable.soundflower.chat", var2);
             var3.getChatStyle().setColor(EnumChatFormatting.DARK_RED);
             this.field_152953_e.ingameGUI.getChatGUI().func_146227_a(var3);
         }
         else
         {
-            var2 = new ChatComponentTranslation("stream.unavailable.unknown.chat", new Object[] {ErrorCode.getString(p_152892_1_)});
+            var2 = new ChatComponentTranslation("stream.unavailable.unknown.chat", ErrorCode.getString(p_152892_1_));
             var2.getChatStyle().setColor(EnumChatFormatting.DARK_RED);
             this.field_152953_e.ingameGUI.getChatGUI().func_146227_a(var2);
         }
@@ -467,7 +467,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
 
     public void func_152907_a(IngestServerTester p_152907_1_, IngestServerTester.IngestTestState p_152907_2_)
     {
-        field_152950_b.debug(field_152949_a, "Ingest test state changed to {}", new Object[] {p_152907_2_});
+        field_152950_b.debug(field_152949_a, "Ingest test state changed to {}", p_152907_2_);
 
         if (p_152907_2_ == IngestServerTester.IngestTestState.Finished)
         {
@@ -533,7 +533,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
             if (this.func_152940_a(var5.modes, var5.subscriptions, this.field_152953_e.gameSettings.field_152409_S))
             {
                 ChatComponentText var6 = new ChatComponentText(var5.userName);
-                ChatComponentTranslation var7 = new ChatComponentTranslation("chat.stream." + (var5.action ? "emote" : "text"), new Object[] {this.field_152954_f, var6, EnumChatFormatting.getTextWithoutFormattingCodes(var5.message)});
+                ChatComponentTranslation var7 = new ChatComponentTranslation("chat.stream." + (var5.action ? "emote" : "text"), this.field_152954_f, var6, EnumChatFormatting.getTextWithoutFormattingCodes(var5.message));
 
                 if (var5.action)
                 {
@@ -541,7 +541,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
                 }
 
                 ChatComponentText var8 = new ChatComponentText("");
-                var8.appendSibling(new ChatComponentTranslation("stream.userinfo.chatTooltip", new Object[0]));
+                var8.appendSibling(new ChatComponentTranslation("stream.userinfo.chatTooltip"));
                 Iterator var9 = GuiTwitchUserMode.func_152328_a(var5.modes, var5.subscriptions, (IStream)null).iterator();
 
                 while (var9.hasNext())
@@ -577,7 +577,7 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
 
     private boolean func_152940_a(HashSet p_152940_1_, HashSet p_152940_2_, int p_152940_3_)
     {
-        return p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_BANNED) ? false : (p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_ADMINSTRATOR) ? true : (p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_MODERATOR) ? true : (p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_STAFF) ? true : (p_152940_3_ == 0 ? true : (p_152940_3_ == 1 ? p_152940_2_.contains(ChatUserSubscription.TTV_CHAT_USERSUB_SUBSCRIBER) : false)))));
+        return !p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_BANNED) && (p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_ADMINSTRATOR) || (p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_MODERATOR) || (p_152940_1_.contains(ChatUserMode.TTV_CHAT_USERMODE_STAFF) || (p_152940_3_ == 0 || (p_152940_3_ == 1 && p_152940_2_.contains(ChatUserSubscription.TTV_CHAT_USERSUB_SUBSCRIBER))))));
     }
 
     public void func_152904_a(ChatUserInfo[] p_152904_1_, ChatUserInfo[] p_152904_2_, ChatUserInfo[] p_152904_3_)

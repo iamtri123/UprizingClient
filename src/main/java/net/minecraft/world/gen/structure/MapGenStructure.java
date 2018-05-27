@@ -60,7 +60,7 @@ public abstract class MapGenStructure extends MapGenBase
                         return MapGenStructure.this.canSpawnStructureAtCoords(p_151538_2_, p_151538_3_) ? "True" : "False";
                     }
                 });
-                var9.addCrashSection("Chunk location", String.format("%d,%d", new Object[] {Integer.valueOf(p_151538_2_), Integer.valueOf(p_151538_3_)}));
+                var9.addCrashSection("Chunk location", String.format("%d,%d", Integer.valueOf(p_151538_2_), Integer.valueOf(p_151538_3_)));
                 var9.addCrashSectionCallable("Chunk pos hash", new Callable()
                 {
                     private static final String __OBFID = "CL_00000507";

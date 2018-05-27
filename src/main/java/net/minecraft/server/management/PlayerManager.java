@@ -57,7 +57,7 @@ public class PlayerManager
     private long previousTotalWorldTime;
 
     /** x, z direction vectors: east, south, west, north */
-    private final int[][] xzDirectionsConst = new int[][] {{1, 0}, {0, 1}, { -1, 0}, {0, -1}};
+    private final int[][] xzDirectionsConst = {{1, 0}, {0, 1}, { -1, 0}, {0, -1}};
     private static final String __OBFID = "CL_00001434";
 
     public PlayerManager(WorldServer par1Minecraft)
@@ -331,7 +331,7 @@ public class PlayerManager
     {
         int var6 = par1 - par3;
         int var7 = par2 - par4;
-        return var6 >= -par5 && var6 <= par5 ? var7 >= -par5 && var7 <= par5 : false;
+        return (var6 >= -par5 && var6 <= par5) && (var7 >= -par5 && var7 <= par5);
     }
 
     /**
@@ -464,7 +464,7 @@ public class PlayerManager
     {
         private final List playersWatchingChunk;
         private final ChunkCoordIntPair chunkLocation;
-        private short[] field_151254_d;
+        private final short[] field_151254_d;
         private int numberOfTilesToUpdate;
         private int flagsYAreasToUpdate;
         private long previousWorldTime;
@@ -500,7 +500,7 @@ public class PlayerManager
         {
             if (this.playersWatchingChunk.contains(par1EntityPlayerMP))
             {
-                PlayerManager.field_152627_a.debug("Failed to add player. {} already is in chunk {}, {}", new Object[] {par1EntityPlayerMP, Integer.valueOf(this.chunkLocation.chunkXPos), Integer.valueOf(this.chunkLocation.chunkZPos)});
+                PlayerManager.field_152627_a.debug("Failed to add player. {} already is in chunk {}, {}", par1EntityPlayerMP, Integer.valueOf(this.chunkLocation.chunkXPos), Integer.valueOf(this.chunkLocation.chunkZPos));
             }
             else
             {
@@ -535,7 +535,7 @@ public class PlayerManager
 
                 if (Reflector.EventBus.exists())
                 {
-                    Reflector.postForgeBusEvent(Reflector.ChunkWatchEvent_UnWatch_Constructor, new Object[] {this.chunkLocation, par1EntityPlayerMP});
+                    Reflector.postForgeBusEvent(Reflector.ChunkWatchEvent_UnWatch_Constructor, this.chunkLocation, par1EntityPlayerMP);
                 }
 
                 if (this.playersWatchingChunk.isEmpty())

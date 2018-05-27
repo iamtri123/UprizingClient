@@ -12,10 +12,10 @@ public class ContainerWorkbench extends Container
     /** The crafting matrix inventory (3x3). */
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
     public IInventory craftResult = new InventoryCraftResult();
-    private World worldObj;
-    private int posX;
-    private int posY;
-    private int posZ;
+    private final World worldObj;
+    private final int posX;
+    private final int posY;
+    private final int posZ;
     private static final String __OBFID = "CL_00001744";
 
     public ContainerWorkbench(InventoryPlayer p_i1808_1_, World p_i1808_2_, int p_i1808_3_, int p_i1808_4_, int p_i1808_5_)
@@ -83,7 +83,7 @@ public class ContainerWorkbench extends Container
 
     public boolean canInteractWith(EntityPlayer p_75145_1_)
     {
-        return this.worldObj.getBlock(this.posX, this.posY, this.posZ) != Blocks.crafting_table ? false : p_75145_1_.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
+        return this.worldObj.getBlock(this.posX, this.posY, this.posZ) == Blocks.crafting_table && p_75145_1_.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
     }
 
     /**

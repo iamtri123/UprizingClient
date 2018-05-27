@@ -59,7 +59,7 @@ public interface IChatComponent extends Iterable
      */
     IChatComponent createCopy();
 
-    public static class Serializer implements JsonDeserializer, JsonSerializer
+    class Serializer implements JsonDeserializer, JsonSerializer
     {
         private static final Gson field_150700_a;
         private static final String __OBFID = "CL_00001263";
@@ -97,7 +97,7 @@ public interface IChatComponent extends Iterable
                 }
                 else
                 {
-                    throw new JsonParseException("Don\'t know how to turn " + p_deserialize_1_.toString() + " into a Component");
+                    throw new JsonParseException("Don\'t know how to turn " + p_deserialize_1_ + " into a Component");
                 }
             }
             else
@@ -113,7 +113,7 @@ public interface IChatComponent extends Iterable
                 {
                     if (!var4.has("translate"))
                     {
-                        throw new JsonParseException("Don\'t know how to turn " + p_deserialize_1_.toString() + " into a Component");
+                        throw new JsonParseException("Don\'t know how to turn " + p_deserialize_1_ + " into a Component");
                     }
 
                     String var6 = var4.get("translate").getAsString();
@@ -142,7 +142,7 @@ public interface IChatComponent extends Iterable
                     }
                     else
                     {
-                        var5 = new ChatComponentTranslation(var6, new Object[0]);
+                        var5 = new ChatComponentTranslation(var6);
                     }
                 }
 

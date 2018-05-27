@@ -234,7 +234,6 @@ public class PlayerProfileCache
             }
             catch (FileNotFoundException var10)
             {
-                ;
             }
             finally
             {
@@ -287,7 +286,6 @@ public class PlayerProfileCache
         }
         catch (IOException var9)
         {
-            ;
         }
         finally
         {

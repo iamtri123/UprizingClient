@@ -78,19 +78,19 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                     this.drawTexturedModalRect(var1 + 6, var2 + 7, 0 + var9 % 8 * 18, 198 + var9 / 8 * 18, 18, 18);
                 }
 
-                String var11 = I18n.format(var8.getName(), new Object[0]);
+                String var11 = I18n.format(var8.getName());
 
                 if (var7.getAmplifier() == 1)
                 {
-                    var11 = var11 + " " + I18n.format("enchantment.level.2", new Object[0]);
+                    var11 = var11 + " " + I18n.format("enchantment.level.2");
                 }
                 else if (var7.getAmplifier() == 2)
                 {
-                    var11 = var11 + " " + I18n.format("enchantment.level.3", new Object[0]);
+                    var11 = var11 + " " + I18n.format("enchantment.level.3");
                 }
                 else if (var7.getAmplifier() == 3)
                 {
-                    var11 = var11 + " " + I18n.format("enchantment.level.4", new Object[0]);
+                    var11 = var11 + " " + I18n.format("enchantment.level.4");
                 }
 
                 this.fontRendererObj.drawStringWithShadow(var11, var1 + 10 + 18, var2 + 6, 16777215);

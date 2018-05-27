@@ -24,7 +24,7 @@ public class GuiBeacon extends GuiContainer
 {
     private static final Logger logger = LogManager.getLogger();
     private static final ResourceLocation field_147025_v = new ResourceLocation("textures/gui/container/beacon.png");
-    private TileEntityBeacon field_147024_w;
+    private final TileEntityBeacon field_147024_w;
     private GuiBeacon.ConfirmButton field_147028_x;
     private boolean field_147027_y;
     private static final String __OBFID = "CL_00000739";
@@ -183,8 +183,8 @@ public class GuiBeacon extends GuiContainer
     protected void func_146979_b(int p_146979_1_, int p_146979_2_)
     {
         RenderHelper.disableStandardItemLighting();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.primary", new Object[0]), 62, 10, 14737632);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.secondary", new Object[0]), 169, 10, 14737632);
+        this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.primary"), 62, 10, 14737632);
+        this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.secondary"), 169, 10, 14737632);
         Iterator var3 = this.buttonList.iterator();
 
         while (var3.hasNext())
@@ -288,7 +288,7 @@ public class GuiBeacon extends GuiContainer
 
         public void func_146111_b(int p_146111_1_, int p_146111_2_)
         {
-            GuiBeacon.this.func_146279_a(I18n.format("gui.cancel", new Object[0]), p_146111_1_, p_146111_2_);
+            GuiBeacon.this.func_146279_a(I18n.format("gui.cancel"), p_146111_1_, p_146111_2_);
         }
     }
 
@@ -303,7 +303,7 @@ public class GuiBeacon extends GuiContainer
 
         public void func_146111_b(int p_146111_1_, int p_146111_2_)
         {
-            GuiBeacon.this.func_146279_a(I18n.format("gui.done", new Object[0]), p_146111_1_, p_146111_2_);
+            GuiBeacon.this.func_146279_a(I18n.format("gui.done"), p_146111_1_, p_146111_2_);
         }
     }
 
@@ -322,7 +322,7 @@ public class GuiBeacon extends GuiContainer
 
         public void func_146111_b(int p_146111_1_, int p_146111_2_)
         {
-            String var3 = I18n.format(Potion.potionTypes[this.field_146149_p].getName(), new Object[0]);
+            String var3 = I18n.format(Potion.potionTypes[this.field_146149_p].getName());
 
             if (this.field_146148_q >= 3 && this.field_146149_p != Potion.regeneration.id)
             {

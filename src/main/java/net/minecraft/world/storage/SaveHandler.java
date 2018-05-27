@@ -256,8 +256,8 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
         {
             NBTTagCompound var2 = new NBTTagCompound();
             p_75753_1_.writeToNBT(var2);
-            File var3 = new File(this.playersDirectory, p_75753_1_.getUniqueID().toString() + ".dat.tmp");
-            File var4 = new File(this.playersDirectory, p_75753_1_.getUniqueID().toString() + ".dat");
+            File var3 = new File(this.playersDirectory, p_75753_1_.getUniqueID() + ".dat.tmp");
+            File var4 = new File(this.playersDirectory, p_75753_1_.getUniqueID() + ".dat");
             CompressedStreamTools.writeCompressed(var2, new FileOutputStream(var3));
 
             if (var4.exists())
@@ -282,7 +282,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
 
         try
         {
-            File var3 = new File(this.playersDirectory, p_75752_1_.getUniqueID().toString() + ".dat");
+            File var3 = new File(this.playersDirectory, p_75752_1_.getUniqueID() + ".dat");
 
             if (var3.exists() && var3.isFile())
             {

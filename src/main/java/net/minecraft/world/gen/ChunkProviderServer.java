@@ -35,18 +35,18 @@ public class ChunkProviderServer implements IChunkProvider
      * used by unload100OldestChunks to iterate the loadedChunkHashMap for unload (underlying assumption, first in,
      * first out)
      */
-    private Set chunksToUnload = Collections.newSetFromMap(new ConcurrentHashMap());
-    private Chunk defaultEmptyChunk;
-    private IChunkProvider currentChunkProvider;
-    private IChunkLoader currentChunkLoader;
+    private final Set chunksToUnload = Collections.newSetFromMap(new ConcurrentHashMap());
+    private final Chunk defaultEmptyChunk;
+    private final IChunkProvider currentChunkProvider;
+    private final IChunkLoader currentChunkLoader;
 
     /**
      * if this is false, the defaultEmptyChunk will be returned by the provider
      */
     public boolean loadChunkOnProvideRequest = true;
-    private LongHashMap loadedChunkHashMap = new LongHashMap();
-    private List loadedChunks = new ArrayList();
-    private WorldServer worldObj;
+    private final LongHashMap loadedChunkHashMap = new LongHashMap();
+    private final List loadedChunks = new ArrayList();
+    private final WorldServer worldObj;
     private static final String __OBFID = "CL_00001436";
 
     public ChunkProviderServer(WorldServer p_i1520_1_, IChunkLoader p_i1520_2_, IChunkProvider p_i1520_3_)
@@ -137,7 +137,7 @@ public class ChunkProviderServer implements IChunkProvider
                     {
                         CrashReport var7 = CrashReport.makeCrashReport(var9, "Exception generating new chunk");
                         CrashReportCategory var8 = var7.makeCategory("Chunk to be generated");
-                        var8.addCrashSection("Location", String.format("%d,%d", new Object[] {Integer.valueOf(p_73158_1_), Integer.valueOf(p_73158_2_)}));
+                        var8.addCrashSection("Location", String.format("%d,%d", Integer.valueOf(p_73158_1_), Integer.valueOf(p_73158_2_)));
                         var8.addCrashSection("Position hash", Long.valueOf(var3));
                         var8.addCrashSection("Generator", this.currentChunkProvider.makeString());
                         throw new ReportedException(var7);

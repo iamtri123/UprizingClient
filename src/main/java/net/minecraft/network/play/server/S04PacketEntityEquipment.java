@@ -58,7 +58,7 @@ public class S04PacketEntityEquipment extends Packet
      */
     public String serialize()
     {
-        return String.format("entity=%d, slot=%d, item=%s", new Object[] {Integer.valueOf(this.field_149394_a), Integer.valueOf(this.field_149392_b), this.field_149393_c});
+        return String.format("entity=%d, slot=%d, item=%s", Integer.valueOf(this.field_149394_a), Integer.valueOf(this.field_149392_b), this.field_149393_c);
     }
 
     public int func_149389_d()

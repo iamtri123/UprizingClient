@@ -12,7 +12,7 @@ public class RenderGiantZombie extends RenderLiving
     private static final ResourceLocation zombieTextures = new ResourceLocation("textures/entity/zombie/zombie.png");
 
     /** Scale of the model to use */
-    private float scale;
+    private final float scale;
     private static final String __OBFID = "CL_00000998";
 
     public RenderGiantZombie(ModelBase p_i1255_1_, float p_i1255_2_, float p_i1255_3_)

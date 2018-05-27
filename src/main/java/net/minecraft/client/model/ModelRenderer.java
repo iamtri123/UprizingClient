@@ -39,7 +39,7 @@ public class ModelRenderer
     public List cubeList;
     public List childModels;
     public final String boxName;
-    private ModelBase baseModel;
+    private final ModelBase baseModel;
     public float offsetX;
     public float offsetY;
     public float offsetZ;

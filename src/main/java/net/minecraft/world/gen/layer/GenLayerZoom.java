@@ -38,8 +38,8 @@ public class GenLayerZoom extends GenLayer
                 int var18 = var9[var15 + 1 + (var13 + 0) * var7];
                 int var19 = var9[var15 + 1 + (var13 + 1) * var7];
                 var12[var14] = var16;
-                var12[var14++ + var10] = this.func_151619_a(new int[] {var16, var17});
-                var12[var14] = this.func_151619_a(new int[] {var16, var18});
+                var12[var14++ + var10] = this.func_151619_a(var16, var17);
+                var12[var14] = this.func_151619_a(var16, var18);
                 var12[var14++ + var10] = this.func_151617_b(var16, var18, var17, var19);
                 var16 = var18;
                 var17 = var19;

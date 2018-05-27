@@ -29,11 +29,11 @@ public class ContainerEnchantment extends Container
     };
 
     /** current world (for bookshelf counting) */
-    private World worldPointer;
-    private int posX;
-    private int posY;
-    private int posZ;
-    private Random rand = new Random();
+    private final World worldPointer;
+    private final int posX;
+    private final int posY;
+    private final int posZ;
+    private final Random rand = new Random();
 
     /** used as seed for EnchantmentNameParts (see GuiEnchantment) */
     public long nameSeed;
@@ -261,7 +261,7 @@ public class ContainerEnchantment extends Container
 
     public boolean canInteractWith(EntityPlayer p_75145_1_)
     {
-        return this.worldPointer.getBlock(this.posX, this.posY, this.posZ) != Blocks.enchanting_table ? false : p_75145_1_.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
+        return this.worldPointer.getBlock(this.posX, this.posY, this.posZ) == Blocks.enchanting_table && p_75145_1_.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
     }
 
     /**

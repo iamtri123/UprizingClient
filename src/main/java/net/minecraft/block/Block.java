@@ -573,7 +573,7 @@ public class Block
 
     public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
     {
-        return p_149646_5_ == 0 && this.field_149760_C > 0.0D ? true : (p_149646_5_ == 1 && this.field_149756_F < 1.0D ? true : (p_149646_5_ == 2 && this.field_149754_D > 0.0D ? true : (p_149646_5_ == 3 && this.field_149757_G < 1.0D ? true : (p_149646_5_ == 4 && this.field_149759_B > 0.0D ? true : (p_149646_5_ == 5 && this.field_149755_E < 1.0D ? true : !p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_).isOpaqueCube())))));
+        return p_149646_5_ == 0 && this.field_149760_C > 0.0D || (p_149646_5_ == 1 && this.field_149756_F < 1.0D || (p_149646_5_ == 2 && this.field_149754_D > 0.0D || (p_149646_5_ == 3 && this.field_149757_G < 1.0D || (p_149646_5_ == 4 && this.field_149759_B > 0.0D || (p_149646_5_ == 5 && this.field_149755_E < 1.0D || !p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_).isOpaqueCube())))));
     }
 
     public boolean isBlockSolid(IBlockAccess p_149747_1_, int p_149747_2_, int p_149747_3_, int p_149747_4_, int p_149747_5_)
@@ -889,7 +889,7 @@ public class Block
      */
     private boolean isVecInsideYZBounds(Vec3 p_149654_1_)
     {
-        return p_149654_1_ == null ? false : p_149654_1_.yCoord >= this.field_149760_C && p_149654_1_.yCoord <= this.field_149756_F && p_149654_1_.zCoord >= this.field_149754_D && p_149654_1_.zCoord <= this.field_149757_G;
+        return p_149654_1_ != null && (p_149654_1_.yCoord >= this.field_149760_C && p_149654_1_.yCoord <= this.field_149756_F && p_149654_1_.zCoord >= this.field_149754_D && p_149654_1_.zCoord <= this.field_149757_G);
     }
 
     /**
@@ -897,7 +897,7 @@ public class Block
      */
     private boolean isVecInsideXZBounds(Vec3 p_149687_1_)
     {
-        return p_149687_1_ == null ? false : p_149687_1_.xCoord >= this.field_149759_B && p_149687_1_.xCoord <= this.field_149755_E && p_149687_1_.zCoord >= this.field_149754_D && p_149687_1_.zCoord <= this.field_149757_G;
+        return p_149687_1_ != null && (p_149687_1_.xCoord >= this.field_149759_B && p_149687_1_.xCoord <= this.field_149755_E && p_149687_1_.zCoord >= this.field_149754_D && p_149687_1_.zCoord <= this.field_149757_G);
     }
 
     /**
@@ -905,7 +905,7 @@ public class Block
      */
     private boolean isVecInsideXYBounds(Vec3 p_149661_1_)
     {
-        return p_149661_1_ == null ? false : p_149661_1_.xCoord >= this.field_149759_B && p_149661_1_.xCoord <= this.field_149755_E && p_149661_1_.yCoord >= this.field_149760_C && p_149661_1_.yCoord <= this.field_149756_F;
+        return p_149661_1_ != null && (p_149661_1_.xCoord >= this.field_149759_B && p_149661_1_.xCoord <= this.field_149755_E && p_149661_1_.yCoord >= this.field_149760_C && p_149661_1_.yCoord <= this.field_149756_F);
     }
 
     /**
@@ -1264,7 +1264,7 @@ public class Block
 
     public static boolean isEqualTo(Block p_149680_0_, Block p_149680_1_)
     {
-        return p_149680_0_ != null && p_149680_1_ != null ? (p_149680_0_ == p_149680_1_ ? true : p_149680_0_.func_149667_c(p_149680_1_)) : false;
+        return (p_149680_0_ != null && p_149680_1_ != null) && (p_149680_0_ == p_149680_1_ || p_149680_0_.func_149667_c(p_149680_1_));
     }
 
     public boolean hasComparatorInputOverride()

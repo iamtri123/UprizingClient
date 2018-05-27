@@ -220,17 +220,17 @@ public class Potion
         if (this.id == regeneration.id)
         {
             var3 = 50 >> p_76397_2_;
-            return var3 > 0 ? p_76397_1_ % var3 == 0 : true;
+            return var3 <= 0 || p_76397_1_ % var3 == 0;
         }
         else if (this.id == poison.id)
         {
             var3 = 25 >> p_76397_2_;
-            return var3 > 0 ? p_76397_1_ % var3 == 0 : true;
+            return var3 <= 0 || p_76397_1_ % var3 == 0;
         }
         else if (this.id == wither.id)
         {
             var3 = 40 >> p_76397_2_;
-            return var3 > 0 ? p_76397_1_ % var3 == 0 : true;
+            return var3 <= 0 || p_76397_1_ % var3 == 0;
         }
         else
         {

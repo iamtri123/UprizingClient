@@ -19,8 +19,8 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
     private static final ResourceLocation field_147506_e = new ResourceLocation("textures/entity/chest/trapped.png");
     private static final ResourceLocation field_147503_f = new ResourceLocation("textures/entity/chest/christmas.png");
     private static final ResourceLocation field_147504_g = new ResourceLocation("textures/entity/chest/normal.png");
-    private ModelChest field_147510_h = new ModelChest();
-    private ModelChest field_147511_i = new ModelLargeChest();
+    private final ModelChest field_147510_h = new ModelChest();
+    private final ModelChest field_147511_i = new ModelLargeChest();
     private boolean field_147509_j;
     private static final String __OBFID = "CL_00000965";
 

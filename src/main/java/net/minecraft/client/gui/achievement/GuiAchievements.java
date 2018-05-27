@@ -43,7 +43,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     protected double field_146565_w;
     protected double field_146573_x;
     private int field_146554_D;
-    private StatFileWriter field_146556_E;
+    private final StatFileWriter field_146556_E;
     private boolean field_146558_F = true;
     private static final String __OBFID = "CL_00000722";
 
@@ -64,7 +64,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     {
         this.mc.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
         this.buttonList.clear();
-        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 24, this.height / 2 + 74, 80, 20, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 24, this.height / 2 + 74, 80, 20, I18n.format("gui.done")));
     }
 
     protected void actionPerformed(GuiButton p_146284_1_)
@@ -102,7 +102,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         if (this.field_146558_F)
         {
             this.drawDefaultBackground();
-            this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.downloadingStats", new Object[0]), this.width / 2, this.height / 2, 16777215);
+            this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.downloadingStats"), this.width / 2, this.height / 2, 16777215);
             this.drawCenteredString(this.fontRendererObj, field_146510_b_[(int)(Minecraft.getSystemTime() / 150L % (long)field_146510_b_.length)], this.width / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * 2, 16777215);
         }
         else
@@ -233,7 +233,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     {
         int var1 = (this.width - this.field_146555_f) / 2;
         int var2 = (this.height - this.field_146557_g) / 2;
-        this.fontRendererObj.drawString(I18n.format("gui.achievements", new Object[0]), var1 + 15, var2 + 5, 4210752);
+        this.fontRendererObj.drawString(I18n.format("gui.achievements"), var1 + 15, var2 + 5, 4210752);
     }
 
     protected void func_146552_b(int p_146552_1_, int p_146552_2_, float p_146552_3_)
@@ -516,9 +516,9 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
                 if (var30 == 3)
                 {
-                    var40 = I18n.format("achievement.unknown", new Object[0]);
+                    var40 = I18n.format("achievement.unknown");
                     var31 = Math.max(this.fontRendererObj.getStringWidth(var40), 120);
-                    var32 = (new ChatComponentTranslation("achievement.requires", new Object[] {var34.parentAchievement.func_150951_e()})).getUnformattedText();
+                    var32 = (new ChatComponentTranslation("achievement.requires", var34.parentAchievement.func_150951_e())).getUnformattedText();
                     var33 = this.fontRendererObj.splitStringWidth(var32, var31);
                     this.drawGradientRect(var43 - 3, var44 - 3, var43 + var31 + 3, var44 + var33 + 12 + 3, -1073741824, -1073741824);
                     this.fontRendererObj.drawSplitString(var32, var43, var44 + 12, var31, -9416624);
@@ -526,7 +526,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 else if (var30 < 3)
                 {
                     var31 = Math.max(this.fontRendererObj.getStringWidth(var40), 120);
-                    var32 = (new ChatComponentTranslation("achievement.requires", new Object[] {var34.parentAchievement.func_150951_e()})).getUnformattedText();
+                    var32 = (new ChatComponentTranslation("achievement.requires", var34.parentAchievement.func_150951_e())).getUnformattedText();
                     var33 = this.fontRendererObj.splitStringWidth(var32, var31);
                     this.drawGradientRect(var43 - 3, var44 - 3, var43 + var31 + 3, var44 + var33 + 12 + 3, -1073741824, -1073741824);
                     this.fontRendererObj.drawSplitString(var32, var43, var44 + 12, var31, -9416624);
@@ -551,7 +551,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
                 if (this.field_146556_E.hasAchievementUnlocked(var34))
                 {
-                    this.fontRendererObj.drawStringWithShadow(I18n.format("achievement.taken", new Object[0]), var43, var44 + var46 + 4, -7302913);
+                    this.fontRendererObj.drawStringWithShadow(I18n.format("achievement.taken"), var43, var44 + var46 + 4, -7302913);
                 }
             }
 

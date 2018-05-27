@@ -22,20 +22,20 @@ public class EntityAIAvoidEntity extends EntityAIBase
     };
 
     /** The entity we are attached to */
-    private EntityCreature theEntity;
-    private double farSpeed;
-    private double nearSpeed;
+    private final EntityCreature theEntity;
+    private final double farSpeed;
+    private final double nearSpeed;
     private Entity closestLivingEntity;
-    private float distanceFromEntity;
+    private final float distanceFromEntity;
 
     /** The PathEntity of our entity */
     private PathEntity entityPathEntity;
 
     /** The PathNavigate of our entity */
-    private PathNavigate entityPathNavigate;
+    private final PathNavigate entityPathNavigate;
 
     /** The class of the entity we should avoid */
-    private Class targetEntityClass;
+    private final Class targetEntityClass;
     private static final String __OBFID = "CL_00001574";
 
     public EntityAIAvoidEntity(EntityCreature p_i1616_1_, Class p_i1616_2_, float p_i1616_3_, double p_i1616_4_, double p_i1616_6_)
@@ -93,7 +93,7 @@ public class EntityAIAvoidEntity extends EntityAIBase
         else
         {
             this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(var2.xCoord, var2.yCoord, var2.zCoord);
-            return this.entityPathEntity == null ? false : this.entityPathEntity.isDestinationSame(var2);
+            return this.entityPathEntity != null && this.entityPathEntity.isDestinationSame(var2);
         }
     }
 

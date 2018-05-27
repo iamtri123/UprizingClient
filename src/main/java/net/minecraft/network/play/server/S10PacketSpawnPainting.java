@@ -65,7 +65,7 @@ public class S10PacketSpawnPainting extends Packet
      */
     public String serialize()
     {
-        return String.format("id=%d, type=%s, x=%d, y=%d, z=%d", new Object[] {Integer.valueOf(this.field_148973_a), this.field_148968_f, Integer.valueOf(this.field_148971_b), Integer.valueOf(this.field_148972_c), Integer.valueOf(this.field_148969_d)});
+        return String.format("id=%d, type=%s, x=%d, y=%d, z=%d", Integer.valueOf(this.field_148973_a), this.field_148968_f, Integer.valueOf(this.field_148971_b), Integer.valueOf(this.field_148972_c), Integer.valueOf(this.field_148969_d));
     }
 
     public int func_148965_c()

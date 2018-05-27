@@ -8,7 +8,7 @@ public class GuiOptionSlider extends GuiButton
 {
     private float field_146134_p;
     public boolean field_146135_o;
-    private GameSettings.Options field_146133_q;
+    private final GameSettings.Options field_146133_q;
     private final float field_146132_r;
     private final float field_146131_s;
     private static final String __OBFID = "CL_00000680";

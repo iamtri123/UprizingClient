@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 
 public class PathNavigate
 {
-    private EntityLiving theEntity;
-    private World worldObj;
+    private final EntityLiving theEntity;
+    private final World worldObj;
 
     /** The PathEntity being followed. */
     private PathEntity currentPath;
@@ -25,7 +25,7 @@ public class PathNavigate
     /**
      * The number of blocks (extra) +/- in each axis that get pulled out as cache for the pathfinder's search space
      */
-    private IAttributeInstance pathSearchRange;
+    private final IAttributeInstance pathSearchRange;
     private boolean noSunPathfind;
 
     /** Time, in number of ticks, following the current path */
@@ -39,7 +39,7 @@ public class PathNavigate
     /**
      * Coordinates of the entity's position last time a check was done (part of monitoring getting 'stuck')
      */
-    private Vec3 lastPosCheck = Vec3.createVectorHelper(0.0D, 0.0D, 0.0D);
+    private final Vec3 lastPosCheck = Vec3.createVectorHelper(0.0D, 0.0D, 0.0D);
 
     /**
      * Specifically, if a wooden door block is even considered to be passable by the pathfinder
@@ -157,7 +157,7 @@ public class PathNavigate
     public boolean tryMoveToEntityLiving(Entity p_75497_1_, double p_75497_2_)
     {
         PathEntity var4 = this.getPathToEntityLiving(p_75497_1_);
-        return var4 != null ? this.setPath(var4, p_75497_2_) : false;
+        return var4 != null && this.setPath(var4, p_75497_2_);
     }
 
     /**

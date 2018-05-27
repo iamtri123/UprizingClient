@@ -133,7 +133,7 @@ public final class WorldSettings
         return this.field_82751_h;
     }
 
-    public static enum GameType
+    public enum GameType
     {
         NOT_SET("NOT_SET", 0, -1, ""),
         SURVIVAL("SURVIVAL", 1, 0, "survival"),
@@ -142,10 +142,10 @@ public final class WorldSettings
         int id;
         String name;
 
-        private static final WorldSettings.GameType[] $VALUES = new WorldSettings.GameType[]{NOT_SET, SURVIVAL, CREATIVE, ADVENTURE};
+        private static final WorldSettings.GameType[] $VALUES = {NOT_SET, SURVIVAL, CREATIVE, ADVENTURE};
         private static final String __OBFID = "CL_00000148";
 
-        private GameType(String p_i1956_1_, int p_i1956_2_, int p_i1956_3_, String p_i1956_4_)
+        GameType(String p_i1956_1_, int p_i1956_2_, int p_i1956_3_, String p_i1956_4_)
         {
             this.id = p_i1956_3_;
             this.name = p_i1956_4_;

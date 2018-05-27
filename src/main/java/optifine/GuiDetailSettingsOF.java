@@ -11,10 +11,10 @@ import net.minecraft.client.settings.GameSettings;
 
 public class GuiDetailSettingsOF extends GuiScreen
 {
-    private GuiScreen prevScreen;
+    private final GuiScreen prevScreen;
     protected String title = "Detail Settings";
-    private GameSettings settings;
-    private static GameSettings.Options[] enumOptions = new GameSettings.Options[] {GameSettings.Options.CLOUDS, GameSettings.Options.CLOUD_HEIGHT, GameSettings.Options.TREES, GameSettings.Options.GRASS, GameSettings.Options.WATER, GameSettings.Options.RAIN, GameSettings.Options.SKY, GameSettings.Options.STARS, GameSettings.Options.SUN_MOON, GameSettings.Options.SHOW_CAPES, GameSettings.Options.DEPTH_FOG, GameSettings.Options.HELD_ITEM_TOOLTIPS, GameSettings.Options.TRANSLUCENT_BLOCKS, GameSettings.Options.DROPPED_ITEMS, GameSettings.Options.VIGNETTE};
+    private final GameSettings settings;
+    private static final GameSettings.Options[] enumOptions = {GameSettings.Options.CLOUDS, GameSettings.Options.CLOUD_HEIGHT, GameSettings.Options.TREES, GameSettings.Options.GRASS, GameSettings.Options.WATER, GameSettings.Options.RAIN, GameSettings.Options.SKY, GameSettings.Options.STARS, GameSettings.Options.SUN_MOON, GameSettings.Options.SHOW_CAPES, GameSettings.Options.DEPTH_FOG, GameSettings.Options.HELD_ITEM_TOOLTIPS, GameSettings.Options.TRANSLUCENT_BLOCKS, GameSettings.Options.DROPPED_ITEMS, GameSettings.Options.VIGNETTE};
     private int lastMouseX = 0;
     private int lastMouseY = 0;
     private long mouseStillTime = 0L;
@@ -52,7 +52,7 @@ public class GuiDetailSettingsOF extends GuiScreen
             ++i;
         }
 
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, I18n.format("gui.done")));
     }
 
     protected void actionPerformed(GuiButton guibutton)

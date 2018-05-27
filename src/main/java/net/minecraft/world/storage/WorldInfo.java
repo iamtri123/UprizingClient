@@ -588,7 +588,7 @@ public class WorldInfo
             private static final String __OBFID = "CL_00000589";
             public String call()
             {
-                return String.format("ID %02d - %s, ver %d. Features enabled: %b", new Object[] {Integer.valueOf(WorldInfo.this.terrainType.getWorldTypeID()), WorldInfo.this.terrainType.getWorldTypeName(), Integer.valueOf(WorldInfo.this.terrainType.getGeneratorVersion()), Boolean.valueOf(WorldInfo.this.mapFeaturesEnabled)});
+                return String.format("ID %02d - %s, ver %d. Features enabled: %b", Integer.valueOf(WorldInfo.this.terrainType.getWorldTypeID()), WorldInfo.this.terrainType.getWorldTypeName(), Integer.valueOf(WorldInfo.this.terrainType.getGeneratorVersion()), Boolean.valueOf(WorldInfo.this.mapFeaturesEnabled));
             }
         });
         p_85118_1_.addCrashSectionCallable("Level generator options", new Callable()
@@ -612,7 +612,7 @@ public class WorldInfo
             private static final String __OBFID = "CL_00000592";
             public String call()
             {
-                return String.format("%d game time, %d day time", new Object[] {Long.valueOf(WorldInfo.this.totalTime), Long.valueOf(WorldInfo.this.worldTime)});
+                return String.format("%d game time, %d day time", Long.valueOf(WorldInfo.this.totalTime), Long.valueOf(WorldInfo.this.worldTime));
             }
         });
         p_85118_1_.addCrashSectionCallable("Level dimension", new Callable()
@@ -644,10 +644,9 @@ public class WorldInfo
                 }
                 catch (Throwable var3)
                 {
-                    ;
                 }
 
-                return String.format("0x%05X - %s", new Object[] {Integer.valueOf(WorldInfo.this.saveVersion), var1});
+                return String.format("0x%05X - %s", Integer.valueOf(WorldInfo.this.saveVersion), var1);
             }
         });
         p_85118_1_.addCrashSectionCallable("Level weather", new Callable()
@@ -655,7 +654,7 @@ public class WorldInfo
             private static final String __OBFID = "CL_00000595";
             public String call()
             {
-                return String.format("Rain time: %d (now: %b), thunder time: %d (now: %b)", new Object[] {Integer.valueOf(WorldInfo.this.rainTime), Boolean.valueOf(WorldInfo.this.raining), Integer.valueOf(WorldInfo.this.thunderTime), Boolean.valueOf(WorldInfo.this.thundering)});
+                return String.format("Rain time: %d (now: %b), thunder time: %d (now: %b)", Integer.valueOf(WorldInfo.this.rainTime), Boolean.valueOf(WorldInfo.this.raining), Integer.valueOf(WorldInfo.this.thunderTime), Boolean.valueOf(WorldInfo.this.thundering));
             }
         });
         p_85118_1_.addCrashSectionCallable("Level game mode", new Callable()
@@ -663,7 +662,7 @@ public class WorldInfo
             private static final String __OBFID = "CL_00000597";
             public String call()
             {
-                return String.format("Game mode: %s (ID %d). Hardcore: %b. Cheats: %b", new Object[] {WorldInfo.this.theGameType.getName(), Integer.valueOf(WorldInfo.this.theGameType.getID()), Boolean.valueOf(WorldInfo.this.hardcore), Boolean.valueOf(WorldInfo.this.allowCommands)});
+                return String.format("Game mode: %s (ID %d). Hardcore: %b. Cheats: %b", WorldInfo.this.theGameType.getName(), Integer.valueOf(WorldInfo.this.theGameType.getID()), Boolean.valueOf(WorldInfo.this.hardcore), Boolean.valueOf(WorldInfo.this.allowCommands));
             }
         });
     }

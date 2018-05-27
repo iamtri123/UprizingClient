@@ -5,11 +5,11 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class EntityUtils
 {
-    private static ReflectorClass ForgeEntityLivingBase = new ReflectorClass(EntityLivingBase.class);
-    private static ReflectorField ForgeEntityLivingBase_entityAge = new ReflectorField(ForgeEntityLivingBase, "entityAge");
+    private static final ReflectorClass ForgeEntityLivingBase = new ReflectorClass(EntityLivingBase.class);
+    private static final ReflectorField ForgeEntityLivingBase_entityAge = new ReflectorField(ForgeEntityLivingBase, "entityAge");
     private static boolean directEntityAge = true;
-    private static ReflectorClass ForgeEntityLiving = new ReflectorClass(EntityLiving.class);
-    private static ReflectorMethod ForgeEntityLiving_despawnEntity = new ReflectorMethod(ForgeEntityLiving, "despawnEntity");
+    private static final ReflectorClass ForgeEntityLiving = new ReflectorClass(EntityLiving.class);
+    private static final ReflectorMethod ForgeEntityLiving_despawnEntity = new ReflectorMethod(ForgeEntityLiving, "despawnEntity");
     private static boolean directDespawnEntity = true;
 
     public static int getEntityAge(EntityLivingBase elb)
@@ -77,6 +77,6 @@ public class EntityUtils
             }
         }
 
-        Reflector.callVoid(el, ForgeEntityLiving_despawnEntity, new Object[0]);
+        Reflector.callVoid(el, ForgeEntityLiving_despawnEntity);
     }
 }

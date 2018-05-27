@@ -125,6 +125,6 @@ public class PathEntity
     public boolean isDestinationSame(Vec3 p_75880_1_)
     {
         PathPoint var2 = this.getFinalPathPoint();
-        return var2 == null ? false : var2.xCoord == (int)p_75880_1_.xCoord && var2.zCoord == (int)p_75880_1_.zCoord;
+        return var2 != null && (var2.xCoord == (int) p_75880_1_.xCoord && var2.zCoord == (int) p_75880_1_.zCoord);
     }
 }

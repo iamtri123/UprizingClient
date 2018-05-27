@@ -7,10 +7,10 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class GuiControls extends GuiScreen
 {
-    private static final GameSettings.Options[] field_146492_g = new GameSettings.Options[] {GameSettings.Options.INVERT_MOUSE, GameSettings.Options.SENSITIVITY, GameSettings.Options.TOUCHSCREEN};
-    private GuiScreen field_146496_h;
+    private static final GameSettings.Options[] field_146492_g = {GameSettings.Options.INVERT_MOUSE, GameSettings.Options.SENSITIVITY, GameSettings.Options.TOUCHSCREEN};
+    private final GuiScreen field_146496_h;
     protected String field_146495_a = "Controls";
-    private GameSettings field_146497_i;
+    private final GameSettings field_146497_i;
     public KeyBinding field_146491_f = null;
     public long field_152177_g;
     private GuiKeyBindingList field_146494_r;
@@ -29,9 +29,9 @@ public class GuiControls extends GuiScreen
     public void initGui()
     {
         this.field_146494_r = new GuiKeyBindingList(this, this.mc);
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 155, this.height - 29, 150, 20, I18n.format("gui.done", new Object[0])));
-        this.buttonList.add(this.field_146493_s = new GuiButton(201, this.width / 2 - 155 + 160, this.height - 29, 150, 20, I18n.format("controls.resetAll", new Object[0])));
-        this.field_146495_a = I18n.format("controls.title", new Object[0]);
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 155, this.height - 29, 150, 20, I18n.format("gui.done")));
+        this.buttonList.add(this.field_146493_s = new GuiButton(201, this.width / 2 - 155 + 160, this.height - 29, 150, 20, I18n.format("controls.resetAll")));
+        this.field_146495_a = I18n.format("controls.title");
         int var1 = 0;
         GameSettings.Options[] var2 = field_146492_g;
         int var3 = var2.length;

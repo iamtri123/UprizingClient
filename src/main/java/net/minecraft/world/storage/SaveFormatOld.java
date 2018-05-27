@@ -197,7 +197,6 @@ public class SaveFormatOld implements ISaveFormat
                     }
                     catch (InterruptedException var5)
                     {
-                        ;
                     }
                 }
             }

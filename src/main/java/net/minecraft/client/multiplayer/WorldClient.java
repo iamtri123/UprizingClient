@@ -35,7 +35,7 @@ import net.minecraft.world.storage.SaveHandlerMP;
 public class WorldClient extends World
 {
     /** The packets that need to be sent to the server. */
-    private NetHandlerPlayClient sendQueue;
+    private final NetHandlerPlayClient sendQueue;
 
     /** The ChunkProviderClient instance */
     private ChunkProviderClient clientChunkProvider;
@@ -43,16 +43,16 @@ public class WorldClient extends World
     /**
      * The hash set of entities handled by this client. Uses the entity's ID as the hash set's key.
      */
-    private IntHashMap entityHashSet = new IntHashMap();
+    private final IntHashMap entityHashSet = new IntHashMap();
 
     /** Contains all entities for this client, both spawned and non-spawned. */
-    private Set entityList = new HashSet();
+    private final Set entityList = new HashSet();
 
     /**
      * Contains all entities for this client that were not spawned due to a non-present chunk. The game will attempt to
      * spawn up to 10 pending entities with each subsequent tick until the spawn queue is empty.
      */
-    private Set entitySpawnQueue = new HashSet();
+    private final Set entitySpawnQueue = new HashSet();
     private final Minecraft mc = Minecraft.getMinecraft();
     private final Set previousActiveChunkSet = new HashSet();
     private static final String __OBFID = "CL_00000882";
@@ -302,7 +302,6 @@ public class WorldClient extends World
     {
         if (!this.provider.hasNoSky)
         {
-            ;
         }
     }
 
@@ -409,7 +408,7 @@ public class WorldClient extends World
             private static final String __OBFID = "CL_00000883";
             public String call()
             {
-                return WorldClient.this.entityList.size() + " total; " + WorldClient.this.entityList.toString();
+                return WorldClient.this.entityList.size() + " total; " + WorldClient.this.entityList;
             }
         });
         var2.addCrashSectionCallable("Retry entities", new Callable()
@@ -417,7 +416,7 @@ public class WorldClient extends World
             private static final String __OBFID = "CL_00000884";
             public String call()
             {
-                return WorldClient.this.entitySpawnQueue.size() + " total; " + WorldClient.this.entitySpawnQueue.toString();
+                return WorldClient.this.entitySpawnQueue.size() + " total; " + WorldClient.this.entitySpawnQueue;
             }
         });
         var2.addCrashSectionCallable("Server brand", new Callable()

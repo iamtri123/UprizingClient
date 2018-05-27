@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class BlockHugeMushroom extends Block
 {
-    private static final String[] field_149793_a = new String[] {"skin_brown", "skin_red"};
+    private static final String[] field_149793_a = {"skin_brown", "skin_red"};
     private final int field_149792_b;
     private IIcon[] field_149794_M;
     private IIcon field_149795_N;

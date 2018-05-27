@@ -10,8 +10,8 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class GuiStreamOptions extends GuiScreen
 {
-    private static final GameSettings.Options[] field_152312_a = new GameSettings.Options[] {GameSettings.Options.STREAM_BYTES_PER_PIXEL, GameSettings.Options.STREAM_FPS, GameSettings.Options.STREAM_KBPS, GameSettings.Options.STREAM_SEND_METADATA, GameSettings.Options.STREAM_VOLUME_MIC, GameSettings.Options.STREAM_VOLUME_SYSTEM, GameSettings.Options.STREAM_MIC_TOGGLE_BEHAVIOR, GameSettings.Options.STREAM_COMPRESSION};
-    private static final GameSettings.Options[] field_152316_f = new GameSettings.Options[] {GameSettings.Options.STREAM_CHAT_ENABLED, GameSettings.Options.STREAM_CHAT_USER_FILTER};
+    private static final GameSettings.Options[] field_152312_a = {GameSettings.Options.STREAM_BYTES_PER_PIXEL, GameSettings.Options.STREAM_FPS, GameSettings.Options.STREAM_KBPS, GameSettings.Options.STREAM_SEND_METADATA, GameSettings.Options.STREAM_VOLUME_MIC, GameSettings.Options.STREAM_VOLUME_SYSTEM, GameSettings.Options.STREAM_MIC_TOGGLE_BEHAVIOR, GameSettings.Options.STREAM_COMPRESSION};
+    private static final GameSettings.Options[] field_152316_f = {GameSettings.Options.STREAM_CHAT_ENABLED, GameSettings.Options.STREAM_CHAT_USER_FILTER};
     private final GuiScreen field_152317_g;
     private final GameSettings field_152318_h;
     private String field_152319_i;
@@ -32,8 +32,8 @@ public class GuiStreamOptions extends GuiScreen
     public void initGui()
     {
         int var1 = 0;
-        this.field_152319_i = I18n.format("options.stream.title", new Object[0]);
-        this.field_152313_r = I18n.format("options.stream.chat.title", new Object[0]);
+        this.field_152319_i = I18n.format("options.stream.title");
+        this.field_152313_r = I18n.format("options.stream.chat.title");
         GameSettings.Options[] var2 = field_152312_a;
         int var3 = var2.length;
         int var4;
@@ -81,8 +81,8 @@ public class GuiStreamOptions extends GuiScreen
             ++var1;
         }
 
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 155, this.height / 6 + 168, 150, 20, I18n.format("gui.done", new Object[0])));
-        GuiButton var6 = new GuiButton(201, this.width / 2 + 5, this.height / 6 + 168, 150, 20, I18n.format("options.stream.ingestSelection", new Object[0]));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 155, this.height / 6 + 168, 150, 20, I18n.format("gui.done")));
+        GuiButton var6 = new GuiButton(201, this.width / 2 + 5, this.height / 6 + 168, 150, 20, I18n.format("options.stream.ingestSelection"));
         var6.enabled = this.mc.func_152346_Z().func_152924_m() && this.mc.func_152346_Z().func_152925_v().length > 0 || this.mc.func_152346_Z().func_152908_z();
         this.buttonList.add(var6);
     }

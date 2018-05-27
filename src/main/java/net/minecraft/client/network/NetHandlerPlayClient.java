@@ -230,7 +230,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     /**
      * A mapping from player names to their respective GuiPlayerInfo (specifies the clients response time to the server)
      */
-    private Map playerInfoMap = new HashMap();
+    private final Map playerInfoMap = new HashMap();
 
     /**
      * An ArrayList of GuiPlayerInfo (includes all the players' GuiPlayerInfo on the current server)
@@ -242,14 +242,14 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      * Seems to be either null (integrated server) or an instance of either GuiMultiplayer (when connecting to a server)
      * or GuiScreenReamlsTOS (when connecting to MCO server)
      */
-    private GuiScreen guiScreenServer;
+    private final GuiScreen guiScreenServer;
     private boolean field_147308_k = false;
 
     /**
      * Just an ordinary random number generator, used to randomize audio pitch of item/orb pickup and randomize both
      * particlespawn offset and velocity
      */
-    private Random avRandomizer = new Random();
+    private final Random avRandomizer = new Random();
     private static final String __OBFID = "CL_00000878";
 
     public NetHandlerPlayClient(Minecraft p_i45061_1_, GuiScreen p_i45061_2_, NetworkManager p_i45061_3_)
@@ -289,7 +289,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         this.currentServerMaxPlayers = p_147282_1_.func_149193_h();
         this.gameController.playerController.setGameType(p_147282_1_.func_149198_e());
         this.gameController.gameSettings.sendSettingsToServer();
-        this.netManager.scheduleOutboundPacket(new C17PacketCustomPayload("MC|Brand", ClientBrandRetriever.getClientModName().getBytes(Charsets.UTF_8)), new GenericFutureListener[0]);
+        this.netManager.scheduleOutboundPacket(new C17PacketCustomPayload("MC|Brand", ClientBrandRetriever.getClientModName().getBytes(Charsets.UTF_8)));
     }
 
     /**
@@ -651,7 +651,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         var2.ySize = 0.0F;
         var2.motionX = var2.motionY = var2.motionZ = 0.0D;
         var2.setPositionAndRotation(var3, var5, var7, var9, var10);
-        this.netManager.scheduleOutboundPacket(new C03PacketPlayer.C06PacketPlayerPosLook(var2.posX, var2.boundingBox.minY, var2.posY, var2.posZ, p_147258_1_.func_148931_f(), p_147258_1_.func_148930_g(), p_147258_1_.func_148929_h()), new GenericFutureListener[0]);
+        this.netManager.scheduleOutboundPacket(new C03PacketPlayer.C06PacketPlayerPosLook(var2.posX, var2.boundingBox.minY, var2.posY, var2.posZ, p_147258_1_.func_148931_f(), p_147258_1_.func_148930_g(), p_147258_1_.func_148929_h()));
 
         if (!this.doneLoadingTerrain)
         {
@@ -693,7 +693,6 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             }
             catch (IOException var13)
             {
-                ;
             }
         }
     }
@@ -767,7 +766,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
     public void addToSendQueue(Packet p_147297_1_)
     {
-        this.netManager.scheduleOutboundPacket(p_147297_1_, new GenericFutureListener[0]);
+        this.netManager.scheduleOutboundPacket(p_147297_1_);
     }
 
     public void handleCollectItem(S0DPacketCollectItem p_147246_1_)
@@ -938,7 +937,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             if (var4)
             {
                 GameSettings var5 = this.gameController.gameSettings;
-                this.gameController.ingameGUI.func_110326_a(I18n.format("mount.onboard", new Object[] {GameSettings.getKeyDisplayString(var5.keyBindSneak.getKeyCode())}), false);
+                this.gameController.ingameGUI.func_110326_a(I18n.format("mount.onboard", GameSettings.getKeyDisplayString(var5.keyBindSneak.getKeyCode())), false);
             }
         }
         else if (p_147243_1_.func_149404_c() == 1 && var2 != null && var2 instanceof EntityLiving)
@@ -1378,7 +1377,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
         if (var3 >= 0 && var3 < S2BPacketChangeGameState.field_149142_a.length && S2BPacketChangeGameState.field_149142_a[var3] != null)
         {
-            var2.addChatComponentMessage(new ChatComponentTranslation(S2BPacketChangeGameState.field_149142_a[var3], new Object[0]));
+            var2.addChatComponentMessage(new ChatComponentTranslation(S2BPacketChangeGameState.field_149142_a[var3]));
         }
 
         if (var3 == 1)
@@ -1409,15 +1408,15 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             }
             else if (var4 == 101.0F)
             {
-                this.gameController.ingameGUI.getChatGUI().func_146227_a(new ChatComponentTranslation("demo.help.movement", new Object[] {GameSettings.getKeyDisplayString(var6.keyBindForward.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindLeft.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindBack.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindRight.getKeyCode())}));
+                this.gameController.ingameGUI.getChatGUI().func_146227_a(new ChatComponentTranslation("demo.help.movement", GameSettings.getKeyDisplayString(var6.keyBindForward.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindLeft.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindBack.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindRight.getKeyCode())));
             }
             else if (var4 == 102.0F)
             {
-                this.gameController.ingameGUI.getChatGUI().func_146227_a(new ChatComponentTranslation("demo.help.jump", new Object[] {GameSettings.getKeyDisplayString(var6.keyBindJump.getKeyCode())}));
+                this.gameController.ingameGUI.getChatGUI().func_146227_a(new ChatComponentTranslation("demo.help.jump", GameSettings.getKeyDisplayString(var6.keyBindJump.getKeyCode())));
             }
             else if (var4 == 103.0F)
             {
-                this.gameController.ingameGUI.getChatGUI().func_146227_a(new ChatComponentTranslation("demo.help.inventory", new Object[] {GameSettings.getKeyDisplayString(var6.keyBindInventory.getKeyCode())}));
+                this.gameController.ingameGUI.getChatGUI().func_146227_a(new ChatComponentTranslation("demo.help.inventory", GameSettings.getKeyDisplayString(var6.keyBindInventory.getKeyCode())));
             }
         }
         else if (var3 == 6)
@@ -1660,7 +1659,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
                         NetHandlerPlayClient.this.gameController.displayGuiScreen((GuiScreen)null);
                     }
-                }, I18n.format("multiplayer.texturePrompt.line1", new Object[0]), I18n.format("multiplayer.texturePrompt.line2", new Object[0]), 0));
+                }, I18n.format("multiplayer.texturePrompt.line1"), I18n.format("multiplayer.texturePrompt.line2"), 0));
             }
         }
     }

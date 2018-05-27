@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderEnchantmentTable extends TileEntitySpecialRenderer
 {
     private static final ResourceLocation field_147540_b = new ResourceLocation("textures/entity/enchanting_table_book.png");
-    private ModelBook field_147541_c = new ModelBook();
+    private final ModelBook field_147541_c = new ModelBook();
     private static final String __OBFID = "CL_00000966";
 
     public void renderTileEntityAt(TileEntityEnchantmentTable p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_)
@@ -25,7 +25,6 @@ public class RenderEnchantmentTable extends TileEntitySpecialRenderer
 
         for (var10 = p_147500_1_.field_145928_o - p_147500_1_.field_145925_p; var10 >= (float)Math.PI; var10 -= ((float)Math.PI * 2F))
         {
-            ;
         }
 
         while (var10 < -(float)Math.PI)

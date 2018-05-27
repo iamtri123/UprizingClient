@@ -33,11 +33,11 @@ public class CommandDifficulty extends CommandBase
         {
             EnumDifficulty var3 = this.func_147201_h(p_71515_1_, p_71515_2_[0]);
             MinecraftServer.getServer().func_147139_a(var3);
-            func_152373_a(p_71515_1_, this, "commands.difficulty.success", new Object[] {new ChatComponentTranslation(var3.getDifficultyResourceKey(), new Object[0])});
+            func_152373_a(p_71515_1_, this, "commands.difficulty.success", new ChatComponentTranslation(var3.getDifficultyResourceKey()));
         }
         else
         {
-            throw new WrongUsageException("commands.difficulty.usage", new Object[0]);
+            throw new WrongUsageException("commands.difficulty.usage");
         }
     }
 
@@ -51,6 +51,6 @@ public class CommandDifficulty extends CommandBase
      */
     public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"peaceful", "easy", "normal", "hard"}): null;
+        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, "peaceful", "easy", "normal", "hard"): null;
     }
 }

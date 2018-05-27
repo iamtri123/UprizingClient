@@ -11,9 +11,9 @@ import java.util.Set;
 
 public class NextTickHashSet extends AbstractSet
 {
-    private LongHashMap longHashMap = new LongHashMap();
+    private final LongHashMap longHashMap = new LongHashMap();
     private int size = 0;
-    private HashSet emptySet = new HashSet();
+    private final HashSet emptySet = new HashSet();
 
     public NextTickHashSet(Set oldSet)
     {
@@ -43,7 +43,7 @@ public class NextTickHashSet extends AbstractSet
             {
                 long key = ChunkCoordIntPair.chunkXZ2Int(entry.xCoord >> 4, entry.zCoord >> 4);
                 HashSet set = (HashSet)this.longHashMap.getValueByKey(key);
-                return set == null ? false : set.contains(entry);
+                return set != null && set.contains(entry);
             }
         }
     }

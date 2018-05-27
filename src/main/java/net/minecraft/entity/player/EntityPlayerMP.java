@@ -379,7 +379,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
                 while (var7.hasNext())
                 {
                     ScoreObjective var9 = (ScoreObjective)var7.next();
-                    this.getWorldScoreboard().func_96529_a(this.getCommandSenderName(), var9).func_96651_a(Arrays.asList(new EntityPlayer[] {this}));
+                    this.getWorldScoreboard().func_96529_a(this.getCommandSenderName(), var9).func_96651_a(Arrays.asList(this));
                 }
             }
 
@@ -540,7 +540,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
     public boolean canAttackPlayer(EntityPlayer p_96122_1_)
     {
-        return !this.mcServer.isPVPEnabled() ? false : super.canAttackPlayer(p_96122_1_);
+        return this.mcServer.isPVPEnabled() && super.canAttackPlayer(p_96122_1_);
     }
 
     /**
@@ -1118,7 +1118,6 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
         if (var2 > 3 && var2 < 20)
         {
-            ;
         }
 
         this.chatVisibility = p_147100_1_.func_149523_e();
@@ -1164,7 +1163,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     {
         if (p_152339_1_ instanceof EntityPlayer)
         {
-            this.playerNetServerHandler.sendPacket(new S13PacketDestroyEntities(new int[] {p_152339_1_.getEntityId()}));
+            this.playerNetServerHandler.sendPacket(new S13PacketDestroyEntities(p_152339_1_.getEntityId()));
         }
         else
         {

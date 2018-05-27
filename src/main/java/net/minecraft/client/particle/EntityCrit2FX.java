@@ -7,10 +7,10 @@ import net.minecraft.world.World;
 public class EntityCrit2FX extends EntityFX
 {
     /** Entity that had been hit and done the Critical hit on. */
-    private Entity theEntity;
+    private final Entity theEntity;
     private int currentLife;
-    private int maximumLife;
-    private String particleName;
+    private final int maximumLife;
+    private final String particleName;
     private static final String __OBFID = "CL_00000899";
 
     public EntityCrit2FX(World p_i1199_1_, Entity p_i1199_2_)

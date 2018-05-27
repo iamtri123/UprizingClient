@@ -65,13 +65,13 @@ public class GameSettings
     };
 
     /** GUI scale values */
-    private static final String[] GUISCALES = new String[] {"options.guiScale.auto", "options.guiScale.small", "options.guiScale.normal", "options.guiScale.large"};
-    private static final String[] PARTICLES = new String[] {"options.particles.all", "options.particles.decreased", "options.particles.minimal"};
-    private static final String[] AMBIENT_OCCLUSIONS = new String[] {"options.ao.off", "options.ao.min", "options.ao.max"};
-    private static final String[] field_152391_aS = new String[] {"options.stream.compression.low", "options.stream.compression.medium", "options.stream.compression.high"};
-    private static final String[] field_152392_aT = new String[] {"options.stream.chat.enabled.streaming", "options.stream.chat.enabled.always", "options.stream.chat.enabled.never"};
-    private static final String[] field_152393_aU = new String[] {"options.stream.chat.userFilter.all", "options.stream.chat.userFilter.subs", "options.stream.chat.userFilter.mods"};
-    private static final String[] field_152394_aV = new String[] {"options.stream.mic_toggle.mute", "options.stream.mic_toggle.talk"};
+    private static final String[] GUISCALES = {"options.guiScale.auto", "options.guiScale.small", "options.guiScale.normal", "options.guiScale.large"};
+    private static final String[] PARTICLES = {"options.particles.all", "options.particles.decreased", "options.particles.minimal"};
+    private static final String[] AMBIENT_OCCLUSIONS = {"options.ao.off", "options.ao.min", "options.ao.max"};
+    private static final String[] field_152391_aS = {"options.stream.compression.low", "options.stream.compression.medium", "options.stream.compression.high"};
+    private static final String[] field_152392_aT = {"options.stream.chat.enabled.streaming", "options.stream.chat.enabled.always", "options.stream.chat.enabled.never"};
+    private static final String[] field_152393_aU = {"options.stream.chat.userFilter.all", "options.stream.chat.userFilter.subs", "options.stream.chat.userFilter.mods"};
+    private static final String[] field_152394_aV = {"options.stream.mic_toggle.mute", "options.stream.mic_toggle.talk"};
     public float mouseSensitivity = 0.5F;
     public boolean invertMouse;
     public int renderDistanceChunks = -1;
@@ -199,7 +199,7 @@ public class GameSettings
     public boolean showInventoryAchievementHint;
     public int mipmapLevels;
     public int anisotropicFiltering;
-    private Map mapSoundLevels;
+    private final Map mapSoundLevels;
     public float field_152400_J;
     public float field_152401_K;
     public float field_152402_L;
@@ -424,7 +424,7 @@ public class GameSettings
      */
     public static String getKeyDisplayString(int par0)
     {
-        return par0 < 0 ? I18n.format("key.mouseButton", new Object[] {Integer.valueOf(par0 + 101)}): Keyboard.getKeyName(par0);
+        return par0 < 0 ? I18n.format("key.mouseButton", Integer.valueOf(par0 + 101)): Keyboard.getKeyName(par0);
     }
 
     /**
@@ -432,7 +432,7 @@ public class GameSettings
      */
     public static boolean isKeyDown(KeyBinding par0KeyBinding)
     {
-        return par0KeyBinding.getKeyCode() == 0 ? false : (par0KeyBinding.getKeyCode() < 0 ? Mouse.isButtonDown(par0KeyBinding.getKeyCode() + 100) : Keyboard.isKeyDown(par0KeyBinding.getKeyCode()));
+        return par0KeyBinding.getKeyCode() != 0 && (par0KeyBinding.getKeyCode() < 0 ? Mouse.isButtonDown(par0KeyBinding.getKeyCode() + 100) : Keyboard.isKeyDown(par0KeyBinding.getKeyCode()));
     }
 
     public void setKeyCodeSave(KeyBinding p_151440_1_, int p_151440_2_)
@@ -1335,7 +1335,7 @@ public class GameSettings
             par1 = 0;
         }
 
-        return I18n.format(par0ArrayOfStr[par1], new Object[0]);
+        return I18n.format(par0ArrayOfStr[par1]);
     }
 
     /**
@@ -1343,7 +1343,7 @@ public class GameSettings
      */
     public String getKeyBinding(GameSettings.Options par1EnumOptions)
     {
-        String var2 = I18n.format(par1EnumOptions.getEnumString(), new Object[0]) + ": ";
+        String var2 = I18n.format(par1EnumOptions.getEnumString()) + ": ";
 
         if (var2 == null)
         {
@@ -1801,22 +1801,22 @@ public class GameSettings
             if (par1EnumOptions == GameSettings.Options.FRAMERATE_LIMIT)
             {
                 var32 = this.getOptionFloatValue(par1EnumOptions);
-                return var32 == 0.0F ? var2 + "VSync" : (var32 == par1EnumOptions.valueMax ? var2 + I18n.format("options.framerateLimit.max", new Object[0]) : var2 + (int)var32 + " fps");
+                return var32 == 0.0F ? var2 + "VSync" : (var32 == par1EnumOptions.valueMax ? var2 + I18n.format("options.framerateLimit.max") : var2 + (int)var32 + " fps");
             }
             else if (par1EnumOptions.getEnumFloat())
             {
                 var32 = this.getOptionFloatValue(par1EnumOptions);
                 float var4 = par1EnumOptions.normalizeValue(var32);
-                return par1EnumOptions == GameSettings.Options.SENSITIVITY ? (var4 == 0.0F ? var2 + I18n.format("options.sensitivity.min", new Object[0]) : (var4 == 1.0F ? var2 + I18n.format("options.sensitivity.max", new Object[0]) : var2 + (int)(var4 * 200.0F) + "%")) : (par1EnumOptions == GameSettings.Options.FOV ? (var32 == 70.0F ? var2 + I18n.format("options.fov.min", new Object[0]) : (var32 == 110.0F ? var2 + I18n.format("options.fov.max", new Object[0]) : var2 + (int)var32)) : (par1EnumOptions == GameSettings.Options.FRAMERATE_LIMIT ? (var32 == par1EnumOptions.valueMax ? var2 + I18n.format("options.framerateLimit.max", new Object[0]) : var2 + (int)var32 + " fps") : (par1EnumOptions == GameSettings.Options.GAMMA ? (var4 == 0.0F ? var2 + I18n.format("options.gamma.min", new Object[0]) : (var4 == 1.0F ? var2 + I18n.format("options.gamma.max", new Object[0]) : var2 + "+" + (int)(var4 * 100.0F) + "%")) : (par1EnumOptions == GameSettings.Options.SATURATION ? var2 + (int)(var4 * 400.0F) + "%" : (par1EnumOptions == GameSettings.Options.CHAT_OPACITY ? var2 + (int)(var4 * 90.0F + 10.0F) + "%" : (par1EnumOptions == GameSettings.Options.CHAT_HEIGHT_UNFOCUSED ? var2 + GuiNewChat.func_146243_b(var4) + "px" : (par1EnumOptions == GameSettings.Options.CHAT_HEIGHT_FOCUSED ? var2 + GuiNewChat.func_146243_b(var4) + "px" : (par1EnumOptions == GameSettings.Options.CHAT_WIDTH ? var2 + GuiNewChat.func_146233_a(var4) + "px" : (par1EnumOptions == GameSettings.Options.RENDER_DISTANCE ? var2 + (int)var32 + " chunks" : (par1EnumOptions == GameSettings.Options.ANISOTROPIC_FILTERING ? (var32 == 1.0F ? var2 + I18n.format("options.off", new Object[0]) : var2 + (int)var32) : (par1EnumOptions == GameSettings.Options.MIPMAP_LEVELS ? (var32 == 0.0F ? var2 + I18n.format("options.off", new Object[0]) : var2 + (int)var32) : (par1EnumOptions == GameSettings.Options.STREAM_FPS ? var2 + TwitchStream.func_152948_a(var4) + " fps" : (par1EnumOptions == GameSettings.Options.STREAM_KBPS ? var2 + TwitchStream.func_152946_b(var4) + " Kbps" : (par1EnumOptions == GameSettings.Options.STREAM_BYTES_PER_PIXEL ? var2 + String.format("%.3f bpp", new Object[] {Float.valueOf(TwitchStream.func_152947_c(var4))}): (var4 == 0.0F ? var2 + I18n.format("options.off", new Object[0]) : var2 + (int)(var4 * 100.0F) + "%")))))))))))))));
+                return par1EnumOptions == GameSettings.Options.SENSITIVITY ? (var4 == 0.0F ? var2 + I18n.format("options.sensitivity.min") : (var4 == 1.0F ? var2 + I18n.format("options.sensitivity.max") : var2 + (int)(var4 * 200.0F) + "%")) : (par1EnumOptions == GameSettings.Options.FOV ? (var32 == 70.0F ? var2 + I18n.format("options.fov.min") : (var32 == 110.0F ? var2 + I18n.format("options.fov.max") : var2 + (int)var32)) : (par1EnumOptions == GameSettings.Options.FRAMERATE_LIMIT ? (var32 == par1EnumOptions.valueMax ? var2 + I18n.format("options.framerateLimit.max") : var2 + (int)var32 + " fps") : (par1EnumOptions == GameSettings.Options.GAMMA ? (var4 == 0.0F ? var2 + I18n.format("options.gamma.min") : (var4 == 1.0F ? var2 + I18n.format("options.gamma.max") : var2 + "+" + (int)(var4 * 100.0F) + "%")) : (par1EnumOptions == GameSettings.Options.SATURATION ? var2 + (int)(var4 * 400.0F) + "%" : (par1EnumOptions == GameSettings.Options.CHAT_OPACITY ? var2 + (int)(var4 * 90.0F + 10.0F) + "%" : (par1EnumOptions == GameSettings.Options.CHAT_HEIGHT_UNFOCUSED ? var2 + GuiNewChat.func_146243_b(var4) + "px" : (par1EnumOptions == GameSettings.Options.CHAT_HEIGHT_FOCUSED ? var2 + GuiNewChat.func_146243_b(var4) + "px" : (par1EnumOptions == GameSettings.Options.CHAT_WIDTH ? var2 + GuiNewChat.func_146233_a(var4) + "px" : (par1EnumOptions == GameSettings.Options.RENDER_DISTANCE ? var2 + (int)var32 + " chunks" : (par1EnumOptions == GameSettings.Options.ANISOTROPIC_FILTERING ? (var32 == 1.0F ? var2 + I18n.format("options.off") : var2 + (int)var32) : (par1EnumOptions == GameSettings.Options.MIPMAP_LEVELS ? (var32 == 0.0F ? var2 + I18n.format("options.off") : var2 + (int)var32) : (par1EnumOptions == GameSettings.Options.STREAM_FPS ? var2 + TwitchStream.func_152948_a(var4) + " fps" : (par1EnumOptions == GameSettings.Options.STREAM_KBPS ? var2 + TwitchStream.func_152946_b(var4) + " Kbps" : (par1EnumOptions == GameSettings.Options.STREAM_BYTES_PER_PIXEL ? var2 + String.format("%.3f bpp", Float.valueOf(TwitchStream.func_152947_c(var4))): (var4 == 0.0F ? var2 + I18n.format("options.off") : var2 + (int)(var4 * 100.0F) + "%")))))))))))))));
             }
             else if (par1EnumOptions.getEnumBoolean())
             {
                 boolean var31 = this.getOptionOrdinalValue(par1EnumOptions);
-                return var31 ? var2 + I18n.format("options.on", new Object[0]) : var2 + I18n.format("options.off", new Object[0]);
+                return var31 ? var2 + I18n.format("options.on") : var2 + I18n.format("options.off");
             }
             else if (par1EnumOptions == GameSettings.Options.DIFFICULTY)
             {
-                return var2 + I18n.format(this.difficulty.getDifficultyResourceKey(), new Object[0]);
+                return var2 + I18n.format(this.difficulty.getDifficultyResourceKey());
             }
             else if (par1EnumOptions == GameSettings.Options.GUI_SCALE)
             {
@@ -1824,7 +1824,7 @@ public class GameSettings
             }
             else if (par1EnumOptions == GameSettings.Options.CHAT_VISIBILITY)
             {
-                return var2 + I18n.format(this.chatVisibility.getResourceKey(), new Object[0]);
+                return var2 + I18n.format(this.chatVisibility.getResourceKey());
             }
             else if (par1EnumOptions == GameSettings.Options.PARTICLES)
             {
@@ -1854,12 +1854,12 @@ public class GameSettings
             {
                 if (this.fancyGraphics)
                 {
-                    return var2 + I18n.format("options.graphics.fancy", new Object[0]);
+                    return var2 + I18n.format("options.graphics.fancy");
                 }
                 else
                 {
                     String var3 = "options.graphics.fast";
-                    return var2 + I18n.format("options.graphics.fast", new Object[0]);
+                    return var2 + I18n.format("options.graphics.fast");
                 }
             }
             else
@@ -2257,9 +2257,9 @@ public class GameSettings
     {
         if (Reflector.FMLClientHandler.exists())
         {
-            Object var6 = Reflector.call(Reflector.FMLClientHandler_instance, new Object[0]);
+            Object var6 = Reflector.call(Reflector.FMLClientHandler_instance);
 
-            if (var6 != null && Reflector.callBoolean(var6, Reflector.FMLClientHandler_isLoading, new Object[0]))
+            if (var6 != null && Reflector.callBoolean(var6, Reflector.FMLClientHandler_isLoading))
             {
                 return;
             }
@@ -3031,7 +3031,7 @@ public class GameSettings
         this.ofAnimatedTextures = flag;
     }
 
-    public static enum Options
+    public enum Options
     {
         INVERT_MOUSE("INVERT_MOUSE", 0, "INVERT_MOUSE", 0, "options.invertMouse", false, true),
         SENSITIVITY("SENSITIVITY", 1, "SENSITIVITY", 1, "options.sensitivity", true, false),
@@ -3153,12 +3153,12 @@ public class GameSettings
         private final boolean enumBoolean;
         private final String enumString;
         private final float valueStep;
-        private float valueMin;
+        private final float valueMin;
         private float valueMax;
-        private static final GameSettings.Options[] $VALUES = new GameSettings.Options[]{INVERT_MOUSE, SENSITIVITY, FOV, GAMMA, SATURATION, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, ADVANCED_OPENGL, FRAMERATE_LIMIT, FBO_ENABLE, DIFFICULTY, GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE, RENDER_CLOUDS, PARTICLES, CHAT_VISIBILITY, CHAT_COLOR, CHAT_LINKS, CHAT_OPACITY, CHAT_LINKS_PROMPT, SNOOPER_ENABLED, USE_FULLSCREEN, ENABLE_VSYNC, SHOW_CAPE, TOUCHSCREEN, CHAT_SCALE, CHAT_WIDTH, CHAT_HEIGHT_FOCUSED, CHAT_HEIGHT_UNFOCUSED, MIPMAP_LEVELS, ANISOTROPIC_FILTERING, FORCE_UNICODE_FONT, STREAM_BYTES_PER_PIXEL, STREAM_VOLUME_MIC, STREAM_VOLUME_SYSTEM, STREAM_KBPS, STREAM_FPS, STREAM_COMPRESSION, STREAM_SEND_METADATA, STREAM_CHAT_ENABLED, STREAM_CHAT_USER_FILTER, STREAM_MIC_TOGGLE_BEHAVIOR};
+        private static final GameSettings.Options[] $VALUES = {INVERT_MOUSE, SENSITIVITY, FOV, GAMMA, SATURATION, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, ADVANCED_OPENGL, FRAMERATE_LIMIT, FBO_ENABLE, DIFFICULTY, GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE, RENDER_CLOUDS, PARTICLES, CHAT_VISIBILITY, CHAT_COLOR, CHAT_LINKS, CHAT_OPACITY, CHAT_LINKS_PROMPT, SNOOPER_ENABLED, USE_FULLSCREEN, ENABLE_VSYNC, SHOW_CAPE, TOUCHSCREEN, CHAT_SCALE, CHAT_WIDTH, CHAT_HEIGHT_FOCUSED, CHAT_HEIGHT_UNFOCUSED, MIPMAP_LEVELS, ANISOTROPIC_FILTERING, FORCE_UNICODE_FONT, STREAM_BYTES_PER_PIXEL, STREAM_VOLUME_MIC, STREAM_VOLUME_SYSTEM, STREAM_KBPS, STREAM_FPS, STREAM_COMPRESSION, STREAM_SEND_METADATA, STREAM_CHAT_ENABLED, STREAM_CHAT_USER_FILTER, STREAM_MIC_TOGGLE_BEHAVIOR};
       
 
-        private static final GameSettings.Options[] $VALUES$ = new GameSettings.Options[]{INVERT_MOUSE, SENSITIVITY, FOV, GAMMA, SATURATION, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, ADVANCED_OPENGL, FRAMERATE_LIMIT, FBO_ENABLE, DIFFICULTY, GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE, RENDER_CLOUDS, PARTICLES, CHAT_VISIBILITY, CHAT_COLOR, CHAT_LINKS, CHAT_OPACITY, CHAT_LINKS_PROMPT, SNOOPER_ENABLED, USE_FULLSCREEN, ENABLE_VSYNC, SHOW_CAPE, TOUCHSCREEN, CHAT_SCALE, CHAT_WIDTH, CHAT_HEIGHT_FOCUSED, CHAT_HEIGHT_UNFOCUSED, MIPMAP_LEVELS, ANISOTROPIC_FILTERING, FORCE_UNICODE_FONT, STREAM_BYTES_PER_PIXEL, STREAM_VOLUME_MIC, STREAM_VOLUME_SYSTEM, STREAM_KBPS, STREAM_FPS, STREAM_COMPRESSION, STREAM_SEND_METADATA, STREAM_CHAT_ENABLED, STREAM_CHAT_USER_FILTER, STREAM_MIC_TOGGLE_BEHAVIOR, FOG_FANCY, FOG_START, MIPMAP_TYPE, LOAD_FAR, PRELOADED_CHUNKS, SMOOTH_FPS, CLOUDS, CLOUD_HEIGHT, TREES, GRASS, RAIN, WATER, ANIMATED_WATER, ANIMATED_LAVA, ANIMATED_FIRE, ANIMATED_PORTAL, AO_LEVEL, LAGOMETER, SHOW_FPS, AUTOSAVE_TICKS, BETTER_GRASS, ANIMATED_REDSTONE, ANIMATED_EXPLOSION, ANIMATED_FLAME, ANIMATED_SMOKE, WEATHER, SKY, STARS, SUN_MOON, VIGNETTE, CHUNK_UPDATES, CHUNK_UPDATES_DYNAMIC, TIME, CLEAR_WATER, SMOOTH_WORLD, DEPTH_FOG, VOID_PARTICLES, WATER_PARTICLES, RAIN_SPLASH, PORTAL_PARTICLES, POTION_PARTICLES, PROFILER, DRIPPING_WATER_LAVA, BETTER_SNOW, FULLSCREEN_MODE, ANIMATED_TERRAIN, ANIMATED_ITEMS, SWAMP_COLORS, RANDOM_MOBS, SMOOTH_BIOMES, CUSTOM_FONTS, CUSTOM_COLORS, SHOW_CAPES, CONNECTED_TEXTURES, AA_LEVEL, ANIMATED_TEXTURES, NATURAL_TEXTURES, CHUNK_LOADING, HELD_ITEM_TOOLTIPS, DROPPED_ITEMS, LAZY_CHUNK_LOADING, CUSTOM_SKY, FAST_MATH, FAST_RENDER, TRANSLUCENT_BLOCKS};
+        private static final GameSettings.Options[] $VALUES$ = {INVERT_MOUSE, SENSITIVITY, FOV, GAMMA, SATURATION, RENDER_DISTANCE, VIEW_BOBBING, ANAGLYPH, ADVANCED_OPENGL, FRAMERATE_LIMIT, FBO_ENABLE, DIFFICULTY, GRAPHICS, AMBIENT_OCCLUSION, GUI_SCALE, RENDER_CLOUDS, PARTICLES, CHAT_VISIBILITY, CHAT_COLOR, CHAT_LINKS, CHAT_OPACITY, CHAT_LINKS_PROMPT, SNOOPER_ENABLED, USE_FULLSCREEN, ENABLE_VSYNC, SHOW_CAPE, TOUCHSCREEN, CHAT_SCALE, CHAT_WIDTH, CHAT_HEIGHT_FOCUSED, CHAT_HEIGHT_UNFOCUSED, MIPMAP_LEVELS, ANISOTROPIC_FILTERING, FORCE_UNICODE_FONT, STREAM_BYTES_PER_PIXEL, STREAM_VOLUME_MIC, STREAM_VOLUME_SYSTEM, STREAM_KBPS, STREAM_FPS, STREAM_COMPRESSION, STREAM_SEND_METADATA, STREAM_CHAT_ENABLED, STREAM_CHAT_USER_FILTER, STREAM_MIC_TOGGLE_BEHAVIOR, FOG_FANCY, FOG_START, MIPMAP_TYPE, LOAD_FAR, PRELOADED_CHUNKS, SMOOTH_FPS, CLOUDS, CLOUD_HEIGHT, TREES, GRASS, RAIN, WATER, ANIMATED_WATER, ANIMATED_LAVA, ANIMATED_FIRE, ANIMATED_PORTAL, AO_LEVEL, LAGOMETER, SHOW_FPS, AUTOSAVE_TICKS, BETTER_GRASS, ANIMATED_REDSTONE, ANIMATED_EXPLOSION, ANIMATED_FLAME, ANIMATED_SMOKE, WEATHER, SKY, STARS, SUN_MOON, VIGNETTE, CHUNK_UPDATES, CHUNK_UPDATES_DYNAMIC, TIME, CLEAR_WATER, SMOOTH_WORLD, DEPTH_FOG, VOID_PARTICLES, WATER_PARTICLES, RAIN_SPLASH, PORTAL_PARTICLES, POTION_PARTICLES, PROFILER, DRIPPING_WATER_LAVA, BETTER_SNOW, FULLSCREEN_MODE, ANIMATED_TERRAIN, ANIMATED_ITEMS, SWAMP_COLORS, RANDOM_MOBS, SMOOTH_BIOMES, CUSTOM_FONTS, CUSTOM_COLORS, SHOW_CAPES, CONNECTED_TEXTURES, AA_LEVEL, ANIMATED_TEXTURES, NATURAL_TEXTURES, CHUNK_LOADING, HELD_ITEM_TOOLTIPS, DROPPED_ITEMS, LAZY_CHUNK_LOADING, CUSTOM_SKY, FAST_MATH, FAST_RENDER, TRANSLUCENT_BLOCKS};
         private static final String __OBFID = "CL_00000653";
 
         public static GameSettings.Options getEnumOptions(int par0)
@@ -3179,12 +3179,12 @@ public class GameSettings
             return null;
         }
 
-        private Options(String p_i46401_1_, int p_i46401_2_, String par1Str, int par2, String par3Str, boolean par4, boolean par5)
+        Options(String p_i46401_1_, int p_i46401_2_, String par1Str, int par2, String par3Str, boolean par4, boolean par5)
         {
             this(p_i46401_1_, p_i46401_2_, par1Str, par2, par3Str, par4, par5, 0.0F, 1.0F, 0.0F);
         }
 
-        private Options(String p_i46402_1_, int p_i46402_2_, String p_i45004_1_, int p_i45004_2_, String p_i45004_3_, boolean p_i45004_4_, boolean p_i45004_5_, float p_i45004_6_, float p_i45004_7_, float p_i45004_8_)
+        Options(String p_i46402_1_, int p_i46402_2_, String p_i45004_1_, int p_i45004_2_, String p_i45004_3_, boolean p_i45004_4_, boolean p_i45004_5_, float p_i45004_6_, float p_i45004_7_, float p_i45004_8_)
         {
             this.enumString = p_i45004_3_;
             this.enumFloat = p_i45004_4_;
@@ -3250,7 +3250,7 @@ public class GameSettings
             return p_148264_1_;
         }
 
-        private Options(String p_i46403_1_, int p_i46403_2_, String p_i45005_1_, int p_i45005_2_, String p_i45005_3_, boolean p_i45005_4_, boolean p_i45005_5_, float p_i45005_6_, float p_i45005_7_, float p_i45005_8_, Object p_i45005_9_)
+        Options(String p_i46403_1_, int p_i46403_2_, String p_i45005_1_, int p_i45005_2_, String p_i45005_3_, boolean p_i45005_4_, boolean p_i45005_5_, float p_i45005_6_, float p_i45005_7_, float p_i45005_8_, Object p_i45005_9_)
         {
             this(p_i46403_1_, p_i46403_2_, p_i45005_1_, p_i45005_2_, p_i45005_3_, p_i45005_4_, p_i45005_5_, p_i45005_6_, p_i45005_7_, p_i45005_8_);
         }
@@ -3274,7 +3274,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var16)
             {
-                ;
             }
 
             try
@@ -3283,7 +3282,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var15)
             {
-                ;
             }
 
             try
@@ -3292,7 +3290,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var14)
             {
-                ;
             }
 
             try
@@ -3301,7 +3298,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var13)
             {
-                ;
             }
 
             try
@@ -3310,7 +3306,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var12)
             {
-                ;
             }
 
             try
@@ -3319,7 +3314,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var11)
             {
-                ;
             }
 
             try
@@ -3328,7 +3322,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var10)
             {
-                ;
             }
 
             try
@@ -3337,7 +3330,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var9)
             {
-                ;
             }
 
             try
@@ -3346,7 +3338,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var8)
             {
-                ;
             }
 
             try
@@ -3355,7 +3346,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var7)
             {
-                ;
             }
 
             try
@@ -3364,7 +3354,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var6)
             {
-                ;
             }
 
             try
@@ -3373,7 +3362,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var5)
             {
-                ;
             }
 
             try
@@ -3382,7 +3370,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var4)
             {
-                ;
             }
 
             try
@@ -3391,7 +3378,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             try
@@ -3400,7 +3386,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -3409,7 +3394,6 @@ public class GameSettings
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

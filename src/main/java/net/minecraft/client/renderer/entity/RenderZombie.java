@@ -15,7 +15,7 @@ public class RenderZombie extends RenderBiped
     private static final ResourceLocation zombiePigmanTextures = new ResourceLocation("textures/entity/zombie_pigman.png");
     private static final ResourceLocation zombieTextures = new ResourceLocation("textures/entity/zombie/zombie.png");
     private static final ResourceLocation zombieVillagerTextures = new ResourceLocation("textures/entity/zombie/zombie_villager.png");
-    private ModelBiped field_82434_o;
+    private final ModelBiped field_82434_o;
     private ModelZombieVillager zombieVillagerModel;
     protected ModelBiped field_82437_k;
     protected ModelBiped field_82435_l;

@@ -11,23 +11,23 @@ import net.minecraft.potion.PotionEffect;
 public class EnchantmentDamage extends Enchantment
 {
     /** Holds the name to be translated of each protection type. */
-    private static final String[] protectionName = new String[] {"all", "undead", "arthropods"};
+    private static final String[] protectionName = {"all", "undead", "arthropods"};
 
     /**
      * Holds the base factor of enchantability needed to be able to use the enchant.
      */
-    private static final int[] baseEnchantability = new int[] {1, 5, 5};
+    private static final int[] baseEnchantability = {1, 5, 5};
 
     /**
      * Holds how much each level increased the enchantability factor to be able to use this enchant.
      */
-    private static final int[] levelEnchantability = new int[] {11, 8, 8};
+    private static final int[] levelEnchantability = {11, 8, 8};
 
     /**
      * Used on the formula of base enchantability, this is the 'window' factor of values to be able to use thing
      * enchant.
      */
-    private static final int[] thresholdEnchantability = new int[] {20, 20, 20};
+    private static final int[] thresholdEnchantability = {20, 20, 20};
 
     /**
      * Defines the type of damage of the enchantment, 0 = all, 1 = undead, 3 = arthropods
@@ -88,7 +88,7 @@ public class EnchantmentDamage extends Enchantment
 
     public boolean canApply(ItemStack p_92089_1_)
     {
-        return p_92089_1_.getItem() instanceof ItemAxe ? true : super.canApply(p_92089_1_);
+        return p_92089_1_.getItem() instanceof ItemAxe || super.canApply(p_92089_1_);
     }
 
     public void func_151368_a(EntityLivingBase p_151368_1_, Entity p_151368_2_, int p_151368_3_)

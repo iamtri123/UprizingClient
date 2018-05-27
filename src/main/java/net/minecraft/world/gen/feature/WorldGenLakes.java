@@ -10,7 +10,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class WorldGenLakes extends WorldGenerator
 {
-    private Block field_150556_a;
+    private final Block field_150556_a;
     private static final String __OBFID = "CL_00000418";
 
     public WorldGenLakes(Block p_i45455_1_)
@@ -24,7 +24,6 @@ public class WorldGenLakes extends WorldGenerator
 
         for (p_76484_5_ -= 8; p_76484_4_ > 5 && p_76484_1_.isAirBlock(p_76484_3_, p_76484_4_, p_76484_5_); --p_76484_4_)
         {
-            ;
         }
 
         if (p_76484_4_ <= 4)

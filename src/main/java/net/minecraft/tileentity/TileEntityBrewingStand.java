@@ -13,8 +13,8 @@ import net.minecraft.potion.PotionHelper;
 
 public class TileEntityBrewingStand extends TileEntity implements ISidedInventory
 {
-    private static final int[] field_145941_a = new int[] {3};
-    private static final int[] field_145947_i = new int[] {0, 1, 2};
+    private static final int[] field_145941_a = {3};
+    private static final int[] field_145947_i = {0, 1, 2};
     private ItemStack[] field_145945_j = new ItemStack[4];
     private int field_145946_k;
     private int field_145943_l;
@@ -310,7 +310,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
      */
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
-        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) != this ? false : p_70300_1_.getDistanceSq((double)this.field_145851_c + 0.5D, (double)this.field_145848_d + 0.5D, (double)this.field_145849_e + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) == this && p_70300_1_.getDistanceSq((double) this.field_145851_c + 0.5D, (double) this.field_145848_d + 0.5D, (double) this.field_145849_e + 0.5D) <= 64.0D;
     }
 
     public void openInventory() {}

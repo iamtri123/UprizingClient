@@ -20,10 +20,10 @@ public class WorldChunkManager
     private GenLayer biomeIndexLayer;
 
     /** The BiomeCache object for this world. */
-    private BiomeCache biomeCache;
+    private final BiomeCache biomeCache;
 
     /** A list of biomes that the player can spawn in. */
-    private List biomesToSpawnIn;
+    private final List biomesToSpawnIn;
     private static final String __OBFID = "CL_00000166";
 
     protected WorldChunkManager()

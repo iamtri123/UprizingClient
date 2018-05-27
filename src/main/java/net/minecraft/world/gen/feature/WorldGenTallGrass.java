@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 public class WorldGenTallGrass extends WorldGenerator
 {
-    private Block field_150522_a;
-    private int tallGrassMetadata;
+    private final Block field_150522_a;
+    private final int tallGrassMetadata;
     private static final String __OBFID = "CL_00000437";
 
     public WorldGenTallGrass(Block p_i45466_1_, int p_i45466_2_)

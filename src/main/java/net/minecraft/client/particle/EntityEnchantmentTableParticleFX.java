@@ -4,10 +4,10 @@ import net.minecraft.world.World;
 
 public class EntityEnchantmentTableParticleFX extends EntityFX
 {
-    private float field_70565_a;
-    private double field_70568_aq;
-    private double field_70567_ar;
-    private double field_70566_as;
+    private final float field_70565_a;
+    private final double field_70568_aq;
+    private final double field_70567_ar;
+    private final double field_70566_as;
     private static final String __OBFID = "CL_00000902";
 
     public EntityEnchantmentTableParticleFX(World p_i1204_1_, double p_i1204_2_, double p_i1204_4_, double p_i1204_6_, double p_i1204_8_, double p_i1204_10_, double p_i1204_12_)

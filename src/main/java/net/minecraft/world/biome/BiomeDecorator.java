@@ -283,7 +283,6 @@ public class BiomeDecorator
 
             for (var6 = this.randomGenerator.nextInt(this.currentWorld.getHeightValue(var4, var5) * 2); var6 > 0 && this.currentWorld.isAirBlock(var4, var6 - 1, var5); --var6)
             {
-                ;
             }
 
             this.waterlilyGen.generate(this.currentWorld, this.randomGenerator, var4, var6, var5);

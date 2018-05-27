@@ -21,7 +21,7 @@ public class MathHelper
     /**
      * A table of sin values computed from 0 (inclusive) to 2*pi (exclusive), with steps of 2*PI / 65536.
      */
-    private static float[] SIN_TABLE = new float[65536];
+    private static final float[] SIN_TABLE = new float[65536];
 
     /**
      * Though it looks like an array, this is really more like a mapping.  Key (index of this array) is the upper 5 bits
@@ -269,7 +269,6 @@ public class MathHelper
         }
         catch (Throwable var4)
         {
-            ;
         }
 
         return var2;
@@ -288,7 +287,6 @@ public class MathHelper
         }
         catch (Throwable var5)
         {
-            ;
         }
 
         if (var3 < par2)
@@ -312,7 +310,6 @@ public class MathHelper
         }
         catch (Throwable var6)
         {
-            ;
         }
 
         return var3;
@@ -328,7 +325,6 @@ public class MathHelper
         }
         catch (Throwable var8)
         {
-            ;
         }
 
         if (var5 < par3)

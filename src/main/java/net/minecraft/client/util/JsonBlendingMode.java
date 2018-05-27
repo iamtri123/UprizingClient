@@ -86,7 +86,7 @@ public class JsonBlendingMode
         else
         {
             JsonBlendingMode var2 = (JsonBlendingMode)p_equals_1_;
-            return this.field_148112_f != var2.field_148112_f ? false : (this.field_148115_e != var2.field_148115_e ? false : (this.field_148114_d != var2.field_148114_d ? false : (this.field_148119_h != var2.field_148119_h ? false : (this.field_148113_g != var2.field_148113_g ? false : (this.field_148117_c != var2.field_148117_c ? false : this.field_148116_b == var2.field_148116_b)))));
+            return this.field_148112_f == var2.field_148112_f && (this.field_148115_e == var2.field_148115_e && (this.field_148114_d == var2.field_148114_d && (this.field_148119_h == var2.field_148119_h && (this.field_148113_g == var2.field_148113_g && (this.field_148117_c == var2.field_148117_c && this.field_148116_b == var2.field_148116_b)))));
         }
     }
 

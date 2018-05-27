@@ -23,25 +23,25 @@ import net.minecraft.world.gen.structure.MapGenNetherBridge;
 
 public class ChunkProviderHell implements IChunkProvider
 {
-    private Random hellRNG;
+    private final Random hellRNG;
 
     /** A NoiseGeneratorOctaves used in generating nether terrain */
-    private NoiseGeneratorOctaves netherNoiseGen1;
-    private NoiseGeneratorOctaves netherNoiseGen2;
-    private NoiseGeneratorOctaves netherNoiseGen3;
+    private final NoiseGeneratorOctaves netherNoiseGen1;
+    private final NoiseGeneratorOctaves netherNoiseGen2;
+    private final NoiseGeneratorOctaves netherNoiseGen3;
 
     /** Determines whether slowsand or gravel can be generated at a location */
-    private NoiseGeneratorOctaves slowsandGravelNoiseGen;
+    private final NoiseGeneratorOctaves slowsandGravelNoiseGen;
 
     /**
      * Determines whether something other than nettherack can be generated at a location
      */
-    private NoiseGeneratorOctaves netherrackExculsivityNoiseGen;
+    private final NoiseGeneratorOctaves netherrackExculsivityNoiseGen;
     public NoiseGeneratorOctaves netherNoiseGen6;
     public NoiseGeneratorOctaves netherNoiseGen7;
 
     /** Is the world that the nether is getting generated. */
-    private World worldObj;
+    private final World worldObj;
     private double[] noiseField;
     public MapGenNetherBridge genNetherBridge = new MapGenNetherBridge();
 
@@ -55,7 +55,7 @@ public class ChunkProviderHell implements IChunkProvider
      * Holds the noise used to determine whether something other than netherrack can be generated at a location
      */
     private double[] netherrackExclusivityNoise = new double[256];
-    private MapGenBase netherCaveGenerator = new MapGenCavesHell();
+    private final MapGenBase netherCaveGenerator = new MapGenCavesHell();
     double[] noiseData1;
     double[] noiseData2;
     double[] noiseData3;

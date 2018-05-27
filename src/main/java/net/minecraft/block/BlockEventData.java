@@ -2,14 +2,14 @@ package net.minecraft.block;
 
 public class BlockEventData
 {
-    private int coordX;
-    private int coordY;
-    private int coordZ;
-    private Block field_151344_d;
+    private final int coordX;
+    private final int coordY;
+    private final int coordZ;
+    private final Block field_151344_d;
 
     /** Different for each blockID */
-    private int eventID;
-    private int eventParameter;
+    private final int eventID;
+    private final int eventParameter;
     private static final String __OBFID = "CL_00000131";
 
     public BlockEventData(int p_i45362_1_, int p_i45362_2_, int p_i45362_3_, Block p_i45362_4_, int p_i45362_5_, int p_i45362_6_)

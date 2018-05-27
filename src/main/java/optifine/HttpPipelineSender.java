@@ -14,7 +14,7 @@ public class HttpPipelineSender extends Thread
 {
     private HttpPipelineConnection httpPipelineConnection = null;
     private static final String CRLF = "\r\n";
-    private static Charset ASCII = Charset.forName("ASCII");
+    private static final Charset ASCII = Charset.forName("ASCII");
 
     public HttpPipelineSender(HttpPipelineConnection httpPipelineConnection)
     {

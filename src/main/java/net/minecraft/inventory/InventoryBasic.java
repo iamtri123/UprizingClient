@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 public class InventoryBasic implements IInventory
 {
     private String inventoryTitle;
-    private int slotsCount;
-    private ItemStack[] inventoryContents;
+    private final int slotsCount;
+    private final ItemStack[] inventoryContents;
     private List field_70480_d;
     private boolean field_94051_e;
     private static final String __OBFID = "CL_00001514";

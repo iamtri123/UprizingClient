@@ -23,21 +23,21 @@ public class ChunkProviderClient implements IChunkProvider
      * The completely empty chunk used by ChunkProviderClient when chunkMapping doesn't contain the requested
      * coordinates.
      */
-    private Chunk blankChunk;
+    private final Chunk blankChunk;
 
     /**
      * The mapping between ChunkCoordinates and Chunks that ChunkProviderClient maintains.
      */
-    private LongHashMap chunkMapping = new LongHashMap();
+    private final LongHashMap chunkMapping = new LongHashMap();
 
     /**
      * This may have been intended to be an iterable version of all currently loaded chunks (MultiplayerChunkCache),
      * with identical contents to chunkMapping's values. However it is never actually added to.
      */
-    private List chunkListing = new ArrayList();
+    private final List chunkListing = new ArrayList();
 
     /** Reference to the World object. */
-    private World worldObj;
+    private final World worldObj;
     private static final String __OBFID = "CL_00000880";
 
     public ChunkProviderClient(World p_i1184_1_)
@@ -124,7 +124,7 @@ public class ChunkProviderClient implements IChunkProvider
 
         if (System.currentTimeMillis() - var1 > 100L)
         {
-            logger.info("Warning: Clientside chunk ticking took {} ms", new Object[] {Long.valueOf(System.currentTimeMillis() - var1)});
+            logger.info("Warning: Clientside chunk ticking took {} ms", Long.valueOf(System.currentTimeMillis() - var1));
         }
 
         return false;

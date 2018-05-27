@@ -35,11 +35,11 @@ public class CommandBroadcast extends CommandBase
         if (p_71515_2_.length > 0 && p_71515_2_[0].length() > 0)
         {
             IChatComponent var3 = func_147176_a(p_71515_1_, p_71515_2_, 0, true);
-            MinecraftServer.getServer().getConfigurationManager().func_148539_a(new ChatComponentTranslation("chat.type.announcement", new Object[] {p_71515_1_.getCommandSenderName(), var3}));
+            MinecraftServer.getServer().getConfigurationManager().func_148539_a(new ChatComponentTranslation("chat.type.announcement", p_71515_1_.getCommandSenderName(), var3));
         }
         else
         {
-            throw new WrongUsageException("commands.say.usage", new Object[0]);
+            throw new WrongUsageException("commands.say.usage");
         }
     }
 

@@ -71,19 +71,19 @@ public class EntityList
     private static final Logger logger = LogManager.getLogger();
 
     /** Provides a mapping between entity classes and a string */
-    private static Map stringToClassMapping = new HashMap();
+    private static final Map stringToClassMapping = new HashMap();
 
     /** Provides a mapping between a string and an entity classes */
-    private static Map classToStringMapping = new HashMap();
+    private static final Map classToStringMapping = new HashMap();
 
     /** provides a mapping between an entityID and an Entity Class */
-    private static Map IDtoClassMapping = new HashMap();
+    private static final Map IDtoClassMapping = new HashMap();
 
     /** provides a mapping between an Entity Class and an entity ID */
-    private static Map classToIDMapping = new HashMap();
+    private static final Map classToIDMapping = new HashMap();
 
     /** Maps entity names to their numeric identifiers */
-    private static Map stringToIDMapping = new HashMap();
+    private static final Map stringToIDMapping = new HashMap();
 
     /** This is a HashMap of the Creative Entity Eggs/Spawners. */
     public static HashMap entityEggs = new LinkedHashMap();

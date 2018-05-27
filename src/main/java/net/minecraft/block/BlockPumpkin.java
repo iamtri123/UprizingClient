@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class BlockPumpkin extends BlockDirectional
 {
-    private boolean field_149985_a;
+    private final boolean field_149985_a;
     private IIcon field_149984_b;
     private IIcon field_149986_M;
     private static final String __OBFID = "CL_00000291";

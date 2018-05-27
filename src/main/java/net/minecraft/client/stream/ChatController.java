@@ -213,7 +213,7 @@ public class ChatController implements IChatCallbacks
             if (ErrorCode.failed(var1))
             {
                 String var2 = ErrorCode.getString(var1);
-                this.func_152995_h(String.format("Error disconnecting: %s", new Object[] {var2}));
+                this.func_152995_h(String.format("Error disconnecting: %s", var2));
                 return false;
             }
 
@@ -236,7 +236,7 @@ public class ChatController implements IChatCallbacks
             if (ErrorCode.failed(var2))
             {
                 String var3 = ErrorCode.getString(var2);
-                this.func_152995_h(String.format("Error initializing chat: %s", new Object[] {var3}));
+                this.func_152995_h(String.format("Error initializing chat: %s", var3));
                 this.func_152989_q();
                 return false;
             }
@@ -259,7 +259,7 @@ public class ChatController implements IChatCallbacks
             if (ErrorCode.failed(var1))
             {
                 String var2 = ErrorCode.getString(var1);
-                this.func_152995_h(String.format("Error shutting down chat: %s", new Object[] {var2}));
+                this.func_152995_h(String.format("Error shutting down chat: %s", var2));
                 return false;
             }
         }
@@ -281,7 +281,7 @@ public class ChatController implements IChatCallbacks
             if (ErrorCode.failed(var1))
             {
                 var2 = ErrorCode.getString(var1);
-                this.func_152995_h(String.format("Error flushing chat events: %s", new Object[] {var2}));
+                this.func_152995_h(String.format("Error flushing chat events: %s", var2));
             }
 
             switch (ChatController.SwitchChatState.field_152983_b[this.field_153011_i.ordinal()])
@@ -305,7 +305,7 @@ public class ChatController implements IChatCallbacks
                     if (ErrorCode.failed(var1))
                     {
                         var2 = ErrorCode.getString(var1);
-                        this.func_152995_h(String.format("Error connecting: %s", new Object[] {var2}));
+                        this.func_152995_h(String.format("Error connecting: %s", var2));
                         this.func_152993_m();
                         this.func_152989_q();
                     }
@@ -336,7 +336,7 @@ public class ChatController implements IChatCallbacks
             if (ErrorCode.failed(var2))
             {
                 String var3 = ErrorCode.getString(var2);
-                this.func_152995_h(String.format("Error sending chat message: %s", new Object[] {var3}));
+                this.func_152995_h(String.format("Error sending chat message: %s", var3));
                 return false;
             }
             else
@@ -401,7 +401,7 @@ public class ChatController implements IChatCallbacks
 
     protected void func_152995_h(String p_152995_1_)
     {
-        field_153018_p.error(TwitchStream.field_152949_a, "[Chat controller] {}", new Object[] {p_152995_1_});
+        field_153018_p.error(TwitchStream.field_152949_a, "[Chat controller] {}", p_152995_1_);
     }
 
     public interface ChatListener
@@ -417,7 +417,7 @@ public class ChatController implements IChatCallbacks
         void func_152902_f();
     }
 
-    public static enum ChatState
+    public enum ChatState
     {
         Uninitialized("Uninitialized", 0),
         Initialized("Initialized", 1),
@@ -425,10 +425,10 @@ public class ChatController implements IChatCallbacks
         Connected("Connected", 3),
         Disconnected("Disconnected", 4);
 
-        private static final ChatController.ChatState[] $VALUES = new ChatController.ChatState[]{Uninitialized, Initialized, Connecting, Connected, Disconnected};
+        private static final ChatController.ChatState[] $VALUES = {Uninitialized, Initialized, Connecting, Connected, Disconnected};
         private static final String __OBFID = "CL_00001817";
 
-        private ChatState(String p_i1021_1_, int p_i1021_2_) {}
+        ChatState(String p_i1021_1_, int p_i1021_2_) {}
     }
 
     static final class SwitchChatState
@@ -446,7 +446,6 @@ public class ChatController implements IChatCallbacks
             }
             catch (NoSuchFieldError var7)
             {
-                ;
             }
 
             try
@@ -455,7 +454,6 @@ public class ChatController implements IChatCallbacks
             }
             catch (NoSuchFieldError var6)
             {
-                ;
             }
 
             try
@@ -464,7 +462,6 @@ public class ChatController implements IChatCallbacks
             }
             catch (NoSuchFieldError var5)
             {
-                ;
             }
 
             try
@@ -473,7 +470,6 @@ public class ChatController implements IChatCallbacks
             }
             catch (NoSuchFieldError var4)
             {
-                ;
             }
 
             try
@@ -482,7 +478,6 @@ public class ChatController implements IChatCallbacks
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             field_152982_a = new int[ChatEvent.values().length];
@@ -493,7 +488,6 @@ public class ChatController implements IChatCallbacks
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -502,7 +496,6 @@ public class ChatController implements IChatCallbacks
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

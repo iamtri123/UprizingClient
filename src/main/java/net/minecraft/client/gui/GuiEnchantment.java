@@ -22,8 +22,8 @@ public class GuiEnchantment extends GuiContainer
     private static final ResourceLocation field_147078_C = new ResourceLocation("textures/gui/container/enchanting_table.png");
     private static final ResourceLocation field_147070_D = new ResourceLocation("textures/entity/enchanting_table_book.png");
     private static final ModelBook field_147072_E = new ModelBook();
-    private Random field_147074_F = new Random();
-    private ContainerEnchantment field_147075_G;
+    private final Random field_147074_F = new Random();
+    private final ContainerEnchantment field_147075_G;
     public int field_147073_u;
     public float field_147071_v;
     public float field_147069_w;
@@ -32,7 +32,7 @@ public class GuiEnchantment extends GuiContainer
     public float field_147080_z;
     public float field_147076_A;
     ItemStack field_147077_B;
-    private String field_147079_H;
+    private final String field_147079_H;
     private static final String __OBFID = "CL_00000757";
 
     public GuiEnchantment(InventoryPlayer p_i46398_1_, World p_i46398_2_, int p_i46398_3_, int p_i46398_4_, int p_i46398_5_, String p_i46398_6_)
@@ -44,8 +44,8 @@ public class GuiEnchantment extends GuiContainer
 
     protected void func_146979_b(int p_146979_1_, int p_146979_2_)
     {
-        this.fontRendererObj.drawString(this.field_147079_H == null ? I18n.format("container.enchant", new Object[0]) : this.field_147079_H, 12, 5, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.field_147000_g - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(this.field_147079_H == null ? I18n.format("container.enchant") : this.field_147079_H, 12, 5, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.field_147000_g - 96 + 2, 4210752);
     }
 
     /**

@@ -107,7 +107,7 @@ public class BlockFlowerPot extends BlockContainer
 
     private boolean func_149928_a(Block p_149928_1_, int p_149928_2_)
     {
-        return p_149928_1_ != Blocks.yellow_flower && p_149928_1_ != Blocks.red_flower && p_149928_1_ != Blocks.cactus && p_149928_1_ != Blocks.brown_mushroom && p_149928_1_ != Blocks.red_mushroom && p_149928_1_ != Blocks.sapling && p_149928_1_ != Blocks.deadbush ? p_149928_1_ == Blocks.tallgrass && p_149928_2_ == 2 : true;
+        return p_149928_1_ == Blocks.yellow_flower || p_149928_1_ == Blocks.red_flower || p_149928_1_ == Blocks.cactus || p_149928_1_ == Blocks.brown_mushroom || p_149928_1_ == Blocks.red_mushroom || p_149928_1_ == Blocks.sapling || p_149928_1_ == Blocks.deadbush || p_149928_1_ == Blocks.tallgrass && p_149928_2_ == 2;
     }
 
     /**

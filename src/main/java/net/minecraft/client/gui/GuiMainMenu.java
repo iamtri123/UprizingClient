@@ -35,7 +35,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final Random rand = new Random();
 
     /** Counts the number of screen updates. */
-    private float updateCounter;
+    private final float updateCounter;
 
     /** The splash message. */
     private String splashText;
@@ -56,7 +56,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
 
     /** An array of all the paths to the panorama pictures. */
-    private static final ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {new ResourceLocation("textures/gui/title/background/panorama_0.png"), new ResourceLocation("textures/gui/title/background/panorama_1.png"), new ResourceLocation("textures/gui/title/background/panorama_2.png"), new ResourceLocation("textures/gui/title/background/panorama_3.png"), new ResourceLocation("textures/gui/title/background/panorama_4.png"), new ResourceLocation("textures/gui/title/background/panorama_5.png")};
+    private static final ResourceLocation[] titlePanoramaPaths = {new ResourceLocation("textures/gui/title/background/panorama_0.png"), new ResourceLocation("textures/gui/title/background/panorama_1.png"), new ResourceLocation("textures/gui/title/background/panorama_2.png"), new ResourceLocation("textures/gui/title/background/panorama_3.png"), new ResourceLocation("textures/gui/title/background/panorama_4.png"), new ResourceLocation("textures/gui/title/background/panorama_5.png")};
     public static final String field_96138_a = "Please click " + EnumChatFormatting.UNDERLINE + "here" + EnumChatFormatting.RESET + " for more information.";
     private int field_92024_r;
     private int field_92023_s;
@@ -100,7 +100,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         catch (IOException var12)
         {
-            ;
         }
         finally
         {
@@ -112,7 +111,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
                 }
                 catch (IOException var11)
                 {
-                    ;
                 }
             }
         }
@@ -122,8 +120,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
         if (!GLContext.getCapabilities().OpenGL20 && !OpenGlHelper.func_153193_b())
         {
-            this.field_92025_p = I18n.format("title.oldgl1", new Object[0]);
-            this.field_146972_A = I18n.format("title.oldgl2", new Object[0]);
+            this.field_92025_p = I18n.format("title.oldgl1");
+            this.field_146972_A = I18n.format("title.oldgl2");
             this.field_104024_v = "https://help.mojang.com/customer/portal/articles/325948?ref=game";
         }
     }
@@ -192,8 +190,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.addSingleplayerMultiplayerButtons(var3, 24);
         }
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, var3 + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, var3 + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, var3 + 72 + 12, 98, 20, I18n.format("menu.options")));
+        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, var3 + 72 + 12, 98, 20, I18n.format("menu.quit")));
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, var3 + 72 + 12));
         Object var4 = this.field_104025_t;
 
@@ -214,9 +212,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(14, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer")));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer")));
+        this.buttonList.add(new GuiButton(14, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online")));
     }
 
     /**
@@ -224,8 +222,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     private void addDemoButtons(int p_73972_1_, int p_73972_2_)
     {
-        this.buttonList.add(new GuiButton(11, this.width / 2 - 100, p_73972_1_, I18n.format("menu.playdemo", new Object[0])));
-        this.buttonList.add(this.buttonResetDemo = new GuiButton(12, this.width / 2 - 100, p_73972_1_ + p_73972_2_ * 1, I18n.format("menu.resetdemo", new Object[0])));
+        this.buttonList.add(new GuiButton(11, this.width / 2 - 100, p_73972_1_, I18n.format("menu.playdemo")));
+        this.buttonList.add(this.buttonResetDemo = new GuiButton(12, this.width / 2 - 100, p_73972_1_ + p_73972_2_ * 1, I18n.format("menu.resetdemo")));
         ISaveFormat var3 = this.mc.getSaveLoader();
         WorldInfo var4 = var3.getWorldInfo("Demo_World");
 
@@ -307,8 +305,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
                 try
                 {
                     Class var3 = Class.forName("java.awt.Desktop");
-                    Object var4 = var3.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
-                    var3.getMethod("browse", new Class[] {URI.class}).invoke(var4, new Object[] {new URI(this.field_104024_v)});
+                    Object var4 = var3.getMethod("getDesktop").invoke((Object)null);
+                    var3.getMethod("browse", URI.class).invoke(var4, new URI(this.field_104024_v));
                 }
                 catch (Throwable var5)
                 {

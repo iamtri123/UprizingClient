@@ -49,7 +49,7 @@ public class S0BPacketAnimation extends Packet
      */
     public String serialize()
     {
-        return String.format("id=%d, type=%d", new Object[] {Integer.valueOf(this.field_148981_a), Integer.valueOf(this.field_148980_b)});
+        return String.format("id=%d, type=%d", Integer.valueOf(this.field_148981_a), Integer.valueOf(this.field_148980_b));
     }
 
     public int func_148978_c()

@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 public class WorldGenBlockBlob extends WorldGenerator
 {
-    private Block field_150545_a;
-    private int field_150544_b;
+    private final Block field_150545_a;
+    private final int field_150544_b;
     private static final String __OBFID = "CL_00000402";
 
     public WorldGenBlockBlob(Block p_i45450_1_, int p_i45450_2_)

@@ -208,7 +208,7 @@ public class DamageSource
         EntityLivingBase var2 = p_151519_1_.func_94060_bK();
         String var3 = "death.attack." + this.damageType;
         String var4 = var3 + ".player";
-        return var2 != null && StatCollector.canTranslate(var4) ? new ChatComponentTranslation(var4, new Object[] {p_151519_1_.func_145748_c_(), var2.func_145748_c_()}): new ChatComponentTranslation(var3, new Object[] {p_151519_1_.func_145748_c_()});
+        return var2 != null && StatCollector.canTranslate(var4) ? new ChatComponentTranslation(var4, p_151519_1_.func_145748_c_(), var2.func_145748_c_()): new ChatComponentTranslation(var3, p_151519_1_.func_145748_c_());
     }
 
     /**

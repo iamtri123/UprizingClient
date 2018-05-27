@@ -19,8 +19,8 @@ import net.minecraft.world.World;
 
 public class ItemSkull extends Item
 {
-    private static final String[] skullTypes = new String[] {"skeleton", "wither", "zombie", "char", "creeper"};
-    public static final String[] field_94587_a = new String[] {"skeleton", "wither", "zombie", "steve", "creeper"};
+    private static final String[] skullTypes = {"skeleton", "wither", "zombie", "char", "creeper"};
+    public static final String[] field_94587_a = {"skeleton", "wither", "zombie", "steve", "creeper"};
     private IIcon[] field_94586_c;
     private static final String __OBFID = "CL_00000067";
 
@@ -176,12 +176,12 @@ public class ItemSkull extends Item
         {
             if (p_77653_1_.getTagCompound().func_150297_b("SkullOwner", 10))
             {
-                return StatCollector.translateToLocalFormatted("item.skull.player.name", new Object[] {NBTUtil.func_152459_a(p_77653_1_.getTagCompound().getCompoundTag("SkullOwner")).getName()});
+                return StatCollector.translateToLocalFormatted("item.skull.player.name", NBTUtil.func_152459_a(p_77653_1_.getTagCompound().getCompoundTag("SkullOwner")).getName());
             }
 
             if (p_77653_1_.getTagCompound().func_150297_b("SkullOwner", 8))
             {
-                return StatCollector.translateToLocalFormatted("item.skull.player.name", new Object[] {p_77653_1_.getTagCompound().getString("SkullOwner")});
+                return StatCollector.translateToLocalFormatted("item.skull.player.name", p_77653_1_.getTagCompound().getString("SkullOwner"));
             }
         }
 

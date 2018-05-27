@@ -30,9 +30,9 @@ import org.apache.logging.log4j.Logger;
 public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
 {
     private static final Logger logger = LogManager.getLogger();
-    private List chunksToRemove = new ArrayList();
-    private Set pendingAnvilChunksCoordinates = new HashSet();
-    private Object syncLockObject = new Object();
+    private final List chunksToRemove = new ArrayList();
+    private final Set pendingAnvilChunksCoordinates = new HashSet();
+    private final Object syncLockObject = new Object();
 
     /** Save directory for chunks using the Anvil format */
     private final File chunkSaveLocation;
@@ -215,7 +215,6 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
     {
         while (this.writeNextIO())
         {
-            ;
         }
     }
 

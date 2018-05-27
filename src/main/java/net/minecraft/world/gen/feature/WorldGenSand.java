@@ -8,10 +8,10 @@ import net.minecraft.world.World;
 
 public class WorldGenSand extends WorldGenerator
 {
-    private Block field_150517_a;
+    private final Block field_150517_a;
 
     /** The maximum radius used when generating a patch of blocks. */
-    private int radius;
+    private final int radius;
     private static final String __OBFID = "CL_00000431";
 
     public WorldGenSand(Block p_i45462_1_, int p_i45462_2_)

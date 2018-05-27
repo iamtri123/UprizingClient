@@ -19,12 +19,12 @@ public class ContainerRepair extends Container
     private static final Logger logger = LogManager.getLogger();
 
     /** Here comes out item you merged and/or renamed. */
-    private IInventory outputSlot = new InventoryCraftResult();
+    private final IInventory outputSlot = new InventoryCraftResult();
 
     /**
      * The 2slots where you put your items in that you want to merge and/or rename.
      */
-    private IInventory inputSlots = new InventoryBasic("Repair", true, 2)
+    private final IInventory inputSlots = new InventoryBasic("Repair", true, 2)
     {
         private static final String __OBFID = "CL_00001733";
         public void onInventoryChanged()
@@ -33,10 +33,10 @@ public class ContainerRepair extends Container
             ContainerRepair.this.onCraftMatrixChanged(this);
         }
     };
-    private World theWorld;
-    private int field_82861_i;
-    private int field_82858_j;
-    private int field_82859_k;
+    private final World theWorld;
+    private final int field_82861_i;
+    private final int field_82858_j;
+    private final int field_82859_k;
 
     /** The maximum cost of repairing/renaming in the anvil. */
     public int maximumCost;
@@ -480,7 +480,7 @@ public class ContainerRepair extends Container
 
     public boolean canInteractWith(EntityPlayer p_75145_1_)
     {
-        return this.theWorld.getBlock(this.field_82861_i, this.field_82858_j, this.field_82859_k) != Blocks.anvil ? false : p_75145_1_.getDistanceSq((double)this.field_82861_i + 0.5D, (double)this.field_82858_j + 0.5D, (double)this.field_82859_k + 0.5D) <= 64.0D;
+        return this.theWorld.getBlock(this.field_82861_i, this.field_82858_j, this.field_82859_k) == Blocks.anvil && p_75145_1_.getDistanceSq((double) this.field_82861_i + 0.5D, (double) this.field_82858_j + 0.5D, (double) this.field_82859_k + 0.5D) <= 64.0D;
     }
 
     /**

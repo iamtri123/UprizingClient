@@ -20,9 +20,9 @@ import org.lwjgl.opengl.GL11;
 public class GuiRepair extends GuiContainer implements ICrafting
 {
     private static final ResourceLocation field_147093_u = new ResourceLocation("textures/gui/container/anvil.png");
-    private ContainerRepair field_147092_v;
+    private final ContainerRepair field_147092_v;
     private GuiTextField field_147091_w;
-    private InventoryPlayer field_147094_x;
+    private final InventoryPlayer field_147094_x;
     private static final String __OBFID = "CL_00000738";
 
     public GuiRepair(InventoryPlayer p_i46381_1_, World p_i46381_2_, int p_i46381_3_, int p_i46381_4_, int p_i46381_5_)
@@ -64,17 +64,17 @@ public class GuiRepair extends GuiContainer implements ICrafting
     {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_BLEND);
-        this.fontRendererObj.drawString(I18n.format("container.repair", new Object[0]), 60, 6, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.repair"), 60, 6, 4210752);
 
         if (this.field_147092_v.maximumCost > 0)
         {
             int var3 = 8453920;
             boolean var4 = true;
-            String var5 = I18n.format("container.repair.cost", new Object[] {Integer.valueOf(this.field_147092_v.maximumCost)});
+            String var5 = I18n.format("container.repair.cost", Integer.valueOf(this.field_147092_v.maximumCost));
 
             if (this.field_147092_v.maximumCost >= 40 && !this.mc.thePlayer.capabilities.isCreativeMode)
             {
-                var5 = I18n.format("container.repair.expensive", new Object[0]);
+                var5 = I18n.format("container.repair.expensive");
                 var3 = 16736352;
             }
             else if (!this.field_147092_v.getSlot(2).getHasStack())

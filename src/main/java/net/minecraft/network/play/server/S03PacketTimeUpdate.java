@@ -58,7 +58,7 @@ public class S03PacketTimeUpdate extends Packet
      */
     public String serialize()
     {
-        return String.format("time=%d,dtime=%d", new Object[] {Long.valueOf(this.field_149369_a), Long.valueOf(this.field_149368_b)});
+        return String.format("time=%d,dtime=%d", Long.valueOf(this.field_149369_a), Long.valueOf(this.field_149368_b));
     }
 
     public long func_149366_c()

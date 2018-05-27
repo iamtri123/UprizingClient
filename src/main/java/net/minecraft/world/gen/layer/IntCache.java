@@ -10,24 +10,24 @@ public class IntCache
     /**
      * A list of pre-allocated int[256] arrays that are currently unused and can be returned by getIntCache()
      */
-    private static List freeSmallArrays = new ArrayList();
+    private static final List freeSmallArrays = new ArrayList();
 
     /**
      * A list of pre-allocated int[256] arrays that were previously returned by getIntCache() and which will not be re-
      * used again until resetIntCache() is called.
      */
-    private static List inUseSmallArrays = new ArrayList();
+    private static final List inUseSmallArrays = new ArrayList();
 
     /**
      * A list of pre-allocated int[cacheSize] arrays that are currently unused and can be returned by getIntCache()
      */
-    private static List freeLargeArrays = new ArrayList();
+    private static final List freeLargeArrays = new ArrayList();
 
     /**
      * A list of pre-allocated int[cacheSize] arrays that were previously returned by getIntCache() and which will not
      * be re-used again until resetIntCache() is called.
      */
-    private static List inUseLargeArrays = new ArrayList();
+    private static final List inUseLargeArrays = new ArrayList();
     private static final String __OBFID = "CL_00000557";
 
     public static synchronized int[] getIntCache(int p_76445_0_)

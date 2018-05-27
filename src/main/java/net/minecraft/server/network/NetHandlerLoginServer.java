@@ -38,7 +38,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
     private NetHandlerLoginServer.LoginState field_147328_g;
     private int field_147336_h;
     private GameProfile field_147337_i;
-    private String field_147334_j;
+    private final String field_147334_j;
     private SecretKey field_147335_k;
     private static final String __OBFID = "CL_00001458";
 
@@ -74,7 +74,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
         {
             logger.info("Disconnecting " + this.func_147317_d() + ": " + p_147322_1_);
             ChatComponentText var2 = new ChatComponentText(p_147322_1_);
-            this.field_147333_a.scheduleOutboundPacket(new S00PacketDisconnect(var2), new GenericFutureListener[0]);
+            this.field_147333_a.scheduleOutboundPacket(new S00PacketDisconnect(var2));
             this.field_147333_a.closeChannel(var2);
         }
         catch (Exception var3)
@@ -99,7 +99,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
         else
         {
             this.field_147328_g = NetHandlerLoginServer.LoginState.ACCEPTED;
-            this.field_147333_a.scheduleOutboundPacket(new S02PacketLoginSuccess(this.field_147337_i), new GenericFutureListener[0]);
+            this.field_147333_a.scheduleOutboundPacket(new S02PacketLoginSuccess(this.field_147337_i));
             this.field_147327_f.getConfigurationManager().initializeConnectionToPlayer(this.field_147333_a, this.field_147327_f.getConfigurationManager().func_148545_a(this.field_147337_i));
         }
     }
@@ -114,7 +114,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
 
     public String func_147317_d()
     {
-        return this.field_147337_i != null ? this.field_147337_i.toString() + " (" + this.field_147333_a.getSocketAddress().toString() + ")" : String.valueOf(this.field_147333_a.getSocketAddress());
+        return this.field_147337_i != null ? this.field_147337_i + " (" + this.field_147333_a.getSocketAddress() + ")" : String.valueOf(this.field_147333_a.getSocketAddress());
     }
 
     /**
@@ -123,19 +123,19 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
      */
     public void onConnectionStateTransition(EnumConnectionState p_147232_1_, EnumConnectionState p_147232_2_)
     {
-        Validate.validState(this.field_147328_g == NetHandlerLoginServer.LoginState.ACCEPTED || this.field_147328_g == NetHandlerLoginServer.LoginState.HELLO, "Unexpected change in protocol", new Object[0]);
-        Validate.validState(p_147232_2_ == EnumConnectionState.PLAY || p_147232_2_ == EnumConnectionState.LOGIN, "Unexpected protocol " + p_147232_2_, new Object[0]);
+        Validate.validState(this.field_147328_g == NetHandlerLoginServer.LoginState.ACCEPTED || this.field_147328_g == NetHandlerLoginServer.LoginState.HELLO, "Unexpected change in protocol");
+        Validate.validState(p_147232_2_ == EnumConnectionState.PLAY || p_147232_2_ == EnumConnectionState.LOGIN, "Unexpected protocol " + p_147232_2_);
     }
 
     public void processLoginStart(C00PacketLoginStart p_147316_1_)
     {
-        Validate.validState(this.field_147328_g == NetHandlerLoginServer.LoginState.HELLO, "Unexpected hello packet", new Object[0]);
+        Validate.validState(this.field_147328_g == NetHandlerLoginServer.LoginState.HELLO, "Unexpected hello packet");
         this.field_147337_i = p_147316_1_.func_149304_c();
 
         if (this.field_147327_f.isServerInOnlineMode() && !this.field_147333_a.isLocalChannel())
         {
             this.field_147328_g = NetHandlerLoginServer.LoginState.KEY;
-            this.field_147333_a.scheduleOutboundPacket(new S01PacketEncryptionRequest(this.field_147334_j, this.field_147327_f.getKeyPair().getPublic(), this.field_147330_e), new GenericFutureListener[0]);
+            this.field_147333_a.scheduleOutboundPacket(new S01PacketEncryptionRequest(this.field_147334_j, this.field_147327_f.getKeyPair().getPublic(), this.field_147330_e));
         }
         else
         {
@@ -145,7 +145,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
 
     public void processEncryptionResponse(C01PacketEncryptionResponse p_147315_1_)
     {
-        Validate.validState(this.field_147328_g == NetHandlerLoginServer.LoginState.KEY, "Unexpected key packet", new Object[0]);
+        Validate.validState(this.field_147328_g == NetHandlerLoginServer.LoginState.KEY, "Unexpected key packet");
         PrivateKey var2 = this.field_147327_f.getKeyPair().getPrivate();
 
         if (!Arrays.equals(this.field_147330_e, p_147315_1_.func_149299_b(var2)))
@@ -211,7 +211,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
         return new GameProfile(var2, p_152506_1_.getName());
     }
 
-    static enum LoginState
+    enum LoginState
     {
         HELLO("HELLO", 0),
         KEY("KEY", 1),
@@ -219,9 +219,9 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer
         READY_TO_ACCEPT("READY_TO_ACCEPT", 3),
         ACCEPTED("ACCEPTED", 4);
 
-        private static final NetHandlerLoginServer.LoginState[] $VALUES = new NetHandlerLoginServer.LoginState[]{HELLO, KEY, AUTHENTICATING, READY_TO_ACCEPT, ACCEPTED};
+        private static final NetHandlerLoginServer.LoginState[] $VALUES = {HELLO, KEY, AUTHENTICATING, READY_TO_ACCEPT, ACCEPTED};
         private static final String __OBFID = "CL_00001463";
 
-        private LoginState(String p_i45297_1_, int p_i45297_2_) {}
+        LoginState(String p_i45297_1_, int p_i45297_2_) {}
     }
 }

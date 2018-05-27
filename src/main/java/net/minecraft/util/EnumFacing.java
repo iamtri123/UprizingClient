@@ -22,7 +22,7 @@ public enum EnumFacing
     private static final EnumFacing[] faceList = new EnumFacing[6];
     private static final String __OBFID = "CL_00001201";
 
-    private EnumFacing(int p_i1367_3_, int p_i1367_4_, int p_i1367_5_, int p_i1367_6_, int p_i1367_7_)
+    EnumFacing(int p_i1367_3_, int p_i1367_4_, int p_i1367_5_, int p_i1367_6_, int p_i1367_7_)
     {
         this.order_a = p_i1367_3_;
         this.order_b = p_i1367_4_;

@@ -139,19 +139,19 @@ public class ServerData
         return this.field_152588_l;
     }
 
-    public static enum ServerResourceMode
+    public enum ServerResourceMode
     {
         ENABLED("ENABLED", 0, "enabled"),
         DISABLED("DISABLED", 1, "disabled"),
         PROMPT("PROMPT", 2, "prompt");
         private final IChatComponent field_152594_d;
 
-        private static final ServerData.ServerResourceMode[] $VALUES = new ServerData.ServerResourceMode[]{ENABLED, DISABLED, PROMPT};
+        private static final ServerData.ServerResourceMode[] $VALUES = {ENABLED, DISABLED, PROMPT};
         private static final String __OBFID = "CL_00001833";
 
-        private ServerResourceMode(String p_i1053_1_, int p_i1053_2_, String p_i1053_3_)
+        ServerResourceMode(String p_i1053_1_, int p_i1053_2_, String p_i1053_3_)
         {
-            this.field_152594_d = new ChatComponentTranslation("addServer.resourcePack." + p_i1053_3_, new Object[0]);
+            this.field_152594_d = new ChatComponentTranslation("addServer.resourcePack." + p_i1053_3_);
         }
 
         public IChatComponent func_152589_a()

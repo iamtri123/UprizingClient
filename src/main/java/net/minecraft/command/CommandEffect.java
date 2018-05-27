@@ -33,7 +33,7 @@ public class CommandEffect extends CommandBase
     {
         if (p_71515_2_.length < 2)
         {
-            throw new WrongUsageException("commands.effect.usage", new Object[0]);
+            throw new WrongUsageException("commands.effect.usage");
         }
         else
         {
@@ -43,11 +43,11 @@ public class CommandEffect extends CommandBase
             {
                 if (var3.getActivePotionEffects().isEmpty())
                 {
-                    throw new CommandException("commands.effect.failure.notActive.all", new Object[] {var3.getCommandSenderName()});
+                    throw new CommandException("commands.effect.failure.notActive.all", var3.getCommandSenderName());
                 }
 
                 var3.clearActivePotions();
-                func_152373_a(p_71515_1_, this, "commands.effect.success.removed.all", new Object[] {var3.getCommandSenderName()});
+                func_152373_a(p_71515_1_, this, "commands.effect.success.removed.all", var3.getCommandSenderName());
             }
             else
             {
@@ -58,7 +58,7 @@ public class CommandEffect extends CommandBase
 
                 if (var4 < 0 || var4 >= Potion.potionTypes.length || Potion.potionTypes[var4] == null)
                 {
-                    throw new NumberInvalidException("commands.effect.notFound", new Object[] {Integer.valueOf(var4)});
+                    throw new NumberInvalidException("commands.effect.notFound", Integer.valueOf(var4));
                 }
 
                 if (p_71515_2_.length >= 3)
@@ -88,17 +88,17 @@ public class CommandEffect extends CommandBase
                 {
                     if (!var3.isPotionActive(var4))
                     {
-                        throw new CommandException("commands.effect.failure.notActive", new Object[] {new ChatComponentTranslation(Potion.potionTypes[var4].getName(), new Object[0]), var3.getCommandSenderName()});
+                        throw new CommandException("commands.effect.failure.notActive", new ChatComponentTranslation(Potion.potionTypes[var4].getName()), var3.getCommandSenderName());
                     }
 
                     var3.removePotionEffect(var4);
-                    func_152373_a(p_71515_1_, this, "commands.effect.success.removed", new Object[] {new ChatComponentTranslation(Potion.potionTypes[var4].getName(), new Object[0]), var3.getCommandSenderName()});
+                    func_152373_a(p_71515_1_, this, "commands.effect.success.removed", new ChatComponentTranslation(Potion.potionTypes[var4].getName()), var3.getCommandSenderName());
                 }
                 else
                 {
                     PotionEffect var8 = new PotionEffect(var4, var5, var7);
                     var3.addPotionEffect(var8);
-                    func_152373_a(p_71515_1_, this, "commands.effect.success", new Object[] {new ChatComponentTranslation(var8.getEffectName(), new Object[0]), Integer.valueOf(var4), Integer.valueOf(var7), var3.getCommandSenderName(), Integer.valueOf(var6)});
+                    func_152373_a(p_71515_1_, this, "commands.effect.success", new ChatComponentTranslation(var8.getEffectName()), Integer.valueOf(var4), Integer.valueOf(var7), var3.getCommandSenderName(), Integer.valueOf(var6));
                 }
             }
         }

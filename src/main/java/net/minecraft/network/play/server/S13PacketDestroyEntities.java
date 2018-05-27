@@ -66,7 +66,7 @@ public class S13PacketDestroyEntities extends Packet
             var1.append(this.field_149100_a[var2]);
         }
 
-        return String.format("entities=%d[%s]", new Object[] {Integer.valueOf(this.field_149100_a.length), var1});
+        return String.format("entities=%d[%s]", Integer.valueOf(this.field_149100_a.length), var1);
     }
 
     public int[] func_149098_c()

@@ -69,9 +69,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public float prevRenderArmPitch;
     private int horseJumpPowerCounter;
     private float horseJumpPower;
-    private MouseFilter field_71162_ch = new MouseFilter();
-    private MouseFilter field_71160_ci = new MouseFilter();
-    private MouseFilter field_71161_cj = new MouseFilter();
+    private final MouseFilter field_71162_ch = new MouseFilter();
+    private final MouseFilter field_71160_ci = new MouseFilter();
+    private final MouseFilter field_71161_cj = new MouseFilter();
 
     /** The amount of time an entity has been in a Portal */
     public float timeInPortal;

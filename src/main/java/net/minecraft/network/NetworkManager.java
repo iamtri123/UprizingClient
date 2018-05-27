@@ -106,7 +106,7 @@ public class NetworkManager extends SimpleChannelInboundHandler
 
     public void channelInactive(ChannelHandlerContext p_channelInactive_1_)
     {
-        this.closeChannel(new ChatComponentTranslation("disconnect.endOfStream", new Object[0]));
+        this.closeChannel(new ChatComponentTranslation("disconnect.endOfStream"));
     }
 
     public void exceptionCaught(ChannelHandlerContext p_exceptionCaught_1_, Throwable p_exceptionCaught_2_)
@@ -115,11 +115,11 @@ public class NetworkManager extends SimpleChannelInboundHandler
 
         if (p_exceptionCaught_2_ instanceof TimeoutException)
         {
-            var3 = new ChatComponentTranslation("disconnect.timeout", new Object[0]);
+            var3 = new ChatComponentTranslation("disconnect.timeout");
         }
         else
         {
-            var3 = new ChatComponentTranslation("disconnect.genericReason", new Object[] {"Internal Exception: " + p_exceptionCaught_2_});
+            var3 = new ChatComponentTranslation("disconnect.genericReason", "Internal Exception: " + p_exceptionCaught_2_);
         }
 
         this.closeChannel(var3);
@@ -146,8 +146,8 @@ public class NetworkManager extends SimpleChannelInboundHandler
      */
     public void setNetHandler(INetHandler p_150719_1_)
     {
-        Validate.notNull(p_150719_1_, "packetListener", new Object[0]);
-        logger.debug("Set listener of {} to {}", new Object[] {this, p_150719_1_});
+        Validate.notNull(p_150719_1_, "packetListener");
+        logger.debug("Set listener of {} to {}", this, p_150719_1_);
         this.netHandler = p_150719_1_;
     }
 
@@ -304,7 +304,6 @@ public class NetworkManager extends SimpleChannelInboundHandler
                 }
                 catch (ChannelException var4)
                 {
-                    ;
                 }
 
                 try
@@ -313,7 +312,6 @@ public class NetworkManager extends SimpleChannelInboundHandler
                 }
                 catch (ChannelException var3)
                 {
-                    ;
                 }
 
                 p_initChannel_1_.pipeline().addLast("timeout", new ReadTimeoutHandler(20)).addLast("splitter", new MessageDeserializer2()).addLast("decoder", new MessageDeserializer(NetworkManager.field_152462_h)).addLast("prepender", new MessageSerializer2()).addLast("encoder", new MessageSerializer(NetworkManager.field_152462_h)).addLast("packet_handler", var2);

@@ -60,17 +60,17 @@ public class C02PacketUseEntity extends Packet
         this.processPacket((INetHandlerPlayServer)p_148833_1_);
     }
 
-    public static enum Action
+    public enum Action
     {
         INTERACT("INTERACT", 0, 0),
         ATTACK("ATTACK", 1, 1);
         private static final C02PacketUseEntity.Action[] field_151421_c = new C02PacketUseEntity.Action[values().length];
         private final int field_151418_d;
 
-        private static final C02PacketUseEntity.Action[] $VALUES = new C02PacketUseEntity.Action[]{INTERACT, ATTACK};
+        private static final C02PacketUseEntity.Action[] $VALUES = {INTERACT, ATTACK};
         private static final String __OBFID = "CL_00001358";
 
-        private Action(String p_i45250_1_, int p_i45250_2_, int p_i45250_3_)
+        Action(String p_i45250_1_, int p_i45250_2_, int p_i45250_3_)
         {
             this.field_151418_d = p_i45250_3_;
         }

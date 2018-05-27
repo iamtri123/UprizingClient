@@ -229,7 +229,6 @@ public class ShaderUniform
     {
         if (!this.field_148105_h)
         {
-            ;
         }
 
         this.field_148105_h = false;

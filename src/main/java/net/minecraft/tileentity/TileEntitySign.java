@@ -7,7 +7,7 @@ import net.minecraft.network.play.server.S33PacketUpdateSign;
 
 public class TileEntitySign extends TileEntity
 {
-    public String[] field_145915_a = new String[] {"", "", "", ""};
+    public String[] field_145915_a = {"", "", "", ""};
     public int field_145918_i = -1;
     private boolean field_145916_j = true;
     private EntityPlayer field_145917_k;

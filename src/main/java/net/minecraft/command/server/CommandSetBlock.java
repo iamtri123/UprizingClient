@@ -58,7 +58,7 @@ public class CommandSetBlock extends CommandBase
 
             if (!var8.blockExists(var3, var4, var5))
             {
-                throw new CommandException("commands.setblock.outOfWorld", new Object[0]);
+                throw new CommandException("commands.setblock.outOfWorld");
             }
             else
             {
@@ -75,7 +75,7 @@ public class CommandSetBlock extends CommandBase
 
                         if (!(var12 instanceof NBTTagCompound))
                         {
-                            throw new CommandException("commands.setblock.tagError", new Object[] {"Not a valid tag"});
+                            throw new CommandException("commands.setblock.tagError", "Not a valid tag");
                         }
 
                         var9 = (NBTTagCompound)var12;
@@ -83,7 +83,7 @@ public class CommandSetBlock extends CommandBase
                     }
                     catch (NBTException var13)
                     {
-                        throw new CommandException("commands.setblock.tagError", new Object[] {var13.getMessage()});
+                        throw new CommandException("commands.setblock.tagError", var13.getMessage());
                     }
                 }
 
@@ -95,13 +95,13 @@ public class CommandSetBlock extends CommandBase
                     }
                     else if (p_71515_2_[5].equals("keep") && !var8.isAirBlock(var3, var4, var5))
                     {
-                        throw new CommandException("commands.setblock.noChange", new Object[0]);
+                        throw new CommandException("commands.setblock.noChange");
                     }
                 }
 
                 if (!var8.setBlock(var3, var4, var5, var6, var7, 3))
                 {
-                    throw new CommandException("commands.setblock.noChange", new Object[0]);
+                    throw new CommandException("commands.setblock.noChange");
                 }
                 else
                 {
@@ -118,13 +118,13 @@ public class CommandSetBlock extends CommandBase
                         }
                     }
 
-                    func_152373_a(p_71515_1_, this, "commands.setblock.success", new Object[0]);
+                    func_152373_a(p_71515_1_, this, "commands.setblock.success");
                 }
             }
         }
         else
         {
-            throw new WrongUsageException("commands.setblock.usage", new Object[0]);
+            throw new WrongUsageException("commands.setblock.usage");
         }
     }
 
@@ -133,6 +133,6 @@ public class CommandSetBlock extends CommandBase
      */
     public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
     {
-        return p_71516_2_.length == 4 ? getListOfStringsFromIterableMatchingLastWord(p_71516_2_, Block.blockRegistry.getKeys()) : (p_71516_2_.length == 6 ? getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"replace", "destroy", "keep"}): null);
+        return p_71516_2_.length == 4 ? getListOfStringsFromIterableMatchingLastWord(p_71516_2_, Block.blockRegistry.getKeys()) : (p_71516_2_.length == 6 ? getListOfStringsMatchingLastWord(p_71516_2_, "replace", "destroy", "keep"): null);
     }
 }

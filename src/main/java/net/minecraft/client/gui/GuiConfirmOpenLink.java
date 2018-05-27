@@ -12,11 +12,11 @@ public class GuiConfirmOpenLink extends GuiYesNo
 
     public GuiConfirmOpenLink(GuiYesNoCallback p_i1084_1_, String p_i1084_2_, int p_i1084_3_, boolean p_i1084_4_)
     {
-        super(p_i1084_1_, I18n.format(p_i1084_4_ ? "chat.link.confirmTrusted" : "chat.link.confirm", new Object[0]), p_i1084_2_, p_i1084_3_);
-        this.field_146352_g = I18n.format(p_i1084_4_ ? "chat.link.open" : "gui.yes", new Object[0]);
-        this.field_146356_h = I18n.format(p_i1084_4_ ? "gui.cancel" : "gui.no", new Object[0]);
-        this.field_146362_s = I18n.format("chat.copy", new Object[0]);
-        this.field_146363_r = I18n.format("chat.link.warning", new Object[0]);
+        super(p_i1084_1_, I18n.format(p_i1084_4_ ? "chat.link.confirmTrusted" : "chat.link.confirm"), p_i1084_2_, p_i1084_3_);
+        this.field_146352_g = I18n.format(p_i1084_4_ ? "chat.link.open" : "gui.yes");
+        this.field_146356_h = I18n.format(p_i1084_4_ ? "gui.cancel" : "gui.no");
+        this.field_146362_s = I18n.format("chat.copy");
+        this.field_146363_r = I18n.format("chat.link.warning");
         this.field_146361_t = p_i1084_2_;
     }
 

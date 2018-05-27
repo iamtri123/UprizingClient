@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerHorseInventory extends Container
 {
-    private IInventory field_111243_a;
-    private EntityHorse theHorse;
+    private final IInventory field_111243_a;
+    private final EntityHorse theHorse;
     private static final String __OBFID = "CL_00001751";
 
     public ContainerHorseInventory(IInventory p_i1817_1_, final IInventory p_i1817_2_, final EntityHorse p_i1817_3_)

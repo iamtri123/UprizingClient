@@ -64,14 +64,14 @@ public interface IStream
 
     IStream.AuthFailureReason func_152918_H();
 
-    public static enum AuthFailureReason
+    enum AuthFailureReason
     {
         ERROR("ERROR", 0),
         INVALID_TOKEN("INVALID_TOKEN", 1);
 
-        private static final IStream.AuthFailureReason[] $VALUES = new IStream.AuthFailureReason[]{ERROR, INVALID_TOKEN};
+        private static final IStream.AuthFailureReason[] $VALUES = {ERROR, INVALID_TOKEN};
         private static final String __OBFID = "CL_00001813";
 
-        private AuthFailureReason(String p_i1014_1_, int p_i1014_2_) {}
+        AuthFailureReason(String p_i1014_1_, int p_i1014_2_) {}
     }
 }

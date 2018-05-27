@@ -47,7 +47,7 @@ public class RealmsServerStatusPinger
                         p_pingServer_2_.nrOfPlayers = String.valueOf(var2.func_151318_b().func_151333_b());
                     }
 
-                    var4.scheduleOutboundPacket(new C01PacketPing(Realms.currentTimeMillis()), new GenericFutureListener[0]);
+                    var4.scheduleOutboundPacket(new C01PacketPing(Realms.currentTimeMillis()));
                     this.field_154345_e = true;
                 }
                 public void handlePong(S01PacketPong p_147398_1_)
@@ -73,8 +73,8 @@ public class RealmsServerStatusPinger
 
             try
             {
-                var4.scheduleOutboundPacket(new C00Handshake(RealmsSharedConstants.NETWORK_PROTOCOL_VERSION, var3.getHost(), var3.getPort(), EnumConnectionState.STATUS), new GenericFutureListener[0]);
-                var4.scheduleOutboundPacket(new C00PacketServerQuery(), new GenericFutureListener[0]);
+                var4.scheduleOutboundPacket(new C00Handshake(RealmsSharedConstants.NETWORK_PROTOCOL_VERSION, var3.getHost(), var3.getPort(), EnumConnectionState.STATUS));
+                var4.scheduleOutboundPacket(new C00PacketServerQuery());
             }
             catch (Throwable var6)
             {

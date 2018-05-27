@@ -11,7 +11,7 @@ public class RandomPositionGenerator
      * used to store a driection when the user passes a point to move towards or away from. WARNING: NEVER THREAD SAFE.
      * MULTIPLE findTowards and findAway calls, will share this var
      */
-    private static Vec3 staticVector = Vec3.createVectorHelper(0.0D, 0.0D, 0.0D);
+    private static final Vec3 staticVector = Vec3.createVectorHelper(0.0D, 0.0D, 0.0D);
     private static final String __OBFID = "CL_00001629";
 
     /**

@@ -35,7 +35,7 @@ public class CommandClearInventory extends CommandBase
 
         if (p_71515_2_.length >= 2 && var4 == null)
         {
-            throw new CommandException("commands.clear.failure", new Object[] {var3.getCommandSenderName()});
+            throw new CommandException("commands.clear.failure", var3.getCommandSenderName());
         }
         else
         {
@@ -49,11 +49,11 @@ public class CommandClearInventory extends CommandBase
 
             if (var6 == 0)
             {
-                throw new CommandException("commands.clear.failure", new Object[] {var3.getCommandSenderName()});
+                throw new CommandException("commands.clear.failure", var3.getCommandSenderName());
             }
             else
             {
-                func_152373_a(p_71515_1_, this, "commands.clear.success", new Object[] {var3.getCommandSenderName(), Integer.valueOf(var6)});
+                func_152373_a(p_71515_1_, this, "commands.clear.success", var3.getCommandSenderName(), Integer.valueOf(var6));
             }
         }
     }

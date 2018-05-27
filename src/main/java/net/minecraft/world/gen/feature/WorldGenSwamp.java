@@ -21,7 +21,6 @@ public class WorldGenSwamp extends WorldGenAbstractTree
 
         for (var6 = p_76484_2_.nextInt(4) + 5; p_76484_1_.getBlock(p_76484_3_, p_76484_4_ - 1, p_76484_5_).getMaterial() == Material.water; --p_76484_4_)
         {
-            ;
         }
 
         boolean var7 = true;

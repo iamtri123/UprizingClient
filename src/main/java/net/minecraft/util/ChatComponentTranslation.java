@@ -103,7 +103,7 @@ public class ChatComponentTranslation extends ChatComponentStyle
 
                 if (var6 > var5)
                 {
-                    ChatComponentText var8 = new ChatComponentText(String.format(p_150269_1_.substring(var5, var6), new Object[0]));
+                    ChatComponentText var8 = new ChatComponentText(String.format(p_150269_1_.substring(var5, var6)));
                     var8.getChatStyle().setParentStyle(this.getChatStyle());
                     this.children.add(var8);
                 }
@@ -132,7 +132,7 @@ public class ChatComponentTranslation extends ChatComponentStyle
 
             if (var5 < p_150269_1_.length())
             {
-                ChatComponentText var13 = new ChatComponentText(String.format(p_150269_1_.substring(var5), new Object[0]));
+                ChatComponentText var13 = new ChatComponentText(String.format(p_150269_1_.substring(var5)));
                 var13.getChatStyle().setParentStyle(this.getChatStyle());
                 this.children.add(var13);
             }

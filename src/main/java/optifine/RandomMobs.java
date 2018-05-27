@@ -20,16 +20,16 @@ import java.util.UUID;
 
 public class RandomMobs
 {
-    private static Map locationProperties = new HashMap();
+    private static final Map locationProperties = new HashMap();
     private static RenderGlobal renderGlobal = null;
     private static boolean initialized = false;
-    private static Random random = new Random();
+    private static final Random random = new Random();
     private static boolean working = false;
     public static final String SUFFIX_PNG = ".png";
     public static final String SUFFIX_PROPERTIES = ".properties";
     public static final String PREFIX_TEXTURES_ENTITY = "textures/entity/";
     public static final String PREFIX_MCPATCHER_MOB = "mcpatcher/mob/";
-    private static final String[] DEPENDANT_SUFFIXES = new String[] {"_armor", "_eyes", "_exploding", "_shooting", "_fur", "_eyes", "_invulnerable", "_angry", "_tame", "_collar"};
+    private static final String[] DEPENDANT_SUFFIXES = {"_armor", "_eyes", "_exploding", "_shooting", "_fur", "_eyes", "_invulnerable", "_angry", "_tame", "_collar"};
 
     public static void entityLoaded(Entity entity, World world)
     {

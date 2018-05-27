@@ -67,7 +67,7 @@ public class CommandBanIp extends CommandBase
 
                 if (var5 == null)
                 {
-                    throw new PlayerNotFoundException("commands.banip.invalid", new Object[0]);
+                    throw new PlayerNotFoundException("commands.banip.invalid");
                 }
 
                 this.func_147210_a(p_71515_1_, var5.getPlayerIP(), var4 == null ? null : var4.getUnformattedText());
@@ -75,7 +75,7 @@ public class CommandBanIp extends CommandBase
         }
         else
         {
-            throw new WrongUsageException("commands.banip.usage", new Object[0]);
+            throw new WrongUsageException("commands.banip.usage");
         }
     }
 
@@ -104,11 +104,11 @@ public class CommandBanIp extends CommandBase
 
         if (var5.isEmpty())
         {
-            func_152373_a(p_147210_1_, this, "commands.banip.success", new Object[] {p_147210_2_});
+            func_152373_a(p_147210_1_, this, "commands.banip.success", p_147210_2_);
         }
         else
         {
-            func_152373_a(p_147210_1_, this, "commands.banip.success.players", new Object[] {p_147210_2_, joinNiceString(var6)});
+            func_152373_a(p_147210_1_, this, "commands.banip.success.players", p_147210_2_, joinNiceString(var6));
         }
     }
 }

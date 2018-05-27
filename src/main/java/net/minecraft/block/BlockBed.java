@@ -19,7 +19,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class BlockBed extends BlockDirectional
 {
-    public static final int[][] field_149981_a = new int[][] {{0, 1}, { -1, 0}, {0, -1}, {1, 0}};
+    public static final int[][] field_149981_a = {{0, 1}, { -1, 0}, {0, -1}, {1, 0}};
     private IIcon[] field_149980_b;
     private IIcon[] field_149982_M;
     private IIcon[] field_149983_N;
@@ -82,7 +82,7 @@ public class BlockBed extends BlockDirectional
 
                     if (var19 != null)
                     {
-                        p_149727_5_.addChatComponentMessage(new ChatComponentTranslation("tile.bed.occupied", new Object[0]));
+                        p_149727_5_.addChatComponentMessage(new ChatComponentTranslation("tile.bed.occupied"));
                         return true;
                     }
 
@@ -100,11 +100,11 @@ public class BlockBed extends BlockDirectional
                 {
                     if (var20 == EntityPlayer.EnumStatus.NOT_POSSIBLE_NOW)
                     {
-                        p_149727_5_.addChatComponentMessage(new ChatComponentTranslation("tile.bed.noSleep", new Object[0]));
+                        p_149727_5_.addChatComponentMessage(new ChatComponentTranslation("tile.bed.noSleep"));
                     }
                     else if (var20 == EntityPlayer.EnumStatus.NOT_SAFE)
                     {
-                        p_149727_5_.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
+                        p_149727_5_.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe"));
                     }
 
                     return true;

@@ -146,7 +146,7 @@ public class Profiler
 
         if (!this.profilerLocalEnabled)
         {
-            return new ArrayList(Arrays.asList(new Profiler.Result[] {new Profiler.Result("root", 0.0D, 0.0D)}));
+            return new ArrayList(Arrays.asList(new Result("root", 0.0D, 0.0D)));
         }
         else if (!this.profilingEnabled)
         {

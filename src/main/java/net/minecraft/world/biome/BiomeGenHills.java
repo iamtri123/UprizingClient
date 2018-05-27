@@ -11,11 +11,11 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeGenHills extends BiomeGenBase
 {
-    private WorldGenerator theWorldGenerator;
-    private WorldGenTaiga2 field_150634_aD;
-    private int field_150635_aE;
-    private int field_150636_aF;
-    private int field_150637_aG;
+    private final WorldGenerator theWorldGenerator;
+    private final WorldGenTaiga2 field_150634_aD;
+    private final int field_150635_aE;
+    private final int field_150636_aF;
+    private final int field_150637_aG;
     private int field_150638_aH;
     private static final String __OBFID = "CL_00000168";
 

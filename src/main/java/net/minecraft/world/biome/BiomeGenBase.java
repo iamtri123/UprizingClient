@@ -370,7 +370,7 @@ public abstract class BiomeGenBase
      */
     public boolean canSpawnLightningBolt()
     {
-        return this.func_150559_j() ? false : this.enableRain;
+        return !this.func_150559_j() && this.enableRain;
     }
 
     /**
@@ -564,7 +564,7 @@ public abstract class BiomeGenBase
 
     public boolean func_150569_a(BiomeGenBase p_150569_1_)
     {
-        return p_150569_1_ == this ? true : (p_150569_1_ == null ? false : this.func_150562_l() == p_150569_1_.func_150562_l());
+        return p_150569_1_ == this || (p_150569_1_ != null && this.func_150562_l() == p_150569_1_.func_150562_l());
     }
 
     public BiomeGenBase.TempCategory func_150561_m()
@@ -674,16 +674,16 @@ public abstract class BiomeGenBase
         }
     }
 
-    public static enum TempCategory
+    public enum TempCategory
     {
         OCEAN("OCEAN", 0),
         COLD("COLD", 1),
         MEDIUM("MEDIUM", 2),
         WARM("WARM", 3);
 
-        private static final BiomeGenBase.TempCategory[] $VALUES = new BiomeGenBase.TempCategory[]{OCEAN, COLD, MEDIUM, WARM};
+        private static final BiomeGenBase.TempCategory[] $VALUES = {OCEAN, COLD, MEDIUM, WARM};
         private static final String __OBFID = "CL_00000160";
 
-        private TempCategory(String p_i45372_1_, int p_i45372_2_) {}
+        TempCategory(String p_i45372_1_, int p_i45372_2_) {}
     }
 }

@@ -6,17 +6,17 @@ import net.minecraft.util.Vec3;
 
 public class EntityAIMoveTowardsTarget extends EntityAIBase
 {
-    private EntityCreature theEntity;
+    private final EntityCreature theEntity;
     private EntityLivingBase targetEntity;
     private double movePosX;
     private double movePosY;
     private double movePosZ;
-    private double speed;
+    private final double speed;
 
     /**
      * If the distance to the target entity is further than this, this AI task will not run.
      */
-    private float maxTargetDistance;
+    private final float maxTargetDistance;
     private static final String __OBFID = "CL_00001599";
 
     public EntityAIMoveTowardsTarget(EntityCreature p_i1640_1_, double p_i1640_2_, float p_i1640_4_)

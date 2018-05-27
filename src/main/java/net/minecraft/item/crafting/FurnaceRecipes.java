@@ -16,8 +16,8 @@ public class FurnaceRecipes
     private static final FurnaceRecipes smeltingBase = new FurnaceRecipes();
 
     /** The list of smelting results. */
-    private Map smeltingList = new HashMap();
-    private Map experienceList = new HashMap();
+    private final Map smeltingList = new HashMap();
+    private final Map experienceList = new HashMap();
     private static final String __OBFID = "CL_00000085";
 
     /**

@@ -41,7 +41,7 @@ public class GuiKeyBindingList extends GuiListExtended
                 this.field_148190_m[var4++] = new GuiKeyBindingList.CategoryEntry(var10);
             }
 
-            int var11 = p_i45031_2_.fontRenderer.getStringWidth(I18n.format(var9.getKeyDescription(), new Object[0]));
+            int var11 = p_i45031_2_.fontRenderer.getStringWidth(I18n.format(var9.getKeyDescription()));
 
             if (var11 > this.field_148188_n)
             {
@@ -80,7 +80,7 @@ public class GuiKeyBindingList extends GuiListExtended
 
         public CategoryEntry(String p_i45028_2_)
         {
-            this.field_148285_b = I18n.format(p_i45028_2_, new Object[0]);
+            this.field_148285_b = I18n.format(p_i45028_2_);
             this.field_148286_c = GuiKeyBindingList.this.field_148189_l.fontRenderer.getStringWidth(this.field_148285_b);
         }
 
@@ -108,9 +108,9 @@ public class GuiKeyBindingList extends GuiListExtended
         private KeyEntry(KeyBinding p_i45029_2_)
         {
             this.field_148282_b = p_i45029_2_;
-            this.field_148283_c = I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]);
-            this.field_148280_d = new GuiButton(0, 0, 0, 75, 18, I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]));
-            this.field_148281_e = new GuiButton(0, 0, 0, 50, 18, I18n.format("controls.reset", new Object[0]));
+            this.field_148283_c = I18n.format(p_i45029_2_.getKeyDescription());
+            this.field_148280_d = new GuiButton(0, 0, 0, 75, 18, I18n.format(p_i45029_2_.getKeyDescription()));
+            this.field_148281_e = new GuiButton(0, 0, 0, 50, 18, I18n.format("controls.reset"));
         }
 
         public void func_148279_a(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)

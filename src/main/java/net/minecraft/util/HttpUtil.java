@@ -168,7 +168,7 @@ public class HttpUtil
 
                     if (p_151223_5_ != null)
                     {
-                        p_151223_5_.resetProgresAndWorkingMessage(String.format("Downloading file (%.2f MB)...", new Object[] {Float.valueOf(var7 / 1000.0F / 1000.0F)}));
+                        p_151223_5_.resetProgresAndWorkingMessage(String.format("Downloading file (%.2f MB)...", Float.valueOf(var7 / 1000.0F / 1000.0F)));
                     }
 
                     if (p_151223_0_.exists())
@@ -254,7 +254,6 @@ public class HttpUtil
                     }
                     catch (IOException var25)
                     {
-                        ;
                     }
 
                     try
@@ -266,7 +265,6 @@ public class HttpUtil
                     }
                     catch (IOException var24)
                     {
-                        ;
                     }
                 }
             }
@@ -297,7 +295,6 @@ public class HttpUtil
             }
             catch (IOException var8)
             {
-                ;
             }
         }
 

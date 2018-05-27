@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 public class BlockStairs extends Block
 {
-    private static final int[][] field_150150_a = new int[][] {{2, 6}, {3, 7}, {2, 3}, {6, 7}, {0, 4}, {1, 5}, {0, 1}, {4, 5}};
+    private static final int[][] field_150150_a = {{2, 6}, {3, 7}, {2, 3}, {6, 7}, {0, 4}, {1, 5}, {0, 1}, {4, 5}};
     private final Block field_150149_b;
     private final int field_150151_M;
     private boolean field_150152_N;
@@ -540,7 +540,6 @@ public class BlockStairs extends Block
 
                 if (var16 == var12)
                 {
-                    ;
                 }
             }
 

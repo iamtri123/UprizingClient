@@ -41,11 +41,11 @@ public class CommandSaveOff extends CommandBase
 
         if (var4)
         {
-            func_152373_a(p_71515_1_, this, "commands.save.disabled", new Object[0]);
+            func_152373_a(p_71515_1_, this, "commands.save.disabled");
         }
         else
         {
-            throw new CommandException("commands.save-off.alreadyOff", new Object[0]);
+            throw new CommandException("commands.save-off.alreadyOff");
         }
     }
 }

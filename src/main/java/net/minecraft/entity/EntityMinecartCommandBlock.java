@@ -131,7 +131,6 @@ public class EntityMinecartCommandBlock extends EntityMinecart
             }
             catch (Throwable var3)
             {
-                ;
             }
         }
         else if (p_145781_1_ == 23)

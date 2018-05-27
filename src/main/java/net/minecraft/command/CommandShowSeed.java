@@ -38,6 +38,6 @@ public class CommandShowSeed extends CommandBase
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
     {
         Object var3 = p_71515_1_ instanceof EntityPlayer ? ((EntityPlayer)p_71515_1_).worldObj : MinecraftServer.getServer().worldServerForDimension(0);
-        p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.seed.success", new Object[] {Long.valueOf(((World)var3).getSeed())}));
+        p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.seed.success", Long.valueOf(((World)var3).getSeed())));
     }
 }

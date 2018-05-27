@@ -60,7 +60,7 @@ public class NBTTagByteArray extends NBTBase
 
     public boolean equals(Object p_equals_1_)
     {
-        return super.equals(p_equals_1_) ? Arrays.equals(this.byteArray, ((NBTTagByteArray)p_equals_1_).byteArray) : false;
+        return super.equals(p_equals_1_) && Arrays.equals(this.byteArray, ((NBTTagByteArray) p_equals_1_).byteArray);
     }
 
     public int hashCode()

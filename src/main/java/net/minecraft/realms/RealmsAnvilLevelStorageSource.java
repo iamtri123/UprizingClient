@@ -10,7 +10,7 @@ import net.minecraft.world.storage.SaveFormatComparator;
 
 public class RealmsAnvilLevelStorageSource
 {
-    private ISaveFormat levelStorageSource;
+    private final ISaveFormat levelStorageSource;
     private static final String __OBFID = "CL_00001856";
 
     public RealmsAnvilLevelStorageSource(ISaveFormat p_i1106_1_)

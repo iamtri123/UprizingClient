@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagList;
 public class TileEntityDispenser extends TileEntity implements IInventory
 {
     private ItemStack[] field_146022_i = new ItemStack[9];
-    private Random field_146021_j = new Random();
+    private final Random field_146021_j = new Random();
     protected String field_146020_a;
     private static final String __OBFID = "CL_00000352";
 
@@ -210,7 +210,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
      */
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
-        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) != this ? false : p_70300_1_.getDistanceSq((double)this.field_145851_c + 0.5D, (double)this.field_145848_d + 0.5D, (double)this.field_145849_e + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) == this && p_70300_1_.getDistanceSq((double) this.field_145851_c + 0.5D, (double) this.field_145848_d + 0.5D, (double) this.field_145849_e + 0.5D) <= 64.0D;
     }
 
     public void openInventory() {}

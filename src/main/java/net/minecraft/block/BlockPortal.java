@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class BlockPortal extends BlockBreakable
 {
-    public static final int[][] field_150001_a = new int[][] {new int[0], {3, 1}, {2, 0}};
+    public static final int[][] field_150001_a = {new int[0], {3, 1}, {2, 0}};
     private static final String __OBFID = "CL_00000284";
 
     public BlockPortal()
@@ -36,7 +36,6 @@ public class BlockPortal extends BlockBreakable
 
             for (var6 = p_149674_3_; !World.doesBlockHaveSolidTopSurface(p_149674_1_, p_149674_2_, var6, p_149674_4_) && var6 > 0; --var6)
             {
-                ;
             }
 
             if (var6 > 0 && !p_149674_1_.getBlock(p_149674_2_, var6 + 1, p_149674_4_).isNormalCube())
@@ -173,7 +172,7 @@ public class BlockPortal extends BlockBreakable
         boolean var10 = p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_ + 1) == this && p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_ + 2) != this;
         boolean var11 = var7 || var8 || var6 == 1;
         boolean var12 = var9 || var10 || var6 == 2;
-        return var11 && p_149646_5_ == 4 ? true : (var11 && p_149646_5_ == 5 ? true : (var12 && p_149646_5_ == 2 ? true : var12 && p_149646_5_ == 3));
+        return var11 && p_149646_5_ == 4 || (var11 && p_149646_5_ == 5 || (var12 && p_149646_5_ == 2 || var12 && p_149646_5_ == 3));
     }
 
     /**
@@ -272,7 +271,6 @@ public class BlockPortal extends BlockBreakable
 
             for (int var6 = p_i45415_3_; p_i45415_3_ > var6 - 21 && p_i45415_3_ > 0 && this.func_150857_a(p_i45415_1_.getBlock(p_i45415_2_, p_i45415_3_ - 1, p_i45415_4_)); --p_i45415_3_)
             {
-                ;
             }
 
             int var7 = this.func_150853_a(p_i45415_2_, p_i45415_3_, p_i45415_4_, this.field_150863_d) - 1;

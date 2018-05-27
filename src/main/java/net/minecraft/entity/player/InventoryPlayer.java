@@ -170,7 +170,6 @@ public class InventoryPlayer implements IInventory
 
         for (this.currentItem -= p_70453_1_; this.currentItem < 0; this.currentItem += 9)
         {
-            ;
         }
 
         while (this.currentItem >= 9)
@@ -664,7 +663,7 @@ public class InventoryPlayer implements IInventory
         else
         {
             ItemStack var2 = this.getStackInSlot(this.currentItem);
-            return var2 != null ? var2.func_150998_b(p_146025_1_) : false;
+            return var2 != null && var2.func_150998_b(p_146025_1_);
         }
     }
 
@@ -770,7 +769,7 @@ public class InventoryPlayer implements IInventory
      */
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
-        return this.player.isDead ? false : p_70300_1_.getDistanceSqToEntity(this.player) <= 64.0D;
+        return !this.player.isDead && p_70300_1_.getDistanceSqToEntity(this.player) <= 64.0D;
     }
 
     /**

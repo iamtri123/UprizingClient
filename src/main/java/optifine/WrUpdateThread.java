@@ -10,12 +10,12 @@ import java.util.List;
 public class WrUpdateThread extends Thread
 {
     private Pbuffer pbuffer = null;
-    private Object lock = new Object();
-    private List updateList = new LinkedList();
-    private List updatedList = new LinkedList();
+    private final Object lock = new Object();
+    private final List updateList = new LinkedList();
+    private final List updatedList = new LinkedList();
     private int updateCount = 0;
-    private Tessellator mainTessellator;
-    private Tessellator threadTessellator;
+    private final Tessellator mainTessellator;
+    private final Tessellator threadTessellator;
     private boolean working;
     private WorldRendererThreaded currentRenderer;
     private boolean canWork;
@@ -138,7 +138,6 @@ public class WrUpdateThread extends Thread
                 }
                 catch (InterruptedException var4)
                 {
-                    ;
                 }
             }
 
@@ -154,7 +153,7 @@ public class WrUpdateThread extends Thread
 
         synchronized (this.lock)
         {
-            return this.updateList.size() > 0 ? true : (this.currentRenderer != null ? true : this.working);
+            return this.updateList.size() > 0 || (this.currentRenderer != null || this.working);
         }
     }
 
@@ -217,7 +216,6 @@ public class WrUpdateThread extends Thread
                 }
                 catch (InterruptedException var4)
                 {
-                    ;
                 }
             }
 
@@ -267,7 +265,6 @@ public class WrUpdateThread extends Thread
                     }
                     catch (InterruptedException var4)
                     {
-                        ;
                     }
                 }
 
@@ -299,7 +296,6 @@ public class WrUpdateThread extends Thread
                 }
                 catch (InterruptedException var5)
                 {
-                    ;
                 }
             }
 
@@ -416,7 +412,7 @@ public class WrUpdateThread extends Thread
 
     private class ThreadUpdateListener implements IWrUpdateListener
     {
-        private WrUpdateThread.ThreadUpdateControl tuc;
+        private final WrUpdateThread.ThreadUpdateControl tuc;
 
         private ThreadUpdateListener()
         {

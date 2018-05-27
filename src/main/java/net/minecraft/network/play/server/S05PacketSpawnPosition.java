@@ -61,7 +61,7 @@ public class S05PacketSpawnPosition extends Packet
      */
     public String serialize()
     {
-        return String.format("x=%d, y=%d, z=%d", new Object[] {Integer.valueOf(this.field_149364_a), Integer.valueOf(this.field_149362_b), Integer.valueOf(this.field_149363_c)});
+        return String.format("x=%d, y=%d, z=%d", Integer.valueOf(this.field_149364_a), Integer.valueOf(this.field_149362_b), Integer.valueOf(this.field_149363_c));
     }
 
     public int func_149360_c()

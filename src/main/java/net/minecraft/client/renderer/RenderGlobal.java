@@ -126,7 +126,7 @@ public class RenderGlobal implements IWorldAccess
     private IntBuffer glOcclusionQueryBase;
 
     /** Is occlusion testing enabled */
-    private boolean occlusionEnabled;
+    private final boolean occlusionEnabled;
 
     /**
      * counts the cloud render updates. Used with mod to stagger some updates
@@ -134,13 +134,13 @@ public class RenderGlobal implements IWorldAccess
     private int cloudTickCounter;
 
     /** The star GL Call list */
-    private int starGLCallList;
+    private final int starGLCallList;
 
     /** OpenGL sky list */
-    private int glSkyList;
+    private final int glSkyList;
 
     /** OpenGL sky list 2 */
-    private int glSkyList2;
+    private final int glSkyList2;
 
     /** Minimum block X */
     private int minBlockX;
@@ -168,7 +168,7 @@ public class RenderGlobal implements IWorldAccess
     private final Map mapSoundPositions = Maps.newHashMap();
     private IIcon[] destroyBlockIcons;
     private boolean displayListEntitiesDirty;
-    private int displayListEntities;
+    private final int displayListEntities;
     private int renderDistanceChunks = -1;
 
     /** Render entities startup counter (init value=2) */
@@ -210,10 +210,10 @@ public class RenderGlobal implements IWorldAccess
     private int worldRenderersCheckIndex;
 
     /** List of OpenGL lists for the current render pass */
-    private List glRenderLists = new ArrayList();
+    private final List glRenderLists = new ArrayList();
 
     /** All render lists (fixed length 4) */
-    private RenderList[] allRenderLists = new RenderList[] {new RenderList(), new RenderList(), new RenderList(), new RenderList()};
+    private final RenderList[] allRenderLists = {new RenderList(), new RenderList(), new RenderList(), new RenderList()};
 
     /**
      * Previous x position when the renderers were sorted. (Once the distance moves more than 4 units they will be
@@ -243,7 +243,7 @@ public class RenderGlobal implements IWorldAccess
      * The offset used to determine if a renderer is one of the sixteenth that are being updated this frame
      */
     int frustumCheckOffset;
-    private IntBuffer glListBuffer = BufferUtils.createIntBuffer(65536);
+    private final IntBuffer glListBuffer = BufferUtils.createIntBuffer(65536);
     double prevReposX;
     double prevReposY;
     double prevReposZ;
@@ -262,7 +262,7 @@ public class RenderGlobal implements IWorldAccess
     private int countTileEntitiesRendered;
     private long lastMovedTime = System.currentTimeMillis();
     private long lastActionTime = System.currentTimeMillis();
-    private static AxisAlignedBB AABB_INFINITE = AxisAlignedBB.getBoundingBox(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+    private static final AxisAlignedBB AABB_INFINITE = AxisAlignedBB.getBoundingBox(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
     private static final String __OBFID = "CL_00000954";
 
     public RenderGlobal(Minecraft par1Minecraft)
@@ -552,7 +552,7 @@ public class RenderGlobal implements IWorldAccess
 
         if (Reflector.MinecraftForgeClient_getRenderPass.exists())
         {
-            pass = Reflector.callInt(Reflector.MinecraftForgeClient_getRenderPass, new Object[0]);
+            pass = Reflector.callInt(Reflector.MinecraftForgeClient_getRenderPass);
         }
 
         boolean hasEntityShouldRenderInPass = Reflector.ForgeEntity_shouldRenderInPass.exists();
@@ -630,7 +630,7 @@ public class RenderGlobal implements IWorldAccess
             {
                 var19 = (Entity)this.theWorld.weatherEffects.get(var25);
 
-                if (!hasEntityShouldRenderInPass || Reflector.callBoolean(var19, Reflector.ForgeEntity_shouldRenderInPass, new Object[] {Integer.valueOf(pass)}))
+                if (!hasEntityShouldRenderInPass || Reflector.callBoolean(var19, Reflector.ForgeEntity_shouldRenderInPass, Integer.valueOf(pass)))
                 {
                     ++this.countEntitiesRendered;
 
@@ -649,7 +649,7 @@ public class RenderGlobal implements IWorldAccess
             {
                 var19 = (Entity)var24.get(var25);
 
-                if (!hasEntityShouldRenderInPass || Reflector.callBoolean(var19, Reflector.ForgeEntity_shouldRenderInPass, new Object[] {Integer.valueOf(pass)}))
+                if (!hasEntityShouldRenderInPass || Reflector.callBoolean(var19, Reflector.ForgeEntity_shouldRenderInPass, Integer.valueOf(pass)))
                 {
                     boolean te = var19.isInRangeToRender3d(var4, var6, var8) && (var19.ignoreFrustumCheck || p_147589_2_.isBoundingBoxInFrustum(var19.boundingBox) || var19.riddenByEntity == this.mc.thePlayer);
 
@@ -688,7 +688,7 @@ public class RenderGlobal implements IWorldAccess
             {
                 TileEntity var27 = (TileEntity)this.tileEntities.get(var25);
 
-                if (!hasTileEntityShouldRenderInPass || Reflector.callBoolean(var27, Reflector.ForgeTileEntity_shouldRenderInPass, new Object[] {Integer.valueOf(pass)}))
+                if (!hasTileEntityShouldRenderInPass || Reflector.callBoolean(var27, Reflector.ForgeTileEntity_shouldRenderInPass, Integer.valueOf(pass)))
                 {
                     AxisAlignedBB var29 = this.getTileEntityBoundingBox(var27);
 
@@ -1474,11 +1474,11 @@ public class RenderGlobal implements IWorldAccess
         if (Reflector.ForgeWorldProvider_getSkyRenderer.exists())
         {
             WorldProvider var2 = this.mc.theWorld.provider;
-            Object var3 = Reflector.call(var2, Reflector.ForgeWorldProvider_getSkyRenderer, new Object[0]);
+            Object var3 = Reflector.call(var2, Reflector.ForgeWorldProvider_getSkyRenderer);
 
             if (var3 != null)
             {
-                Reflector.callVoid(var3, Reflector.IRenderHandler_render, new Object[] {Float.valueOf(par1), this.theWorld, this.mc});
+                Reflector.callVoid(var3, Reflector.IRenderHandler_render, Float.valueOf(par1), this.theWorld, this.mc);
                 return;
             }
         }
@@ -1756,11 +1756,11 @@ public class RenderGlobal implements IWorldAccess
             if (Reflector.ForgeWorldProvider_getCloudRenderer.exists())
             {
                 WorldProvider partialTicks = this.mc.theWorld.provider;
-                Object var2 = Reflector.call(partialTicks, Reflector.ForgeWorldProvider_getCloudRenderer, new Object[0]);
+                Object var2 = Reflector.call(partialTicks, Reflector.ForgeWorldProvider_getCloudRenderer);
 
                 if (var2 != null)
                 {
-                    Reflector.callVoid(var2, Reflector.IRenderHandler_render, new Object[] {Float.valueOf(par1), this.theWorld, this.mc});
+                    Reflector.callVoid(var2, Reflector.IRenderHandler_render, Float.valueOf(par1), this.theWorld, this.mc);
                     return;
                 }
             }
@@ -3203,7 +3203,7 @@ public class RenderGlobal implements IWorldAccess
     private boolean isMovingNow(EntityLivingBase entityliving)
     {
         double maxDiff = 0.001D;
-        return entityliving.isSneaking() ? true : ((double)entityliving.prevSwingProgress > maxDiff ? true : (this.mc.mouseHelper.deltaX != 0 ? true : (this.mc.mouseHelper.deltaY != 0 ? true : (Math.abs(entityliving.posX - entityliving.prevPosX) > maxDiff ? true : (Math.abs(entityliving.posY - entityliving.prevPosY) > maxDiff ? true : Math.abs(entityliving.posZ - entityliving.prevPosZ) > maxDiff)))));
+        return entityliving.isSneaking() || ((double) entityliving.prevSwingProgress > maxDiff || (this.mc.mouseHelper.deltaX != 0 || (this.mc.mouseHelper.deltaY != 0 || (Math.abs(entityliving.posX - entityliving.prevPosX) > maxDiff || (Math.abs(entityliving.posY - entityliving.prevPosY) > maxDiff || Math.abs(entityliving.posZ - entityliving.prevPosZ) > maxDiff)))));
     }
 
     public boolean isActing()
@@ -3223,7 +3223,7 @@ public class RenderGlobal implements IWorldAccess
 
     public boolean isActingNow()
     {
-        return Mouse.isButtonDown(0) ? true : Mouse.isButtonDown(1);
+        return Mouse.isButtonDown(0) || Mouse.isButtonDown(1);
     }
 
     public int renderAllSortedRenderers(int renderPass, double partialTicks)

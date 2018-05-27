@@ -19,7 +19,7 @@ public class CommandMessage extends CommandBase
 
     public List getCommandAliases()
     {
-        return Arrays.asList(new String[] {"w", "msg"});
+        return Arrays.asList("w", "msg");
     }
 
     public String getCommandName()
@@ -44,7 +44,7 @@ public class CommandMessage extends CommandBase
     {
         if (p_71515_2_.length < 2)
         {
-            throw new WrongUsageException("commands.message.usage", new Object[0]);
+            throw new WrongUsageException("commands.message.usage");
         }
         else
         {
@@ -56,13 +56,13 @@ public class CommandMessage extends CommandBase
             }
             else if (var3 == p_71515_1_)
             {
-                throw new PlayerNotFoundException("commands.message.sameTarget", new Object[0]);
+                throw new PlayerNotFoundException("commands.message.sameTarget");
             }
             else
             {
                 IChatComponent var4 = func_147176_a(p_71515_1_, p_71515_2_, 1, !(p_71515_1_ instanceof EntityPlayer));
-                ChatComponentTranslation var5 = new ChatComponentTranslation("commands.message.display.incoming", new Object[] {p_71515_1_.func_145748_c_(), var4.createCopy()});
-                ChatComponentTranslation var6 = new ChatComponentTranslation("commands.message.display.outgoing", new Object[] {var3.func_145748_c_(), var4.createCopy()});
+                ChatComponentTranslation var5 = new ChatComponentTranslation("commands.message.display.incoming", p_71515_1_.func_145748_c_(), var4.createCopy());
+                ChatComponentTranslation var6 = new ChatComponentTranslation("commands.message.display.outgoing", var3.func_145748_c_(), var4.createCopy());
                 var5.getChatStyle().setColor(EnumChatFormatting.GRAY).setItalic(Boolean.valueOf(true));
                 var6.getChatStyle().setColor(EnumChatFormatting.GRAY).setItalic(Boolean.valueOf(true));
                 var3.addChatMessage(var5);

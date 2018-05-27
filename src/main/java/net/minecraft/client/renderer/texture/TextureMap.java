@@ -59,7 +59,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     public static TextureMap textureMapBlocks = null;
     public static TextureMap textureMapItems = null;
     private TextureAtlasSprite[] iconGrid;
-    private int iconGridSize;
+    private final int iconGridSize;
     private int iconGridCountX;
     private int iconGridCountY;
     private double iconGridSizeU;
@@ -149,7 +149,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         this.mapUploadedSprites.clear();
         this.listAnimatedSprites.clear();
         int var4 = Integer.MAX_VALUE;
-        Reflector.callVoid(Reflector.ForgeHooksClient_onTextureStitchedPre, new Object[] {this});
+        Reflector.callVoid(Reflector.ForgeHooksClient_onTextureStitchedPre, this);
         Iterator var5 = this.mapRegisteredSprites.entrySet().iterator();
         TextureAtlasSprite var8;
 
@@ -211,7 +211,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                                 }
                                 catch (IOException var20)
                                 {
-                                    logger.error("Unable to load miplevel {} from: {}", new Object[] {Integer.valueOf(var30), var32, var20});
+                                    logger.error("Unable to load miplevel {} from: {}", Integer.valueOf(var30), var32, var20);
                                 }
                             }
                         }
@@ -247,7 +247,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
         if (var241 < this.field_147636_j)
         {
-            logger.info("{}: dropping miplevel from {} to {}, because of minTexel: {}", new Object[] {this.basePath, Integer.valueOf(this.field_147636_j), Integer.valueOf(var241), Integer.valueOf(var4)});
+            logger.info("{}: dropping miplevel from {} to {}, because of minTexel: {}", this.basePath, Integer.valueOf(this.field_147636_j), Integer.valueOf(var241), Integer.valueOf(var4));
             this.field_147636_j = var241;
         }
 
@@ -329,7 +329,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
             debugImage2 = this.makeDebugImage(sheetWidth2, sheetHeight1);
         }
 
-        logger.info("Created: {}x{} {}-atlas", new Object[] {Integer.valueOf(var3.getCurrentWidth()), Integer.valueOf(var3.getCurrentHeight()), this.basePath});
+        logger.info("Created: {}x{} {}-atlas", Integer.valueOf(var3.getCurrentWidth()), Integer.valueOf(var3.getCurrentHeight()), this.basePath);
         TextureUtil.func_147946_a(this.getGlTextureId(), this.field_147636_j, var3.getCurrentWidth(), var3.getCurrentHeight(), (float)this.field_147637_k);
         HashMap var262 = Maps.newHashMap(this.mapRegisteredSprites);
         Iterator var282 = var3.getStichSlots().iterator();
@@ -382,12 +382,12 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
             this.writeDebugImage(debugImage2, "debug_" + this.basePath.replace('/', '_') + ".png");
         }
 
-        Reflector.callVoid(Reflector.ForgeHooksClient_onTextureStitchedPost, new Object[] {this});
+        Reflector.callVoid(Reflector.ForgeHooksClient_onTextureStitchedPost, this);
     }
 
     private ResourceLocation func_147634_a(ResourceLocation p_147634_1_, int p_147634_2_)
     {
-        return this.isAbsoluteLocation(p_147634_1_) ? (p_147634_2_ == 0 ? new ResourceLocation(p_147634_1_.getResourceDomain(), p_147634_1_.getResourcePath() + ".png") : new ResourceLocation(p_147634_1_.getResourceDomain(), p_147634_1_.getResourcePath() + "mipmap" + p_147634_2_ + ".png")) : (p_147634_2_ == 0 ? new ResourceLocation(p_147634_1_.getResourceDomain(), String.format("%s/%s%s", new Object[] {this.basePath, p_147634_1_.getResourcePath(), ".png"})): new ResourceLocation(p_147634_1_.getResourceDomain(), String.format("%s/mipmaps/%s.%d%s", new Object[] {this.basePath, p_147634_1_.getResourcePath(), Integer.valueOf(p_147634_2_), ".png"})));
+        return this.isAbsoluteLocation(p_147634_1_) ? (p_147634_2_ == 0 ? new ResourceLocation(p_147634_1_.getResourceDomain(), p_147634_1_.getResourcePath() + ".png") : new ResourceLocation(p_147634_1_.getResourceDomain(), p_147634_1_.getResourcePath() + "mipmap" + p_147634_2_ + ".png")) : (p_147634_2_ == 0 ? new ResourceLocation(p_147634_1_.getResourceDomain(), String.format("%s/%s%s", this.basePath, p_147634_1_.getResourcePath(), ".png")): new ResourceLocation(p_147634_1_.getResourceDomain(), String.format("%s/mipmaps/%s.%d%s", this.basePath, p_147634_1_.getResourcePath(), Integer.valueOf(p_147634_2_), ".png")));
     }
 
     private void registerIcons()
@@ -471,7 +471,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
     private boolean isItemAnimationActive(TextureAtlasSprite ts)
     {
-        return ts != TextureUtils.iconClock && ts != TextureUtils.iconCompass ? Config.isAnimatedItems() : true;
+        return ts == TextureUtils.iconClock || ts == TextureUtils.iconCompass || Config.isAnimatedItems();
     }
 
     public IIcon registerIcon(String par1Str)
@@ -490,7 +490,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
             if (var2 == null && this.textureType == 1 && Reflector.ModLoader_getCustomAnimationLogic.exists())
             {
-                var2 = Reflector.call(Reflector.ModLoader_getCustomAnimationLogic, new Object[] {par1Str});
+                var2 = Reflector.call(Reflector.ModLoader_getCustomAnimationLogic, par1Str);
             }
 
             if (var2 == null)

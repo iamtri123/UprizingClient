@@ -26,7 +26,7 @@ import org.lwjgl.opengl.GL11;
 
 public class TileEntityRendererDispatcher
 {
-    private Map mapSpecialRenderers = new HashMap();
+    private final Map mapSpecialRenderers = new HashMap();
     public static TileEntityRendererDispatcher instance = new TileEntityRendererDispatcher();
     private FontRenderer field_147557_n;
     public static double staticPlayerX;

@@ -485,7 +485,7 @@ public class EntityWolf extends EntityTameable
      */
     public boolean isBreedingItem(ItemStack p_70877_1_)
     {
-        return p_70877_1_ == null ? false : (!(p_70877_1_.getItem() instanceof ItemFood) ? false : ((ItemFood)p_70877_1_.getItem()).isWolfsFavoriteMeat());
+        return p_70877_1_ != null && (p_70877_1_.getItem() instanceof ItemFood && ((ItemFood) p_70877_1_.getItem()).isWolfsFavoriteMeat());
     }
 
     /**
@@ -583,7 +583,7 @@ public class EntityWolf extends EntityTameable
         else
         {
             EntityWolf var2 = (EntityWolf)p_70878_1_;
-            return !var2.isTamed() ? false : (var2.isSitting() ? false : this.isInLove() && var2.isInLove());
+            return var2.isTamed() && (!var2.isSitting() && (this.isInLove() && var2.isInLove()));
         }
     }
 
@@ -614,7 +614,7 @@ public class EntityWolf extends EntityTameable
                 }
             }
 
-            return p_142018_1_ instanceof EntityPlayer && p_142018_2_ instanceof EntityPlayer && !((EntityPlayer)p_142018_2_).canAttackPlayer((EntityPlayer)p_142018_1_) ? false : !(p_142018_1_ instanceof EntityHorse) || !((EntityHorse)p_142018_1_).isTame();
+            return !(p_142018_1_ instanceof EntityPlayer) || !(p_142018_2_ instanceof EntityPlayer) || ((EntityPlayer) p_142018_2_).canAttackPlayer((EntityPlayer) p_142018_1_) && (!(p_142018_1_ instanceof EntityHorse) || !((EntityHorse) p_142018_1_).isTame());
         }
         else
         {

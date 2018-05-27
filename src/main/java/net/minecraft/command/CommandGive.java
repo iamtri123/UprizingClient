@@ -37,7 +37,7 @@ public class CommandGive extends CommandBase
     {
         if (p_71515_2_.length < 2)
         {
-            throw new WrongUsageException("commands.give.usage", new Object[0]);
+            throw new WrongUsageException("commands.give.usage");
         }
         else
         {
@@ -68,7 +68,7 @@ public class CommandGive extends CommandBase
 
                     if (!(var9 instanceof NBTTagCompound))
                     {
-                        func_152373_a(p_71515_1_, this, "commands.give.tagError", new Object[] {"Not a valid tag"});
+                        func_152373_a(p_71515_1_, this, "commands.give.tagError", "Not a valid tag");
                         return;
                     }
 
@@ -76,7 +76,7 @@ public class CommandGive extends CommandBase
                 }
                 catch (NBTException var10)
                 {
-                    func_152373_a(p_71515_1_, this, "commands.give.tagError", new Object[] {var10.getMessage()});
+                    func_152373_a(p_71515_1_, this, "commands.give.tagError", var10.getMessage());
                     return;
                 }
             }
@@ -84,7 +84,7 @@ public class CommandGive extends CommandBase
             EntityItem var11 = var3.dropPlayerItemWithRandomChoice(var7, false);
             var11.delayBeforeCanPickup = 0;
             var11.func_145797_a(var3.getCommandSenderName());
-            func_152373_a(p_71515_1_, this, "commands.give.success", new Object[] {var7.func_151000_E(), Integer.valueOf(var5), var3.getCommandSenderName()});
+            func_152373_a(p_71515_1_, this, "commands.give.success", var7.func_151000_E(), Integer.valueOf(var5), var3.getCommandSenderName());
         }
     }
 

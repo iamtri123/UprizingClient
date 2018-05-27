@@ -2,7 +2,7 @@ package optifine;
 
 public class WrUpdateControl implements IWrUpdateControl
 {
-    private boolean hasForge;
+    private final boolean hasForge;
     private int renderPass;
 
     public WrUpdateControl()

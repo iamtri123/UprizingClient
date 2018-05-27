@@ -95,14 +95,14 @@ public class CommandHandler implements ICommandManager
             }
             else
             {
-                ChatComponentTranslation var21 = new ChatComponentTranslation("commands.generic.permission", new Object[0]);
+                ChatComponentTranslation var21 = new ChatComponentTranslation("commands.generic.permission");
                 var21.getChatStyle().setColor(EnumChatFormatting.RED);
                 p_71556_1_.addChatMessage(var21);
             }
         }
         catch (WrongUsageException var18)
         {
-            var9 = new ChatComponentTranslation("commands.generic.usage", new Object[] {new ChatComponentTranslation(var18.getMessage(), var18.getErrorOjbects())});
+            var9 = new ChatComponentTranslation("commands.generic.usage", new ChatComponentTranslation(var18.getMessage(), var18.getErrorOjbects()));
             var9.getChatStyle().setColor(EnumChatFormatting.RED);
             p_71556_1_.addChatMessage(var9);
         }
@@ -114,7 +114,7 @@ public class CommandHandler implements ICommandManager
         }
         catch (Throwable var20)
         {
-            var9 = new ChatComponentTranslation("commands.generic.exception", new Object[0]);
+            var9 = new ChatComponentTranslation("commands.generic.exception");
             var9.getChatStyle().setColor(EnumChatFormatting.RED);
             p_71556_1_.addChatMessage(var9);
             logger.error("Couldn\'t process command: \'" + p_71556_2_ + "\'", var20);

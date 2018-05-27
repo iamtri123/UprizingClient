@@ -94,7 +94,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderManager
 {
     /** A map of entity classes and the associated renderer. */
-    private Map entityRenderMap = new HashMap();
+    private final Map entityRenderMap = new HashMap();
 
     /** The static instance of RenderManager. */
     public static RenderManager instance = new RenderManager();

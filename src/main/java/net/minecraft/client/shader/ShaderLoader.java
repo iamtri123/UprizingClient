@@ -17,7 +17,7 @@ public class ShaderLoader
 {
     private final ShaderLoader.ShaderType field_148061_a;
     private final String field_148059_b;
-    private int field_148060_c;
+    private final int field_148060_c;
     private int field_148058_d = 0;
     private static final String __OBFID = "CL_00001043";
 
@@ -81,7 +81,7 @@ public class ShaderLoader
         return var3;
     }
 
-    public static enum ShaderType
+    public enum ShaderType
     {
         VERTEX("VERTEX", 0, "vertex", ".vsh", OpenGlHelper.field_153209_q),
         FRAGMENT("FRAGMENT", 1, "fragment", ".fsh", OpenGlHelper.field_153210_r);
@@ -90,10 +90,10 @@ public class ShaderLoader
         private final int field_148070_e;
         private final Map field_148067_f = Maps.newHashMap();
 
-        private static final ShaderLoader.ShaderType[] $VALUES = new ShaderLoader.ShaderType[]{VERTEX, FRAGMENT};
+        private static final ShaderLoader.ShaderType[] $VALUES = {VERTEX, FRAGMENT};
         private static final String __OBFID = "CL_00001044";
 
-        private ShaderType(String p_i45090_1_, int p_i45090_2_, String p_i45090_3_, String p_i45090_4_, int p_i45090_5_)
+        ShaderType(String p_i45090_1_, int p_i45090_2_, String p_i45090_3_, String p_i45090_4_, int p_i45090_5_)
         {
             this.field_148072_c = p_i45090_3_;
             this.field_148069_d = p_i45090_4_;

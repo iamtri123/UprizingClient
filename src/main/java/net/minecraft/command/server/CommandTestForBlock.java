@@ -53,7 +53,7 @@ public class CommandTestForBlock extends CommandBase
 
             if (var6 == null)
             {
-                throw new NumberInvalidException("commands.setblock.notFound", new Object[] {p_71515_2_[3]});
+                throw new NumberInvalidException("commands.setblock.notFound", p_71515_2_[3]);
             }
             else
             {
@@ -68,7 +68,7 @@ public class CommandTestForBlock extends CommandBase
 
                 if (!var8.blockExists(var3, var4, var5))
                 {
-                    throw new CommandException("commands.testforblock.outOfWorld", new Object[0]);
+                    throw new CommandException("commands.testforblock.outOfWorld");
                 }
                 else
                 {
@@ -85,7 +85,7 @@ public class CommandTestForBlock extends CommandBase
 
                             if (!(var12 instanceof NBTTagCompound))
                             {
-                                throw new CommandException("commands.setblock.tagError", new Object[] {"Not a valid tag"});
+                                throw new CommandException("commands.setblock.tagError", "Not a valid tag");
                             }
 
                             var9 = (NBTTagCompound)var12;
@@ -93,7 +93,7 @@ public class CommandTestForBlock extends CommandBase
                         }
                         catch (NBTException var14)
                         {
-                            throw new CommandException("commands.setblock.tagError", new Object[] {var14.getMessage()});
+                            throw new CommandException("commands.setblock.tagError", var14.getMessage());
                         }
                     }
 
@@ -101,7 +101,7 @@ public class CommandTestForBlock extends CommandBase
 
                     if (var15 != var6)
                     {
-                        throw new CommandException("commands.testforblock.failed.tile", new Object[] {Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5), var15.getLocalizedName(), var6.getLocalizedName()});
+                        throw new CommandException("commands.testforblock.failed.tile", Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5), var15.getLocalizedName(), var6.getLocalizedName());
                     }
                     else
                     {
@@ -111,7 +111,7 @@ public class CommandTestForBlock extends CommandBase
 
                             if (var16 != var7)
                             {
-                                throw new CommandException("commands.testforblock.failed.data", new Object[] {Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5), Integer.valueOf(var16), Integer.valueOf(var7)});
+                                throw new CommandException("commands.testforblock.failed.data", Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5), Integer.valueOf(var16), Integer.valueOf(var7));
                             }
                         }
 
@@ -121,7 +121,7 @@ public class CommandTestForBlock extends CommandBase
 
                             if (var17 == null)
                             {
-                                throw new CommandException("commands.testforblock.failed.tileEntity", new Object[] {Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5)});
+                                throw new CommandException("commands.testforblock.failed.tileEntity", Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5));
                             }
 
                             NBTTagCompound var13 = new NBTTagCompound();
@@ -129,18 +129,18 @@ public class CommandTestForBlock extends CommandBase
 
                             if (!this.func_147181_a(var9, var13))
                             {
-                                throw new CommandException("commands.testforblock.failed.nbt", new Object[] {Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5)});
+                                throw new CommandException("commands.testforblock.failed.nbt", Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5));
                             }
                         }
 
-                        p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.testforblock.success", new Object[] {Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5)}));
+                        p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.testforblock.success", Integer.valueOf(var3), Integer.valueOf(var4), Integer.valueOf(var5)));
                     }
                 }
             }
         }
         else
         {
-            throw new WrongUsageException("commands.testforblock.usage", new Object[0]);
+            throw new WrongUsageException("commands.testforblock.usage");
         }
     }
 

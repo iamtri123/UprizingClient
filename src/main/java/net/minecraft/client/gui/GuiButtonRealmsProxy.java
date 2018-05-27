@@ -5,7 +5,7 @@ import net.minecraft.realms.RealmsButton;
 
 public class GuiButtonRealmsProxy extends GuiButton
 {
-    private RealmsButton field_154318_o;
+    private final RealmsButton field_154318_o;
     private static final String __OBFID = "CL_00001848";
 
     public GuiButtonRealmsProxy(RealmsButton p_i46321_1_, int p_i46321_2_, int p_i46321_3_, int p_i46321_4_, String p_i46321_5_)

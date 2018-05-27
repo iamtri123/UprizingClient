@@ -34,7 +34,7 @@ public class WorldServerOF extends WorldServer
     private int lastViewDistance = 0;
     private boolean allChunksTicked = false;
     public Set setChunkCoordsToTickOnce = new HashSet();
-    private Set limitedChunkSet = new HashSet();
+    private final Set limitedChunkSet = new HashSet();
     private static final Logger logger = LogManager.getLogger();
 
     public WorldServerOF(MinecraftServer par1MinecraftServer, ISaveHandler par2iSaveHandler, String par3Str, int par4, WorldSettings par5WorldSettings, Profiler par6Profiler)

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class ItemDoor extends Item
 {
-    private Material doorMaterial;
+    private final Material doorMaterial;
     private static final String __OBFID = "CL_00000020";
 
     public ItemDoor(Material p_i45334_1_)

@@ -520,7 +520,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
                 func_146089_b(var2, Items.experience_bottle, this.rand, this.adjustProbability(0.2F));
                 func_146089_b(var2, Items.redstone, this.rand, this.adjustProbability(0.4F));
                 func_146089_b(var2, Item.getItemFromBlock(Blocks.glowstone), this.rand, this.adjustProbability(0.3F));
-                Item[] var3 = new Item[] {Items.iron_sword, Items.diamond_sword, Items.iron_chestplate, Items.diamond_chestplate, Items.iron_axe, Items.diamond_axe, Items.iron_pickaxe, Items.diamond_pickaxe};
+                Item[] var3 = {Items.iron_sword, Items.diamond_sword, Items.iron_chestplate, Items.diamond_chestplate, Items.iron_axe, Items.diamond_axe, Items.iron_pickaxe, Items.diamond_pickaxe};
                 Item[] var4 = var3;
                 int var5 = var3.length;
                 var6 = 0;

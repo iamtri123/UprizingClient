@@ -50,7 +50,7 @@ public class CommandBanPlayer extends CommandBase
 
             if (var4 == null)
             {
-                throw new CommandException("commands.ban.failed", new Object[] {p_71515_2_[0]});
+                throw new CommandException("commands.ban.failed", p_71515_2_[0]);
             }
             else
             {
@@ -70,12 +70,12 @@ public class CommandBanPlayer extends CommandBase
                     var7.playerNetServerHandler.kickPlayerFromServer("You are banned from this server.");
                 }
 
-                func_152373_a(p_71515_1_, this, "commands.ban.success", new Object[] {p_71515_2_[0]});
+                func_152373_a(p_71515_1_, this, "commands.ban.success", p_71515_2_[0]);
             }
         }
         else
         {
-            throw new WrongUsageException("commands.ban.usage", new Object[0]);
+            throw new WrongUsageException("commands.ban.usage");
         }
     }
 

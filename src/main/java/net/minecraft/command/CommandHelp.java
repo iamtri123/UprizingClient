@@ -35,7 +35,7 @@ public class CommandHelp extends CommandBase
 
     public List getCommandAliases()
     {
-        return Arrays.asList(new String[] {"?"});
+        return Arrays.asList("?");
     }
 
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
@@ -57,7 +57,7 @@ public class CommandHelp extends CommandBase
 
             if (var9 != null)
             {
-                throw new WrongUsageException(var9.getCommandUsage(p_71515_1_), new Object[0]);
+                throw new WrongUsageException(var9.getCommandUsage(p_71515_1_));
             }
 
             if (MathHelper.parseIntWithDefault(p_71515_2_[0], -1) != -1)
@@ -69,21 +69,21 @@ public class CommandHelp extends CommandBase
         }
 
         int var7 = Math.min((var13 + 1) * var4, var3.size());
-        ChatComponentTranslation var14 = new ChatComponentTranslation("commands.help.header", new Object[] {Integer.valueOf(var13 + 1), Integer.valueOf(var5 + 1)});
+        ChatComponentTranslation var14 = new ChatComponentTranslation("commands.help.header", Integer.valueOf(var13 + 1), Integer.valueOf(var5 + 1));
         var14.getChatStyle().setColor(EnumChatFormatting.DARK_GREEN);
         p_71515_1_.addChatMessage(var14);
 
         for (int var15 = var13 * var4; var15 < var7; ++var15)
         {
             ICommand var10 = (ICommand)var3.get(var15);
-            ChatComponentTranslation var11 = new ChatComponentTranslation(var10.getCommandUsage(p_71515_1_), new Object[0]);
+            ChatComponentTranslation var11 = new ChatComponentTranslation(var10.getCommandUsage(p_71515_1_));
             var11.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + var10.getCommandName() + " "));
             p_71515_1_.addChatMessage(var11);
         }
 
         if (var13 == 0 && p_71515_1_ instanceof EntityPlayer)
         {
-            ChatComponentTranslation var16 = new ChatComponentTranslation("commands.help.footer", new Object[0]);
+            ChatComponentTranslation var16 = new ChatComponentTranslation("commands.help.footer");
             var16.getChatStyle().setColor(EnumChatFormatting.GREEN);
             p_71515_1_.addChatMessage(var16);
         }

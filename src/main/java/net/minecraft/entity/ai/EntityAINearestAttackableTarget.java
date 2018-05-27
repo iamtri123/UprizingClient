@@ -46,7 +46,7 @@ public class EntityAINearestAttackableTarget extends EntityAITarget
             private static final String __OBFID = "CL_00001621";
             public boolean isEntityApplicable(Entity p_82704_1_)
             {
-                return !(p_82704_1_ instanceof EntityLivingBase) ? false : (p_i1665_6_ != null && !p_i1665_6_.isEntityApplicable(p_82704_1_) ? false : EntityAINearestAttackableTarget.this.isSuitableTarget((EntityLivingBase)p_82704_1_, false));
+                return p_82704_1_ instanceof EntityLivingBase && (p_i1665_6_ == null || p_i1665_6_.isEntityApplicable(p_82704_1_) && EntityAINearestAttackableTarget.this.isSuitableTarget((EntityLivingBase) p_82704_1_, false));
             }
         };
     }

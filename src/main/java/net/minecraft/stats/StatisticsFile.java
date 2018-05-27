@@ -86,7 +86,7 @@ public class StatisticsFile extends StatFileWriter
 
             if (this.field_150890_c.func_147136_ar())
             {
-                this.field_150890_c.getConfigurationManager().func_148539_a(new ChatComponentTranslation("chat.type.achievement", new Object[] {p_150873_1_.func_145748_c_(), p_150873_2_.func_150955_j()}));
+                this.field_150890_c.getConfigurationManager().func_148539_a(new ChatComponentTranslation("chat.type.achievement", p_150873_1_.func_145748_c_(), p_150873_2_.func_150955_j()));
             }
         }
     }
@@ -139,7 +139,7 @@ public class StatisticsFile extends StatFileWriter
                         {
                             try
                             {
-                                Constructor var10 = var7.func_150954_l().getConstructor(new Class[0]);
+                                Constructor var10 = var7.func_150954_l().getConstructor();
                                 IJsonSerializable var11 = (IJsonSerializable)var10.newInstance(new Object[0]);
                                 var11.func_152753_a(var9.get("progress"));
                                 var8.setJsonSerializableValue(var11);

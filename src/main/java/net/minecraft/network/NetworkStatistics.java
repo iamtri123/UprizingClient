@@ -10,8 +10,8 @@ public class NetworkStatistics
 {
     private static final Logger field_152478_a = LogManager.getLogger();
     private static final Marker field_152479_b = MarkerManager.getMarker("NETSTAT_MARKER", NetworkManager.field_152461_c);
-    private NetworkStatistics.Tracker field_152480_c = new NetworkStatistics.Tracker();
-    private NetworkStatistics.Tracker field_152481_d = new NetworkStatistics.Tracker();
+    private final NetworkStatistics.Tracker field_152480_c = new NetworkStatistics.Tracker();
+    private final NetworkStatistics.Tracker field_152481_d = new NetworkStatistics.Tracker();
     private static final String __OBFID = "CL_00001897";
 
     public void func_152469_a(int p_152469_1_, long p_152469_2_)
@@ -134,7 +134,7 @@ public class NetworkStatistics
 
     static class Tracker
     {
-        private AtomicReference[] field_152490_a = new AtomicReference[100];
+        private final AtomicReference[] field_152490_a = new AtomicReference[100];
         private static final String __OBFID = "CL_00001894";
 
         public Tracker()

@@ -31,7 +31,7 @@ public class FontRenderer implements IResourceManagerReloadListener
     private static final ResourceLocation[] unicodePageLocations = new ResourceLocation[256];
 
     /** Array of width of all the characters in default.png */
-    private float[] charWidth = new float[256];
+    private final float[] charWidth = new float[256];
 
     /** the height in pixels of default text */
     public int FONT_HEIGHT = 9;
@@ -40,13 +40,13 @@ public class FontRenderer implements IResourceManagerReloadListener
     /**
      * Array of the start/end column (in upper/lower nibble) for every glyph in the /font directory.
      */
-    private byte[] glyphWidth = new byte[65536];
+    private final byte[] glyphWidth = new byte[65536];
 
     /**
      * Array of RGB triplets defining the 16 standard chat colors followed by 16 darker version of the same colors for
      * drop shadows.
      */
-    private int[] colorCode = new int[32];
+    private final int[] colorCode = new int[32];
     private ResourceLocation locationFontTexture;
 
     /** The RenderEngine used to load and setup glyph textures. */
@@ -295,7 +295,7 @@ public class FontRenderer implements IResourceManagerReloadListener
     {
         if (unicodePageLocations[par1] == null)
         {
-            unicodePageLocations[par1] = new ResourceLocation(String.format("textures/font/unicode_page_%02x.png", new Object[] {Integer.valueOf(par1)}));
+            unicodePageLocations[par1] = new ResourceLocation(String.format("textures/font/unicode_page_%02x.png", Integer.valueOf(par1)));
             unicodePageLocations[par1] = getHdFontLocation(unicodePageLocations[par1]);
         }
 
@@ -1084,7 +1084,6 @@ public class FontRenderer implements IResourceManagerReloadListener
             }
             catch (FileNotFoundException var15)
             {
-                ;
             }
             catch (IOException var16)
             {

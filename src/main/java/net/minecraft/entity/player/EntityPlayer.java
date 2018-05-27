@@ -1073,7 +1073,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
     {
         Team var2 = this.getTeam();
         Team var3 = p_96122_1_.getTeam();
-        return var2 == null ? true : (!var2.isSameTeam(var3) ? true : var2.getAllowFriendlyFire());
+        return var2 == null || (!var2.isSameTeam(var3) || var2.getAllowFriendlyFire());
     }
 
     protected void damageArmor(float p_70675_1_)
@@ -2098,7 +2098,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
 
     public boolean canPlayerEdit(int p_82247_1_, int p_82247_2_, int p_82247_3_, int p_82247_4_, ItemStack p_82247_5_)
     {
-        return this.capabilities.allowEdit ? true : (p_82247_5_ != null ? p_82247_5_.canEditBlocks() : false);
+        return this.capabilities.allowEdit || (p_82247_5_ != null && p_82247_5_.canEditBlocks());
     }
 
     /**
@@ -2300,7 +2300,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         return var1;
     }
 
-    public static enum EnumChatVisibility
+    public enum EnumChatVisibility
     {
         FULL("FULL", 0, 0, "options.chat.visibility.full"),
         SYSTEM("SYSTEM", 1, 1, "options.chat.visibility.system"),
@@ -2309,10 +2309,10 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         private final int chatVisibility;
         private final String resourceKey;
 
-        private static final EntityPlayer.EnumChatVisibility[] $VALUES = new EntityPlayer.EnumChatVisibility[]{FULL, SYSTEM, HIDDEN};
+        private static final EntityPlayer.EnumChatVisibility[] $VALUES = {FULL, SYSTEM, HIDDEN};
         private static final String __OBFID = "CL_00001714";
 
-        private EnumChatVisibility(String p_i45323_1_, int p_i45323_2_, int p_i45323_3_, String p_i45323_4_)
+        EnumChatVisibility(String p_i45323_1_, int p_i45323_2_, int p_i45323_3_, String p_i45323_4_)
         {
             this.chatVisibility = p_i45323_3_;
             this.resourceKey = p_i45323_4_;
@@ -2345,7 +2345,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         }
     }
 
-    public static enum EnumStatus
+    public enum EnumStatus
     {
         OK("OK", 0),
         NOT_POSSIBLE_HERE("NOT_POSSIBLE_HERE", 1),
@@ -2354,9 +2354,9 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         OTHER_PROBLEM("OTHER_PROBLEM", 4),
         NOT_SAFE("NOT_SAFE", 5);
 
-        private static final EntityPlayer.EnumStatus[] $VALUES = new EntityPlayer.EnumStatus[]{OK, NOT_POSSIBLE_HERE, NOT_POSSIBLE_NOW, TOO_FAR_AWAY, OTHER_PROBLEM, NOT_SAFE};
+        private static final EntityPlayer.EnumStatus[] $VALUES = {OK, NOT_POSSIBLE_HERE, NOT_POSSIBLE_NOW, TOO_FAR_AWAY, OTHER_PROBLEM, NOT_SAFE};
         private static final String __OBFID = "CL_00001712";
 
-        private EnumStatus(String p_i1751_1_, int p_i1751_2_) {}
+        EnumStatus(String p_i1751_1_, int p_i1751_2_) {}
     }
 }

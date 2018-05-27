@@ -20,7 +20,7 @@ public class RenderList
     private double cameraZ;
 
     /** A list of OpenGL render list IDs rendered by this RenderList. */
-    private IntBuffer glLists = GLAllocation.createDirectIntBuffer(65536);
+    private final IntBuffer glLists = GLAllocation.createDirectIntBuffer(65536);
 
     /**
      * Does this RenderList contain properly-initialized and current data for rendering?
@@ -45,7 +45,7 @@ public class RenderList
 
     public boolean rendersChunk(int p_78418_1_, int p_78418_2_, int p_78418_3_)
     {
-        return !this.valid ? false : p_78418_1_ == this.renderChunkX && p_78418_2_ == this.renderChunkY && p_78418_3_ == this.renderChunkZ;
+        return this.valid && (p_78418_1_ == this.renderChunkX && p_78418_2_ == this.renderChunkY && p_78418_3_ == this.renderChunkZ);
     }
 
     public void addGLRenderList(int p_78420_1_)

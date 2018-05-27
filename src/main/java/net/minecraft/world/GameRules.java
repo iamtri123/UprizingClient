@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class GameRules
 {
-    private TreeMap theGameRules = new TreeMap();
+    private final TreeMap theGameRules = new TreeMap();
     private static final String __OBFID = "CL_00000136";
 
     public GameRules()
@@ -60,7 +60,7 @@ public class GameRules
     public boolean getGameRuleBooleanValue(String par1Str)
     {
         GameRules.Value var2 = (GameRules.Value)this.theGameRules.get(par1Str);
-        return var2 != null ? var2.getGameRuleBooleanValue() : false;
+        return var2 != null && var2.getGameRuleBooleanValue();
     }
 
     /**
@@ -153,7 +153,6 @@ public class GameRules
             }
             catch (NumberFormatException var4)
             {
-                ;
             }
 
             try
@@ -162,7 +161,6 @@ public class GameRules
             }
             catch (NumberFormatException var3)
             {
-                ;
             }
         }
 

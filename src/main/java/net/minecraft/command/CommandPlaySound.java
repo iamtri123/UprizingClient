@@ -29,7 +29,7 @@ public class CommandPlaySound extends CommandBase
     {
         if (p_71515_2_.length < 2)
         {
-            throw new WrongUsageException(this.getCommandUsage(p_71515_1_), new Object[0]);
+            throw new WrongUsageException(this.getCommandUsage(p_71515_1_));
         }
         else
         {
@@ -81,7 +81,7 @@ public class CommandPlaySound extends CommandBase
             {
                 if (var16 <= 0.0D)
                 {
-                    throw new CommandException("commands.playsound.playerTooFar", new Object[] {var5.getCommandSenderName()});
+                    throw new CommandException("commands.playsound.playerTooFar", var5.getCommandSenderName());
                 }
 
                 double var22 = var6 - var5.posX;
@@ -106,7 +106,7 @@ public class CommandPlaySound extends CommandBase
                 var5.playerNetServerHandler.sendPacket(new S29PacketSoundEffect(var4, var6, var8, var10, (float)var12, (float)var14));
             }
 
-            func_152373_a(p_71515_1_, this, "commands.playsound.success", new Object[] {var4, var5.getCommandSenderName()});
+            func_152373_a(p_71515_1_, this, "commands.playsound.success", var4, var5.getCommandSenderName());
         }
     }
 

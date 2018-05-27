@@ -24,7 +24,7 @@ public class ItemRendererOF extends ItemRenderer
     private Minecraft mc = null;
     private RenderBlocks renderBlocksIr = null;
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-    private static Field ItemRenderer_renderBlockInstance = Reflector.getField(ItemRenderer.class, RenderBlocks.class);
+    private static final Field ItemRenderer_renderBlockInstance = Reflector.getField(ItemRenderer.class, RenderBlocks.class);
 
     public ItemRendererOF(Minecraft par1Minecraft)
     {
@@ -69,13 +69,13 @@ public class ItemRendererOF extends ItemRenderer
         if (Reflector.MinecraftForgeClient_getItemRenderer.exists())
         {
             type = Reflector.getFieldValue(Reflector.ItemRenderType_EQUIPPED);
-            customRenderer = Reflector.call(Reflector.MinecraftForgeClient_getItemRenderer, new Object[] {par2ItemStack, type});
+            customRenderer = Reflector.call(Reflector.MinecraftForgeClient_getItemRenderer, par2ItemStack, type);
         }
 
         if (customRenderer != null)
         {
             var4.bindTexture(var4.getResourceLocation(par2ItemStack.getItemSpriteNumber()));
-            Reflector.callVoid(Reflector.ForgeHooksClient_renderEquippedItem, new Object[] {type, customRenderer, this.renderBlocksIr, par1EntityLivingBase, par2ItemStack});
+            Reflector.callVoid(Reflector.ForgeHooksClient_renderEquippedItem, type, customRenderer, this.renderBlocksIr, par1EntityLivingBase, par2ItemStack);
         }
         else if (par2ItemStack.getItemSpriteNumber() == 0 && var5 instanceof ItemBlock && RenderBlocks.renderItemIn3d(var6.getRenderType()))
         {
@@ -123,7 +123,7 @@ public class ItemRendererOF extends ItemRenderer
 
             if (Reflector.ForgeItemStack_hasEffect.exists())
             {
-                renderEffect = Reflector.callBoolean(par2ItemStack, Reflector.ForgeItemStack_hasEffect, new Object[] {Integer.valueOf(par3)});
+                renderEffect = Reflector.callBoolean(par2ItemStack, Reflector.ForgeItemStack_hasEffect, Integer.valueOf(par3));
             }
             else
             {

@@ -104,13 +104,13 @@ public class Tessellator
     /** The size of the buffers used (in integers). */
     private int bufferSize;
     private boolean renderingChunk;
-    private static boolean littleEndianByteOrder = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN;
+    private static final boolean littleEndianByteOrder = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN;
     public static boolean renderingWorldRenderer = false;
     public boolean defaultTexture;
     public int textureID;
     public boolean autoGrow;
     private VertexData[] vertexDatas;
-    private boolean[] drawnIcons;
+    private final boolean[] drawnIcons;
     private TextureAtlasSprite[] vertexQuadIcons;
     private static final String __OBFID = "CL_00000960";
 

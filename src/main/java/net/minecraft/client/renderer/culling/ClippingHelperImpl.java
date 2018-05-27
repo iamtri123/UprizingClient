@@ -7,10 +7,10 @@ import org.lwjgl.opengl.GL11;
 
 public class ClippingHelperImpl extends ClippingHelper
 {
-    private static ClippingHelperImpl instance = new ClippingHelperImpl();
-    private FloatBuffer projectionMatrixBuffer = GLAllocation.createDirectFloatBuffer(16);
-    private FloatBuffer modelviewMatrixBuffer = GLAllocation.createDirectFloatBuffer(16);
-    private FloatBuffer field_78564_h = GLAllocation.createDirectFloatBuffer(16);
+    private static final ClippingHelperImpl instance = new ClippingHelperImpl();
+    private final FloatBuffer projectionMatrixBuffer = GLAllocation.createDirectFloatBuffer(16);
+    private final FloatBuffer modelviewMatrixBuffer = GLAllocation.createDirectFloatBuffer(16);
+    private final FloatBuffer field_78564_h = GLAllocation.createDirectFloatBuffer(16);
     private static final String __OBFID = "CL_00000975";
 
     /**

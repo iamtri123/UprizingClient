@@ -31,7 +31,7 @@ public class RenderBiped extends RenderLiving
     private static final Map field_110859_k = Maps.newHashMap();
 
     /** List of armor texture filenames. */
-    private static final String[] bipedArmorFilenamePrefix = new String[] {"leather", "chainmail", "iron", "diamond", "gold"};
+    private static final String[] bipedArmorFilenamePrefix = {"leather", "chainmail", "iron", "diamond", "gold"};
     private static final String __OBFID = "CL_00001001";
 
     public RenderBiped(ModelBiped p_i1257_1_, float p_i1257_2_)
@@ -60,7 +60,7 @@ public class RenderBiped extends RenderLiving
 
     public static ResourceLocation func_110858_a(ItemArmor p_110858_0_, int p_110858_1_, String p_110858_2_)
     {
-        String var3 = String.format("textures/models/armor/%s_layer_%d%s.png", new Object[] {bipedArmorFilenamePrefix[p_110858_0_.renderIndex], Integer.valueOf(p_110858_1_ == 2 ? 2 : 1), p_110858_2_ == null ? "" : String.format("_%s", new Object[]{p_110858_2_})});
+        String var3 = String.format("textures/models/armor/%s_layer_%d%s.png", bipedArmorFilenamePrefix[p_110858_0_.renderIndex], Integer.valueOf(p_110858_1_ == 2 ? 2 : 1), p_110858_2_ == null ? "" : String.format("_%s", p_110858_2_));
         ResourceLocation var4 = (ResourceLocation)field_110859_k.get(var3);
 
         if (var4 == null)

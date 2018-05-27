@@ -14,14 +14,14 @@ import org.lwjgl.opengl.GL12;
 public class GuiAchievement extends Gui
 {
     private static final ResourceLocation field_146261_a = new ResourceLocation("textures/gui/achievement/achievement_background.png");
-    private Minecraft field_146259_f;
+    private final Minecraft field_146259_f;
     private int field_146260_g;
     private int field_146267_h;
     private String field_146268_i;
     private String field_146265_j;
     private Achievement field_146266_k;
     private long field_146263_l;
-    private RenderItem field_146264_m;
+    private final RenderItem field_146264_m;
     private boolean field_146262_n;
     private static final String __OBFID = "CL_00000721";
 
@@ -33,7 +33,7 @@ public class GuiAchievement extends Gui
 
     public void func_146256_a(Achievement p_146256_1_)
     {
-        this.field_146268_i = I18n.format("achievement.get", new Object[0]);
+        this.field_146268_i = I18n.format("achievement.get");
         this.field_146265_j = p_146256_1_.func_150951_e().getUnformattedText();
         this.field_146263_l = Minecraft.getSystemTime();
         this.field_146266_k = p_146256_1_;

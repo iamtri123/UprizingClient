@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 
 public class RecipesWeapons
 {
-    private String[][] recipePatterns = new String[][] {{"X", "X", "#"}};
-    private Object[][] recipeItems;
+    private final String[][] recipePatterns = {{"X", "X", "#"}};
+    private final Object[][] recipeItems;
     private static final String __OBFID = "CL_00000097";
 
     public RecipesWeapons()
@@ -28,11 +28,11 @@ public class RecipesWeapons
             for (int var4 = 0; var4 < this.recipeItems.length - 1; ++var4)
             {
                 Item var5 = (Item)this.recipeItems[var4 + 1][var2];
-                p_77583_1_.addRecipe(new ItemStack(var5), new Object[] {this.recipePatterns[var4], '#', Items.stick, 'X', var3});
+                p_77583_1_.addRecipe(new ItemStack(var5), this.recipePatterns[var4], '#', Items.stick, 'X', var3);
             }
         }
 
-        p_77583_1_.addRecipe(new ItemStack(Items.bow, 1), new Object[] {" #X", "# X", " #X", 'X', Items.string, '#', Items.stick});
-        p_77583_1_.addRecipe(new ItemStack(Items.arrow, 4), new Object[] {"X", "#", "Y", 'Y', Items.feather, 'X', Items.flint, '#', Items.stick});
+        p_77583_1_.addRecipe(new ItemStack(Items.bow, 1), " #X", "# X", " #X", 'X', Items.string, '#', Items.stick);
+        p_77583_1_.addRecipe(new ItemStack(Items.arrow, 4), "X", "#", "Y", 'Y', Items.feather, 'X', Items.flint, '#', Items.stick);
     }
 }

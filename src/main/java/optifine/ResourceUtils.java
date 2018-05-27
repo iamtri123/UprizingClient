@@ -6,8 +6,8 @@ import java.io.File;
 
 public class ResourceUtils
 {
-    private static ReflectorClass ForgeAbstractResourcePack = new ReflectorClass(AbstractResourcePack.class);
-    private static ReflectorField ForgeAbstractResourcePack_resourcePackFile = new ReflectorField(ForgeAbstractResourcePack, "resourcePackFile");
+    private static final ReflectorClass ForgeAbstractResourcePack = new ReflectorClass(AbstractResourcePack.class);
+    private static final ReflectorField ForgeAbstractResourcePack_resourcePackFile = new ReflectorField(ForgeAbstractResourcePack, "resourcePackFile");
     private static boolean directAccessValid = true;
 
     public static File getResourcePackFile(AbstractResourcePack arp)

@@ -62,7 +62,7 @@ public class IconFlipped implements IIcon
      */
     public float getMinV()
     {
-        return this.flipV ? this.baseIcon.getMinV() : this.baseIcon.getMinV();
+        return this.baseIcon.getMinV();
     }
 
     /**

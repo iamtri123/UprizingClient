@@ -304,7 +304,7 @@ public class BlockSkull extends BlockContainer
         else
         {
             TileEntity var6 = p_149966_1_.getTileEntity(p_149966_2_, p_149966_3_, p_149966_4_);
-            return var6 != null && var6 instanceof TileEntitySkull ? ((TileEntitySkull)var6).func_145904_a() == p_149966_5_ : false;
+            return (var6 != null && var6 instanceof TileEntitySkull) && ((TileEntitySkull) var6).func_145904_a() == p_149966_5_;
         }
     }
 

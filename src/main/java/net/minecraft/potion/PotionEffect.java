@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class PotionEffect
 {
     /** ID value of the potion this effect matches. */
-    private int potionID;
+    private final int potionID;
 
     /** The duration of the potion effect */
     private int duration;

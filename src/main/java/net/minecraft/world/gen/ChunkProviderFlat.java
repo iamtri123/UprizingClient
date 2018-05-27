@@ -25,8 +25,8 @@ import net.minecraft.world.gen.structure.MapGenVillage;
 
 public class ChunkProviderFlat implements IChunkProvider
 {
-    private World worldObj;
-    private Random random;
+    private final World worldObj;
+    private final Random random;
     private final Block[] cachedBlockIDs = new Block[256];
     private final byte[] cachedBlockMetadata = new byte[256];
     private final FlatGeneratorInfo flatWorldGenInfo;

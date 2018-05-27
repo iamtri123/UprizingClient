@@ -30,14 +30,14 @@ import org.lwjgl.opengl.GL12;
 
 public class GuiStats extends GuiScreen implements IProgressMeter
 {
-    private static RenderItem field_146544_g = new RenderItem();
+    private static final RenderItem field_146544_g = new RenderItem();
     protected GuiScreen field_146549_a;
     protected String field_146542_f = "Select world";
     private GuiStats.StatsGeneral field_146550_h;
     private GuiStats.StatsItem field_146551_i;
     private GuiStats.StatsBlock field_146548_r;
     private GuiStats.StatsMobsList field_146547_s;
-    private StatFileWriter field_146546_t;
+    private final StatFileWriter field_146546_t;
     private GuiSlot field_146545_u;
     private boolean field_146543_v = true;
     private static final String __OBFID = "CL_00000723";
@@ -53,20 +53,20 @@ public class GuiStats extends GuiScreen implements IProgressMeter
      */
     public void initGui()
     {
-        this.field_146542_f = I18n.format("gui.stats", new Object[0]);
+        this.field_146542_f = I18n.format("gui.stats");
         this.mc.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
     }
 
     public void func_146541_h()
     {
-        this.buttonList.add(new GuiButton(0, this.width / 2 + 4, this.height - 28, 150, 20, I18n.format("gui.done", new Object[0])));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 160, this.height - 52, 80, 20, I18n.format("stat.generalButton", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 + 4, this.height - 28, 150, 20, I18n.format("gui.done")));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 160, this.height - 52, 80, 20, I18n.format("stat.generalButton")));
         GuiButton var1;
         GuiButton var2;
         GuiButton var3;
-        this.buttonList.add(var1 = new GuiButton(2, this.width / 2 - 80, this.height - 52, 80, 20, I18n.format("stat.blocksButton", new Object[0])));
-        this.buttonList.add(var2 = new GuiButton(3, this.width / 2, this.height - 52, 80, 20, I18n.format("stat.itemsButton", new Object[0])));
-        this.buttonList.add(var3 = new GuiButton(4, this.width / 2 + 80, this.height - 52, 80, 20, I18n.format("stat.mobsButton", new Object[0])));
+        this.buttonList.add(var1 = new GuiButton(2, this.width / 2 - 80, this.height - 52, 80, 20, I18n.format("stat.blocksButton")));
+        this.buttonList.add(var2 = new GuiButton(3, this.width / 2, this.height - 52, 80, 20, I18n.format("stat.itemsButton")));
+        this.buttonList.add(var3 = new GuiButton(4, this.width / 2 + 80, this.height - 52, 80, 20, I18n.format("stat.mobsButton")));
 
         if (this.field_146548_r.getSize() == 0)
         {
@@ -123,7 +123,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         if (this.field_146543_v)
         {
             this.drawDefaultBackground();
-            this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.downloadingStats", new Object[0]), this.width / 2, this.height / 2, 16777215);
+            this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.downloadingStats"), this.width / 2, this.height / 2, 16777215);
             this.drawCenteredString(this.fontRendererObj, field_146510_b_[(int)(Minecraft.getSystemTime() / 150L % (long)field_146510_b_.length)], this.width / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * 2, 16777215);
         }
         else
@@ -368,7 +368,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
                         var9 = this.func_148210_b(2);
                     }
 
-                    var9 = ("" + I18n.format(var9, new Object[0])).trim();
+                    var9 = ("" + I18n.format(var9)).trim();
 
                     if (var9.length() > 0)
                     {
@@ -387,7 +387,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
             if (p_148213_1_ != null)
             {
                 Item var4 = p_148213_1_.func_150959_a();
-                String var5 = ("" + I18n.format(var4.getUnlocalizedName() + ".name", new Object[0])).trim();
+                String var5 = ("" + I18n.format(var4.getUnlocalizedName() + ".name")).trim();
 
                 if (var5.length() > 0)
                 {
@@ -787,20 +787,20 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         protected void drawSlot(int p_148126_1_, int p_148126_2_, int p_148126_3_, int p_148126_4_, Tessellator p_148126_5_, int p_148126_6_, int p_148126_7_)
         {
             EntityList.EntityEggInfo var8 = (EntityList.EntityEggInfo)this.field_148222_l.get(p_148126_1_);
-            String var9 = I18n.format("entity." + EntityList.getStringFromID(var8.spawnedID) + ".name", new Object[0]);
+            String var9 = I18n.format("entity." + EntityList.getStringFromID(var8.spawnedID) + ".name");
             int var10 = GuiStats.this.field_146546_t.writeStat(var8.field_151512_d);
             int var11 = GuiStats.this.field_146546_t.writeStat(var8.field_151513_e);
-            String var12 = I18n.format("stat.entityKills", new Object[] {Integer.valueOf(var10), var9});
-            String var13 = I18n.format("stat.entityKilledBy", new Object[] {var9, Integer.valueOf(var11)});
+            String var12 = I18n.format("stat.entityKills", Integer.valueOf(var10), var9);
+            String var13 = I18n.format("stat.entityKilledBy", var9, Integer.valueOf(var11));
 
             if (var10 == 0)
             {
-                var12 = I18n.format("stat.entityKills.none", new Object[] {var9});
+                var12 = I18n.format("stat.entityKills.none", var9);
             }
 
             if (var11 == 0)
             {
-                var13 = I18n.format("stat.entityKilledBy.none", new Object[] {var9});
+                var13 = I18n.format("stat.entityKilledBy.none", var9);
             }
 
             GuiStats.this.drawString(GuiStats.this.fontRendererObj, var9, p_148126_2_ + 2 - 10, p_148126_3_ + 1, 16777215);

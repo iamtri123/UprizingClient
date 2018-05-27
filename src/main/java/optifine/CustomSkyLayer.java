@@ -17,7 +17,7 @@ public class CustomSkyLayer
     private float speed = 1.0F;
     private float[] axis;
     public int textureId;
-    public static final float[] DEFAULT_AXIS = new float[] {1.0F, 0.0F, 0.0F};
+    public static final float[] DEFAULT_AXIS = {1.0F, 0.0F, 0.0F};
 
     public CustomSkyLayer(Properties props, String defSource)
     {
@@ -167,7 +167,7 @@ public class CustomSkyLayer
                 }
                 else
                 {
-                    float[] as = new float[] {az, ay, -var9};
+                    float[] as = {az, ay, -var9};
                     return as;
                 }
             }

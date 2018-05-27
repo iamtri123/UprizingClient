@@ -9,10 +9,10 @@ import net.minecraft.village.MerchantRecipeList;
 public class NpcMerchant implements IMerchant
 {
     /** Instance of Merchants Inventory. */
-    private InventoryMerchant theMerchantInventory;
+    private final InventoryMerchant theMerchantInventory;
 
     /** This merchant's current player customer. */
-    private EntityPlayer customer;
+    private final EntityPlayer customer;
 
     /** The MerchantRecipeList instance. */
     private MerchantRecipeList recipeList;

@@ -14,8 +14,8 @@ import net.minecraft.world.World;
 
 public class BlockSign extends BlockContainer
 {
-    private Class field_149968_a;
-    private boolean field_149967_b;
+    private final Class field_149968_a;
+    private final boolean field_149967_b;
     private static final String __OBFID = "CL_00000306";
 
     protected BlockSign(Class p_i45426_1_, boolean p_i45426_2_)
@@ -145,12 +145,8 @@ public class BlockSign extends BlockContainer
         else
         {
             int var7 = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
-            var6 = true;
 
-            if (var7 == 2 && p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ + 1).getMaterial().isSolid())
-            {
-                var6 = false;
-            }
+            var6 = var7 != 2 || !p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ + 1).getMaterial().isSolid();
 
             if (var7 == 3 && p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ - 1).getMaterial().isSolid())
             {

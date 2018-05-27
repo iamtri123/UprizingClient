@@ -11,7 +11,7 @@ import net.minecraft.util.MathHelper;
 public class SlotFurnace extends Slot
 {
     /** The player that is using the GUI where this slot resides. */
-    private EntityPlayer thePlayer;
+    private final EntityPlayer thePlayer;
     private int field_75228_b;
     private static final String __OBFID = "CL_00001749";
 

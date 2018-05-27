@@ -21,16 +21,16 @@ public class EntityAIArrowAttack extends EntityAIBase
      * maxRangedAttackTime.
      */
     private int rangedAttackTime;
-    private double entityMoveSpeed;
+    private final double entityMoveSpeed;
     private int field_75318_f;
-    private int field_96561_g;
+    private final int field_96561_g;
 
     /**
      * The maximum time the AI has to wait before peforming another ranged attack.
      */
-    private int maxRangedAttackTime;
-    private float field_96562_i;
-    private float field_82642_h;
+    private final int maxRangedAttackTime;
+    private final float field_96562_i;
+    private final float field_82642_h;
     private static final String __OBFID = "CL_00001609";
 
     public EntityAIArrowAttack(IRangedAttackMob p_i1649_1_, double p_i1649_2_, int p_i1649_4_, float p_i1649_5_)

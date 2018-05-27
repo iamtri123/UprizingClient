@@ -115,7 +115,6 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
 
             for (var7 = this.otherPlayerMPYaw - (double)this.rotationYaw; var7 < -180.0D; var7 += 360.0D)
             {
-                ;
             }
 
             while (var7 >= 180.0D)

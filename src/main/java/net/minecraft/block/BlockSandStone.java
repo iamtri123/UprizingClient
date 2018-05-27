@@ -10,8 +10,8 @@ import net.minecraft.util.IIcon;
 
 public class BlockSandStone extends Block
 {
-    public static final String[] field_150157_a = new String[] {"default", "chiseled", "smooth"};
-    private static final String[] field_150156_b = new String[] {"normal", "carved", "smooth"};
+    public static final String[] field_150157_a = {"default", "chiseled", "smooth"};
+    private static final String[] field_150156_b = {"normal", "carved", "smooth"};
     private IIcon[] field_150158_M;
     private IIcon field_150159_N;
     private IIcon field_150160_O;

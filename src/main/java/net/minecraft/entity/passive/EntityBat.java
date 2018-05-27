@@ -281,7 +281,7 @@ public class EntityBat extends EntityAmbientCreature
                 var5 = 7;
             }
 
-            return var4 > this.rand.nextInt(var5) ? false : super.getCanSpawnHere();
+            return var4 <= this.rand.nextInt(var5) && super.getCanSpawnHere();
         }
     }
 }

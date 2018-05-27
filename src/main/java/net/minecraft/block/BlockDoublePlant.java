@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public class BlockDoublePlant extends BlockBush implements IGrowable
 {
-    public static final String[] field_149892_a = new String[] {"sunflower", "syringa", "grass", "fern", "rose", "paeonia"};
+    public static final String[] field_149892_a = {"sunflower", "syringa", "grass", "fern", "rose", "paeonia"};
     private IIcon[] field_149893_M;
     private IIcon[] field_149894_N;
     public IIcon[] field_149891_b;

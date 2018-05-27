@@ -81,7 +81,7 @@ public class ClickEvent
         return var1;
     }
 
-    public static enum Action
+    public enum Action
     {
         OPEN_URL("OPEN_URL", 0, "open_url", true),
         OPEN_FILE("OPEN_FILE", 1, "open_file", false),
@@ -92,10 +92,10 @@ public class ClickEvent
         private final boolean allowedInChat;
         private final String canonicalName;
 
-        private static final ClickEvent.Action[] $VALUES = new ClickEvent.Action[]{OPEN_URL, OPEN_FILE, RUN_COMMAND, TWITCH_USER_INFO, SUGGEST_COMMAND};
+        private static final ClickEvent.Action[] $VALUES = {OPEN_URL, OPEN_FILE, RUN_COMMAND, TWITCH_USER_INFO, SUGGEST_COMMAND};
         private static final String __OBFID = "CL_00001261";
 
-        private Action(String p_i45155_1_, int p_i45155_2_, String p_i45155_3_, boolean p_i45155_4_)
+        Action(String p_i45155_1_, int p_i45155_2_, String p_i45155_3_, boolean p_i45155_4_)
         {
             this.canonicalName = p_i45155_3_;
             this.allowedInChat = p_i45155_4_;

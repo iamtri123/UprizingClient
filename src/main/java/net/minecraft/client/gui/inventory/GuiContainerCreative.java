@@ -35,7 +35,7 @@ import org.lwjgl.opengl.GL12;
 public class GuiContainerCreative extends InventoryEffectRenderer
 {
     private static final ResourceLocation field_147061_u = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
-    private static InventoryBasic field_147060_v = new InventoryBasic("tmp", true, 45);
+    private static final InventoryBasic field_147060_v = new InventoryBasic("tmp", true, 45);
     private static int field_147058_w = CreativeTabs.tabBlock.getTabIndex();
     private float field_147067_x;
     private boolean field_147066_y;
@@ -395,7 +395,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         if (var3.drawInForegroundOfTab())
         {
             GL11.glDisable(GL11.GL_BLEND);
-            this.fontRendererObj.drawString(I18n.format(var3.getTranslatedTabLabel(), new Object[0]), 8, 6, 4210752);
+            this.fontRendererObj.drawString(I18n.format(var3.getTranslatedTabLabel()), 8, 6, 4210752);
         }
     }
 
@@ -640,7 +640,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (this.field_147064_C != null && field_147058_w == CreativeTabs.tabInventory.getTabIndex() && this.func_146978_c(this.field_147064_C.xDisplayPosition, this.field_147064_C.yDisplayPosition, 16, 16, p_73863_1_, p_73863_2_))
         {
-            this.func_146279_a(I18n.format("inventory.binSlot", new Object[0]), p_73863_1_, p_73863_2_);
+            this.func_146279_a(I18n.format("inventory.binSlot"), p_73863_1_, p_73863_2_);
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -679,7 +679,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
             if (var5 != null)
             {
-                var4.add(1, "" + EnumChatFormatting.BOLD + EnumChatFormatting.BLUE + I18n.format(var5.getTranslatedTabLabel(), new Object[0]));
+                var4.add(1, "" + EnumChatFormatting.BOLD + EnumChatFormatting.BLUE + I18n.format(var5.getTranslatedTabLabel()));
             }
 
             for (int var12 = 0; var12 < var4.size(); ++var12)
@@ -801,7 +801,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (this.func_146978_c(var5 + 3, var7 + 3, 23, 27, p_147052_2_, p_147052_3_))
         {
-            this.func_146279_a(I18n.format(p_147052_1_.getTranslatedTabLabel(), new Object[0]), p_147052_2_, p_147052_3_);
+            this.func_146279_a(I18n.format(p_147052_1_.getTranslatedTabLabel()), p_147052_2_, p_147052_3_);
             return true;
         }
         else

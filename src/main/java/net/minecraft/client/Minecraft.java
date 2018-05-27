@@ -175,7 +175,7 @@ public class Minecraft implements IPlayerUsage
 
     /** A 10MiB preallocation to ensure the heap is reasonably sized. */
     public static byte[] memoryReserve = new byte[10485760];
-    private static final List macDisplayModes = Lists.newArrayList(new DisplayMode[] {new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
+    private static final List macDisplayModes = Lists.newArrayList(new DisplayMode(2560, 1600), new DisplayMode(2880, 1800));
     private final File fileResourcepacks;
     private final Multimap field_152356_J;
     private ServerData currentServerData;
@@ -195,10 +195,10 @@ public class Minecraft implements IPlayerUsage
     private CrashReport crashReporter;
     public int displayWidth;
     public int displayHeight;
-    private Timer timer = new Timer(20.0F);
+    private final Timer timer = new Timer(20.0F);
 
     /** Instance of PlayerUsageSnooper. */
-    private PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getSystemTimeMillis());
+    private final PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getSystemTimeMillis());
     public WorldClient theWorld;
     public RenderGlobal renderGlobal;
     public EntityClientPlayerMP thePlayer;
@@ -228,10 +228,10 @@ public class Minecraft implements IPlayerUsage
     private int leftClickCounter;
 
     /** Display width */
-    private int tempDisplayWidth;
+    private final int tempDisplayWidth;
 
     /** Display height */
-    private int tempDisplayHeight;
+    private final int tempDisplayHeight;
 
     /** Instance of IntegratedServer. */
     private IntegratedServer theIntegratedServer;
@@ -293,8 +293,8 @@ public class Minecraft implements IPlayerUsage
     private long field_83002_am = -1L;
     private IReloadableResourceManager mcResourceManager;
     private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
-    private List defaultResourcePacks = Lists.newArrayList();
-    private DefaultResourcePack mcDefaultResourcePack;
+    private final List defaultResourcePacks = Lists.newArrayList();
+    private final DefaultResourcePack mcDefaultResourcePack;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
     private IStream field_152353_at;
@@ -356,7 +356,7 @@ public class Minecraft implements IPlayerUsage
 
     private static boolean isJvm64bit()
     {
-        String[] var0 = new String[] {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
+        String[] var0 = {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
         String[] var1 = var0;
         int var2 = var0.length;
 
@@ -394,7 +394,6 @@ public class Minecraft implements IPlayerUsage
                     }
                     catch (InterruptedException var2)
                     {
-                        ;
                     }
                 }
             }
@@ -512,7 +511,6 @@ public class Minecraft implements IPlayerUsage
             }
             catch (InterruptedException var6)
             {
-                ;
             }
 
             if (this.fullscreen)
@@ -579,7 +577,7 @@ public class Minecraft implements IPlayerUsage
             {
                 try
                 {
-                    return String.format(p_74535_1_, new Object[] {GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindInventory.getKeyCode())});
+                    return String.format(p_74535_1_, GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindInventory.getKeyCode()));
                 }
                 catch (Exception var3)
                 {
@@ -762,8 +760,7 @@ public class Minecraft implements IPlayerUsage
     /**
      * Displays a new screen.
      */
-    private void loadScreen() throws LWJGLException
-    {
+    private void loadScreen() {
         ScaledResolution var1 = new ScaledResolution(this, this.displayWidth, this.displayHeight);
         int var2 = var1.getScaleFactor();
         Framebuffer var3 = new Framebuffer(var1.getScaledWidth() * var2, var1.getScaledHeight() * var2, true);
@@ -912,7 +909,6 @@ public class Minecraft implements IPlayerUsage
             }
             catch (Throwable var7)
             {
-                ;
             }
 
             try
@@ -921,7 +917,6 @@ public class Minecraft implements IPlayerUsage
             }
             catch (Throwable var6)
             {
-                ;
             }
 
             this.mcSoundHandler.func_147685_d();
@@ -984,7 +979,6 @@ public class Minecraft implements IPlayerUsage
             }
             catch (MinecraftError var12)
             {
-                ;
             }
             catch (ReportedException var13)
             {
@@ -1191,7 +1185,6 @@ public class Minecraft implements IPlayerUsage
         }
         catch (Throwable var4)
         {
-            ;
         }
 
         try
@@ -1200,7 +1193,6 @@ public class Minecraft implements IPlayerUsage
         }
         catch (Throwable var3)
         {
-            ;
         }
 
         try
@@ -1210,7 +1202,6 @@ public class Minecraft implements IPlayerUsage
         }
         catch (Throwable var2)
         {
-            ;
         }
 
         System.gc();
@@ -2016,7 +2007,6 @@ public class Minecraft implements IPlayerUsage
                     {
                         while (this.gameSettings.keyBindUseItem.isPressed())
                         {
-                            ;
                         }
 
                         while (true)
@@ -2191,7 +2181,7 @@ public class Minecraft implements IPlayerUsage
             throw new ReportedException(var7);
         }
 
-        this.loadingScreen.displayProgressMessage(I18n.format("menu.loadingLevel", new Object[0]));
+        this.loadingScreen.displayProgressMessage(I18n.format("menu.loadingLevel"));
 
         while (!this.theIntegratedServer.serverIsInRunLoop())
         {
@@ -2199,7 +2189,7 @@ public class Minecraft implements IPlayerUsage
 
             if (var6 != null)
             {
-                this.loadingScreen.resetProgresAndWorkingMessage(I18n.format(var6, new Object[0]));
+                this.loadingScreen.resetProgresAndWorkingMessage(I18n.format(var6));
             }
             else
             {
@@ -2212,7 +2202,6 @@ public class Minecraft implements IPlayerUsage
             }
             catch (InterruptedException var9)
             {
-                ;
             }
         }
 
@@ -2220,8 +2209,8 @@ public class Minecraft implements IPlayerUsage
         SocketAddress var11 = this.theIntegratedServer.func_147137_ag().addLocalEndpoint();
         NetworkManager var12 = NetworkManager.provideLocalClient(var11);
         var12.setNetHandler(new NetHandlerLoginClient(var12, this, (GuiScreen)null));
-        var12.scheduleOutboundPacket(new C00Handshake(5, var11.toString(), 0, EnumConnectionState.LOGIN), new GenericFutureListener[0]);
-        var12.scheduleOutboundPacket(new C00PacketLoginStart(this.getSession().func_148256_e()), new GenericFutureListener[0]);
+        var12.scheduleOutboundPacket(new C00Handshake(5, var11.toString(), 0, EnumConnectionState.LOGIN));
+        var12.scheduleOutboundPacket(new C00PacketLoginStart(this.getSession().func_148256_e()));
         this.myNetworkManager = var12;
     }
 
@@ -2986,7 +2975,7 @@ public class Minecraft implements IPlayerUsage
 
                                     Minecraft.this.displayGuiScreen((GuiScreen)null);
                                 }
-                            }, I18n.format("stream.confirm_start", new Object[0]), "", 0));
+                            }, I18n.format("stream.confirm_start"), "", 0));
                         }
                         else if (this.func_152346_Z().func_152928_D() && this.func_152346_Z().func_152936_l())
                         {
@@ -3104,7 +3093,6 @@ public class Minecraft implements IPlayerUsage
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -3113,7 +3101,6 @@ public class Minecraft implements IPlayerUsage
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

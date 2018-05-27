@@ -36,14 +36,14 @@ import tv.twitch.chat.ChatUserInfo;
 
 public class GuiChat extends GuiScreen implements GuiYesNoCallback
 {
-    private static final Set field_152175_f = Sets.newHashSet(new String[] {"http", "https"});
+    private static final Set field_152175_f = Sets.newHashSet("http", "https");
     private static final Logger logger = LogManager.getLogger();
     private String field_146410_g = "";
     private int field_146416_h = -1;
     private boolean field_146417_i;
     private boolean field_146414_r;
     private int field_146413_s;
-    private List field_146412_t = new ArrayList();
+    private final List field_146412_t = new ArrayList();
     private URI field_146411_u;
     protected GuiTextField field_146415_a;
     private String field_146409_v = "";
@@ -288,8 +288,8 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
         try
         {
             Class var2 = Class.forName("java.awt.Desktop");
-            Object var3 = var2.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
-            var2.getMethod("browse", new Class[] {URI.class}).invoke(var3, new Object[] {p_146407_1_});
+            Object var3 = var2.getMethod("getDesktop").invoke((Object)null);
+            var2.getMethod("browse", URI.class).invoke(var3, p_146407_1_);
         }
         catch (Throwable var4)
         {
@@ -420,7 +420,6 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                 }
                 catch (NBTException var11)
                 {
-                    ;
                 }
 
                 if (var6 != null)
@@ -443,10 +442,10 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                 if (var12 != null)
                 {
                     IChatComponent var13 = var12.func_150951_e();
-                    ChatComponentTranslation var8 = new ChatComponentTranslation("stats.tooltip.type." + (var12.isAchievement() ? "achievement" : "statistic"), new Object[0]);
+                    ChatComponentTranslation var8 = new ChatComponentTranslation("stats.tooltip.type." + (var12.isAchievement() ? "achievement" : "statistic"));
                     var8.getChatStyle().setItalic(Boolean.valueOf(true));
                     String var9 = var12 instanceof Achievement ? ((Achievement)var12).getDescription() : null;
-                    ArrayList var10 = Lists.newArrayList(new String[] {var13.getFormattedText(), var8.getFormattedText()});
+                    ArrayList var10 = Lists.newArrayList(var13.getFormattedText(), var8.getFormattedText());
 
                     if (var9 != null)
                     {

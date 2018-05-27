@@ -40,17 +40,17 @@ public class CommandOp extends CommandBase
 
             if (var4 == null)
             {
-                throw new CommandException("commands.op.failed", new Object[] {p_71515_2_[0]});
+                throw new CommandException("commands.op.failed", p_71515_2_[0]);
             }
             else
             {
                 var3.getConfigurationManager().func_152605_a(var4);
-                func_152373_a(p_71515_1_, this, "commands.op.success", new Object[] {p_71515_2_[0]});
+                func_152373_a(p_71515_1_, this, "commands.op.success", p_71515_2_[0]);
             }
         }
         else
         {
-            throw new WrongUsageException("commands.op.usage", new Object[0]);
+            throw new WrongUsageException("commands.op.usage");
         }
     }
 

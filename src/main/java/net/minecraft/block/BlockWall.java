@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class BlockWall extends Block
 {
-    public static final String[] field_150092_a = new String[] {"normal", "mossy"};
+    public static final String[] field_150092_a = {"normal", "mossy"};
     private static final String __OBFID = "CL_00000331";
 
     public BlockWall(Block p_i45435_1_)
@@ -119,7 +119,7 @@ public class BlockWall extends Block
     public boolean func_150091_e(IBlockAccess p_150091_1_, int p_150091_2_, int p_150091_3_, int p_150091_4_)
     {
         Block var5 = p_150091_1_.getBlock(p_150091_2_, p_150091_3_, p_150091_4_);
-        return var5 != this && var5 != Blocks.fence_gate ? (var5.blockMaterial.isOpaque() && var5.renderAsNormalBlock() ? var5.blockMaterial != Material.field_151572_C : false) : true;
+        return var5 == this || var5 == Blocks.fence_gate || ((var5.blockMaterial.isOpaque() && var5.renderAsNormalBlock()) && var5.blockMaterial != Material.field_151572_C);
     }
 
     public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
@@ -138,7 +138,7 @@ public class BlockWall extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
     {
-        return p_149646_5_ == 0 ? super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_) : true;
+        return p_149646_5_ != 0 || super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
     }
 
     public void registerBlockIcons(IIconRegister p_149651_1_) {}

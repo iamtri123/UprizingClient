@@ -35,7 +35,7 @@ public class CommandTeleport extends CommandBase
     {
         if (p_71515_2_.length < 1)
         {
-            throw new WrongUsageException("commands.tp.usage", new Object[0]);
+            throw new WrongUsageException("commands.tp.usage");
         }
         else
         {
@@ -68,13 +68,13 @@ public class CommandTeleport extends CommandBase
 
                     if (var11.worldObj != var3.worldObj)
                     {
-                        func_152373_a(p_71515_1_, this, "commands.tp.notSameDimension", new Object[0]);
+                        func_152373_a(p_71515_1_, this, "commands.tp.notSameDimension");
                         return;
                     }
 
                     var3.mountEntity((Entity)null);
                     var3.playerNetServerHandler.setPlayerLocation(var11.posX, var11.posY, var11.posZ, var11.rotationYaw, var11.rotationPitch);
-                    func_152373_a(p_71515_1_, this, "commands.tp.success", new Object[] {var3.getCommandSenderName(), var11.getCommandSenderName()});
+                    func_152373_a(p_71515_1_, this, "commands.tp.success", var3.getCommandSenderName(), var11.getCommandSenderName());
                 }
             }
             else if (var3.worldObj != null)
@@ -85,7 +85,7 @@ public class CommandTeleport extends CommandBase
                 double var9 = func_110666_a(p_71515_1_, var3.posZ, p_71515_2_[var4++]);
                 var3.mountEntity((Entity)null);
                 var3.setPositionAndUpdate(var5, var7, var9);
-                func_152373_a(p_71515_1_, this, "commands.tp.success.coordinates", new Object[] {var3.getCommandSenderName(), Double.valueOf(var5), Double.valueOf(var7), Double.valueOf(var9)});
+                func_152373_a(p_71515_1_, this, "commands.tp.success.coordinates", var3.getCommandSenderName(), Double.valueOf(var5), Double.valueOf(var7), Double.valueOf(var9));
             }
         }
     }

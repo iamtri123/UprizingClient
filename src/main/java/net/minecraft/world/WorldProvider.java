@@ -14,7 +14,7 @@ import net.minecraft.world.gen.FlatGeneratorInfo;
 
 public abstract class WorldProvider
 {
-    public static final float[] moonPhaseFactors = new float[] {1.0F, 0.75F, 0.5F, 0.25F, 0.0F, 0.25F, 0.5F, 0.75F};
+    public static final float[] moonPhaseFactors = {1.0F, 0.75F, 0.5F, 0.25F, 0.0F, 0.25F, 0.5F, 0.75F};
 
     /** world object being used */
     public World worldObj;
@@ -41,7 +41,7 @@ public abstract class WorldProvider
     public int dimensionId;
 
     /** Array for sunrise/sunset colors (RGBA) */
-    private float[] colorsSunriseSunset = new float[4];
+    private final float[] colorsSunriseSunset = new float[4];
     private static final String __OBFID = "CL_00000386";
 
     /**

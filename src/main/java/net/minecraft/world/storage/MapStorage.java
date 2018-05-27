@@ -18,18 +18,18 @@ import net.minecraft.world.WorldSavedData;
 
 public class MapStorage
 {
-    private ISaveHandler saveHandler;
+    private final ISaveHandler saveHandler;
 
     /** Map of item data String id to loaded MapDataBases */
-    private Map loadedDataMap = new HashMap();
+    private final Map loadedDataMap = new HashMap();
 
     /** List of loaded MapDataBases. */
-    private List loadedDataList = new ArrayList();
+    private final List loadedDataList = new ArrayList();
 
     /**
      * Map of MapDataBase id String prefixes ('map' etc) to max known unique Short id (the 0 part etc) for that prefix
      */
-    private Map idCounts = new HashMap();
+    private final Map idCounts = new HashMap();
     private static final String __OBFID = "CL_00000604";
 
     public MapStorage(ISaveHandler p_i2162_1_)
@@ -66,7 +66,7 @@ public class MapStorage
                         }
                         catch (Exception var7)
                         {
-                            throw new RuntimeException("Failed to instantiate " + p_75742_1_.toString(), var7);
+                            throw new RuntimeException("Failed to instantiate " + p_75742_1_, var7);
                         }
 
                         FileInputStream var5 = new FileInputStream(var4);

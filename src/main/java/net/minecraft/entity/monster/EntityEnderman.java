@@ -24,7 +24,7 @@ public class EntityEnderman extends EntityMob
 {
     private static final UUID attackingSpeedBoostModifierUUID = UUID.fromString("020E0DFB-87AE-4653-9556-831010E291A0");
     private static final AttributeModifier attackingSpeedBoostModifier = (new AttributeModifier(attackingSpeedBoostModifierUUID, "Attacking speed boost", 6.199999809265137D, 0)).setSaved(false);
-    private static boolean[] carriableBlocks = new boolean[256];
+    private static final boolean[] carriableBlocks = new boolean[256];
 
     /**
      * Counter to delay the teleportation of an enderman towards the currently attacked target

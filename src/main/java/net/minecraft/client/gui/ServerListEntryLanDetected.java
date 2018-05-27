@@ -22,12 +22,12 @@ public class ServerListEntryLanDetected implements GuiListExtended.IGuiListEntry
 
     public void func_148279_a(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
     {
-        this.field_148293_a.fontRenderer.drawString(I18n.format("lanServer.title", new Object[0]), p_148279_2_ + 32 + 3, p_148279_3_ + 1, 16777215);
+        this.field_148293_a.fontRenderer.drawString(I18n.format("lanServer.title"), p_148279_2_ + 32 + 3, p_148279_3_ + 1, 16777215);
         this.field_148293_a.fontRenderer.drawString(this.field_148291_b.getServerMotd(), p_148279_2_ + 32 + 3, p_148279_3_ + 12, 8421504);
 
         if (this.field_148293_a.gameSettings.hideServerAddress)
         {
-            this.field_148293_a.fontRenderer.drawString(I18n.format("selectServer.hiddenAddress", new Object[0]), p_148279_2_ + 32 + 3, p_148279_3_ + 12 + 11, 3158064);
+            this.field_148293_a.fontRenderer.drawString(I18n.format("selectServer.hiddenAddress"), p_148279_2_ + 32 + 3, p_148279_3_ + 12 + 11, 3158064);
         }
         else
         {

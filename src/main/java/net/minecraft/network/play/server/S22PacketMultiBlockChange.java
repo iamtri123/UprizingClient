@@ -103,7 +103,7 @@ public class S22PacketMultiBlockChange extends Packet
      */
     public String serialize()
     {
-        return String.format("xc=%d, zc=%d, count=%d", new Object[] {Integer.valueOf(this.field_148925_b.chunkXPos), Integer.valueOf(this.field_148925_b.chunkZPos), Integer.valueOf(this.field_148924_d)});
+        return String.format("xc=%d, zc=%d, count=%d", Integer.valueOf(this.field_148925_b.chunkXPos), Integer.valueOf(this.field_148925_b.chunkZPos), Integer.valueOf(this.field_148924_d));
     }
 
     public ChunkCoordIntPair func_148920_c()

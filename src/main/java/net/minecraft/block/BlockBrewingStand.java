@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 public class BlockBrewingStand extends BlockContainer
 {
-    private Random field_149961_a = new Random();
+    private final Random field_149961_a = new Random();
     private IIcon field_149960_b;
     private static final String __OBFID = "CL_00000207";
 

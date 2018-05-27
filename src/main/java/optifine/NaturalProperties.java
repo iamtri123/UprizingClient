@@ -37,6 +37,6 @@ public class NaturalProperties
 
     public boolean isValid()
     {
-        return this.rotation != 2 && this.rotation != 4 ? this.flip : true;
+        return this.rotation == 2 || this.rotation == 4 || this.flip;
     }
 }

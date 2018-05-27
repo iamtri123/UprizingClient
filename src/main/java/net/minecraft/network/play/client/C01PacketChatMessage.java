@@ -49,7 +49,7 @@ public class C01PacketChatMessage extends Packet
      */
     public String serialize()
     {
-        return String.format("message=\'%s\'", new Object[] {this.field_149440_a});
+        return String.format("message=\'%s\'", this.field_149440_a);
     }
 
     public String func_149439_c()

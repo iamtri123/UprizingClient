@@ -25,11 +25,11 @@ public class EffectRenderer
 
     /** Reference to the World object. */
     protected World worldObj;
-    private List[] fxLayers = new List[4];
-    private TextureManager renderer;
+    private final List[] fxLayers = new List[4];
+    private final TextureManager renderer;
 
     /** RNG. */
-    private Random rand = new Random();
+    private final Random rand = new Random();
     private static final String __OBFID = "CL_00000915";
 
     public EffectRenderer(World p_i1220_1_, TextureManager p_i1220_2_)

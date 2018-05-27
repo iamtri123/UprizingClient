@@ -52,7 +52,7 @@ public class S14PacketEntity extends Packet
      */
     public String serialize()
     {
-        return String.format("id=%d", new Object[] {Integer.valueOf(this.field_149074_a)});
+        return String.format("id=%d", Integer.valueOf(this.field_149074_a));
     }
 
     public String toString()
@@ -132,7 +132,7 @@ public class S14PacketEntity extends Packet
 
         public String serialize()
         {
-            return super.serialize() + String.format(", xa=%d, ya=%d, za=%d", new Object[] {Byte.valueOf(this.field_149072_b), Byte.valueOf(this.field_149073_c), Byte.valueOf(this.field_149070_d)});
+            return super.serialize() + String.format(", xa=%d, ya=%d, za=%d", Byte.valueOf(this.field_149072_b), Byte.valueOf(this.field_149073_c), Byte.valueOf(this.field_149070_d));
         }
 
         public void processPacket(INetHandler p_148833_1_)
@@ -174,7 +174,7 @@ public class S14PacketEntity extends Packet
 
         public String serialize()
         {
-            return super.serialize() + String.format(", yRot=%d, xRot=%d", new Object[] {Byte.valueOf(this.field_149071_e), Byte.valueOf(this.field_149068_f)});
+            return super.serialize() + String.format(", yRot=%d, xRot=%d", Byte.valueOf(this.field_149071_e), Byte.valueOf(this.field_149068_f));
         }
 
         public void processPacket(INetHandler p_148833_1_)
@@ -225,7 +225,7 @@ public class S14PacketEntity extends Packet
 
         public String serialize()
         {
-            return super.serialize() + String.format(", xa=%d, ya=%d, za=%d, yRot=%d, xRot=%d", new Object[] {Byte.valueOf(this.field_149072_b), Byte.valueOf(this.field_149073_c), Byte.valueOf(this.field_149070_d), Byte.valueOf(this.field_149071_e), Byte.valueOf(this.field_149068_f)});
+            return super.serialize() + String.format(", xa=%d, ya=%d, za=%d, yRot=%d, xRot=%d", Byte.valueOf(this.field_149072_b), Byte.valueOf(this.field_149073_c), Byte.valueOf(this.field_149070_d), Byte.valueOf(this.field_149071_e), Byte.valueOf(this.field_149068_f));
         }
 
         public void processPacket(INetHandler p_148833_1_)

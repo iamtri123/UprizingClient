@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class EntityDamageSourceIndirect extends EntityDamageSource
 {
-    private Entity indirectEntity;
+    private final Entity indirectEntity;
     private static final String __OBFID = "CL_00001523";
 
     public EntityDamageSourceIndirect(String p_i1568_1_, Entity p_i1568_2_, Entity p_i1568_3_)
@@ -31,6 +31,6 @@ public class EntityDamageSourceIndirect extends EntityDamageSource
         ItemStack var3 = this.indirectEntity instanceof EntityLivingBase ? ((EntityLivingBase)this.indirectEntity).getHeldItem() : null;
         String var4 = "death.attack." + this.damageType;
         String var5 = var4 + ".item";
-        return var3 != null && var3.hasDisplayName() && StatCollector.canTranslate(var5) ? new ChatComponentTranslation(var5, new Object[] {p_151519_1_.func_145748_c_(), var2, var3.func_151000_E()}): new ChatComponentTranslation(var4, new Object[] {p_151519_1_.func_145748_c_(), var2});
+        return var3 != null && var3.hasDisplayName() && StatCollector.canTranslate(var5) ? new ChatComponentTranslation(var5, p_151519_1_.func_145748_c_(), var2, var3.func_151000_E()): new ChatComponentTranslation(var4, p_151519_1_.func_145748_c_(), var2);
     }
 }

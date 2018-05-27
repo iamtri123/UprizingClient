@@ -75,7 +75,7 @@ public class CombatTracker
     {
         if (this.combatEntries.size() == 0)
         {
-            return new ChatComponentTranslation("death.attack.generic", new Object[] {this.fighter.func_145748_c_()});
+            return new ChatComponentTranslation("death.attack.generic", this.fighter.func_145748_c_());
         }
         else
         {
@@ -98,11 +98,11 @@ public class CombatTracker
 
                         if (var8 != null && var8.hasDisplayName())
                         {
-                            var3 = new ChatComponentTranslation("death.fell.assist.item", new Object[] {this.fighter.func_145748_c_(), var6, var8.func_151000_E()});
+                            var3 = new ChatComponentTranslation("death.fell.assist.item", this.fighter.func_145748_c_(), var6, var8.func_151000_E());
                         }
                         else
                         {
-                            var3 = new ChatComponentTranslation("death.fell.assist", new Object[] {this.fighter.func_145748_c_(), var6});
+                            var3 = new ChatComponentTranslation("death.fell.assist", this.fighter.func_145748_c_(), var6);
                         }
                     }
                     else if (var4 != null)
@@ -111,21 +111,21 @@ public class CombatTracker
 
                         if (var7 != null && var7.hasDisplayName())
                         {
-                            var3 = new ChatComponentTranslation("death.fell.finish.item", new Object[] {this.fighter.func_145748_c_(), var4, var7.func_151000_E()});
+                            var3 = new ChatComponentTranslation("death.fell.finish.item", this.fighter.func_145748_c_(), var4, var7.func_151000_E());
                         }
                         else
                         {
-                            var3 = new ChatComponentTranslation("death.fell.finish", new Object[] {this.fighter.func_145748_c_(), var4});
+                            var3 = new ChatComponentTranslation("death.fell.finish", this.fighter.func_145748_c_(), var4);
                         }
                     }
                     else
                     {
-                        var3 = new ChatComponentTranslation("death.fell.killer", new Object[] {this.fighter.func_145748_c_()});
+                        var3 = new ChatComponentTranslation("death.fell.killer", this.fighter.func_145748_c_());
                     }
                 }
                 else
                 {
-                    var3 = new ChatComponentTranslation("death.fell.accident." + this.func_94548_b(var1), new Object[] {this.fighter.func_145748_c_()});
+                    var3 = new ChatComponentTranslation("death.fell.accident." + this.func_94548_b(var1), this.fighter.func_145748_c_());
                 }
             }
             else

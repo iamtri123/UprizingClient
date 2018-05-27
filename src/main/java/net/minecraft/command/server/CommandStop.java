@@ -22,7 +22,7 @@ public class CommandStop extends CommandBase
     {
         if (MinecraftServer.getServer().worldServers != null)
         {
-            func_152373_a(p_71515_1_, this, "commands.stop.start", new Object[0]);
+            func_152373_a(p_71515_1_, this, "commands.stop.start");
         }
 
         MinecraftServer.getServer().initiateShutdown();

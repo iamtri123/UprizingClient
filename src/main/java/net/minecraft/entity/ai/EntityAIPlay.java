@@ -8,9 +8,9 @@ import net.minecraft.util.Vec3;
 
 public class EntityAIPlay extends EntityAIBase
 {
-    private EntityVillager villagerObj;
+    private final EntityVillager villagerObj;
     private EntityLivingBase targetVillager;
-    private double field_75261_c;
+    private final double field_75261_c;
     private int playTime;
     private static final String __OBFID = "CL_00001605";
 

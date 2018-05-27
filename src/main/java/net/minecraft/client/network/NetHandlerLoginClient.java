@@ -58,7 +58,7 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
         {
             if (var6)
             {
-                this.field_147393_d.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", new Object[] {new ChatComponentTranslation("disconnect.loginFailedInfo.serversUnavailable", new Object[0])}));
+                this.field_147393_d.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", new ChatComponentTranslation("disconnect.loginFailedInfo.serversUnavailable")));
                 return;
             }
         }
@@ -66,7 +66,7 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
         {
             if (var6)
             {
-                this.field_147393_d.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", new Object[] {new ChatComponentTranslation("disconnect.loginFailedInfo.invalidSession", new Object[0])}));
+                this.field_147393_d.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", new ChatComponentTranslation("disconnect.loginFailedInfo.invalidSession")));
                 return;
             }
         }
@@ -74,20 +74,19 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
         {
             if (var6)
             {
-                this.field_147393_d.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", new Object[] {var10.getMessage()}));
+                this.field_147393_d.closeChannel(new ChatComponentTranslation("disconnect.loginFailedInfo", var10.getMessage()));
                 return;
             }
         }
 
-        this.field_147393_d.scheduleOutboundPacket(new C01PacketEncryptionResponse(var2, var4, p_147389_1_.func_149607_e()), new GenericFutureListener[] {new GenericFutureListener()
+        this.field_147393_d.scheduleOutboundPacket(new C01PacketEncryptionResponse(var2, var4, p_147389_1_.func_149607_e()), new GenericFutureListener()
             {
                 private static final String __OBFID = "CL_00000877";
                 public void operationComplete(Future p_operationComplete_1_)
                 {
                     NetHandlerLoginClient.this.field_147393_d.enableEncryption(var2);
                 }
-            }
-        });
+            });
     }
 
     private MinecraftSessionService func_147391_c()

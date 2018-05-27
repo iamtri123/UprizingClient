@@ -30,7 +30,7 @@ public class CommandXP extends CommandBase
     {
         if (p_71515_2_.length <= 0)
         {
-            throw new WrongUsageException("commands.xp.usage", new Object[0]);
+            throw new WrongUsageException("commands.xp.usage");
         }
         else
         {
@@ -66,23 +66,23 @@ public class CommandXP extends CommandBase
                 if (var7)
                 {
                     var3.addExperienceLevel(-var6);
-                    func_152373_a(p_71515_1_, this, "commands.xp.success.negative.levels", new Object[] {Integer.valueOf(var6), var3.getCommandSenderName()});
+                    func_152373_a(p_71515_1_, this, "commands.xp.success.negative.levels", Integer.valueOf(var6), var3.getCommandSenderName());
                 }
                 else
                 {
                     var3.addExperienceLevel(var6);
-                    func_152373_a(p_71515_1_, this, "commands.xp.success.levels", new Object[] {Integer.valueOf(var6), var3.getCommandSenderName()});
+                    func_152373_a(p_71515_1_, this, "commands.xp.success.levels", Integer.valueOf(var6), var3.getCommandSenderName());
                 }
             }
             else
             {
                 if (var7)
                 {
-                    throw new WrongUsageException("commands.xp.failure.widthdrawXp", new Object[0]);
+                    throw new WrongUsageException("commands.xp.failure.widthdrawXp");
                 }
 
                 var3.addExperience(var6);
-                func_152373_a(p_71515_1_, this, "commands.xp.success", new Object[] {Integer.valueOf(var6), var3.getCommandSenderName()});
+                func_152373_a(p_71515_1_, this, "commands.xp.success", Integer.valueOf(var6), var3.getCommandSenderName());
             }
         }
     }

@@ -38,13 +38,13 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
                 if (p_147383_1_.func_149595_d() > 5)
                 {
                     var2 = new ChatComponentText("Outdated server! I\'m still on 1.7.10");
-                    this.field_147386_b.scheduleOutboundPacket(new S00PacketDisconnect(var2), new GenericFutureListener[0]);
+                    this.field_147386_b.scheduleOutboundPacket(new S00PacketDisconnect(var2));
                     this.field_147386_b.closeChannel(var2);
                 }
                 else if (p_147383_1_.func_149595_d() < 5)
                 {
                     var2 = new ChatComponentText("Outdated client! Please use 1.7.10");
-                    this.field_147386_b.scheduleOutboundPacket(new S00PacketDisconnect(var2), new GenericFutureListener[0]);
+                    this.field_147386_b.scheduleOutboundPacket(new S00PacketDisconnect(var2));
                     this.field_147386_b.closeChannel(var2);
                 }
                 else
@@ -100,7 +100,6 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -109,7 +108,6 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

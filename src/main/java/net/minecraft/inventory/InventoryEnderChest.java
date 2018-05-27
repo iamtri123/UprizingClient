@@ -67,7 +67,7 @@ public class InventoryEnderChest extends InventoryBasic
      */
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
-        return this.associatedChest != null && !this.associatedChest.func_145971_a(p_70300_1_) ? false : super.isUseableByPlayer(p_70300_1_);
+        return this.associatedChest == null || this.associatedChest.func_145971_a(p_70300_1_) && super.isUseableByPlayer(p_70300_1_);
     }
 
     public void openInventory()

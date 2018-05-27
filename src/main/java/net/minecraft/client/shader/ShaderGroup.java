@@ -398,7 +398,6 @@ public class ShaderGroup
 
         for (this.field_148037_k = p_148018_1_; this.field_148036_j > 20.0F; this.field_148036_j -= 20.0F)
         {
-            ;
         }
 
         Iterator var2 = this.listShaders.iterator();

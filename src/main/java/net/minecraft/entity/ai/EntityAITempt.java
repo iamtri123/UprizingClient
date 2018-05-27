@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 public class EntityAITempt extends EntityAIBase
 {
     /** The entity using this AI that is tempted by the player. */
-    private EntityCreature temptedEntity;
-    private double field_75282_b;
+    private final EntityCreature temptedEntity;
+    private final double field_75282_b;
 
     /** X position of player tempting this mob */
     private double targetX;
@@ -33,12 +33,12 @@ public class EntityAITempt extends EntityAIBase
 
     /** True if this EntityAITempt task is running */
     private boolean isRunning;
-    private Item field_151484_k;
+    private final Item field_151484_k;
 
     /**
      * Whether the entity using this AI will be scared by the tempter's sudden movement.
      */
-    private boolean scaredByPlayerMovement;
+    private final boolean scaredByPlayerMovement;
     private boolean field_75286_m;
     private static final String __OBFID = "CL_00001616";
 
@@ -72,7 +72,7 @@ public class EntityAITempt extends EntityAIBase
             else
             {
                 ItemStack var1 = this.temptingPlayer.getCurrentEquippedItem();
-                return var1 == null ? false : var1.getItem() == this.field_151484_k;
+                return var1 != null && var1.getItem() == this.field_151484_k;
             }
         }
     }

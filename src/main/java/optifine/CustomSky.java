@@ -180,7 +180,7 @@ public class CustomSky
             if (dimId >= 0 && dimId < worldSkyLayers.length)
             {
                 CustomSkyLayer[] sls = worldSkyLayers[dimId];
-                return sls == null ? false : sls.length > 0;
+                return sls != null && sls.length > 0;
             }
             else
             {

@@ -8,59 +8,59 @@ import org.lwjgl.opengl.GL11;
 
 public class ModelHorse extends ModelBase
 {
-    private ModelRenderer head;
-    private ModelRenderer mouthTop;
-    private ModelRenderer mouthBottom;
-    private ModelRenderer horseLeftEar;
-    private ModelRenderer horseRightEar;
+    private final ModelRenderer head;
+    private final ModelRenderer mouthTop;
+    private final ModelRenderer mouthBottom;
+    private final ModelRenderer horseLeftEar;
+    private final ModelRenderer horseRightEar;
 
     /** The left ear box for the mule model. */
-    private ModelRenderer muleLeftEar;
+    private final ModelRenderer muleLeftEar;
 
     /** The right ear box for the mule model. */
-    private ModelRenderer muleRightEar;
-    private ModelRenderer neck;
+    private final ModelRenderer muleRightEar;
+    private final ModelRenderer neck;
 
     /** The box for the horse's ropes on its face. */
-    private ModelRenderer horseFaceRopes;
-    private ModelRenderer mane;
-    private ModelRenderer body;
-    private ModelRenderer tailBase;
-    private ModelRenderer tailMiddle;
-    private ModelRenderer tailTip;
-    private ModelRenderer backLeftLeg;
-    private ModelRenderer backLeftShin;
-    private ModelRenderer backLeftHoof;
-    private ModelRenderer backRightLeg;
-    private ModelRenderer backRightShin;
-    private ModelRenderer backRightHoof;
-    private ModelRenderer frontLeftLeg;
-    private ModelRenderer frontLeftShin;
-    private ModelRenderer frontLeftHoof;
-    private ModelRenderer frontRightLeg;
-    private ModelRenderer frontRightShin;
-    private ModelRenderer frontRightHoof;
+    private final ModelRenderer horseFaceRopes;
+    private final ModelRenderer mane;
+    private final ModelRenderer body;
+    private final ModelRenderer tailBase;
+    private final ModelRenderer tailMiddle;
+    private final ModelRenderer tailTip;
+    private final ModelRenderer backLeftLeg;
+    private final ModelRenderer backLeftShin;
+    private final ModelRenderer backLeftHoof;
+    private final ModelRenderer backRightLeg;
+    private final ModelRenderer backRightShin;
+    private final ModelRenderer backRightHoof;
+    private final ModelRenderer frontLeftLeg;
+    private final ModelRenderer frontLeftShin;
+    private final ModelRenderer frontLeftHoof;
+    private final ModelRenderer frontRightLeg;
+    private final ModelRenderer frontRightShin;
+    private final ModelRenderer frontRightHoof;
 
     /** The left chest box on the mule model. */
-    private ModelRenderer muleLeftChest;
+    private final ModelRenderer muleLeftChest;
 
     /** The right chest box on the mule model. */
-    private ModelRenderer muleRightChest;
-    private ModelRenderer horseSaddleBottom;
-    private ModelRenderer horseSaddleFront;
-    private ModelRenderer horseSaddleBack;
-    private ModelRenderer horseLeftSaddleRope;
-    private ModelRenderer horseLeftSaddleMetal;
-    private ModelRenderer horseRightSaddleRope;
-    private ModelRenderer horseRightSaddleMetal;
+    private final ModelRenderer muleRightChest;
+    private final ModelRenderer horseSaddleBottom;
+    private final ModelRenderer horseSaddleFront;
+    private final ModelRenderer horseSaddleBack;
+    private final ModelRenderer horseLeftSaddleRope;
+    private final ModelRenderer horseLeftSaddleMetal;
+    private final ModelRenderer horseRightSaddleRope;
+    private final ModelRenderer horseRightSaddleMetal;
 
     /** The left metal connected to the horse's face ropes. */
-    private ModelRenderer horseLeftFaceMetal;
+    private final ModelRenderer horseLeftFaceMetal;
 
     /** The right metal connected to the horse's face ropes. */
-    private ModelRenderer horseRightFaceMetal;
-    private ModelRenderer horseLeftRein;
-    private ModelRenderer horseRightRein;
+    private final ModelRenderer horseRightFaceMetal;
+    private final ModelRenderer horseLeftRein;
+    private final ModelRenderer horseRightRein;
     private static final String __OBFID = "CL_00000846";
 
     public ModelHorse()
@@ -336,7 +336,6 @@ public class ModelHorse extends ModelBase
 
         for (var4 = p_110683_2_ - p_110683_1_; var4 < -180.0F; var4 += 360.0F)
         {
-            ;
         }
 
         while (var4 >= 180.0F)

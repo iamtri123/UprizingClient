@@ -30,7 +30,7 @@ public class ItemEditableBook extends Item
         else
         {
             String var1 = p_77828_0_.getString("title");
-            return var1 != null && var1.length() <= 16 ? p_77828_0_.func_150297_b("author", 8) : false;
+            return (var1 != null && var1.length() <= 16) && p_77828_0_.func_150297_b("author", 8);
         }
     }
 

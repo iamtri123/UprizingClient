@@ -229,7 +229,7 @@ public final class ItemStack
      */
     public boolean isItemStackDamageable()
     {
-        return this.field_151002_e.getMaxDamage() <= 0 ? false : !this.hasTagCompound() || !this.getTagCompound().getBoolean("Unbreakable");
+        return this.field_151002_e.getMaxDamage() > 0 && (!this.hasTagCompound() || !this.getTagCompound().getBoolean("Unbreakable"));
     }
 
     public boolean getHasSubtypes()
@@ -408,7 +408,7 @@ public final class ItemStack
 
     public static boolean areItemStackTagsEqual(ItemStack p_77970_0_, ItemStack p_77970_1_)
     {
-        return p_77970_0_ == null && p_77970_1_ == null ? true : (p_77970_0_ != null && p_77970_1_ != null ? (p_77970_0_.stackTagCompound == null && p_77970_1_.stackTagCompound != null ? false : p_77970_0_.stackTagCompound == null || p_77970_0_.stackTagCompound.equals(p_77970_1_.stackTagCompound)) : false);
+        return p_77970_0_ == null && p_77970_1_ == null || ((p_77970_0_ != null && p_77970_1_ != null) && (p_77970_0_.stackTagCompound != null || p_77970_1_.stackTagCompound == null && (p_77970_0_.stackTagCompound == null || p_77970_0_.stackTagCompound.equals(p_77970_1_.stackTagCompound))));
     }
 
     /**
@@ -416,7 +416,7 @@ public final class ItemStack
      */
     public static boolean areItemStacksEqual(ItemStack p_77989_0_, ItemStack p_77989_1_)
     {
-        return p_77989_0_ == null && p_77989_1_ == null ? true : (p_77989_0_ != null && p_77989_1_ != null ? p_77989_0_.isItemStackEqual(p_77989_1_) : false);
+        return p_77989_0_ == null && p_77989_1_ == null || ((p_77989_0_ != null && p_77989_1_ != null) && p_77989_0_.isItemStackEqual(p_77989_1_));
     }
 
     /**
@@ -424,7 +424,7 @@ public final class ItemStack
      */
     private boolean isItemStackEqual(ItemStack p_77959_1_)
     {
-        return this.stackSize != p_77959_1_.stackSize ? false : (this.field_151002_e != p_77959_1_.field_151002_e ? false : (this.itemDamage != p_77959_1_.itemDamage ? false : (this.stackTagCompound == null && p_77959_1_.stackTagCompound != null ? false : this.stackTagCompound == null || this.stackTagCompound.equals(p_77959_1_.stackTagCompound))));
+        return this.stackSize == p_77959_1_.stackSize && (this.field_151002_e == p_77959_1_.field_151002_e && (this.itemDamage == p_77959_1_.itemDamage && (this.stackTagCompound != null || p_77959_1_.stackTagCompound == null && (this.stackTagCompound == null || this.stackTagCompound.equals(p_77959_1_.stackTagCompound)))));
     }
 
     /**
@@ -584,7 +584,7 @@ public final class ItemStack
      */
     public boolean hasDisplayName()
     {
-        return this.stackTagCompound == null ? false : (!this.stackTagCompound.func_150297_b("display", 10) ? false : this.stackTagCompound.getCompoundTag("display").func_150297_b("Name", 8));
+        return this.stackTagCompound != null && (this.stackTagCompound.func_150297_b("display", 10) && this.stackTagCompound.getCompoundTag("display").func_150297_b("Name", 8));
     }
 
     /**
@@ -616,11 +616,11 @@ public final class ItemStack
 
             if (this.getHasSubtypes())
             {
-                var4 = var4 + String.format("#%04d/%d%s", new Object[] {Integer.valueOf(var6), Integer.valueOf(this.itemDamage), var5});
+                var4 = var4 + String.format("#%04d/%d%s", Integer.valueOf(var6), Integer.valueOf(this.itemDamage), var5);
             }
             else
             {
-                var4 = var4 + String.format("#%04d%s", new Object[] {Integer.valueOf(var6), var5});
+                var4 = var4 + String.format("#%04d%s", Integer.valueOf(var6), var5);
             }
         }
         else if (!this.hasDisplayName() && this.field_151002_e == Items.filled_map)
@@ -749,7 +749,7 @@ public final class ItemStack
      */
     public boolean isItemEnchantable()
     {
-        return !this.getItem().isItemTool(this) ? false : !this.isItemEnchanted();
+        return this.getItem().isItemTool(this) && !this.isItemEnchanted();
     }
 
     /**

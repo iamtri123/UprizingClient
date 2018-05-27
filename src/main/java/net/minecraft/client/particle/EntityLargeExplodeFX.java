@@ -11,11 +11,11 @@ public class EntityLargeExplodeFX extends EntityFX
 {
     private static final ResourceLocation field_110127_a = new ResourceLocation("textures/entity/explosion.png");
     private int field_70581_a;
-    private int field_70584_aq;
+    private final int field_70584_aq;
 
     /** The Rendering Engine. */
-    private TextureManager theRenderEngine;
-    private float field_70582_as;
+    private final TextureManager theRenderEngine;
+    private final float field_70582_as;
     private static final String __OBFID = "CL_00000910";
 
     public EntityLargeExplodeFX(TextureManager p_i1213_1_, World p_i1213_2_, double p_i1213_3_, double p_i1213_5_, double p_i1213_7_, double p_i1213_9_, double p_i1213_11_, double p_i1213_13_)

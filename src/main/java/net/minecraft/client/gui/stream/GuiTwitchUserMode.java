@@ -85,22 +85,22 @@ public class GuiTwitchUserMode extends GuiScreen
         {
             if (p_152330_1_ == null)
             {
-                var3 = new ChatComponentTranslation("stream.user.subscription.subscriber", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.subscription.subscriber");
             }
             else if (p_152330_2_)
             {
-                var3 = new ChatComponentTranslation("stream.user.subscription.subscriber.self", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.subscription.subscriber.self");
             }
             else
             {
-                var3 = new ChatComponentTranslation("stream.user.subscription.subscriber.other", new Object[] {p_152330_1_});
+                var3 = new ChatComponentTranslation("stream.user.subscription.subscriber.other", p_152330_1_);
             }
 
             var3.getChatStyle().setColor(field_152331_a);
         }
         else if (p_152330_0_ == ChatUserSubscription.TTV_CHAT_USERSUB_TURBO)
         {
-            var3 = new ChatComponentTranslation("stream.user.subscription.turbo", new Object[0]);
+            var3 = new ChatComponentTranslation("stream.user.subscription.turbo");
             var3.getChatStyle().setColor(field_152336_g);
         }
 
@@ -113,22 +113,22 @@ public class GuiTwitchUserMode extends GuiScreen
 
         if (p_152329_0_ == ChatUserMode.TTV_CHAT_USERMODE_ADMINSTRATOR)
         {
-            var3 = new ChatComponentTranslation("stream.user.mode.administrator", new Object[0]);
+            var3 = new ChatComponentTranslation("stream.user.mode.administrator");
             var3.getChatStyle().setColor(field_152336_g);
         }
         else if (p_152329_0_ == ChatUserMode.TTV_CHAT_USERMODE_BANNED)
         {
             if (p_152329_1_ == null)
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.banned", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.mode.banned");
             }
             else if (p_152329_2_)
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.banned.self", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.mode.banned.self");
             }
             else
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.banned.other", new Object[] {p_152329_1_});
+                var3 = new ChatComponentTranslation("stream.user.mode.banned.other", p_152329_1_);
             }
 
             var3.getChatStyle().setColor(field_152335_f);
@@ -137,15 +137,15 @@ public class GuiTwitchUserMode extends GuiScreen
         {
             if (p_152329_1_ == null)
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.broadcaster", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.mode.broadcaster");
             }
             else if (p_152329_2_)
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.broadcaster.self", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.mode.broadcaster.self");
             }
             else
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.broadcaster.other", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.mode.broadcaster.other");
             }
 
             var3.getChatStyle().setColor(field_152331_a);
@@ -154,22 +154,22 @@ public class GuiTwitchUserMode extends GuiScreen
         {
             if (p_152329_1_ == null)
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.moderator", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.mode.moderator");
             }
             else if (p_152329_2_)
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.moderator.self", new Object[0]);
+                var3 = new ChatComponentTranslation("stream.user.mode.moderator.self");
             }
             else
             {
-                var3 = new ChatComponentTranslation("stream.user.mode.moderator.other", new Object[] {p_152329_1_});
+                var3 = new ChatComponentTranslation("stream.user.mode.moderator.other", p_152329_1_);
             }
 
             var3.getChatStyle().setColor(field_152331_a);
         }
         else if (p_152329_0_ == ChatUserMode.TTV_CHAT_USERMODE_STAFF)
         {
-            var3 = new ChatComponentTranslation("stream.user.mode.staff", new Object[0]);
+            var3 = new ChatComponentTranslation("stream.user.mode.staff");
             var3.getChatStyle().setColor(field_152336_g);
         }
 
@@ -183,12 +183,12 @@ public class GuiTwitchUserMode extends GuiScreen
     {
         int var1 = this.width / 3;
         int var2 = var1 - 130;
-        this.buttonList.add(new GuiButton(1, var1 * 0 + var2 / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.timeout", new Object[0])));
-        this.buttonList.add(new GuiButton(0, var1 * 1 + var2 / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.ban", new Object[0])));
-        this.buttonList.add(new GuiButton(2, var1 * 2 + var2 / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.mod", new Object[0])));
-        this.buttonList.add(new GuiButton(5, var1 * 0 + var2 / 2, this.height - 45, 130, 20, I18n.format("gui.cancel", new Object[0])));
-        this.buttonList.add(new GuiButton(3, var1 * 1 + var2 / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unban", new Object[0])));
-        this.buttonList.add(new GuiButton(4, var1 * 2 + var2 / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unmod", new Object[0])));
+        this.buttonList.add(new GuiButton(1, var1 * 0 + var2 / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.timeout")));
+        this.buttonList.add(new GuiButton(0, var1 * 1 + var2 / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.ban")));
+        this.buttonList.add(new GuiButton(2, var1 * 2 + var2 / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.mod")));
+        this.buttonList.add(new GuiButton(5, var1 * 0 + var2 / 2, this.height - 45, 130, 20, I18n.format("gui.cancel")));
+        this.buttonList.add(new GuiButton(3, var1 * 1 + var2 / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unban")));
+        this.buttonList.add(new GuiButton(4, var1 * 2 + var2 / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unmod")));
         int var3 = 0;
         IChatComponent var5;
 

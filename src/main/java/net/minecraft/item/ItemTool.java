@@ -11,11 +11,11 @@ import net.minecraft.world.World;
 
 public class ItemTool extends Item
 {
-    private Set field_150914_c;
+    private final Set field_150914_c;
     protected float efficiencyOnProperMaterial = 4.0F;
 
     /** Damage versus entities. */
-    private float damageVsEntity;
+    private final float damageVsEntity;
 
     /** The material this tool is made from. */
     protected Item.ToolMaterial toolMaterial;
@@ -91,7 +91,7 @@ public class ItemTool extends Item
      */
     public boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)
     {
-        return this.toolMaterial.func_150995_f() == p_82789_2_.getItem() ? true : super.getIsRepairable(p_82789_1_, p_82789_2_);
+        return this.toolMaterial.func_150995_f() == p_82789_2_.getItem() || super.getIsRepairable(p_82789_1_, p_82789_2_);
     }
 
     /**

@@ -20,7 +20,7 @@ public abstract class ModelBase
     public boolean isChild = true;
 
     /** A mapping for all texture offsets */
-    private Map modelTextureMap = new HashMap();
+    private final Map modelTextureMap = new HashMap();
     public int textureWidth = 64;
     public int textureHeight = 32;
     private static final String __OBFID = "CL_00000845";

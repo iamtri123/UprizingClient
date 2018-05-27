@@ -20,7 +20,7 @@ public enum SoundCategory
     private final int categoryId;
     private static final String __OBFID = "CL_00001686";
 
-    private SoundCategory(String p_i45126_3_, int p_i45126_4_)
+    SoundCategory(String p_i45126_3_, int p_i45126_4_)
     {
         this.categoryName = p_i45126_3_;
         this.categoryId = p_i45126_4_;

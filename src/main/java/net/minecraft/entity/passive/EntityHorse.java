@@ -49,13 +49,13 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         }
     };
     private static final IAttribute horseJumpStrength = (new RangedAttribute("horse.jumpStrength", 0.7D, 0.0D, 2.0D)).setDescription("Jump Strength").setShouldWatch(true);
-    private static final String[] horseArmorTextures = new String[] {null, "textures/entity/horse/armor/horse_armor_iron.png", "textures/entity/horse/armor/horse_armor_gold.png", "textures/entity/horse/armor/horse_armor_diamond.png"};
-    private static final String[] field_110273_bx = new String[] {"", "meo", "goo", "dio"};
-    private static final int[] armorValues = new int[] {0, 5, 7, 11};
-    private static final String[] horseTextures = new String[] {"textures/entity/horse/horse_white.png", "textures/entity/horse/horse_creamy.png", "textures/entity/horse/horse_chestnut.png", "textures/entity/horse/horse_brown.png", "textures/entity/horse/horse_black.png", "textures/entity/horse/horse_gray.png", "textures/entity/horse/horse_darkbrown.png"};
-    private static final String[] field_110269_bA = new String[] {"hwh", "hcr", "hch", "hbr", "hbl", "hgr", "hdb"};
-    private static final String[] horseMarkingTextures = new String[] {null, "textures/entity/horse/horse_markings_white.png", "textures/entity/horse/horse_markings_whitefield.png", "textures/entity/horse/horse_markings_whitedots.png", "textures/entity/horse/horse_markings_blackdots.png"};
-    private static final String[] field_110292_bC = new String[] {"", "wo_", "wmo", "wdo", "bdo"};
+    private static final String[] horseArmorTextures = {null, "textures/entity/horse/armor/horse_armor_iron.png", "textures/entity/horse/armor/horse_armor_gold.png", "textures/entity/horse/armor/horse_armor_diamond.png"};
+    private static final String[] field_110273_bx = {"", "meo", "goo", "dio"};
+    private static final int[] armorValues = {0, 5, 7, 11};
+    private static final String[] horseTextures = {"textures/entity/horse/horse_white.png", "textures/entity/horse/horse_creamy.png", "textures/entity/horse/horse_chestnut.png", "textures/entity/horse/horse_brown.png", "textures/entity/horse/horse_black.png", "textures/entity/horse/horse_gray.png", "textures/entity/horse/horse_darkbrown.png"};
+    private static final String[] field_110269_bA = {"hwh", "hcr", "hch", "hbr", "hbl", "hgr", "hdb"};
+    private static final String[] horseMarkingTextures = {null, "textures/entity/horse/horse_markings_white.png", "textures/entity/horse/horse_markings_whitefield.png", "textures/entity/horse/horse_markings_whitedots.png", "textures/entity/horse/horse_markings_blackdots.png"};
+    private static final String[] field_110292_bC = {"", "wo_", "wmo", "wdo", "bdo"};
     private int eatingHaystackCounter;
     private int openMouthCounter;
     private int jumpRearingCounter;
@@ -79,7 +79,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     private float prevMouthOpenness;
     private int field_110285_bP;
     private String field_110286_bQ;
-    private String[] field_110280_bR = new String[3];
+    private final String[] field_110280_bR = new String[3];
     private static final String __OBFID = "CL_00001641";
 
     public EntityHorse(World p_i1685_1_)
@@ -106,7 +106,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         this.dataWatcher.addObject(16, Integer.valueOf(0));
         this.dataWatcher.addObject(19, Byte.valueOf((byte)0));
         this.dataWatcher.addObject(20, Integer.valueOf(0));
-        this.dataWatcher.addObject(21, String.valueOf(""));
+        this.dataWatcher.addObject(21, "");
         this.dataWatcher.addObject(22, Integer.valueOf(0));
     }
 
@@ -357,7 +357,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
     {
         Entity var3 = p_70097_1_.getEntity();
-        return this.riddenByEntity != null && this.riddenByEntity.equals(var3) ? false : super.attackEntityFrom(p_70097_1_, p_70097_2_);
+        return this.riddenByEntity == null || !this.riddenByEntity.equals(var3) && super.attackEntityFrom(p_70097_1_, p_70097_2_);
     }
 
     /**
@@ -978,7 +978,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
      */
     protected boolean isMovementBlocked()
     {
-        return this.riddenByEntity != null && this.isHorseSaddled() ? true : this.isEatingHaystack() || this.isRearing();
+        return this.riddenByEntity != null && this.isHorseSaddled() || (this.isEatingHaystack() || this.isRearing());
     }
 
     public boolean func_110256_cu()

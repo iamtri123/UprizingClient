@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderEnderCrystal extends Render
 {
     private static final ResourceLocation enderCrystalTextures = new ResourceLocation("textures/entity/endercrystal/endercrystal.png");
-    private ModelBase field_76995_b;
+    private final ModelBase field_76995_b;
     private static final String __OBFID = "CL_00000987";
 
     public RenderEnderCrystal()

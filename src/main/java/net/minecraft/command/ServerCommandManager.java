@@ -109,7 +109,7 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
             var6 = false;
         }
 
-        ChatComponentTranslation var7 = new ChatComponentTranslation("chat.type.admin", new Object[] {p_152372_1_.getCommandSenderName(), new ChatComponentTranslation(p_152372_4_, p_152372_5_)});
+        ChatComponentTranslation var7 = new ChatComponentTranslation("chat.type.admin", p_152372_1_.getCommandSenderName(), new ChatComponentTranslation(p_152372_4_, p_152372_5_));
         var7.getChatStyle().setColor(EnumChatFormatting.GRAY);
         var7.getChatStyle().setItalic(Boolean.valueOf(true));
 

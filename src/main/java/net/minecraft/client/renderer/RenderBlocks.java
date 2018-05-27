@@ -366,13 +366,13 @@ public class RenderBlocks
                 default:
                     if (Reflector.ModLoader.exists())
                     {
-                        return Reflector.callBoolean(Reflector.ModLoader_renderWorldBlock, new Object[] {this, this.blockAccess, Integer.valueOf(par2), Integer.valueOf(par3), Integer.valueOf(par4), par1Block, Integer.valueOf(i)});
+                        return Reflector.callBoolean(Reflector.ModLoader_renderWorldBlock, this, this.blockAccess, Integer.valueOf(par2), Integer.valueOf(par3), Integer.valueOf(par4), par1Block, Integer.valueOf(i));
                     }
                     else
                     {
                         if (Reflector.FMLRenderAccessLibrary.exists())
                         {
-                            return Reflector.callBoolean(Reflector.FMLRenderAccessLibrary_renderWorldBlock, new Object[] {this, this.blockAccess, Integer.valueOf(par2), Integer.valueOf(par3), Integer.valueOf(par4), par1Block, Integer.valueOf(i)});
+                            return Reflector.callBoolean(Reflector.FMLRenderAccessLibrary_renderWorldBlock, this, this.blockAccess, Integer.valueOf(par2), Integer.valueOf(par3), Integer.valueOf(par4), par1Block, Integer.valueOf(i));
                         }
 
                         return false;
@@ -493,12 +493,12 @@ public class RenderBlocks
 
         if (Reflector.ForgeBlock_getBedDirection.exists())
         {
-            var7 = Reflector.callInt(p_147773_1_, Reflector.ForgeBlock_getBedDirection, new Object[] {this.blockAccess, Integer.valueOf(p_147773_2_), Integer.valueOf(p_147773_3_), Integer.valueOf(p_147773_4_)});
+            var7 = Reflector.callInt(p_147773_1_, Reflector.ForgeBlock_getBedDirection, this.blockAccess, Integer.valueOf(p_147773_2_), Integer.valueOf(p_147773_3_), Integer.valueOf(p_147773_4_));
         }
 
         if (Reflector.ForgeBlock_isBedFoot.exists())
         {
-            var8 = Reflector.callBoolean(p_147773_1_, Reflector.ForgeBlock_isBedFoot, new Object[] {this.blockAccess, Integer.valueOf(p_147773_2_), Integer.valueOf(p_147773_3_), Integer.valueOf(p_147773_4_)});
+            var8 = Reflector.callBoolean(p_147773_1_, Reflector.ForgeBlock_isBedFoot, this.blockAccess, Integer.valueOf(p_147773_2_), Integer.valueOf(p_147773_3_), Integer.valueOf(p_147773_4_));
         }
 
         float var9 = 0.5F;
@@ -4416,7 +4416,7 @@ public class RenderBlocks
         float var9 = (float)(var6 & 255) / 255.0F;
         boolean var10 = p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_, p_147721_3_ + 1, p_147721_4_, 1);
         boolean var11 = p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_, p_147721_3_ - 1, p_147721_4_, 0);
-        boolean[] var12 = new boolean[] {p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_, p_147721_3_, p_147721_4_ - 1, 2), p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_, p_147721_3_, p_147721_4_ + 1, 3), p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_ - 1, p_147721_3_, p_147721_4_, 4), p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_ + 1, p_147721_3_, p_147721_4_, 5)};
+        boolean[] var12 = {p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_, p_147721_3_, p_147721_4_ - 1, 2), p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_, p_147721_3_, p_147721_4_ + 1, 3), p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_ - 1, p_147721_3_, p_147721_4_, 4), p_147721_1_.shouldSideBeRendered(this.blockAccess, p_147721_2_ + 1, p_147721_3_, p_147721_4_, 5)};
 
         if (!var10 && !var11 && !var12[0] && !var12[1] && !var12[2] && !var12[3])
         {
@@ -9288,11 +9288,11 @@ public class RenderBlocks
             }
             else if (Reflector.ModLoader.exists())
             {
-                Reflector.callVoid(Reflector.ModLoader_renderInvBlock, new Object[] {this, p_147800_1_, Integer.valueOf(p_147800_2_), Integer.valueOf(var6)});
+                Reflector.callVoid(Reflector.ModLoader_renderInvBlock, this, p_147800_1_, Integer.valueOf(p_147800_2_), Integer.valueOf(var6));
             }
             else if (Reflector.FMLRenderAccessLibrary.exists())
             {
-                Reflector.callVoid(Reflector.FMLRenderAccessLibrary_renderInventoryBlock, new Object[] {this, p_147800_1_, Integer.valueOf(p_147800_2_), Integer.valueOf(var6)});
+                Reflector.callVoid(Reflector.FMLRenderAccessLibrary_renderInventoryBlock, this, p_147800_1_, Integer.valueOf(p_147800_2_), Integer.valueOf(var6));
             }
         }
         else
@@ -9400,7 +9400,7 @@ public class RenderBlocks
             case 37:
             case 38:
             default:
-                return Reflector.ModLoader.exists() ? Reflector.callBoolean(Reflector.ModLoader_renderBlockIsItemFull3D, new Object[] {Integer.valueOf(par0)}): (Reflector.FMLRenderAccessLibrary.exists() ? Reflector.callBoolean(Reflector.FMLRenderAccessLibrary_renderItemAsFull3DBlock, new Object[] {Integer.valueOf(par0)}): false);
+                return Reflector.ModLoader.exists() ? Reflector.callBoolean(Reflector.ModLoader_renderBlockIsItemFull3D, Integer.valueOf(par0)): (Reflector.FMLRenderAccessLibrary.exists() && Reflector.callBoolean(Reflector.FMLRenderAccessLibrary_renderItemAsFull3DBlock, Integer.valueOf(par0)));
         }
     }
 
@@ -9474,7 +9474,7 @@ public class RenderBlocks
     private boolean hasSnowNeighbours(int x, int y, int z)
     {
         Block blockSnow = Blocks.snow_layer;
-        return this.blockAccess.getBlock(x - 1, y, z) != blockSnow && this.blockAccess.getBlock(x + 1, y, z) != blockSnow && this.blockAccess.getBlock(x, y, z - 1) != blockSnow && this.blockAccess.getBlock(x, y, z + 1) != blockSnow ? false : this.blockAccess.getBlock(x, y - 1, z).isOpaqueCube();
+        return this.blockAccess.getBlock(x - 1, y, z) == blockSnow || this.blockAccess.getBlock(x + 1, y, z) == blockSnow || this.blockAccess.getBlock(x, y, z - 1) == blockSnow || this.blockAccess.getBlock(x, y, z + 1) == blockSnow && this.blockAccess.getBlock(x, y - 1, z).isOpaqueCube();
     }
 
     private void renderSnow(int x, int y, int z, double maxY)

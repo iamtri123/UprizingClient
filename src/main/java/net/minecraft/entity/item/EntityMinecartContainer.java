@@ -148,7 +148,7 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
      */
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
-        return this.isDead ? false : p_70300_1_.getDistanceSqToEntity(this) <= 64.0D;
+        return !this.isDead && p_70300_1_.getDistanceSqToEntity(this) <= 64.0D;
     }
 
     public void openInventory() {}

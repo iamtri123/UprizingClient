@@ -16,7 +16,7 @@ public class S3EPacketTeams extends Packet
     private String field_149318_b = "";
     private String field_149319_c = "";
     private String field_149316_d = "";
-    private Collection field_149317_e = new ArrayList();
+    private final Collection field_149317_e = new ArrayList();
     private int field_149314_f;
     private int field_149315_g;
     private static final String __OBFID = "CL_00001334";

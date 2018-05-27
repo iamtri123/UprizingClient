@@ -89,7 +89,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     private final Random field_147146_q = new Random();
 
     /** The server's port. */
-    private int serverPort = -1;
+    private final int serverPort = -1;
 
     /** The server world instances. */
     public WorldServer[] worldServers;
@@ -153,7 +153,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
      * If true, there is no need to save chunks or stop the server, because that is already being done.
      */
     private boolean worldIsBeingDeleted;
-    private String field_147141_M = "";
+    private final String field_147141_M = "";
     private boolean serverIsRunning;
 
     /**
@@ -471,7 +471,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
 
                     if (var7 > 2000L && var1 - this.timeOfLastWarning >= 15000L)
                     {
-                        logger.warn("Can\'t keep up! Did the system time change, or is the server overloaded? Running {}ms behind, skipping {} tick(s)", new Object[] {Long.valueOf(var7), Long.valueOf(var7 / 50L)});
+                        logger.warn("Can\'t keep up! Did the system time change, or is the server overloaded? Running {}ms behind, skipping {} tick(s)", Long.valueOf(var7), Long.valueOf(var7 / 50L));
                         var7 = 2000L;
                         this.timeOfLastWarning = var1;
                     }
@@ -564,8 +564,8 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             try
             {
                 BufferedImage var4 = ImageIO.read(var2);
-                Validate.validState(var4.getWidth() == 64, "Must be 64 pixels wide", new Object[0]);
-                Validate.validState(var4.getHeight() == 64, "Must be 64 pixels high", new Object[0]);
+                Validate.validState(var4.getWidth() == 64, "Must be 64 pixels wide");
+                Validate.validState(var4.getHeight() == 64, "Must be 64 pixels high");
                 ImageIO.write(var4, "PNG", new ByteBufOutputStream(var3));
                 ByteBuf var5 = Base64.encode(var3);
                 p_147138_1_.func_151320_a("data:image/png;base64," + var5.toString(Charsets.UTF_8));

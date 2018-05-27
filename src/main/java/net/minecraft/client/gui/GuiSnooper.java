@@ -31,8 +31,8 @@ public class GuiSnooper extends GuiScreen
      */
     public void initGui()
     {
-        this.field_146610_i = I18n.format("options.snooper.title", new Object[0]);
-        String var1 = I18n.format("options.snooper.desc", new Object[0]);
+        this.field_146610_i = I18n.format("options.snooper.title");
+        String var1 = I18n.format("options.snooper.desc");
         ArrayList var2 = new ArrayList();
         Iterator var3 = this.fontRendererObj.listFormattedStringToWidth(var1, this.width - 30).iterator();
 
@@ -46,7 +46,7 @@ public class GuiSnooper extends GuiScreen
         this.field_146604_g.clear();
         this.field_146609_h.clear();
         this.buttonList.add(this.field_146605_t = new GuiButton(1, this.width / 2 - 152, this.height - 30, 150, 20, this.field_146603_f.getKeyBinding(GameSettings.Options.SNOOPER_ENABLED)));
-        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.format("gui.done")));
         boolean var6 = this.mc.getIntegratedServer() != null && this.mc.getIntegratedServer().getPlayerUsageSnooper() != null;
         Iterator var7 = (new TreeMap(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet().iterator();
         Entry var5;

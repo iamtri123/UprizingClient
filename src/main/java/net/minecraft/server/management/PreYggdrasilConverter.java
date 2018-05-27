@@ -86,7 +86,7 @@ public class PreYggdrasilConverter
                         PreYggdrasilConverter.field_152732_e.warn("Could not lookup user whitelist entry for " + p_onProfileLookupFailed_1_.getName(), p_onProfileLookupFailed_2_);
                     }
                 };
-                func_152717_a(var1, Lists.newArrayList(new String[] {p_152719_0_}), var4);
+                func_152717_a(var1, Lists.newArrayList(p_152719_0_), var4);
                 return var3.size() > 0 && ((GameProfile)var3.get(0)).getId() != null ? ((GameProfile)var3.get(0)).getId().toString() : "";
             }
             else

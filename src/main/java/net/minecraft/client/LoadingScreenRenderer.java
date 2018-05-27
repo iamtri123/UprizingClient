@@ -14,7 +14,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
     private String field_73727_a = "";
 
     /** A reference to the Minecraft object. */
-    private Minecraft mc;
+    private final Minecraft mc;
 
     /**
      * The text currently displayed (i.e. the argument to the last call to printText or func_73722_d)
@@ -22,8 +22,8 @@ public class LoadingScreenRenderer implements IProgressUpdate
     private String currentlyDisplayedText = "";
     private long field_73723_d = Minecraft.getSystemTime();
     private boolean field_73724_e;
-    private ScaledResolution field_146587_f;
-    private Framebuffer field_146588_g;
+    private final ScaledResolution field_146587_f;
+    private final Framebuffer field_146588_g;
     private static final String __OBFID = "CL_00000655";
 
     public LoadingScreenRenderer(Minecraft p_i1017_1_)
@@ -206,7 +206,6 @@ public class LoadingScreenRenderer implements IProgressUpdate
                 }
                 catch (Exception var14)
                 {
-                    ;
                 }
             }
         }

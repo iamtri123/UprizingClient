@@ -153,11 +153,11 @@ public abstract class ServerConfigurationManager
 
         if (!p_72355_2_.getCommandSenderName().equalsIgnoreCase(var6))
         {
-            var12 = new ChatComponentTranslation("multiplayer.player.joined.renamed", new Object[] {p_72355_2_.func_145748_c_(), var6});
+            var12 = new ChatComponentTranslation("multiplayer.player.joined.renamed", p_72355_2_.func_145748_c_(), var6);
         }
         else
         {
-            var12 = new ChatComponentTranslation("multiplayer.player.joined", new Object[] {p_72355_2_.func_145748_c_()});
+            var12 = new ChatComponentTranslation("multiplayer.player.joined", p_72355_2_.func_145748_c_());
         }
 
         var12.getChatStyle().setColor(EnumChatFormatting.YELLOW);
@@ -642,7 +642,7 @@ public abstract class ServerConfigurationManager
 
             if (p_152609_1_)
             {
-                var2 = var2 + " (" + ((EntityPlayerMP)var3.get(var4)).getUniqueID().toString() + ")";
+                var2 = var2 + " (" + ((EntityPlayerMP)var3.get(var4)).getUniqueID() + ")";
             }
         }
 
@@ -1080,7 +1080,7 @@ public abstract class ServerConfigurationManager
         if (var3 == null)
         {
             File var4 = new File(this.mcServer.worldServerForDimension(0).getSaveHandler().getWorldDirectory(), "stats");
-            File var5 = new File(var4, var2.toString() + ".json");
+            File var5 = new File(var4, var2 + ".json");
 
             if (!var5.exists())
             {

@@ -14,14 +14,14 @@ import net.minecraft.world.World;
 
 public class StructureStrongholdPieces
 {
-    private static final StructureStrongholdPieces.PieceWeight[] pieceWeightArray = new StructureStrongholdPieces.PieceWeight[] {new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.Straight.class, 40, 0), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.Prison.class, 5, 5), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.LeftTurn.class, 20, 0), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.RightTurn.class, 20, 0), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.RoomCrossing.class, 10, 6), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.StairsStraight.class, 5, 5), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.Stairs.class, 5, 5), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.Crossing.class, 5, 4), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.ChestCorridor.class, 5, 4), new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.Library.class, 10, 2)
+    private static final StructureStrongholdPieces.PieceWeight[] pieceWeightArray = {new PieceWeight(Straight.class, 40, 0), new PieceWeight(Prison.class, 5, 5), new PieceWeight(LeftTurn.class, 20, 0), new PieceWeight(RightTurn.class, 20, 0), new PieceWeight(RoomCrossing.class, 10, 6), new PieceWeight(StairsStraight.class, 5, 5), new PieceWeight(Stairs.class, 5, 5), new PieceWeight(Crossing.class, 5, 4), new PieceWeight(ChestCorridor.class, 5, 4), new PieceWeight(Library.class, 10, 2)
         {
             private static final String __OBFID = "CL_00000484";
             public boolean canSpawnMoreStructuresOfType(int p_75189_1_)
             {
                 return super.canSpawnMoreStructuresOfType(p_75189_1_) && p_75189_1_ > 4;
             }
-        }, new StructureStrongholdPieces.PieceWeight(StructureStrongholdPieces.PortalRoom.class, 20, 1)
+        }, new PieceWeight(PortalRoom.class, 20, 1)
         {
             private static final String __OBFID = "CL_00000485";
             public boolean canSpawnMoreStructuresOfType(int p_75189_1_)
@@ -242,7 +242,7 @@ public class StructureStrongholdPieces
 
     public static class ChestCorridor extends StructureStrongholdPieces.Stronghold
     {
-        private static final WeightedRandomChestContent[] strongholdChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.ender_pearl, 0, 1, 1, 10), new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 1, 3, 5), new WeightedRandomChestContent(Items.redstone, 0, 4, 9, 5), new WeightedRandomChestContent(Items.bread, 0, 1, 3, 15), new WeightedRandomChestContent(Items.apple, 0, 1, 3, 15), new WeightedRandomChestContent(Items.iron_pickaxe, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_sword, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_chestplate, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_helmet, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_leggings, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_boots, 0, 1, 1, 5), new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 1), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 1), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
+        private static final WeightedRandomChestContent[] strongholdChestContents = {new WeightedRandomChestContent(Items.ender_pearl, 0, 1, 1, 10), new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 1, 3, 5), new WeightedRandomChestContent(Items.redstone, 0, 4, 9, 5), new WeightedRandomChestContent(Items.bread, 0, 1, 3, 15), new WeightedRandomChestContent(Items.apple, 0, 1, 3, 15), new WeightedRandomChestContent(Items.iron_pickaxe, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_sword, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_chestplate, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_helmet, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_leggings, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_boots, 0, 1, 1, 5), new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 1), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 1), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
         private boolean hasMadeChest;
         private static final String __OBFID = "CL_00000487";
 
@@ -311,7 +311,7 @@ public class StructureStrongholdPieces
                     if (p_74875_3_.isVecInside(var5, var4, var6))
                     {
                         this.hasMadeChest = true;
-                        this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 3, 2, 3, WeightedRandomChestContent.func_92080_a(strongholdChestContents, new WeightedRandomChestContent[] {Items.enchanted_book.func_92114_b(p_74875_2_)}), 2 + p_74875_2_.nextInt(2));
+                        this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 3, 2, 3, WeightedRandomChestContent.func_92080_a(strongholdChestContents, Items.enchanted_book.func_92114_b(p_74875_2_)), 2 + p_74875_2_.nextInt(2));
                     }
                 }
 
@@ -603,7 +603,7 @@ public class StructureStrongholdPieces
 
     public static class Library extends StructureStrongholdPieces.Stronghold
     {
-        private static final WeightedRandomChestContent[] strongholdLibraryChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.book, 0, 1, 3, 20), new WeightedRandomChestContent(Items.paper, 0, 2, 7, 20), new WeightedRandomChestContent(Items.map, 0, 1, 1, 1), new WeightedRandomChestContent(Items.compass, 0, 1, 1, 1)};
+        private static final WeightedRandomChestContent[] strongholdLibraryChestContents = {new WeightedRandomChestContent(Items.book, 0, 1, 3, 20), new WeightedRandomChestContent(Items.paper, 0, 2, 7, 20), new WeightedRandomChestContent(Items.map, 0, 1, 1, 1), new WeightedRandomChestContent(Items.compass, 0, 1, 1, 1)};
         private boolean isLargeRoom;
         private static final String __OBFID = "CL_00000491";
 
@@ -750,12 +750,12 @@ public class StructureStrongholdPieces
                     this.func_151550_a(p_74875_1_, Blocks.torch, 0, var8, 8, var9 + 1, p_74875_3_);
                 }
 
-                this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 3, 3, 5, WeightedRandomChestContent.func_92080_a(strongholdLibraryChestContents, new WeightedRandomChestContent[] {Items.enchanted_book.func_92112_a(p_74875_2_, 1, 5, 2)}), 1 + p_74875_2_.nextInt(4));
+                this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 3, 3, 5, WeightedRandomChestContent.func_92080_a(strongholdLibraryChestContents, Items.enchanted_book.func_92112_a(p_74875_2_, 1, 5, 2)), 1 + p_74875_2_.nextInt(4));
 
                 if (this.isLargeRoom)
                 {
                     this.func_151550_a(p_74875_1_, Blocks.air, 0, 12, 9, 1, p_74875_3_);
-                    this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 12, 8, 1, WeightedRandomChestContent.func_92080_a(strongholdLibraryChestContents, new WeightedRandomChestContent[] {Items.enchanted_book.func_92112_a(p_74875_2_, 1, 5, 2)}), 1 + p_74875_2_.nextInt(4));
+                    this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 12, 8, 1, WeightedRandomChestContent.func_92080_a(strongholdLibraryChestContents, Items.enchanted_book.func_92112_a(p_74875_2_, 1, 5, 2)), 1 + p_74875_2_.nextInt(4));
                 }
 
                 return true;
@@ -1030,7 +1030,7 @@ public class StructureStrongholdPieces
 
     public static class RoomCrossing extends StructureStrongholdPieces.Stronghold
     {
-        private static final WeightedRandomChestContent[] strongholdRoomCrossingChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 1, 3, 5), new WeightedRandomChestContent(Items.redstone, 0, 4, 9, 5), new WeightedRandomChestContent(Items.coal, 0, 3, 8, 10), new WeightedRandomChestContent(Items.bread, 0, 1, 3, 15), new WeightedRandomChestContent(Items.apple, 0, 1, 3, 15), new WeightedRandomChestContent(Items.iron_pickaxe, 0, 1, 1, 1)};
+        private static final WeightedRandomChestContent[] strongholdRoomCrossingChestContents = {new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 1, 3, 5), new WeightedRandomChestContent(Items.redstone, 0, 4, 9, 5), new WeightedRandomChestContent(Items.coal, 0, 3, 8, 10), new WeightedRandomChestContent(Items.bread, 0, 1, 3, 15), new WeightedRandomChestContent(Items.apple, 0, 1, 3, 15), new WeightedRandomChestContent(Items.iron_pickaxe, 0, 1, 1, 1)};
         protected int roomType;
         private static final String __OBFID = "CL_00000496";
 
@@ -1171,7 +1171,7 @@ public class StructureStrongholdPieces
                         this.func_151550_a(p_74875_1_, Blocks.ladder, this.func_151555_a(Blocks.ladder, 4), 9, 1, 3, p_74875_3_);
                         this.func_151550_a(p_74875_1_, Blocks.ladder, this.func_151555_a(Blocks.ladder, 4), 9, 2, 3, p_74875_3_);
                         this.func_151550_a(p_74875_1_, Blocks.ladder, this.func_151555_a(Blocks.ladder, 4), 9, 3, 3, p_74875_3_);
-                        this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 3, 4, 8, WeightedRandomChestContent.func_92080_a(strongholdRoomCrossingChestContents, new WeightedRandomChestContent[] {Items.enchanted_book.func_92114_b(p_74875_2_)}), 1 + p_74875_2_.nextInt(4));
+                        this.generateStructureChestContents(p_74875_1_, p_74875_3_, p_74875_2_, 3, 4, 8, WeightedRandomChestContent.func_92080_a(strongholdRoomCrossingChestContents, Items.enchanted_book.func_92114_b(p_74875_2_)), 1 + p_74875_2_.nextInt(4));
                 }
 
                 return true;
@@ -1644,17 +1644,17 @@ public class StructureStrongholdPieces
             return p_74991_0_ != null && p_74991_0_.minY > 10;
         }
 
-        public static enum Door
+        public enum Door
         {
             OPENING("OPENING", 0),
             WOOD_DOOR("WOOD_DOOR", 1),
             GRATES("GRATES", 2),
             IRON_DOOR("IRON_DOOR", 3);
 
-            private static final StructureStrongholdPieces.Stronghold.Door[] $VALUES = new StructureStrongholdPieces.Stronghold.Door[]{OPENING, WOOD_DOOR, GRATES, IRON_DOOR};
+            private static final StructureStrongholdPieces.Stronghold.Door[] $VALUES = {OPENING, WOOD_DOOR, GRATES, IRON_DOOR};
             private static final String __OBFID = "CL_00000504";
 
-            private Door(String p_i2086_1_, int p_i2086_2_) {}
+            Door(String p_i2086_1_, int p_i2086_2_) {}
         }
     }
 
@@ -1671,7 +1671,6 @@ public class StructureStrongholdPieces
             }
             catch (NoSuchFieldError var4)
             {
-                ;
             }
 
             try
@@ -1680,7 +1679,6 @@ public class StructureStrongholdPieces
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             try
@@ -1689,7 +1687,6 @@ public class StructureStrongholdPieces
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -1698,7 +1695,6 @@ public class StructureStrongholdPieces
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

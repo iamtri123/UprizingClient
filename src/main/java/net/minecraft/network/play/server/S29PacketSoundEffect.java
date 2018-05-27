@@ -21,7 +21,7 @@ public class S29PacketSoundEffect extends Packet
 
     public S29PacketSoundEffect(String p_i45200_1_, double p_i45200_2_, double p_i45200_4_, double p_i45200_6_, float p_i45200_8_, float p_i45200_9_)
     {
-        Validate.notNull(p_i45200_1_, "name", new Object[0]);
+        Validate.notNull(p_i45200_1_, "name");
         this.field_149219_a = p_i45200_1_;
         this.field_149217_b = (int)(p_i45200_2_ * 8.0D);
         this.field_149218_c = (int)(p_i45200_4_ * 8.0D);

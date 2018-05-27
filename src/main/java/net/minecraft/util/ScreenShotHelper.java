@@ -117,12 +117,12 @@ public class ScreenShotHelper
             ChatComponentText var13 = new ChatComponentText(var12.getName());
             var13.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, var12.getAbsolutePath()));
             var13.getChatStyle().setUnderlined(Boolean.valueOf(true));
-            return new ChatComponentTranslation("screenshot.success", new Object[] {var13});
+            return new ChatComponentTranslation("screenshot.success", var13);
         }
         catch (Exception var11)
         {
             logger.warn("Couldn\'t save screenshot", var11);
-            return new ChatComponentTranslation("screenshot.failure", new Object[] {var11.getMessage()});
+            return new ChatComponentTranslation("screenshot.failure", var11.getMessage());
         }
     }
 

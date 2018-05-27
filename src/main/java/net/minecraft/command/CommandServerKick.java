@@ -50,17 +50,17 @@ public class CommandServerKick extends CommandBase
 
                 if (var5)
                 {
-                    func_152373_a(p_71515_1_, this, "commands.kick.success.reason", new Object[] {var3.getCommandSenderName(), var4});
+                    func_152373_a(p_71515_1_, this, "commands.kick.success.reason", var3.getCommandSenderName(), var4);
                 }
                 else
                 {
-                    func_152373_a(p_71515_1_, this, "commands.kick.success", new Object[] {var3.getCommandSenderName()});
+                    func_152373_a(p_71515_1_, this, "commands.kick.success", var3.getCommandSenderName());
                 }
             }
         }
         else
         {
-            throw new WrongUsageException("commands.kick.usage", new Object[0]);
+            throw new WrongUsageException("commands.kick.usage");
         }
     }
 

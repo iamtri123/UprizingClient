@@ -16,8 +16,8 @@ public class HttpPipelineConnection
     private String host;
     private int port;
     private Proxy proxy;
-    private List<HttpPipelineRequest> listRequests;
-    private List<HttpPipelineRequest> listRequestsSend;
+    private final List<HttpPipelineRequest> listRequests;
+    private final List<HttpPipelineRequest> listRequestsSend;
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;
@@ -372,7 +372,6 @@ public class HttpPipelineConnection
             }
             catch (IOException var3)
             {
-                ;
             }
 
             this.socket = null;
@@ -404,7 +403,7 @@ public class HttpPipelineConnection
 
     public synchronized boolean isClosed()
     {
-        return this.terminated ? true : this.countRequests >= this.keepaliveMaxCount;
+        return this.terminated || this.countRequests >= this.keepaliveMaxCount;
     }
 
     public int getCountRequests()

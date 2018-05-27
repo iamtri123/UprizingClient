@@ -12,7 +12,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class MapGenNetherBridge extends MapGenStructure
 {
-    private List spawnList = new ArrayList();
+    private final List spawnList = new ArrayList();
     private static final String __OBFID = "CL_00000451";
 
     public MapGenNetherBridge()
@@ -39,7 +39,7 @@ public class MapGenNetherBridge extends MapGenStructure
         int var4 = p_75047_2_ >> 4;
         this.rand.setSeed((long)(var3 ^ var4 << 4) ^ this.worldObj.getSeed());
         this.rand.nextInt();
-        return this.rand.nextInt(3) != 0 ? false : (p_75047_1_ != (var3 << 4) + 4 + this.rand.nextInt(8) ? false : p_75047_2_ == (var4 << 4) + 4 + this.rand.nextInt(8));
+        return this.rand.nextInt(3) == 0 && (p_75047_1_ == (var3 << 4) + 4 + this.rand.nextInt(8) && p_75047_2_ == (var4 << 4) + 4 + this.rand.nextInt(8));
     }
 
     protected StructureStart getStructureStart(int p_75049_1_, int p_75049_2_)

@@ -8,11 +8,11 @@ import net.minecraft.world.World;
 
 public class WorldGenMinable extends WorldGenerator
 {
-    private Block field_150519_a;
+    private final Block field_150519_a;
 
     /** The number of blocks to generate. */
-    private int numberOfBlocks;
-    private Block field_150518_c;
+    private final int numberOfBlocks;
+    private final Block field_150518_c;
     private static final String __OBFID = "CL_00000426";
 
     public WorldGenMinable(Block p_i45459_1_, int p_i45459_2_)

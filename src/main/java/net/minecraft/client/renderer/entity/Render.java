@@ -29,7 +29,7 @@ public abstract class Render
      * Determines the darkness of the object's shadow. Higher value makes a darker shadow.
      */
     protected float shadowOpaque = 1.0F;
-    private boolean field_147908_f = false;
+    private final boolean field_147908_f = false;
     private static final String __OBFID = "CL_00000992";
 
     /**

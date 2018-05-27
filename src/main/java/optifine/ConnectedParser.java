@@ -150,7 +150,7 @@ public class ConnectedParser
         else
         {
             String part1 = parts[1];
-            return part1.length() < 1 ? false : (this.startsWithDigit(part1) ? false : !part1.contains("="));
+            return part1.length() >= 1 && (!this.startsWithDigit(part1) && !part1.contains("="));
         }
     }
 
@@ -214,7 +214,7 @@ public class ConnectedParser
             }
             else
             {
-                Block[] blocks = new Block[] {block};
+                Block[] blocks = {block};
                 return blocks;
             }
         }
@@ -500,7 +500,7 @@ public class ConnectedParser
 
     public static boolean parseBoolean(String str)
     {
-        return str == null ? false : str.toLowerCase().equals("true");
+        return str != null && str.toLowerCase().equals("true");
     }
 
     public static int parseColor(String str, int defVal)

@@ -50,7 +50,7 @@ public class C14PacketTabComplete extends Packet
      */
     public String serialize()
     {
-        return String.format("message=\'%s\'", new Object[] {this.field_149420_a});
+        return String.format("message=\'%s\'", this.field_149420_a);
     }
 
     public void processPacket(INetHandler p_148833_1_)

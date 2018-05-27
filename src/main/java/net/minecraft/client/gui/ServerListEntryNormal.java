@@ -33,7 +33,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
     private long field_148298_f;
     private String field_148299_g;
     private DynamicTexture field_148305_h;
-    private ResourceLocation field_148306_i;
+    private final ResourceLocation field_148306_i;
     private static final String __OBFID = "CL_00000817";
 
     protected ServerListEntryNormal(GuiMultiplayer p_i45048_1_, ServerData p_i45048_2_)
@@ -198,8 +198,8 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
                 try
                 {
                     var1 = ImageIO.read(new ByteBufInputStream(var3));
-                    Validate.validState(var1.getWidth() == 64, "Must be 64 pixels wide", new Object[0]);
-                    Validate.validState(var1.getHeight() == 64, "Must be 64 pixels high", new Object[0]);
+                    Validate.validState(var1.getWidth() == 64, "Must be 64 pixels wide");
+                    Validate.validState(var1.getHeight() == 64, "Must be 64 pixels high");
                     break label74;
                 }
                 catch (Exception var8)

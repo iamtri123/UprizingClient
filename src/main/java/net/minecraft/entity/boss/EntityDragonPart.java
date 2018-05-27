@@ -45,7 +45,7 @@ public class EntityDragonPart extends Entity
      */
     public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
     {
-        return this.isEntityInvulnerable() ? false : this.entityDragonObj.attackEntityFromPart(this, p_70097_1_, p_70097_2_);
+        return !this.isEntityInvulnerable() && this.entityDragonObj.attackEntityFromPart(this, p_70097_1_, p_70097_2_);
     }
 
     /**

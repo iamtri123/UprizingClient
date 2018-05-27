@@ -29,10 +29,10 @@ import org.lwjgl.opengl.GL12;
 public class RenderItem extends Render
 {
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-    private RenderBlocks field_147913_i = new RenderBlocks();
+    private final RenderBlocks field_147913_i = new RenderBlocks();
 
     /** The RNG used in RenderItem (for bobbing itemstacks on the ground) */
-    private Random random = new Random();
+    private final Random random = new Random();
     public boolean renderWithColor = true;
 
     /** Defines the zLevel of rendering of item on GUI. */

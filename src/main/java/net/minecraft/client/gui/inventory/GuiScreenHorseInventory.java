@@ -10,9 +10,9 @@ import org.lwjgl.opengl.GL11;
 public class GuiScreenHorseInventory extends GuiContainer
 {
     private static final ResourceLocation field_147031_u = new ResourceLocation("textures/gui/container/horse.png");
-    private IInventory field_147030_v;
-    private IInventory field_147029_w;
-    private EntityHorse field_147034_x;
+    private final IInventory field_147030_v;
+    private final IInventory field_147029_w;
+    private final EntityHorse field_147034_x;
     private float field_147033_y;
     private float field_147032_z;
     private static final String __OBFID = "CL_00000760";
@@ -28,8 +28,8 @@ public class GuiScreenHorseInventory extends GuiContainer
 
     protected void func_146979_b(int p_146979_1_, int p_146979_2_)
     {
-        this.fontRendererObj.drawString(this.field_147029_w.isInventoryNameLocalized() ? this.field_147029_w.getInventoryName() : I18n.format(this.field_147029_w.getInventoryName(), new Object[0]), 8, 6, 4210752);
-        this.fontRendererObj.drawString(this.field_147030_v.isInventoryNameLocalized() ? this.field_147030_v.getInventoryName() : I18n.format(this.field_147030_v.getInventoryName(), new Object[0]), 8, this.field_147000_g - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(this.field_147029_w.isInventoryNameLocalized() ? this.field_147029_w.getInventoryName() : I18n.format(this.field_147029_w.getInventoryName()), 8, 6, 4210752);
+        this.fontRendererObj.drawString(this.field_147030_v.isInventoryNameLocalized() ? this.field_147030_v.getInventoryName() : I18n.format(this.field_147030_v.getInventoryName()), 8, this.field_147000_g - 96 + 2, 4210752);
     }
 
     protected void func_146976_a(float p_146976_1_, int p_146976_2_, int p_146976_3_)

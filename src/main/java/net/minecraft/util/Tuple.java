@@ -3,10 +3,10 @@ package net.minecraft.util;
 public class Tuple
 {
     /** First Object in the Tuple */
-    private Object first;
+    private final Object first;
 
     /** Second Object in the Tuple */
-    private Object second;
+    private final Object second;
     private static final String __OBFID = "CL_00001502";
 
     public Tuple(Object p_i1555_1_, Object p_i1555_2_)

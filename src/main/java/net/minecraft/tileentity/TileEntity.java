@@ -20,12 +20,12 @@ public class TileEntity
     /**
      * A HashMap storing string names of classes mapping to the actual java.lang.Class type.
      */
-    private static Map nameToClassMap = new HashMap();
+    private static final Map nameToClassMap = new HashMap();
 
     /**
      * A HashMap storing the classes and mapping to the string names (reverse of nameToClassMap).
      */
-    private static Map classToNameMap = new HashMap();
+    private static final Map classToNameMap = new HashMap();
 
     /** the instance of the world the tile entity is in. */
     protected World worldObj;
@@ -251,7 +251,7 @@ public class TileEntity
 
                 try
                 {
-                    return String.format("ID #%d (%s // %s)", new Object[] {Integer.valueOf(var1), Block.getBlockById(var1).getUnlocalizedName(), Block.getBlockById(var1).getClass().getCanonicalName()});
+                    return String.format("ID #%d (%s // %s)", Integer.valueOf(var1), Block.getBlockById(var1).getUnlocalizedName(), Block.getBlockById(var1).getClass().getCanonicalName());
                 }
                 catch (Throwable var3)
                 {
@@ -273,7 +273,7 @@ public class TileEntity
                 else
                 {
                     String var2 = String.format("%4s", new Object[] {Integer.toBinaryString(var1)}).replace(" ", "0");
-                    return String.format("%1$d / 0x%1$X / 0b%2$s", new Object[] {Integer.valueOf(var1), var2});
+                    return String.format("%1$d / 0x%1$X / 0b%2$s", Integer.valueOf(var1), var2);
                 }
             }
         });

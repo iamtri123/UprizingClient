@@ -144,7 +144,7 @@ public class OldServerPinger
                     p_147224_1_.func_147407_a((String)null);
                 }
 
-                var3.scheduleOutboundPacket(new C01PacketPing(Minecraft.getSystemTime()), new GenericFutureListener[0]);
+                var3.scheduleOutboundPacket(new C01PacketPing(Minecraft.getSystemTime()));
                 this.field_147403_d = true;
             }
             public void handlePong(S01PacketPong p_147398_1_)
@@ -176,8 +176,8 @@ public class OldServerPinger
 
         try
         {
-            var3.scheduleOutboundPacket(new C00Handshake(5, var2.getIP(), var2.getPort(), EnumConnectionState.STATUS), new GenericFutureListener[0]);
-            var3.scheduleOutboundPacket(new C00PacketServerQuery(), new GenericFutureListener[0]);
+            var3.scheduleOutboundPacket(new C00Handshake(5, var2.getIP(), var2.getPort(), EnumConnectionState.STATUS));
+            var3.scheduleOutboundPacket(new C00PacketServerQuery());
         }
         catch (Throwable var5)
         {
@@ -199,7 +199,6 @@ public class OldServerPinger
                 }
                 catch (ChannelException var4)
                 {
-                    ;
                 }
 
                 try
@@ -208,10 +207,9 @@ public class OldServerPinger
                 }
                 catch (ChannelException var3)
                 {
-                    ;
                 }
 
-                p_initChannel_1_.pipeline().addLast(new ChannelHandler[] {new SimpleChannelInboundHandler()
+                p_initChannel_1_.pipeline().addLast(new SimpleChannelInboundHandler()
                     {
                         private static final String __OBFID = "CL_00000895";
                         public void channelActive(ChannelHandlerContext p_channelActive_1_) throws Exception
@@ -291,8 +289,7 @@ public class OldServerPinger
                         {
                             this.channelRead0(p_channelRead0_1_, (ByteBuf)p_channelRead0_2_);
                         }
-                    }
-                });
+                    });
             }
         })).channel(NioSocketChannel.class)).connect(var2.getIP(), var2.getPort());
     }

@@ -39,7 +39,7 @@ public interface IEntitySelector
      */
     boolean isEntityApplicable(Entity p_82704_1_);
 
-    public static class ArmoredMob implements IEntitySelector
+    class ArmoredMob implements IEntitySelector
     {
         private final ItemStack field_96567_c;
         private static final String __OBFID = "CL_00001543";
@@ -62,7 +62,7 @@ public interface IEntitySelector
             else
             {
                 EntityLivingBase var2 = (EntityLivingBase)p_82704_1_;
-                return var2.getEquipmentInSlot(EntityLiving.getArmorPosition(this.field_96567_c)) != null ? false : (var2 instanceof EntityLiving ? ((EntityLiving)var2).canPickUpLoot() : var2 instanceof EntityPlayer);
+                return var2.getEquipmentInSlot(EntityLiving.getArmorPosition(this.field_96567_c)) == null && (var2 instanceof EntityLiving ? ((EntityLiving) var2).canPickUpLoot() : var2 instanceof EntityPlayer);
             }
         }
     }

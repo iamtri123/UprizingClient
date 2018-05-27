@@ -122,7 +122,6 @@ public class SkinManager
                 }
                 catch (InsecureTextureException var3)
                 {
-                    ;
                 }
 
                 if (var1.isEmpty() && p_152790_1_.getId().equals(Minecraft.getMinecraft().getSession().func_148256_e().getId()))

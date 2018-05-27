@@ -81,7 +81,6 @@ public class NetworkSystem
                     }
                     catch (ChannelException var4)
                     {
-                        ;
                     }
 
                     try
@@ -90,7 +89,6 @@ public class NetworkSystem
                     }
                     catch (ChannelException var3)
                     {
-                        ;
                     }
 
                     p_initChannel_1_.pipeline().addLast("timeout", new ReadTimeoutHandler(30)).addLast("legacy_query", new PingResponseHandler(NetworkSystem.this)).addLast("splitter", new MessageDeserializer2()).addLast("decoder", new MessageDeserializer(NetworkManager.field_152462_h)).addLast("prepender", new MessageSerializer2()).addLast("encoder", new MessageSerializer(NetworkManager.field_152462_h));
@@ -199,15 +197,14 @@ public class NetworkSystem
 
                         logger.warn("Failed to handle packet for " + var3.getSocketAddress(), var8);
                         final ChatComponentText var5 = new ChatComponentText("Internal server error");
-                        var3.scheduleOutboundPacket(new S40PacketDisconnect(var5), new GenericFutureListener[] {new GenericFutureListener()
+                        var3.scheduleOutboundPacket(new S40PacketDisconnect(var5), new GenericFutureListener()
                             {
                                 private static final String __OBFID = "CL_00001451";
                                 public void operationComplete(Future p_operationComplete_1_)
                                 {
                                     var3.closeChannel(var5);
                                 }
-                            }
-                        });
+                            });
                         var3.disableAutoRead();
                     }
                 }

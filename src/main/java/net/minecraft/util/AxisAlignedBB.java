@@ -265,7 +265,7 @@ public class AxisAlignedBB
      */
     public boolean intersectsWith(AxisAlignedBB p_72326_1_)
     {
-        return p_72326_1_.maxX > this.minX && p_72326_1_.minX < this.maxX ? (p_72326_1_.maxY > this.minY && p_72326_1_.minY < this.maxY ? p_72326_1_.maxZ > this.minZ && p_72326_1_.minZ < this.maxZ : false) : false;
+        return (p_72326_1_.maxX > this.minX && p_72326_1_.minX < this.maxX) && ((p_72326_1_.maxY > this.minY && p_72326_1_.minY < this.maxY) && (p_72326_1_.maxZ > this.minZ && p_72326_1_.minZ < this.maxZ));
     }
 
     /**
@@ -287,7 +287,7 @@ public class AxisAlignedBB
      */
     public boolean isVecInside(Vec3 p_72318_1_)
     {
-        return p_72318_1_.xCoord > this.minX && p_72318_1_.xCoord < this.maxX ? (p_72318_1_.yCoord > this.minY && p_72318_1_.yCoord < this.maxY ? p_72318_1_.zCoord > this.minZ && p_72318_1_.zCoord < this.maxZ : false) : false;
+        return (p_72318_1_.xCoord > this.minX && p_72318_1_.xCoord < this.maxX) && ((p_72318_1_.yCoord > this.minY && p_72318_1_.yCoord < this.maxY) && (p_72318_1_.zCoord > this.minZ && p_72318_1_.zCoord < this.maxZ));
     }
 
     /**
@@ -441,7 +441,7 @@ public class AxisAlignedBB
      */
     private boolean isVecInYZ(Vec3 p_72333_1_)
     {
-        return p_72333_1_ == null ? false : p_72333_1_.yCoord >= this.minY && p_72333_1_.yCoord <= this.maxY && p_72333_1_.zCoord >= this.minZ && p_72333_1_.zCoord <= this.maxZ;
+        return p_72333_1_ != null && (p_72333_1_.yCoord >= this.minY && p_72333_1_.yCoord <= this.maxY && p_72333_1_.zCoord >= this.minZ && p_72333_1_.zCoord <= this.maxZ);
     }
 
     /**
@@ -449,7 +449,7 @@ public class AxisAlignedBB
      */
     private boolean isVecInXZ(Vec3 p_72315_1_)
     {
-        return p_72315_1_ == null ? false : p_72315_1_.xCoord >= this.minX && p_72315_1_.xCoord <= this.maxX && p_72315_1_.zCoord >= this.minZ && p_72315_1_.zCoord <= this.maxZ;
+        return p_72315_1_ != null && (p_72315_1_.xCoord >= this.minX && p_72315_1_.xCoord <= this.maxX && p_72315_1_.zCoord >= this.minZ && p_72315_1_.zCoord <= this.maxZ);
     }
 
     /**
@@ -457,7 +457,7 @@ public class AxisAlignedBB
      */
     private boolean isVecInXY(Vec3 p_72319_1_)
     {
-        return p_72319_1_ == null ? false : p_72319_1_.xCoord >= this.minX && p_72319_1_.xCoord <= this.maxX && p_72319_1_.yCoord >= this.minY && p_72319_1_.yCoord <= this.maxY;
+        return p_72319_1_ != null && (p_72319_1_.xCoord >= this.minX && p_72319_1_.xCoord <= this.maxX && p_72319_1_.yCoord >= this.minY && p_72319_1_.yCoord <= this.maxY);
     }
 
     /**

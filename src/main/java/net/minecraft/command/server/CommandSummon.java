@@ -41,7 +41,7 @@ public class CommandSummon extends CommandBase
     {
         if (p_71515_2_.length < 1)
         {
-            throw new WrongUsageException("commands.summon.usage", new Object[0]);
+            throw new WrongUsageException("commands.summon.usage");
         }
         else
         {
@@ -61,7 +61,7 @@ public class CommandSummon extends CommandBase
 
             if (!var10.blockExists((int)var4, (int)var6, (int)var8))
             {
-                func_152373_a(p_71515_1_, this, "commands.summon.outOfWorld", new Object[0]);
+                func_152373_a(p_71515_1_, this, "commands.summon.outOfWorld");
             }
             else
             {
@@ -78,7 +78,7 @@ public class CommandSummon extends CommandBase
 
                         if (!(var14 instanceof NBTTagCompound))
                         {
-                            func_152373_a(p_71515_1_, this, "commands.summon.tagError", new Object[] {"Not a valid tag"});
+                            func_152373_a(p_71515_1_, this, "commands.summon.tagError", "Not a valid tag");
                             return;
                         }
 
@@ -87,7 +87,7 @@ public class CommandSummon extends CommandBase
                     }
                     catch (NBTException var17)
                     {
-                        func_152373_a(p_71515_1_, this, "commands.summon.tagError", new Object[] {var17.getMessage()});
+                        func_152373_a(p_71515_1_, this, "commands.summon.tagError", var17.getMessage());
                         return;
                     }
                 }
@@ -97,7 +97,7 @@ public class CommandSummon extends CommandBase
 
                 if (var18 == null)
                 {
-                    func_152373_a(p_71515_1_, this, "commands.summon.failed", new Object[0]);
+                    func_152373_a(p_71515_1_, this, "commands.summon.failed");
                 }
                 else
                 {
@@ -125,7 +125,7 @@ public class CommandSummon extends CommandBase
                         var19 = var16;
                     }
 
-                    func_152373_a(p_71515_1_, this, "commands.summon.success", new Object[0]);
+                    func_152373_a(p_71515_1_, this, "commands.summon.success");
                 }
             }
         }

@@ -48,7 +48,7 @@ public class RangeListInt
                 sb.append(", ");
             }
 
-            sb.append(ri.toString());
+            sb.append(ri);
         }
 
         sb.append("]");

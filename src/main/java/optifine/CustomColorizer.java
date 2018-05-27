@@ -45,8 +45,8 @@ public class CustomColorizer
     private static int[] underwaterColors = null;
     private static float[][][] lightMapsColorsRgb = (float[][][])null;
     private static int[] lightMapsHeight = null;
-    private static float[][] sunRgbs = new float[16][3];
-    private static float[][] torchRgbs = new float[16][3];
+    private static final float[][] sunRgbs = new float[16][3];
+    private static final float[][] torchRgbs = new float[16][3];
     private static int[] redstoneColors = null;
     private static int[] stemColors = null;
     private static int[] myceliumParticleColors = null;
@@ -61,7 +61,7 @@ public class CustomColorizer
     private static final int TYPE_NONE = 0;
     private static final int TYPE_GRASS = 1;
     private static final int TYPE_FOLIAGE = 2;
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     public static void update()
     {
@@ -93,30 +93,30 @@ public class CustomColorizer
         String mcpColormap = "mcpatcher/colormap/";
         grassColors = getCustomColors("textures/colormap/grass.png", 65536);
         foliageColors = getCustomColors("textures/colormap/foliage.png", 65536);
-        String[] waterPaths = new String[] {"water.png", "watercolorX.png"};
+        String[] waterPaths = {"water.png", "watercolorX.png"};
         waterColors = getCustomColors(mcpColormap, waterPaths, 65536);
 
         if (Config.isCustomColors())
         {
-            String[] pinePaths = new String[] {"pine.png", "pinecolor.png"};
+            String[] pinePaths = {"pine.png", "pinecolor.png"};
             foliagePineColors = getCustomColors(mcpColormap, pinePaths, 65536);
-            String[] birchPaths = new String[] {"birch.png", "birchcolor.png"};
+            String[] birchPaths = {"birch.png", "birchcolor.png"};
             foliageBirchColors = getCustomColors(mcpColormap, birchPaths, 65536);
-            String[] swampGrassPaths = new String[] {"swampgrass.png", "swampgrasscolor.png"};
+            String[] swampGrassPaths = {"swampgrass.png", "swampgrasscolor.png"};
             swampGrassColors = getCustomColors(mcpColormap, swampGrassPaths, 65536);
-            String[] swampFoliagePaths = new String[] {"swampfoliage.png", "swampfoliagecolor.png"};
+            String[] swampFoliagePaths = {"swampfoliage.png", "swampfoliagecolor.png"};
             swampFoliageColors = getCustomColors(mcpColormap, swampFoliagePaths, 65536);
-            String[] sky0Paths = new String[] {"sky0.png", "skycolor0.png"};
+            String[] sky0Paths = {"sky0.png", "skycolor0.png"};
             skyColors = getCustomColors(mcpColormap, sky0Paths, 65536);
-            String[] fog0Paths = new String[] {"fog0.png", "fogcolor0.png"};
+            String[] fog0Paths = {"fog0.png", "fogcolor0.png"};
             fogColors = getCustomColors(mcpColormap, fog0Paths, 65536);
-            String[] underwaterPaths = new String[] {"underwater.png", "underwatercolor.png"};
+            String[] underwaterPaths = {"underwater.png", "underwatercolor.png"};
             underwaterColors = getCustomColors(mcpColormap, underwaterPaths, 65536);
-            String[] redstonePaths = new String[] {"redstone.png", "redstonecolor.png"};
+            String[] redstonePaths = {"redstone.png", "redstonecolor.png"};
             redstoneColors = getCustomColors(mcpColormap, redstonePaths, 16);
-            String[] stemPaths = new String[] {"stem.png", "stemcolor.png"};
+            String[] stemPaths = {"stem.png", "stemcolor.png"};
             stemColors = getCustomColors(mcpColormap, stemPaths, 8);
-            String[] myceliumPaths = new String[] {"myceliumparticle.png", "myceliumparticlecolor.png"};
+            String[] myceliumPaths = {"myceliumparticle.png", "myceliumparticlecolor.png"};
             myceliumParticleColors = getCustomColors(mcpColormap, myceliumPaths, -1);
             int[][] lightMapsColors = new int[3][];
             lightMapsColorsRgb = new float[3][][];

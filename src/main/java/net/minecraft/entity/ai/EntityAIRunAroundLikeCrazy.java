@@ -7,8 +7,8 @@ import net.minecraft.util.Vec3;
 
 public class EntityAIRunAroundLikeCrazy extends EntityAIBase
 {
-    private EntityHorse horseHost;
-    private double field_111178_b;
+    private final EntityHorse horseHost;
+    private final double field_111178_b;
     private double field_111179_c;
     private double field_111176_d;
     private double field_111177_e;

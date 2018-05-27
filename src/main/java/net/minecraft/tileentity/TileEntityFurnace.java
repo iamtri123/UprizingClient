@@ -19,9 +19,9 @@ import net.minecraft.nbt.NBTTagList;
 
 public class TileEntityFurnace extends TileEntity implements ISidedInventory
 {
-    private static final int[] field_145962_k = new int[] {0};
-    private static final int[] field_145959_l = new int[] {2, 1};
-    private static final int[] field_145960_m = new int[] {1};
+    private static final int[] field_145962_k = {0};
+    private static final int[] field_145959_l = {2, 1};
+    private static final int[] field_145960_m = {1};
     private ItemStack[] field_145957_n = new ItemStack[3];
     public int field_145956_a;
     public int field_145963_i;
@@ -286,7 +286,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
         else
         {
             ItemStack var1 = FurnaceRecipes.smelting().func_151395_a(this.field_145957_n[0]);
-            return var1 == null ? false : (this.field_145957_n[2] == null ? true : (!this.field_145957_n[2].isItemEqual(var1) ? false : (this.field_145957_n[2].stackSize < this.getInventoryStackLimit() && this.field_145957_n[2].stackSize < this.field_145957_n[2].getMaxStackSize() ? true : this.field_145957_n[2].stackSize < var1.getMaxStackSize())));
+            return var1 != null && (this.field_145957_n[2] == null || (this.field_145957_n[2].isItemEqual(var1) && (this.field_145957_n[2].stackSize < this.getInventoryStackLimit() && this.field_145957_n[2].stackSize < this.field_145957_n[2].getMaxStackSize() || this.field_145957_n[2].stackSize < var1.getMaxStackSize())));
         }
     }
 
@@ -358,7 +358,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      */
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
-        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) != this ? false : p_70300_1_.getDistanceSq((double)this.field_145851_c + 0.5D, (double)this.field_145848_d + 0.5D, (double)this.field_145849_e + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) == this && p_70300_1_.getDistanceSq((double) this.field_145851_c + 0.5D, (double) this.field_145848_d + 0.5D, (double) this.field_145849_e + 0.5D) <= 64.0D;
     }
 
     public void openInventory() {}
@@ -370,7 +370,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      */
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
     {
-        return p_94041_1_ == 2 ? false : (p_94041_1_ == 1 ? func_145954_b(p_94041_2_) : true);
+        return p_94041_1_ != 2 && (p_94041_1_ != 1 || func_145954_b(p_94041_2_));
     }
 
     /**

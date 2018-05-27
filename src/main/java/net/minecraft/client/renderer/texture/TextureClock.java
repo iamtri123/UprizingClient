@@ -35,7 +35,6 @@ public class TextureClock extends TextureAtlasSprite
 
             for (var7 = var2 - this.field_94239_h; var7 < -0.5D; ++var7)
             {
-                ;
             }
 
             while (var7 >= 0.5D)
@@ -60,7 +59,6 @@ public class TextureClock extends TextureAtlasSprite
 
             for (var6 = (int)((this.field_94239_h + 1.0D) * (double)this.framesTextureData.size()) % this.framesTextureData.size(); var6 < 0; var6 = (var6 + this.framesTextureData.size()) % this.framesTextureData.size())
             {
-                ;
             }
 
             if (var6 != this.frameCounter)

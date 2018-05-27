@@ -16,7 +16,7 @@ public class SlotCrafting extends Slot
     private final IInventory craftMatrix;
 
     /** The player that is using the GUI where this slot resides. */
-    private EntityPlayer thePlayer;
+    private final EntityPlayer thePlayer;
 
     /**
      * The number of items that have been crafted so far. Gets passed to ItemStack.onCrafting before being reset.

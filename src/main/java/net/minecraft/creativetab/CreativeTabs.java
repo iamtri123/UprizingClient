@@ -56,7 +56,7 @@ public abstract class CreativeTabs
         {
             return Items.lava_bucket;
         }
-    }).func_111229_a(new EnumEnchantmentType[] {EnumEnchantmentType.all});
+    }).func_111229_a(EnumEnchantmentType.all);
     public static final CreativeTabs tabAllSearch = (new CreativeTabs(5, "search")
     {
         private static final String __OBFID = "CL_00000015";
@@ -80,7 +80,7 @@ public abstract class CreativeTabs
         {
             return Items.iron_axe;
         }
-    }).func_111229_a(new EnumEnchantmentType[] {EnumEnchantmentType.digger, EnumEnchantmentType.fishing_rod, EnumEnchantmentType.breakable});
+    }).func_111229_a(EnumEnchantmentType.digger, EnumEnchantmentType.fishing_rod, EnumEnchantmentType.breakable);
     public static final CreativeTabs tabCombat = (new CreativeTabs(8, "combat")
     {
         private static final String __OBFID = "CL_00000018";
@@ -88,7 +88,7 @@ public abstract class CreativeTabs
         {
             return Items.golden_sword;
         }
-    }).func_111229_a(new EnumEnchantmentType[] {EnumEnchantmentType.armor, EnumEnchantmentType.armor_feet, EnumEnchantmentType.armor_head, EnumEnchantmentType.armor_legs, EnumEnchantmentType.armor_torso, EnumEnchantmentType.bow, EnumEnchantmentType.weapon});
+    }).func_111229_a(EnumEnchantmentType.armor, EnumEnchantmentType.armor_feet, EnumEnchantmentType.armor_head, EnumEnchantmentType.armor_legs, EnumEnchantmentType.armor_torso, EnumEnchantmentType.bow, EnumEnchantmentType.weapon);
     public static final CreativeTabs tabBrewing = new CreativeTabs(9, "brewing")
     {
         private static final String __OBFID = "CL_00000007";

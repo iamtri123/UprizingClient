@@ -25,11 +25,11 @@ public class CommandPublishLocalServer extends CommandBase
 
         if (var3 != null)
         {
-            func_152373_a(p_71515_1_, this, "commands.publish.started", new Object[] {var3});
+            func_152373_a(p_71515_1_, this, "commands.publish.started", var3);
         }
         else
         {
-            func_152373_a(p_71515_1_, this, "commands.publish.failed", new Object[0]);
+            func_152373_a(p_71515_1_, this, "commands.publish.failed");
         }
     }
 }

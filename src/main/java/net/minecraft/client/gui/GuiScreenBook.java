@@ -30,8 +30,8 @@ public class GuiScreenBook extends GuiScreen
     private boolean field_146481_r;
     private boolean field_146480_s;
     private int field_146479_t;
-    private int field_146478_u = 192;
-    private int field_146477_v = 192;
+    private final int field_146478_u = 192;
+    private final int field_146477_v = 192;
     private int field_146476_w = 1;
     private int field_146484_x;
     private NBTTagList field_146483_y;
@@ -94,14 +94,14 @@ public class GuiScreenBook extends GuiScreen
 
         if (this.field_146475_i)
         {
-            this.buttonList.add(this.field_146465_D = new GuiButton(3, this.width / 2 - 100, 4 + this.field_146477_v, 98, 20, I18n.format("book.signButton", new Object[0])));
-            this.buttonList.add(this.field_146472_C = new GuiButton(0, this.width / 2 + 2, 4 + this.field_146477_v, 98, 20, I18n.format("gui.done", new Object[0])));
-            this.buttonList.add(this.field_146467_E = new GuiButton(5, this.width / 2 - 100, 4 + this.field_146477_v, 98, 20, I18n.format("book.finalizeButton", new Object[0])));
-            this.buttonList.add(this.field_146469_F = new GuiButton(4, this.width / 2 + 2, 4 + this.field_146477_v, 98, 20, I18n.format("gui.cancel", new Object[0])));
+            this.buttonList.add(this.field_146465_D = new GuiButton(3, this.width / 2 - 100, 4 + this.field_146477_v, 98, 20, I18n.format("book.signButton")));
+            this.buttonList.add(this.field_146472_C = new GuiButton(0, this.width / 2 + 2, 4 + this.field_146477_v, 98, 20, I18n.format("gui.done")));
+            this.buttonList.add(this.field_146467_E = new GuiButton(5, this.width / 2 - 100, 4 + this.field_146477_v, 98, 20, I18n.format("book.finalizeButton")));
+            this.buttonList.add(this.field_146469_F = new GuiButton(4, this.width / 2 + 2, 4 + this.field_146477_v, 98, 20, I18n.format("gui.cancel")));
         }
         else
         {
-            this.buttonList.add(this.field_146472_C = new GuiButton(0, this.width / 2 - 100, 4 + this.field_146477_v, 200, 20, I18n.format("gui.done", new Object[0])));
+            this.buttonList.add(this.field_146472_C = new GuiButton(0, this.width / 2 - 100, 4 + this.field_146477_v, 200, 20, I18n.format("gui.done")));
         }
 
         int var1 = (this.width - this.field_146478_u) / 2;
@@ -397,20 +397,20 @@ public class GuiScreenBook extends GuiScreen
                 }
             }
 
-            var7 = I18n.format("book.editTitle", new Object[0]);
+            var7 = I18n.format("book.editTitle");
             var8 = this.fontRendererObj.getStringWidth(var7);
             this.fontRendererObj.drawString(var7, var4 + 36 + (116 - var8) / 2, var5 + 16 + 16, 0);
             int var9 = this.fontRendererObj.getStringWidth(var6);
             this.fontRendererObj.drawString(var6, var4 + 36 + (116 - var9) / 2, var5 + 48, 0);
-            String var10 = I18n.format("book.byAuthor", new Object[] {this.field_146468_g.getCommandSenderName()});
+            String var10 = I18n.format("book.byAuthor", this.field_146468_g.getCommandSenderName());
             int var11 = this.fontRendererObj.getStringWidth(var10);
             this.fontRendererObj.drawString(EnumChatFormatting.DARK_GRAY + var10, var4 + 36 + (116 - var11) / 2, var5 + 48 + 10, 0);
-            String var12 = I18n.format("book.finalizeWarning", new Object[0]);
+            String var12 = I18n.format("book.finalizeWarning");
             this.fontRendererObj.drawSplitString(var12, var4 + 36, var5 + 80, 116, 0);
         }
         else
         {
-            var6 = I18n.format("book.pageIndicator", new Object[] {Integer.valueOf(this.field_146484_x + 1), Integer.valueOf(this.field_146476_w)});
+            var6 = I18n.format("book.pageIndicator", Integer.valueOf(this.field_146484_x + 1), Integer.valueOf(this.field_146476_w));
             var7 = "";
 
             if (this.field_146483_y != null && this.field_146484_x >= 0 && this.field_146484_x < this.field_146483_y.tagCount())

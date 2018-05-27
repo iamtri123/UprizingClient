@@ -21,7 +21,7 @@ public class NBTTagCompound extends NBTBase
     /**
      * The key-value pairs for the tag. Each key is a UTF string, each value is a tag.
      */
-    private Map tagMap = new HashMap();
+    private final Map tagMap = new HashMap();
     private static final String __OBFID = "CL_00001215";
 
     /**
@@ -188,7 +188,7 @@ public class NBTTagCompound extends NBTBase
     public boolean func_150297_b(String p_150297_1_, int p_150297_2_)
     {
         byte var3 = this.func_150299_b(p_150297_1_);
-        return var3 == p_150297_2_ ? true : (p_150297_2_ != 99 ? false : var3 == 1 || var3 == 2 || var3 == 3 || var3 == 4 || var3 == 5 || var3 == 6);
+        return var3 == p_150297_2_ || (p_150297_2_ == 99 && (var3 == 1 || var3 == 2 || var3 == 3 || var3 == 4 || var3 == 5 || var3 == 6));
     }
 
     /**

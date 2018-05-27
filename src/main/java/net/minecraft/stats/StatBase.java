@@ -20,7 +20,7 @@ public class StatBase
     private final IStatType type;
     private final IScoreObjectiveCriteria field_150957_c;
     private Class field_150956_d;
-    private static NumberFormat numberFormat = NumberFormat.getIntegerInstance(Locale.US);
+    private static final NumberFormat numberFormat = NumberFormat.getIntegerInstance(Locale.US);
     public static IStatType simpleStatType = new IStatType()
     {
         private static final String __OBFID = "CL_00001473";
@@ -29,7 +29,7 @@ public class StatBase
             return StatBase.numberFormat.format((long)p_75843_1_);
         }
     };
-    private static DecimalFormat decimalFormat = new DecimalFormat("########0.00");
+    private static final DecimalFormat decimalFormat = new DecimalFormat("########0.00");
     public static IStatType timeStatType = new IStatType()
     {
         private static final String __OBFID = "CL_00001474";

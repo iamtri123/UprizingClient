@@ -40,7 +40,7 @@ public class GuiStreamUnavailable extends GuiScreen
 
     public GuiStreamUnavailable(GuiScreen p_i46311_1_, GuiStreamUnavailable.Reason p_i46311_2_, List p_i46311_3_)
     {
-        this.field_152324_f = new ChatComponentTranslation("stream.unavailable.title", new Object[0]);
+        this.field_152324_f = new ChatComponentTranslation("stream.unavailable.title");
         this.field_152323_r = Lists.newArrayList();
         this.field_152325_g = p_i46311_1_;
         this.field_152326_h = p_i46311_2_;
@@ -71,12 +71,12 @@ public class GuiStreamUnavailable extends GuiScreen
 
         if (this.field_152326_h.func_152559_b() != null)
         {
-            this.buttonList.add(new GuiButton(0, this.width / 2 - 155, this.height - 50, 150, 20, I18n.format("gui.cancel", new Object[0])));
-            this.buttonList.add(new GuiButton(1, this.width / 2 - 155 + 160, this.height - 50, 150, 20, I18n.format(this.field_152326_h.func_152559_b().getFormattedText(), new Object[0])));
+            this.buttonList.add(new GuiButton(0, this.width / 2 - 155, this.height - 50, 150, 20, I18n.format("gui.cancel")));
+            this.buttonList.add(new GuiButton(1, this.width / 2 - 155 + 160, this.height - 50, 150, 20, I18n.format(this.field_152326_h.func_152559_b().getFormattedText())));
         }
         else
         {
-            this.buttonList.add(new GuiButton(0, this.width / 2 - 75, this.height - 50, 150, 20, I18n.format("gui.cancel", new Object[0])));
+            this.buttonList.add(new GuiButton(0, this.width / 2 - 75, this.height - 50, 150, 20, I18n.format("gui.cancel")));
         }
     }
 
@@ -140,8 +140,8 @@ public class GuiStreamUnavailable extends GuiScreen
         try
         {
             Class var2 = Class.forName("java.awt.Desktop");
-            Object var3 = var2.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
-            var2.getMethod("browse", new Class[] {URI.class}).invoke(var3, new Object[] {new URI(p_152320_1_)});
+            Object var3 = var2.getMethod("getDesktop").invoke((Object)null);
+            var2.getMethod("browse", URI.class).invoke(var3, new URI(p_152320_1_));
         }
         catch (Throwable var4)
         {
@@ -157,10 +157,10 @@ public class GuiStreamUnavailable extends GuiScreen
         if (!OpenGlHelper.framebufferSupported)
         {
             ArrayList var3 = Lists.newArrayList();
-            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.version", new Object[] {GL11.glGetString(GL11.GL_VERSION)}));
-            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.blend", new Object[] {Boolean.valueOf(GLContext.getCapabilities().GL_EXT_blend_func_separate)}));
-            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.arb", new Object[] {Boolean.valueOf(GLContext.getCapabilities().GL_ARB_framebuffer_object)}));
-            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.ext", new Object[] {Boolean.valueOf(GLContext.getCapabilities().GL_EXT_framebuffer_object)}));
+            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.version", GL11.glGetString(GL11.GL_VERSION)));
+            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.blend", Boolean.valueOf(GLContext.getCapabilities().GL_EXT_blend_func_separate)));
+            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.arb", Boolean.valueOf(GLContext.getCapabilities().GL_ARB_framebuffer_object)));
+            var3.add(new ChatComponentTranslation("stream.unavailable.no_fbo.ext", Boolean.valueOf(GLContext.getCapabilities().GL_EXT_framebuffer_object)));
             var1.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.NO_FBO, var3));
         }
         else if (var2 instanceof NullStream)
@@ -216,7 +216,7 @@ public class GuiStreamUnavailable extends GuiScreen
         }
         else if (var2.func_152912_E() != null)
         {
-            List var4 = Arrays.asList(new ChatComponentTranslation[] {new ChatComponentTranslation("stream.unavailable.initialization_failure.extra", new Object[]{ErrorCode.getString(var2.func_152912_E())})});
+            List var4 = Arrays.asList(new ChatComponentTranslation("stream.unavailable.initialization_failure.extra", ErrorCode.getString(var2.func_152912_E())));
             var1.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.INITIALIZATION_FAILURE, var4));
         }
         else
@@ -225,32 +225,32 @@ public class GuiStreamUnavailable extends GuiScreen
         }
     }
 
-    public static enum Reason
+    public enum Reason
     {
-        NO_FBO("NO_FBO", 0, new ChatComponentTranslation("stream.unavailable.no_fbo", new Object[0])),
-        LIBRARY_ARCH_MISMATCH("LIBRARY_ARCH_MISMATCH", 1, new ChatComponentTranslation("stream.unavailable.library_arch_mismatch", new Object[0])),
-        LIBRARY_FAILURE("LIBRARY_FAILURE", 2, new ChatComponentTranslation("stream.unavailable.library_failure", new Object[0]), new ChatComponentTranslation("stream.unavailable.report_to_mojang", new Object[0])),
-        UNSUPPORTED_OS_WINDOWS("UNSUPPORTED_OS_WINDOWS", 3, new ChatComponentTranslation("stream.unavailable.not_supported.windows", new Object[0])),
-        UNSUPPORTED_OS_MAC("UNSUPPORTED_OS_MAC", 4, new ChatComponentTranslation("stream.unavailable.not_supported.mac", new Object[0]), new ChatComponentTranslation("stream.unavailable.not_supported.mac.okay", new Object[0])),
-        UNSUPPORTED_OS_OTHER("UNSUPPORTED_OS_OTHER", 5, new ChatComponentTranslation("stream.unavailable.not_supported.other", new Object[0])),
-        ACCOUNT_NOT_MIGRATED("ACCOUNT_NOT_MIGRATED", 6, new ChatComponentTranslation("stream.unavailable.account_not_migrated", new Object[0]), new ChatComponentTranslation("stream.unavailable.account_not_migrated.okay", new Object[0])),
-        ACCOUNT_NOT_BOUND("ACCOUNT_NOT_BOUND", 7, new ChatComponentTranslation("stream.unavailable.account_not_bound", new Object[0]), new ChatComponentTranslation("stream.unavailable.account_not_bound.okay", new Object[0])),
-        FAILED_TWITCH_AUTH("FAILED_TWITCH_AUTH", 8, new ChatComponentTranslation("stream.unavailable.failed_auth", new Object[0]), new ChatComponentTranslation("stream.unavailable.failed_auth.okay", new Object[0])),
-        FAILED_TWITCH_AUTH_ERROR("FAILED_TWITCH_AUTH_ERROR", 9, new ChatComponentTranslation("stream.unavailable.failed_auth_error", new Object[0])),
-        INITIALIZATION_FAILURE("INITIALIZATION_FAILURE", 10, new ChatComponentTranslation("stream.unavailable.initialization_failure", new Object[0]), new ChatComponentTranslation("stream.unavailable.report_to_mojang", new Object[0])),
-        UNKNOWN("UNKNOWN", 11, new ChatComponentTranslation("stream.unavailable.unknown", new Object[0]), new ChatComponentTranslation("stream.unavailable.report_to_mojang", new Object[0]));
+        NO_FBO("NO_FBO", 0, new ChatComponentTranslation("stream.unavailable.no_fbo")),
+        LIBRARY_ARCH_MISMATCH("LIBRARY_ARCH_MISMATCH", 1, new ChatComponentTranslation("stream.unavailable.library_arch_mismatch")),
+        LIBRARY_FAILURE("LIBRARY_FAILURE", 2, new ChatComponentTranslation("stream.unavailable.library_failure"), new ChatComponentTranslation("stream.unavailable.report_to_mojang")),
+        UNSUPPORTED_OS_WINDOWS("UNSUPPORTED_OS_WINDOWS", 3, new ChatComponentTranslation("stream.unavailable.not_supported.windows")),
+        UNSUPPORTED_OS_MAC("UNSUPPORTED_OS_MAC", 4, new ChatComponentTranslation("stream.unavailable.not_supported.mac"), new ChatComponentTranslation("stream.unavailable.not_supported.mac.okay")),
+        UNSUPPORTED_OS_OTHER("UNSUPPORTED_OS_OTHER", 5, new ChatComponentTranslation("stream.unavailable.not_supported.other")),
+        ACCOUNT_NOT_MIGRATED("ACCOUNT_NOT_MIGRATED", 6, new ChatComponentTranslation("stream.unavailable.account_not_migrated"), new ChatComponentTranslation("stream.unavailable.account_not_migrated.okay")),
+        ACCOUNT_NOT_BOUND("ACCOUNT_NOT_BOUND", 7, new ChatComponentTranslation("stream.unavailable.account_not_bound"), new ChatComponentTranslation("stream.unavailable.account_not_bound.okay")),
+        FAILED_TWITCH_AUTH("FAILED_TWITCH_AUTH", 8, new ChatComponentTranslation("stream.unavailable.failed_auth"), new ChatComponentTranslation("stream.unavailable.failed_auth.okay")),
+        FAILED_TWITCH_AUTH_ERROR("FAILED_TWITCH_AUTH_ERROR", 9, new ChatComponentTranslation("stream.unavailable.failed_auth_error")),
+        INITIALIZATION_FAILURE("INITIALIZATION_FAILURE", 10, new ChatComponentTranslation("stream.unavailable.initialization_failure"), new ChatComponentTranslation("stream.unavailable.report_to_mojang")),
+        UNKNOWN("UNKNOWN", 11, new ChatComponentTranslation("stream.unavailable.unknown"), new ChatComponentTranslation("stream.unavailable.report_to_mojang"));
         private final IChatComponent field_152574_m;
         private final IChatComponent field_152575_n;
 
-        private static final GuiStreamUnavailable.Reason[] $VALUES = new GuiStreamUnavailable.Reason[]{NO_FBO, LIBRARY_ARCH_MISMATCH, LIBRARY_FAILURE, UNSUPPORTED_OS_WINDOWS, UNSUPPORTED_OS_MAC, UNSUPPORTED_OS_OTHER, ACCOUNT_NOT_MIGRATED, ACCOUNT_NOT_BOUND, FAILED_TWITCH_AUTH, FAILED_TWITCH_AUTH_ERROR, INITIALIZATION_FAILURE, UNKNOWN};
+        private static final GuiStreamUnavailable.Reason[] $VALUES = {NO_FBO, LIBRARY_ARCH_MISMATCH, LIBRARY_FAILURE, UNSUPPORTED_OS_WINDOWS, UNSUPPORTED_OS_MAC, UNSUPPORTED_OS_OTHER, ACCOUNT_NOT_MIGRATED, ACCOUNT_NOT_BOUND, FAILED_TWITCH_AUTH, FAILED_TWITCH_AUTH_ERROR, INITIALIZATION_FAILURE, UNKNOWN};
         private static final String __OBFID = "CL_00001838";
 
-        private Reason(String p_i1066_1_, int p_i1066_2_, IChatComponent p_i1066_3_)
+        Reason(String p_i1066_1_, int p_i1066_2_, IChatComponent p_i1066_3_)
         {
             this(p_i1066_1_, p_i1066_2_, p_i1066_3_, (IChatComponent)null);
         }
 
-        private Reason(String p_i1067_1_, int p_i1067_2_, IChatComponent p_i1067_3_, IChatComponent p_i1067_4_)
+        Reason(String p_i1067_1_, int p_i1067_2_, IChatComponent p_i1067_3_, IChatComponent p_i1067_4_)
         {
             this.field_152574_m = p_i1067_3_;
             this.field_152575_n = p_i1067_4_;
@@ -284,7 +284,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var11)
             {
-                ;
             }
 
             try
@@ -293,7 +292,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var10)
             {
-                ;
             }
 
             field_152578_b = new int[Util.EnumOS.values().length];
@@ -304,7 +302,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var9)
             {
-                ;
             }
 
             try
@@ -313,7 +310,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var8)
             {
-                ;
             }
 
             field_152577_a = new int[GuiStreamUnavailable.Reason.values().length];
@@ -324,7 +320,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var7)
             {
-                ;
             }
 
             try
@@ -333,7 +328,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var6)
             {
-                ;
             }
 
             try
@@ -342,7 +336,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var5)
             {
-                ;
             }
 
             try
@@ -351,7 +344,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var4)
             {
-                ;
             }
 
             try
@@ -360,7 +352,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             try
@@ -369,7 +360,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -378,7 +368,6 @@ public class GuiStreamUnavailable extends GuiScreen
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

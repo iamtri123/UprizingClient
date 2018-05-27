@@ -9,7 +9,7 @@ import net.minecraft.util.IIcon;
 
 public class BlockNewLog extends BlockLog
 {
-    public static final String[] field_150169_M = new String[] {"acacia", "big_oak"};
+    public static final String[] field_150169_M = {"acacia", "big_oak"};
     private static final String __OBFID = "CL_00000277";
 
     public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)

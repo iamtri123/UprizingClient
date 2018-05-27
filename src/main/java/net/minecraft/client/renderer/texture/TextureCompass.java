@@ -65,7 +65,6 @@ public class TextureCompass extends TextureAtlasSprite
 
                 for (var17 = var10 - this.currentAngle; var17 < -Math.PI; var17 += (Math.PI * 2D))
                 {
-                    ;
                 }
 
                 while (var17 >= Math.PI)
@@ -92,7 +91,6 @@ public class TextureCompass extends TextureAtlasSprite
 
             for (var18 = (int)((this.currentAngle / (Math.PI * 2D) + 1.0D) * (double)this.framesTextureData.size()) % this.framesTextureData.size(); var18 < 0; var18 = (var18 + this.framesTextureData.size()) % this.framesTextureData.size())
             {
-                ;
             }
 
             if (var18 != this.frameCounter)

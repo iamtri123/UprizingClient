@@ -35,9 +35,9 @@ public class GuiScreenAddServer extends GuiScreen
     {
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 18, I18n.format("addServer.add", new Object[0])));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 18, I18n.format("gui.cancel", new Object[0])));
-        this.buttonList.add(this.field_152176_i = new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, I18n.format("addServer.resourcePack", new Object[0]) + ": " + this.field_146311_h.func_152586_b().func_152589_a().getFormattedText()));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 18, I18n.format("addServer.add")));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 18, I18n.format("gui.cancel")));
+        this.buttonList.add(this.field_152176_i = new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, I18n.format("addServer.resourcePack") + ": " + this.field_146311_h.func_152586_b().func_152589_a().getFormattedText()));
         this.field_146309_g = new GuiTextField(this.fontRendererObj, this.width / 2 - 100, 66, 200, 20);
         this.field_146309_g.setFocused(true);
         this.field_146309_g.setText(this.field_146311_h.serverName);
@@ -62,7 +62,7 @@ public class GuiScreenAddServer extends GuiScreen
             if (p_146284_1_.id == 2)
             {
                 this.field_146311_h.func_152584_a(ServerData.ServerResourceMode.values()[(this.field_146311_h.func_152586_b().ordinal() + 1) % ServerData.ServerResourceMode.values().length]);
-                this.field_152176_i.displayString = I18n.format("addServer.resourcePack", new Object[0]) + ": " + this.field_146311_h.func_152586_b().func_152589_a().getFormattedText();
+                this.field_152176_i.displayString = I18n.format("addServer.resourcePack") + ": " + this.field_146311_h.func_152586_b().func_152589_a().getFormattedText();
             }
             else if (p_146284_1_.id == 1)
             {
@@ -115,9 +115,9 @@ public class GuiScreenAddServer extends GuiScreen
     public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("addServer.title", new Object[0]), this.width / 2, 17, 16777215);
-        this.drawString(this.fontRendererObj, I18n.format("addServer.enterName", new Object[0]), this.width / 2 - 100, 53, 10526880);
-        this.drawString(this.fontRendererObj, I18n.format("addServer.enterIp", new Object[0]), this.width / 2 - 100, 94, 10526880);
+        this.drawCenteredString(this.fontRendererObj, I18n.format("addServer.title"), this.width / 2, 17, 16777215);
+        this.drawString(this.fontRendererObj, I18n.format("addServer.enterName"), this.width / 2 - 100, 53, 10526880);
+        this.drawString(this.fontRendererObj, I18n.format("addServer.enterIp"), this.width / 2 - 100, 94, 10526880);
         this.field_146309_g.drawTextBox();
         this.field_146308_f.drawTextBox();
         super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);

@@ -75,7 +75,7 @@ public abstract class ChatComponentStyle implements IChatComponent
 
     public Iterator iterator()
     {
-        return Iterators.concat(Iterators.forArray(new ChatComponentStyle[] {this}), createDeepCopyIterator(this.siblings));
+        return Iterators.concat(Iterators.forArray(this), createDeepCopyIterator(this.siblings));
     }
 
     /**

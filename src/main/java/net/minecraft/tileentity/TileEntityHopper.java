@@ -198,7 +198,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
      */
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
     {
-        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) != this ? false : p_70300_1_.getDistanceSq((double)this.field_145851_c + 0.5D, (double)this.field_145848_d + 0.5D, (double)this.field_145849_e + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) == this && p_70300_1_.getDistanceSq((double) this.field_145851_c + 0.5D, (double) this.field_145848_d + 0.5D, (double) this.field_145849_e + 0.5D) <= 64.0D;
     }
 
     public void openInventory() {}
@@ -535,7 +535,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
 
     private static boolean func_145885_a(IInventory p_145885_0_, ItemStack p_145885_1_, int p_145885_2_, int p_145885_3_)
     {
-        return !p_145885_0_.isItemValidForSlot(p_145885_2_, p_145885_1_) ? false : !(p_145885_0_ instanceof ISidedInventory) || ((ISidedInventory)p_145885_0_).canInsertItem(p_145885_2_, p_145885_1_, p_145885_3_);
+        return p_145885_0_.isItemValidForSlot(p_145885_2_, p_145885_1_) && (!(p_145885_0_ instanceof ISidedInventory) || ((ISidedInventory) p_145885_0_).canInsertItem(p_145885_2_, p_145885_1_, p_145885_3_));
     }
 
     private static boolean func_145890_b(IInventory p_145890_0_, ItemStack p_145890_1_, int p_145890_2_, int p_145890_3_)
@@ -636,7 +636,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
 
     private static boolean func_145894_a(ItemStack p_145894_0_, ItemStack p_145894_1_)
     {
-        return p_145894_0_.getItem() != p_145894_1_.getItem() ? false : (p_145894_0_.getItemDamage() != p_145894_1_.getItemDamage() ? false : (p_145894_0_.stackSize > p_145894_0_.getMaxStackSize() ? false : ItemStack.areItemStackTagsEqual(p_145894_0_, p_145894_1_)));
+        return p_145894_0_.getItem() == p_145894_1_.getItem() && (p_145894_0_.getItemDamage() == p_145894_1_.getItemDamage() && (p_145894_0_.stackSize <= p_145894_0_.getMaxStackSize() && ItemStack.areItemStackTagsEqual(p_145894_0_, p_145894_1_)));
     }
 
     /**

@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class FileUploadThread extends Thread
 {
-    private String urlString;
-    private Map headers;
-    private byte[] content;
-    private IFileUploadListener listener;
+    private final String urlString;
+    private final Map headers;
+    private final byte[] content;
+    private final IFileUploadListener listener;
 
     public FileUploadThread(String urlString, Map headers, byte[] content, IFileUploadListener listener)
     {

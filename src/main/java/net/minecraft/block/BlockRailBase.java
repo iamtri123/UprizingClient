@@ -205,12 +205,12 @@ public abstract class BlockRailBase extends Block
 
     public class Rail
     {
-        private World field_150660_b;
-        private int field_150661_c;
-        private int field_150658_d;
-        private int field_150659_e;
+        private final World field_150660_b;
+        private final int field_150661_c;
+        private final int field_150658_d;
+        private final int field_150659_e;
         private final boolean field_150656_f;
-        private List field_150657_g = new ArrayList();
+        private final List field_150657_g = new ArrayList();
         private static final String __OBFID = "CL_00000196";
 
         public Rail(World p_i45388_2_, int p_i45388_3_, int p_i45388_4_, int p_i45388_5_)
@@ -310,7 +310,7 @@ public abstract class BlockRailBase extends Block
 
         private boolean func_150646_a(int p_150646_1_, int p_150646_2_, int p_150646_3_)
         {
-            return BlockRailBase.func_150049_b_(this.field_150660_b, p_150646_1_, p_150646_2_, p_150646_3_) ? true : (BlockRailBase.func_150049_b_(this.field_150660_b, p_150646_1_, p_150646_2_ + 1, p_150646_3_) ? true : BlockRailBase.func_150049_b_(this.field_150660_b, p_150646_1_, p_150646_2_ - 1, p_150646_3_));
+            return BlockRailBase.func_150049_b_(this.field_150660_b, p_150646_1_, p_150646_2_, p_150646_3_) || (BlockRailBase.func_150049_b_(this.field_150660_b, p_150646_1_, p_150646_2_ + 1, p_150646_3_) || BlockRailBase.func_150049_b_(this.field_150660_b, p_150646_1_, p_150646_2_ - 1, p_150646_3_));
         }
 
         private BlockRailBase.Rail func_150654_a(ChunkPosition p_150654_1_)
@@ -377,7 +377,7 @@ public abstract class BlockRailBase extends Block
 
         private boolean func_150649_b(BlockRailBase.Rail p_150649_1_)
         {
-            return this.func_150653_a(p_150649_1_) ? true : (this.field_150657_g.size() == 2 ? false : (this.field_150657_g.isEmpty() ? true : true));
+            return this.func_150653_a(p_150649_1_) || (this.field_150657_g.size() != 2 && (true));
         }
 
         private void func_150645_c(BlockRailBase.Rail p_150645_1_)

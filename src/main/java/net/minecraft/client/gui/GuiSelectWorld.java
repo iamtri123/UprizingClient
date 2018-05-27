@@ -29,7 +29,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
     private GuiSelectWorld.List field_146638_t;
     private String field_146637_u;
     private String field_146636_v;
-    private String[] field_146635_w = new String[3];
+    private final String[] field_146635_w = new String[3];
     private boolean field_146643_x;
     private GuiButton field_146642_y;
     private GuiButton field_146641_z;
@@ -47,7 +47,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
      */
     public void initGui()
     {
-        this.field_146628_f = I18n.format("selectWorld.title", new Object[0]);
+        this.field_146628_f = I18n.format("selectWorld.title");
 
         try
         {
@@ -60,11 +60,11 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
             return;
         }
 
-        this.field_146637_u = I18n.format("selectWorld.world", new Object[0]);
-        this.field_146636_v = I18n.format("selectWorld.conversion", new Object[0]);
-        this.field_146635_w[WorldSettings.GameType.SURVIVAL.getID()] = I18n.format("gameMode.survival", new Object[0]);
-        this.field_146635_w[WorldSettings.GameType.CREATIVE.getID()] = I18n.format("gameMode.creative", new Object[0]);
-        this.field_146635_w[WorldSettings.GameType.ADVENTURE.getID()] = I18n.format("gameMode.adventure", new Object[0]);
+        this.field_146637_u = I18n.format("selectWorld.world");
+        this.field_146636_v = I18n.format("selectWorld.conversion");
+        this.field_146635_w[WorldSettings.GameType.SURVIVAL.getID()] = I18n.format("gameMode.survival");
+        this.field_146635_w[WorldSettings.GameType.CREATIVE.getID()] = I18n.format("gameMode.creative");
+        this.field_146635_w[WorldSettings.GameType.ADVENTURE.getID()] = I18n.format("gameMode.adventure");
         this.field_146638_t = new GuiSelectWorld.List();
         this.field_146638_t.func_148134_d(4, 5);
         this.func_146618_g();
@@ -89,7 +89,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
         if (var2 == null || MathHelper.stringNullOrLengthZero(var2))
         {
-            var2 = I18n.format("selectWorld.world", new Object[0]) + " " + (p_146614_1_ + 1);
+            var2 = I18n.format("selectWorld.world") + " " + (p_146614_1_ + 1);
         }
 
         return var2;
@@ -97,12 +97,12 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
     public void func_146618_g()
     {
-        this.buttonList.add(this.field_146641_z = new GuiButton(1, this.width / 2 - 154, this.height - 52, 150, 20, I18n.format("selectWorld.select", new Object[0])));
-        this.buttonList.add(new GuiButton(3, this.width / 2 + 4, this.height - 52, 150, 20, I18n.format("selectWorld.create", new Object[0])));
-        this.buttonList.add(this.field_146630_A = new GuiButton(6, this.width / 2 - 154, this.height - 28, 72, 20, I18n.format("selectWorld.rename", new Object[0])));
-        this.buttonList.add(this.field_146642_y = new GuiButton(2, this.width / 2 - 76, this.height - 28, 72, 20, I18n.format("selectWorld.delete", new Object[0])));
-        this.buttonList.add(this.field_146631_B = new GuiButton(7, this.width / 2 + 4, this.height - 28, 72, 20, I18n.format("selectWorld.recreate", new Object[0])));
-        this.buttonList.add(new GuiButton(0, this.width / 2 + 82, this.height - 28, 72, 20, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(this.field_146641_z = new GuiButton(1, this.width / 2 - 154, this.height - 52, 150, 20, I18n.format("selectWorld.select")));
+        this.buttonList.add(new GuiButton(3, this.width / 2 + 4, this.height - 52, 150, 20, I18n.format("selectWorld.create")));
+        this.buttonList.add(this.field_146630_A = new GuiButton(6, this.width / 2 - 154, this.height - 28, 72, 20, I18n.format("selectWorld.rename")));
+        this.buttonList.add(this.field_146642_y = new GuiButton(2, this.width / 2 - 76, this.height - 28, 72, 20, I18n.format("selectWorld.delete")));
+        this.buttonList.add(this.field_146631_B = new GuiButton(7, this.width / 2 + 4, this.height - 28, 72, 20, I18n.format("selectWorld.recreate")));
+        this.buttonList.add(new GuiButton(0, this.width / 2 + 82, this.height - 28, 72, 20, I18n.format("gui.cancel")));
         this.field_146641_z.enabled = false;
         this.field_146642_y.enabled = false;
         this.field_146630_A.enabled = false;
@@ -222,10 +222,10 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
     public static GuiYesNo func_152129_a(GuiYesNoCallback p_152129_0_, String p_152129_1_, int p_152129_2_)
     {
-        String var3 = I18n.format("selectWorld.deleteQuestion", new Object[0]);
-        String var4 = "\'" + p_152129_1_ + "\' " + I18n.format("selectWorld.deleteWarning", new Object[0]);
-        String var5 = I18n.format("selectWorld.deleteButton", new Object[0]);
-        String var6 = I18n.format("gui.cancel", new Object[0]);
+        String var3 = I18n.format("selectWorld.deleteQuestion");
+        String var4 = "\'" + p_152129_1_ + "\' " + I18n.format("selectWorld.deleteWarning");
+        String var5 = I18n.format("selectWorld.deleteButton");
+        String var6 = I18n.format("gui.cancel");
         GuiYesNo var7 = new GuiYesNo(p_152129_0_, var3, var4, var5, var6, p_152129_2_);
         return var7;
     }
@@ -304,7 +304,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
                 if (var8.getCheatsEnabled())
                 {
-                    var11 = var11 + ", " + I18n.format("selectWorld.cheats", new Object[0]);
+                    var11 = var11 + ", " + I18n.format("selectWorld.cheats");
                 }
             }
 

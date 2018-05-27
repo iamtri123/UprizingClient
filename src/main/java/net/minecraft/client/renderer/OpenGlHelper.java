@@ -764,6 +764,6 @@ public class OpenGlHelper
 
     public static boolean isFramebufferEnabled()
     {
-        return Config.isFastRender() ? false : framebufferSupported && Minecraft.getMinecraft().gameSettings.fboEnable;
+        return !Config.isFastRender() && (framebufferSupported && Minecraft.getMinecraft().gameSettings.fboEnable);
     }
 }

@@ -266,7 +266,7 @@ public abstract class Entity
 
     public boolean equals(Object p_equals_1_)
     {
-        return p_equals_1_ instanceof Entity ? ((Entity)p_equals_1_).field_145783_c == this.field_145783_c : false;
+        return p_equals_1_ instanceof Entity && ((Entity) p_equals_1_).field_145783_c == this.field_145783_c;
     }
 
     public int hashCode()
@@ -602,7 +602,7 @@ public abstract class Entity
     {
         AxisAlignedBB var7 = this.boundingBox.getOffsetBoundingBox(p_70038_1_, p_70038_3_, p_70038_5_);
         List var8 = this.worldObj.getCollidingBoundingBoxes(this, var7);
-        return !var8.isEmpty() ? false : !this.worldObj.isAnyLiquid(var7);
+        return var8.isEmpty() && !this.worldObj.isAnyLiquid(var7);
     }
 
     /**
@@ -1512,9 +1512,9 @@ public abstract class Entity
     {
         try
         {
-            p_70109_1_.setTag("Pos", this.newDoubleNBTList(new double[] {this.posX, this.posY + (double)this.ySize, this.posZ}));
-            p_70109_1_.setTag("Motion", this.newDoubleNBTList(new double[] {this.motionX, this.motionY, this.motionZ}));
-            p_70109_1_.setTag("Rotation", this.newFloatNBTList(new float[] {this.rotationYaw, this.rotationPitch}));
+            p_70109_1_.setTag("Pos", this.newDoubleNBTList(this.posX, this.posY + (double)this.ySize, this.posZ));
+            p_70109_1_.setTag("Motion", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
+            p_70109_1_.setTag("Rotation", this.newFloatNBTList(this.rotationYaw, this.rotationPitch));
             p_70109_1_.setFloat("FallDistance", this.fallDistance);
             p_70109_1_.setShort("Fire", (short)this.fire);
             p_70109_1_.setShort("Air", (short)this.getAir());
@@ -1775,7 +1775,6 @@ public abstract class Entity
 
                 for (this.entityRiderPitchDelta += (double)(this.ridingEntity.rotationPitch - this.ridingEntity.prevRotationPitch); this.entityRiderYawDelta >= 180.0D; this.entityRiderYawDelta -= 360.0D)
                 {
-                    ;
                 }
 
                 while (this.entityRiderYawDelta < -180.0D)
@@ -2282,7 +2281,7 @@ public abstract class Entity
 
     public String toString()
     {
-        return String.format("%s[\'%s\'/%d, l=\'%s\', x=%.2f, y=%.2f, z=%.2f]", new Object[] {this.getClass().getSimpleName(), this.getCommandSenderName(), Integer.valueOf(this.field_145783_c), this.worldObj == null ? "~NULL~" : this.worldObj.getWorldInfo().getWorldName(), Double.valueOf(this.posX), Double.valueOf(this.posY), Double.valueOf(this.posZ)});
+        return String.format("%s[\'%s\'/%d, l=\'%s\', x=%.2f, y=%.2f, z=%.2f]", this.getClass().getSimpleName(), this.getCommandSenderName(), Integer.valueOf(this.field_145783_c), this.worldObj == null ? "~NULL~" : this.worldObj.getWorldInfo().getWorldName(), Double.valueOf(this.posX), Double.valueOf(this.posY), Double.valueOf(this.posZ));
     }
 
     /**
@@ -2411,9 +2410,9 @@ public abstract class Entity
                 return Entity.this.getCommandSenderName();
             }
         });
-        p_85029_1_.addCrashSection("Entity\'s Exact location", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.posX), Double.valueOf(this.posY), Double.valueOf(this.posZ)}));
+        p_85029_1_.addCrashSection("Entity\'s Exact location", String.format("%.2f, %.2f, %.2f", Double.valueOf(this.posX), Double.valueOf(this.posY), Double.valueOf(this.posZ)));
         p_85029_1_.addCrashSection("Entity\'s Block location", CrashReportCategory.getLocationInfo(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)));
-        p_85029_1_.addCrashSection("Entity\'s Momentum", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.motionX), Double.valueOf(this.motionY), Double.valueOf(this.motionZ)}));
+        p_85029_1_.addCrashSection("Entity\'s Momentum", String.format("%.2f, %.2f, %.2f", Double.valueOf(this.motionX), Double.valueOf(this.motionY), Double.valueOf(this.motionZ)));
     }
 
     /**
@@ -2441,7 +2440,7 @@ public abstract class Entity
 
     public void func_145781_i(int p_145781_1_) {}
 
-    public static enum EnumEntitySize
+    public enum EnumEntitySize
     {
         SIZE_1("SIZE_1", 0),
         SIZE_2("SIZE_2", 1),
@@ -2450,10 +2449,10 @@ public abstract class Entity
         SIZE_5("SIZE_5", 4),
         SIZE_6("SIZE_6", 5);
 
-        private static final Entity.EnumEntitySize[] $VALUES = new Entity.EnumEntitySize[]{SIZE_1, SIZE_2, SIZE_3, SIZE_4, SIZE_5, SIZE_6};
+        private static final Entity.EnumEntitySize[] $VALUES = {SIZE_1, SIZE_2, SIZE_3, SIZE_4, SIZE_5, SIZE_6};
         private static final String __OBFID = "CL_00001537";
 
-        private EnumEntitySize(String p_i1581_1_, int p_i1581_2_) {}
+        EnumEntitySize(String p_i1581_1_, int p_i1581_2_) {}
 
         public int multiplyBy32AndRound(double p_75630_1_)
         {
@@ -2556,7 +2555,6 @@ public abstract class Entity
             }
             catch (NoSuchFieldError var6)
             {
-                ;
             }
 
             try
@@ -2565,7 +2563,6 @@ public abstract class Entity
             }
             catch (NoSuchFieldError var5)
             {
-                ;
             }
 
             try
@@ -2574,7 +2571,6 @@ public abstract class Entity
             }
             catch (NoSuchFieldError var4)
             {
-                ;
             }
 
             try
@@ -2583,7 +2579,6 @@ public abstract class Entity
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             try
@@ -2592,7 +2587,6 @@ public abstract class Entity
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -2601,7 +2595,6 @@ public abstract class Entity
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

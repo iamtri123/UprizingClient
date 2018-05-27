@@ -479,7 +479,7 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
         void func_152907_a(IngestServerTester p_152907_1_, IngestServerTester.IngestTestState p_152907_2_);
     }
 
-    public static enum IngestTestState
+    public enum IngestTestState
     {
         Uninitalized("Uninitalized", 0),
         Starting("Starting", 1),
@@ -490,10 +490,10 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
         Cancelled("Cancelled", 6),
         Failed("Failed", 7);
 
-        private static final IngestServerTester.IngestTestState[] $VALUES = new IngestServerTester.IngestTestState[]{Uninitalized, Starting, ConnectingToServer, TestingServer, DoneTestingServer, Finished, Cancelled, Failed};
+        private static final IngestServerTester.IngestTestState[] $VALUES = {Uninitalized, Starting, ConnectingToServer, TestingServer, DoneTestingServer, Finished, Cancelled, Failed};
         private static final String __OBFID = "CL_00001814";
 
-        private IngestTestState(String p_i1016_1_, int p_i1016_2_) {}
+        IngestTestState(String p_i1016_1_, int p_i1016_2_) {}
     }
 
     static final class SwitchStatType
@@ -511,7 +511,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var10)
             {
-                ;
             }
 
             try
@@ -520,7 +519,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var9)
             {
-                ;
             }
 
             try
@@ -529,7 +527,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var8)
             {
-                ;
             }
 
             try
@@ -538,7 +535,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var7)
             {
-                ;
             }
 
             try
@@ -547,7 +543,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var6)
             {
-                ;
             }
 
             try
@@ -556,7 +551,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var5)
             {
-                ;
             }
 
             try
@@ -565,7 +559,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var4)
             {
-                ;
             }
 
             try
@@ -574,7 +567,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             field_153026_a = new int[StatType.values().length];
@@ -585,7 +577,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -594,7 +585,6 @@ public class IngestServerTester implements IStatCallbacks, IStreamCallbacks
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

@@ -94,7 +94,7 @@ public class S12PacketEntityVelocity extends Packet
      */
     public String serialize()
     {
-        return String.format("id=%d, x=%.2f, y=%.2f, z=%.2f", new Object[] {Integer.valueOf(this.field_149417_a), Float.valueOf((float)this.field_149415_b / 8000.0F), Float.valueOf((float)this.field_149416_c / 8000.0F), Float.valueOf((float)this.field_149414_d / 8000.0F)});
+        return String.format("id=%d, x=%.2f, y=%.2f, z=%.2f", Integer.valueOf(this.field_149417_a), Float.valueOf((float)this.field_149415_b / 8000.0F), Float.valueOf((float)this.field_149416_c / 8000.0F), Float.valueOf((float)this.field_149414_d / 8000.0F));
     }
 
     public int func_149412_c()

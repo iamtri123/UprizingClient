@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class EntityDropParticleFX extends EntityFX
 {
     /** the material type for dropped items/blocks */
-    private Material materialType;
+    private final Material materialType;
 
     /** The height of the current bob */
     private int bobTimer;

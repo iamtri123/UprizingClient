@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 public class BlockQuartz extends Block
 {
-    public static final String[] field_150191_a = new String[] {"default", "chiseled", "lines"};
-    private static final String[] field_150189_b = new String[] {"side", "chiseled", "lines", null, null};
+    public static final String[] field_150191_a = {"default", "chiseled", "lines"};
+    private static final String[] field_150189_b = {"side", "chiseled", "lines", null, null};
     private IIcon[] field_150192_M;
     private IIcon field_150193_N;
     private IIcon field_150194_O;

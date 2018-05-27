@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 
 public class FlatLayerInfo
 {
-    private Block field_151537_a;
+    private final Block field_151537_a;
 
     /** Amount of layers for this set of layers. */
     private int layerCount;

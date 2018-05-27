@@ -13,14 +13,14 @@ public class WorldGenBigTree extends WorldGenAbstractTree
      * Contains three sets of two values that provide complimentary indices for a given 'major' index - 1 and 2 for 0, 0
      * and 2 for 1, and 0 and 1 for 2.
      */
-    static final byte[] otherCoordPairs = new byte[] {(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1};
+    static final byte[] otherCoordPairs = {(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1};
 
     /** random seed for GenBigTree */
     Random rand = new Random();
 
     /** Reference to the World object. */
     World worldObj;
-    int[] basePos = new int[] {0, 0, 0};
+    int[] basePos = {0, 0, 0};
     int heightLimit;
     int height;
     double heightAttenuation = 0.618D;
@@ -101,12 +101,12 @@ public class WorldGenBigTree extends WorldGenAbstractTree
                     double var13 = (double)this.rand.nextFloat() * 2.0D * Math.PI;
                     int var15 = MathHelper.floor_double(var11 * Math.sin(var13) + (double)this.basePos[0] + var9);
                     int var16 = MathHelper.floor_double(var11 * Math.cos(var13) + (double)this.basePos[2] + var9);
-                    int[] var17 = new int[] {var15, var3, var16};
-                    int[] var18 = new int[] {var15, var3 + this.leafDistanceLimit, var16};
+                    int[] var17 = {var15, var3, var16};
+                    int[] var18 = {var15, var3 + this.leafDistanceLimit, var16};
 
                     if (this.checkBlockLine(var17, var18) == -1)
                     {
-                        int[] var19 = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]};
+                        int[] var19 = {this.basePos[0], this.basePos[1], this.basePos[2]};
                         double var20 = Math.sqrt(Math.pow((double)Math.abs(this.basePos[0] - var17[0]), 2.0D) + Math.pow((double)Math.abs(this.basePos[2] - var17[2]), 2.0D));
                         double var22 = var20 * this.branchSlope;
 
@@ -144,8 +144,8 @@ public class WorldGenBigTree extends WorldGenAbstractTree
         int var7 = (int)((double)p_150529_4_ + 0.618D);
         byte var8 = otherCoordPairs[p_150529_5_];
         byte var9 = otherCoordPairs[p_150529_5_ + 3];
-        int[] var10 = new int[] {p_150529_1_, p_150529_2_, p_150529_3_};
-        int[] var11 = new int[] {0, 0, 0};
+        int[] var10 = {p_150529_1_, p_150529_2_, p_150529_3_};
+        int[] var11 = {0, 0, 0};
         int var12 = -var7;
         int var13 = -var7;
 
@@ -235,7 +235,7 @@ public class WorldGenBigTree extends WorldGenAbstractTree
 
     void func_150530_a(int[] p_150530_1_, int[] p_150530_2_, Block p_150530_3_)
     {
-        int[] var4 = new int[] {0, 0, 0};
+        int[] var4 = {0, 0, 0};
         byte var5 = 0;
         byte var6;
 
@@ -266,7 +266,7 @@ public class WorldGenBigTree extends WorldGenAbstractTree
 
             double var10 = (double)var4[var7] / (double)var4[var6];
             double var12 = (double)var4[var8] / (double)var4[var6];
-            int[] var14 = new int[] {0, 0, 0};
+            int[] var14 = {0, 0, 0};
             int var15 = 0;
 
             for (int var16 = var4[var6] + var9; var15 != var16; var15 += var9)
@@ -330,8 +330,8 @@ public class WorldGenBigTree extends WorldGenAbstractTree
         int var2 = this.basePos[1];
         int var3 = this.basePos[1] + this.height;
         int var4 = this.basePos[2];
-        int[] var5 = new int[] {var1, var2, var4};
-        int[] var6 = new int[] {var1, var3, var4};
+        int[] var5 = {var1, var2, var4};
+        int[] var6 = {var1, var3, var4};
         this.func_150530_a(var5, var6, Blocks.log);
 
         if (this.trunkSize == 2)
@@ -356,10 +356,10 @@ public class WorldGenBigTree extends WorldGenAbstractTree
         int var1 = 0;
         int var2 = this.leafNodes.length;
 
-        for (int[] var3 = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]}; var1 < var2; ++var1)
+        for (int[] var3 = {this.basePos[0], this.basePos[1], this.basePos[2]}; var1 < var2; ++var1)
         {
             int[] var4 = this.leafNodes[var1];
-            int[] var5 = new int[] {var4[0], var4[1], var4[2]};
+            int[] var5 = {var4[0], var4[1], var4[2]};
             var3[1] = var4[3];
             int var6 = var3[1] - this.basePos[1];
 
@@ -376,7 +376,7 @@ public class WorldGenBigTree extends WorldGenAbstractTree
      */
     int checkBlockLine(int[] p_76496_1_, int[] p_76496_2_)
     {
-        int[] var3 = new int[] {0, 0, 0};
+        int[] var3 = {0, 0, 0};
         byte var4 = 0;
         byte var5;
 
@@ -411,7 +411,7 @@ public class WorldGenBigTree extends WorldGenAbstractTree
 
             double var9 = (double)var3[var6] / (double)var3[var5];
             double var11 = (double)var3[var7] / (double)var3[var5];
-            int[] var13 = new int[] {0, 0, 0};
+            int[] var13 = {0, 0, 0};
             int var14 = 0;
             int var15;
 
@@ -438,8 +438,8 @@ public class WorldGenBigTree extends WorldGenAbstractTree
      */
     boolean validTreeLocation()
     {
-        int[] var1 = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]};
-        int[] var2 = new int[] {this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2]};
+        int[] var1 = {this.basePos[0], this.basePos[1], this.basePos[2]};
+        int[] var2 = {this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2]};
         Block var3 = this.worldObj.getBlock(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
 
         if (var3 != Blocks.dirt && var3 != Blocks.grass && var3 != Blocks.farmland)

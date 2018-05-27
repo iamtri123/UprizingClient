@@ -30,7 +30,7 @@ public class MapData extends WorldSavedData
     /**
      * Holds a reference to the players who own a copy of the map and a reference to their MapInfo
      */
-    private Map playersHashMap = new HashMap();
+    private final Map playersHashMap = new HashMap();
     public Map playersVisibleOnMap = new LinkedHashMap();
     private static final String __OBFID = "CL_00000577";
 

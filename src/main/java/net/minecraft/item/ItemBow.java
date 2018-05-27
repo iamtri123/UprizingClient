@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class ItemBow extends Item
 {
-    public static final String[] bowPullIconNameArray = new String[] {"pulling_0", "pulling_1", "pulling_2"};
+    public static final String[] bowPullIconNameArray = {"pulling_0", "pulling_1", "pulling_2"};
     private IIcon[] iconArray;
     private static final String __OBFID = "CL_00001777";
 

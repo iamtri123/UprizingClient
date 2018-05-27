@@ -49,7 +49,7 @@ public class ContainerPlayer extends Container
                 }
                 public boolean isItemValid(ItemStack p_75214_1_)
                 {
-                    return p_75214_1_ == null ? false : (p_75214_1_.getItem() instanceof ItemArmor ? ((ItemArmor)p_75214_1_.getItem()).armorType == var44 : (p_75214_1_.getItem() != Item.getItemFromBlock(Blocks.pumpkin) && p_75214_1_.getItem() != Items.skull ? false : var44 == 0));
+                    return p_75214_1_ != null && (p_75214_1_.getItem() instanceof ItemArmor ? ((ItemArmor) p_75214_1_.getItem()).armorType == var44 : (p_75214_1_.getItem() == Item.getItemFromBlock(Blocks.pumpkin) || p_75214_1_.getItem() == Items.skull && var44 == 0));
                 }
                 public IIcon getBackgroundIconIndex()
                 {

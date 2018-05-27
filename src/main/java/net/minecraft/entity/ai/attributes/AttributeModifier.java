@@ -28,8 +28,8 @@ public class AttributeModifier
         this.name = p_i1606_2_;
         this.amount = p_i1606_3_;
         this.operation = p_i1606_5_;
-        Validate.notEmpty(p_i1606_2_, "Modifier name cannot be empty", new Object[0]);
-        Validate.inclusiveBetween(Integer.valueOf(0), Integer.valueOf(2), Integer.valueOf(p_i1606_5_), "Invalid operation", new Object[0]);
+        Validate.notEmpty(p_i1606_2_, "Modifier name cannot be empty");
+        Validate.inclusiveBetween(Integer.valueOf(0), Integer.valueOf(2), Integer.valueOf(p_i1606_5_), "Invalid operation");
     }
 
     public UUID getID()

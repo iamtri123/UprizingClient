@@ -20,7 +20,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
      */
     public boolean shouldExecute()
     {
-        return !super.shouldExecute() ? false : (!this.theEntity.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing") ? false : !this.field_151504_e.func_150015_f(this.theEntity.worldObj, this.entityPosX, this.entityPosY, this.entityPosZ));
+        return super.shouldExecute() && (this.theEntity.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing") && !this.field_151504_e.func_150015_f(this.theEntity.worldObj, this.entityPosX, this.entityPosY, this.entityPosZ));
     }
 
     /**

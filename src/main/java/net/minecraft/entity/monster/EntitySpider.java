@@ -171,7 +171,7 @@ public class EntitySpider extends EntityMob
 
     public boolean isPotionApplicable(PotionEffect p_70687_1_)
     {
-        return p_70687_1_.getPotionID() == Potion.poison.id ? false : super.isPotionApplicable(p_70687_1_);
+        return p_70687_1_.getPotionID() != Potion.poison.id && super.isPotionApplicable(p_70687_1_);
     }
 
     /**

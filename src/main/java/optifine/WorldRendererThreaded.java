@@ -25,10 +25,10 @@ import java.util.List;
 public class WorldRendererThreaded extends WorldRenderer
 {
     private int glRenderListWork;
-    private int glRenderListBoundingBox;
+    private final int glRenderListBoundingBox;
     public boolean[] tempSkipRenderPass = new boolean[2];
     public TesselatorVertexState tempVertexState;
-    private Tessellator tessellatorWork = null;
+    private final Tessellator tessellatorWork = null;
 
     public WorldRendererThreaded(World par1World, List par2List, int par3, int par4, int par5, int par6)
     {
@@ -93,7 +93,7 @@ public class WorldRendererThreaded extends WorldRenderer
             {
                 ++chunksUpdated;
                 RenderBlocks hashset1 = new RenderBlocks(chunkcache);
-                Reflector.callVoid(Reflector.ForgeHooksClient_setWorldRendererRB, new Object[] {hashset1});
+                Reflector.callVoid(Reflector.ForgeHooksClient_setWorldRendererRB, hashset1);
                 this.bytesDrawn = 0;
                 this.tempVertexState = null;
                 this.tessellator = Tessellator.instance;
@@ -133,7 +133,7 @@ public class WorldRendererThreaded extends WorldRenderer
 
                                     if (hasForge)
                                     {
-                                        hasTileEntity = Reflector.callBoolean(block, Reflector.ForgeBlock_hasTileEntity, new Object[] {Integer.valueOf(chunkcache.getBlockMetadata(x, y, z))});
+                                        hasTileEntity = Reflector.callBoolean(block, Reflector.ForgeBlock_hasTileEntity, Integer.valueOf(chunkcache.getBlockMetadata(x, y, z)));
                                     }
                                     else
                                     {
@@ -161,7 +161,7 @@ public class WorldRendererThreaded extends WorldRenderer
 
                                     if (Reflector.ForgeBlock_canRenderInPass.exists())
                                     {
-                                        canRender = Reflector.callBoolean(block, Reflector.ForgeBlock_canRenderInPass, new Object[] {Integer.valueOf(renderPass)});
+                                        canRender = Reflector.callBoolean(block, Reflector.ForgeBlock_canRenderInPass, Integer.valueOf(renderPass));
                                     }
 
                                     if (canRender)
@@ -208,7 +208,7 @@ public class WorldRendererThreaded extends WorldRenderer
                     }
                 }
 
-                Reflector.callVoid(Reflector.ForgeHooksClient_setWorldRendererRB, new Object[] {(RenderBlocks)null});
+                Reflector.callVoid(Reflector.ForgeHooksClient_setWorldRendererRB, (RenderBlocks)null);
             }
 
             HashSet var31 = new HashSet();
@@ -229,7 +229,7 @@ public class WorldRendererThreaded extends WorldRenderer
 
         if (Config.isFastRender())
         {
-            Reflector.callVoid(Reflector.ForgeHooksClient_onPreRenderWorld, new Object[] {this, Integer.valueOf(renderpass)});
+            Reflector.callVoid(Reflector.ForgeHooksClient_onPreRenderWorld, this, Integer.valueOf(renderpass));
             this.tessellator.startDrawingQuads();
             this.tessellator.setTranslation((double)(-globalChunkOffsetX), 0.0D, (double)(-globalChunkOffsetZ));
         }
@@ -241,7 +241,7 @@ public class WorldRendererThreaded extends WorldRenderer
             GL11.glTranslatef(-8.0F, -8.0F, -8.0F);
             GL11.glScalef(var2, var2, var2);
             GL11.glTranslatef(8.0F, 8.0F, 8.0F);
-            Reflector.callVoid(Reflector.ForgeHooksClient_onPreRenderWorld, new Object[] {this, Integer.valueOf(renderpass)});
+            Reflector.callVoid(Reflector.ForgeHooksClient_onPreRenderWorld, this, Integer.valueOf(renderpass));
             this.tessellator.startDrawingQuads();
             this.tessellator.setTranslation((double)(-this.posX), (double)(-this.posY), (double)(-this.posZ));
         }
@@ -255,7 +255,7 @@ public class WorldRendererThreaded extends WorldRenderer
         }
 
         this.bytesDrawn += this.tessellator.draw();
-        Reflector.callVoid(Reflector.ForgeHooksClient_onPostRenderWorld, new Object[] {this, Integer.valueOf(renderpass)});
+        Reflector.callVoid(Reflector.ForgeHooksClient_onPostRenderWorld, this, Integer.valueOf(renderpass));
         this.tessellator.setRenderingChunk(false);
 
         if (!Config.isFastRender())
@@ -305,8 +305,8 @@ public class WorldRendererThreaded extends WorldRenderer
         if (Reflector.LightCache.exists())
         {
             Object var3 = Reflector.getFieldValue(Reflector.LightCache_cache);
-            Reflector.callVoid(var3, Reflector.LightCache_clear, new Object[0]);
-            Reflector.callVoid(Reflector.BlockCoord_resetPool, new Object[0]);
+            Reflector.callVoid(var3, Reflector.LightCache_clear);
+            Reflector.callVoid(Reflector.BlockCoord_resetPool);
         }
 
         this.updateFinished();

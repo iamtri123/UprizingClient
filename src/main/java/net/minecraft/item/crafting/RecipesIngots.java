@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class RecipesIngots
 {
-    private Object[][] recipeItems;
+    private final Object[][] recipeItems;
     private static final String __OBFID = "CL_00000089";
 
     public RecipesIngots()
@@ -24,11 +24,11 @@ public class RecipesIngots
         {
             Block var3 = (Block)this.recipeItems[var2][0];
             ItemStack var4 = (ItemStack)this.recipeItems[var2][1];
-            p_77590_1_.addRecipe(new ItemStack(var3), new Object[] {"###", "###", "###", '#', var4});
-            p_77590_1_.addRecipe(var4, new Object[] {"#", '#', var3});
+            p_77590_1_.addRecipe(new ItemStack(var3), "###", "###", "###", '#', var4);
+            p_77590_1_.addRecipe(var4, "#", '#', var3);
         }
 
-        p_77590_1_.addRecipe(new ItemStack(Items.gold_ingot), new Object[] {"###", "###", "###", '#', Items.gold_nugget});
-        p_77590_1_.addRecipe(new ItemStack(Items.gold_nugget, 9), new Object[] {"#", '#', Items.gold_ingot});
+        p_77590_1_.addRecipe(new ItemStack(Items.gold_ingot), "###", "###", "###", '#', Items.gold_nugget);
+        p_77590_1_.addRecipe(new ItemStack(Items.gold_nugget, 9), "#", '#', Items.gold_ingot);
     }
 }

@@ -16,7 +16,7 @@ public class TileEntityEnchantmentTable extends TileEntity
     public float field_145928_o;
     public float field_145925_p;
     public float field_145924_q;
-    private static Random field_145923_r = new Random();
+    private static final Random field_145923_r = new Random();
     private String field_145922_s;
     private static final String __OBFID = "CL_00000354";
 
@@ -95,7 +95,6 @@ public class TileEntityEnchantmentTable extends TileEntity
 
         for (var7 = this.field_145924_q - this.field_145928_o; var7 >= (float)Math.PI; var7 -= ((float)Math.PI * 2F))
         {
-            ;
         }
 
         while (var7 < -(float)Math.PI)

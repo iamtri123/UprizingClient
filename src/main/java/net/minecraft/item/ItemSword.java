@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class ItemSword extends Item
 {
-    private float field_150934_a;
+    private final float field_150934_a;
     private final Item.ToolMaterial field_150933_b;
     private static final String __OBFID = "CL_00000072";
 
@@ -120,7 +120,7 @@ public class ItemSword extends Item
      */
     public boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)
     {
-        return this.field_150933_b.func_150995_f() == p_82789_2_.getItem() ? true : super.getIsRepairable(p_82789_1_, p_82789_2_);
+        return this.field_150933_b.func_150995_f() == p_82789_2_.getItem() || super.getIsRepairable(p_82789_1_, p_82789_2_);
     }
 
     /**

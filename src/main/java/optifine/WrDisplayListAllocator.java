@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WrDisplayListAllocator
 {
-    private List<WrDisplayListBlock> listBlocks = new ArrayList();
+    private final List<WrDisplayListBlock> listBlocks = new ArrayList();
     private WrDisplayListBlock currentBlock = null;
     private int blockIndex = -1;
 

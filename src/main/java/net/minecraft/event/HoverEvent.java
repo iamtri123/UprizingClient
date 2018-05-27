@@ -82,7 +82,7 @@ public class HoverEvent
         return var1;
     }
 
-    public static enum Action
+    public enum Action
     {
         SHOW_TEXT("SHOW_TEXT", 0, "show_text", true),
         SHOW_ACHIEVEMENT("SHOW_ACHIEVEMENT", 1, "show_achievement", true),
@@ -91,10 +91,10 @@ public class HoverEvent
         private final boolean allowedInChat;
         private final String canonicalName;
 
-        private static final HoverEvent.Action[] $VALUES = new HoverEvent.Action[]{SHOW_TEXT, SHOW_ACHIEVEMENT, SHOW_ITEM};
+        private static final HoverEvent.Action[] $VALUES = {SHOW_TEXT, SHOW_ACHIEVEMENT, SHOW_ITEM};
         private static final String __OBFID = "CL_00001265";
 
-        private Action(String p_i45157_1_, int p_i45157_2_, String p_i45157_3_, boolean p_i45157_4_)
+        Action(String p_i45157_1_, int p_i45157_2_, String p_i45157_3_, boolean p_i45157_4_)
         {
             this.canonicalName = p_i45157_3_;
             this.allowedInChat = p_i45157_4_;

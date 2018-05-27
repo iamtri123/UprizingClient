@@ -63,7 +63,7 @@ public class Config
     public static final String OF_EDITION = "HD_U";
     public static final String OF_RELEASE = "D4";
     public static final String VERSION = "OptiFine_1.7.10_HD_U_D4";
-    private static String newRelease = null;
+    private static final String newRelease = null;
     private static boolean notify64BitJava = false;
     public static String openGlVersion = null;
     public static String openGlRenderer = null;
@@ -80,7 +80,7 @@ public class Config
     public static boolean waterOpacityChanged = false;
     private static boolean fullscreenModeChecked = false;
     private static boolean desktopModeChecked = false;
-    private static PrintStream systemOut = new PrintStream(new FileOutputStream(FileDescriptor.out));
+    private static final PrintStream systemOut = new PrintStream(new FileOutputStream(FileDescriptor.out));
     public static final Boolean DEF_FOG_FANCY = Boolean.valueOf(true);
     public static final Float DEF_FOG_START = Float.valueOf(0.2F);
     public static final Boolean DEF_OPTIMIZE_RENDER_DISTANCE = Boolean.valueOf(false);
@@ -326,7 +326,7 @@ public class Config
 
     public static boolean isFogFancy()
     {
-        return !isFancyFogAvailable() ? false : gameSettings.ofFogType == 2;
+        return isFancyFogAvailable() && gameSettings.ofFogType == 2;
     }
 
     public static boolean isFogFast()
@@ -351,7 +351,7 @@ public class Config
 
     public static boolean isOcclusionFancy()
     {
-        return !isOcclusionEnabled() ? false : gameSettings.ofOcclusionFancy;
+        return isOcclusionEnabled() && gameSettings.ofOcclusionFancy;
     }
 
     public static boolean isLoadChunksFar()
@@ -419,7 +419,7 @@ public class Config
 
     public static boolean isCloudsOff()
     {
-        return gameSettings.ofClouds != 0 ? gameSettings.ofClouds == 3 : (texturePackClouds != 0 ? texturePackClouds == 3 : false);
+        return gameSettings.ofClouds != 0 ? gameSettings.ofClouds == 3 : (texturePackClouds != 0 && texturePackClouds == 3);
     }
 
     public static void updateTexturePackClouds()
@@ -468,7 +468,6 @@ public class Config
             }
             catch (Exception var4)
             {
-                ;
             }
         }
     }
@@ -1513,12 +1512,12 @@ public class Config
 
     public static boolean isSmoothWorld()
     {
-        return !isSingleProcessor() ? false : gameSettings.ofSmoothWorld;
+        return isSingleProcessor() && gameSettings.ofSmoothWorld;
     }
 
     public static boolean isLazyChunkLoading()
     {
-        return !isSingleProcessor() ? false : gameSettings.ofLazyChunkLoading;
+        return isSingleProcessor() && gameSettings.ofLazyChunkLoading;
     }
 
     public static int getChunkViewDistance()
@@ -1536,7 +1535,7 @@ public class Config
 
     public static boolean equals(Object o1, Object o2)
     {
-        return o1 == o2 ? true : (o1 == null ? false : o1.equals(o2));
+        return o1 == o2 || (o1 != null && o1.equals(o2));
     }
 
     public static String normalize(String s)
@@ -1598,7 +1597,7 @@ public class Config
                     File e = new File(minecraft.mcDataDir, "assets");
                     ByteBuffer bufIcon16 = readIconImage(new File(e, "/icons/icon_16x16.png"));
                     ByteBuffer bufIcon32 = readIconImage(new File(e, "/icons/icon_32x32.png"));
-                    ByteBuffer[] buf = new ByteBuffer[] {bufIcon16, bufIcon32};
+                    ByteBuffer[] buf = {bufIcon16, bufIcon32};
                     Display.setIcon(buf);
                 }
                 catch (IOException var6)
@@ -1814,7 +1813,7 @@ public class Config
 
     public static int getBitsJre()
     {
-        String[] propNames = new String[] {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
+        String[] propNames = {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
 
         for (int i = 0; i < propNames.length; ++i)
         {
@@ -1865,7 +1864,7 @@ public class Config
                 buf.append(fillChar);
             }
 
-            return buf.toString() + s;
+            return buf + s;
         }
     }
 

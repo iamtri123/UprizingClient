@@ -63,7 +63,7 @@ public class S3APacketTabComplete extends Packet
      */
     public String serialize()
     {
-        return String.format("candidates=\'%s\'", new Object[] {ArrayUtils.toString(this.field_149632_a)});
+        return String.format("candidates=\'%s\'", ArrayUtils.toString(this.field_149632_a));
     }
 
     public void processPacket(INetHandler p_148833_1_)

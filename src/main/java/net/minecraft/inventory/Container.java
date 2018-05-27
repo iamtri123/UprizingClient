@@ -28,7 +28,7 @@ public abstract class Container
      * list of all people that need to be notified when this craftinventory changes
      */
     protected List crafters = new ArrayList();
-    private Set playerList = new HashSet();
+    private final Set playerList = new HashSet();
     private static final String __OBFID = "CL_00001730";
 
     /**
@@ -612,7 +612,7 @@ public abstract class Container
 
         if (p_75135_1_.isStackable())
         {
-            while (p_75135_1_.stackSize > 0 && (!p_75135_4_ && var6 < p_75135_3_ || p_75135_4_ && var6 >= p_75135_2_))
+            while (p_75135_1_.stackSize > 0 && (p_75135_4_ ? var6 >= p_75135_2_ : var6 < p_75135_3_))
             {
                 var7 = (Slot)this.inventorySlots.get(var6);
                 var8 = var7.getStack();
@@ -659,7 +659,7 @@ public abstract class Container
                 var6 = p_75135_2_;
             }
 
-            while (!p_75135_4_ && var6 < p_75135_3_ || p_75135_4_ && var6 >= p_75135_2_)
+            while (p_75135_4_ ? var6 >= p_75135_2_ : var6 < p_75135_3_)
             {
                 var7 = (Slot)this.inventorySlots.get(var6);
                 var8 = var7.getStack();

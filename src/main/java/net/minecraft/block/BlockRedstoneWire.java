@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class BlockRedstoneWire extends Block
 {
     private boolean field_150181_a = true;
-    private Set field_150179_b = new HashSet();
+    private final Set field_150179_b = new HashSet();
     private IIcon field_150182_M;
     private IIcon field_150183_N;
     private IIcon field_150184_O;

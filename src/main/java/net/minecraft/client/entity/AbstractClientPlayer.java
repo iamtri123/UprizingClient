@@ -51,7 +51,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
 
     public boolean func_152122_n()
     {
-        return !Config.isShowCapes() ? false : (this.locationOfCape != null ? true : this.locationCape != null);
+        return Config.isShowCapes() && (this.locationOfCape != null || this.locationCape != null);
     }
 
     public boolean func_152123_o()
@@ -76,7 +76,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
 
         if (var3 == null)
         {
-            var3 = new ThreadDownloadImageData((File)null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", new Object[] {StringUtils.stripControlCodes(par1Str)}), locationStevePng, new ImageBufferDownload());
+            var3 = new ThreadDownloadImageData((File)null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", StringUtils.stripControlCodes(par1Str)), locationStevePng, new ImageBufferDownload());
             var2.loadTexture(par0ResourceLocation, (ITextureObject)var3);
         }
 
@@ -129,7 +129,6 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -138,7 +137,6 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

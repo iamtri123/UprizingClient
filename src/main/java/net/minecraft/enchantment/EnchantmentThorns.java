@@ -43,7 +43,7 @@ public class EnchantmentThorns extends Enchantment
 
     public boolean canApply(ItemStack p_92089_1_)
     {
-        return p_92089_1_.getItem() instanceof ItemArmor ? true : super.canApply(p_92089_1_);
+        return p_92089_1_.getItem() instanceof ItemArmor || super.canApply(p_92089_1_);
     }
 
     public void func_151367_b(EntityLivingBase p_151367_1_, Entity p_151367_2_, int p_151367_3_)
@@ -69,7 +69,7 @@ public class EnchantmentThorns extends Enchantment
 
     public static boolean func_92094_a(int p_92094_0_, Random p_92094_1_)
     {
-        return p_92094_0_ <= 0 ? false : p_92094_1_.nextFloat() < 0.15F * (float)p_92094_0_;
+        return p_92094_0_ > 0 && p_92094_1_.nextFloat() < 0.15F * (float) p_92094_0_;
     }
 
     public static int func_92095_b(int p_92095_0_, Random p_92095_1_)

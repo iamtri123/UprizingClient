@@ -98,7 +98,7 @@ public class BlockFalling extends Block
         else
         {
             Material var5 = var4.blockMaterial;
-            return var5 == Material.water ? true : var5 == Material.lava;
+            return var5 == Material.water || var5 == Material.lava;
         }
     }
 

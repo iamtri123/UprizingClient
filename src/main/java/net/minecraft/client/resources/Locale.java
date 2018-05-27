@@ -34,7 +34,7 @@ public class Locale
         while (var3.hasNext())
         {
             String var4 = (String)var3.next();
-            String var5 = String.format("lang/%s.lang", new Object[] {var4});
+            String var5 = String.format("lang/%s.lang", var4);
             Iterator var6 = p_135022_1_.getResourceDomains().iterator();
 
             while (var6.hasNext())
@@ -47,7 +47,6 @@ public class Locale
                 }
                 catch (IOException var9)
                 {
-                    ;
                 }
             }
         }

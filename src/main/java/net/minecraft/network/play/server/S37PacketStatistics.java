@@ -70,7 +70,7 @@ public class S37PacketStatistics extends Packet
      */
     public String serialize()
     {
-        return String.format("count=%d", new Object[] {Integer.valueOf(this.field_148976_a.size())});
+        return String.format("count=%d", Integer.valueOf(this.field_148976_a.size()));
     }
 
     public Map func_148974_c()

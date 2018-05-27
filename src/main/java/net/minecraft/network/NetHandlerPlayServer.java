@@ -102,7 +102,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     private boolean field_147366_g;
     private int field_147378_h;
     private long field_147379_i;
-    private static Random field_147376_j = new Random();
+    private static final Random field_147376_j = new Random();
     private long field_147377_k;
 
     /**
@@ -111,7 +111,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
      */
     private int chatSpamThresholdCount;
     private int field_147375_m;
-    private IntHashMap field_147372_n = new IntHashMap();
+    private final IntHashMap field_147372_n = new IntHashMap();
     private double lastPosX;
     private double lastPosY;
     private double lastPosZ;
@@ -172,15 +172,14 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     public void kickPlayerFromServer(String p_147360_1_)
     {
         final ChatComponentText var2 = new ChatComponentText(p_147360_1_);
-        this.netManager.scheduleOutboundPacket(new S40PacketDisconnect(var2), new GenericFutureListener[] {new GenericFutureListener()
+        this.netManager.scheduleOutboundPacket(new S40PacketDisconnect(var2), new GenericFutureListener()
             {
                 private static final String __OBFID = "CL_00001453";
                 public void operationComplete(Future p_operationComplete_1_)
                 {
                     NetHandlerPlayServer.this.netManager.closeChannel(var2);
                 }
-            }
-        });
+            });
         this.netManager.disableAutoRead();
     }
 
@@ -536,7 +535,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
         }
         else if (p_147346_1_.func_149571_d() >= this.serverController.getBuildLimit() - 1 && (p_147346_1_.func_149568_f() == 1 || p_147346_1_.func_149571_d() >= this.serverController.getBuildLimit()))
         {
-            ChatComponentTranslation var9 = new ChatComponentTranslation("build.tooHigh", new Object[] {Integer.valueOf(this.serverController.getBuildLimit())});
+            ChatComponentTranslation var9 = new ChatComponentTranslation("build.tooHigh", Integer.valueOf(this.serverController.getBuildLimit()));
             var9.getChatStyle().setColor(EnumChatFormatting.RED);
             this.playerEntity.playerNetServerHandler.sendPacket(new S02PacketChat(var9));
             var4 = true;
@@ -618,7 +617,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     {
         logger.info(this.playerEntity.getCommandSenderName() + " lost connection: " + p_147231_1_);
         this.serverController.func_147132_au();
-        ChatComponentTranslation var2 = new ChatComponentTranslation("multiplayer.player.left", new Object[] {this.playerEntity.func_145748_c_()});
+        ChatComponentTranslation var2 = new ChatComponentTranslation("multiplayer.player.left", this.playerEntity.func_145748_c_());
         var2.getChatStyle().setColor(EnumChatFormatting.YELLOW);
         this.serverController.getConfigurationManager().func_148539_a(var2);
         this.playerEntity.mountEntityAndWakeUp();
@@ -651,7 +650,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
 
         try
         {
-            this.netManager.scheduleOutboundPacket(p_147359_1_, new GenericFutureListener[0]);
+            this.netManager.scheduleOutboundPacket(p_147359_1_);
         }
         catch (Throwable var5)
         {
@@ -692,7 +691,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     {
         if (this.playerEntity.func_147096_v() == EntityPlayer.EnumChatVisibility.HIDDEN)
         {
-            ChatComponentTranslation var4 = new ChatComponentTranslation("chat.cannotSend", new Object[0]);
+            ChatComponentTranslation var4 = new ChatComponentTranslation("chat.cannotSend");
             var4.getChatStyle().setColor(EnumChatFormatting.RED);
             this.sendPacket(new S02PacketChat(var4));
         }
@@ -717,7 +716,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
             }
             else
             {
-                ChatComponentTranslation var5 = new ChatComponentTranslation("chat.type.text", new Object[] {this.playerEntity.func_145748_c_(), var2});
+                ChatComponentTranslation var5 = new ChatComponentTranslation("chat.type.text", this.playerEntity.func_145748_c_(), var2);
                 this.serverController.getConfigurationManager().func_148544_a(var5, false);
             }
 
@@ -1235,7 +1234,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
             {
                 if (!this.serverController.isCommandBlockEnabled())
                 {
-                    this.playerEntity.addChatMessage(new ChatComponentTranslation("advMode.notEnabled", new Object[0]));
+                    this.playerEntity.addChatMessage(new ChatComponentTranslation("advMode.notEnabled"));
                 }
                 else if (this.playerEntity.canCommandSenderUseCommand(2, "") && this.playerEntity.capabilities.isCreativeMode)
                 {
@@ -1271,7 +1270,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
                         {
                             var46.func_145752_a(var49);
                             var46.func_145756_e();
-                            this.playerEntity.addChatMessage(new ChatComponentTranslation("advMode.setCommand.success", new Object[] {var49}));
+                            this.playerEntity.addChatMessage(new ChatComponentTranslation("advMode.setCommand.success", var49));
                         }
                     }
                     catch (Exception var33)
@@ -1285,7 +1284,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
                 }
                 else
                 {
-                    this.playerEntity.addChatMessage(new ChatComponentTranslation("advMode.notAllowed", new Object[0]));
+                    this.playerEntity.addChatMessage(new ChatComponentTranslation("advMode.notAllowed"));
                 }
             }
             else if ("MC|Beacon".equals(p_147349_1_.func_149559_c()))
@@ -1361,7 +1360,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
             }
             catch (NoSuchFieldError var3)
             {
-                ;
             }
 
             try
@@ -1370,7 +1368,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
             }
             catch (NoSuchFieldError var2)
             {
-                ;
             }
 
             try
@@ -1379,7 +1376,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
             }
             catch (NoSuchFieldError var1)
             {
-                ;
             }
         }
     }

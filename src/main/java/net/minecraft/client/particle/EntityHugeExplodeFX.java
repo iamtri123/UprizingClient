@@ -8,7 +8,7 @@ public class EntityHugeExplodeFX extends EntityFX
     private int timeSinceStart;
 
     /** the maximum time for the explosion */
-    private int maximumTime = 8;
+    private final int maximumTime = 8;
     private static final String __OBFID = "CL_00000911";
 
     public EntityHugeExplodeFX(World p_i1214_1_, double p_i1214_2_, double p_i1214_4_, double p_i1214_6_, double p_i1214_8_, double p_i1214_10_, double p_i1214_12_)

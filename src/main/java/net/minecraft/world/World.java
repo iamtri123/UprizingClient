@@ -61,15 +61,15 @@ public abstract class World implements IBlockAccess
     public List loadedEntityList = new ArrayList();
     protected List unloadedEntityList = new ArrayList();
     public List field_147482_g = new ArrayList();
-    private List field_147484_a = new ArrayList();
-    private List field_147483_b = new ArrayList();
+    private final List field_147484_a = new ArrayList();
+    private final List field_147483_b = new ArrayList();
 
     /** Array list of players in the world. */
     public List playerEntities = new ArrayList();
 
     /** a list of all the lightning entities */
     public List weatherEffects = new ArrayList();
-    private long cloudColour = 16777215L;
+    private final long cloudColour = 16777215L;
 
     /** How much light is subtracted from full daylight */
     public int skylightSubtracted;
@@ -138,7 +138,7 @@ public abstract class World implements IBlockAccess
 
     /** A flag indicating whether we should spawn peaceful mobs. */
     protected boolean spawnPeacefulMobs;
-    private ArrayList collidingBoundingBoxes;
+    private final ArrayList collidingBoundingBoxes;
     private boolean field_147481_N;
 
     /**
@@ -273,7 +273,6 @@ public abstract class World implements IBlockAccess
                 }
                 catch (Throwable var9)
                 {
-                    ;
                 }
 
                 throw new ReportedException(var7);
@@ -323,7 +322,6 @@ public abstract class World implements IBlockAccess
 
         for (var3 = 63; !this.isAirBlock(p_147474_1_, var3 + 1, p_147474_2_); ++var3)
         {
-            ;
         }
 
         return this.getBlock(p_147474_1_, var3, p_147474_2_);
@@ -368,7 +366,7 @@ public abstract class World implements IBlockAccess
      */
     public boolean blockExists(int p_72899_1_, int p_72899_2_, int p_72899_3_)
     {
-        return p_72899_2_ >= 0 && p_72899_2_ < 256 ? this.chunkExists(p_72899_1_ >> 4, p_72899_3_ >> 4) : false;
+        return (p_72899_2_ >= 0 && p_72899_2_ < 256) && this.chunkExists(p_72899_1_ >> 4, p_72899_3_ >> 4);
     }
 
     /**
@@ -733,7 +731,7 @@ public abstract class World implements IBlockAccess
                     {
                         try
                         {
-                            return String.format("ID #%d (%s // %s)", new Object[] {Integer.valueOf(Block.getIdFromBlock(p_147460_4_)), p_147460_4_.getUnlocalizedName(), p_147460_4_.getClass().getCanonicalName()});
+                            return String.format("ID #%d (%s // %s)", Integer.valueOf(Block.getIdFromBlock(p_147460_4_)), p_147460_4_.getUnlocalizedName(), p_147460_4_.getClass().getCanonicalName());
                         }
                         catch (Throwable var2)
                         {
@@ -2725,7 +2723,7 @@ public abstract class World implements IBlockAccess
     {
         Block var4 = p_147466_0_.getBlock(p_147466_1_, p_147466_2_, p_147466_3_);
         int var5 = p_147466_0_.getBlockMetadata(p_147466_1_, p_147466_2_, p_147466_3_);
-        return var4.getMaterial().isOpaque() && var4.renderAsNormalBlock() ? true : (var4 instanceof BlockStairs ? (var5 & 4) == 4 : (var4 instanceof BlockSlab ? (var5 & 8) == 8 : (var4 instanceof BlockHopper ? true : (var4 instanceof BlockSnow ? (var5 & 7) == 7 : false))));
+        return var4.getMaterial().isOpaque() && var4.renderAsNormalBlock() || (var4 instanceof BlockStairs ? (var5 & 4) == 4 : (var4 instanceof BlockSlab ? (var5 & 8) == 8 : (var4 instanceof BlockHopper || (var4 instanceof BlockSnow && (var5 & 7) == 7))));
     }
 
     /**
@@ -3444,7 +3442,7 @@ public abstract class World implements IBlockAccess
     {
         Block var9 = this.getBlock(p_147472_2_, p_147472_3_, p_147472_4_);
         AxisAlignedBB var10 = p_147472_5_ ? null : p_147472_1_.getCollisionBoundingBoxFromPool(this, p_147472_2_, p_147472_3_, p_147472_4_);
-        return var10 != null && !this.checkNoEntityCollision(var10, p_147472_7_) ? false : (var9.getMaterial() == Material.circuits && p_147472_1_ == Blocks.anvil ? true : var9.getMaterial().isReplaceable() && p_147472_1_.canReplace(this, p_147472_2_, p_147472_3_, p_147472_4_, p_147472_6_, p_147472_8_));
+        return var10 == null || this.checkNoEntityCollision(var10, p_147472_7_) && (var9.getMaterial() == Material.circuits && p_147472_1_ == Blocks.anvil || var9.getMaterial().isReplaceable() && p_147472_1_.canReplace(this, p_147472_2_, p_147472_3_, p_147472_4_, p_147472_6_, p_147472_8_));
     }
 
     public PathEntity getPathEntityToEntity(Entity p_72865_1_, Entity p_72865_2_, float p_72865_3_, boolean p_72865_4_, boolean p_72865_5_, boolean p_72865_6_, boolean p_72865_7_)
@@ -3540,7 +3538,7 @@ public abstract class World implements IBlockAccess
                         else
                         {
                             var5 = Math.max(var5, this.isBlockProvidingPowerTo(p_94577_1_ + 1, p_94577_2_, p_94577_3_, 5));
-                            return var5 >= 15 ? var5 : var5;
+                            return var5;
                         }
                     }
                 }
@@ -3571,7 +3569,7 @@ public abstract class World implements IBlockAccess
      */
     public boolean isBlockIndirectlyGettingPowered(int p_72864_1_, int p_72864_2_, int p_72864_3_)
     {
-        return this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_ - 1, p_72864_3_, 0) > 0 ? true : (this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_ + 1, p_72864_3_, 1) > 0 ? true : (this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_, p_72864_3_ - 1, 2) > 0 ? true : (this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_, p_72864_3_ + 1, 3) > 0 ? true : (this.getIndirectPowerLevelTo(p_72864_1_ - 1, p_72864_2_, p_72864_3_, 4) > 0 ? true : this.getIndirectPowerLevelTo(p_72864_1_ + 1, p_72864_2_, p_72864_3_, 5) > 0))));
+        return this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_ - 1, p_72864_3_, 0) > 0 || (this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_ + 1, p_72864_3_, 1) > 0 || (this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_, p_72864_3_ - 1, 2) > 0 || (this.getIndirectPowerLevelTo(p_72864_1_, p_72864_2_, p_72864_3_ + 1, 3) > 0 || (this.getIndirectPowerLevelTo(p_72864_1_ - 1, p_72864_2_, p_72864_3_, 4) > 0 || this.getIndirectPowerLevelTo(p_72864_1_ + 1, p_72864_2_, p_72864_3_, 5) > 0))));
     }
 
     public int getStrongestIndirectPower(int p_94572_1_, int p_94572_2_, int p_94572_3_)
@@ -3914,7 +3912,7 @@ public abstract class World implements IBlockAccess
         else
         {
             BiomeGenBase var4 = this.getBiomeGenForCoords(p_72951_1_, p_72951_3_);
-            return var4.getEnableSnow() ? false : (this.func_147478_e(p_72951_1_, p_72951_2_, p_72951_3_, false) ? false : var4.canSpawnLightningBolt());
+            return !var4.getEnableSnow() && (!this.func_147478_e(p_72951_1_, p_72951_2_, p_72951_3_, false) && var4.canSpawnLightningBolt());
         }
     }
 
@@ -4056,7 +4054,7 @@ public abstract class World implements IBlockAccess
             private static final String __OBFID = "CL_00000143";
             public String call()
             {
-                return World.this.playerEntities.size() + " total; " + World.this.playerEntities.toString();
+                return World.this.playerEntities.size() + " total; " + World.this.playerEntities;
             }
         });
         var2.addCrashSectionCallable("Chunk stats", new Callable()

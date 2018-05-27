@@ -24,18 +24,18 @@ public class GuiMerchant extends GuiContainer
 {
     private static final Logger logger = LogManager.getLogger();
     private static final ResourceLocation field_147038_v = new ResourceLocation("textures/gui/container/villager.png");
-    private IMerchant field_147037_w;
+    private final IMerchant field_147037_w;
     private GuiMerchant.MerchantButton field_147043_x;
     private GuiMerchant.MerchantButton field_147042_y;
     private int field_147041_z;
-    private String field_147040_A;
+    private final String field_147040_A;
     private static final String __OBFID = "CL_00000762";
 
     public GuiMerchant(InventoryPlayer p_i46380_1_, IMerchant p_i46380_2_, World p_i46380_3_, String p_i46380_4_)
     {
         super(new ContainerMerchant(p_i46380_1_, p_i46380_2_, p_i46380_3_));
         this.field_147037_w = p_i46380_2_;
-        this.field_147040_A = p_i46380_4_ != null && p_i46380_4_.length() >= 1 ? p_i46380_4_ : I18n.format("entity.Villager.name", new Object[0]);
+        this.field_147040_A = p_i46380_4_ != null && p_i46380_4_.length() >= 1 ? p_i46380_4_ : I18n.format("entity.Villager.name");
     }
 
     /**
@@ -55,7 +55,7 @@ public class GuiMerchant extends GuiContainer
     protected void func_146979_b(int p_146979_1_, int p_146979_2_)
     {
         this.fontRendererObj.drawString(this.field_147040_A, this.field_146999_f / 2 - this.fontRendererObj.getStringWidth(this.field_147040_A) / 2, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.field_147000_g - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.field_147000_g - 96 + 2, 4210752);
     }
 
     /**

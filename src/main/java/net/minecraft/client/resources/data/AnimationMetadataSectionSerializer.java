@@ -26,7 +26,7 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
 
         if (var6 != 1)
         {
-            Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var6), "Invalid default frame time", new Object[0]);
+            Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var6), "Invalid default frame time");
         }
 
         int var8;
@@ -59,12 +59,12 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
 
         if (var12 != -1)
         {
-            Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var12), "Invalid width", new Object[0]);
+            Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var12), "Invalid width");
         }
 
         if (var8 != -1)
         {
-            Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var8), "Invalid height", new Object[0]);
+            Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var8), "Invalid height");
         }
 
         return new AnimationMetadataSection(var4, var12, var8, var6);
@@ -83,11 +83,11 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
 
             if (var3.has("time"))
             {
-                Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var4), "Invalid frame time", new Object[0]);
+                Validate.inclusiveBetween(Integer.valueOf(1), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var4), "Invalid frame time");
             }
 
             int var5 = JsonUtils.getJsonObjectIntegerFieldValue(var3, "index");
-            Validate.inclusiveBetween(Integer.valueOf(0), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var5), "Invalid frame index", new Object[0]);
+            Validate.inclusiveBetween(Integer.valueOf(0), Integer.valueOf(Integer.MAX_VALUE), Integer.valueOf(var5), "Invalid frame index");
             return new AnimationFrame(var5, var4);
         }
         else

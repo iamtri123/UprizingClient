@@ -146,7 +146,7 @@ public class RandomMobsRule
             }
         }
 
-        return this.heights != null && el.spawnPosition != null ? this.heights.isInRange(el.spawnPosition.getY()) : true;
+        return this.heights == null || el.spawnPosition == null || this.heights.isInRange(el.spawnPosition.getY());
     }
 
     public ResourceLocation getTextureLocation(ResourceLocation loc, int randomId)

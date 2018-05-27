@@ -47,17 +47,17 @@ public class CommandPardonPlayer extends CommandBase
 
             if (var4 == null)
             {
-                throw new CommandException("commands.unban.failed", new Object[] {p_71515_2_[0]});
+                throw new CommandException("commands.unban.failed", p_71515_2_[0]);
             }
             else
             {
                 var3.getConfigurationManager().func_152608_h().func_152684_c(var4);
-                func_152373_a(p_71515_1_, this, "commands.unban.success", new Object[] {p_71515_2_[0]});
+                func_152373_a(p_71515_1_, this, "commands.unban.success", p_71515_2_[0]);
             }
         }
         else
         {
-            throw new WrongUsageException("commands.unban.usage", new Object[0]);
+            throw new WrongUsageException("commands.unban.usage");
         }
     }
 

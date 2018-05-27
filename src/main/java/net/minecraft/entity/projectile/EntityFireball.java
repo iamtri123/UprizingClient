@@ -173,7 +173,6 @@ public abstract class EntityFireball extends Entity
 
             for (this.rotationPitch = (float)(Math.atan2((double)var15, this.motionY) * 180.0D / Math.PI) - 90.0F; this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
             {
-                ;
             }
 
             while (this.rotationPitch - this.prevRotationPitch >= 180.0F)
@@ -240,7 +239,7 @@ public abstract class EntityFireball extends Entity
         p_70014_1_.setShort("zTile", (short)this.field_145794_g);
         p_70014_1_.setByte("inTile", (byte)Block.getIdFromBlock(this.field_145796_h));
         p_70014_1_.setByte("inGround", (byte)(this.inGround ? 1 : 0));
-        p_70014_1_.setTag("direction", this.newDoubleNBTList(new double[] {this.motionX, this.motionY, this.motionZ}));
+        p_70014_1_.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
     }
 
     /**

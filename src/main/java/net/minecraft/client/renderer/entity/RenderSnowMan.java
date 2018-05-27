@@ -17,7 +17,7 @@ public class RenderSnowMan extends RenderLiving
     private static final ResourceLocation snowManTextures = new ResourceLocation("textures/entity/snowman.png");
 
     /** A reference to the Snowman model in RenderSnowMan. */
-    private ModelSnowMan snowmanModel;
+    private final ModelSnowMan snowmanModel;
     private static final String __OBFID = "CL_00001025";
 
     public RenderSnowMan()

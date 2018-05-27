@@ -12,15 +12,15 @@ public class EntityAITasks
     private static final Logger logger = LogManager.getLogger();
 
     /** A list of EntityAITaskEntrys in EntityAITasks. */
-    private List taskEntries = new ArrayList();
+    private final List taskEntries = new ArrayList();
 
     /** A list of EntityAITaskEntrys that are currently being executed. */
-    private List executingTaskEntries = new ArrayList();
+    private final List executingTaskEntries = new ArrayList();
 
     /** Instance of Profiler. */
     private final Profiler theProfiler;
     private int tickCount;
-    private int tickRate = 3;
+    private final int tickRate = 3;
     private static final String __OBFID = "CL_00001588";
 
     public EntityAITasks(Profiler p_i1628_1_)

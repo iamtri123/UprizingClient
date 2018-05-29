@@ -7,6 +7,7 @@ import optifine.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uprizing.mod.ModRepository;
+import uprizing.mods.WaypointsMod;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +25,7 @@ public class Uprizing {
 
     /** Mods */
     private final ModRepository modRepository = new ModRepository();
+    private transient WaypointsMod waypointsMod;
 
     /** Options */
     public boolean scoreboardNumbers = false;
@@ -39,7 +41,10 @@ public class Uprizing {
         Config.initUprizing(this);
     }
 
-    private void initMods(File mainDir) {}
+    private void initMods(File mainDir) {
+        waypointsMod = new WaypointsMod(this, mainDir);
+        modRepository.addMod(waypointsMod);
+    }
 
     private void initKeyBindings() { // TODO: KeyBindings object in IMod (for mod disabling)
         KeyBinding[] gameSettings = minecraft.gameSettings.keyBindings;
@@ -83,8 +88,8 @@ public class Uprizing {
             }
 
             reader.close();
-        } catch (Exception var101) {
-            logger.error("Failed to load options", var101);
+        } catch (Exception exception) {
+            logger.error("Failed to load options", exception);
         }
     }
 
@@ -95,8 +100,8 @@ public class Uprizing {
             writer.println("chatBackground:" + chatBackground);
             writer.println("clearGlass:" + clearGlass);
             writer.close();
-        } catch (Exception var71) {
-            logger.error("Failed to save options", var71);
+        } catch (Exception exception) {
+            logger.error("Failed to save options", exception);
         }
     }
 

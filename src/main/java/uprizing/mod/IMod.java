@@ -7,8 +7,6 @@ public interface IMod {
 
     String getName();
 
-    boolean isEnabled();
-
     void runTick(TickType tickType);
 
     KeyBinding[] getKeyBindings();

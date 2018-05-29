@@ -64,6 +64,7 @@ public class GuiConnecting extends GuiScreen
                     }
 
                     var1 = InetAddress.getByName(p_146367_1_);
+                    GuiConnecting.this.mc.sexy().setServerHostAddress(var1.getHostAddress());
                     GuiConnecting.this.field_146371_g = NetworkManager.provideLanClient(var1, p_146367_2_);
                     GuiConnecting.this.field_146371_g.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.field_146371_g, GuiConnecting.this.mc, GuiConnecting.this.field_146374_i));
                     GuiConnecting.this.field_146371_g.scheduleOutboundPacket(new C00Handshake(5, p_146367_1_, p_146367_2_, EnumConnectionState.LOGIN));

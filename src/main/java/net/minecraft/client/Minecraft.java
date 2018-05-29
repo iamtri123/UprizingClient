@@ -144,6 +144,7 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
+import uprizing.Sexy;
 import uprizing.TickType;
 import uprizing.Uprizing;
 
@@ -253,6 +254,11 @@ public class Minecraft implements IPlayerUsage
 
     /** I'm Gay */
     public Uprizing uprizing;
+    private final Sexy sexy = new Sexy();
+
+    public final Sexy sexy() {
+        return sexy;
+    }
 
     /** Mouse helper instance. */
     public MouseHelper mouseHelper;
@@ -2249,6 +2255,7 @@ public class Minecraft implements IPlayerUsage
             }
 
             this.theIntegratedServer = null;
+            this.sexy.reset();
             this.guiAchievement.func_146257_b();
             this.entityRenderer.getMapItemRenderer().func_148249_a();
         }
@@ -2295,6 +2302,7 @@ public class Minecraft implements IPlayerUsage
                 this.playerController.flipPlayer(this.thePlayer);
             }
 
+            this.uprizing.getWaypointsMod().handleWorldLoading(this);
             this.thePlayer.preparePlayerToSpawn();
             p_71353_1_.spawnEntityInWorld(this.thePlayer);
             this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);

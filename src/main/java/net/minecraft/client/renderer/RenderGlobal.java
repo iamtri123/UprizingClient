@@ -645,6 +645,10 @@ public class RenderGlobal implements IWorldAccess
             boolean var26 = this.mc.gameSettings.fancyGraphics;
             this.mc.gameSettings.fancyGraphics = Config.isDroppedItemsFancy();
 
+            if (!this.mc.gameSettings.hideGUI) {
+                this.mc.uprizing.getWaypointsMod().renderWaypoints(p_147589_2_);
+            }
+
             for (var25 = 0; var25 < var24.size(); ++var25)
             {
                 var19 = (Entity)var24.get(var25);

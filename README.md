@@ -4,6 +4,9 @@
 # UprizingClient v0.0.1
 For more informations please join the [Discord:](https://discord.gg/FeFhNYZ) Q&A, mods screenshots, development logs, etc..
 
+## Want to play with the best client ?
+Please follow this [tutorial](https://github.com/Stawlker/UprizingClient/wiki/How-to-play-%3F) to learn how to use the UprizingClient.
+
 ## Mods
 - Waypoints
 
@@ -14,10 +17,3 @@ For more informations please join the [Discord:](https://discord.gg/FeFhNYZ) Q&A
 
 ## Suggestions
 If you want to share your suggestions, ideas or mods, do not hesitate to join the [Discord](https://discord.gg/FeFhNYZ) and write all this in the **#suggestions** channel.
-
-## Want to play with the best client ?
-1. Download the **UprizingClient.zip** file at: [UprizingClient.zip](https://github.com/Stawlker/UprizingClient/releases/download/v0.0.1/UprizingClient.zip)
-2. Unzip this file into a folder.
-3. Edit the **start.bat** file and replace placeholders with your e-mail, password and Minecraft assets directory:
-	> _java -Djava.library.path=natives -XX:+DisableAttachMechanism -XX:-DisableExplicitGC -jar UprizingClient.jar --e-mail randommcuser@hotmail<span></span>.com --password StawlkerIsTheBest --assetsDir "C:\Users\Stawlker\AppData\Roaming\\.minecraft\assets"_
-4. Double click on the start.bat file and enjoy playing with the UprizingClient :rocket:

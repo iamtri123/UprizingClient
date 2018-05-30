@@ -126,6 +126,7 @@ public class Uprizing {
             chatBackground = !chatBackground;
         } else if (option == Options.CLEAR_GLASS) {
             clearGlass = !clearGlass;
+            minecraft.renderGlobal.loadRenderers();
         }
     }
 }

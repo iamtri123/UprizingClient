@@ -7,7 +7,8 @@ public enum Options {
 
     SCOREBOARD_NUMBERS("Scoreboard Numbers"),
     CHAT_BACKGROUND("Chat Background"),
-    CLEAR_GLASS("Clear Glass");
+    CLEAR_GLASS("Clear Glass"),
+    WORLD_TIME_MODE("World Time Mode");
 
     private final String name;
 

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uprizing.mod.ModRepository;
 import uprizing.mods.WaypointsMod;
+import uprizing.world.WorldTimeMode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,6 +27,9 @@ public class Uprizing {
     /** Mods */
     private final ModRepository modRepository = new ModRepository();
     private transient WaypointsMod waypointsMod;
+
+    /** Others */
+    public WorldTimeMode worldTimeMode = new WorldTimeMode();
 
     /** Options */
     public boolean scoreboardNumbers = false;
@@ -80,6 +84,8 @@ public class Uprizing {
                         chatBackground = args[1].equals("true");
                     } else if (args[0].equals("clearGlass")) {
                         clearGlass = args[1].equals("true");
+                    } else if (args[0].equals("worldTimeMode")) {
+                        worldTimeMode.set(Integer.parseInt(args[1]));
                     }
                 } catch (Exception var91) {
                     logger.warn("Skipping bad option: " + line);
@@ -99,6 +105,7 @@ public class Uprizing {
             writer.println("scoreboardNumbers:" + scoreboardNumbers);
             writer.println("chatBackground:" + chatBackground);
             writer.println("clearGlass:" + clearGlass);
+            writer.println("worldTimeMode:" + worldTimeMode.get());
             writer.close();
         } catch (Exception exception) {
             logger.error("Failed to save options", exception);
@@ -114,6 +121,8 @@ public class Uprizing {
             return chatBackground ? prefix + "ON" : prefix + "OFF";
         } else if (option == Options.CLEAR_GLASS) {
             return clearGlass ? prefix + "ON" : prefix + "OFF";
+        } else if (option == Options.WORLD_TIME_MODE) {
+            return prefix + worldTimeMode.getName();
         } else {
             return prefix;
         }
@@ -127,6 +136,8 @@ public class Uprizing {
         } else if (option == Options.CLEAR_GLASS) {
             clearGlass = !clearGlass;
             minecraft.renderGlobal.loadRenderers();
+        } else if (option == Options.WORLD_TIME_MODE) {
+            worldTimeMode.next();
         }
     }
 }

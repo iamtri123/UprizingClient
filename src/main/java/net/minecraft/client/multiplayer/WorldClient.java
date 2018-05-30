@@ -31,6 +31,7 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.SaveHandlerMP;
+import uprizing.world.WorldTimeMode;
 
 public class WorldClient extends World
 {
@@ -470,18 +471,18 @@ public class WorldClient extends World
     /**
      * Sets the world time.
      */
-    public void setWorldTime(long p_72877_1_)
-    {
-        if (p_72877_1_ < 0L)
-        {
-            p_72877_1_ = -p_72877_1_;
-            this.getGameRules().setOrCreateGameRule("doDaylightCycle", "false");
+    public void setWorldTime(long worldTime) {
+        if (mc.uprizing.worldTimeMode.get() != WorldTimeMode.VANILLA) {
+            worldTime = mc.uprizing.worldTimeMode.getTime();
         }
-        else
-        {
+
+        if (worldTime < 0L) {
+            worldTime = -worldTime;
+            this.getGameRules().setOrCreateGameRule("doDaylightCycle", "false");
+        } else {
             this.getGameRules().setOrCreateGameRule("doDaylightCycle", "true");
         }
 
-        super.setWorldTime(p_72877_1_);
+        super.setWorldTime(worldTime);
     }
 }

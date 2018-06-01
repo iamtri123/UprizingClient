@@ -541,7 +541,7 @@ public class GuiIngame extends Gui
                 int var19 = var23 - var12 * p_96136_4_.FONT_HEIGHT;
                 int var20 = p_96136_3_ - var24 + 2;
                 drawRect(var25 - 2, var19, var20, var19 + p_96136_4_.FONT_HEIGHT, 1342177280);
-                p_96136_4_.drawString(var16, var25, var19, 553648127);
+                drawString(p_96136_4_, var16, var25, var19);
 
                 if (mc.uprizing.scoreboardNumbers) {
                     p_96136_4_.drawString(var17, var20 - p_96136_4_.getStringWidth(var17), var19, 553648127);
@@ -552,9 +552,17 @@ public class GuiIngame extends Gui
                     String var21 = p_96136_1_.getDisplayName();
                     drawRect(var25 - 2, var19 - p_96136_4_.FONT_HEIGHT - 1, var20, var19 - 1, 1610612736);
                     drawRect(var25 - 2, var19 - 1, var20, var19, 1342177280);
-                    p_96136_4_.drawString(var21, var25 + var7 / 2 - p_96136_4_.getStringWidth(var21) / 2, var19 - p_96136_4_.FONT_HEIGHT, 553648127);
+                    drawString(p_96136_4_, var21, var25 + var7 / 2 - p_96136_4_.getStringWidth(var21) / 2, var19 - p_96136_4_.FONT_HEIGHT);
                 }
             }
+        }
+    }
+
+    private void drawString(FontRenderer renderer, String text, int x, int z) {
+        if (mc.uprizing.scoreboardShadow) {
+            renderer.drawStringWithShadow(text, x, z, 553648127);
+        } else {
+            renderer.drawString(text, x, z, 553648127);
         }
     }
 

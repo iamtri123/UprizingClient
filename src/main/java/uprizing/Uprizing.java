@@ -33,6 +33,7 @@ public class Uprizing {
 
     /** Options */
     public boolean scoreboardNumbers = false;
+    public boolean scoreboardShadow = false;
     public boolean chatBackground = false;
     public boolean clearGlass = true;
 
@@ -80,6 +81,8 @@ public class Uprizing {
 
                     if (args[0].equals("scoreboardNumbers")) {
                         scoreboardNumbers = args[1].equals("true");
+                    } else if (args[0].equals("scoreboardShadow")) {
+                        scoreboardShadow = args[1].equals("true");
                     } else if (args[0].equals("chatBackground")) {
                         chatBackground = args[1].equals("true");
                     } else if (args[0].equals("clearGlass")) {
@@ -103,6 +106,7 @@ public class Uprizing {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(file));
             writer.println("scoreboardNumbers:" + scoreboardNumbers);
+            writer.println("scoreboardShadow:" + scoreboardShadow);
             writer.println("chatBackground:" + chatBackground);
             writer.println("clearGlass:" + clearGlass);
             writer.println("worldTimeMode:" + worldTimeMode.get());
@@ -117,6 +121,8 @@ public class Uprizing {
 
         if (option == Options.SCOREBOARD_NUMBERS) {
             return scoreboardNumbers ? prefix + "ON" : prefix + "OFF";
+        } else if (option == Options.SCOREBOARD_SHADOW) {
+            return scoreboardShadow ? prefix + "ON" : prefix + "OFF";
         } else if (option == Options.CHAT_BACKGROUND) {
             return chatBackground ? prefix + "ON" : prefix + "OFF";
         } else if (option == Options.CLEAR_GLASS) {
@@ -131,6 +137,8 @@ public class Uprizing {
     public void setOptionValue(Options option) {
         if (option == Options.SCOREBOARD_NUMBERS) {
             scoreboardNumbers = !scoreboardNumbers;
+        } else if (option == Options.SCOREBOARD_SHADOW) {
+            scoreboardShadow = !scoreboardShadow;
         } else if (option == Options.CHAT_BACKGROUND) {
             chatBackground = !chatBackground;
         } else if (option == Options.CLEAR_GLASS) {

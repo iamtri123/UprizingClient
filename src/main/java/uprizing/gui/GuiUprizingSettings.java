@@ -12,7 +12,7 @@ public class GuiUprizingSettings extends GuiScreen {
     private final GuiScreen prevScreen;
     private final Uprizing uprizing;
     private static final String title = "Uprizing Settings";
-    private static final Options[] options = { Options.SCOREBOARD_NUMBERS, Options.SCOREBOARD_SHADOW, Options.CHAT_BACKGROUND, Options.CLEAR_GLASS, Options.WORLD_TIME_MODE };
+    private static final Options[] options = { Options.SCOREBOARD_NUMBERS, Options.SCOREBOARD_SHADOW, Options.CHAT_BACKGROUND, Options.CLEAR_GLASS, Options.WORLD_TIME_MODE, Options.MOTION_BLUR };
     private int lastMouseX = 0, lastMouseY = 0;
     private long mouseStillTime = 0L;
 

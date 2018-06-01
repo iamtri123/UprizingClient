@@ -11,7 +11,11 @@ public class WorldTimeMode {
         return value;
     }
 
-    public final String getName() {
+    public final void set(int value) {
+        this.value = value;
+    }
+
+    public final String getSuffix() {
         return names[value];
     }
 
@@ -21,9 +25,5 @@ public class WorldTimeMode {
 
     public final void next() {
         value = value == names.length - 1 ? 0 : value + 1;
-    }
-
-    public final void set(int value) {
-        this.value = value;
     }
 }

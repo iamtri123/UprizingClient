@@ -9,7 +9,8 @@ public enum Options {
     SCOREBOARD_SHADOW("Scoreboard Shadow"),
     CHAT_BACKGROUND("Chat Background"),
     CLEAR_GLASS("Clear Glass"),
-    WORLD_TIME_MODE("World Time Mode");
+    WORLD_TIME_MODE("World Time Mode"),
+    MOTION_BLUR("Motion Blur");
 
     private final String name;
 

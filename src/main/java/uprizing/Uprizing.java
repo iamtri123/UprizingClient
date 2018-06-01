@@ -29,7 +29,8 @@ public class Uprizing {
     private transient WaypointsMod waypointsMod;
 
     /** Others */
-    public WorldTimeMode worldTimeMode = new WorldTimeMode();
+    public final WorldTimeMode worldTimeMode = new WorldTimeMode();
+    public final MotionBlur motionBlur = new MotionBlur();
 
     /** Options */
     public boolean scoreboardNumbers = false;
@@ -89,6 +90,8 @@ public class Uprizing {
                         clearGlass = args[1].equals("true");
                     } else if (args[0].equals("worldTimeMode")) {
                         worldTimeMode.set(Integer.parseInt(args[1]));
+                    } else if (args[0].equals("motionBlur")) {
+                        motionBlur.set(Integer.valueOf(args[1]));
                     }
                 } catch (Exception var91) {
                     logger.warn("Skipping bad option: " + line);
@@ -110,6 +113,7 @@ public class Uprizing {
             writer.println("chatBackground:" + chatBackground);
             writer.println("clearGlass:" + clearGlass);
             writer.println("worldTimeMode:" + worldTimeMode.get());
+            writer.println("motionBlur:" + motionBlur.get());
             writer.close();
         } catch (Exception exception) {
             logger.error("Failed to save options", exception);
@@ -128,7 +132,9 @@ public class Uprizing {
         } else if (option == Options.CLEAR_GLASS) {
             return clearGlass ? prefix + "ON" : prefix + "OFF";
         } else if (option == Options.WORLD_TIME_MODE) {
-            return prefix + worldTimeMode.getName();
+            return prefix + worldTimeMode.getSuffix();
+        } else if (option == Options.MOTION_BLUR) {
+            return prefix + motionBlur.getSuffix();
         } else {
             return prefix;
         }
@@ -146,6 +152,8 @@ public class Uprizing {
             minecraft.renderGlobal.loadRenderers();
         } else if (option == Options.WORLD_TIME_MODE) {
             worldTimeMode.next();
+        } else if (option == Options.MOTION_BLUR) {
+            motionBlur.next();
         }
     }
 }

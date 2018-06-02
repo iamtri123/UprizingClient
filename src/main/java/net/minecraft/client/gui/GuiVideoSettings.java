@@ -191,7 +191,7 @@ public class GuiVideoSettings extends GuiScreen
         }
 
         this.drawString(this.fontRendererObj, ver, 2, this.height - 10, 8421504);
-        String verMc = "UprizingClient v0.0.1";
+        String verMc = "UprizingClient v0.0.2";
         int lenMc = this.fontRendererObj.getStringWidth(verMc);
         this.drawString(this.fontRendererObj, verMc, this.width - lenMc - 2, this.height - 10, 8421504);
 

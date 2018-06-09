@@ -17,6 +17,22 @@ public class Stawlker {
         return String.format("%.1f", dbl);
     }
 
+    public static String configKey(String name) {
+		final StringBuilder builder = new StringBuilder();
+
+		for (int index = 0; index < name.length(); index++) {
+			final char c = name.charAt(index);
+
+			if (index == 0) {
+				builder.append(Character.toLowerCase(c));
+			} else if (c != ' ') {
+				builder.append(c);
+			}
+		}
+
+		return builder.toString();
+	}
+
     public static boolean isDbl(String string) {
         try {
             Double.parseDouble(string);
@@ -26,7 +42,7 @@ public class Stawlker {
         }
     }
 
-    public static KeyBinding keyBinding(String name, int keyId, String group) {
-        return new KeyBinding(name, keyId, group);
+    public static KeyBinding keyBinding(String description, int keyCode, String category) {
+        return new KeyBinding(description, keyCode, category);
     }
 }

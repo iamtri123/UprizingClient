@@ -159,14 +159,14 @@ public class GuiWinGame extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.func_146575_b(p_73863_1_, p_73863_2_, p_73863_3_);
+        this.func_146575_b(mouseX, mouseY, partialTicks);
         Tessellator var4 = Tessellator.instance;
         short var5 = 274;
         int var6 = this.width / 2 - var5 / 2;
         int var7 = this.height + 50;
-        float var8 = -((float)this.field_146581_h + p_73863_3_) * this.field_146578_s;
+        float var8 = -((float)this.field_146581_h + partialTicks) * this.field_146578_s;
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, var8, 0.0F);
         this.mc.getTextureManager().bindTexture(field_146576_f);
@@ -221,6 +221,6 @@ public class GuiWinGame extends GuiScreen
         var4.addVertexWithUV(0.0D, 0.0D, (double)this.zLevel, 0.0D, 0.0D);
         var4.draw();
         GL11.glDisable(GL11.GL_BLEND);
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

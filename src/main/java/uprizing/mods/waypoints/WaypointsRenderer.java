@@ -1,4 +1,4 @@
-package uprizing.waypoint;
+package uprizing.mods.waypoints;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

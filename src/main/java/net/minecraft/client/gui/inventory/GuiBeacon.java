@@ -234,35 +234,35 @@ public class GuiBeacon extends GuiContainer
 
         public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_)
         {
-            if (this.field_146125_m)
+            if (this.visible)
             {
                 p_146112_1_.getTextureManager().bindTexture(GuiBeacon.field_147025_v);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.field_146123_n = p_146112_2_ >= this.field_146128_h && p_146112_3_ >= this.field_146129_i && p_146112_2_ < this.field_146128_h + this.field_146120_f && p_146112_3_ < this.field_146129_i + this.field_146121_g;
+                this.hovered = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
                 short var4 = 219;
                 int var5 = 0;
 
                 if (!this.enabled)
                 {
-                    var5 += this.field_146120_f * 2;
+                    var5 += this.width * 2;
                 }
                 else if (this.field_146142_r)
                 {
-                    var5 += this.field_146120_f * 1;
+                    var5 += this.width * 1;
                 }
-                else if (this.field_146123_n)
+                else if (this.hovered)
                 {
-                    var5 += this.field_146120_f * 3;
+                    var5 += this.width * 3;
                 }
 
-                this.drawTexturedModalRect(this.field_146128_h, this.field_146129_i, var5, var4, this.field_146120_f, this.field_146121_g);
+                this.drawTexturedModalRect(this.xPosition, this.yPosition, var5, var4, this.width, this.height);
 
                 if (!GuiBeacon.field_147025_v.equals(this.field_146145_o))
                 {
                     p_146112_1_.getTextureManager().bindTexture(this.field_146145_o);
                 }
 
-                this.drawTexturedModalRect(this.field_146128_h + 2, this.field_146129_i + 2, this.field_146144_p, this.field_146143_q, 18, 18);
+                this.drawTexturedModalRect(this.xPosition + 2, this.yPosition + 2, this.field_146144_p, this.field_146143_q, 18, 18);
             }
         }
 

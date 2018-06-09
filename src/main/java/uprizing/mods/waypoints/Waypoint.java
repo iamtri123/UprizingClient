@@ -1,4 +1,4 @@
-package uprizing.waypoint;
+package uprizing.mods.waypoints;
 
 import lombok.Getter;
 import lombok.Setter;

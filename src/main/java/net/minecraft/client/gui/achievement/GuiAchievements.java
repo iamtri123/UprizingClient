@@ -97,7 +97,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         if (this.field_146558_F)
         {
@@ -116,7 +116,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 int var6 = var4 + 8;
                 int var7 = var5 + 17;
 
-                if ((this.field_146554_D == 0 || this.field_146554_D == 1) && p_73863_1_ >= var6 && p_73863_1_ < var6 + 224 && p_73863_2_ >= var7 && p_73863_2_ < var7 + 155)
+                if ((this.field_146554_D == 0 || this.field_146554_D == 1) && mouseX >= var6 && mouseX < var6 + 224 && mouseY >= var7 && mouseY < var7 + 155)
                 {
                     if (this.field_146554_D == 0)
                     {
@@ -124,14 +124,14 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                     }
                     else
                     {
-                        this.field_146567_u -= (double)((float)(p_73863_1_ - this.field_146563_h) * this.field_146570_r);
-                        this.field_146566_v -= (double)((float)(p_73863_2_ - this.field_146564_i) * this.field_146570_r);
+                        this.field_146567_u -= (double)((float)(mouseX - this.field_146563_h) * this.field_146570_r);
+                        this.field_146566_v -= (double)((float)(mouseY - this.field_146564_i) * this.field_146570_r);
                         this.field_146565_w = this.field_146569_s = this.field_146567_u;
                         this.field_146573_x = this.field_146568_t = this.field_146566_v;
                     }
 
-                    this.field_146563_h = p_73863_1_;
-                    this.field_146564_i = p_73863_2_;
+                    this.field_146563_h = mouseX;
+                    this.field_146564_i = mouseY;
                 }
             }
             else
@@ -187,7 +187,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             }
 
             this.drawDefaultBackground();
-            this.func_146552_b(p_73863_1_, p_73863_2_, p_73863_3_);
+            this.func_146552_b(mouseX, mouseY, partialTicks);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             this.func_146553_h();

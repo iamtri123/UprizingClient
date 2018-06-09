@@ -95,10 +95,10 @@ public class GuiSnooper extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.field_146606_s.func_148128_a(p_73863_1_, p_73863_2_, p_73863_3_);
+        this.field_146606_s.func_148128_a(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, this.field_146610_i, this.width / 2, 8, 16777215);
         int var4 = 22;
         String[] var5 = this.field_146607_r;
@@ -111,7 +111,7 @@ public class GuiSnooper extends GuiScreen
             var4 += this.fontRendererObj.FONT_HEIGHT;
         }
 
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     class List extends GuiSlot

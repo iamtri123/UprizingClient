@@ -1,4 +1,4 @@
-package uprizing.mods;
+package uprizing.mods.waypoints;
 
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
@@ -7,24 +7,21 @@ import org.lwjgl.input.Keyboard;
 import uprizing.Stawlker;
 import uprizing.TickType;
 import uprizing.Uprizing;
-import uprizing.gui.waypoint.GuiWaypoint;
-import uprizing.gui.waypoint.GuiWaypointsMenu;
-import uprizing.mod.IMod;
-import uprizing.waypoint.MultiplayerWaypoint;
-import uprizing.waypoint.SingleplayerWaypoint;
-import uprizing.waypoint.Waypoint;
-import uprizing.waypoint.WaypointsContainer;
+import uprizing.gui.waypoints.GuiWaypoint;
+import uprizing.gui.waypoints.GuiWaypointsMenu;
+import uprizing.mods.Mod;
+import uprizing.mods.ModMetadata;
 
 import java.io.File;
 
 @Getter
-public class WaypointsMod extends WaypointsContainer implements IMod {
+public class WaypointsMod extends WaypointsContainer implements Mod {
 
     private final transient Uprizing uprizing;
     private final transient Minecraft minecraft;
-    private final String name = "Waypoints";
-    public final KeyBinding keyBindAddWaypoint = Stawlker.keyBinding("Add Waypoint", Keyboard.KEY_B, "Uprizing Client"); // 48
-    public final KeyBinding keyBindWaypointsMenu = Stawlker.keyBinding("Waypoints Menu", Keyboard.KEY_M, "Uprizing Client"); // 50
+    private final ModMetadata metadata = new ModMetadata("Waypoints", "Stawlker");
+    private final KeyBinding addWaypointKeyBinding = Stawlker.keyBinding("Add Waypoint", Keyboard.KEY_B, "Uprizing Client"); // 48
+    private final KeyBinding openWaypointsMenuKeyBinding = Stawlker.keyBinding("Open Waypoints Menu", Keyboard.KEY_M, "Uprizing Client"); // 50
 
     public WaypointsMod(final Uprizing uprizing, final File mainDir) {
         super(mainDir);
@@ -36,9 +33,9 @@ public class WaypointsMod extends WaypointsContainer implements IMod {
     @Override
     public void runTick(TickType tickType) {
         if (minecraft.currentScreen == null) {
-            if (keyBindAddWaypoint.isPressed()) {
+            if (addWaypointKeyBinding.isPressed()) {
                 minecraft.displayGuiScreen(new GuiWaypoint(uprizing));
-            } else if (keyBindWaypointsMenu.isPressed()) {
+            } else if (openWaypointsMenuKeyBinding.isPressed()) {
                 minecraft.displayGuiScreen(new GuiWaypointsMenu(uprizing));
             }
         }
@@ -54,7 +51,7 @@ public class WaypointsMod extends WaypointsContainer implements IMod {
 
     @Override
     public final KeyBinding[] getKeyBindings() {
-        return new KeyBinding[] { keyBindAddWaypoint, keyBindWaypointsMenu };
+        return new KeyBinding[] { addWaypointKeyBinding, openWaypointsMenuKeyBinding };
     }
 
     @Override
@@ -64,6 +61,6 @@ public class WaypointsMod extends WaypointsContainer implements IMod {
 
     @Override
     public String toString() {
-        return name;
+        return metadata.getName();
     }
 }

@@ -68,15 +68,15 @@ public class GuiCreateWorld extends GuiScreen
         this.buttonList.add(this.field_146343_z = new GuiButton(2, this.width / 2 - 75, 115, 150, 20, I18n.format("selectWorld.gameMode")));
         this.buttonList.add(this.field_146324_A = new GuiButton(3, this.width / 2 - 75, 187, 150, 20, I18n.format("selectWorld.moreWorldOptions")));
         this.buttonList.add(this.field_146325_B = new GuiButton(4, this.width / 2 - 155, 100, 150, 20, I18n.format("selectWorld.mapFeatures")));
-        this.field_146325_B.field_146125_m = false;
+        this.field_146325_B.visible = false;
         this.buttonList.add(this.field_146326_C = new GuiButton(7, this.width / 2 + 5, 151, 150, 20, I18n.format("selectWorld.bonusItems")));
-        this.field_146326_C.field_146125_m = false;
+        this.field_146326_C.visible = false;
         this.buttonList.add(this.field_146320_D = new GuiButton(5, this.width / 2 + 5, 100, 150, 20, I18n.format("selectWorld.mapType")));
-        this.field_146320_D.field_146125_m = false;
+        this.field_146320_D.visible = false;
         this.buttonList.add(this.field_146321_E = new GuiButton(6, this.width / 2 - 155, 151, 150, 20, I18n.format("selectWorld.allowCommands")));
-        this.field_146321_E.field_146125_m = false;
+        this.field_146321_E.visible = false;
         this.buttonList.add(this.field_146322_F = new GuiButton(8, this.width / 2 + 5, 120, 150, 20, I18n.format("selectWorld.customizeType")));
-        this.field_146322_F.field_146125_m = false;
+        this.field_146322_F.visible = false;
         this.field_146333_g = new GuiTextField(this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
         this.field_146333_g.setFocused(true);
         this.field_146333_g.setText(this.field_146330_J);
@@ -337,12 +337,12 @@ public class GuiCreateWorld extends GuiScreen
     private void func_146316_a(boolean p_146316_1_)
     {
         this.field_146344_y = p_146316_1_;
-        this.field_146343_z.field_146125_m = !this.field_146344_y;
-        this.field_146325_B.field_146125_m = this.field_146344_y;
-        this.field_146326_C.field_146125_m = this.field_146344_y;
-        this.field_146320_D.field_146125_m = this.field_146344_y;
-        this.field_146321_E.field_146125_m = this.field_146344_y;
-        this.field_146322_F.field_146125_m = this.field_146344_y && WorldType.worldTypes[this.field_146331_K] == WorldType.FLAT;
+        this.field_146343_z.visible = !this.field_146344_y;
+        this.field_146325_B.visible = this.field_146344_y;
+        this.field_146326_C.visible = this.field_146344_y;
+        this.field_146320_D.visible = this.field_146344_y;
+        this.field_146321_E.visible = this.field_146344_y;
+        this.field_146322_F.visible = this.field_146344_y && WorldType.worldTypes[this.field_146331_K] == WorldType.FLAT;
 
         if (this.field_146344_y)
         {
@@ -382,24 +382,24 @@ public class GuiCreateWorld extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
-        super.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
 
         if (this.field_146344_y)
         {
-            this.field_146335_h.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+            this.field_146335_h.mouseClicked(mouseX, mouseY, mouseButton);
         }
         else
         {
-            this.field_146333_g.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+            this.field_146333_g.mouseClicked(mouseX, mouseY, mouseButton);
         }
     }
 
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, I18n.format("selectWorld.create"), this.width / 2, 20, -1);
@@ -414,7 +414,7 @@ public class GuiCreateWorld extends GuiScreen
 
             if (WorldType.worldTypes[this.field_146331_K].func_151357_h())
             {
-                this.fontRendererObj.drawSplitString(I18n.format(WorldType.worldTypes[this.field_146331_K].func_151359_c()), this.field_146320_D.field_146128_h + 2, this.field_146320_D.field_146129_i + 22, this.field_146320_D.func_146117_b(), 10526880);
+                this.fontRendererObj.drawSplitString(I18n.format(WorldType.worldTypes[this.field_146331_K].func_151359_c()), this.field_146320_D.xPosition + 2, this.field_146320_D.yPosition + 22, this.field_146320_D.func_146117_b(), 10526880);
             }
         }
         else
@@ -426,7 +426,7 @@ public class GuiCreateWorld extends GuiScreen
             this.drawString(this.fontRendererObj, this.field_146328_H, this.width / 2 - 100, 149, -6250336);
         }
 
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     public void func_146318_a(WorldInfo p_146318_1_)

@@ -137,9 +137,9 @@ public class GuiMerchant extends GuiContainer
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
         MerchantRecipeList var4 = this.field_147037_w.getRecipes(this.mc.thePlayer);
 
         if (var4 != null && !var4.isEmpty())
@@ -172,17 +172,17 @@ public class GuiMerchant extends GuiContainer
             itemRender.zLevel = 0.0F;
             GL11.glDisable(GL11.GL_LIGHTING);
 
-            if (this.func_146978_c(36, 24, 16, 16, p_73863_1_, p_73863_2_))
+            if (this.func_146978_c(36, 24, 16, 16, mouseX, mouseY))
             {
-                this.func_146285_a(var9, p_73863_1_, p_73863_2_);
+                this.func_146285_a(var9, mouseX, mouseY);
             }
-            else if (var10 != null && this.func_146978_c(62, 24, 16, 16, p_73863_1_, p_73863_2_))
+            else if (var10 != null && this.func_146978_c(62, 24, 16, 16, mouseX, mouseY))
             {
-                this.func_146285_a(var10, p_73863_1_, p_73863_2_);
+                this.func_146285_a(var10, mouseX, mouseY);
             }
-            else if (this.func_146978_c(120, 24, 16, 16, p_73863_1_, p_73863_2_))
+            else if (this.func_146978_c(120, 24, 16, 16, mouseX, mouseY))
             {
-                this.func_146285_a(var11, p_73863_1_, p_73863_2_);
+                this.func_146285_a(var11, mouseX, mouseY);
             }
 
             GL11.glPopMatrix();
@@ -210,29 +210,29 @@ public class GuiMerchant extends GuiContainer
 
         public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_)
         {
-            if (this.field_146125_m)
+            if (this.visible)
             {
                 p_146112_1_.getTextureManager().bindTexture(GuiMerchant.field_147038_v);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                boolean var4 = p_146112_2_ >= this.field_146128_h && p_146112_3_ >= this.field_146129_i && p_146112_2_ < this.field_146128_h + this.field_146120_f && p_146112_3_ < this.field_146129_i + this.field_146121_g;
+                boolean var4 = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
                 int var5 = 0;
                 int var6 = 176;
 
                 if (!this.enabled)
                 {
-                    var6 += this.field_146120_f * 2;
+                    var6 += this.width * 2;
                 }
                 else if (var4)
                 {
-                    var6 += this.field_146120_f;
+                    var6 += this.width;
                 }
 
                 if (!this.field_146157_o)
                 {
-                    var5 += this.field_146121_g;
+                    var5 += this.height;
                 }
 
-                this.drawTexturedModalRect(this.field_146128_h, this.field_146129_i, var6, var5, this.field_146120_f, this.field_146121_g);
+                this.drawTexturedModalRect(this.xPosition, this.yPosition, var6, var5, this.width, this.height);
             }
         }
     }

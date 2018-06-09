@@ -1,4 +1,4 @@
-package uprizing.gui.waypoint;
+package uprizing.gui.waypoints;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -10,10 +10,11 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import uprizing.Uprizing;
-import uprizing.waypoint.Waypoint;
+import uprizing.mods.waypoints.Waypoint;
 
 public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { // TODO: Optimize
 
+	private static final ResourceLocation inventoryTextures = new ResourceLocation("textures/gui/container/inventory.png");
     private final Uprizing uprizing;
     private List list;
     private Waypoint selectedWaypoint;
@@ -152,7 +153,7 @@ public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { //
             }
 
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            uprizing.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/gui/container/inventory.png")); // TODO: Optimize ?
+            uprizing.getMinecraft().getTextureManager().bindTexture(inventoryTextures);
             drawTexturedModalRect(par2 + 198, par3 - 2, waypoint.isEnabled() ? 72 : 90, 216, 16, 16);
         }
     }

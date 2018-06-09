@@ -107,7 +107,7 @@ public class GuiEditSign extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, I18n.format("sign.edit"), this.width / 2, 40, 16777215);
@@ -156,6 +156,6 @@ public class GuiEditSign extends GuiScreen
         TileEntityRendererDispatcher.instance.func_147549_a(this.field_146848_f, -0.5D, -0.75D, -0.5D, 0.0F);
         this.field_146848_f.field_145918_i = -1;
         GL11.glPopMatrix();
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

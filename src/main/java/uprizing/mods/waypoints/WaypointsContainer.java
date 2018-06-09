@@ -1,9 +1,9 @@
-package uprizing.waypoint;
+package uprizing.mods.waypoints;
 
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.ICamera;
-import uprizing.enums.Dimensions;
+import uprizing.Dimensions;
 
 import java.io.BufferedReader;
 import java.io.File;

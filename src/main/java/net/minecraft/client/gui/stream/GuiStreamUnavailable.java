@@ -88,7 +88,7 @@ public class GuiStreamUnavailable extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         int var4 = Math.max((int)((double)this.height * 0.85D / 2.0D - (double)((float)(this.field_152323_r.size() * this.fontRendererObj.FONT_HEIGHT) / 2.0F)), 50);
@@ -100,7 +100,7 @@ public class GuiStreamUnavailable extends GuiScreen
             this.drawCenteredString(this.fontRendererObj, var6, this.width / 2, var4, 10526880);
         }
 
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     protected void actionPerformed(GuiButton p_146284_1_)

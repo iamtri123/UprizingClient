@@ -72,17 +72,17 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         int var4 = this.field_147003_i;
         int var5 = this.field_147009_r;
-        this.func_146976_a(p_73863_3_, p_73863_1_, p_73863_2_);
+        this.func_146976_a(partialTicks, mouseX, mouseY);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
         RenderHelper.enableGUIStandardItemLighting();
         GL11.glPushMatrix();
         GL11.glTranslatef((float)var4, (float)var5, 0.0F);
@@ -100,7 +100,7 @@ public abstract class GuiContainer extends GuiScreen
             Slot var9 = (Slot)this.field_147002_h.inventorySlots.get(var8);
             this.func_146977_a(var9);
 
-            if (this.func_146981_a(var9, p_73863_1_, p_73863_2_) && var9.func_111238_b())
+            if (this.func_146981_a(var9, mouseX, mouseY) && var9.func_111238_b())
             {
                 this.field_147006_u = var9;
                 GL11.glDisable(GL11.GL_LIGHTING);
@@ -115,7 +115,7 @@ public abstract class GuiContainer extends GuiScreen
             }
         }
 
-        this.func_146979_b(p_73863_1_, p_73863_2_);
+        this.func_146979_b(mouseX, mouseY);
         InventoryPlayer var15 = this.mc.thePlayer.inventory;
         ItemStack var16 = this.field_147012_x == null ? var15.getItemStack() : this.field_147012_x;
 
@@ -141,7 +141,7 @@ public abstract class GuiContainer extends GuiScreen
                 }
             }
 
-            this.func_146982_a(var16, p_73863_1_ - var4 - var17, p_73863_2_ - var5 - var11, var12);
+            this.func_146982_a(var16, mouseX - var4 - var17, mouseY - var5 - var11, var12);
         }
 
         if (this.field_146991_C != null)
@@ -166,7 +166,7 @@ public abstract class GuiContainer extends GuiScreen
         if (var15.getItemStack() == null && this.field_147006_u != null && this.field_147006_u.getHasStack())
         {
             ItemStack var19 = this.field_147006_u.getStack();
-            this.func_146285_a(var19, p_73863_1_, p_73863_2_);
+            this.func_146285_a(var19, mouseX, mouseY);
         }
 
         GL11.glEnable(GL11.GL_LIGHTING);
@@ -317,20 +317,20 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
-        super.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
-        boolean var4 = p_73864_3_ == this.mc.gameSettings.keyBindPickBlock.getKeyCode() + 100;
-        Slot var5 = this.func_146975_c(p_73864_1_, p_73864_2_);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        boolean var4 = mouseButton == this.mc.gameSettings.keyBindPickBlock.getKeyCode() + 100;
+        Slot var5 = this.func_146975_c(mouseX, mouseY);
         long var6 = Minecraft.getSystemTime();
-        this.field_146993_M = this.field_146998_K == var5 && var6 - this.field_146997_J < 250L && this.field_146992_L == p_73864_3_;
+        this.field_146993_M = this.field_146998_K == var5 && var6 - this.field_146997_J < 250L && this.field_146992_L == mouseButton;
         this.field_146995_H = false;
 
-        if (p_73864_3_ == 0 || p_73864_3_ == 1 || var4)
+        if (mouseButton == 0 || mouseButton == 1 || var4)
         {
             int var8 = this.field_147003_i;
             int var9 = this.field_147009_r;
-            boolean var10 = p_73864_1_ < var8 || p_73864_2_ < var9 || p_73864_1_ >= var8 + this.field_146999_f || p_73864_2_ >= var9 + this.field_147000_g;
+            boolean var10 = mouseX < var8 || mouseY < var9 || mouseX >= var8 + this.field_146999_f || mouseY >= var9 + this.field_147000_g;
             int var11 = -1;
 
             if (var5 != null)
@@ -357,7 +357,7 @@ public abstract class GuiContainer extends GuiScreen
                     {
                         this.field_147005_v = var5;
                         this.field_147012_x = null;
-                        this.field_147004_w = p_73864_3_ == 1;
+                        this.field_147004_w = mouseButton == 1;
                     }
                     else
                     {
@@ -368,9 +368,9 @@ public abstract class GuiContainer extends GuiScreen
                 {
                     if (this.mc.thePlayer.inventory.getItemStack() == null)
                     {
-                        if (p_73864_3_ == this.mc.gameSettings.keyBindPickBlock.getKeyCode() + 100)
+                        if (mouseButton == this.mc.gameSettings.keyBindPickBlock.getKeyCode() + 100)
                         {
-                            this.func_146984_a(var5, var11, p_73864_3_, 3);
+                            this.func_146984_a(var5, var11, mouseButton, 3);
                         }
                         else
                         {
@@ -387,7 +387,7 @@ public abstract class GuiContainer extends GuiScreen
                                 var13 = 4;
                             }
 
-                            this.func_146984_a(var5, var11, p_73864_3_, var13);
+                            this.func_146984_a(var5, var11, mouseButton, var13);
                         }
 
                         this.field_146995_H = true;
@@ -395,14 +395,14 @@ public abstract class GuiContainer extends GuiScreen
                     else
                     {
                         this.field_147007_t = true;
-                        this.field_146988_G = p_73864_3_;
+                        this.field_146988_G = mouseButton;
                         this.field_147008_s.clear();
 
-                        if (p_73864_3_ == 0)
+                        if (mouseButton == 0)
                         {
                             this.field_146987_F = 0;
                         }
-                        else if (p_73864_3_ == 1)
+                        else if (mouseButton == 1)
                         {
                             this.field_146987_F = 1;
                         }
@@ -413,7 +413,7 @@ public abstract class GuiContainer extends GuiScreen
 
         this.field_146998_K = var5;
         this.field_146997_J = var6;
-        this.field_146992_L = p_73864_3_;
+        this.field_146992_L = mouseButton;
     }
 
     protected void mouseClickMove(int p_146273_1_, int p_146273_2_, int p_146273_3_, long p_146273_4_)

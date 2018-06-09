@@ -60,16 +60,16 @@ public class GuiEnchantment extends GuiContainer
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
-        super.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
         int var4 = (this.width - this.field_146999_f) / 2;
         int var5 = (this.height - this.field_147000_g) / 2;
 
         for (int var6 = 0; var6 < 3; ++var6)
         {
-            int var7 = p_73864_1_ - (var4 + 60);
-            int var8 = p_73864_2_ - (var5 + 14 + 19 * var6);
+            int var7 = mouseX - (var4 + 60);
+            int var8 = mouseY - (var5 + 14 + 19 * var6);
 
             if (var7 >= 0 && var8 >= 0 && var7 < 108 && var8 < 19 && this.field_147075_G.enchantItem(this.mc.thePlayer, var6))
             {

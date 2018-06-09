@@ -1,11 +1,11 @@
-package uprizing.mod;
+package uprizing.mods;
 
 import net.minecraft.client.settings.KeyBinding;
 import uprizing.TickType;
 
-public interface IMod {
+public interface Mod {
 
-    String getName();
+    ModMetadata getMetadata();
 
     void runTick(TickType tickType);
 

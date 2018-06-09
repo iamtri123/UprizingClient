@@ -1,4 +1,4 @@
-package uprizing.gui.waypoint;
+package uprizing.gui.waypoints;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -8,11 +8,11 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import uprizing.enums.Dimensions;
+import uprizing.Dimensions;
 import uprizing.Stawlker;
 import uprizing.Uprizing;
 import uprizing.gui.GuiSlotUprizing;
-import uprizing.waypoint.Waypoint;
+import uprizing.mods.waypoints.Waypoint;
 
 import java.util.Random;
 
@@ -65,7 +65,7 @@ public class GuiWaypoint extends GuiScreen { // TODO: Optimize
         buttonList.add(new GuiButton(0, width / 2 - 155, height / 6 + 168, 150, 20, "Done"));
         buttonList.add(new GuiButton(1, width / 2 + 5, height / 6 + 168, 150, 20, "Cancel"));
         buttonList.add(new GuiButton(2, width / 2 - 101, height / 6 + 82 + 6, 100, 20, "Enabled: " + (waypoint.isEnabled() ? "ON" : "OFF")));
-        ((GuiButton) buttonList.get(0)).enabled = name.getText().length() > 0;
+        buttonList.get(0).enabled = name.getText().length() > 0;
 
         list = new List(this);
         list.registerScrollButtons(7, 8);
@@ -96,7 +96,7 @@ public class GuiWaypoint extends GuiScreen { // TODO: Optimize
 
     @Override
     public void drawScreen(int par1, int par2, float par3) {
-        ((GuiButton) buttonList.get(2)).displayString = "Enabled: " + (waypoint.isEnabled() ? "ON" : "OFF");
+        buttonList.get(2).displayString = "Enabled: " + (waypoint.isEnabled() ? "ON" : "OFF");
         drawDefaultBackground();
         tooltip = null;
         list.drawScreen(par1, par2, par3);

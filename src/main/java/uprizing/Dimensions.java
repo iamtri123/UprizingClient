@@ -1,4 +1,4 @@
-package uprizing.enums;
+package uprizing;
 
 import lombok.Getter;
 

@@ -1,10 +1,5 @@
 package net.minecraft.client.multiplayer;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.Callable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -31,7 +26,15 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.SaveHandlerMP;
-import uprizing.world.WorldTimeMode;
+import uprizing.setting.Setting;
+import uprizing.setting.Settings;
+import uprizing.settings.WorldTimeSetting;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.Callable;
 
 public class WorldClient extends World
 {
@@ -472,8 +475,9 @@ public class WorldClient extends World
      * Sets the world time.
      */
     public void setWorldTime(long worldTime) {
-        if (mc.uprizing.worldTimeMode.get() != WorldTimeMode.VANILLA) {
-            worldTime = mc.uprizing.worldTimeMode.getTime();
+        final Setting worldTimeSetting = mc.uprizing.getSetting(Settings.WORLD_TIME);
+        if (worldTimeSetting.getAsInt() != WorldTimeSetting.VANILLA) {
+            worldTime = worldTimeSetting.getAsLong();
         }
 
         if (worldTime < 0L) {

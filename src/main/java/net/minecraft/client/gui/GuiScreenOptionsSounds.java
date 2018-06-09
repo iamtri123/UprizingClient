@@ -65,11 +65,11 @@ public class GuiScreenOptionsSounds extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, this.field_146507_a, this.width / 2, 15, 16777215);
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     protected String func_146504_a(SoundCategory p_146504_1_)
@@ -102,11 +102,11 @@ public class GuiScreenOptionsSounds extends GuiScreen
 
         protected void mouseDragged(Minecraft p_146119_1_, int p_146119_2_, int p_146119_3_)
         {
-            if (this.field_146125_m)
+            if (this.visible)
             {
                 if (this.field_146155_p)
                 {
-                    this.field_146156_o = (float)(p_146119_2_ - (this.field_146128_h + 4)) / (float)(this.field_146120_f - 8);
+                    this.field_146156_o = (float)(p_146119_2_ - (this.xPosition + 4)) / (float)(this.width - 8);
 
                     if (this.field_146156_o < 0.0F)
                     {
@@ -124,16 +124,16 @@ public class GuiScreenOptionsSounds extends GuiScreen
                 }
 
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.drawTexturedModalRect(this.field_146128_h + (int)(this.field_146156_o * (float)(this.field_146120_f - 8)), this.field_146129_i, 0, 66, 4, 20);
-                this.drawTexturedModalRect(this.field_146128_h + (int)(this.field_146156_o * (float)(this.field_146120_f - 8)) + 4, this.field_146129_i, 196, 66, 4, 20);
+                this.drawTexturedModalRect(this.xPosition + (int)(this.field_146156_o * (float)(this.width - 8)), this.yPosition, 0, 66, 4, 20);
+                this.drawTexturedModalRect(this.xPosition + (int)(this.field_146156_o * (float)(this.width - 8)) + 4, this.yPosition, 196, 66, 4, 20);
             }
         }
 
-        public boolean mousePressed(Minecraft p_146116_1_, int p_146116_2_, int p_146116_3_)
+        public boolean mousePressed(Minecraft mc, int mouseX, int mouseY)
         {
-            if (super.mousePressed(p_146116_1_, p_146116_2_, p_146116_3_))
+            if (super.mousePressed(mc, mouseX, mouseY))
             {
-                this.field_146156_o = (float)(p_146116_2_ - (this.field_146128_h + 4)) / (float)(this.field_146120_f - 8);
+                this.field_146156_o = (float)(mouseX - (this.xPosition + 4)) / (float)(this.width - 8);
 
                 if (this.field_146156_o < 0.0F)
                 {
@@ -145,8 +145,8 @@ public class GuiScreenOptionsSounds extends GuiScreen
                     this.field_146156_o = 1.0F;
                 }
 
-                p_146116_1_.gameSettings.setSoundLevel(this.field_146153_r, this.field_146156_o);
-                p_146116_1_.gameSettings.saveOptions();
+                mc.gameSettings.setSoundLevel(this.field_146153_r, this.field_146156_o);
+                mc.gameSettings.saveOptions();
                 this.displayString = this.field_146152_s + ": " + GuiScreenOptionsSounds.this.func_146504_a(this.field_146153_r);
                 this.field_146155_p = true;
                 return true;
@@ -157,7 +157,7 @@ public class GuiScreenOptionsSounds extends GuiScreen
             }
         }
 
-        public void func_146113_a(SoundHandler p_146113_1_) {}
+        public void playPressSound(SoundHandler p_146113_1_) {}
 
         public void mouseReleased(int p_146118_1_, int p_146118_2_)
         {

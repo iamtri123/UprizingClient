@@ -118,7 +118,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         if (this.field_146543_v)
         {
@@ -128,9 +128,9 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         }
         else
         {
-            this.field_146545_u.func_148128_a(p_73863_1_, p_73863_2_, p_73863_3_);
+            this.field_146545_u.func_148128_a(mouseX, mouseY, partialTicks);
             this.drawCenteredString(this.fontRendererObj, this.field_146542_f, this.width / 2, 20, 16777215);
-            super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+            super.drawScreen(mouseX, mouseY, partialTicks);
         }
     }
 

@@ -1,4 +1,4 @@
-package uprizing.waypoint;
+package uprizing.mods.waypoints;
 
 public class WaypointsArray {
 

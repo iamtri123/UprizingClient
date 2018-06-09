@@ -13,6 +13,7 @@ import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
+import uprizing.setting.Settings;
 
 public class GuiNewChat extends Gui
 {
@@ -56,6 +57,8 @@ public class GuiNewChat extends Gui
                 int var11;
                 int var14;
 
+                final boolean flag = field_146247_f.uprizing.getBoolean(Settings.CHAT_BACKGROUND);
+
                 for (var9 = 0; var9 + this.field_146250_j < this.field_146253_i.size() && var9 < var2; ++var9)
                 {
                     ChatLine var10 = (ChatLine)this.field_146253_i.get(var9 + this.field_146250_j);
@@ -95,7 +98,7 @@ public class GuiNewChat extends Gui
                             {
                                 byte var15 = 0;
                                 int var16 = -var9 * 9;
-                                if (field_146247_f.uprizing.chatBackground)
+                                if (flag)
                                     drawRect(var15, var16 - 9, var15 + var8 + 4, var16, var14 / 2 << 24);
                                 String var17 = var10.func_151461_a().getFormattedText();
                                 this.field_146247_f.fontRenderer.drawStringWithShadow(var17, var15, var16 - 8, 16777215 + (var14 << 24));

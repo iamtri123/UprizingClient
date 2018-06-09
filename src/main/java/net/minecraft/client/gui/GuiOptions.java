@@ -9,7 +9,6 @@ import net.minecraft.client.gui.stream.GuiStreamUnavailable;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
-import uprizing.gui.GuiUprizingSettings;
 
 public class GuiOptions extends GuiScreen implements GuiYesNoCallback
 {
@@ -62,7 +61,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(new GuiButton(8675309, this.width / 2 + 5, this.height / 6 + 48 - 6, 150, 20, "Super Secret Settings...")
         {
             private static final String __OBFID = "CL_00000701";
-            public void func_146113_a(SoundHandler p_146113_1_)
+            public void playPressSound(SoundHandler p_146113_1_)
             {
                 SoundEventAccessorComposite var2 = p_146113_1_.func_147686_a(SoundCategory.ANIMALS, SoundCategory.BLOCKS, SoundCategory.MOBS, SoundCategory.PLAYERS, SoundCategory.WEATHER);
 
@@ -72,7 +71,6 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
                 }
             }
         });
-        this.buttonList.add(new GuiButton(108, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, "Uprizing Settings..."));
         this.buttonList.add(new GuiButton(106, this.width / 2 - 155, this.height / 6 + 72 - 6, 150, 20, I18n.format("options.sounds")));
         this.buttonList.add(new GuiButton(107, this.width / 2 + 5, this.height / 6 + 72 - 6, 150, 20, I18n.format("options.stream")));
         this.buttonList.add(new GuiButton(101, this.width / 2 - 155, this.height / 6 + 96 - 6, 150, 20, I18n.format("options.video")));
@@ -92,11 +90,6 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
             {
                 this.field_146443_h.setOptionValue(((GuiOptionButton)p_146284_1_).func_146136_c(), 1);
                 p_146284_1_.displayString = this.field_146443_h.getKeyBinding(GameSettings.Options.getEnumOptions(p_146284_1_.id));
-            }
-
-            if (p_146284_1_.id == 108) {
-                this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new GuiUprizingSettings(this, this.mc.uprizing));
             }
 
             if (p_146284_1_.id == 8675309)
@@ -172,10 +165,10 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, this.field_146442_a, this.width / 2, 15, 16777215);
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

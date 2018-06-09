@@ -58,7 +58,7 @@ public class GuiCreateFlatWorld extends GuiScreen
         this.buttonList.add(new GuiButton(0, this.width / 2 - 155, this.height - 28, 150, 20, I18n.format("gui.done")));
         this.buttonList.add(new GuiButton(5, this.width / 2 + 5, this.height - 52, 150, 20, I18n.format("createWorld.customize.presets")));
         this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height - 28, 150, 20, I18n.format("gui.cancel")));
-        this.field_146389_t.field_146125_m = this.field_146388_u.field_146125_m = false;
+        this.field_146389_t.visible = this.field_146388_u.visible = false;
         this.field_146387_g.func_82645_d();
         this.func_146375_g();
     }
@@ -107,15 +107,15 @@ public class GuiCreateFlatWorld extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.field_146390_s.func_148128_a(p_73863_1_, p_73863_2_, p_73863_3_);
+        this.field_146390_s.func_148128_a(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, this.field_146393_h, this.width / 2, 8, 16777215);
         int var4 = this.width / 2 - 92 - 16;
         this.drawString(this.fontRendererObj, this.field_146394_i, var4, 32, 16777215);
         this.drawString(this.fontRendererObj, this.field_146391_r, var4 + 2 + 213 - this.fontRendererObj.getStringWidth(this.field_146391_r), 32, 16777215);
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     class Details extends GuiSlot

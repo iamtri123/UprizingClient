@@ -347,17 +347,17 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.field_146812_y = null;
         this.drawDefaultBackground();
-        this.field_146803_h.func_148128_a(p_73863_1_, p_73863_2_, p_73863_3_);
+        this.field_146803_h.func_148128_a(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.title"), this.width / 2, 20, 16777215);
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, partialTicks);
 
         if (this.field_146812_y != null)
         {
-            this.func_146283_a(Lists.newArrayList(Splitter.on("\n").split(this.field_146812_y)), p_73863_1_, p_73863_2_);
+            this.func_146283_a(Lists.newArrayList(Splitter.on("\n").split(this.field_146812_y)), mouseX, mouseY);
         }
     }
 
@@ -414,10 +414,10 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
-        super.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
-        this.field_146803_h.func_148179_a(p_73864_1_, p_73864_2_, p_73864_3_);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        this.field_146803_h.func_148179_a(mouseX, mouseY, mouseButton);
     }
 
     protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_)

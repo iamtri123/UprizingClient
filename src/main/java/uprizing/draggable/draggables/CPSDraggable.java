@@ -6,7 +6,7 @@ public class CPSDraggable extends AbstractDraggable {
 
 	private static final String SUFFIX = " CPS";
 	private static final int SECOND = 20;
-	private transient int leftClicks[] = {};
+	private transient int elements[] = {};
 	private int ticks, size;
 
 	public CPSDraggable() {
@@ -17,16 +17,16 @@ public class CPSDraggable extends AbstractDraggable {
 		ticks++;
 	}
 
-	public final void addLeft() {
+	public final void add() {
 		growCapacity(size + 1);
-		leftClicks[size++] = ticks;
+		elements[size++] = ticks;
 	}
 
 	private void growCapacity(int minCapacity) {
-		if (minCapacity - leftClicks.length > 0) {
+		if (minCapacity - elements.length > 0) {
 			final int[] result = new int[minCapacity];
-			System.arraycopy(leftClicks, 0, result, 0, leftClicks.length);
-			leftClicks = result;
+			System.arraycopy(elements, 0, result, 0, elements.length);
+			elements = result;
 		}
 	}
 
@@ -40,7 +40,7 @@ public class CPSDraggable extends AbstractDraggable {
 		final int duration = ticks - SECOND;
 
 		for (int index = 0; index < size; index++) {
-			final int leftClick = leftClicks[index];
+			final int leftClick = elements[index];
 			if (leftClick < duration) {
 				fastRemove(index);
 			}
@@ -50,9 +50,9 @@ public class CPSDraggable extends AbstractDraggable {
 	private void fastRemove(int index) {
 		final int numMoved = size - index - 1;
 		if (numMoved > 0)
-			System.arraycopy(leftClicks, index+1, leftClicks, index,
+			System.arraycopy(elements, index+1, elements, index,
 							 numMoved);
-		leftClicks[--size] = 0; // clear to let GC do its work
+		elements[--size] = 0; // clear to let GC do its work
 	}
 
 	@Override

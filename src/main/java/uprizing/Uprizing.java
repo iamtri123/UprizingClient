@@ -7,6 +7,7 @@ import optifine.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
+import uprizing.beerus.Beerus;
 import uprizing.category.Categories;
 import uprizing.category.Category;
 import uprizing.count.Count;
@@ -37,6 +38,7 @@ public class Uprizing {
 	}
 
 	/** X0 Tour Llif3 */
+	private final Beerus beerus = new Beerus();
 	private final Count tickCount = new Count();
 	private final Count fpsCount = new Count();
 	private final Categories categories;
@@ -83,6 +85,7 @@ public class Uprizing {
 
 	public void runTick() {
 		//tickCount.increment();
+		beerus.tick();
 		draggables.getCps().tick();
 	}
 
@@ -113,7 +116,8 @@ public class Uprizing {
 	}
 
 	public final void addLeftClick() {
-		draggables.getCps().addLeft();
+		beerus.addLeftClick();
+		draggables.getCps().add();
 	}
 
 	private void loadSettings() {

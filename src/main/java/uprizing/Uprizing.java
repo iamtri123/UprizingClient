@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import uprizing.category.Categories;
 import uprizing.category.Category;
+import uprizing.count.Count;
+import uprizing.draggable.Draggables;
 import uprizing.gui.GuiMenu;
 import uprizing.mods.ModRepository;
 import uprizing.mods.waypoints.WaypointsMod;
@@ -34,9 +36,12 @@ public class Uprizing {
 		return instance;
 	}
 
-	/** X0 Tour Llif3  */
+	/** X0 Tour Llif3 */
+	private final Count tickCount = new Count();
+	private final Count fpsCount = new Count();
 	private final Categories categories;
-	private final Settings settings = new Settings();
+	private final Settings settings;
+	private final Draggables draggables;
 
 	/** Mods */
 	private final ModRepository modRepository = new ModRepository();
@@ -49,6 +54,8 @@ public class Uprizing {
 		instance = this;
 		this.minecraft = minecraft;
 		this.file = new File(mainDir, "uprizing.txt");
+		this.draggables = new Draggables(this);
+		this.settings = new Settings();
 		this.categories = new Categories();
 		this.initMods(mainDir);
 		this.initKeyBindings();
@@ -74,13 +81,22 @@ public class Uprizing {
 		minecraft.gameSettings.keyBindings = keyBindings;
 	}
 
-	public void runTick(TickType tickType) {
-		if (minecraft.currentScreen == null && openMenuKeyBinding.isPressed()) {
-			minecraft.displayGuiScreen(new GuiMenu(this));
+	public void runTick() {
+		//tickCount.increment();
+		draggables.getCps().tick();
+	}
+
+	public void runRenderTick() {
+		if (minecraft.currentScreen == null) {
+			if (openMenuKeyBinding.isPressed()) {
+				minecraft.displayGuiScreen(new GuiMenu(this));
+			} else if (!minecraft.gameSettings.showDebugInfo) { // && !minecraft.gameSettings.hideGUI
+				draggables.draw();
+			}
 		}
 
 		while (modRepository.hasNext())
-			modRepository.next().runTick(tickType);
+			modRepository.next().onRenderTick();
 		modRepository.close();
 	}
 
@@ -94,6 +110,10 @@ public class Uprizing {
 
 	public final Setting getSetting(int index) {
 		return settings.get(index);
+	}
+
+	public final void addLeftClick() {
+		draggables.getCps().addLeft();
 	}
 
 	private void loadSettings() {
@@ -130,7 +150,7 @@ public class Uprizing {
 	public void saveSettings() {
 		try {
 			final PrintWriter writer = new PrintWriter(new FileWriter(file));
-			writer.println("openMenuKeyBinding:" + openMenuKeyBinding.getKeyCode());
+			writer.println("openMenuKeyBinding:" + openMenuKeyBinding.getKeyCode()); // TODO: utilisé un int pour que ça soit plus rapide
 			for (int i = 0; i < settings.size(); i++)
 				writer.println(settings.get(i).getConfigKeyAndValue());
 			writer.close();

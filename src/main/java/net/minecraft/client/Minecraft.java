@@ -145,7 +145,6 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import uprizing.Sexy;
-import uprizing.TickType;
 import uprizing.Uprizing;
 
 import javax.imageio.ImageIO;
@@ -1077,7 +1076,7 @@ public class Minecraft implements IPlayerUsage
         {
             this.mcProfiler.endStartSection("gameRenderer");
             this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks);
-            this.uprizing.runTick(TickType.RENDER); // TODO: move on mcProfiler class ?
+            this.uprizing.runRenderTick();
             this.mcProfiler.endSection();
         }
 
@@ -1131,6 +1130,7 @@ public class Minecraft implements IPlayerUsage
         while (getSystemTime() >= this.debugUpdateTime + 1000L)
         {
             debugFPS = this.fpsCounter;
+            this.uprizing.getFpsCount().set(fpsCounter);
             this.debug = debugFPS + " fps, " + WorldRenderer.chunksUpdated + " chunk updates";
             WorldRenderer.chunksUpdated = 0;
             this.debugUpdateTime += 1000L;
@@ -1463,6 +1463,8 @@ public class Minecraft implements IPlayerUsage
 
     private void func_147116_af()
     {
+        uprizing.addLeftClick();
+
         if (this.leftClickCounter <= 0)
         {
             this.thePlayer.swingItem();
@@ -1666,6 +1668,7 @@ public class Minecraft implements IPlayerUsage
      */
     public void runTick()
     {
+    	this.uprizing.runTick();
         this.mcProfiler.startSection("scheduledExecutables");
         Queue var1 = this.field_152351_aB;
 

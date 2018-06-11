@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import uprizing.Stawlker;
-import uprizing.TickType;
 import uprizing.Uprizing;
 import uprizing.gui.waypoints.GuiWaypoint;
 import uprizing.gui.waypoints.GuiWaypointsMenu;
@@ -31,7 +30,7 @@ public class WaypointsMod extends WaypointsContainer implements Mod {
     }
 
     @Override
-    public void runTick(TickType tickType) {
+    public void onRenderTick() {
         if (minecraft.currentScreen == null) {
             if (addWaypointKeyBinding.isPressed()) {
                 minecraft.displayGuiScreen(new GuiWaypoint(uprizing));

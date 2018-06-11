@@ -8,15 +8,20 @@ import uprizing.Merguez;
 import uprizing.Stawlker;
 
 @Getter
-abstract class AbstractSetting extends Gui implements Setting { // TODO: Temporary extending Gui
+public abstract class AbstractSetting extends Gui implements Setting { // TODO: Temporary extending Gui
 
 	private final String name, configKey;
 	private int textX, textY, buttonX, buttonY, buttonWidth, buttonHeight;
 	private static final int DEFAULT_BUTTON_HEIGHT = 10;
 
-	AbstractSetting(final String name) {
+	public AbstractSetting(final String name) {
 		this.name = name;
 		this.configKey = Stawlker.configKey(name);
+	}
+
+	public AbstractSetting(final String name, final String prefix) {
+		this.name = name;
+		this.configKey = Stawlker.configKey(prefix, name);
 	}
 
 	@Override

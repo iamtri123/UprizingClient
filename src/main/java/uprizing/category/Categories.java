@@ -1,6 +1,6 @@
 package uprizing.category;
 
-import uprizing.categories.*;
+import uprizing.category.categories.*;
 
 public class Categories {
 

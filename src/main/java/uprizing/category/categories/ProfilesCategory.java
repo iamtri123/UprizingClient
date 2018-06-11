@@ -1,4 +1,4 @@
-package uprizing.categories;
+package uprizing.category.categories;
 
 import uprizing.category.Category;
 

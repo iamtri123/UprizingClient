@@ -5,12 +5,15 @@ import net.minecraft.client.gui.GuiScreen;
 import uprizing.Merguez;
 import uprizing.Uprizing;
 import uprizing.category.Category;
+import uprizing.draggable.Draggable;
 import uprizing.setting.Setting;
 
 public class GuiMenu extends GuiScreen {
 
 	private final Uprizing uprizing;
 	private final Category category; // TODO: change
+	private Draggable draggable = null;
+	private int lastMouseX, lastMouseY;
 
 	public GuiMenu(final Uprizing uprizing) {
 		this.uprizing = uprizing;
@@ -44,6 +47,8 @@ public class GuiMenu extends GuiScreen {
 			Merguez.B);
 
 		category.draw(fontRenderer, mouseX, mouseY);
+
+		uprizing.getDraggables().draw();
 	}
 
 	@Override
@@ -56,27 +61,40 @@ public class GuiMenu extends GuiScreen {
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		// TODO: LOGGER - System.out.println("mouseClicked");
-
-		if (mouseButton != 0) return; // pas un clique droit
-
 		// TODO: MenuGuiButton pour SettingButton && autres (close: [X])
+		if (mouseButton != 0) return; // pas un clique gauche
+
+		// TODO: optimize: check si mouse est dans la box puis select settings sinon draggables
 
 		final Setting setting = category.getByMouse(mouseX, mouseY);
 		if (setting != null) {
 			//this.selectedSetting = setting;
 			setting.pressButton(mc);
+		} else {
+			final Draggable hoveredDraggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
+			if (hoveredDraggable != null) {
+				draggable = hoveredDraggable;
+				lastMouseX = mouseX;
+				lastMouseY = mouseY;
+			}
 		}
 	}
 
 	@Override
 	protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_) {
-		// TODO: LOGGER - System.out.println("mouseMovedOrUp");
+		if (p_146286_3_ == 0 && draggable != null) {
+			draggable = null;
+		}
 	}
 
 	@Override
 	protected void mouseClickMove(int p_146273_1_, int p_146273_2_, int p_146273_3_, long p_146273_4_) {
-		// TODO: LOGGER - System.out.println("mouseClickMove");
+		if (draggable == null) return;
+
+		draggable.move(p_146273_1_ - lastMouseX, p_146273_2_ - lastMouseY);
+
+		lastMouseX = p_146273_1_;
+		lastMouseY = p_146273_2_;
 	}
 
 	@Override

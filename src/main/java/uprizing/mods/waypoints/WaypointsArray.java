@@ -46,7 +46,6 @@ public class WaypointsArray {
         // clear to let GC do its work
         for (int i = 0; i < size; i++)
             elements[i] = null;
-
         size = 0;
     }
 }

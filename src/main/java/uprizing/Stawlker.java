@@ -33,6 +33,21 @@ public class Stawlker {
 		return builder.toString();
 	}
 
+	public static String configKey(String prefix, String name) {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(prefix.toLowerCase());
+
+		for (int index = 0; index < name.length(); index++) {
+			final char c = name.charAt(index);
+
+			if (c != ' ') {
+				builder.append(c);
+			}
+		}
+
+		return builder.toString();
+	}
+
     public static boolean isDbl(String string) {
         try {
             Double.parseDouble(string);

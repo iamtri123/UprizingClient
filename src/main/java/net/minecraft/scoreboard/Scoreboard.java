@@ -84,9 +84,9 @@ public class Scoreboard
         return var4;
     }
 
-    public Collection func_96534_i(ScoreObjective p_96534_1_)
+    public Collection<Score> func_96534_i(ScoreObjective p_96534_1_)
     {
-        ArrayList var2 = new ArrayList();
+        ArrayList<Score> var2 = new ArrayList<>();
         Iterator var3 = this.field_96544_c.values().iterator();
 
         while (var3.hasNext())

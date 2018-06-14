@@ -10,7 +10,6 @@ import org.lwjgl.input.Keyboard;
 import uprizing.beerus.Beerus;
 import uprizing.category.Categories;
 import uprizing.category.Category;
-import uprizing.count.Count;
 import uprizing.draggable.Draggables;
 import uprizing.gui.GuiMenu;
 import uprizing.mods.ModRepository;
@@ -39,6 +38,7 @@ public class Uprizing {
 
 	/** X0 Tour Llif3 */
 	private final Beerus beerus = new Beerus();
+	private final Sidebar sidebar = new Sidebar(this);
 	private final Count tickCount = new Count();
 	private final Count fpsCount = new Count();
 	private final Categories categories;

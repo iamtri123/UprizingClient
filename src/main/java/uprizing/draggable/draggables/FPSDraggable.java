@@ -1,7 +1,7 @@
 package uprizing.draggable.draggables;
 
 import uprizing.Uprizing;
-import uprizing.count.Count;
+import uprizing.Count;
 import uprizing.draggable.AbstractDraggable;
 
 public class FPSDraggable extends AbstractDraggable {

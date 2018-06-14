@@ -1,4 +1,4 @@
-package uprizing.count;
+package uprizing;
 
 public class Count {
 

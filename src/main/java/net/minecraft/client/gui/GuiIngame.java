@@ -22,7 +22,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.FoodStats;
@@ -34,11 +33,8 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.chunk.Chunk;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-import uprizing.setting.Settings;
 
 import java.awt.Color;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -390,7 +386,7 @@ public class GuiIngame extends Gui
 
         if (var37 != null)
         {
-            this.func_96136_a(var37, var7, var6, var8);
+            this.mc.uprizing.getSidebar().draw(var37, var7, var6, var8);
         }
 
         GL11.glEnable(GL11.GL_BLEND);
@@ -506,67 +502,6 @@ public class GuiIngame extends Gui
     public void func_152126_a(float p_152126_1_, float p_152126_2_)
     {
         this.field_152127_m.func_152437_a((int)(p_152126_1_ - 10.0F), 10);
-    }
-
-    private void func_96136_a(ScoreObjective p_96136_1_, int p_96136_2_, int p_96136_3_, FontRenderer p_96136_4_)
-    {
-        Scoreboard var5 = p_96136_1_.getScoreboard();
-        Collection var6 = var5.func_96534_i(p_96136_1_);
-
-        if (var6.size() <= 15)
-        {
-            int var7 = p_96136_4_.getStringWidth(p_96136_1_.getDisplayName());
-            String var11;
-
-            final boolean scoreboardScores = mc.uprizing.getBoolean(Settings.SCOREBOARD_SCORES);
-
-            for (Iterator var8 = var6.iterator(); var8.hasNext(); var7 = Math.max(var7, p_96136_4_.getStringWidth(var11))) {
-                Score var9 = (Score)var8.next();
-                ScorePlayerTeam var10 = var5.getPlayersTeam(var9.getPlayerName());
-                var11 = ScorePlayerTeam.formatPlayerName(var10, var9.getPlayerName() + (scoreboardScores ? ": " + EnumChatFormatting.RED + var9.getScorePoints() : ""));
-            }
-
-            int var22 = var6.size() * p_96136_4_.FONT_HEIGHT;
-            int var23 = p_96136_2_ / 2 + var22 / 3;
-            byte var24 = 3;
-            int var25 = p_96136_3_ - var7 - var24;
-            int var12 = 0;
-            Iterator var13 = var6.iterator();
-
-            final boolean flag = mc.uprizing.getBoolean(Settings.SCOREBOARD_TEXT_SHADOW);
-
-            while (var13.hasNext())
-            {
-                Score var14 = (Score)var13.next();
-                ++var12;
-                ScorePlayerTeam var15 = var5.getPlayersTeam(var14.getPlayerName());
-                String var16 = ScorePlayerTeam.formatPlayerName(var15, var14.getPlayerName());
-                String var17 = EnumChatFormatting.RED + "" + var14.getScorePoints();
-                int var19 = var23 - var12 * p_96136_4_.FONT_HEIGHT;
-                int var20 = p_96136_3_ - var24 + 2;
-                drawRect(var25 - 2, var19, var20, var19 + p_96136_4_.FONT_HEIGHT, 1342177280);
-                drawString(p_96136_4_, var16, var25, var19, flag);
-
-                if (scoreboardScores) {
-                    p_96136_4_.drawString(var17, var20 - p_96136_4_.getStringWidth(var17), var19, 553648127);
-                }
-
-                if (var12 == var6.size()) {
-                    String var21 = p_96136_1_.getDisplayName();
-                    drawRect(var25 - 2, var19 - p_96136_4_.FONT_HEIGHT - 1, var20, var19 - 1, 1610612736);
-                    drawRect(var25 - 2, var19 - 1, var20, var19, 1342177280);
-                    drawString(p_96136_4_, var21, var25 + var7 / 2 - p_96136_4_.getStringWidth(var21) / 2, var19 - p_96136_4_.FONT_HEIGHT, flag);
-                }
-            }
-        }
-    }
-
-    private void drawString(FontRenderer renderer, String text, int x, int z, boolean flag) {
-        if (flag) {
-            renderer.drawStringWithShadow(text, x, z, 553648127);
-        } else {
-            renderer.drawString(text, x, z, 553648127);
-        }
     }
 
     private void func_110327_a(int p_110327_1_, int p_110327_2_)

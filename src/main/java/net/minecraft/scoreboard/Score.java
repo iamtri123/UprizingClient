@@ -5,16 +5,12 @@ import java.util.List;
 
 public class Score
 {
-    public static final Comparator field_96658_a = new Comparator()
+    public static final Comparator<Score> field_96658_a = new Comparator<Score>()
     {
         private static final String __OBFID = "CL_00000618";
         public int compare(Score p_compare_1_, Score p_compare_2_)
         {
             return p_compare_1_.getScorePoints() > p_compare_2_.getScorePoints() ? 1 : (p_compare_1_.getScorePoints() < p_compare_2_.getScorePoints() ? -1 : 0);
-        }
-        public int compare(Object p_compare_1_, Object p_compare_2_)
-        {
-            return this.compare((Score)p_compare_1_, (Score)p_compare_2_);
         }
     };
     private final Scoreboard theScoreboard;

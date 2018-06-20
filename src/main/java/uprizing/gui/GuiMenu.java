@@ -109,6 +109,8 @@ public class GuiMenu extends GuiScreen {
 
 		category.resetButtons();
 		uprizing.saveSettings();
+
+		uprizing.getMotionBlur().handleGuiClose();
 	}
 
 	@Override

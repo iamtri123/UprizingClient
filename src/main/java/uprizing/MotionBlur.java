@@ -17,7 +17,7 @@ import java.util.Set;
 public class MotionBlur {
 
 	private static final String KEY = "uprizing";
-	private static final int MAXIMUM = 20;
+	private static final int MAXIMUM = 11;
 	private static final Minecraft minecraft = Minecraft.getMinecraft();
 	public int index;
 
@@ -52,7 +52,9 @@ public class MotionBlur {
 
 	public final void next() {
 		index = index == MAXIMUM ? 0 : index + 1;
+	}
 
+	public void handleGuiClose() {
 		final EntityRenderer entityRenderer = minecraft.entityRenderer;
 
 		if (entityRenderer.theShaderGroup != null) { // reset the current motion blur effect

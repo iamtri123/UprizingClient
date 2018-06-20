@@ -301,7 +301,7 @@ public class Minecraft implements IPlayerUsage
     /** The profiler instance */
     public final Profiler mcProfiler = new Profiler();
     private long field_83002_am = -1L;
-    private IReloadableResourceManager mcResourceManager;
+    private SimpleReloadableResourceManager mcResourceManager;
     private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
     private final List defaultResourcePacks = Lists.newArrayList();
     private final DefaultResourcePack mcDefaultResourcePack;
@@ -2918,7 +2918,7 @@ public class Minecraft implements IPlayerUsage
         return this.renderEngine;
     }
 
-    public IResourceManager getResourceManager()
+    public SimpleReloadableResourceManager getResourceManager()
     {
         return this.mcResourceManager;
     }

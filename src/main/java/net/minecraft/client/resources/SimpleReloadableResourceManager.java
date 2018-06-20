@@ -21,7 +21,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
 {
     private static final Logger logger = LogManager.getLogger();
     private static final Joiner joinerResourcePacks = Joiner.on(", ");
-    public final Map domainResourceManagers = Maps.newHashMap();
+    public final Map<String, IResourceManager> domainResourceManagers = Maps.newHashMap();
     private final List reloadListeners = Lists.newArrayList();
     private final Set setResourceDomains = Sets.newLinkedHashSet();
     private final IMetadataSerializer rmMetadataSerializer;
@@ -57,7 +57,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
 
     public IResource getResource(ResourceLocation p_110536_1_) throws IOException
     {
-        IResourceManager var2 = (IResourceManager)this.domainResourceManagers.get(p_110536_1_.getResourceDomain());
+        IResourceManager var2 = this.domainResourceManagers.get(p_110536_1_.getResourceDomain());
 
         if (var2 != null)
         {
@@ -71,7 +71,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
 
     public List getAllResources(ResourceLocation p_135056_1_) throws IOException
     {
-        IResourceManager var2 = (IResourceManager)this.domainResourceManagers.get(p_135056_1_.getResourceDomain());
+        IResourceManager var2 = this.domainResourceManagers.get(p_135056_1_.getResourceDomain());
 
         if (var2 != null)
         {

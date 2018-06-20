@@ -13,12 +13,12 @@ public class WorldTimeSetting extends IntSetting {
 	}
 
 	@Override
-	public String getAsString() {
+	public final String getAsString() {
 		return names[value];
 	}
 
 	@Override
-	public long getAsLong() {
+	public final long getAsLong() {
 		return times[value - 1];
 	}
 }

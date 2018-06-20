@@ -38,6 +38,7 @@ public class Uprizing {
 
 	/** X0 Tour Llif3 */
 	private final Beerus beerus = new Beerus();
+	private final MotionBlur motionBlur;
 	private final Sidebar sidebar = new Sidebar(this);
 	private final Count tickCount = new Count();
 	private final Count fpsCount = new Count();
@@ -56,6 +57,7 @@ public class Uprizing {
 		instance = this;
 		this.minecraft = minecraft;
 		this.file = new File(mainDir, "uprizing.txt");
+		this.motionBlur = new MotionBlur();
 		this.draggables = new Draggables(this);
 		this.settings = new Settings();
 		this.categories = new Categories();

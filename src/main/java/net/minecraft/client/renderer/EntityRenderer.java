@@ -277,13 +277,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
         this.shaderIndex = shaderCount;
     }
 
-    public void deactivateShader()
-    {
-        if (this.theShaderGroup != null)
-        {
+    public void deactivateShader() {
+        if (this.theShaderGroup != null) {
             this.theShaderGroup.deleteShaderGroup();
         }
 
+        this.mc.uprizing.getMotionBlur().reset();
         this.theShaderGroup = null;
         this.shaderIndex = shaderCount;
     }
@@ -299,6 +298,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     this.theShaderGroup.deleteShaderGroup();
                 }
 
+                this.mc.uprizing.getMotionBlur().reset();
                 this.shaderIndex = (this.shaderIndex + 1) % (shaderResourceLocations.length + 1);
 
                 if (this.shaderIndex != shaderCount)
@@ -329,22 +329,16 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
     }
 
-    public void onResourceManagerReload(IResourceManager par1ResourceManager)
-    {
-        if (this.theShaderGroup != null)
-        {
+    public void onResourceManagerReload(IResourceManager par1ResourceManager) {
+        if (this.theShaderGroup != null) {
             this.theShaderGroup.deleteShaderGroup();
         }
 
-        if (this.shaderIndex != shaderCount)
-        {
-            try
-            {
+        if (!this.mc.uprizing.getMotionBlur().reload() || this.shaderIndex != shaderCount) {
+            try {
                 this.theShaderGroup = new ShaderGroup(this.mc.getTextureManager(), par1ResourceManager, this.mc.getFramebuffer(), shaderResourceLocations[this.shaderIndex]);
                 this.theShaderGroup.createBindFramebuffers(this.mc.displayWidth, this.mc.displayHeight);
-            }
-            catch (IOException var3)
-            {
+            } catch (IOException var3) {
                 logger.warn("Failed to load shader: " + shaderResourceLocations[this.shaderIndex], var3);
                 this.shaderIndex = shaderCount;
             }

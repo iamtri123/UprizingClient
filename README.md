@@ -11,6 +11,7 @@ Please follow this [tutorial](https://github.com/Stawlker/UprizingClient/wiki/Ho
 - Waypoints
 - CPS
 - FPS
+- MotionBlur
 
 ## Options
 - Scoreboard Scores

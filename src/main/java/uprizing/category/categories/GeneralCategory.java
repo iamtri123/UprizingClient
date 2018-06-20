@@ -1,5 +1,6 @@
 package uprizing.category.categories;
 
+import uprizing.settings.MotionBlurSetting;
 import uprizing.category.Category;
 import uprizing.category.CategoryBuilder;
 import uprizing.category.SubCategory;
@@ -15,7 +16,8 @@ public class GeneralCategory extends Category {
 		addSubCategory(new SubCategory("Spongebob", new CategoryBuilder()
 			.add(new BooleanSetting("Chat Background"))
 			.add(new GlassRenderingSetting())
-			.add(new WorldTimeSetting())));
+			.add(new WorldTimeSetting())
+			.add(new MotionBlurSetting())));
 
 		addSubCategory(new SubCategory("Scoreboard", new CategoryBuilder()
 			.add(new BooleanSetting("Scoreboard Scores"))

@@ -34,8 +34,8 @@ public class ShowBackgroundSetting extends AbstractSetting {
 	}
 
 	@Override
-	public void pressButton(Minecraft minecraft) {
-		super.pressButton(minecraft);
+	public void pressButton(Minecraft minecraft, int mouseButton) {
+		super.pressButton(minecraft, mouseButton);
 
 		draggable.setShowBackground(!draggable.isShowBackground());
 	}

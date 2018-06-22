@@ -27,7 +27,7 @@ public interface Setting {
 
 	void drawButton(FontRenderer fontRenderer, int mouseX, int mouseY);
 
-	void pressButton(Minecraft minecraft);
+	void pressButton(Minecraft minecraft, int mouseButton);
 
 	void updateButton(int buttonX, int buttonY, int buttonWidth);
 

@@ -50,8 +50,20 @@ public class MotionBlur {
 		}
 	}
 
-	public final void next() {
+	public final void increment() {
 		index = index == MAXIMUM ? 0 : index + 1;
+
+		if (minecraft.entityRenderer.shaderIndex != EntityRenderer.shaderCount) { // reset super secret settings
+			minecraft.entityRenderer.shaderIndex = EntityRenderer.shaderCount;
+		}
+	}
+
+	public final void decrement() {
+		index = index == 0 ? MAXIMUM : index - 1;
+
+		if (minecraft.entityRenderer.shaderIndex != EntityRenderer.shaderCount) { // reset super secret settings
+			minecraft.entityRenderer.shaderIndex = EntityRenderer.shaderCount;
+		}
 	}
 
 	public void handleGuiClose() {

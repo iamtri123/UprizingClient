@@ -29,9 +29,13 @@ public class IntSetting extends AbstractSetting {
 	}
 
 	@Override
-	public void pressButton(Minecraft minecraft) {
-		super.pressButton(minecraft);
+	public void pressButton(Minecraft minecraft, int mouseButton) {
+		super.pressButton(minecraft, mouseButton);
 
-		value = value == maximum ? 0 : value + 1;
+		if (mouseButton == 1) {
+			value = value == 0 ? maximum : value - 1;
+		} else {
+			value = value == maximum ? 0 : value + 1;
+		}
 	}
 }

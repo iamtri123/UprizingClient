@@ -62,14 +62,12 @@ public class GuiMenu extends GuiScreen {
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		// TODO: MenuGuiButton pour SettingButton && autres (close: [X])
-		if (mouseButton != 0) return; // pas un clique gauche
-
 		// TODO: optimize: check si mouse est dans la box puis select settings sinon draggables
 
 		final Setting setting = category.getByMouse(mouseX, mouseY);
 		if (setting != null) {
 			//this.selectedSetting = setting;
-			setting.pressButton(mc);
+			setting.pressButton(mc, mouseButton);
 		} else {
 			final Draggable hoveredDraggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
 			if (hoveredDraggable != null) {

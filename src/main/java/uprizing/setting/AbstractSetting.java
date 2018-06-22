@@ -65,7 +65,7 @@ public abstract class AbstractSetting extends Gui implements Setting { // TODO: 
 	}
 
 	@Override
-	public void pressButton(Minecraft minecraft) {
+	public void pressButton(Minecraft minecraft, int mouseButton) {
 		// TODO: LOGGER - System.out.println("clicked button: " + name);
 		//minecraft.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
 	}

@@ -32,9 +32,13 @@ public class MotionBlurSetting extends AbstractSetting {
 	}
 
 	@Override
-	public void pressButton(Minecraft minecraft) {
-		super.pressButton(minecraft);
+	public void pressButton(Minecraft minecraft, int mouseButton) {
+		super.pressButton(minecraft, mouseButton);
 
-		motionBlur.next();
+		if (mouseButton == 1) {
+			motionBlur.decrement();
+		} else {
+			motionBlur.increment();
+		}
 	}
 }

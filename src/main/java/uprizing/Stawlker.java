@@ -1,6 +1,7 @@
 package uprizing;
 
 import net.minecraft.client.settings.KeyBinding;
+import sun.misc.FloatingDecimal;
 
 import java.text.DecimalFormat;
 
@@ -13,8 +14,10 @@ public class Stawlker {
         return Double.parseDouble(decimalFormat.format(value).replace(",", ".")); // TODO: Méthode blédarde à changer
     }
 
-    public static String toString(double dbl) { // TODO: optimize
-        return String.format("%.1f", dbl);
+    public static String toString(double d) {
+		final int k = (int) d;
+		final int v = (int) ((d - k) * 100);
+		return k + "," + v;
     }
 
     public static String configKey(String name) {
@@ -50,7 +53,7 @@ public class Stawlker {
 
     public static boolean isDbl(String string) {
         try {
-            Double.parseDouble(string);
+			FloatingDecimal.parseDouble(string);
             return true;
         } catch (NumberFormatException ignored) {
             return false;

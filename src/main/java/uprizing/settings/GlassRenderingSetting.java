@@ -10,8 +10,8 @@ public class GlassRenderingSetting extends BooleanSetting {
 	}
 
 	@Override
-	public final void pressButton(Minecraft minecraft) {
-		super.pressButton(minecraft);
+	public final void pressButton(Minecraft minecraft, int mouseButton) {
+		super.pressButton(minecraft, mouseButton);
 		minecraft.renderGlobal.loadRenderers();
 	}
 }

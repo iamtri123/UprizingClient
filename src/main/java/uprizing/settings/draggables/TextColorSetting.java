@@ -34,7 +34,7 @@ public class TextColorSetting extends AbstractSetting {
 	}
 
 	@Override
-	public void pressButton(Minecraft minecraft) { // TODO: only show for the moment
-		super.pressButton(minecraft);
+	public void pressButton(Minecraft minecraft, int mouseButton) { // TODO: only show for the moment
+		super.pressButton(minecraft, mouseButton);
 	}
 }

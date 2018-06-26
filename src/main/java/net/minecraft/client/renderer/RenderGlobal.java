@@ -1487,7 +1487,7 @@ public class RenderGlobal implements IWorldAccess
             }
         }
 
-        if (this.mc.theWorld.provider.dimensionId == 1)
+        if (this.mc.uprizing.dimension.isEnd())
         {
             if (!Config.isSkyEnabled())
             {
@@ -1546,7 +1546,7 @@ public class RenderGlobal implements IWorldAccess
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glEnable(GL11.GL_ALPHA_TEST);
         }
-        else if (this.mc.theWorld.provider.isSurfaceWorld())
+        else if (this.mc.uprizing.dimension.isOverWorld())
         {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             Vec3 var21 = this.theWorld.getSkyColor(this.mc.renderViewEntity, par1);
@@ -1643,7 +1643,7 @@ public class RenderGlobal implements IWorldAccess
             GL11.glColor4f(1.0F, 1.0F, 1.0F, var8);
             GL11.glTranslatef(var9, var10, var11);
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-            CustomSky.renderSky(this.theWorld, this.renderEngine, this.theWorld.getCelestialAngle(par1), var8);
+            CustomSky.renderSky(this.theWorld, this.mc.uprizing.dimension, this.renderEngine, this.theWorld.getCelestialAngle(par1), var8);
             GL11.glRotatef(this.theWorld.getCelestialAngle(par1) * 360.0F, 1.0F, 0.0F, 0.0F);
 
             if (Config.isSunMoonEnabled())
@@ -1676,7 +1676,7 @@ public class RenderGlobal implements IWorldAccess
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             var20 = this.theWorld.getStarBrightness(par1) * var8;
 
-            if (var20 > 0.0F && Config.isStarsEnabled() && !CustomSky.hasSkyLayers(this.theWorld))
+            if (var20 > 0.0F && Config.isStarsEnabled() && !CustomSky.hasSkyLayers(this.mc.uprizing.dimension))
             {
                 GL11.glColor4f(var20, var20, var20, var20);
                 GL11.glCallList(this.starGLCallList);
@@ -1725,7 +1725,7 @@ public class RenderGlobal implements IWorldAccess
                 var241.draw();
             }
 
-            if (this.theWorld.provider.isSkyColored())
+            if (!this.mc.uprizing.dimension.isEnd())
             {
                 GL11.glColor3f(var231 * 0.2F + 0.04F, var4 * 0.2F + 0.04F, var5 * 0.6F + 0.1F);
             }
@@ -1769,7 +1769,7 @@ public class RenderGlobal implements IWorldAccess
                 }
             }
 
-            if (this.mc.theWorld.provider.isSurfaceWorld())
+            if (this.mc.uprizing.dimension.isOverWorld())
             {
                 if (Config.isCloudsFancy())
                 {

@@ -38,6 +38,7 @@ public class Uprizing {
 
 	/** X0 Tour Llif3 */
 	private final Beerus beerus = new Beerus();
+	public final Dimension dimension = new Dimension();
 	private final MotionBlur motionBlur;
 	private final Sidebar sidebar = new Sidebar(this);
 	private final Count tickCount = new Count();

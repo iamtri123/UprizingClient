@@ -169,7 +169,7 @@ public class ChunkCache implements IBlockAccess
 
         if (p_72810_3_ >= 0 && p_72810_3_ < 256 && p_72810_2_ >= -30000000 && p_72810_4_ >= -30000000 && p_72810_2_ < 30000000 && p_72810_4_ <= 30000000)
         {
-            if (p_72810_1_ == EnumSkyBlock.Sky && this.worldObj.provider.hasNoSky)
+            if (p_72810_1_ == EnumSkyBlock.Sky && !this.worldObj.dimension.isOverWorld())
             {
                 return 0;
             }

@@ -278,7 +278,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public void handleJoinGame(S01PacketJoinGame p_147282_1_)
     {
         this.gameController.playerController = new PlayerControllerMP(this.gameController, this);
-        this.clientWorldController = new WorldClient(this, new WorldSettings(0L, p_147282_1_.func_149198_e(), false, p_147282_1_.func_149195_d(), p_147282_1_.func_149196_i()), p_147282_1_.func_149194_f(), p_147282_1_.func_149192_g(), this.gameController.mcProfiler);
+        this.clientWorldController = new WorldClient(this.gameController.uprizing.getDimension(), this, new WorldSettings(0L, p_147282_1_.func_149198_e(), false, p_147282_1_.func_149195_d(), p_147282_1_.func_149196_i()), p_147282_1_.func_149194_f(), p_147282_1_.func_149192_g(), this.gameController.mcProfiler);
         this.clientWorldController.isClient = true;
         this.gameController.loadWorld(this.clientWorldController);
         this.gameController.thePlayer.dimension = p_147282_1_.func_149194_f();
@@ -978,7 +978,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         {
             this.doneLoadingTerrain = false;
             Scoreboard var2 = this.clientWorldController.getScoreboard();
-            this.clientWorldController = new WorldClient(this, new WorldSettings(0L, p_147280_1_.func_149083_e(), false, this.gameController.theWorld.getWorldInfo().isHardcoreModeEnabled(), p_147280_1_.func_149080_f()), p_147280_1_.func_149082_c(), p_147280_1_.func_149081_d(), this.gameController.mcProfiler);
+            this.clientWorldController = new WorldClient(this.gameController.uprizing.getDimension(), this, new WorldSettings(0L, p_147280_1_.func_149083_e(), false, this.gameController.theWorld.getWorldInfo().isHardcoreModeEnabled(), p_147280_1_.func_149080_f()), p_147280_1_.func_149082_c(), p_147280_1_.func_149081_d(), this.gameController.mcProfiler);
             this.clientWorldController.setWorldScoreboard(var2);
             this.clientWorldController.isClient = true;
             this.gameController.loadWorld(this.clientWorldController);

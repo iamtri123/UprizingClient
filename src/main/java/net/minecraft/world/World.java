@@ -17,6 +17,7 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -49,6 +50,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldInfo;
+import uprizing.Dimension;
 
 public abstract class World implements IBlockAccess
 {
@@ -189,8 +191,11 @@ public abstract class World implements IBlockAccess
         return this.provider.worldChunkMgr;
     }
 
-    public World(ISaveHandler p_i45368_1_, String p_i45368_2_, WorldProvider p_i45368_3_, WorldSettings p_i45368_4_, Profiler p_i45368_5_)
+    public final Dimension dimension;
+
+    public World(Dimension dimension, ISaveHandler p_i45368_1_, String p_i45368_2_, WorldProvider p_i45368_3_, WorldSettings p_i45368_4_, Profiler p_i45368_5_)
     {
+    	this.dimension = dimension;
         this.ambientTickCountdown = this.rand.nextInt(12000);
         this.spawnHostileMobs = true;
         this.spawnPeacefulMobs = true;
@@ -222,6 +227,7 @@ public abstract class World implements IBlockAccess
 
     public World(ISaveHandler p_i45369_1_, String p_i45369_2_, WorldSettings p_i45369_3_, WorldProvider p_i45369_4_, Profiler p_i45369_5_)
     {
+    	this.dimension = Minecraft.getMinecraft().uprizing.getDimension(); // TODO: temporary
         this.ambientTickCountdown = this.rand.nextInt(12000);
         this.spawnHostileMobs = true;
         this.spawnPeacefulMobs = true;
@@ -637,7 +643,7 @@ public abstract class World implements IBlockAccess
             p_72975_3_ = var5;
         }
 
-        if (!this.provider.hasNoSky)
+        if (this.dimension.isOverWorld())
         {
             for (var5 = p_72975_3_; var5 <= p_72975_4_; ++var5)
             {
@@ -901,7 +907,7 @@ public abstract class World implements IBlockAccess
      */
     public int getSkyBlockTypeBrightness(EnumSkyBlock p_72925_1_, int p_72925_2_, int p_72925_3_, int p_72925_4_)
     {
-        if (this.provider.hasNoSky && p_72925_1_ == EnumSkyBlock.Sky)
+        if (!this.dimension.isOverWorld() && p_72925_1_ == EnumSkyBlock.Sky)
         {
             return 0;
         }
@@ -2803,7 +2809,7 @@ public abstract class World implements IBlockAccess
      */
     protected void updateWeather()
     {
-        if (!this.provider.hasNoSky)
+        if (this.dimension.isOverWorld())
         {
             if (!this.isClient)
             {
@@ -3077,7 +3083,7 @@ public abstract class World implements IBlockAccess
     {
         boolean var4 = false;
 
-        if (!this.provider.hasNoSky)
+        if (this.dimension.isOverWorld())
         {
             var4 |= this.updateLightByType(EnumSkyBlock.Sky, p_147451_1_, p_147451_2_, p_147451_3_);
         }

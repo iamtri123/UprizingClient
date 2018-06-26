@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import uprizing.Dimension;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -129,13 +130,13 @@ public class CustomSky
         }
     }
 
-    public static void renderSky(World world, TextureManager re, float celestialAngle, float rainBrightness)
+    public static void renderSky(World world, Dimension dimension, TextureManager re, float celestialAngle, float rainBrightness)
     {
         if (worldSkyLayers != null)
         {
             if (Config.getGameSettings().renderDistanceChunks >= 8)
             {
-                int dimId = world.provider.dimensionId;
+                int dimId = dimension.asSexyCopy();
 
                 if (dimId >= 0 && dimId < worldSkyLayers.length)
                 {
@@ -163,7 +164,7 @@ public class CustomSky
         }
     }
 
-    public static boolean hasSkyLayers(World world)
+    public static boolean hasSkyLayers(Dimension dimension)
     {
         if (worldSkyLayers == null)
         {
@@ -175,7 +176,7 @@ public class CustomSky
         }
         else
         {
-            int dimId = world.provider.dimensionId;
+            int dimId = dimension.asSexyCopy();
 
             if (dimId >= 0 && dimId < worldSkyLayers.length)
             {

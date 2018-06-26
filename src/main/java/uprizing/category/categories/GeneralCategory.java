@@ -17,6 +17,7 @@ public class GeneralCategory extends Category {
 			.add(new BooleanSetting("Chat Background"))
 			.add(new GlassRenderingSetting())
 			.add(new WorldTimeSetting())
+			.add(new DimensionSetting())
 			.add(new MotionBlurSetting())));
 
 		addSubCategory(new SubCategory("Scoreboard", new CategoryBuilder()

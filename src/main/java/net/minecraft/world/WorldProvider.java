@@ -236,7 +236,7 @@ public abstract class WorldProvider
      */
     public boolean getWorldHasVoidParticles()
     {
-        return this.terrainType != WorldType.FLAT && !this.hasNoSky;
+        return this.terrainType != WorldType.FLAT; // TODO: && this.mc.uprizing.dimension.isOverWorld();
     }
 
     /**

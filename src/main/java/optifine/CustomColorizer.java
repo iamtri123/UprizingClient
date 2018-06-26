@@ -16,6 +16,7 @@ import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import uprizing.Dimension;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -1001,7 +1002,7 @@ public class CustomColorizer
         }
     }
 
-    public static boolean updateLightmap(World world, float torchFlickerX, int[] lmColors, boolean nightvision)
+    public static boolean updateLightmap(World world, Dimension dimension, float torchFlickerX, int[] lmColors, boolean nightvision)
     {
         if (world == null)
         {
@@ -1017,7 +1018,7 @@ public class CustomColorizer
         }
         else
         {
-            int worldType = world.provider.dimensionId;
+            int worldType = dimension.asSexyCopy();
 
             if (worldType >= -1 && worldType <= 1)
             {
@@ -1147,9 +1148,9 @@ public class CustomColorizer
         }
     }
 
-    public static Vec3 getWorldFogColor(Vec3 fogVec, WorldClient world, float partialTicks)
+    public static Vec3 getWorldFogColor(Vec3 fogVec, Dimension dimension, float partialTicks)
     {
-        int worldType = world.provider.dimensionId;
+        int worldType = dimension.asSexyCopy();
 
         switch (worldType)
         {
@@ -1169,9 +1170,9 @@ public class CustomColorizer
         return fogVec;
     }
 
-    public static Vec3 getWorldSkyColor(Vec3 skyVec, WorldClient world, EntityLivingBase renderViewEntity, float partialTicks)
+    public static Vec3 getWorldSkyColor(Vec3 skyVec, Dimension dimension, EntityLivingBase renderViewEntity, float partialTicks)
     {
-        int worldType = world.provider.dimensionId;
+        int worldType = dimension.asSexyCopy();
 
         switch (worldType)
         {

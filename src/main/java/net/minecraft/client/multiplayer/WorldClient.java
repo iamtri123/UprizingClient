@@ -26,6 +26,7 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.SaveHandlerMP;
+import uprizing.Dimension;
 import uprizing.setting.Setting;
 import uprizing.setting.Settings;
 import uprizing.settings.WorldTimeSetting;
@@ -61,9 +62,9 @@ public class WorldClient extends World
     private final Set previousActiveChunkSet = new HashSet();
     private static final String __OBFID = "CL_00000882";
 
-    public WorldClient(NetHandlerPlayClient p_i45063_1_, WorldSettings p_i45063_2_, int p_i45063_3_, EnumDifficulty p_i45063_4_, Profiler p_i45063_5_)
+    public WorldClient(Dimension dimension, NetHandlerPlayClient p_i45063_1_, WorldSettings p_i45063_2_, int p_i45063_3_, EnumDifficulty p_i45063_4_, Profiler p_i45063_5_)
     {
-        super(new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(p_i45063_3_), p_i45063_2_, p_i45063_5_);
+        super(dimension, new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(p_i45063_3_), p_i45063_2_, p_i45063_5_);
         this.sendQueue = p_i45063_1_;
         this.difficultySetting = p_i45063_4_;
         this.setSpawnLocation(8, 64, 8);
@@ -304,7 +305,7 @@ public class WorldClient extends World
      */
     protected void updateWeather()
     {
-        if (!this.provider.hasNoSky)
+        if (!this.mc.uprizing.dimension.isOverWorld())
         {
         }
     }

@@ -62,6 +62,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Project;
+import uprizing.Dimension;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -817,7 +818,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             clipDistance = 128.0F;
         }
 
-        if (this.mc.theWorld.provider.dimensionId == 1)
+        if (this.mc.uprizing.dimension.isEnd())
         {
             clipDistance = 256.0F;
         }
@@ -1023,7 +1024,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (var2 != null)
         {
-            if (CustomColorizer.updateLightmap(var2, this.torchFlickerX, this.lightmapColors, this.mc.thePlayer.isPotionActive(Potion.nightVision)))
+            if (CustomColorizer.updateLightmap(var2, this.mc.uprizing.dimension, this.torchFlickerX, this.lightmapColors, this.mc.thePlayer.isPotionActive(Potion.nightVision)))
             {
                 this.lightmapTexture.updateDynamicTexture();
                 this.lightmapUpdateNeeded = false;
@@ -1061,7 +1062,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     var15 = var15 * (1.0F - var16) + var15 * 0.6F * var16;
                 }
 
-                if (var2.provider.dimensionId == 1)
+                if (mc.uprizing.dimension.isEnd())
                 {
                     var13 = 0.22F + var6 * 0.75F;
                     var14 = 0.28F + var11 * 0.75F;
@@ -2066,12 +2067,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
         float var4 = 0.25F + 0.75F * (float)this.mc.gameSettings.renderDistanceChunks / 16.0F;
         var4 = 1.0F - (float)Math.pow((double)var4, 0.25D);
         Vec3 var5 = var2.getSkyColor(this.mc.renderViewEntity, par1);
-        var5 = CustomColorizer.getWorldSkyColor(var5, var2, this.mc.renderViewEntity, par1);
+        Dimension dimension = this.mc.uprizing.dimension;
+        var5 = CustomColorizer.getWorldSkyColor(var5, dimension, this.mc.renderViewEntity, par1);
         float var6 = (float)var5.xCoord;
         float var7 = (float)var5.yCoord;
         float var8 = (float)var5.zCoord;
         Vec3 var9 = var2.getFogColor(par1);
-        var9 = CustomColorizer.getWorldFogColor(var9, var2, par1);
+        var9 = CustomColorizer.getWorldFogColor(var9, dimension, par1);
         this.fogColorRed = (float)var9.xCoord;
         this.fogColorGreen = (float)var9.yCoord;
         this.fogColorBlue = (float)var9.zCoord;

@@ -8,8 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import uprizing.beerus.Beerus;
-import uprizing.category.Categories;
-import uprizing.category.Category;
 import uprizing.draggable.Draggables;
 import uprizing.gui.GuiMenu;
 import uprizing.mods.ModRepository;
@@ -43,7 +41,6 @@ public class Uprizing {
 	private final Sidebar sidebar = new Sidebar(this);
 	private final Count tickCount = new Count();
 	private final Count fpsCount = new Count();
-	private final Categories categories;
 	private final Settings settings;
 	private final Draggables draggables;
 
@@ -61,7 +58,6 @@ public class Uprizing {
 		this.motionBlur = new MotionBlur();
 		this.draggables = new Draggables(this);
 		this.settings = new Settings();
-		this.categories = new Categories();
 		this.initMods(mainDir);
 		this.initKeyBindings();
 		this.loadSettings();
@@ -106,10 +102,6 @@ public class Uprizing {
 		modRepository.close();
 	}
 
-	public final Category getDefaultCategory() {
-		return categories.getByIndex(0);
-	}
-
 	public final boolean getBoolean(int index) {
 		return settings.get(index).getAsBoolean();
 	}
@@ -142,9 +134,9 @@ public class Uprizing {
 						if (setting.getConfigKey().equals(args[0])) // TODO: ArrayIndexOutOfBoundsException
 							setting.parseValue(args[1]);
 					}
-				} catch (Exception var91) {
+				} catch (Exception exception) {
 					logger.warn("Skipping bad setting: " + line);
-					var91.printStackTrace();
+					exception.printStackTrace();
 				}
 			}
 

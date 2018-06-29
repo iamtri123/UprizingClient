@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 public abstract class AbstractDraggable implements Draggable {
 
 	private final Tessellator tessellator = Tessellator.instance;
+	private boolean enabled;
 	private final String name;
 	private final int width, height;
 	private int posX, posY, textColor = -1, backgroundColor = 1140850688;
@@ -25,7 +26,7 @@ public abstract class AbstractDraggable implements Draggable {
 
 	@Override
 	public boolean isHovered(int mouseX, int mouseY) {
-		return mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
+		return enabled && mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
 	}
 
 	public final void move(int mouseX, int mouseY) {
@@ -38,6 +39,8 @@ public abstract class AbstractDraggable implements Draggable {
 	public abstract int getTextWidth();
 
 	public final void draw(FontRenderer fontRenderer) {
+		if (!enabled) return;
+
 		final String text = getText();
 		final int textWidth = getTextWidth();
 

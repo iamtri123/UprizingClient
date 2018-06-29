@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum Dimensions {
 
     NETHER(-1, "Nether"),
-    OVERWORLD(0, "OverWorld"),
+    OVERWORLD(0, "Overworld"),
     THE_END(1, "End");
 
     private final int value;

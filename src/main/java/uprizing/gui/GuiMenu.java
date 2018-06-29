@@ -2,27 +2,37 @@ package uprizing.gui;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.input.Mouse;
 import uprizing.Merguez;
 import uprizing.Uprizing;
-import uprizing.category.Category;
 import uprizing.draggable.Draggable;
 import uprizing.setting.Setting;
+import uprizing.setting.Settings;
 
 public class GuiMenu extends GuiScreen {
 
 	private final Uprizing uprizing;
-	private final Category category; // TODO: change
+	private final Settings settings;
 	private Draggable draggable = null;
 	private int lastMouseX, lastMouseY;
 
 	public GuiMenu(final Uprizing uprizing) {
 		this.uprizing = uprizing;
-		this.category = uprizing.getDefaultCategory();
+		this.settings = uprizing.getSettings();
 	}
 
 	@Override
 	public void initGui() {
-		category.updateButtons(width, height);
+		settings.updateButtons(width, height);
+	}
+
+	@Override
+	public void handleMouseInput() {
+		super.handleMouseInput();
+		final int value = Mouse.getEventDWheel();
+		if (value != 0) {
+			// TODO: menu scrolling
+		}
 	}
 
 	@Override
@@ -41,12 +51,12 @@ public class GuiMenu extends GuiScreen {
 
 		final FontRenderer fontRenderer = uprizing.getMinecraft().fontRenderer;
 
-		drawString(fontRenderer, category.getName(),
+		drawString(fontRenderer, "General Settings",
 			width / Merguez.F + 8 + 1, // x
 			(height / Merguez.F) + Merguez.V + 6 + 1, // y
 			Merguez.B);
 
-		category.draw(fontRenderer, mouseX, mouseY);
+		settings.draw(fontRenderer, mouseX, mouseY);
 
 		uprizing.getDraggables().draw();
 	}
@@ -64,7 +74,7 @@ public class GuiMenu extends GuiScreen {
 		// TODO: MenuGuiButton pour SettingButton && autres (close: [X])
 		// TODO: optimize: check si mouse est dans la box puis select settings sinon draggables
 
-		final Setting setting = category.getByMouse(mouseX, mouseY);
+		final Setting setting = settings.getByMouse(mouseX, mouseY);
 		if (setting != null) {
 			//this.selectedSetting = setting;
 			setting.pressButton(mc, mouseButton);
@@ -105,7 +115,7 @@ public class GuiMenu extends GuiScreen {
 		// TODO: LOGGER - System.out.println("handle close");
 		// TODO: delete button UNIQUEMENT ceux render
 
-		category.resetButtons();
+		settings.resetButtons();
 		uprizing.saveSettings();
 
 		uprizing.getMotionBlur().handleGuiClose();

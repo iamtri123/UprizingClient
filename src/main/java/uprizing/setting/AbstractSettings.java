@@ -1,24 +1,15 @@
-package uprizing.category;
+package uprizing.setting;
 
-import lombok.Getter;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
 import uprizing.Merguez;
-import uprizing.setting.Setting;
 
-@Getter
-public class Category extends Gui { // TODO: retirer
-
-	private final String name;
-
+public abstract class AbstractSettings {
+	
 	private transient SubCategory[] elements = {};
+	
 	private int size;
-
-	public Category(final String name) {
-		this.name = name + Merguez.S;
-	}
-
-	protected void addSubCategory(SubCategory subCategory) {
+	
+	void addSubCategory(SubCategory subCategory) {
 		elements = growCapacity();
 		elements[size++] = subCategory;
 	}

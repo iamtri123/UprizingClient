@@ -4,6 +4,10 @@ import net.minecraft.client.gui.FontRenderer;
 
 public interface Draggable {
 
+	boolean isEnabled();
+
+	void setEnabled(boolean enabled);
+
 	String getName();
 
 	int getPosX();

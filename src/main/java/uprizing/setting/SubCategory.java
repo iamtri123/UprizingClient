@@ -5,7 +5,7 @@ import lombok.Setter;
 import uprizing.Merguez;
 
 @Getter @Setter
-public class SubCategory {
+public class SubCategory { // TODO: rename
 
 	private final String name;
 

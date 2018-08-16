@@ -486,7 +486,7 @@ public class Minecraft implements IPlayerUsage
         }
 
         Display.setResizable(true);
-        Display.setTitle("UprizingClient v0.0.4");
+        Display.setTitle("UprizingClient v0.0.5");
         logger.info("LWJGL Version: " + Sys.getVersion());
         Util.EnumOS var1 = Util.getOSType();
 

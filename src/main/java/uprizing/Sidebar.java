@@ -7,7 +7,7 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.EnumChatFormatting;
-import uprizing.setting.Settings;
+import uprizing.option.Options;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -28,7 +28,7 @@ public class Sidebar extends Gui {
 			int stringWidth = fontRenderer.getStringWidth(objective.getDisplayName());
 			String playerName;
 
-			final boolean scoreboardScores = uprizing.getBoolean(Settings.SCOREBOARD_SCORES);
+			final boolean scoreboardScores = uprizing.getBoolean(Options.SCOREBOARD_SCORES);
 
 			for (Iterator<Score> iterator = scores.iterator(); iterator.hasNext(); stringWidth = Math.max(stringWidth, fontRenderer.getStringWidth(playerName))) {
 				Score score = iterator.next();
@@ -43,7 +43,7 @@ public class Sidebar extends Gui {
 			int count = 0;
 			Iterator<Score> iterator = scores.iterator();
 
-			final boolean flag = uprizing.getBoolean(Settings.SCOREBOARD_TEXT_SHADOW);
+			final boolean flag = uprizing.getBoolean(Options.SCOREBOARD_TEXT_SHADOW);
 
 			while (iterator.hasNext()) {
 				Score score = iterator.next();

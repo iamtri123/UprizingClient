@@ -10,10 +10,10 @@ import org.lwjgl.input.Keyboard;
 import uprizing.beerus.Beerus;
 import uprizing.draggable.Draggables;
 import uprizing.gui.GuiMenu;
-import uprizing.mods.ModRepository;
-import uprizing.mods.waypoints.WaypointsMod;
-import uprizing.setting.Setting;
-import uprizing.setting.Settings;
+import uprizing.mod.ModRepository;
+import uprizing.mod.waypoints.WaypointsMod;
+import uprizing.option.Option;
+import uprizing.option.Options;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +41,7 @@ public class Uprizing {
 	private final Sidebar sidebar = new Sidebar(this);
 	private final Count tickCount = new Count();
 	private final Count fpsCount = new Count();
-	private final Settings settings;
+	private final Options settings;
 	private final Draggables draggables;
 
 	/** Mods */
@@ -57,7 +57,7 @@ public class Uprizing {
 		this.file = new File(mainDir, "uprizing.txt");
 		this.motionBlur = new MotionBlur();
 		this.draggables = new Draggables(this);
-		this.settings = new Settings();
+		this.settings = new Options();
 		this.initMods(mainDir);
 		this.initKeyBindings();
 		this.loadSettings();
@@ -106,7 +106,7 @@ public class Uprizing {
 		return settings.get(index).getAsBoolean();
 	}
 
-	public final Setting getSetting(int index) {
+	public final Option getSetting(int index) {
 		return settings.get(index);
 	}
 
@@ -130,9 +130,9 @@ public class Uprizing {
 					}
 
 					for (int i = 0; i < settings.size(); i++) {
-						final Setting setting = settings.get(i);
-						if (setting.getConfigKey().equals(args[0])) // TODO: ArrayIndexOutOfBoundsException
-							setting.parseValue(args[1]);
+						final Option option = settings.get(i);
+						if (option.getConfigKey().equals(args[0])) // TODO: ArrayIndexOutOfBoundsException
+							option.parseValue(args[1]);
 					}
 				} catch (Exception exception) {
 					logger.warn("Skipping bad setting: " + line);
@@ -150,6 +150,8 @@ public class Uprizing {
 		try {
 			final PrintWriter writer = new PrintWriter(new FileWriter(file));
 			writer.println("openMenuKeyBinding:" + openMenuKeyBinding.getKeyCode()); // TODO: utilisé un int pour que ça soit plus rapide
+
+
 			for (int i = 0; i < settings.size(); i++)
 				writer.println(settings.get(i).getConfigKeyAndValue());
 			writer.close();

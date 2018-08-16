@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import uprizing.Uprizing;
-import uprizing.mods.waypoints.Waypoint;
+import uprizing.mod.waypoints.Waypoint;
 
 public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { // TODO: Optimize
 

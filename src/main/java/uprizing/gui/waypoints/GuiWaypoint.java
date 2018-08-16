@@ -12,7 +12,7 @@ import uprizing.Dimensions;
 import uprizing.Stawlker;
 import uprizing.Uprizing;
 import uprizing.gui.GuiSlotUprizing;
-import uprizing.mods.waypoints.Waypoint;
+import uprizing.mod.waypoints.Waypoint;
 
 import java.util.Random;
 

@@ -6,13 +6,13 @@ import org.lwjgl.input.Mouse;
 import uprizing.Merguez;
 import uprizing.Uprizing;
 import uprizing.draggable.Draggable;
-import uprizing.setting.Setting;
-import uprizing.setting.Settings;
+import uprizing.option.Option;
+import uprizing.option.Options;
 
 public class GuiMenu extends GuiScreen {
 
 	private final Uprizing uprizing;
-	private final Settings settings;
+	private final Options settings;
 	private Draggable draggable = null;
 	private int lastMouseX, lastMouseY;
 
@@ -51,10 +51,10 @@ public class GuiMenu extends GuiScreen {
 
 		final FontRenderer fontRenderer = uprizing.getMinecraft().fontRenderer;
 
-		drawString(fontRenderer, "General Settings",
-			width / Merguez.F + 8 + 1, // x
-			(height / Merguez.F) + Merguez.V + 6 + 1, // y
-			Merguez.B);
+		//drawString(fontRenderer, "General Settings",
+			//width / Merguez.F + 8 + 1, // x
+			//(height / Merguez.F) + Merguez.V + 6 + 1, // y
+			//Merguez.B);
 
 		settings.draw(fontRenderer, mouseX, mouseY);
 
@@ -74,10 +74,10 @@ public class GuiMenu extends GuiScreen {
 		// TODO: MenuGuiButton pour SettingButton && autres (close: [X])
 		// TODO: optimize: check si mouse est dans la box puis select settings sinon draggables
 
-		final Setting setting = settings.getByMouse(mouseX, mouseY);
-		if (setting != null) {
+		final Option option = settings.getByMouse(mouseX, mouseY);
+		if (option != null) {
 			//this.selectedSetting = setting;
-			setting.pressButton(mc, mouseButton);
+			option.pressButton(mc, mouseButton);
 		} else {
 			final Draggable hoveredDraggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
 			if (hoveredDraggable != null) {

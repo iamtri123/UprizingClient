@@ -6,7 +6,7 @@ public class Dimension { // Nether = -1, Overworld: 0, End = 1
 
 	private static final int MINIMUM = 0, MAXIMUM = 2;
 	
-	private int value;
+	private int value = 1;
 
 	public final boolean isNether() {
 		return value == 0;

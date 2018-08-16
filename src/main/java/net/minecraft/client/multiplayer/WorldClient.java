@@ -27,9 +27,9 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.SaveHandlerMP;
 import uprizing.Dimension;
-import uprizing.setting.Setting;
-import uprizing.setting.Settings;
-import uprizing.settings.WorldTimeSetting;
+import uprizing.option.Option;
+import uprizing.option.Options;
+import uprizing.settings.WorldTimeOption;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -476,9 +476,9 @@ public class WorldClient extends World
      * Sets the world time.
      */
     public void setWorldTime(long worldTime) {
-        final Setting worldTimeSetting = mc.uprizing.getSetting(Settings.WORLD_TIME);
-        if (worldTimeSetting.getAsInt() != WorldTimeSetting.VANILLA) {
-            worldTime = worldTimeSetting.getAsLong();
+        final Option worldTimeOption = mc.uprizing.getSetting(Options.WORLD_TIME);
+        if (worldTimeOption.getAsInt() != WorldTimeOption.VANILLA) {
+            worldTime = worldTimeOption.getAsLong();
         }
 
         if (worldTime < 0L) {

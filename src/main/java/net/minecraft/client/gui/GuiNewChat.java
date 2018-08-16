@@ -13,7 +13,7 @@ import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
-import uprizing.setting.Settings;
+import uprizing.option.Options;
 
 public class GuiNewChat extends Gui
 {
@@ -57,7 +57,7 @@ public class GuiNewChat extends Gui
                 int var11;
                 int var14;
 
-                final boolean flag = field_146247_f.uprizing.getBoolean(Settings.CHAT_BACKGROUND);
+                final boolean flag = field_146247_f.uprizing.getBoolean(Options.CHAT_BACKGROUND);
 
                 for (var9 = 0; var9 + this.field_146250_j < this.field_146253_i.size() && var9 < var2; ++var9)
                 {

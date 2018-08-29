@@ -214,7 +214,7 @@ public class Minecraft implements IPlayerUsage
     public EntityLivingBase renderViewEntity;
     public Entity pointedEntity;
     public EffectRenderer effectRenderer;
-    private final Session session;
+    public final Session session;
     private boolean isGamePaused;
 
     /** The font renderer used for displaying and measuring text. */
@@ -253,7 +253,7 @@ public class Minecraft implements IPlayerUsage
 
     /** I'm Gay */
     public Uprizing uprizing;
-    private final Sexy sexy = new Sexy();
+    private final Sexy sexy = new Sexy(this);
 
     public final Sexy sexy() {
         return sexy;
@@ -486,7 +486,7 @@ public class Minecraft implements IPlayerUsage
         }
 
         Display.setResizable(true);
-        Display.setTitle("UprizingClient v0.0.5");
+        Display.setTitle("UprizingClient v0.0.6");
         logger.info("LWJGL Version: " + Sys.getVersion());
         Util.EnumOS var1 = Util.getOSType();
 
@@ -1461,27 +1461,24 @@ public class Minecraft implements IPlayerUsage
         }
     }
 
-    private void func_147116_af()
-    {
+    private void func_147116_af() {
         uprizing.addLeftClick();
 
-        if (this.leftClickCounter <= 0)
-        {
+        if (sexy.isOnBeerusServer) {
+            thePlayer.dance(1);
+        }
+
+        if (this.leftClickCounter <= 0) {
             this.thePlayer.swingItem();
 
-            if (this.objectMouseOver == null)
-            {
+            if (this.objectMouseOver == null) {
                 logger.error("Null returned as \'hitResult\', this shouldn\'t happen!");
 
-                if (this.playerController.isNotCreative())
-                {
+                if (this.playerController.isNotCreative()) {
                     this.leftClickCounter = 10;
                 }
-            }
-            else
-            {
-                switch (Minecraft.SwitchMovingObjectType.field_152390_a[this.objectMouseOver.typeOfHit.ordinal()])
-                {
+            } else {
+                switch (Minecraft.SwitchMovingObjectType.field_152390_a[this.objectMouseOver.typeOfHit.ordinal()]) {
                     case 1:
                         this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
                         break;
@@ -1491,15 +1488,11 @@ public class Minecraft implements IPlayerUsage
                         int var2 = this.objectMouseOver.blockY;
                         int var3 = this.objectMouseOver.blockZ;
 
-                        if (this.theWorld.getBlock(var1, var2, var3).getMaterial() == Material.air)
-                        {
-                            if (this.playerController.isNotCreative())
-                            {
+                        if (this.theWorld.getBlock(var1, var2, var3).getMaterial() == Material.air) {
+                            if (this.playerController.isNotCreative()) {
                                 this.leftClickCounter = 10;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             this.playerController.clickBlock(var1, var2, var3, this.objectMouseOver.sideHit);
                         }
                 }

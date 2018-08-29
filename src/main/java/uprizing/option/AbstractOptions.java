@@ -1,7 +1,7 @@
 package uprizing.option;
 
 import net.minecraft.client.gui.FontRenderer;
-import uprizing.Merguez;
+import uprizing.utils.Merguez;
 
 public abstract class AbstractOptions {
 	

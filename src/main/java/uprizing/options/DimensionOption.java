@@ -1,7 +1,7 @@
-package uprizing.settings;
+package uprizing.options;
 
 import net.minecraft.client.Minecraft;
-import uprizing.Dimension;
+import uprizing.dimension.Dimension;
 import uprizing.Uprizing;
 import uprizing.option.AbstractOption;
 

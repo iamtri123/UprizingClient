@@ -323,69 +323,59 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         }
     }
 
-    private void func_147053_i()
-    {
-        GuiContainerCreative.ContainerCreative var1 = (GuiContainerCreative.ContainerCreative)this.field_147002_h;
-        var1.field_148330_a.clear();
-        Iterator var2 = Item.itemRegistry.iterator();
+    private void func_147053_i() {
+		GuiContainerCreative.ContainerCreative var1 = (GuiContainerCreative.ContainerCreative) this.field_147002_h;
+		var1.field_148330_a.clear();
+		Iterator var2 = Item.itemRegistry.iterator();
 
-        while (var2.hasNext())
-        {
-            Item var3 = (Item)var2.next();
+		while (var2.hasNext()) {
+			Item var3 = (Item) var2.next();
 
-            if (var3 != null && var3.getCreativeTab() != null)
-            {
-                var3.getSubItems(var3, (CreativeTabs)null, var1.field_148330_a);
-            }
-        }
+			if (var3 != null && var3.getCreativeTab() != null) {
+				var3.getSubItems(var3, (CreativeTabs) null, var1.field_148330_a);
+			}
+		}
 
-        Enchantment[] var8 = Enchantment.enchantmentsList;
-        int var9 = var8.length;
+		Enchantment[] var8 = Enchantment.enchantmentsList;
+		int var9 = var8.length;
 
-        for (int var4 = 0; var4 < var9; ++var4)
-        {
-            Enchantment var5 = var8[var4];
+		for (int var4 = 0; var4 < var9; ++var4) {
+			Enchantment var5 = var8[var4];
 
-            if (var5 != null && var5.type != null)
-            {
-                Items.enchanted_book.func_92113_a(var5, var1.field_148330_a);
-            }
-        }
+			if (var5 != null && var5.type != null) {
+				Items.enchanted_book.func_92113_a(var5, var1.field_148330_a);
+			}
+		}
 
-        var2 = var1.field_148330_a.iterator();
-        String var10 = this.field_147062_A.getText().toLowerCase();
+		var2 = var1.field_148330_a.iterator();
+		String var10 = this.field_147062_A.getText().toLowerCase();
 
-        while (var2.hasNext())
-        {
-            ItemStack var11 = (ItemStack)var2.next();
-            boolean var12 = false;
-            Iterator var6 = var11.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips).iterator();
+		while (var2.hasNext()) {
+			ItemStack var11 = (ItemStack) var2.next();
+			boolean var12 = false;
+			Iterator<String> var6 = var11.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips).iterator();
 
-            while (true)
-            {
-                if (var6.hasNext())
-                {
-                    String var7 = (String)var6.next();
+			while (true) {
+				if (var6.hasNext()) {
+					String var7 = var6.next();
 
-                    if (!var7.toLowerCase().contains(var10))
-                    {
-                        continue;
-                    }
+					if (!var7.toLowerCase().contains(var10)) {
+						continue;
+					}
 
-                    var12 = true;
-                }
+					var12 = true;
+				}
 
-                if (!var12)
-                {
-                    var2.remove();
-                }
+				if (!var12) {
+					var2.remove();
+				}
 
-                break;
-            }
-        }
+				break;
+			}
+		}
 
-        this.field_147067_x = 0.0F;
-        var1.func_148329_a(0.0F);
+		this.field_147067_x = 0.0F;
+		var1.func_148329_a(0.0F);
     }
 
     protected void func_146979_b(int p_146979_1_, int p_146979_2_)
@@ -647,29 +637,23 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         GL11.glDisable(GL11.GL_LIGHTING);
     }
 
-    protected void func_146285_a(ItemStack p_146285_1_, int p_146285_2_, int p_146285_3_)
-    {
-        if (field_147058_w == CreativeTabs.tabAllSearch.getTabIndex())
-        {
-            List var4 = p_146285_1_.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
+    protected void func_146285_a(ItemStack p_146285_1_, int p_146285_2_, int p_146285_3_) {
+        if (field_147058_w == CreativeTabs.tabAllSearch.getTabIndex()) {
+            List<String> var4 = p_146285_1_.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
             CreativeTabs var5 = p_146285_1_.getItem().getCreativeTab();
 
-            if (var5 == null && p_146285_1_.getItem() == Items.enchanted_book)
-            {
+            if (var5 == null && p_146285_1_.getItem() == Items.enchanted_book) {
                 Map var6 = EnchantmentHelper.getEnchantments(p_146285_1_);
 
-                if (var6.size() == 1)
-                {
-                    Enchantment var7 = Enchantment.enchantmentsList[((Integer)var6.keySet().iterator().next()).intValue()];
+                if (var6.size() == 1) {
+                    Enchantment var7 = Enchantment.enchantmentsList[(Integer) var6.keySet().iterator().next()];
                     CreativeTabs[] var8 = CreativeTabs.creativeTabArray;
                     int var9 = var8.length;
 
-                    for (int var10 = 0; var10 < var9; ++var10)
-                    {
+                    for (int var10 = 0; var10 < var9; ++var10) {
                         CreativeTabs var11 = var8[var10];
 
-                        if (var11.func_111226_a(var7.type))
-                        {
+                        if (var11.func_111226_a(var7.type)) {
                             var5 = var11;
                             break;
                         }
@@ -677,27 +661,20 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                 }
             }
 
-            if (var5 != null)
-            {
+            if (var5 != null) {
                 var4.add(1, "" + EnumChatFormatting.BOLD + EnumChatFormatting.BLUE + I18n.format(var5.getTranslatedTabLabel()));
             }
 
-            for (int var12 = 0; var12 < var4.size(); ++var12)
-            {
-                if (var12 == 0)
-                {
-                    var4.set(var12, p_146285_1_.getRarity().rarityColor + (String)var4.get(var12));
-                }
-                else
-                {
-                    var4.set(var12, EnumChatFormatting.GRAY + (String)var4.get(var12));
+            for (int var12 = 0; var12 < var4.size(); ++var12) {
+                if (var12 == 0) {
+                    var4.set(var12, p_146285_1_.getRarity().rarityColor + (String) var4.get(var12));
+                } else {
+                    var4.set(var12, EnumChatFormatting.GRAY + (String) var4.get(var12));
                 }
             }
 
             this.func_146283_a(var4, p_146285_2_, p_146285_3_);
-        }
-        else
-        {
+        } else {
             super.func_146285_a(p_146285_1_, p_146285_2_, p_146285_3_);
         }
     }

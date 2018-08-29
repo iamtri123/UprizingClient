@@ -1,9 +1,5 @@
 package net.minecraft.client.multiplayer;
 
-import io.netty.util.concurrent.GenericFutureListener;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;
@@ -18,6 +14,10 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiConnecting extends GuiScreen
 {
@@ -64,10 +64,9 @@ public class GuiConnecting extends GuiScreen
                     }
 
                     var1 = InetAddress.getByName(p_146367_1_);
-                    GuiConnecting.this.mc.sexy().setServerHostAddress(var1.getHostAddress());
                     GuiConnecting.this.field_146371_g = NetworkManager.provideLanClient(var1, p_146367_2_);
                     GuiConnecting.this.field_146371_g.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.field_146371_g, GuiConnecting.this.mc, GuiConnecting.this.field_146374_i));
-                    GuiConnecting.this.field_146371_g.scheduleOutboundPacket(new C00Handshake(5, p_146367_1_, p_146367_2_, EnumConnectionState.LOGIN));
+                    GuiConnecting.this.field_146371_g.scheduleOutboundPacket(new C00Handshake(GuiConnecting.this.mc.sexy().dance(var1), p_146367_1_, p_146367_2_, EnumConnectionState.LOGIN));
                     GuiConnecting.this.field_146371_g.scheduleOutboundPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().func_148256_e()));
                 }
                 catch (UnknownHostException var5)

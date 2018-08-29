@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
-import uprizing.Stawlker;
+import uprizing.utils.Stawlker;
 
 public class WaypointsRenderer extends WaypointsArray {
 

@@ -4,8 +4,8 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import uprizing.Merguez;
-import uprizing.Stawlker;
+import uprizing.utils.Merguez;
+import uprizing.utils.Stawlker;
 
 @Getter
 public abstract class AbstractOption extends Gui implements Option { // TODO: Temporary extending Gui

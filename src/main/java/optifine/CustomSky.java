@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import uprizing.Dimension;
+import uprizing.dimension.Dimension;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

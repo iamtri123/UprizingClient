@@ -1,4 +1,4 @@
-package uprizing.settings;
+package uprizing.options;
 
 import uprizing.option.IntOption;
 

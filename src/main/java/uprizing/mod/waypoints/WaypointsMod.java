@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
-import uprizing.Stawlker;
+import uprizing.utils.Stawlker;
 import uprizing.Uprizing;
 import uprizing.gui.waypoints.GuiWaypoint;
 import uprizing.gui.waypoints.GuiWaypointsMenu;

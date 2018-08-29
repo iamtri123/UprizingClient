@@ -1,4 +1,4 @@
-package uprizing.settings;
+package uprizing.options;
 
 import net.minecraft.client.Minecraft;
 import uprizing.option.BooleanOption;

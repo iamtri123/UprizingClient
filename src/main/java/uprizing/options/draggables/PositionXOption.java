@@ -1,20 +1,20 @@
-package uprizing.settings.draggables;
+package uprizing.options.draggables;
 
 import net.minecraft.client.Minecraft;
 import uprizing.Uprizing;
 import uprizing.draggable.Draggable;
 import uprizing.option.AbstractOption;
 
-public class PositionYOption extends AbstractOption {
+public class PositionXOption extends AbstractOption {
 
 	private final Draggable draggable;
 
-	public PositionYOption(final int draggableIndex) {
+	public PositionXOption(final int draggableIndex) {
 		this(Uprizing.getInstance().getDraggables().getByIndex(draggableIndex));
 	}
 
-	public PositionYOption(final Draggable draggable) {
-		super("Position Y", draggable.getName());
+	public PositionXOption(final Draggable draggable) {
+		super("Position X", draggable.getName());
 		this.draggable = draggable;
 	}
 
@@ -25,12 +25,12 @@ public class PositionYOption extends AbstractOption {
 
 	@Override
 	public final void parseValue(String configValue) {
-		draggable.setPosY(Integer.parseInt(configValue));
+		draggable.setPosX(Integer.parseInt(configValue));
 	}
 
 	@Override
 	public final String getAsString() {
-		return "" + draggable.getPosY();
+		return "" + draggable.getPosX();
 	}
 
 	@Override

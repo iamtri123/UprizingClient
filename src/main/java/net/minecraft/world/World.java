@@ -50,7 +50,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldInfo;
-import uprizing.Dimension;
+import uprizing.dimension.Dimension;
 
 public abstract class World implements IBlockAccess
 {

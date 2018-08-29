@@ -3,7 +3,7 @@ package uprizing.gui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
-import uprizing.Merguez;
+import uprizing.utils.Merguez;
 import uprizing.Uprizing;
 import uprizing.draggable.Draggable;
 import uprizing.option.Option;

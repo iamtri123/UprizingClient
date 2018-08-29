@@ -85,6 +85,7 @@ import net.minecraft.world.WorldServer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uprizing.protocol.C18PacketCheating;
 
 public class NetHandlerPlayServer implements INetHandlerPlayServer
 {
@@ -736,6 +737,9 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     {
         this.serverController.getCommandManager().executeCommand(this.playerEntity, p_147361_1_);
     }
+
+    @Override
+    public void processClicking(C18PacketCheating packet) {}
 
     /**
      * Processes the player swinging its held item

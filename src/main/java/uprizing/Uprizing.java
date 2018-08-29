@@ -7,13 +7,14 @@ import optifine.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
-import uprizing.beerus.Beerus;
+import uprizing.dimension.Dimension;
 import uprizing.draggable.Draggables;
 import uprizing.gui.GuiMenu;
 import uprizing.mod.ModRepository;
 import uprizing.mod.waypoints.WaypointsMod;
 import uprizing.option.Option;
 import uprizing.option.Options;
+import uprizing.utils.Stawlker;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,7 +36,6 @@ public class Uprizing {
 	}
 
 	/** X0 Tour Llif3 */
-	private final Beerus beerus = new Beerus();
 	public final Dimension dimension = new Dimension();
 	private final MotionBlur motionBlur;
 	private final Sidebar sidebar = new Sidebar(this);
@@ -84,7 +84,6 @@ public class Uprizing {
 
 	public void runTick() {
 		//tickCount.increment();
-		beerus.tick();
 		draggables.getCps().tick();
 	}
 
@@ -111,7 +110,6 @@ public class Uprizing {
 	}
 
 	public final void addLeftClick() {
-		beerus.addLeftClick();
 		draggables.getCps().add();
 	}
 

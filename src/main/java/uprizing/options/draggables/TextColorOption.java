@@ -1,20 +1,20 @@
-package uprizing.settings.draggables;
+package uprizing.options.draggables;
 
 import net.minecraft.client.Minecraft;
 import uprizing.Uprizing;
 import uprizing.draggable.Draggable;
 import uprizing.option.AbstractOption;
 
-public class ScaleOption extends AbstractOption {
+public class TextColorOption extends AbstractOption {
 
 	private final Draggable draggable;
 
-	public ScaleOption(final int draggableIndex) {
+	public TextColorOption(final int draggableIndex) {
 		this(Uprizing.getInstance().getDraggables().getByIndex(draggableIndex));
 	}
 
-	public ScaleOption(final Draggable draggable) {
-		super("Scale", draggable.getName());
+	public TextColorOption(final Draggable draggable) {
+		super("Text Color", draggable.getName());
 		this.draggable = draggable;
 	}
 
@@ -25,12 +25,12 @@ public class ScaleOption extends AbstractOption {
 
 	@Override
 	public final void parseValue(String configValue) {
-		draggable.setScale(Double.parseDouble(configValue));
+		draggable.setTextColor(Integer.parseInt(configValue));
 	}
 
 	@Override
 	public final String getAsString() {
-		return "" + draggable.getScale();
+		return "" + draggable.getTextColor();
 	}
 
 	@Override

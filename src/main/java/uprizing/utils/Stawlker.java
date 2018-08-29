@@ -1,4 +1,4 @@
-package uprizing;
+package uprizing.utils;
 
 import net.minecraft.client.settings.KeyBinding;
 import sun.misc.FloatingDecimal;

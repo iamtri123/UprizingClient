@@ -3,7 +3,7 @@ package uprizing.mod.waypoints;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.ICamera;
-import uprizing.Dimensions;
+import uprizing.dimension.Dimensions;
 
 import java.io.BufferedReader;
 import java.io.File;

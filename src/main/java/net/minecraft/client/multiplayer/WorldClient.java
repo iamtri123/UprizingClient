@@ -26,10 +26,10 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.SaveHandlerMP;
-import uprizing.Dimension;
+import uprizing.dimension.Dimension;
 import uprizing.option.Option;
 import uprizing.option.Options;
-import uprizing.settings.WorldTimeOption;
+import uprizing.options.WorldTimeOption;
 
 import java.util.HashSet;
 import java.util.Iterator;

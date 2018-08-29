@@ -590,146 +590,124 @@ public final class ItemStack
     /**
      * Return a list of strings containing information about the item
      */
-    public List getTooltip(EntityPlayer p_82840_1_, boolean p_82840_2_)
-    {
-        ArrayList var3 = new ArrayList();
-        String var4 = this.getDisplayName();
+    public List<String> getTooltip(EntityPlayer p_82840_1_, boolean p_82840_2_) {
+		ArrayList<String> var3 = new ArrayList<>();
+		String var4 = this.getDisplayName();
 
-        if (this.hasDisplayName())
-        {
-            var4 = EnumChatFormatting.ITALIC + var4 + EnumChatFormatting.RESET;
-        }
+		final boolean hasDisplayName;
 
-        int var6;
+		if (hasDisplayName = this.hasDisplayName()) {
+			var4 = EnumChatFormatting.ITALIC + var4 + EnumChatFormatting.RESET;
+		}
 
-        if (p_82840_2_)
-        {
-            String var5 = "";
+		int var6;
 
-            if (var4.length() > 0)
-            {
-                var4 = var4 + " (";
-                var5 = ")";
-            }
+		if (p_82840_2_) {
+			String var5 = "";
 
-            var6 = Item.getIdFromItem(this.field_151002_e);
+			if (var4.length() > 0) {
+				var4 = var4 + " (";
+				var5 = ")";
+			}
 
-            if (this.getHasSubtypes())
-            {
-                var4 = var4 + String.format("#%04d/%d%s", Integer.valueOf(var6), Integer.valueOf(this.itemDamage), var5);
-            }
-            else
-            {
-                var4 = var4 + String.format("#%04d%s", Integer.valueOf(var6), var5);
-            }
-        }
-        else if (!this.hasDisplayName() && this.field_151002_e == Items.filled_map)
-        {
-            var4 = var4 + " #" + this.itemDamage;
-        }
+			var6 = Item.getIdFromItem(this.field_151002_e);
 
-        var3.add(var4);
-        this.field_151002_e.addInformation(this, p_82840_1_, var3, p_82840_2_);
+			if (this.getHasSubtypes()) {
+				var4 = var4 + String.format("#%04d/%d%s", var6, this.itemDamage, var5);
+			} else {
+				var4 = var4 + String.format("#%04d%s", var6, var5);
+			}
+		} else if (!hasDisplayName && this.field_151002_e == Items.filled_map) {
+			var4 = var4 + " #" + this.itemDamage;
+		}
 
-        if (this.hasTagCompound())
-        {
-            NBTTagList var13 = this.getEnchantmentTagList();
+		var3.add(var4);
 
-            if (var13 != null)
-            {
-                for (var6 = 0; var6 < var13.tagCount(); ++var6)
-                {
-                    short var7 = var13.getCompoundTagAt(var6).getShort("id");
-                    short var8 = var13.getCompoundTagAt(var6).getShort("lvl");
+		final boolean notNull = this.stackTagCompound != null;
+		final boolean hideAttributes = notNull && this.stackTagCompound.getBoolean("HideAttributes");
 
-                    if (Enchantment.enchantmentsList[var7] != null)
-                    {
-                        var3.add(Enchantment.enchantmentsList[var7].getTranslatedName(var8));
-                    }
-                }
-            }
+		if (!hideAttributes) {
+			this.field_151002_e.addInformation(this, p_82840_1_, var3, p_82840_2_);
+		}
 
-            if (this.stackTagCompound.func_150297_b("display", 10))
-            {
-                NBTTagCompound var15 = this.stackTagCompound.getCompoundTag("display");
+		if (notNull) {
+			NBTTagList var13 = this.getEnchantmentTagList();
 
-                if (var15.func_150297_b("color", 3))
-                {
-                    if (p_82840_2_)
-                    {
-                        var3.add("Color: #" + Integer.toHexString(var15.getInteger("color")).toUpperCase());
-                    }
-                    else
-                    {
-                        var3.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("item.dyed"));
-                    }
-                }
+			if (var13 != null) {
+				for (var6 = 0; var6 < var13.tagCount(); ++var6) {
+					short var7 = var13.getCompoundTagAt(var6).getShort("id");
+					short var8 = var13.getCompoundTagAt(var6).getShort("lvl");
 
-                if (var15.func_150299_b("Lore") == 9)
-                {
-                    NBTTagList var17 = var15.getTagList("Lore", 8);
+					if (Enchantment.enchantmentsList[var7] != null) {
+						var3.add(Enchantment.enchantmentsList[var7].getTranslatedName(var8));
+					}
+				}
+			}
 
-                    if (var17.tagCount() > 0)
-                    {
-                        for (int var19 = 0; var19 < var17.tagCount(); ++var19)
-                        {
-                            var3.add(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + var17.getStringTagAt(var19));
-                        }
-                    }
-                }
-            }
-        }
+			if (this.stackTagCompound.func_150297_b("display", 10)) {
+				NBTTagCompound var15 = this.stackTagCompound.getCompoundTag("display");
 
-        Multimap var14 = this.getAttributeModifiers();
+				if (var15.func_150297_b("color", 3)) {
+					if (p_82840_2_) {
+						var3.add("Color: #" + Integer.toHexString(var15.getInteger("color")).toUpperCase());
+					} else {
+						var3.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("item.dyed"));
+					}
+				}
 
-        if (!var14.isEmpty())
-        {
-            var3.add("");
-            Iterator var16 = var14.entries().iterator();
+				if (var15.func_150299_b("Lore") == 9) {
+					NBTTagList var17 = var15.getTagList("Lore", 8);
 
-            while (var16.hasNext())
-            {
-                Entry var18 = (Entry)var16.next();
-                AttributeModifier var20 = (AttributeModifier)var18.getValue();
-                double var9 = var20.getAmount();
+					if (var17.tagCount() > 0) {
+						for (int var19 = 0; var19 < var17.tagCount(); ++var19) {
+							var3.add(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + var17.getStringTagAt(var19));
+						}
+					}
+				}
+			}
+		}
 
-                if (var20.getID() == Item.field_111210_e)
-                {
-                    var9 += (double)EnchantmentHelper.func_152377_a(this, EnumCreatureAttribute.UNDEFINED);
-                }
+		if (!hideAttributes) {
+			Multimap var14 = this.getAttributeModifiers();
 
-                double var11;
+			if (!var14.isEmpty()) {
+				var3.add("");
+				Iterator var16 = var14.entries().iterator();
 
-                if (var20.getOperation() != 1 && var20.getOperation() != 2)
-                {
-                    var11 = var9;
-                }
-                else
-                {
-                    var11 = var9 * 100.0D;
-                }
+				while (var16.hasNext()) {
+					Entry var18 = (Entry) var16.next();
+					AttributeModifier var20 = (AttributeModifier) var18.getValue();
+					double var9 = var20.getAmount();
 
-                if (var9 > 0.0D)
-                {
-                    var3.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("attribute.modifier.plus." + var20.getOperation(), new Object[] {field_111284_a.format(var11), StatCollector.translateToLocal("attribute.name." + (String)var18.getKey())}));
-                }
-                else if (var9 < 0.0D)
-                {
-                    var11 *= -1.0D;
-                    var3.add(EnumChatFormatting.RED + StatCollector.translateToLocalFormatted("attribute.modifier.take." + var20.getOperation(), new Object[] {field_111284_a.format(var11), StatCollector.translateToLocal("attribute.name." + (String)var18.getKey())}));
-                }
-            }
-        }
+					if (var20.getID() == Item.field_111210_e) {
+						var9 += (double) EnchantmentHelper.func_152377_a(this, EnumCreatureAttribute.UNDEFINED);
+					}
 
-        if (this.hasTagCompound() && this.getTagCompound().getBoolean("Unbreakable"))
-        {
-            var3.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("item.unbreakable"));
-        }
+					double var11;
 
-        if (p_82840_2_ && this.isItemDamaged())
-        {
-            var3.add("Durability: " + (this.getMaxDamage() - this.getItemDamageForDisplay()) + " / " + this.getMaxDamage());
-        }
+					if (var20.getOperation() != 1 && var20.getOperation() != 2) {
+						var11 = var9;
+					} else {
+						var11 = var9 * 100.0D;
+					}
+
+					if (var9 > 0.0D) {
+						var3.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("attribute.modifier.plus." + var20.getOperation(), new Object[]{field_111284_a.format(var11), StatCollector.translateToLocal("attribute.name." + (String) var18.getKey())}));
+					} else if (var9 < 0.0D) {
+						var11 *= -1.0D;
+						var3.add(EnumChatFormatting.RED + StatCollector.translateToLocalFormatted("attribute.modifier.take." + var20.getOperation(), new Object[]{field_111284_a.format(var11), StatCollector.translateToLocal("attribute.name." + (String) var18.getKey())}));
+					}
+				}
+			}
+		}
+
+		if (notNull && this.getTagCompound().getBoolean("Unbreakable")) {
+			var3.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("item.unbreakable"));
+		}
+
+		if (p_82840_2_ && this.isItemDamaged()) {
+			var3.add("Durability: " + (this.getMaxDamage() - this.getItemDamageForDisplay()) + " / " + this.getMaxDamage());
+		}
 
         return var3;
     }

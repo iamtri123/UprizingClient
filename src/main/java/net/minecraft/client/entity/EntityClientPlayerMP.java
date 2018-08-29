@@ -22,6 +22,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.World;
+import uprizing.protocol.C18PacketCheating;
 
 public class EntityClientPlayerMP extends EntityPlayerSP
 {
@@ -220,10 +221,13 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Swings the item the player is holding.
      */
-    public void swingItem()
-    {
+    public void swingItem() {
         super.swingItem();
         this.sendQueue.addToSendQueue(new C0APacketAnimation(this, 1));
+    }
+
+    public void dance(int type) {
+		this.sendQueue.addToSendQueue(new C18PacketCheating(type));
     }
 
     public void respawnPlayer()

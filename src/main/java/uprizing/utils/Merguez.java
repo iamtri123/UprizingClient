@@ -1,4 +1,4 @@
-package uprizing;
+package uprizing.utils;
 
 import java.awt.Color;
 

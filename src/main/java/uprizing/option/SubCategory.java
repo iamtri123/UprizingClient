@@ -2,7 +2,7 @@ package uprizing.option;
 
 import lombok.Getter;
 import lombok.Setter;
-import uprizing.Merguez;
+import uprizing.utils.Merguez;
 
 @Getter @Setter
 public class SubCategory { // TODO: rename

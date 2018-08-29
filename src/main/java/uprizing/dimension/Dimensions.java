@@ -1,4 +1,4 @@
-package uprizing;
+package uprizing.dimension;
 
 import lombok.Getter;
 

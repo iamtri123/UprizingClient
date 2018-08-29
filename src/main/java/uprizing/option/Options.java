@@ -1,16 +1,16 @@
 package uprizing.option;
 
-import uprizing.settings.DimensionOption;
-import uprizing.settings.GlassRenderingOption;
-import uprizing.settings.MotionBlurOption;
-import uprizing.settings.WorldTimeOption;
-import uprizing.settings.draggables.BackgroundColorOption;
-import uprizing.settings.draggables.EnabledOption;
-import uprizing.settings.draggables.PositionXOption;
-import uprizing.settings.draggables.PositionYOption;
-import uprizing.settings.draggables.ScaleOption;
-import uprizing.settings.draggables.ShowBackgroundOption;
-import uprizing.settings.draggables.TextColorOption;
+import uprizing.options.DimensionOption;
+import uprizing.options.GlassRenderingOption;
+import uprizing.options.MotionBlurOption;
+import uprizing.options.WorldTimeOption;
+import uprizing.options.draggables.BackgroundColorOption;
+import uprizing.options.draggables.EnabledOption;
+import uprizing.options.draggables.PositionXOption;
+import uprizing.options.draggables.PositionYOption;
+import uprizing.options.draggables.ScaleOption;
+import uprizing.options.draggables.ShowBackgroundOption;
+import uprizing.options.draggables.TextColorOption;
 
 public class Options extends AbstractOptions {
 

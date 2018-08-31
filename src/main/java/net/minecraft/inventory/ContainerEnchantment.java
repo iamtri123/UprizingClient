@@ -322,4 +322,9 @@ public class ContainerEnchantment extends Container
 
         return var3;
     }
+
+    @Override
+    public void updateTitle(String title) {
+        tableInventory.setInventoryName(title);
+    }
 }

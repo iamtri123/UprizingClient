@@ -33,6 +33,9 @@ public class InventoryCraftResult implements IInventory
         return "Result";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

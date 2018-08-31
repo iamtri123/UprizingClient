@@ -560,4 +560,9 @@ public class ContainerRepair extends Container
 
         this.updateRepairOutput();
     }
+
+    @Override
+    public void updateTitle(String title) {
+        inputSlots.setInventoryName(title);
+    }
 }

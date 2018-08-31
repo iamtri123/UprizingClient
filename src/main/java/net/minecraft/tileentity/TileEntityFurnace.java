@@ -118,6 +118,9 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
         return this.isInventoryNameLocalized() ? this.field_145958_o : "container.furnace";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

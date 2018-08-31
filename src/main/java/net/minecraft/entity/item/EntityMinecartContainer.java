@@ -171,6 +171,9 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
         return this.isInventoryNameLocalized() ? this.func_95999_t() : "container.minecart";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns the maximum stack size for a inventory slot.
      */

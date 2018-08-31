@@ -92,6 +92,11 @@ public class ContainerChest extends Container
         this.lowerChestInventory.closeInventory();
     }
 
+    @Override
+    public void updateTitle(String title) {
+        lowerChestInventory.setInventoryName(title);
+    }
+
     /**
      * Return this chest container's lower chest inventory.
      */

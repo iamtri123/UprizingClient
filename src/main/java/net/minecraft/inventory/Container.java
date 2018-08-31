@@ -558,6 +558,8 @@ public abstract class Container
         }
     }
 
+    public void updateTitle(String title) {}
+
     public void updateProgressBar(int p_75137_1_, int p_75137_2_) {}
 
     /**

@@ -37,6 +37,8 @@ public interface IInventory
      */
     String getInventoryName();
 
+    void setInventoryName(String inventoryName);
+
     /**
      * Returns if the inventory name is localized
      */

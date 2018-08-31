@@ -57,6 +57,9 @@ public class InventoryLargeChest implements IInventory
         return this.upperChest.isInventoryNameLocalized() ? this.upperChest.getInventoryName() : (this.lowerChest.isInventoryNameLocalized() ? this.lowerChest.getInventoryName() : this.name);
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

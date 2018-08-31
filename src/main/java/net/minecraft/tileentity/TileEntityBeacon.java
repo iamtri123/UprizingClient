@@ -347,6 +347,9 @@ public class TileEntityBeacon extends TileEntity implements IInventory
         return this.isInventoryNameLocalized() ? this.field_146008_p : "container.beacon";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

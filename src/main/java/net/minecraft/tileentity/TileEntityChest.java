@@ -132,6 +132,9 @@ public class TileEntityChest extends TileEntity implements IInventory
         return this.isInventoryNameLocalized() ? this.field_145981_s : "container.chest";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

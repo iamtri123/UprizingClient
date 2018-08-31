@@ -65,6 +65,9 @@ public class InventoryCrafting implements IInventory
         return "container.crafting";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

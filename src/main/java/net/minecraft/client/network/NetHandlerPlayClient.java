@@ -1294,14 +1294,17 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     /**
      * Sets the progressbar of the opened window to the specified value
      */
-    public void handleWindowProperty(S31PacketWindowProperty p_147245_1_)
-    {
-        EntityClientPlayerMP var2 = this.gameController.thePlayer;
+    public void handleWindowProperty(S31PacketWindowProperty packet) {
+		EntityClientPlayerMP player = this.gameController.thePlayer;
 
-        if (var2.openContainer != null && var2.openContainer.windowId == p_147245_1_.func_149182_c())
-        {
-            var2.openContainer.updateProgressBar(p_147245_1_.func_149181_d(), p_147245_1_.func_149180_e());
-        }
+		if (player.openContainer != null && player.openContainer.windowId == packet.getWindowId()) {
+			final int property = packet.getProperty();
+			if (property == 3) {
+				player.openContainer.updateTitle(packet.getTitle());
+			} else {
+				player.openContainer.updateProgressBar(property, packet.getValue());
+			}
+		}
     }
 
     public void handleEntityEquipment(S04PacketEntityEquipment p_147242_1_)

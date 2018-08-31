@@ -140,6 +140,9 @@ public class InventoryMerchant implements IInventory
         return "mob.villager";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

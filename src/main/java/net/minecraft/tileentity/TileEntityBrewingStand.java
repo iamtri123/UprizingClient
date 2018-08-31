@@ -30,6 +30,9 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
         return this.isInventoryNameLocalized() ? this.field_145942_n : "container.brewing";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

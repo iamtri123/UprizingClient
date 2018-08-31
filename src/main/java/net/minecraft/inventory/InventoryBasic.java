@@ -130,6 +130,11 @@ public class InventoryBasic implements IInventory
         return this.inventoryTitle;
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {
+        this.inventoryTitle = inventoryName;
+    }
+
     /**
      * Returns if the inventory name is localized
      */

@@ -137,6 +137,9 @@ public class TileEntityDispenser extends TileEntity implements IInventory
         return this.isInventoryNameLocalized() ? this.field_146020_a : "container.dispenser";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     public void func_146018_a(String p_146018_1_)
     {
         this.field_146020_a = p_146018_1_;

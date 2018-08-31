@@ -172,6 +172,9 @@ public class TileEntityHopper extends TileEntity implements IHopper
         return this.isInventoryNameLocalized() ? this.field_145902_i : "container.hopper";
     }
 
+    @Override
+    public void setInventoryName(String inventoryName) {}
+
     /**
      * Returns if the inventory name is localized
      */

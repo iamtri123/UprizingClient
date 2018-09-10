@@ -1,7 +1,7 @@
 [discord-invite]: https://discord.gg/R8dfj6S
 [ ![Discord](https://discordapp.com/api/guilds/398116303941926915/widget.png) ][discord-invite]
 
-# UprizingClient v0.0.6
+# UprizingClient v0.0.7
 For more informations please join the [Discord:](https://discord.gg/R8dfj6S) Q&A, mods screenshots, development logs, etc..
 
 ## Want to play with the best client ?

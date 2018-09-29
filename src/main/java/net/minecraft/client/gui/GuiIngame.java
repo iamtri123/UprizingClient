@@ -386,7 +386,7 @@ public class GuiIngame extends Gui
 
         if (var37 != null)
         {
-            this.mc.uprizing.getSidebar().draw(var37, var7, var6, var8);
+            this.mc.uprizing.getSidebarDrawer().draw(var37, var7, var6, var8);
         }
 
         GL11.glEnable(GL11.GL_BLEND);

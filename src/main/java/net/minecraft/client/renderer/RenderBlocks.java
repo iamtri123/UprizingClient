@@ -55,7 +55,7 @@ import optifine.Reflector;
 import optifine.TextureUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-import uprizing.option.Options;
+import uprizing.UprizingSettings;
 
 public class RenderBlocks
 {
@@ -278,7 +278,7 @@ public class RenderBlocks
 
     public boolean renderBlockByRenderType(Block par1Block, int par2, int par3, int par4)
     {
-        if (par1Block.isGlassCube() && !minecraftRB.uprizing.getBoolean(Options.GLASS_RENDERING)) return false;
+        if (par1Block.isGlassCube() && !minecraftRB.uprizing.getBoolean(UprizingSettings.GLASS_RENDERING)) return false;
 
         int i = par1Block.getRenderType();
 

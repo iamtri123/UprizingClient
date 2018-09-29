@@ -9,6 +9,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
+import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -54,8 +55,6 @@ import net.minecraft.client.resources.DefaultResourcePack;
 import net.minecraft.client.resources.FoliageColorReloadListener;
 import net.minecraft.client.resources.GrassColorReloadListener;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.client.resources.ResourceIndex;
 import net.minecraft.client.resources.ResourcePackRepository;
@@ -144,8 +143,9 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
-import uprizing.Sexy;
+import uprizing.counters.Counter;
 import uprizing.Uprizing;
+import uprizing.counters.FPSCounter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -253,11 +253,6 @@ public class Minecraft implements IPlayerUsage
 
     /** I'm Gay */
     public Uprizing uprizing;
-    private final Sexy sexy = new Sexy(this);
-
-    public final Sexy sexy() {
-        return sexy;
-    }
 
     /** Mouse helper instance. */
     public MouseHelper mouseHelper;
@@ -266,12 +261,6 @@ public class Minecraft implements IPlayerUsage
     private final String launchedVersion;
     private final Proxy proxy;
     private ISaveFormat saveLoader;
-
-    /**
-     * This is set to fpsCounter every debug screen update, and is shown on the debug screen. It's also sent as part of
-     * the usage snooping.
-     */
-    private static int debugFPS;
 
     /**
      * When you place a block, it's set to 6, decremented once per tick, when it's 0, you can place another block.
@@ -330,7 +319,7 @@ public class Minecraft implements IPlayerUsage
     long debugUpdateTime = getSystemTime();
 
     /** holds the current fps */
-    int fpsCounter;
+    @Getter final FPSCounter fpsCounter = new FPSCounter();
     long prevFrameTime = -1L;
 
     /** Profiler currently displayed in the debug screen pie chart */
@@ -1124,17 +1113,15 @@ public class Minecraft implements IPlayerUsage
         this.mcProfiler.endSection();
         this.mcProfiler.endSection();
         this.checkGLError("Post render");
-        ++this.fpsCounter;
+        this.fpsCounter.increment();
         this.isGamePaused = this.isSingleplayer() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame() && !this.theIntegratedServer.getPublic();
 
         while (getSystemTime() >= this.debugUpdateTime + 1000L)
         {
-            debugFPS = this.fpsCounter;
-            this.uprizing.getFpsCount().set(fpsCounter);
-            this.debug = debugFPS + " fps, " + WorldRenderer.chunksUpdated + " chunk updates";
+            this.debug = this.fpsCounter.debug() + " fps, " + WorldRenderer.chunksUpdated + " chunk updates";
             WorldRenderer.chunksUpdated = 0;
             this.debugUpdateTime += 1000L;
-            this.fpsCounter = 0;
+            this.fpsCounter.reset();
             this.usageSnooper.addMemoryStatsToSnooper();
 
             if (!this.usageSnooper.isSnooperRunning())
@@ -1462,9 +1449,9 @@ public class Minecraft implements IPlayerUsage
     }
 
     private void func_147116_af() {
-        uprizing.addLeftClick();
+        uprizing.getClicksPerSecond().add();
 
-        if (sexy.isOnBeerusServer) {
+        if (uprizing.isOnBeerusServer) {
             thePlayer.dance(1);
         }
 
@@ -1661,7 +1648,6 @@ public class Minecraft implements IPlayerUsage
      */
     public void runTick()
     {
-    	this.uprizing.runTick();
         this.mcProfiler.startSection("scheduledExecutables");
         Queue var1 = this.field_152351_aB;
 
@@ -2251,7 +2237,7 @@ public class Minecraft implements IPlayerUsage
             }
 
             this.theIntegratedServer = null;
-            this.sexy.reset();
+            this.uprizing.reset();
             this.guiAchievement.func_146257_b();
             this.entityRenderer.getMapItemRenderer().func_148249_a();
         }
@@ -2658,7 +2644,7 @@ public class Minecraft implements IPlayerUsage
 
     public void addServerStatsToSnooper(PlayerUsageSnooper p_70000_1_)
     {
-        p_70000_1_.func_152768_a("fps", Integer.valueOf(debugFPS));
+        p_70000_1_.func_152768_a("fps", fpsCounter.debug);
         p_70000_1_.func_152768_a("vsync_enabled", Boolean.valueOf(this.gameSettings.enableVsync));
         p_70000_1_.func_152768_a("display_frequency", Integer.valueOf(Display.getDisplayMode().getFrequency()));
         p_70000_1_.func_152768_a("display_type", this.fullscreen ? "fullscreen" : "windowed");

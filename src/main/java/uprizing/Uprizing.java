@@ -4,74 +4,89 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import optifine.Config;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
-import uprizing.dimension.Dimension;
-import uprizing.draggable.Draggables;
+import uprizing.dimensions.Dimension;
+import uprizing.draggables.Draggables;
 import uprizing.gui.GuiMenu;
-import uprizing.mod.ModRepository;
-import uprizing.mod.waypoints.WaypointsMod;
-import uprizing.option.Option;
-import uprizing.option.Options;
-import uprizing.utils.Stawlker;
+import uprizing.settings.Setting;
+import uprizing.settings.SettingUtils;
+import uprizing.waypoints.WaypointsMod;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.net.InetAddress;
 
 @Getter
 public class Uprizing {
 
-	/** I'm Gay */
-	private static Uprizing instance;
-	private static final Logger logger = LogManager.getLogger();
-	private transient final Minecraft minecraft;
-	private final File file;
+	@Getter private static Uprizing instance;
+	private static final int DEFAULT_PROTOCOL = 5;
+	private static final int ALGERIAN_PROTOCOL = -213;
 
-	public static Uprizing getInstance() {
-		return instance;
-	}
+	private final Minecraft minecraft;
+	private final File settingsFile;
+	private final BeerusServers servers = new BeerusServers();
 
-	/** X0 Tour Llif3 */
+	private String serverHostAddress;
+	public boolean isOnBeerusServer;
+
+	@Getter private final ClicksPerSecond clicksPerSecond = new ClicksPerSecond();
+	private WaypointsMod waypointsMod;
+	private final Draggables draggables;
+	private final UprizingSettings settings;
+
 	public final Dimension dimension = new Dimension();
 	private final MotionBlur motionBlur;
-	private final Sidebar sidebar = new Sidebar(this);
-	private final Count tickCount = new Count();
-	private final Count fpsCount = new Count();
-	private final Options settings;
-	private final Draggables draggables;
+	private final SidebarDrawer sidebarDrawer = new SidebarDrawer(this);
 
-	/** Mods */
-	private final ModRepository modRepository = new ModRepository();
-	private transient WaypointsMod waypointsMod;
-
-	/** Key Bindings */
-	private final KeyBinding openMenuKeyBinding = Stawlker.keyBinding("Open Menu", Keyboard.KEY_G, "Uprizing Client");
+	private final KeyBinding openMenuKeyBinding = UprizingUtils.keyBinding("Open Menu", Keyboard.KEY_G, "Uprizing Client");
 
 	public Uprizing(final Minecraft minecraft, final File mainDir) {
 		instance = this;
+
 		this.minecraft = minecraft;
-		this.file = new File(mainDir, "uprizing.txt");
+		this.settingsFile = new File(mainDir, "uprizing.txt");
+		this.draggables = new Draggables(clicksPerSecond, minecraft);
 		this.motionBlur = new MotionBlur();
-		this.draggables = new Draggables(this);
-		this.settings = new Options();
-		this.initMods(mainDir);
+		this.settings = new UprizingSettings();
+		SettingUtils.loadFromFile(settingsFile, settings);
+		this.waypointsMod = new WaypointsMod(this, mainDir);
+
 		this.initKeyBindings();
-		this.loadSettings();
+
 		Config.initUprizing(this);
+		SettingUtils.saveToFile(settingsFile, settings);
 	}
 
-	private void initMods(File mainDir) {
-		waypointsMod = new WaypointsMod(this, mainDir);
-		modRepository.addMod(waypointsMod);
+	public final String getServerHostAddress() { // TODO: CurrentServer, ClientProperties class
+		return serverHostAddress;
 	}
 
-	private void initKeyBindings() { // TODO: KeyBindings object in Mod (for mod disabling)
+	public final int dance(InetAddress address) { // TODO: dans Uprizing
+		serverHostAddress = address.getHostAddress();
+
+		for (BeerusServer server : servers.toArray()) {
+			if (server.isAllowed(serverHostAddress, minecraft.session)) {
+				isOnBeerusServer = true;
+				return ALGERIAN_PROTOCOL;
+			}
+		}
+
+		return DEFAULT_PROTOCOL;
+	}
+
+	public final void reset() {
+		serverHostAddress = null;
+		isOnBeerusServer = false;
+	}
+
+	public final void saveSettings() {
+		SettingUtils.saveToFile(settingsFile, settings);
+	}
+
+	@Deprecated
+	private void initKeyBindings() {
 		KeyBinding[] gameSettings = minecraft.gameSettings.keyBindings;
-		KeyBinding[] uprizing = modRepository.getKeyBindings();
+		KeyBinding[] uprizing = waypointsMod.getKeyBindings();
 
 		KeyBinding[] keyBindings = new KeyBinding[gameSettings.length + uprizing.length + 1];
 		keyBindings[keyBindings.length - 1] = openMenuKeyBinding;
@@ -82,79 +97,25 @@ public class Uprizing {
 		minecraft.gameSettings.keyBindings = keyBindings;
 	}
 
-	public void runTick() {
-		//tickCount.increment();
-		draggables.getCps().tick();
-	}
-
 	public void runRenderTick() {
 		if (minecraft.currentScreen == null) {
+			clicksPerSecond.tick();
+
 			if (openMenuKeyBinding.isPressed()) {
 				minecraft.displayGuiScreen(new GuiMenu(this));
 			} else if (!minecraft.gameSettings.showDebugInfo) { // && !minecraft.gameSettings.hideGUI
-				draggables.draw();
+				draggables.draw(minecraft.fontRenderer);
 			}
 		}
 
-		while (modRepository.hasNext())
-			modRepository.next().onRenderTick();
-		modRepository.close();
+		waypointsMod.onRenderTick();
 	}
 
 	public final boolean getBoolean(int index) {
 		return settings.get(index).getAsBoolean();
 	}
 
-	public final Option getSetting(int index) {
+	public final Setting getSetting(int index) {
 		return settings.get(index);
-	}
-
-	public final void addLeftClick() {
-		draggables.getCps().add();
-	}
-
-	private void loadSettings() {
-		try {
-			if (!file.exists()) return;
-
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String line;
-
-			while ((line = reader.readLine()) != null) {
-				try {
-					final String[] args = line.split(":");
-					if (args[0].equals("openMenuKeyBinding")) { // TODO: keyBindings.txt
-						openMenuKeyBinding.setKeyCode(Integer.parseInt(args[1]));
-					}
-
-					for (int i = 0; i < settings.size(); i++) {
-						final Option option = settings.get(i);
-						if (option.getConfigKey().equals(args[0])) // TODO: ArrayIndexOutOfBoundsException
-							option.parseValue(args[1]);
-					}
-				} catch (Exception exception) {
-					logger.warn("Skipping bad setting: " + line);
-					exception.printStackTrace();
-				}
-			}
-
-			reader.close();
-		} catch (Exception exception) {
-			logger.error("Failed to load settings.", exception);
-		}
-	}
-
-	public void saveSettings() {
-		try {
-			final PrintWriter writer = new PrintWriter(new FileWriter(file));
-			writer.println("openMenuKeyBinding:" + openMenuKeyBinding.getKeyCode()); // TODO: utilisé un int pour que ça soit plus rapide
-
-
-			for (int i = 0; i < settings.size(); i++)
-				writer.println(settings.get(i).getConfigKeyAndValue());
-			writer.close();
-		} catch (Exception exception) {
-			logger.error("Failed to save settings.", exception);
-		}
 	}
 }

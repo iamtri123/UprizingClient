@@ -3,32 +3,36 @@ package uprizing.gui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
-import uprizing.utils.Merguez;
+import uprizing.Constants;
 import uprizing.Uprizing;
-import uprizing.draggable.Draggable;
-import uprizing.option.Option;
-import uprizing.option.Options;
+import uprizing.UprizingSettings;
+import uprizing.draggables.Draggable;
+import uprizing.settings.Setting;
 
 public class GuiMenu extends GuiScreen {
 
 	private final Uprizing uprizing;
-	private final Options settings;
+	private final UprizingSettings settings;
+	private final FontRenderer fontRenderer;
+	private int lastMouseX;
+	private int lastMouseY;
 	private Draggable draggable = null;
-	private int lastMouseX, lastMouseY;
 
 	public GuiMenu(final Uprizing uprizing) {
 		this.uprizing = uprizing;
 		this.settings = uprizing.getSettings();
+		this.fontRenderer = uprizing.getMinecraft().fontRenderer;
 	}
 
 	@Override
 	public void initGui() {
-		settings.updateButtons(width, height);
+		settings.getDrawer().createButtons(width, height);
 	}
 
 	@Override
 	public void handleMouseInput() {
 		super.handleMouseInput();
+
 		final int value = Mouse.getEventDWheel();
 		if (value != 0) {
 			// TODO: menu scrolling
@@ -37,28 +41,20 @@ public class GuiMenu extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		drawRect((width / Merguez.F) - 1, // horizontal
-			(height / Merguez.F) + Merguez.V + 1, // vertical
-			width - (width / Merguez.F) + 1, // horizontal
-			height - (height / Merguez.F) + Merguez.V - 1, // vertical
-				Merguez.A);
+		drawRect((width / Constants.F) - 1, // horizontal
+			(height / Constants.F) + Constants.V + 1, // vertical
+			width - (width / Constants.F) + 1, // horizontal
+			height - (height / Constants.F) + Constants.V - 1, // vertical
+				Constants.A);
 
-		drawRect(width / Merguez.F, // horizontal
-			(height / Merguez.F) + Merguez.V, // vertical
-			width - (width / Merguez.F), // horizontal
-			height - (height / Merguez.F) + Merguez.V, // vertical
-				Merguez.A);
+		drawRect(width / Constants.F, // horizontal
+			(height / Constants.F) + Constants.V, // vertical
+			width - (width / Constants.F), // horizontal
+			height - (height / Constants.F) + Constants.V, // vertical
+				Constants.A);
 
-		final FontRenderer fontRenderer = uprizing.getMinecraft().fontRenderer;
-
-		//drawString(fontRenderer, "General Settings",
-			//width / Merguez.F + 8 + 1, // x
-			//(height / Merguez.F) + Merguez.V + 6 + 1, // y
-			//Merguez.B);
-
-		settings.draw(fontRenderer, mouseX, mouseY);
-
-		uprizing.getDraggables().draw();
+		settings.getDrawer().draw(fontRenderer, mouseX, mouseY);
+		uprizing.getDraggables().draw(fontRenderer);
 	}
 
 	@Override
@@ -74,10 +70,10 @@ public class GuiMenu extends GuiScreen {
 		// TODO: MenuGuiButton pour SettingButton && autres (close: [X])
 		// TODO: optimize: check si mouse est dans la box puis select settings sinon draggables
 
-		final Option option = settings.getByMouse(mouseX, mouseY);
-		if (option != null) {
+		final Setting setting = settings.getDrawer().getByMouse(mouseX, mouseY);
+		if (setting != null) {
 			//this.selectedSetting = setting;
-			option.pressButton(mc, mouseButton);
+			setting.pressButton(mc, mouseButton);
 		} else {
 			final Draggable hoveredDraggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
 			if (hoveredDraggable != null) {
@@ -115,7 +111,7 @@ public class GuiMenu extends GuiScreen {
 		// TODO: LOGGER - System.out.println("handle close");
 		// TODO: delete button UNIQUEMENT ceux render
 
-		settings.resetButtons();
+		settings.getDrawer().destroyButtons();
 		uprizing.saveSettings();
 
 		uprizing.getMotionBlur().handleGuiClose();

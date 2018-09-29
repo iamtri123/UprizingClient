@@ -1,9 +1,6 @@
 package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -13,7 +10,11 @@ import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
-import uprizing.option.Options;
+import uprizing.UprizingSettings;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class GuiNewChat extends Gui
 {
@@ -57,7 +58,7 @@ public class GuiNewChat extends Gui
                 int var11;
                 int var14;
 
-                final boolean flag = field_146247_f.uprizing.getBoolean(Options.CHAT_BACKGROUND);
+                final boolean flag = field_146247_f.uprizing.getBoolean(UprizingSettings.CHAT_BACKGROUND);
 
                 for (var9 = 0; var9 + this.field_146250_j < this.field_146253_i.size() && var9 < var2; ++var9)
                 {

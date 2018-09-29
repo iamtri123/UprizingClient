@@ -62,7 +62,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Project;
-import uprizing.dimension.Dimension;
+import uprizing.dimensions.Dimension;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

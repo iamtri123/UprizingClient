@@ -8,32 +8,35 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import uprizing.dimension.Dimensions;
-import uprizing.utils.Stawlker;
+import uprizing.dimensions.EnumDimension;
+import uprizing.UprizingUtils;
 import uprizing.Uprizing;
 import uprizing.gui.GuiSlotUprizing;
-import uprizing.mod.waypoints.Waypoint;
+import uprizing.waypoints.Waypoint;
 
 import java.util.Random;
 
 public class GuiWaypoint extends GuiScreen { // TODO: Optimize
 
+    private static final Random RANDOM = new Random();
+
     private final GuiScreen prevScreen;
     private final Uprizing uprizing;
     private List list;
     private final Waypoint waypoint;
-    private GuiTextField name, x, y, z;
+    private GuiTextField name;
+	private GuiTextField x;
+	private GuiTextField y;
+	private GuiTextField z;
     private String tooltip = null;
-    private Dimensions selectedDimension;
-    private static final Random random = new Random();
-    private static final Dimensions[] DIMENSIONS = { Dimensions.NETHER, Dimensions.OVERWORLD, Dimensions.THE_END };
+    private EnumDimension selectedDimension;
 
     public GuiWaypoint(final Uprizing uprizing) {
         this(null, uprizing, uprizing.getWaypointsMod().createWaypoint("",
-            Stawlker.round(uprizing.getMinecraft().thePlayer.posX),
-            Stawlker.round(uprizing.getMinecraft().thePlayer.posY),
-            Stawlker.round(uprizing.getMinecraft().thePlayer.posZ),
-            random.nextFloat(), random.nextFloat(), random.nextFloat(), true));
+            UprizingUtils.round(uprizing.getMinecraft().thePlayer.posX),
+            UprizingUtils.round(uprizing.getMinecraft().thePlayer.posY),
+            UprizingUtils.round(uprizing.getMinecraft().thePlayer.posZ),
+            RANDOM.nextFloat(), RANDOM.nextFloat(), RANDOM.nextFloat(), true));
     }
 
     GuiWaypoint(final GuiScreen prevScreen, final Uprizing uprizing, final Waypoint waypoint) {
@@ -181,18 +184,18 @@ public class GuiWaypoint extends GuiScreen { // TODO: Optimize
 
         boolean enabled = name.getText().length() > 0;
         if (enabled) {
-            enabled = Stawlker.isDbl(x.getText());
+            enabled = UprizingUtils.isDbl(x.getText());
 
             if (enabled) {
-                enabled = Stawlker.isDbl(y.getText());
+                enabled = UprizingUtils.isDbl(y.getText());
 
                 if (enabled) {
-                    enabled = Stawlker.isDbl(z.getText());
+                    enabled = UprizingUtils.isDbl(z.getText());
                 }
             }
         }
 
-        ((GuiButton) buttonList.get(0)).enabled = enabled;
+        buttonList.get(0).enabled = enabled;
     }
 
     @Override
@@ -216,12 +219,12 @@ public class GuiWaypoint extends GuiScreen { // TODO: Optimize
 
         @Override
         protected int getSize() {
-            return DIMENSIONS.length;
+            return EnumDimension.values().length;
         }
 
         @Override
         protected void elementClicked(int par1, boolean par2, int x, int y) {
-            selectedDimension = Dimensions.getByValue(par1);
+            selectedDimension = EnumDimension.getByValue(par1);
 
             int leftEdge = prevScreen.width / 2 - slotWidth / 2;
             byte padding = 4, iconWidth = 16;
@@ -250,7 +253,7 @@ public class GuiWaypoint extends GuiScreen { // TODO: Optimize
 
         @Override
         protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator tessellator, int x, int y) {
-            final Dimensions dimension = DIMENSIONS[par1];
+            final EnumDimension dimension = EnumDimension.values()[par1];
             drawCenteredString(fontRendererObj, dimension.getName(), prevScreen.width / 2, par3 + 3, 16777215);
 
             byte padding = 4;

@@ -15,7 +15,7 @@ import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import uprizing.dimension.Dimension;
+import uprizing.dimensions.Dimension;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

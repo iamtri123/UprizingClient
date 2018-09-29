@@ -36,10 +36,8 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
     private boolean hasListHeader;
     protected int headerPadding;
     private boolean field_148164_v = true;
-    private static final String __OBFID = "CL_00000679";
 
-    public GuiSlotUprizing(Minecraft par1Minecraft, int par2, int par3, int par4, int par5, int par6)
-    {
+    public GuiSlotUprizing(Minecraft par1Minecraft, int par2, int par3, int par4, int par5, int par6) {
         this.mc = par1Minecraft;
         this.width = par2;
         this.height = par3;
@@ -93,16 +91,19 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
 
     protected abstract void drawSlot(int paramInt1, int paramInt2, int paramInt3, int paramInt4, Tessellator paramTessellator, int paramInt5, int paramInt6);
 
-    protected void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_) {}
+    protected void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_) {
+    }
 
-    protected void func_148132_a(int p_148132_1_, int p_148132_2_) {}
+    protected void func_148132_a(int p_148132_1_, int p_148132_2_) {
+    }
 
-    protected void func_148142_b(int p_148142_1_, int p_148142_2_) {}
+    protected void func_148142_b(int p_148142_1_, int p_148142_2_) {
+    }
 
     public int func_148124_c(int p_148124_1_, int p_148124_2_) {
         int var3 = this.left + this.width / 2 - getListWidth() / 2;
         int var4 = this.left + this.width / 2 + getListWidth() / 2;
-        int var5 = p_148124_2_ - this.top - this.headerPadding + (int)this.amountScrolled - 4;
+        int var5 = p_148124_2_ - this.top - this.headerPadding + (int) this.amountScrolled - 4;
         int var6 = var5 / this.slotHeight;
         return (p_148124_1_ < getScrollBarX()) && (p_148124_1_ >= var3) && (p_148124_1_ <= var4) && (var6 >= 0) && (var5 >= 0) && (var6 < getSize()) ? var6 : -1;
     }
@@ -133,7 +134,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
     }
 
     public int getAmountScrolled() {
-        return (int)this.amountScrolled;
+        return (int) this.amountScrolled;
     }
 
     public boolean func_148141_e(int p_148141_1_) {
@@ -152,9 +153,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
                 this.amountScrolled -= this.slotHeight * 2 / 3;
                 this.initialClickY = -2.0F;
                 bindAmountScrolled();
-            }
-            else if (p_148147_1_.id == this.scrollDownButtonID)
-            {
+            } else if (p_148147_1_.id == this.scrollDownButtonID) {
                 this.amountScrolled += this.slotHeight * 2 / 3;
                 this.initialClickY = -2.0F;
                 bindAmountScrolled();
@@ -176,7 +175,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
                     if ((p_148128_2_ >= this.top) && (p_148128_2_ <= this.bottom)) {
                         int var8 = this.width / 2 - getListWidth() / 2;
                         int var9 = this.width / 2 + getListWidth() / 2;
-                        int var10 = p_148128_2_ - this.top - this.headerPadding + (int)this.amountScrolled - 4;
+                        int var10 = p_148128_2_ - this.top - this.headerPadding + (int) this.amountScrolled - 4;
                         int var11 = var10 / this.slotHeight;
                         if ((p_148128_1_ >= var8) && (p_148128_1_ <= var9) && (var11 >= 0) && (var10 >= 0) && (var11 < var4)) {
                             boolean var12 = (var11 == this.selectedElement) && (Minecraft.getSystemTime() - this.lastClicked < 250L);
@@ -184,7 +183,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
                             this.selectedElement = var11;
                             this.lastClicked = Minecraft.getSystemTime();
                         } else if ((p_148128_1_ >= var8) && (p_148128_1_ <= var9) && (var10 < 0)) {
-                            func_148132_a(p_148128_1_ - var8, p_148128_2_ - this.top + (int)this.amountScrolled - 4);
+                            func_148132_a(p_148128_1_ - var8, p_148128_2_ - this.top + (int) this.amountScrolled - 4);
                             var15 = false;
                         }
 
@@ -194,7 +193,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
                             if (var19 < 1) {
                                 var19 = 1;
                             }
-                            int var13 = (int)((this.bottom - this.top) * (this.bottom - this.top) / getContentHeight());
+                            int var13 = (int) ((this.bottom - this.top) * (this.bottom - this.top) / getContentHeight());
                             if (var13 < 32) {
                                 var13 = 32;
                             }
@@ -242,14 +241,14 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
             float var16 = 32.0F;
             var17.startDrawingQuads();
             var17.setColorOpaque_I(2105376);
-            var17.addVertexWithUV(this.left, this.bottom, 0.0D, this.left / var16, (this.bottom + (int)this.amountScrolled) / var16);
-            var17.addVertexWithUV(this.right, this.bottom, 0.0D, this.right / var16, (this.bottom + (int)this.amountScrolled) / var16);
-            var17.addVertexWithUV(this.right, this.top, 0.0D, this.right / var16, (this.top + (int)this.amountScrolled) / var16);
-            var17.addVertexWithUV(this.left, this.top, 0.0D, this.left / var16, (this.top + (int)this.amountScrolled) / var16);
+            var17.addVertexWithUV(this.left, this.bottom, 0.0D, this.left / var16, (this.bottom + (int) this.amountScrolled) / var16);
+            var17.addVertexWithUV(this.right, this.bottom, 0.0D, this.right / var16, (this.bottom + (int) this.amountScrolled) / var16);
+            var17.addVertexWithUV(this.right, this.top, 0.0D, this.right / var16, (this.top + (int) this.amountScrolled) / var16);
+            var17.addVertexWithUV(this.left, this.top, 0.0D, this.left / var16, (this.top + (int) this.amountScrolled) / var16);
             var17.draw();
         }
         int var9 = this.left + this.width / 2 - getListWidth() / 2 + 2;
-        int var10 = this.top + 4 - (int)this.amountScrolled;
+        int var10 = this.top + 4 - (int) this.amountScrolled;
         if (this.hasListHeader) {
             drawListHeader(var9, var10, var17);
         }
@@ -292,7 +291,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
             if (var13 > this.bottom - this.top - 8) {
                 var13 = this.bottom - this.top - 8;
             }
-            int var14 = (int)this.amountScrolled * (this.bottom - this.top - var13) / var19 + this.top;
+            int var14 = (int) this.amountScrolled * (this.bottom - this.top - var13) / var19 + this.top;
             if (var14 < this.top) {
                 var14 = this.top;
             }

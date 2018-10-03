@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uprizing.Constants;
 
 public class ServerList
 {
@@ -19,8 +20,7 @@ public class ServerList
     private final Minecraft mc;
 
     /** List of ServerData instances. */
-    private final List servers = new ArrayList();
-    private static final String __OBFID = "CL_00000891";
+    private final List<ServerData> servers = new ArrayList<>();
 
     public ServerList(Minecraft p_i1194_1_)
     {
@@ -32,29 +32,32 @@ public class ServerList
      * Loads a list of servers from servers.dat, by running ServerData.getServerDataFromNBTCompound on each NBT compound
      * found in the "servers" tag list.
      */
-    public void loadServerList()
-    {
-        try
-        {
-            this.servers.clear();
-            NBTTagCompound var1 = CompressedStreamTools.read(new File(this.mc.mcDataDir, "servers.dat"));
+    public void loadServerList() {
+		try {
+			this.servers.clear();
+			NBTTagCompound var1 = CompressedStreamTools.read(new File(this.mc.mcDataDir, "servers.dat"));
 
-            if (var1 == null)
-            {
-                return;
-            }
+			if (var1 == null) {
+				this.servers.add(new ServerData(Constants.NAME, Constants.ADDRESS_WITH_PORT));
+				return;
+			}
 
-            NBTTagList var2 = var1.getTagList("servers", 10);
+			NBTTagList var2 = var1.getTagList("servers", 10);
 
-            for (int var3 = 0; var3 < var2.tagCount(); ++var3)
-            {
-                this.servers.add(ServerData.getServerDataFromNBTCompound(var2.getCompoundTagAt(var3)));
-            }
-        }
-        catch (Exception var4)
-        {
-            logger.error("Couldn\'t load server list", var4);
-        }
+			for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
+				this.servers.add(ServerData.getServerDataFromNBTCompound(var2.getCompoundTagAt(var3)));
+			}
+
+			final ServerData serverData = this.servers.get(0);
+
+			if (!serverData.serverIP.equals(Constants.ADDRESS_WITH_PORT)) {
+				this.servers.add(0, new ServerData(Constants.NAME, Constants.ADDRESS_WITH_PORT));
+			} else if (!serverData.serverName.equals(Constants.NAME)) {
+				serverData.serverName = Constants.NAME;
+			}
+		} catch (Exception var4) {
+			logger.error("Couldn\'t load server list", var4);
+		}
     }
 
     /**

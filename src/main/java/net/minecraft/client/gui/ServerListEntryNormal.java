@@ -22,6 +22,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
+import uprizing.Constants;
 
 public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
 {
@@ -34,7 +35,6 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
     private String field_148299_g;
     private DynamicTexture field_148305_h;
     private final ResourceLocation field_148306_i;
-    private static final String __OBFID = "CL_00000817";
 
     protected ServerListEntryNormal(GuiMultiplayer p_i45048_1_, ServerData p_i45048_2_)
     {
@@ -43,6 +43,10 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         this.field_148300_d = Minecraft.getMinecraft();
         this.field_148306_i = new ResourceLocation("servers/" + p_i45048_2_.serverIP + "/icon");
         this.field_148305_h = (DynamicTexture)this.field_148300_d.getTextureManager().getTexture(this.field_148306_i);
+    }
+
+    public final boolean isProtected() {
+        return field_148301_e.serverIP.equals(Constants.ADDRESS_WITH_PORT);
     }
 
     public void func_148279_a(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)

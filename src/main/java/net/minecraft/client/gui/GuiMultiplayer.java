@@ -18,11 +18,11 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     private static final Logger logger = LogManager.getLogger();
     private final OldServerPinger field_146797_f = new OldServerPinger();
     private final GuiScreen field_146798_g;
-    private ServerSelectionList field_146803_h;
+    private ServerSelectionList serverListSelector;
     private ServerList field_146804_i;
-    private GuiButton field_146810_r;
-    private GuiButton field_146809_s;
-    private GuiButton field_146808_t;
+    private GuiButton btnEditServer;
+    private GuiButton btnSelectServer;
+    private GuiButton btnDeleteServer;
     private boolean field_146807_u;
     private boolean field_146806_v;
     private boolean field_146805_w;
@@ -32,7 +32,6 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     private LanServerDetector.LanServerList field_146799_A;
     private LanServerDetector.ThreadLanServerFind field_146800_B;
     private boolean field_146801_C;
-    private static final String __OBFID = "CL_00000814";
 
     public GuiMultiplayer(GuiScreen p_i1040_1_)
     {
@@ -64,12 +63,12 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                 logger.warn("Unable to start LAN server detection: " + var2.getMessage());
             }
 
-            this.field_146803_h = new ServerSelectionList(this, this.mc, this.width, this.height, 32, this.height - 64, 36);
-            this.field_146803_h.func_148195_a(this.field_146804_i);
+            this.serverListSelector = new ServerSelectionList(this, this.mc, this.width, this.height, 32, this.height - 64, 36);
+            this.serverListSelector.func_148195_a(this.field_146804_i);
         }
         else
         {
-            this.field_146803_h.func_148122_a(this.width, this.height, 32, this.height - 64);
+            this.serverListSelector.func_148122_a(this.width, this.height, 32, this.height - 64);
         }
 
         this.func_146794_g();
@@ -77,14 +76,14 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
     public void func_146794_g()
     {
-        this.buttonList.add(this.field_146810_r = new GuiButton(7, this.width / 2 - 154, this.height - 28, 70, 20, I18n.format("selectServer.edit")));
-        this.buttonList.add(this.field_146808_t = new GuiButton(2, this.width / 2 - 74, this.height - 28, 70, 20, I18n.format("selectServer.delete")));
-        this.buttonList.add(this.field_146809_s = new GuiButton(1, this.width / 2 - 154, this.height - 52, 100, 20, I18n.format("selectServer.select")));
+        this.buttonList.add(this.btnEditServer = new GuiButton(7, this.width / 2 - 154, this.height - 28, 70, 20, I18n.format("selectServer.edit")));
+        this.buttonList.add(this.btnDeleteServer = new GuiButton(2, this.width / 2 - 74, this.height - 28, 70, 20, I18n.format("selectServer.delete")));
+        this.buttonList.add(this.btnSelectServer = new GuiButton(1, this.width / 2 - 154, this.height - 52, 100, 20, I18n.format("selectServer.select")));
         this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height - 52, 100, 20, I18n.format("selectServer.direct")));
         this.buttonList.add(new GuiButton(3, this.width / 2 + 4 + 50, this.height - 52, 100, 20, I18n.format("selectServer.add")));
         this.buttonList.add(new GuiButton(8, this.width / 2 + 4, this.height - 28, 70, 20, I18n.format("selectServer.refresh")));
         this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 76, this.height - 28, 75, 20, I18n.format("gui.cancel")));
-        this.func_146790_a(this.field_146803_h.func_148193_k());
+        this.func_146790_a(this.serverListSelector.func_148193_k());
     }
 
     /**
@@ -98,7 +97,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         {
             List var1 = this.field_146799_A.getLanServers();
             this.field_146799_A.setWasNotUpdated();
-            this.field_146803_h.func_148194_a(var1);
+            this.serverListSelector.func_148194_a(var1);
         }
 
         this.field_146797_f.func_147223_a();
@@ -124,7 +123,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     {
         if (p_146284_1_.enabled)
         {
-            GuiListExtended.IGuiListEntry var2 = this.field_146803_h.func_148193_k() < 0 ? null : this.field_146803_h.func_148180_b(this.field_146803_h.func_148193_k());
+            GuiListExtended.IGuiListEntry var2 = this.serverListSelector.func_148193_k() < 0 ? null : this.serverListSelector.func_148180_b(this.serverListSelector.func_148193_k());
 
             if (p_146284_1_.id == 2 && var2 instanceof ServerListEntryNormal)
             {
@@ -137,7 +136,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                     String var5 = "\'" + var9 + "\' " + I18n.format("selectServer.deleteWarning");
                     String var6 = I18n.format("selectServer.deleteButton");
                     String var7 = I18n.format("gui.cancel");
-                    GuiYesNo var8 = new GuiYesNo(this, var4, var5, var6, var7, this.field_146803_h.func_148193_k());
+                    GuiYesNo var8 = new GuiYesNo(this, var4, var5, var6, var7, this.serverListSelector.func_148193_k());
                     this.mc.displayGuiScreen(var8);
                 }
             }
@@ -181,7 +180,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
     public void confirmClicked(boolean p_73878_1_, int p_73878_2_)
     {
-        GuiListExtended.IGuiListEntry var3 = this.field_146803_h.func_148193_k() < 0 ? null : this.field_146803_h.func_148180_b(this.field_146803_h.func_148193_k());
+        GuiListExtended.IGuiListEntry var3 = this.serverListSelector.func_148193_k() < 0 ? null : this.serverListSelector.func_148180_b(this.serverListSelector.func_148193_k());
 
         if (this.field_146807_u)
         {
@@ -189,10 +188,10 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
             if (p_73878_1_ && var3 instanceof ServerListEntryNormal)
             {
-                this.field_146804_i.removeServerData(this.field_146803_h.func_148193_k());
+                this.field_146804_i.removeServerData(this.serverListSelector.func_148193_k());
                 this.field_146804_i.saveServerList();
-                this.field_146803_h.func_148192_c(-1);
-                this.field_146803_h.func_148195_a(this.field_146804_i);
+                this.serverListSelector.func_148192_c(-1);
+                this.serverListSelector.func_148195_a(this.field_146804_i);
             }
 
             this.mc.displayGuiScreen(this);
@@ -218,8 +217,8 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             {
                 this.field_146804_i.addServerData(this.field_146811_z);
                 this.field_146804_i.saveServerList();
-                this.field_146803_h.func_148192_c(-1);
-                this.field_146803_h.func_148195_a(this.field_146804_i);
+                this.serverListSelector.func_148192_c(-1);
+                this.serverListSelector.func_148195_a(this.field_146804_i);
             }
 
             this.mc.displayGuiScreen(this);
@@ -235,7 +234,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                 var4.serverIP = this.field_146811_z.serverIP;
                 var4.func_152583_a(this.field_146811_z);
                 this.field_146804_i.saveServerList();
-                this.field_146803_h.func_148195_a(this.field_146804_i);
+                this.serverListSelector.func_148195_a(this.field_146804_i);
             }
 
             this.mc.displayGuiScreen(this);
@@ -247,8 +246,8 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
      */
     protected void keyTyped(char p_73869_1_, int p_73869_2_)
     {
-        int var3 = this.field_146803_h.func_148193_k();
-        GuiListExtended.IGuiListEntry var4 = var3 < 0 ? null : this.field_146803_h.func_148180_b(var3);
+        int var3 = this.serverListSelector.func_148193_k();
+        GuiListExtended.IGuiListEntry var4 = var3 < 0 ? null : this.serverListSelector.func_148180_b(var3);
 
         if (p_73869_2_ == 63)
         {
@@ -265,22 +264,22 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                         if (var3 > 0 && var4 instanceof ServerListEntryNormal)
                         {
                             this.field_146804_i.swapServers(var3, var3 - 1);
-                            this.func_146790_a(this.field_146803_h.func_148193_k() - 1);
-                            this.field_146803_h.func_148145_f(-this.field_146803_h.func_148146_j());
-                            this.field_146803_h.func_148195_a(this.field_146804_i);
+                            this.func_146790_a(this.serverListSelector.func_148193_k() - 1);
+                            this.serverListSelector.func_148145_f(-this.serverListSelector.func_148146_j());
+                            this.serverListSelector.func_148195_a(this.field_146804_i);
                         }
                     }
                     else if (var3 > 0)
                     {
-                        this.func_146790_a(this.field_146803_h.func_148193_k() - 1);
-                        this.field_146803_h.func_148145_f(-this.field_146803_h.func_148146_j());
+                        this.func_146790_a(this.serverListSelector.func_148193_k() - 1);
+                        this.serverListSelector.func_148145_f(-this.serverListSelector.func_148146_j());
 
-                        if (this.field_146803_h.func_148180_b(this.field_146803_h.func_148193_k()) instanceof ServerListEntryLanScan)
+                        if (this.serverListSelector.func_148180_b(this.serverListSelector.func_148193_k()) instanceof ServerListEntryLanScan)
                         {
-                            if (this.field_146803_h.func_148193_k() > 0)
+                            if (this.serverListSelector.func_148193_k() > 0)
                             {
-                                this.func_146790_a(this.field_146803_h.getSize() - 1);
-                                this.field_146803_h.func_148145_f(-this.field_146803_h.func_148146_j());
+                                this.func_146790_a(this.serverListSelector.getSize() - 1);
+                                this.serverListSelector.func_148145_f(-this.serverListSelector.func_148146_j());
                             }
                             else
                             {
@@ -301,21 +300,21 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                         {
                             this.field_146804_i.swapServers(var3, var3 + 1);
                             this.func_146790_a(var3 + 1);
-                            this.field_146803_h.func_148145_f(this.field_146803_h.func_148146_j());
-                            this.field_146803_h.func_148195_a(this.field_146804_i);
+                            this.serverListSelector.func_148145_f(this.serverListSelector.func_148146_j());
+                            this.serverListSelector.func_148195_a(this.field_146804_i);
                         }
                     }
-                    else if (var3 < this.field_146803_h.getSize())
+                    else if (var3 < this.serverListSelector.getSize())
                     {
-                        this.func_146790_a(this.field_146803_h.func_148193_k() + 1);
-                        this.field_146803_h.func_148145_f(this.field_146803_h.func_148146_j());
+                        this.func_146790_a(this.serverListSelector.func_148193_k() + 1);
+                        this.serverListSelector.func_148145_f(this.serverListSelector.func_148146_j());
 
-                        if (this.field_146803_h.func_148180_b(this.field_146803_h.func_148193_k()) instanceof ServerListEntryLanScan)
+                        if (this.serverListSelector.func_148180_b(this.serverListSelector.func_148193_k()) instanceof ServerListEntryLanScan)
                         {
-                            if (this.field_146803_h.func_148193_k() < this.field_146803_h.getSize() - 1)
+                            if (this.serverListSelector.func_148193_k() < this.serverListSelector.getSize() - 1)
                             {
-                                this.func_146790_a(this.field_146803_h.getSize() + 1);
-                                this.field_146803_h.func_148145_f(this.field_146803_h.func_148146_j());
+                                this.func_146790_a(this.serverListSelector.getSize() + 1);
+                                this.serverListSelector.func_148145_f(this.serverListSelector.func_148146_j());
                             }
                             else
                             {
@@ -351,7 +350,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     {
         this.field_146812_y = null;
         this.drawDefaultBackground();
-        this.field_146803_h.func_148128_a(mouseX, mouseY, partialTicks);
+        this.serverListSelector.func_148128_a(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.title"), this.width / 2, 20, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
 
@@ -363,7 +362,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
     public void func_146796_h()
     {
-        GuiListExtended.IGuiListEntry var1 = this.field_146803_h.func_148193_k() < 0 ? null : this.field_146803_h.func_148180_b(this.field_146803_h.func_148193_k());
+        GuiListExtended.IGuiListEntry var1 = this.serverListSelector.func_148193_k() < 0 ? null : this.serverListSelector.func_148180_b(this.serverListSelector.func_148193_k());
 
         if (var1 instanceof ServerListEntryNormal)
         {
@@ -383,20 +382,20 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
     public void func_146790_a(int p_146790_1_)
     {
-        this.field_146803_h.func_148192_c(p_146790_1_);
-        GuiListExtended.IGuiListEntry var2 = p_146790_1_ < 0 ? null : this.field_146803_h.func_148180_b(p_146790_1_);
-        this.field_146809_s.enabled = false;
-        this.field_146810_r.enabled = false;
-        this.field_146808_t.enabled = false;
+        this.serverListSelector.func_148192_c(p_146790_1_);
+        GuiListExtended.IGuiListEntry var2 = p_146790_1_ < 0 ? null : this.serverListSelector.func_148180_b(p_146790_1_);
+        this.btnSelectServer.enabled = false;
+        this.btnEditServer.enabled = false;
+        this.btnDeleteServer.enabled = false;
 
         if (var2 != null && !(var2 instanceof ServerListEntryLanScan))
         {
-            this.field_146809_s.enabled = true;
+            this.btnSelectServer.enabled = true;
 
-            if (var2 instanceof ServerListEntryNormal)
+            if (var2 instanceof ServerListEntryNormal && !((ServerListEntryNormal) var2).isProtected())
             {
-                this.field_146810_r.enabled = true;
-                this.field_146808_t.enabled = true;
+                this.btnEditServer.enabled = true;
+                this.btnDeleteServer.enabled = true;
             }
         }
     }
@@ -417,13 +416,13 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        this.field_146803_h.func_148179_a(mouseX, mouseY, mouseButton);
+        this.serverListSelector.func_148179_a(mouseX, mouseY, mouseButton);
     }
 
     protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_)
     {
         super.mouseMovedOrUp(p_146286_1_, p_146286_2_, p_146286_3_);
-        this.field_146803_h.func_148181_b(p_146286_1_, p_146286_2_, p_146286_3_);
+        this.serverListSelector.func_148181_b(p_146286_1_, p_146286_2_, p_146286_3_);
     }
 
     public ServerList func_146795_p()

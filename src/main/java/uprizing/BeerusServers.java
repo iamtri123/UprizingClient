@@ -6,7 +6,7 @@ public class BeerusServers {
 	private int size;
 
 	public BeerusServers() {
-		elements[size++] = new BeerusServer("149.91.80.12");
+		elements[size++] = new BeerusServer(Constants.ADDRESS);
 		elements[size++] = new BeerusServer.Localhost();
 	}
 

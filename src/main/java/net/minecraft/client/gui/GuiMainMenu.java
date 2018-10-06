@@ -501,7 +501,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GL11.glScalef(var8, var8, var8);
         this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
         GL11.glPopMatrix();
-        String var9 = "UprizingClient v0.0.7";
+        String var9 = "UprizingClient v0.0.8";
 
         if (this.mc.isDemo())
         {

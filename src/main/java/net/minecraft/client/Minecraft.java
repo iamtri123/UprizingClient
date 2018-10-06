@@ -1648,8 +1648,8 @@ public class Minecraft implements IPlayerUsage
      */
     public void runTick()
     {
+        this.uprizing.getClicksPerSecond().tick();
         this.mcProfiler.startSection("scheduledExecutables");
-        Queue var1 = this.field_152351_aB;
 
         synchronized (this.field_152351_aB)
         {
@@ -2287,7 +2287,7 @@ public class Minecraft implements IPlayerUsage
             this.uprizing.getWaypointsMod().handleWorldLoading(this);
             this.thePlayer.preparePlayerToSpawn();
             p_71353_1_.spawnEntityInWorld(this.thePlayer);
-            this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
+            this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings, this.uprizing.getToggleSprint());
             this.playerController.setPlayerCapabilities(this.thePlayer);
             this.renderViewEntity = this.thePlayer;
         }
@@ -2355,7 +2355,7 @@ public class Minecraft implements IPlayerUsage
         this.thePlayer.func_142020_c(var3);
         this.theWorld.spawnEntityInWorld(this.thePlayer);
         this.playerController.flipPlayer(this.thePlayer);
-        this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
+        this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings, this.uprizing.getToggleSprint());
         this.thePlayer.setEntityId(var2);
         this.playerController.setPlayerCapabilities(this.thePlayer);
 

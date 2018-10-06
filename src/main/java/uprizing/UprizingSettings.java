@@ -5,14 +5,7 @@ import uprizing.settings.BaseSettings;
 import uprizing.settings.BooleanSetting;
 import uprizing.settings.SettingType;
 import uprizing.settings.SettingsDrawer;
-import uprizing.settings.defaults.DimensionSetting;
-import uprizing.settings.defaults.DraggableEnabledSetting;
-import uprizing.settings.defaults.DraggablePositionXSetting;
-import uprizing.settings.defaults.DraggablePositionYSetting;
-import uprizing.settings.defaults.DraggableShowBackgroundSetting;
-import uprizing.settings.defaults.GlassRenderingSetting;
-import uprizing.settings.defaults.MotionBlurSetting;
-import uprizing.settings.defaults.WorldTimeSetting;
+import uprizing.settings.defaults.*;
 
 public class UprizingSettings extends BaseSettings {
 
@@ -24,10 +17,10 @@ public class UprizingSettings extends BaseSettings {
 	public static final int SCOREBOARD_SCORES = 5;
 	public static final int SCOREBOARD_TEXT_SHADOW = 6;
 
-	private final SettingType[] types = UprizingUtils.types(4, "Spongebob", "Scoreboard", "CPS", "FPS");
+	private final SettingType[] types = UprizingUtils.types(5, "Spongebob", "Scoreboard", "CPS", "FPS", "ToggleSprint");
 	@Getter private final SettingsDrawer drawer;
 
-	public UprizingSettings() {
+	public UprizingSettings(final Uprizing instance) {
 		/* Spongebob */
 
 		addSetting(new BooleanSetting("Chat Background").type(types[0]));
@@ -39,21 +32,42 @@ public class UprizingSettings extends BaseSettings {
 		/* Scoreboard */
 
 		addSetting(new BooleanSetting("Scoreboard Scores").type(types[1]));
-		addSetting(new BooleanSetting("Scoreboard Text Shadow").type(types[1]));
+		addSetting(new BooleanSetting("Scoreboard Text Shadow", true).type(types[1]));
 
 		/* CPS */
 
-		addSetting(new DraggableEnabledSetting(0).type(types[2]));
-		addSetting(new DraggableShowBackgroundSetting(0).type(types[2]));
+		addSetting(new SimpleDraggableEnabledSetting(0).type(types[2]));
+		addSetting(new SimpleDraggableTextColorSetting(0));
+		addSetting(new SimpleDraggableBackgroundColorSetting(0));
+		addSetting(new SimpleDraggableShowBackgroundSetting(0).type(types[2]));
 		addSetting(new DraggablePositionXSetting(0));
 		addSetting(new DraggablePositionYSetting(0));
 
 		/* FPS */
 
-		addSetting(new DraggableEnabledSetting(1).type(types[3]));
-		addSetting(new DraggableShowBackgroundSetting(1).type(types[3]));
+		addSetting(new SimpleDraggableEnabledSetting(1).type(types[3]));
+		addSetting(new SimpleDraggableTextColorSetting(1));
+		addSetting(new SimpleDraggableBackgroundColorSetting(1));
+		addSetting(new SimpleDraggableShowBackgroundSetting(1).type(types[3]));
 		addSetting(new DraggablePositionXSetting(1));
 		addSetting(new DraggablePositionYSetting(1));
+
+		/* ToggleSprint */
+
+		addSetting(new ToggleSprintEnabledSetting().type(types[4]));
+		addSetting(new ToggleSprintShowTextSetting().type(types[4]));
+		addSetting(new DraggablePositionXSetting(2));
+		addSetting(new DraggablePositionYSetting(2));
+		addSetting(new ToggleSprintSneakEnabledSetting().type(types[4]));
+		addSetting(new ToggleSprintJumpEnabledSetting().type(types[4]));
+		addSetting(new ToggleSprintSprintEnabledSetting().type(types[4]));
+		addSetting(new ToggleSprintAlwaysSprintingSetting().type(types[4]));
+		addSetting(new ToggleSprintFlyingBoostSetting().type(types[4]));
+
+		for (TextAndColor textAndColor : instance.getToggleSprint().getTextAndColors()) {
+			addSetting(new TextAndColorTextSetting(textAndColor));
+			addSetting(new TextAndColorColorSetting(textAndColor));
+		}
 
 		drawer = new SettingsDrawer(this);
 	}

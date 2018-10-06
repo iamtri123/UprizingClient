@@ -1921,8 +1921,7 @@ public abstract class EntityLivingBase extends Entity
      */
     public void onLivingUpdate()
     {
-        if (this.jumpTicks > 0)
-        {
+        if (this.jumpTicks > 0) {
             --this.jumpTicks;
         }
 
@@ -1989,23 +1988,16 @@ public abstract class EntityLivingBase extends Entity
         this.worldObj.theProfiler.endSection();
         this.worldObj.theProfiler.startSection("jump");
 
-        if (this.isJumping)
-        {
-            if (!this.isInWater() && !this.handleLavaMovement())
-            {
-                if (this.onGround && this.jumpTicks == 0)
-                {
+        if (this.isJumping) {
+            if (!this.isInWater() && !this.handleLavaMovement()) {
+                if (this.onGround && this.jumpTicks == 0) {
                     this.jump();
                     this.jumpTicks = 10;
                 }
-            }
-            else
-            {
+            } else {
                 this.motionY += 0.03999999910593033D;
             }
-        }
-        else
-        {
+        } else {
             this.jumpTicks = 0;
         }
 

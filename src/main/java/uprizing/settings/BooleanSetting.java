@@ -10,6 +10,11 @@ public class BooleanSetting extends Setting {
 		super(name);
 	}
 
+	public BooleanSetting(final String name, final boolean defaultValue) {
+		super(name);
+		this.value = defaultValue;
+	}
+
 	@Override
 	public final void foo(String configValue) {
 		value = configValue.equals("1");

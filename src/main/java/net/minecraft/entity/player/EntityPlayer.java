@@ -1229,6 +1229,10 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
         return (double)(this.yOffset - 0.5F);
     }
 
+	public boolean isSexy() {
+		return false;
+	}
+
     /**
      * Attacks for the player the targeted entity with the currently equipped item.  The equipped item has hitEntity
      * called on it. Args: targetEntity
@@ -1282,7 +1286,10 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
                             p_71059_1_.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)var3 * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)var3 * 0.5F));
                             this.motionX *= 0.6D;
                             this.motionZ *= 0.6D;
-                            this.setSprinting(false);
+
+                            if (!this.isSexy()) {
+								this.setSprinting(false);
+							}
                         }
 
                         if (var5)

@@ -2,18 +2,18 @@ package uprizing.settings.defaults;
 
 import net.minecraft.client.Minecraft;
 import uprizing.Uprizing;
-import uprizing.draggables.Draggable;
+import uprizing.draggables.SimpleDraggable;
 import uprizing.settings.Setting;
 
-public class DraggableShowBackgroundSetting extends Setting {
+public class SimpleDraggableShowBackgroundSetting extends Setting {
 
-	private final Draggable draggable;
+	private final SimpleDraggable draggable;
 
-	public DraggableShowBackgroundSetting(final int draggableIndex) {
-		this(Uprizing.getInstance().getDraggables().getByIndex(draggableIndex));
+	public SimpleDraggableShowBackgroundSetting(final int draggableIndex) {
+		this((SimpleDraggable) Uprizing.getInstance().getDraggables().getByIndex(draggableIndex));
 	}
 
-	public DraggableShowBackgroundSetting(final Draggable draggable) {
+	public SimpleDraggableShowBackgroundSetting(final SimpleDraggable draggable) {
 		super("Show Background", draggable.getName() + " Draggable - ");
 		this.draggable = draggable;
 	}

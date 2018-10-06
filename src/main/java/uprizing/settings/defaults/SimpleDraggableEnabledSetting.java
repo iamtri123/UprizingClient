@@ -2,19 +2,19 @@ package uprizing.settings.defaults;
 
 import net.minecraft.client.Minecraft;
 import uprizing.Uprizing;
-import uprizing.draggables.Draggable;
+import uprizing.draggables.SimpleDraggable;
 import uprizing.settings.Setting;
 
-public class DraggableEnabledSetting extends Setting {
+public class SimpleDraggableEnabledSetting extends Setting {
 
-	private final Draggable draggable;
+	private final SimpleDraggable draggable;
 
-	public DraggableEnabledSetting(final int draggableIndex) {
-		this(Uprizing.getInstance().getDraggables().getByIndex(draggableIndex));
+	public SimpleDraggableEnabledSetting(final int draggableIndex) {
+		this((SimpleDraggable) Uprizing.getInstance().getDraggables().getByIndex(draggableIndex));
 	}
 
-	public DraggableEnabledSetting(final Draggable draggable) {
-		super("Enable", draggable.getName() + " Draggable - ");
+	public SimpleDraggableEnabledSetting(final SimpleDraggable draggable) {
+		super("Enabled", draggable.getName() + " Draggable - ");
 		this.draggable = draggable;
 	}
 

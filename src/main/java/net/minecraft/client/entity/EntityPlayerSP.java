@@ -48,6 +48,7 @@ import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Session;
 import net.minecraft.world.World;
+import uprizing.ToggleSprint;
 
 public class EntityPlayerSP extends AbstractClientPlayer
 {
@@ -99,85 +100,114 @@ public class EntityPlayerSP extends AbstractClientPlayer
         this.renderArmYaw = (float)((double)this.renderArmYaw + (double)(this.rotationYaw - this.renderArmYaw) * 0.5D);
     }
 
-    /**
+    @Override
+    public final boolean isSexy() {
+    	return mc.uprizing.getToggleSprint().alwaysSprinting;
+	}
+
+	@Override
+	public final void jump() {
+		this.motionY = 0.41999998688697815D;
+
+		final boolean magic;
+
+		if (magic = this.isPotionActive(Potion.jump)) {
+			this.motionY += (double) ((float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
+		}
+
+		final boolean sprinting;
+
+		if (sprinting = this.isSprinting()) {
+			float var1 = this.rotationYaw * 0.017453292F;
+			this.motionX -= (double) (MathHelper.sin(var1) * 0.2F);
+			this.motionZ += (double) (MathHelper.cos(var1) * 0.2F);
+		}
+
+		final ToggleSprint toggleSprint = mc.uprizing.getToggleSprint();
+
+		if (magic) {
+			toggleSprint.mode = ToggleSprint.JUMPING_MAGIC;
+		} else if (sprinting) {
+			toggleSprint.mode = ToggleSprint.JUMPING_SPRINTING;
+		} else if (toggleSprint.jumpEnabled) {
+			toggleSprint.mode = ToggleSprint.JUMPING_TOGGLED;
+		} else {
+			toggleSprint.mode = ToggleSprint.JUMPING_VANILLA;
+		}
+
+		this.isAirBorne = true;
+		this.test = true;
+	}
+
+	boolean test; // TODO: temporary
+
+	/**
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
-    public void onLivingUpdate()
-    {
-        if (this.sprintingTicksLeft > 0)
-        {
+    public void onLivingUpdate() {
+		final ToggleSprint toggleSprint = mc.uprizing.getToggleSprint();
+
+		if (test && onGround) {
+			toggleSprint.mode = this.isSprinting() ? toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA : ToggleSprint.OFF;
+			test = false;
+		}
+
+        if (!toggleSprint.alwaysSprinting && this.sprintingTicksLeft > 0) {
             --this.sprintingTicksLeft;
 
-            if (this.sprintingTicksLeft == 0)
-            {
+            if (this.sprintingTicksLeft == 0) {
                 this.setSprinting(false);
             }
         }
 
-        if (this.sprintToggleTimer > 0)
-        {
+        if (this.sprintToggleTimer > 0) {
             --this.sprintToggleTimer;
         }
 
-        if (this.mc.playerController.enableEverythingIsScrewedUpMode())
-        {
+        if (this.mc.playerController.enableEverythingIsScrewedUpMode()) {
             this.posX = this.posZ = 0.5D;
             this.posX = 0.0D;
             this.posZ = 0.0D;
-            this.rotationYaw = (float)this.ticksExisted / 12.0F;
+            this.rotationYaw = (float) this.ticksExisted / 12.0F;
             this.rotationPitch = 10.0F;
             this.posY = 68.5D;
-        }
-        else
-        {
+        } else {
             this.prevTimeInPortal = this.timeInPortal;
 
-            if (this.inPortal)
-            {
-                if (this.mc.currentScreen != null)
-                {
-                    this.mc.displayGuiScreen((GuiScreen)null);
+            if (this.inPortal) {
+                if (this.mc.currentScreen != null) {
+                    this.mc.displayGuiScreen(null);
                 }
 
-                if (this.timeInPortal == 0.0F)
-                {
+                if (this.timeInPortal == 0.0F) {
                     this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("portal.trigger"), this.rand.nextFloat() * 0.4F + 0.8F));
                 }
 
                 this.timeInPortal += 0.0125F;
 
-                if (this.timeInPortal >= 1.0F)
-                {
+                if (this.timeInPortal >= 1.0F) {
                     this.timeInPortal = 1.0F;
                 }
 
                 this.inPortal = false;
-            }
-            else if (this.isPotionActive(Potion.confusion) && this.getActivePotionEffect(Potion.confusion).getDuration() > 60)
-            {
+            } else if (this.isPotionActive(Potion.confusion) && this.getActivePotionEffect(Potion.confusion).getDuration() > 60) {
                 this.timeInPortal += 0.006666667F;
 
-                if (this.timeInPortal > 1.0F)
-                {
+                if (this.timeInPortal > 1.0F) {
                     this.timeInPortal = 1.0F;
                 }
-            }
-            else
-            {
-                if (this.timeInPortal > 0.0F)
-                {
+            } else {
+                if (this.timeInPortal > 0.0F) {
                     this.timeInPortal -= 0.05F;
                 }
 
-                if (this.timeInPortal < 0.0F)
-                {
+                if (this.timeInPortal < 0.0F) {
                     this.timeInPortal = 0.0F;
                 }
             }
 
-            if (this.timeUntilPortal > 0)
-            {
+            if (this.timeUntilPortal > 0) {
                 --this.timeUntilPortal;
             }
 
@@ -186,118 +216,130 @@ public class EntityPlayerSP extends AbstractClientPlayer
             boolean var3 = this.movementInput.moveForward >= var2;
             this.movementInput.updatePlayerMoveState();
 
-            if (this.isUsingItem() && !this.isRiding())
-            {
+            if (this.isUsingItem() && !this.isRiding()) {
                 this.movementInput.moveStrafe *= 0.2F;
                 this.movementInput.moveForward *= 0.2F;
                 this.sprintToggleTimer = 0;
             }
 
-            if (this.movementInput.sneak && this.ySize < 0.2F)
-            {
+            if (this.movementInput.sneak && this.ySize < 0.2F) {
                 this.ySize = 0.2F;
             }
 
-            this.func_145771_j(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
-            this.func_145771_j(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
-            this.func_145771_j(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
-            this.func_145771_j(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
-            boolean var4 = (float)this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
+            this.func_145771_j(this.posX - (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double) this.width * 0.35D);
+            this.func_145771_j(this.posX - (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double) this.width * 0.35D);
+            this.func_145771_j(this.posX + (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double) this.width * 0.35D);
+            this.func_145771_j(this.posX + (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double) this.width * 0.35D);
+            boolean var4 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
-            if (this.onGround && !var3 && this.movementInput.moveForward >= var2 && !this.isSprinting() && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness))
-            {
-                if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.getIsKeyPressed())
-                {
-                    this.sprintToggleTimer = 7;
-                }
-                else
-                {
-                    this.setSprinting(true);
-                }
-            }
+			final boolean var5 = this.movementInput.moveForward >= var2;
+			final boolean sprinting = this.isSprinting();
 
-            if (!this.isSprinting() && this.movementInput.moveForward >= var2 && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.getIsKeyPressed())
-            {
-                this.setSprinting(true);
-            }
+			if (this.onGround && !var3 && var5 && !sprinting && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
+				if (toggleSprint.sprintEnabled) {
+					//System.out.println("5 (commence directement en courant grâce à ToggleSprint");
+					this.setSprinting(true);
+					toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
+				} else {
+					if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
+						//System.out.println("1 (commence en marchant)");
+						this.sprintToggleTimer = 7;
+						toggleSprint.mode = ToggleSprint.WALKING_VANILLA;
+					} else {
+						//System.out.println("2 (commence en courant OU en double appuyant sur avancer avant que le premier timer soit à 0)");
+						this.setSprinting(true);
+						toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
+					}
+				}
+			}
 
-            if (this.isSprinting() && (this.movementInput.moveForward < var2 || this.isCollidedHorizontally || !var4))
-            {
-                this.setSprinting(false);
-            }
+			if (!toggleSprint.sprintEnabled) {
+				if (!sprinting && var5 && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
+					//System.out.println("3 (active le sprint quand je marche)");
+					this.setSprinting(true);
+					toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
+				}
+			}
 
-            if (this.capabilities.allowFlying && !var1 && this.movementInput.jump)
-            {
-                if (this.flyToggleTimer == 0)
-                {
+			if (sprinting) {
+				if (this.isCollidedHorizontally || !var4) {
+					//System.out.println("4-1 (s'arrête [bouffe ou mur])");
+					this.setSprinting(false);
+					toggleSprint.mode = ToggleSprint.OFF;
+				} else if (this.movementInput.moveForward < var2) {
+					if (!toggleSprint.alwaysSprinting || this.movementInput.moveForward == 0) { // remove disabling when player get pushing back (hit, explosion, etc..)
+						//System.out.println("4-2 (s'arrête)"); // var2 = 0.8
+						this.setSprinting(false);
+						toggleSprint.mode = ToggleSprint.OFF;
+					}
+				}
+			}
+
+            /* TODO: Added to the client soon (respect other server) */
+			//if (this.capabilities.isCreativeMode && this.capabilities.isFlying && toggleSprint.flyingBoost != 0 && this.mc.gameSettings.keyBindSprint.isPressed()) {
+				//this.capabilities.setFlySpeed(0.05f * (float) toggleSprint.flyingBoost);
+
+				//if (this.movementInput.sneak) {
+					//this.motionY -= 0.15 * toggleSprint.flyingBoost;
+				//} else if (this.movementInput.jump) {
+					//this.motionY += 0.15 * toggleSprint.flyingBoost;
+				//}
+			//} else if (this.capabilities.getFlySpeed() == 0.05f) {
+				//this.capabilities.setFlySpeed(0.05f);
+			//}
+            /* TODO: Added to the client soon (respect other server) */
+
+            if (this.capabilities.allowFlying && !var1 && this.movementInput.jump) { // TODO: 155
+                if (this.flyToggleTimer == 0) {
                     this.flyToggleTimer = 7;
-                }
-                else
-                {
+                } else {
                     this.capabilities.isFlying = !this.capabilities.isFlying;
                     this.sendPlayerAbilities();
                     this.flyToggleTimer = 0;
                 }
             }
 
-            if (this.capabilities.isFlying)
-            {
-                if (this.movementInput.sneak)
-                {
+            if (this.capabilities.isFlying) {
+                if (this.movementInput.sneak) {
                     this.motionY -= 0.15D;
                 }
 
-                if (this.movementInput.jump)
-                {
+                if (this.movementInput.jump) {
                     this.motionY += 0.15D;
                 }
             }
 
-            if (this.isRidingHorse())
-            {
-                if (this.horseJumpPowerCounter < 0)
-                {
+            if (this.isRidingHorse()) {
+                if (this.horseJumpPowerCounter < 0) {
                     ++this.horseJumpPowerCounter;
 
-                    if (this.horseJumpPowerCounter == 0)
-                    {
+                    if (this.horseJumpPowerCounter == 0) {
                         this.horseJumpPower = 0.0F;
                     }
                 }
 
-                if (var1 && !this.movementInput.jump)
-                {
+                if (var1 && !this.movementInput.jump) {
                     this.horseJumpPowerCounter = -10;
                     this.func_110318_g();
-                }
-                else if (!var1 && this.movementInput.jump)
-                {
+                } else if (!var1 && this.movementInput.jump) {
                     this.horseJumpPowerCounter = 0;
                     this.horseJumpPower = 0.0F;
-                }
-                else if (var1)
-                {
+                } else if (var1) {
                     ++this.horseJumpPowerCounter;
 
-                    if (this.horseJumpPowerCounter < 10)
-                    {
-                        this.horseJumpPower = (float)this.horseJumpPowerCounter * 0.1F;
-                    }
-                    else
-                    {
-                        this.horseJumpPower = 0.8F + 2.0F / (float)(this.horseJumpPowerCounter - 9) * 0.1F;
+                    if (this.horseJumpPowerCounter < 10) {
+                        this.horseJumpPower = (float) this.horseJumpPowerCounter * 0.1F;
+                    } else {
+                        this.horseJumpPower = 0.8F + 2.0F / (float) (this.horseJumpPowerCounter - 9) * 0.1F;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 this.horseJumpPower = 0.0F;
             }
 
             super.onLivingUpdate();
 
-            if (this.onGround && this.capabilities.isFlying)
-            {
+            if (this.onGround && this.capabilities.isFlying) {
                 this.capabilities.isFlying = false;
                 this.sendPlayerAbilities();
             }

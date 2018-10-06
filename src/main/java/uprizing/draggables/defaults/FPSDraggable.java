@@ -1,12 +1,15 @@
 package uprizing.draggables.defaults;
 
+import lombok.Getter;
 import uprizing.counters.FPSCounter;
-import uprizing.draggables.AbstractDraggable;
+import uprizing.draggables.SimpleDraggable;
 
-public class FPSDraggable extends AbstractDraggable {
+public class FPSDraggable extends SimpleDraggable {
 
 	private static final String SUFFIX = " FPS";
 
+
+	@Getter private final String sexyText = "9999 FPS";
 	private final FPSCounter counter;
 
 	public FPSDraggable(final FPSCounter counter) {
@@ -21,6 +24,6 @@ public class FPSDraggable extends AbstractDraggable {
 
 	@Override
 	public final int getTextWidth() {
-		return 12; // return fpsCount.get() > 9 ? 12 : 15;
+		return counter.debug > 9 ? 12 : 15;
 	}
 }

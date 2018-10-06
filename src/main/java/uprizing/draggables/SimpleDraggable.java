@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 
 @Getter @Setter
-public abstract class AbstractDraggable implements Draggable {
+public abstract class SimpleDraggable implements Draggable {
 
 	private final Tessellator tessellator = Tessellator.instance;
 	private boolean enabled;
@@ -17,34 +17,52 @@ public abstract class AbstractDraggable implements Draggable {
 	private final int height;
 	private int posX;
 	private int posY;
-	private int textColor = -1; // TODO: on the menu
-	private int backgroundColor = 1140850688; // TODO: on the menu
+	private int textColor = -1;
+	private int backgroundColor = 1140850688;
 	private boolean showBackground = true;
 
-	public AbstractDraggable(final String name, final int width, final int height) {
+	public SimpleDraggable(final String name, final int width, final int height) {
 		this.name = name;
 		this.width = width;
 		this.height = height;
 	}
+
+	public abstract String getSexyText();
 
 	public abstract String getText();
 
 	public abstract int getTextWidth();
 
 	@Override
-	public boolean isHovered(int mouseX, int mouseY) {
+	public final boolean isHovered(int mouseX, int mouseY) {
 		return enabled && mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
 	}
 
+	@Override
 	public final void move(int mouseX, int mouseY) {
 		posX += mouseX;
 		posY += mouseY;
 	}
 
+	@Override
 	public final void draw(FontRenderer fontRenderer) {
 		if (!enabled) return;
 
 		final String text = getText();
+		final int textWidth = getTextWidth();
+
+		if (showBackground) {
+			drawRect(posX, posY, posX + width, posY + height, backgroundColor);
+		}
+
+		fontRenderer.drawString(text, posX + textWidth, posY + 3, textColor);
+	}
+
+	@Override
+	public final void drawSlut(FontRenderer fontRenderer) {
+		if (!enabled) return;
+
+		final String text = getSexyText();
 		final int textWidth = getTextWidth();
 
 		if (showBackground) {

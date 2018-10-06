@@ -20,7 +20,7 @@ public class SettingButton extends Gui { // TODO: Temporary extending Gui
 
 	SettingButton(final Setting setting, final int x, final int y, final int width) {
 		this.setting = setting;
-		this.textX = x + 4 + 1;
+		this.textX = x + 4 + 2 + 1;
 		this.textY = y + 1;
 		this.x = x;
 		this.y = y;

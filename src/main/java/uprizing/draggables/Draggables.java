@@ -5,19 +5,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 import uprizing.ClicksPerSecond;
+import uprizing.ToggleSprint;
 import uprizing.draggables.defaults.CPSDraggable;
 import uprizing.draggables.defaults.FPSDraggable;
 
 @Getter
 public class Draggables { // TODO: draggable pour chaque keyStrokes
 
-	private final Draggable[] elements = new Draggable[2];
+	private final Draggable[] elements = new Draggable[3];
 	private int size;
 	private int cursor;
 
-	public Draggables(final ClicksPerSecond clicksPerSecond, final Minecraft minecraft) {
-		this.elements[size++] = new CPSDraggable(clicksPerSecond);
-		this.elements[size++] = new FPSDraggable(minecraft.getFpsCounter());
+	public Draggables(final ClicksPerSecond clicksPerSecond, final Minecraft minecraft, final ToggleSprint toggleSprint) {
+		elements[size++] = new CPSDraggable(clicksPerSecond);
+		elements[size++] = new FPSDraggable(minecraft.getFpsCounter());
+		elements[size++] = toggleSprint;
 	}
 
 	public final void draw(FontRenderer fontRenderer) {
@@ -33,6 +35,14 @@ public class Draggables { // TODO: draggable pour chaque keyStrokes
 		if (enabled) {
 			GL11.glEnable(3042);
 		}
+	}
+
+	public final void drawSlut(FontRenderer fontRenderer) {
+		while (cursor != size) {
+			elements[cursor++].drawSlut(fontRenderer);
+		}
+
+		cursor = 0;
 	}
 
 	public final Draggable getByIndex(int index) {

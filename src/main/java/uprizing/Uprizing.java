@@ -37,6 +37,7 @@ public class Uprizing {
 	public final Dimension dimension = new Dimension();
 	private final MotionBlur motionBlur;
 	private final SidebarDrawer sidebarDrawer = new SidebarDrawer(this);
+	private final ToggleSprint toggleSprint = new ToggleSprint();
 
 	private final KeyBinding openMenuKeyBinding = UprizingUtils.keyBinding("Open Menu", Keyboard.KEY_G, "Uprizing Client");
 
@@ -45,9 +46,9 @@ public class Uprizing {
 
 		this.minecraft = minecraft;
 		this.settingsFile = new File(mainDir, "uprizing.txt");
-		this.draggables = new Draggables(clicksPerSecond, minecraft);
+		this.draggables = new Draggables(clicksPerSecond, minecraft, toggleSprint);
 		this.motionBlur = new MotionBlur();
-		this.settings = new UprizingSettings();
+		this.settings = new UprizingSettings(this);
 		SettingUtils.loadFromFile(settingsFile, settings);
 		this.waypointsMod = new WaypointsMod(this, mainDir);
 
@@ -99,8 +100,6 @@ public class Uprizing {
 
 	public void runRenderTick() {
 		if (minecraft.currentScreen == null) {
-			clicksPerSecond.tick();
-
 			if (openMenuKeyBinding.isPressed()) {
 				minecraft.displayGuiScreen(new GuiMenu(this));
 			} else if (!minecraft.gameSettings.showDebugInfo) { // && !minecraft.gameSettings.hideGUI

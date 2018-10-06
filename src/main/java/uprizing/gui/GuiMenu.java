@@ -54,7 +54,7 @@ public class GuiMenu extends GuiScreen {
 				Constants.A);
 
 		settings.getDrawer().draw(fontRenderer, mouseX, mouseY);
-		uprizing.getDraggables().draw(fontRenderer);
+		uprizing.getDraggables().drawSlut(fontRenderer);
 	}
 
 	@Override
@@ -70,16 +70,16 @@ public class GuiMenu extends GuiScreen {
 		// TODO: MenuGuiButton pour SettingButton && autres (close: [X])
 		// TODO: optimize: check si mouse est dans la box puis select settings sinon draggables
 
-		final Setting setting = settings.getDrawer().getByMouse(mouseX, mouseY);
-		if (setting != null) {
-			//this.selectedSetting = setting;
-			setting.pressButton(mc, mouseButton);
+		final Draggable hoveredDraggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
+		if (hoveredDraggable != null) {
+			draggable = hoveredDraggable;
+			lastMouseX = mouseX;
+			lastMouseY = mouseY;
 		} else {
-			final Draggable hoveredDraggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
-			if (hoveredDraggable != null) {
-				draggable = hoveredDraggable;
-				lastMouseX = mouseX;
-				lastMouseY = mouseY;
+			final Setting setting = settings.getDrawer().getByMouse(mouseX, mouseY);
+			if (setting != null) {
+				//this.selectedSetting = setting;
+				setting.pressButton(mc, mouseButton);
 			}
 		}
 	}

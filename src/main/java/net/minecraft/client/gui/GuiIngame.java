@@ -127,10 +127,11 @@ public class GuiIngame extends Gui
             this.drawTexturedModalRect(var6 / 2 - 91, var7 - 22, 0, 0, 182, 22);
             this.drawTexturedModalRect(var6 / 2 - 91 - 1 + var31.currentItem * 20, var7 - 22 - 1, 0, 22, 24, 22);
             this.mc.getTextureManager().bindTexture(icons);
+            final boolean fuck = !this.mc.uprizing.getMotionBlur().isEnabled();
             GL11.glEnable(GL11.GL_BLEND);
-            OpenGlHelper.glBlendFunc(775, 769, 1, 0);
+            if (fuck) OpenGlHelper.glBlendFunc(775, 769, 1, 0);
             this.drawTexturedModalRect(var6 / 2 - 7, var7 / 2 - 7, 0, 0, 16, 16);
-            OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+			if (fuck) OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             this.mc.mcProfiler.startSection("bossHealth");
             this.renderBossHealth();
             this.mc.mcProfiler.endSection();

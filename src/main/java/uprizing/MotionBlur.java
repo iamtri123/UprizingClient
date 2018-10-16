@@ -21,6 +21,10 @@ public class MotionBlur {
 	private static final Minecraft minecraft = Minecraft.getMinecraft();
 	public int index;
 
+	public final boolean isEnabled() {
+		return index != 0;
+	}
+
 	public final void load(int index) {
 		this.index = index;
 	}

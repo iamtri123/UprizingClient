@@ -141,7 +141,7 @@ public abstract class BlockRedstoneDiode extends BlockDirectional
         {
             boolean var7 = this.func_149900_a(p_149897_1_, p_149897_2_, p_149897_3_, p_149897_4_, var6);
 
-            if ((this.field_149914_a ? !var7 : var7) && !p_149897_1_.func_147477_a(p_149897_2_, p_149897_3_, p_149897_4_, this))
+            if ((this.field_149914_a != var7) && !p_149897_1_.func_147477_a(p_149897_2_, p_149897_3_, p_149897_4_, this))
             {
                 byte var8 = -1;
 

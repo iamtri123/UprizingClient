@@ -11,12 +11,12 @@ public class SettingButton extends Gui { // TODO: Temporary extending Gui
 	private static final int DEFAULT_BUTTON_HEIGHT = 10;
 
 	private final Setting setting;
-	private int textX;
-	private int textY;
-	private int x;
-	private int y;
-	private int width;
-	private int height;
+	private final int textX;
+	private final int textY;
+	private final int x;
+	private final int y;
+	private final int width;
+	private final int height;
 
 	SettingButton(final Setting setting, final int x, final int y, final int width) {
 		this.setting = setting;

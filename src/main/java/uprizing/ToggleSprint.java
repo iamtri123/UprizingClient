@@ -35,7 +35,7 @@ public class ToggleSprint implements Draggable {
 	public boolean sprintEnabled = false; // TODO: public int sprintMode = Off, On, Double-Tapping.
 	public boolean alwaysSprinting = false;
 	public double flyingBoost = 0;
-	private double[] storage = { 1, 1, 0, 1, 1, 4 };
+	private final double[] storage = { 1, 1, 0, 1, 1, 4 };
 
 	public ToggleSprint() {
 		textAndColors[SNEAKING_KEY_HELD] = new TextAndColor("Sneaking 1", "[Sneaking (Key Held)]", -1);

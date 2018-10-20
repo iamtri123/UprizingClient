@@ -30,7 +30,7 @@ public class Uprizing {
 	public boolean isOnBeerusServer;
 
 	@Getter private final ClicksPerSecond clicksPerSecond = new ClicksPerSecond();
-	private WaypointsMod waypointsMod;
+	private final WaypointsMod waypointsMod;
 	private final Draggables draggables;
 	private final UprizingSettings settings;
 

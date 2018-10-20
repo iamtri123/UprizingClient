@@ -28,79 +28,95 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class Block
-{
+public class Block {
+
     public static final RegistryNamespaced blockRegistry = new RegistryNamespacedDefaultedByKey("air");
     private CreativeTabs displayOnCreativeTab;
     protected String textureName;
     public static final Block.SoundType soundTypeStone = new Block.SoundType("stone", 1.0F, 1.0F);
 
-    /** the wood sound type */
+    /**
+     * the wood sound type
+     */
     public static final Block.SoundType soundTypeWood = new Block.SoundType("wood", 1.0F, 1.0F);
 
-    /** the gravel sound type */
+    /**
+     * the gravel sound type
+     */
     public static final Block.SoundType soundTypeGravel = new Block.SoundType("gravel", 1.0F, 1.0F);
     public static final Block.SoundType soundTypeGrass = new Block.SoundType("grass", 1.0F, 1.0F);
 
-    /** The piston step sound */
+    /**
+     * The piston step sound
+     */
     public static final Block.SoundType soundTypePiston = new Block.SoundType("stone", 1.0F, 1.0F);
 
-    /** The metal sound type */
+    /**
+     * The metal sound type
+     */
     public static final Block.SoundType soundTypeMetal = new Block.SoundType("stone", 1.0F, 1.5F);
 
-    /** Glass footsteps */
-    public static final Block.SoundType soundTypeGlass = new Block.SoundType("stone", 1.0F, 1.0F)
-    {
-        private static final String __OBFID = "CL_00000200";
-        public String func_150495_a()
-        {
+    /**
+     * Glass footsteps
+     */
+    public static final Block.SoundType soundTypeGlass = new Block.SoundType("stone", 1.0F, 1.0F) {
+        public String func_150495_a() {
             return "dig.glass";
         }
-        public String func_150496_b()
-        {
+
+        public String func_150496_b() {
             return "step.stone";
         }
     };
 
-    /** Sound for cloth and carpets */
+    /**
+     * Sound for cloth and carpets
+     */
     public static final Block.SoundType soundTypeCloth = new Block.SoundType("cloth", 1.0F, 1.0F);
     public static final Block.SoundType field_149776_m = new Block.SoundType("sand", 1.0F, 1.0F);
     public static final Block.SoundType soundTypeSnow = new Block.SoundType("snow", 1.0F, 1.0F);
 
-    /** The ladder sound type */
-    public static final Block.SoundType soundTypeLadder = new Block.SoundType("ladder", 1.0F, 1.0F)
-    {
-        private static final String __OBFID = "CL_00000201";
-        public String func_150495_a()
-        {
+    /**
+     * The ladder sound type
+     */
+    public static final Block.SoundType soundTypeLadder = new Block.SoundType("ladder", 1.0F, 1.0F) {
+
+        public String func_150495_a() {
             return "dig.wood";
         }
     };
 
-    /** The anvil sound type */
-    public static final Block.SoundType soundTypeAnvil = new Block.SoundType("anvil", 0.3F, 1.0F)
-    {
-        private static final String __OBFID = "CL_00000202";
-        public String func_150495_a()
-        {
+    /**
+     * The anvil sound type
+     */
+    public static final Block.SoundType soundTypeAnvil = new Block.SoundType("anvil", 0.3F, 1.0F) {
+
+        public String func_150495_a() {
             return "dig.stone";
         }
-        public String func_150496_b()
-        {
+
+        public String func_150496_b() {
             return "random.anvil_land";
         }
     };
+
     protected boolean opaque;
 
-    /** How much light is subtracted for going through this block */
+    /**
+     * How much light is subtracted for going through this block
+     */
     protected int lightOpacity;
     protected boolean canBlockGrass;
 
-    /** Amount of light emitted */
+    /**
+     * Amount of light emitted
+     */
     protected int lightValue;
     protected boolean field_149783_u;
 
-    /** Indicates how many hits it takes to break a block. */
+    /**
+     * Indicates how many hits it takes to break a block.
+     */
     protected float blockHardness;
     protected float blockResistance;
     protected boolean field_149791_x = true;
@@ -112,7 +128,9 @@ public class Block
      */
     protected boolean needsRandomTick;
 
-    /** true if the Block contains a Tile Entity */
+    /**
+     * true if the Block contains a Tile Entity
+     */
     protected boolean isBlockContainer;
     protected double field_149759_B;
     protected double field_149760_C;
@@ -121,7 +139,9 @@ public class Block
     protected double field_149756_F;
     protected double field_149757_G;
 
-    /** Sound of stepping on the block */
+    /**
+     * Sound of stepping on the block
+     */
     public Block.SoundType stepSound;
     public float blockParticleGravity;
     protected final Material blockMaterial;
@@ -132,79 +152,60 @@ public class Block
     public float slipperiness;
     private String unlocalizedNameBlock;
     protected IIcon blockIcon;
-    private static final String __OBFID = "CL_00000199";
 
-    public static int getIdFromBlock(Block p_149682_0_)
-    {
+    public static int getIdFromBlock(Block p_149682_0_) {
         return blockRegistry.getIDForObject(p_149682_0_);
     }
 
-    public static Block getBlockById(int p_149729_0_)
-    {
-        return (Block)blockRegistry.getObjectForID(p_149729_0_);
+    public static Block getBlockById(int p_149729_0_) {
+        return (Block) blockRegistry.getObjectForID(p_149729_0_);
     }
 
-    public static Block getBlockFromItem(Item p_149634_0_)
-    {
+    public static Block getBlockFromItem(Item p_149634_0_) {
         return getBlockById(Item.getIdFromItem(p_149634_0_));
     }
 
-    public static Block getBlockFromName(String p_149684_0_)
-    {
-        if (blockRegistry.containsKey(p_149684_0_))
-        {
-            return (Block)blockRegistry.getObject(p_149684_0_);
-        }
-        else
-        {
-            try
-            {
-                return (Block)blockRegistry.getObjectForID(Integer.parseInt(p_149684_0_));
-            }
-            catch (NumberFormatException var2)
-            {
+    public static Block getBlockFromName(String p_149684_0_) {
+        if (blockRegistry.containsKey(p_149684_0_)) {
+            return (Block) blockRegistry.getObject(p_149684_0_);
+        } else {
+            try {
+                return (Block) blockRegistry.getObjectForID(Integer.parseInt(p_149684_0_));
+            } catch (NumberFormatException var2) {
                 return null;
             }
         }
     }
 
-    public boolean func_149730_j()
-    {
+    public boolean func_149730_j() {
         return this.opaque;
     }
 
-    public int getLightOpacity()
-    {
+    public int getLightOpacity() {
         return this.lightOpacity;
     }
 
-    public boolean getCanBlockGrass()
-    {
+    public boolean getCanBlockGrass() {
         return this.canBlockGrass;
     }
 
-    public int getLightValue()
-    {
+    public int getLightValue() {
         return this.lightValue;
     }
 
-    public boolean func_149710_n()
-    {
+    public boolean func_149710_n() {
         return this.field_149783_u;
     }
 
-    public Material getMaterial()
-    {
+    public Material getMaterial() {
         return this.blockMaterial;
     }
 
-    public MapColor getMapColor(int p_149728_1_)
-    {
+    public MapColor getMapColor(int p_149728_1_) {
         return this.getMaterial().getMaterialMapColor();
     }
 
-    public static void registerBlocks()
-    {
+    public static void registerBlocks() {
         blockRegistry.addObject(0, "air", (new BlockAir()).setBlockName("air"));
         blockRegistry.addObject(1, "stone", (new BlockStone()).setHardness(1.5F).setResistance(10.0F).setStepSound(soundTypePiston).setBlockName("stone").setBlockTextureName("stone"));
         blockRegistry.addObject(2, "grass", (new BlockGrass()).setHardness(0.6F).setStepSound(soundTypeGrass).setBlockName("grass").setBlockTextureName("grass"));
@@ -388,16 +389,12 @@ public class Block
         blockRegistry.addObject(175, "double_plant", new BlockDoublePlant());
         Iterator var10 = blockRegistry.iterator();
 
-        while (var10.hasNext())
-        {
-            Block var11 = (Block)var10.next();
+        while (var10.hasNext()) {
+            Block var11 = (Block) var10.next();
 
-            if (var11.blockMaterial == Material.air)
-            {
+            if (var11.blockMaterial == Material.air) {
                 var11.field_149783_u = false;
-            }
-            else
-            {
+            } else {
                 boolean var12 = false;
                 boolean var13 = var11.getRenderType() == 10;
                 boolean var14 = var11 instanceof BlockSlab;
@@ -405,8 +402,7 @@ public class Block
                 boolean var16 = var11.canBlockGrass;
                 boolean var17 = var11.lightOpacity == 0;
 
-                if (var13 || var14 || var15 || var16 || var17)
-                {
+                if (var13 || var14 || var15 || var16 || var17) {
                     var12 = true;
                 }
 
@@ -415,8 +411,7 @@ public class Block
         }
     }
 
-    protected Block(Material p_i45394_1_)
-    {
+    protected Block(Material p_i45394_1_) {
         this.stepSound = soundTypeStone;
         this.blockParticleGravity = 1.0F;
         this.slipperiness = 0.6F;
@@ -434,8 +429,7 @@ public class Block
     /**
      * Sets the footstep sound for the block. Returns the object for convenience in constructing.
      */
-    protected Block setStepSound(Block.SoundType p_149672_1_)
-    {
+    protected Block setStepSound(Block.SoundType p_149672_1_) {
         this.stepSound = p_149672_1_;
         return this;
     }
@@ -443,8 +437,7 @@ public class Block
     /**
      * Sets how much light is blocked going through this block. Returns the object for convenience in constructing.
      */
-    public Block setLightOpacity(int p_149713_1_)
-    {
+    public Block setLightOpacity(int p_149713_1_) {
         this.lightOpacity = p_149713_1_;
         return this;
     }
@@ -453,17 +446,15 @@ public class Block
      * Sets the light value that the block emits. Returns resulting block instance for constructing convenience. Args:
      * level
      */
-    protected Block setLightLevel(float p_149715_1_)
-    {
-        this.lightValue = (int)(15.0F * p_149715_1_);
+    protected Block setLightLevel(float p_149715_1_) {
+        this.lightValue = (int) (15.0F * p_149715_1_);
         return this;
     }
 
     /**
      * Sets the the blocks resistance to explosions. Returns the object for convenience in constructing.
      */
-    protected Block setResistance(float p_149752_1_)
-    {
+    protected Block setResistance(float p_149752_1_) {
         this.blockResistance = p_149752_1_ * 3.0F;
         return this;
     }
@@ -471,65 +462,55 @@ public class Block
     /**
      * Indicate if a material is a normal solid opaque cube
      */
-    public boolean isBlockNormalCube()
-    {
+    public boolean isBlockNormalCube() {
         return this.blockMaterial.blocksMovement() && this.renderAsNormalBlock();
     }
 
-    public boolean isNormalCube()
-    {
+    public boolean isNormalCube() {
         return this.blockMaterial.isOpaque() && this.renderAsNormalBlock() && !this.canProvidePower();
     }
 
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return true;
     }
 
-    public boolean getBlocksMovement(IBlockAccess p_149655_1_, int p_149655_2_, int p_149655_3_, int p_149655_4_)
-    {
+    public boolean getBlocksMovement(IBlockAccess p_149655_1_, int p_149655_2_, int p_149655_3_, int p_149655_4_) {
         return !this.blockMaterial.blocksMovement();
     }
 
     /**
      * The type of render function that is called for this block
      */
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return 0;
     }
 
     /**
      * Sets how many hits it takes to break a block.
      */
-    protected Block setHardness(float p_149711_1_)
-    {
+    protected Block setHardness(float p_149711_1_) {
         this.blockHardness = p_149711_1_;
 
-        if (this.blockResistance < p_149711_1_ * 5.0F)
-        {
+        if (this.blockResistance < p_149711_1_ * 5.0F) {
             this.blockResistance = p_149711_1_ * 5.0F;
         }
 
         return this;
     }
 
-    protected Block setBlockUnbreakable()
-    {
+    protected Block setBlockUnbreakable() {
         this.setHardness(-1.0F);
         return this;
     }
 
-    public float getBlockHardness(World p_149712_1_, int p_149712_2_, int p_149712_3_, int p_149712_4_)
-    {
+    public float getBlockHardness(World p_149712_1_, int p_149712_2_, int p_149712_3_, int p_149712_4_) {
         return this.blockHardness;
     }
 
     /**
      * Sets whether this block type will receive random update ticks
      */
-    protected Block setTickRandomly(boolean p_149675_1_)
-    {
+    protected Block setTickRandomly(boolean p_149675_1_) {
         this.needsRandomTick = p_149675_1_;
         return this;
     }
@@ -538,88 +519,73 @@ public class Block
      * Returns whether or not this block is of a type that needs random ticking. Called for ref-counting purposes by
      * ExtendedBlockStorage in order to broadly cull a chunk from the random chunk update list for efficiency's sake.
      */
-    public boolean getTickRandomly()
-    {
+    public boolean getTickRandomly() {
         return this.needsRandomTick;
     }
 
-    public boolean hasTileEntity()
-    {
+    public boolean hasTileEntity() {
         return this.isBlockContainer;
     }
 
-    protected final void setBlockBounds(float p_149676_1_, float p_149676_2_, float p_149676_3_, float p_149676_4_, float p_149676_5_, float p_149676_6_)
-    {
-        this.field_149759_B = (double)p_149676_1_;
-        this.field_149760_C = (double)p_149676_2_;
-        this.field_149754_D = (double)p_149676_3_;
-        this.field_149755_E = (double)p_149676_4_;
-        this.field_149756_F = (double)p_149676_5_;
-        this.field_149757_G = (double)p_149676_6_;
+    protected final void setBlockBounds(float p_149676_1_, float p_149676_2_, float p_149676_3_, float p_149676_4_, float p_149676_5_, float p_149676_6_) {
+        this.field_149759_B = (double) p_149676_1_;
+        this.field_149760_C = (double) p_149676_2_;
+        this.field_149754_D = (double) p_149676_3_;
+        this.field_149755_E = (double) p_149676_4_;
+        this.field_149756_F = (double) p_149676_5_;
+        this.field_149757_G = (double) p_149676_6_;
     }
 
-    public int getBlockBrightness(IBlockAccess p_149677_1_, int p_149677_2_, int p_149677_3_, int p_149677_4_)
-    {
+    public int getBlockBrightness(IBlockAccess p_149677_1_, int p_149677_2_, int p_149677_3_, int p_149677_4_) {
         Block var5 = p_149677_1_.getBlock(p_149677_2_, p_149677_3_, p_149677_4_);
         int var6 = p_149677_1_.getLightBrightnessForSkyBlocks(p_149677_2_, p_149677_3_, p_149677_4_, var5.getLightValue());
 
-        if (var6 == 0 && var5 instanceof BlockSlab)
-        {
+        if (var6 == 0 && var5 instanceof BlockSlab) {
             --p_149677_3_;
             var5 = p_149677_1_.getBlock(p_149677_2_, p_149677_3_, p_149677_4_);
             return p_149677_1_.getLightBrightnessForSkyBlocks(p_149677_2_, p_149677_3_, p_149677_4_, var5.getLightValue());
-        }
-        else
-        {
+        } else {
             return var6;
         }
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
-    {
+    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_) {
         return p_149646_5_ == 0 && this.field_149760_C > 0.0D || (p_149646_5_ == 1 && this.field_149756_F < 1.0D || (p_149646_5_ == 2 && this.field_149754_D > 0.0D || (p_149646_5_ == 3 && this.field_149757_G < 1.0D || (p_149646_5_ == 4 && this.field_149759_B > 0.0D || (p_149646_5_ == 5 && this.field_149755_E < 1.0D || !p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_).isOpaqueCube())))));
     }
 
-    public boolean isBlockSolid(IBlockAccess p_149747_1_, int p_149747_2_, int p_149747_3_, int p_149747_4_, int p_149747_5_)
-    {
+    public boolean isBlockSolid(IBlockAccess p_149747_1_, int p_149747_2_, int p_149747_3_, int p_149747_4_, int p_149747_5_) {
         return p_149747_1_.getBlock(p_149747_2_, p_149747_3_, p_149747_4_).getMaterial().isSolid();
     }
 
-    public IIcon getIcon(IBlockAccess p_149673_1_, int p_149673_2_, int p_149673_3_, int p_149673_4_, int p_149673_5_)
-    {
+    public IIcon getIcon(IBlockAccess p_149673_1_, int p_149673_2_, int p_149673_3_, int p_149673_4_, int p_149673_5_) {
         return this.getIcon(p_149673_5_, p_149673_1_.getBlockMetadata(p_149673_2_, p_149673_3_, p_149673_4_));
     }
 
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
-    {
+    public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
         return this.blockIcon;
     }
 
     /**
      * Returns the block texture based on the side being looked at.  Args: side
      */
-    public final IIcon getBlockTextureFromSide(int p_149733_1_)
-    {
+    public final IIcon getBlockTextureFromSide(int p_149733_1_) {
         return this.getIcon(p_149733_1_, 0);
     }
 
     /**
      * Returns the bounding box of the wired rectangular prism to render.
      */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int p_149633_2_, int p_149633_3_, int p_149633_4_)
-    {
-        return AxisAlignedBB.getBoundingBox((double)p_149633_2_ + this.field_149759_B, (double)p_149633_3_ + this.field_149760_C, (double)p_149633_4_ + this.field_149754_D, (double)p_149633_2_ + this.field_149755_E, (double)p_149633_3_ + this.field_149756_F, (double)p_149633_4_ + this.field_149757_G);
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int p_149633_2_, int p_149633_3_, int p_149633_4_) {
+        return AxisAlignedBB.getBoundingBox((double) p_149633_2_ + this.field_149759_B, (double) p_149633_3_ + this.field_149760_C, (double) p_149633_4_ + this.field_149754_D, (double) p_149633_2_ + this.field_149755_E, (double) p_149633_3_ + this.field_149756_F, (double) p_149633_4_ + this.field_149757_G);
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
-    {
+    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_) {
         AxisAlignedBB var8 = this.getCollisionBoundingBoxFromPool(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_);
 
-        if (var8 != null && p_149743_5_.intersectsWith(var8))
-        {
+        if (var8 != null && p_149743_5_.intersectsWith(var8)) {
             p_149743_6_.add(var8);
         }
     }
@@ -628,13 +594,11 @@ public class Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
-    {
-        return AxisAlignedBB.getBoundingBox((double)p_149668_2_ + this.field_149759_B, (double)p_149668_3_ + this.field_149760_C, (double)p_149668_4_ + this.field_149754_D, (double)p_149668_2_ + this.field_149755_E, (double)p_149668_3_ + this.field_149756_F, (double)p_149668_4_ + this.field_149757_G);
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_) {
+        return AxisAlignedBB.getBoundingBox((double) p_149668_2_ + this.field_149759_B, (double) p_149668_3_ + this.field_149760_C, (double) p_149668_4_ + this.field_149754_D, (double) p_149668_2_ + this.field_149755_E, (double) p_149668_3_ + this.field_149756_F, (double) p_149668_4_ + this.field_149757_G);
     }
 
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return true;
     }
 
@@ -642,20 +606,19 @@ public class Block
      * Returns whether this block is collideable based on the arguments passed in \n@param par1 block metaData \n@param
      * par2 whether the player right-clicked while holding a boat
      */
-    public boolean canCollideCheck(int p_149678_1_, boolean p_149678_2_)
-    {
+    public boolean canCollideCheck(int p_149678_1_, boolean p_149678_2_) {
         return this.isCollidable();
     }
 
-    public boolean isCollidable()
-    {
+    public boolean isCollidable() {
         return true;
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_) {}
+    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_) {
+    }
 
     /**
      * A randomly called display update to be able to add particles or other items for display
@@ -666,8 +629,7 @@ public class Block
 
     public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_) {}
 
-    public int func_149738_a(World p_149738_1_)
-    {
+    public int func_149738_a(World p_149738_1_) {
         return 10;
     }
 
@@ -678,18 +640,15 @@ public class Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
-    {
+    public int quantityDropped(Random p_149745_1_) {
         return 1;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
-    {
+    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
         return Item.getItemFromBlock(this);
     }
 
-    public float getPlayerRelativeBlockHardness(EntityPlayer p_149737_1_, World p_149737_2_, int p_149737_3_, int p_149737_4_, int p_149737_5_)
-    {
+    public float getPlayerRelativeBlockHardness(EntityPlayer p_149737_1_, World p_149737_2_, int p_149737_3_, int p_149737_4_, int p_149737_5_) {
         float var6 = this.getBlockHardness(p_149737_2_, p_149737_3_, p_149737_4_, p_149737_5_);
         return var6 < 0.0F ? 0.0F : (!p_149737_1_.canHarvestBlock(this) ? p_149737_1_.getCurrentPlayerStrVsBlock(this, false) / var6 / 100.0F : p_149737_1_.getCurrentPlayerStrVsBlock(this, true) / var6 / 30.0F);
     }
@@ -697,28 +656,22 @@ public class Block
     /**
      * Drops the specified block items
      */
-    public final void dropBlockAsItem(World p_149697_1_, int p_149697_2_, int p_149697_3_, int p_149697_4_, int p_149697_5_, int p_149697_6_)
-    {
+    public final void dropBlockAsItem(World p_149697_1_, int p_149697_2_, int p_149697_3_, int p_149697_4_, int p_149697_5_, int p_149697_6_) {
         this.dropBlockAsItemWithChance(p_149697_1_, p_149697_2_, p_149697_3_, p_149697_4_, p_149697_5_, 1.0F, p_149697_6_);
     }
 
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
-    {
-        if (!p_149690_1_.isClient)
-        {
+    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_) {
+        if (!p_149690_1_.isClient) {
             int var8 = this.quantityDroppedWithBonus(p_149690_7_, p_149690_1_.rand);
 
-            for (int var9 = 0; var9 < var8; ++var9)
-            {
-                if (p_149690_1_.rand.nextFloat() <= p_149690_6_)
-                {
+            for (int var9 = 0; var9 < var8; ++var9) {
+                if (p_149690_1_.rand.nextFloat() <= p_149690_6_) {
                     Item var10 = this.getItemDropped(p_149690_5_, p_149690_1_.rand, p_149690_7_);
 
-                    if (var10 != null)
-                    {
+                    if (var10 != null) {
                         this.dropBlockAsItem_do(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, new ItemStack(var10, 1, this.damageDropped(p_149690_5_)));
                     }
                 }
@@ -729,29 +682,24 @@ public class Block
     /**
      * Spawns EntityItem in the world for the given ItemStack if the world is not remote.
      */
-    protected void dropBlockAsItem_do(World p_149642_1_, int p_149642_2_, int p_149642_3_, int p_149642_4_, ItemStack p_149642_5_)
-    {
-        if (!p_149642_1_.isClient && p_149642_1_.getGameRules().getGameRuleBooleanValue("doTileDrops"))
-        {
+    protected void dropBlockAsItem_do(World p_149642_1_, int p_149642_2_, int p_149642_3_, int p_149642_4_, ItemStack p_149642_5_) {
+        if (!p_149642_1_.isClient && p_149642_1_.getGameRules().getGameRuleBooleanValue("doTileDrops")) {
             float var6 = 0.7F;
-            double var7 = (double)(p_149642_1_.rand.nextFloat() * var6) + (double)(1.0F - var6) * 0.5D;
-            double var9 = (double)(p_149642_1_.rand.nextFloat() * var6) + (double)(1.0F - var6) * 0.5D;
-            double var11 = (double)(p_149642_1_.rand.nextFloat() * var6) + (double)(1.0F - var6) * 0.5D;
-            EntityItem var13 = new EntityItem(p_149642_1_, (double)p_149642_2_ + var7, (double)p_149642_3_ + var9, (double)p_149642_4_ + var11, p_149642_5_);
+            double var7 = (double) (p_149642_1_.rand.nextFloat() * var6) + (double) (1.0F - var6) * 0.5D;
+            double var9 = (double) (p_149642_1_.rand.nextFloat() * var6) + (double) (1.0F - var6) * 0.5D;
+            double var11 = (double) (p_149642_1_.rand.nextFloat() * var6) + (double) (1.0F - var6) * 0.5D;
+            EntityItem var13 = new EntityItem(p_149642_1_, (double) p_149642_2_ + var7, (double) p_149642_3_ + var9, (double) p_149642_4_ + var11, p_149642_5_);
             var13.delayBeforeCanPickup = 10;
             p_149642_1_.spawnEntityInWorld(var13);
         }
     }
 
-    protected void dropXpOnBlockBreak(World p_149657_1_, int p_149657_2_, int p_149657_3_, int p_149657_4_, int p_149657_5_)
-    {
-        if (!p_149657_1_.isClient)
-        {
-            while (p_149657_5_ > 0)
-            {
+    protected void dropXpOnBlockBreak(World p_149657_1_, int p_149657_2_, int p_149657_3_, int p_149657_4_, int p_149657_5_) {
+        if (!p_149657_1_.isClient) {
+            while (p_149657_5_ > 0) {
                 int var6 = EntityXPOrb.getXPSplit(p_149657_5_);
                 p_149657_5_ -= var6;
-                p_149657_1_.spawnEntityInWorld(new EntityXPOrb(p_149657_1_, (double)p_149657_2_ + 0.5D, (double)p_149657_3_ + 0.5D, (double)p_149657_4_ + 0.5D, var6));
+                p_149657_1_.spawnEntityInWorld(new EntityXPOrb(p_149657_1_, (double) p_149657_2_ + 0.5D, (double) p_149657_3_ + 0.5D, (double) p_149657_4_ + 0.5D, var6));
             }
         }
     }
@@ -759,24 +707,21 @@ public class Block
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
-    {
+    public int damageDropped(int p_149692_1_) {
         return 0;
     }
 
     /**
      * Returns how much this block can resist explosions from the passed in entity.
      */
-    public float getExplosionResistance(Entity p_149638_1_)
-    {
+    public float getExplosionResistance(Entity p_149638_1_) {
         return this.blockResistance / 5.0F;
     }
 
-    public MovingObjectPosition collisionRayTrace(World p_149731_1_, int p_149731_2_, int p_149731_3_, int p_149731_4_, Vec3 p_149731_5_, Vec3 p_149731_6_)
-    {
+    public MovingObjectPosition collisionRayTrace(World p_149731_1_, int p_149731_2_, int p_149731_3_, int p_149731_4_, Vec3 p_149731_5_, Vec3 p_149731_6_) {
         this.setBlockBoundsBasedOnState(p_149731_1_, p_149731_2_, p_149731_3_, p_149731_4_);
-        p_149731_5_ = p_149731_5_.addVector((double)(-p_149731_2_), (double)(-p_149731_3_), (double)(-p_149731_4_));
-        p_149731_6_ = p_149731_6_.addVector((double)(-p_149731_2_), (double)(-p_149731_3_), (double)(-p_149731_4_));
+        p_149731_5_ = p_149731_5_.addVector((double) (-p_149731_2_), (double) (-p_149731_3_), (double) (-p_149731_4_));
+        p_149731_6_ = p_149731_6_.addVector((double) (-p_149731_2_), (double) (-p_149731_3_), (double) (-p_149731_4_));
         Vec3 var7 = p_149731_5_.getIntermediateWithXValue(p_149731_6_, this.field_149759_B);
         Vec3 var8 = p_149731_5_.getIntermediateWithXValue(p_149731_6_, this.field_149755_E);
         Vec3 var9 = p_149731_5_.getIntermediateWithYValue(p_149731_6_, this.field_149760_C);
@@ -784,247 +729,214 @@ public class Block
         Vec3 var11 = p_149731_5_.getIntermediateWithZValue(p_149731_6_, this.field_149754_D);
         Vec3 var12 = p_149731_5_.getIntermediateWithZValue(p_149731_6_, this.field_149757_G);
 
-        if (!this.isVecInsideYZBounds(var7))
-        {
+        if (!this.isVecInsideYZBounds(var7)) {
             var7 = null;
         }
 
-        if (!this.isVecInsideYZBounds(var8))
-        {
+        if (!this.isVecInsideYZBounds(var8)) {
             var8 = null;
         }
 
-        if (!this.isVecInsideXZBounds(var9))
-        {
+        if (!this.isVecInsideXZBounds(var9)) {
             var9 = null;
         }
 
-        if (!this.isVecInsideXZBounds(var10))
-        {
+        if (!this.isVecInsideXZBounds(var10)) {
             var10 = null;
         }
 
-        if (!this.isVecInsideXYBounds(var11))
-        {
+        if (!this.isVecInsideXYBounds(var11)) {
             var11 = null;
         }
 
-        if (!this.isVecInsideXYBounds(var12))
-        {
+        if (!this.isVecInsideXYBounds(var12)) {
             var12 = null;
         }
 
         Vec3 var13 = null;
 
-        if (var7 != null && (var13 == null || p_149731_5_.squareDistanceTo(var7) < p_149731_5_.squareDistanceTo(var13)))
-        {
+        if (var7 != null && (var13 == null || p_149731_5_.squareDistanceTo(var7) < p_149731_5_.squareDistanceTo(var13))) {
             var13 = var7;
         }
 
-        if (var8 != null && (var13 == null || p_149731_5_.squareDistanceTo(var8) < p_149731_5_.squareDistanceTo(var13)))
-        {
+        if (var8 != null && (var13 == null || p_149731_5_.squareDistanceTo(var8) < p_149731_5_.squareDistanceTo(var13))) {
             var13 = var8;
         }
 
-        if (var9 != null && (var13 == null || p_149731_5_.squareDistanceTo(var9) < p_149731_5_.squareDistanceTo(var13)))
-        {
+        if (var9 != null && (var13 == null || p_149731_5_.squareDistanceTo(var9) < p_149731_5_.squareDistanceTo(var13))) {
             var13 = var9;
         }
 
-        if (var10 != null && (var13 == null || p_149731_5_.squareDistanceTo(var10) < p_149731_5_.squareDistanceTo(var13)))
-        {
+        if (var10 != null && (var13 == null || p_149731_5_.squareDistanceTo(var10) < p_149731_5_.squareDistanceTo(var13))) {
             var13 = var10;
         }
 
-        if (var11 != null && (var13 == null || p_149731_5_.squareDistanceTo(var11) < p_149731_5_.squareDistanceTo(var13)))
-        {
+        if (var11 != null && (var13 == null || p_149731_5_.squareDistanceTo(var11) < p_149731_5_.squareDistanceTo(var13))) {
             var13 = var11;
         }
 
-        if (var12 != null && (var13 == null || p_149731_5_.squareDistanceTo(var12) < p_149731_5_.squareDistanceTo(var13)))
-        {
+        if (var12 != null && (var13 == null || p_149731_5_.squareDistanceTo(var12) < p_149731_5_.squareDistanceTo(var13))) {
             var13 = var12;
         }
 
-        if (var13 == null)
-        {
+        if (var13 == null) {
             return null;
-        }
-        else
-        {
+        } else {
             byte var14 = -1;
 
-            if (var13 == var7)
-            {
+            if (var13 == var7) {
                 var14 = 4;
             }
 
-            if (var13 == var8)
-            {
+            if (var13 == var8) {
                 var14 = 5;
             }
 
-            if (var13 == var9)
-            {
+            if (var13 == var9) {
                 var14 = 0;
             }
 
-            if (var13 == var10)
-            {
+            if (var13 == var10) {
                 var14 = 1;
             }
 
-            if (var13 == var11)
-            {
+            if (var13 == var11) {
                 var14 = 2;
             }
 
-            if (var13 == var12)
-            {
+            if (var13 == var12) {
                 var14 = 3;
             }
 
-            return new MovingObjectPosition(p_149731_2_, p_149731_3_, p_149731_4_, var14, var13.addVector((double)p_149731_2_, (double)p_149731_3_, (double)p_149731_4_));
+            return new MovingObjectPosition(p_149731_2_, p_149731_3_, p_149731_4_, var14, var13.addVector((double) p_149731_2_, (double) p_149731_3_, (double) p_149731_4_));
         }
     }
 
     /**
      * Checks if a vector is within the Y and Z bounds of the block.
      */
-    private boolean isVecInsideYZBounds(Vec3 p_149654_1_)
-    {
+    private boolean isVecInsideYZBounds(Vec3 p_149654_1_) {
         return p_149654_1_ != null && (p_149654_1_.yCoord >= this.field_149760_C && p_149654_1_.yCoord <= this.field_149756_F && p_149654_1_.zCoord >= this.field_149754_D && p_149654_1_.zCoord <= this.field_149757_G);
     }
 
     /**
      * Checks if a vector is within the X and Z bounds of the block.
      */
-    private boolean isVecInsideXZBounds(Vec3 p_149687_1_)
-    {
+    private boolean isVecInsideXZBounds(Vec3 p_149687_1_) {
         return p_149687_1_ != null && (p_149687_1_.xCoord >= this.field_149759_B && p_149687_1_.xCoord <= this.field_149755_E && p_149687_1_.zCoord >= this.field_149754_D && p_149687_1_.zCoord <= this.field_149757_G);
     }
 
     /**
      * Checks if a vector is within the X and Y bounds of the block.
      */
-    private boolean isVecInsideXYBounds(Vec3 p_149661_1_)
-    {
+    private boolean isVecInsideXYBounds(Vec3 p_149661_1_) {
         return p_149661_1_ != null && (p_149661_1_.xCoord >= this.field_149759_B && p_149661_1_.xCoord <= this.field_149755_E && p_149661_1_.yCoord >= this.field_149760_C && p_149661_1_.yCoord <= this.field_149756_F);
     }
 
     /**
      * Called upon the block being destroyed by an explosion
      */
-    public void onBlockDestroyedByExplosion(World p_149723_1_, int p_149723_2_, int p_149723_3_, int p_149723_4_, Explosion p_149723_5_) {}
+    public void onBlockDestroyedByExplosion(World p_149723_1_, int p_149723_2_, int p_149723_3_, int p_149723_4_, Explosion p_149723_5_) {
+    }
 
     /**
      * Returns which pass should this block be rendered on. 0 for solids and 1 for alpha
      */
-    public int getRenderBlockPass()
-    {
+    public int getRenderBlockPass() {
         return 0;
     }
 
-    public boolean canReplace(World p_149705_1_, int p_149705_2_, int p_149705_3_, int p_149705_4_, int p_149705_5_, ItemStack p_149705_6_)
-    {
+    public boolean canReplace(World p_149705_1_, int p_149705_2_, int p_149705_3_, int p_149705_4_, int p_149705_5_, ItemStack p_149705_6_) {
         return this.canPlaceBlockOnSide(p_149705_1_, p_149705_2_, p_149705_3_, p_149705_4_, p_149705_5_);
     }
 
     /**
      * checks to see if you can place this block can be placed on that side of a block: BlockLever overrides
      */
-    public boolean canPlaceBlockOnSide(World p_149707_1_, int p_149707_2_, int p_149707_3_, int p_149707_4_, int p_149707_5_)
-    {
+    public boolean canPlaceBlockOnSide(World p_149707_1_, int p_149707_2_, int p_149707_3_, int p_149707_4_, int p_149707_5_) {
         return this.canPlaceBlockAt(p_149707_1_, p_149707_2_, p_149707_3_, p_149707_4_);
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
-    {
+    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_) {
         return p_149742_1_.getBlock(p_149742_2_, p_149742_3_, p_149742_4_).blockMaterial.isReplaceable();
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
-    {
+    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         return false;
     }
 
-    public void onEntityWalking(World p_149724_1_, int p_149724_2_, int p_149724_3_, int p_149724_4_, Entity p_149724_5_) {}
+    public void onEntityWalking(World p_149724_1_, int p_149724_2_, int p_149724_3_, int p_149724_4_, Entity p_149724_5_) {
+    }
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
-    {
+    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {
         return p_149660_9_;
     }
 
     /**
      * Called when a player hits the block. Args: world, x, y, z, player
      */
-    public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_) {}
+    public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_) {
+    }
 
-    public void velocityToAddToEntity(World p_149640_1_, int p_149640_2_, int p_149640_3_, int p_149640_4_, Entity p_149640_5_, Vec3 p_149640_6_) {}
+    public void velocityToAddToEntity(World p_149640_1_, int p_149640_2_, int p_149640_3_, int p_149640_4_, Entity p_149640_5_, Vec3 p_149640_6_) {
+    }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_) {}
+    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_) {
+    }
 
     /**
      * returns the block bounderies minX value
      */
-    public final double getBlockBoundsMinX()
-    {
+    public final double getBlockBoundsMinX() {
         return this.field_149759_B;
     }
 
     /**
      * returns the block bounderies maxX value
      */
-    public final double getBlockBoundsMaxX()
-    {
+    public final double getBlockBoundsMaxX() {
         return this.field_149755_E;
     }
 
     /**
      * returns the block bounderies minY value
      */
-    public final double getBlockBoundsMinY()
-    {
+    public final double getBlockBoundsMinY() {
         return this.field_149760_C;
     }
 
     /**
      * returns the block bounderies maxY value
      */
-    public final double getBlockBoundsMaxY()
-    {
+    public final double getBlockBoundsMaxY() {
         return this.field_149756_F;
     }
 
     /**
      * returns the block bounderies minZ value
      */
-    public final double getBlockBoundsMinZ()
-    {
+    public final double getBlockBoundsMinZ() {
         return this.field_149754_D;
     }
 
     /**
      * returns the block bounderies maxZ value
      */
-    public final double getBlockBoundsMaxZ()
-    {
+    public final double getBlockBoundsMaxZ() {
         return this.field_149757_G;
     }
 
-    public int getBlockColor()
-    {
+    public int getBlockColor() {
         return 16777215;
     }
 
     /**
      * Returns the color this block should be rendered. Used by leaves.
      */
-    public int getRenderColor(int p_149741_1_)
-    {
+    public int getRenderColor(int p_149741_1_) {
         return 16777215;
     }
 
@@ -1032,59 +944,51 @@ public class Block
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
      */
-    public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_)
-    {
+    public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_) {
         return 16777215;
     }
 
-    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
-    {
+    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_) {
         return 0;
     }
 
     /**
      * Can this block provide power. Only wire currently seems to have this change based on its state.
      */
-    public boolean canProvidePower()
-    {
+    public boolean canProvidePower() {
         return false;
     }
 
-    public void onEntityCollidedWithBlock(World p_149670_1_, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity p_149670_5_) {}
+    public void onEntityCollidedWithBlock(World p_149670_1_, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity p_149670_5_) {
+    }
 
-    public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_)
-    {
+    public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_) {
         return 0;
     }
 
     /**
      * Sets the block's bounds for rendering it as an item
      */
-    public void setBlockBoundsForItemRender() {}
+    public void setBlockBoundsForItemRender() {
+    }
 
-    public void harvestBlock(World p_149636_1_, EntityPlayer p_149636_2_, int p_149636_3_, int p_149636_4_, int p_149636_5_, int p_149636_6_)
-    {
+    public void harvestBlock(World p_149636_1_, EntityPlayer p_149636_2_, int p_149636_3_, int p_149636_4_, int p_149636_5_, int p_149636_6_) {
         p_149636_2_.addStat(StatList.mineBlockStatArray[getIdFromBlock(this)], 1);
         p_149636_2_.addExhaustion(0.025F);
 
-        if (this.canSilkHarvest() && EnchantmentHelper.getSilkTouchModifier(p_149636_2_))
-        {
+        if (this.canSilkHarvest() && EnchantmentHelper.getSilkTouchModifier(p_149636_2_)) {
             ItemStack var8 = this.createStackedBlock(p_149636_6_);
 
-            if (var8 != null)
-            {
+            if (var8 != null) {
                 this.dropBlockAsItem_do(p_149636_1_, p_149636_3_, p_149636_4_, p_149636_5_, var8);
             }
-        }
-        else
-        {
+        } else {
             int var7 = EnchantmentHelper.getFortuneModifier(p_149636_2_);
             this.dropBlockAsItem(p_149636_1_, p_149636_3_, p_149636_4_, p_149636_5_, p_149636_6_, var7);
         }
     }
 
-    protected boolean canSilkHarvest()
-    {
+    protected boolean canSilkHarvest() {
         return this.renderAsNormalBlock() && !this.isBlockContainer;
     }
 
@@ -1092,13 +996,11 @@ public class Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int p_149644_1_)
-    {
+    protected ItemStack createStackedBlock(int p_149644_1_) {
         int var2 = 0;
         Item var3 = Item.getItemFromBlock(this);
 
-        if (var3 != null && var3.getHasSubtypes())
-        {
+        if (var3 != null && var3.getHasSubtypes()) {
             var2 = p_149644_1_;
         }
 
@@ -1108,34 +1010,33 @@ public class Block
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
-    public int quantityDroppedWithBonus(int p_149679_1_, Random p_149679_2_)
-    {
+    public int quantityDroppedWithBonus(int p_149679_1_, Random p_149679_2_) {
         return this.quantityDropped(p_149679_2_);
     }
 
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World p_149718_1_, int p_149718_2_, int p_149718_3_, int p_149718_4_)
-    {
+    public boolean canBlockStay(World p_149718_1_, int p_149718_2_, int p_149718_3_, int p_149718_4_) {
         return true;
     }
 
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_) {}
+    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_) {
+    }
 
     /**
      * Called after a block is placed
      */
-    public void onPostBlockPlaced(World p_149714_1_, int p_149714_2_, int p_149714_3_, int p_149714_4_, int p_149714_5_) {}
+    public void onPostBlockPlaced(World p_149714_1_, int p_149714_2_, int p_149714_3_, int p_149714_4_, int p_149714_5_) {
+    }
 
     /**
      * Sets the mod-specific block name
      */
-    public Block setBlockName(String p_149663_1_)
-    {
+    public Block setBlockName(String p_149663_1_) {
         this.unlocalizedNameBlock = p_149663_1_;
         return this;
     }
@@ -1143,87 +1044,76 @@ public class Block
     /**
      * Gets the localized name of this block. Used for the statistics page.
      */
-    public String getLocalizedName()
-    {
+    public String getLocalizedName() {
         return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name");
     }
 
     /**
      * Returns the unlocalized name of the block with "tile." appended to the front.
      */
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return "tile." + this.unlocalizedNameBlock;
     }
 
-    public boolean onBlockEventReceived(World p_149696_1_, int p_149696_2_, int p_149696_3_, int p_149696_4_, int p_149696_5_, int p_149696_6_)
-    {
+    public boolean onBlockEventReceived(World p_149696_1_, int p_149696_2_, int p_149696_3_, int p_149696_4_, int p_149696_5_, int p_149696_6_) {
         return false;
     }
 
     /**
      * Return the state of blocks statistics flags - if the block is counted for mined and placed.
      */
-    public boolean getEnableStats()
-    {
+    public boolean getEnableStats() {
         return this.enableStats;
     }
 
-    protected Block disableStats()
-    {
+    protected Block disableStats() {
         this.enableStats = false;
         return this;
     }
 
-    public int getMobilityFlag()
-    {
+    public int getMobilityFlag() {
         return this.blockMaterial.getMaterialMobility();
     }
 
     /**
      * Returns the default ambient occlusion value based on block opacity
      */
-    public float getAmbientOcclusionLightValue()
-    {
+    public float getAmbientOcclusionLightValue() {
         return this.isBlockNormalCube() ? 0.2F : 1.0F;
     }
 
     /**
      * Block's chance to react to an entity falling on it.
      */
-    public void onFallenUpon(World p_149746_1_, int p_149746_2_, int p_149746_3_, int p_149746_4_, Entity p_149746_5_, float p_149746_6_) {}
+    public void onFallenUpon(World p_149746_1_, int p_149746_2_, int p_149746_3_, int p_149746_4_, Entity p_149746_5_, float p_149746_6_) {
+    }
 
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
-    {
+    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_) {
         return Item.getItemFromBlock(this);
     }
 
     /**
      * Get the block's damage value (for use with pick block).
      */
-    public int getDamageValue(World p_149643_1_, int p_149643_2_, int p_149643_3_, int p_149643_4_)
-    {
+    public int getDamageValue(World p_149643_1_, int p_149643_2_, int p_149643_3_, int p_149643_4_) {
         return this.damageDropped(p_149643_1_.getBlockMetadata(p_149643_2_, p_149643_3_, p_149643_4_));
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
-    {
+    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_) {
         p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
     }
 
     /**
      * Returns the CreativeTab to display the given block on.
      */
-    public CreativeTabs getCreativeTabToDisplayOn()
-    {
+    public CreativeTabs getCreativeTabToDisplayOn() {
         return this.displayOnCreativeTab;
     }
 
-    public Block setCreativeTab(CreativeTabs p_149647_1_)
-    {
+    public Block setCreativeTab(CreativeTabs p_149647_1_) {
         this.displayOnCreativeTab = p_149647_1_;
         return this;
     }
@@ -1231,121 +1121,105 @@ public class Block
     /**
      * Called when the block is attempted to be harvested
      */
-    public void onBlockHarvested(World p_149681_1_, int p_149681_2_, int p_149681_3_, int p_149681_4_, int p_149681_5_, EntityPlayer p_149681_6_) {}
+    public void onBlockHarvested(World p_149681_1_, int p_149681_2_, int p_149681_3_, int p_149681_4_, int p_149681_5_, EntityPlayer p_149681_6_) {
+    }
 
-    public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_) {}
+    public void onBlockPreDestroy(World p_149725_1_, int p_149725_2_, int p_149725_3_, int p_149725_4_, int p_149725_5_) {
+    }
 
     /**
      * currently only used by BlockCauldron to incrament meta-data during rain
      */
-    public void fillWithRain(World p_149639_1_, int p_149639_2_, int p_149639_3_, int p_149639_4_) {}
+    public void fillWithRain(World p_149639_1_, int p_149639_2_, int p_149639_3_, int p_149639_4_) {
+    }
 
     /**
      * Returns true only if block is flowerPot
      */
-    public boolean isFlowerPot()
-    {
+    public boolean isFlowerPot() {
         return false;
     }
 
-    public boolean func_149698_L()
-    {
+    public boolean func_149698_L() {
         return true;
     }
 
     /**
      * Return whether this block can drop from an explosion.
      */
-    public boolean canDropFromExplosion(Explosion p_149659_1_)
-    {
+    public boolean canDropFromExplosion(Explosion p_149659_1_) {
         return true;
     }
 
-    public boolean func_149667_c(Block p_149667_1_)
-    {
+    public boolean func_149667_c(Block p_149667_1_) {
         return this == p_149667_1_;
     }
 
-    public static boolean isEqualTo(Block p_149680_0_, Block p_149680_1_)
-    {
+    public static boolean isEqualTo(Block p_149680_0_, Block p_149680_1_) {
         return (p_149680_0_ != null && p_149680_1_ != null) && (p_149680_0_ == p_149680_1_ || p_149680_0_.func_149667_c(p_149680_1_));
     }
 
-    public boolean hasComparatorInputOverride()
-    {
+    public boolean hasComparatorInputOverride() {
         return false;
     }
 
-    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_)
-    {
+    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_) {
         return 0;
     }
 
-    protected Block setBlockTextureName(String p_149658_1_)
-    {
+    protected Block setBlockTextureName(String p_149658_1_) {
         this.textureName = p_149658_1_;
         return this;
     }
 
-    protected String getTextureName()
-    {
+    protected String getTextureName() {
         return this.textureName == null ? "MISSING_ICON_BLOCK_" + getIdFromBlock(this) + "_" + this.unlocalizedNameBlock : this.textureName;
     }
 
-    public IIcon func_149735_b(int p_149735_1_, int p_149735_2_)
-    {
+    public IIcon func_149735_b(int p_149735_1_, int p_149735_2_) {
         return this.getIcon(p_149735_1_, p_149735_2_);
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
-    {
+    public void registerBlockIcons(IIconRegister p_149651_1_) {
         this.blockIcon = p_149651_1_.registerIcon(this.getTextureName());
     }
 
     /**
      * Gets the icon name of the ItemBlock corresponding to this block. Used by hoppers.
      */
-    public String getItemIconName()
-    {
+    public String getItemIconName() {
         return null;
     }
 
-    public static class SoundType
-    {
+    public static class SoundType {
+
         public final String field_150501_a;
         public final float field_150499_b;
         public final float field_150500_c;
-        private static final String __OBFID = "CL_00000203";
 
-        public SoundType(String p_i45393_1_, float p_i45393_2_, float p_i45393_3_)
-        {
+        public SoundType(String p_i45393_1_, float p_i45393_2_, float p_i45393_3_) {
             this.field_150501_a = p_i45393_1_;
             this.field_150499_b = p_i45393_2_;
             this.field_150500_c = p_i45393_3_;
         }
 
-        public float func_150497_c()
-        {
+        public float func_150497_c() {
             return this.field_150499_b;
         }
 
-        public float func_150494_d()
-        {
+        public float func_150494_d() {
             return this.field_150500_c;
         }
 
-        public String func_150495_a()
-        {
+        public String func_150495_a() {
             return "dig." + this.field_150501_a;
         }
 
-        public String func_150498_e()
-        {
+        public String func_150498_e() {
             return "step." + this.field_150501_a;
         }
 
-        public String func_150496_b()
-        {
+        public String func_150496_b() {
             return this.func_150495_a();
         }
     }

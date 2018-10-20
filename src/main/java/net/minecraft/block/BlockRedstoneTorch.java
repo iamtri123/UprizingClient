@@ -158,7 +158,7 @@ public class BlockRedstoneTorch extends BlockTorch
         {
             boolean var6 = this.func_150110_m(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_);
 
-            if (this.field_150113_a ? var6 : !var6)
+            if (this.field_150113_a == var6)
             {
                 p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, this, this.func_149738_a(p_149695_1_));
             }

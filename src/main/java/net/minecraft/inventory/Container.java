@@ -139,74 +139,54 @@ public abstract class Container
         return var3 != null ? var3.getStack() : null;
     }
 
-    public ItemStack slotClick(int p_75144_1_, int p_75144_2_, int p_75144_3_, EntityPlayer p_75144_4_)
-    {
+    public ItemStack slotClick(int slot, int button, int mode, EntityPlayer player) {
         ItemStack var5 = null;
-        InventoryPlayer var6 = p_75144_4_.inventory;
+        InventoryPlayer var6 = player.inventory;
         int var9;
         ItemStack var17;
 
-        if (p_75144_3_ == 5)
-        {
+        if (mode == 5) {
             int var7 = this.field_94536_g;
-            this.field_94536_g = func_94532_c(p_75144_2_);
+            this.field_94536_g = func_94532_c(button);
 
-            if ((var7 != 1 || this.field_94536_g != 2) && var7 != this.field_94536_g)
-            {
+            if ((var7 != 1 || this.field_94536_g != 2) && var7 != this.field_94536_g) {
                 this.func_94533_d();
-            }
-            else if (var6.getItemStack() == null)
-            {
+            } else if (var6.getItemStack() == null) {
                 this.func_94533_d();
-            }
-            else if (this.field_94536_g == 0)
-            {
-                this.field_94535_f = func_94529_b(p_75144_2_);
+            } else if (this.field_94536_g == 0) {
+                this.field_94535_f = func_94529_b(button);
 
-                if (func_94528_d(this.field_94535_f))
-                {
+                if (func_94528_d(this.field_94535_f)) {
                     this.field_94536_g = 1;
                     this.field_94537_h.clear();
-                }
-                else
-                {
+                } else {
                     this.func_94533_d();
                 }
-            }
-            else if (this.field_94536_g == 1)
-            {
-                Slot var8 = (Slot)this.inventorySlots.get(p_75144_1_);
+            } else if (this.field_94536_g == 1) {
+                Slot var8 = (Slot) this.inventorySlots.get(slot);
 
-                if (var8 != null && func_94527_a(var8, var6.getItemStack(), true) && var8.isItemValid(var6.getItemStack()) && var6.getItemStack().stackSize > this.field_94537_h.size() && this.canDragIntoSlot(var8))
-                {
+                if (var8 != null && func_94527_a(var8, var6.getItemStack(), true) && var8.isItemValid(var6.getItemStack()) && var6.getItemStack().stackSize > this.field_94537_h.size() && this.canDragIntoSlot(var8)) {
                     this.field_94537_h.add(var8);
                 }
-            }
-            else if (this.field_94536_g == 2)
-            {
-                if (!this.field_94537_h.isEmpty())
-                {
+            } else if (this.field_94536_g == 2) {
+                if (!this.field_94537_h.isEmpty()) {
                     var17 = var6.getItemStack().copy();
                     var9 = var6.getItemStack().stackSize;
                     Iterator var10 = this.field_94537_h.iterator();
 
-                    while (var10.hasNext())
-                    {
-                        Slot var11 = (Slot)var10.next();
+                    while (var10.hasNext()) {
+                        Slot var11 = (Slot) var10.next();
 
-                        if (var11 != null && func_94527_a(var11, var6.getItemStack(), true) && var11.isItemValid(var6.getItemStack()) && var6.getItemStack().stackSize >= this.field_94537_h.size() && this.canDragIntoSlot(var11))
-                        {
+                        if (var11 != null && func_94527_a(var11, var6.getItemStack(), true) && var11.isItemValid(var6.getItemStack()) && var6.getItemStack().stackSize >= this.field_94537_h.size() && this.canDragIntoSlot(var11)) {
                             ItemStack var12 = var17.copy();
                             int var13 = var11.getHasStack() ? var11.getStack().stackSize : 0;
                             func_94525_a(this.field_94537_h, this.field_94535_f, var12, var13);
 
-                            if (var12.stackSize > var12.getMaxStackSize())
-                            {
+                            if (var12.stackSize > var12.getMaxStackSize()) {
                                 var12.stackSize = var12.getMaxStackSize();
                             }
 
-                            if (var12.stackSize > var11.getSlotStackLimit())
-                            {
+                            if (var12.stackSize > var11.getSlotStackLimit()) {
                                 var12.stackSize = var11.getSlotStackLimit();
                             }
 
@@ -217,8 +197,7 @@ public abstract class Container
 
                     var17.stackSize = var9;
 
-                    if (var17.stackSize <= 0)
-                    {
+                    if (var17.stackSize <= 0) {
                         var17 = null;
                     }
 
@@ -226,172 +205,128 @@ public abstract class Container
                 }
 
                 this.func_94533_d();
-            }
-            else
-            {
+            } else {
                 this.func_94533_d();
             }
-        }
-        else if (this.field_94536_g != 0)
-        {
+        } else if (this.field_94536_g != 0) {
             this.func_94533_d();
-        }
-        else
-        {
+        } else {
             Slot var16;
             int var21;
             ItemStack var23;
 
-            if ((p_75144_3_ == 0 || p_75144_3_ == 1) && (p_75144_2_ == 0 || p_75144_2_ == 1))
-            {
-                if (p_75144_1_ == -999)
-                {
-                    if (var6.getItemStack() != null && p_75144_1_ == -999)
-                    {
-                        if (p_75144_2_ == 0)
-                        {
-                            p_75144_4_.dropPlayerItemWithRandomChoice(var6.getItemStack(), true);
-                            var6.setItemStack((ItemStack)null);
+            if ((mode == 0 || mode == 1) && (button == 0 || button == 1)) {
+                if (slot == -999) {
+                    if (var6.getItemStack() != null && slot == -999) {
+                        if (button == 0) {
+                            player.dropPlayerItemWithRandomChoice(var6.getItemStack(), true);
+                            var6.setItemStack((ItemStack) null);
                         }
 
-                        if (p_75144_2_ == 1)
-                        {
-                            p_75144_4_.dropPlayerItemWithRandomChoice(var6.getItemStack().splitStack(1), true);
+                        if (button == 1) {
+                            player.dropPlayerItemWithRandomChoice(var6.getItemStack().splitStack(1), true);
 
-                            if (var6.getItemStack().stackSize == 0)
-                            {
-                                var6.setItemStack((ItemStack)null);
+                            if (var6.getItemStack().stackSize == 0) {
+                                var6.setItemStack((ItemStack) null);
                             }
                         }
                     }
-                }
-                else if (p_75144_3_ == 1)
-                {
-                    if (p_75144_1_ < 0)
-                    {
+                } else if (mode == 1) {
+                    if (slot < 0) {
                         return null;
                     }
 
-                    var16 = (Slot)this.inventorySlots.get(p_75144_1_);
+                    var16 = (Slot) this.inventorySlots.get(slot);
 
-                    if (var16 != null && var16.canTakeStack(p_75144_4_))
-                    {
-                        var17 = this.transferStackInSlot(p_75144_4_, p_75144_1_);
+                    if (var16 != null && var16.canTakeStack(player)) {
+                        var17 = this.transferStackInSlot(player, slot);
 
-                        if (var17 != null)
-                        {
+                        if (var17 != null) {
                             Item var19 = var17.getItem();
                             var5 = var17.copy();
 
-                            if (var16.getStack() != null && var16.getStack().getItem() == var19)
-                            {
-                                this.retrySlotClick(p_75144_1_, p_75144_2_, true, p_75144_4_);
+                            if (var16.getStack() != null && var16.getStack().getItem() == var19) {
+                                this.retrySlotClick(slot, button, true, player);
                             }
                         }
                     }
-                }
-                else
-                {
-                    if (p_75144_1_ < 0)
-                    {
+                } else {
+                    if (slot < 0) {
                         return null;
                     }
 
-                    var16 = (Slot)this.inventorySlots.get(p_75144_1_);
+                    var16 = (Slot) this.inventorySlots.get(slot);
 
-                    if (var16 != null)
-                    {
+                    if (var16 != null) {
                         var17 = var16.getStack();
                         ItemStack var20 = var6.getItemStack();
 
-                        if (var17 != null)
-                        {
+                        if (var17 != null) {
                             var5 = var17.copy();
                         }
 
-                        if (var17 == null)
-                        {
-                            if (var20 != null && var16.isItemValid(var20))
-                            {
-                                var21 = p_75144_2_ == 0 ? var20.stackSize : 1;
+                        if (var17 == null) {
+                            if (var20 != null && var16.isItemValid(var20)) {
+                                var21 = button == 0 ? var20.stackSize : 1;
 
-                                if (var21 > var16.getSlotStackLimit())
-                                {
+                                if (var21 > var16.getSlotStackLimit()) {
                                     var21 = var16.getSlotStackLimit();
                                 }
 
-                                if (var20.stackSize >= var21)
-                                {
+                                if (var20.stackSize >= var21) {
                                     var16.putStack(var20.splitStack(var21));
                                 }
 
-                                if (var20.stackSize == 0)
-                                {
-                                    var6.setItemStack((ItemStack)null);
+                                if (var20.stackSize == 0) {
+                                    var6.setItemStack((ItemStack) null);
                                 }
                             }
-                        }
-                        else if (var16.canTakeStack(p_75144_4_))
-                        {
-                            if (var20 == null)
-                            {
-                                var21 = p_75144_2_ == 0 ? var17.stackSize : (var17.stackSize + 1) / 2;
+                        } else if (var16.canTakeStack(player)) {
+                            if (var20 == null) {
+                                var21 = button == 0 ? var17.stackSize : (var17.stackSize + 1) / 2;
                                 var23 = var16.decrStackSize(var21);
                                 var6.setItemStack(var23);
 
-                                if (var17.stackSize == 0)
-                                {
-                                    var16.putStack((ItemStack)null);
+                                if (var17.stackSize == 0) {
+                                    var16.putStack((ItemStack) null);
                                 }
 
-                                var16.onPickupFromSlot(p_75144_4_, var6.getItemStack());
-                            }
-                            else if (var16.isItemValid(var20))
-                            {
-                                if (var17.getItem() == var20.getItem() && var17.getItemDamage() == var20.getItemDamage() && ItemStack.areItemStackTagsEqual(var17, var20))
-                                {
-                                    var21 = p_75144_2_ == 0 ? var20.stackSize : 1;
+                                var16.onPickupFromSlot(player, var6.getItemStack());
+                            } else if (var16.isItemValid(var20)) {
+                                if (var17.getItem() == var20.getItem() && var17.getItemDamage() == var20.getItemDamage() && ItemStack.areItemStackTagsEqual(var17, var20)) {
+                                    var21 = button == 0 ? var20.stackSize : 1;
 
-                                    if (var21 > var16.getSlotStackLimit() - var17.stackSize)
-                                    {
+                                    if (var21 > var16.getSlotStackLimit() - var17.stackSize) {
                                         var21 = var16.getSlotStackLimit() - var17.stackSize;
                                     }
 
-                                    if (var21 > var20.getMaxStackSize() - var17.stackSize)
-                                    {
+                                    if (var21 > var20.getMaxStackSize() - var17.stackSize) {
                                         var21 = var20.getMaxStackSize() - var17.stackSize;
                                     }
 
                                     var20.splitStack(var21);
 
-                                    if (var20.stackSize == 0)
-                                    {
-                                        var6.setItemStack((ItemStack)null);
+                                    if (var20.stackSize == 0) {
+                                        var6.setItemStack((ItemStack) null);
                                     }
 
                                     var17.stackSize += var21;
-                                }
-                                else if (var20.stackSize <= var16.getSlotStackLimit())
-                                {
+                                } else if (var20.stackSize <= var16.getSlotStackLimit()) {
                                     var16.putStack(var20);
                                     var6.setItemStack(var17);
                                 }
-                            }
-                            else if (var17.getItem() == var20.getItem() && var20.getMaxStackSize() > 1 && (!var17.getHasSubtypes() || var17.getItemDamage() == var20.getItemDamage()) && ItemStack.areItemStackTagsEqual(var17, var20))
-                            {
+                            } else if (var17.getItem() == var20.getItem() && var20.getMaxStackSize() > 1 && (!var17.getHasSubtypes() || var17.getItemDamage() == var20.getItemDamage()) && ItemStack.areItemStackTagsEqual(var17, var20)) {
                                 var21 = var17.stackSize;
 
-                                if (var21 > 0 && var21 + var20.stackSize <= var20.getMaxStackSize())
-                                {
+                                if (var21 > 0 && var21 + var20.stackSize <= var20.getMaxStackSize()) {
                                     var20.stackSize += var21;
                                     var17 = var16.decrStackSize(var21);
 
-                                    if (var17.stackSize == 0)
-                                    {
-                                        var16.putStack((ItemStack)null);
+                                    if (var17.stackSize == 0) {
+                                        var16.putStack((ItemStack) null);
                                     }
 
-                                    var16.onPickupFromSlot(p_75144_4_, var6.getItemStack());
+                                    var16.onPickupFromSlot(player, var6.getItemStack());
                                 }
                             }
                         }
@@ -399,102 +334,78 @@ public abstract class Container
                         var16.onSlotChanged();
                     }
                 }
-            }
-            else if (p_75144_3_ == 2 && p_75144_2_ >= 0 && p_75144_2_ < 9)
-            {
-                var16 = (Slot)this.inventorySlots.get(p_75144_1_);
+            } else if (mode == 2 && button >= 0 && button < 9) {
+                var16 = (Slot) this.inventorySlots.get(slot);
 
-                if (var16.canTakeStack(p_75144_4_))
-                {
-                    var17 = var6.getStackInSlot(p_75144_2_);
+                if (var16.canTakeStack(player)) {
+                    var17 = var6.getStackInSlot(button);
                     boolean var18 = var17 == null || var16.inventory == var6 && var16.isItemValid(var17);
                     var21 = -1;
 
-                    if (!var18)
-                    {
+                    if (!var18) {
                         var21 = var6.getFirstEmptyStack();
                         var18 |= var21 > -1;
                     }
 
-                    if (var16.getHasStack() && var18)
-                    {
+                    if (var16.getHasStack() && var18) {
                         var23 = var16.getStack();
-                        var6.setInventorySlotContents(p_75144_2_, var23.copy());
+                        var6.setInventorySlotContents(button, var23.copy());
 
-                        if ((var16.inventory != var6 || !var16.isItemValid(var17)) && var17 != null)
-                        {
-                            if (var21 > -1)
-                            {
+                        if ((var16.inventory != var6 || !var16.isItemValid(var17)) && var17 != null) {
+                            if (var21 > -1) {
                                 var6.addItemStackToInventory(var17);
                                 var16.decrStackSize(var23.stackSize);
-                                var16.putStack((ItemStack)null);
-                                var16.onPickupFromSlot(p_75144_4_, var23);
+                                var16.putStack((ItemStack) null);
+                                var16.onPickupFromSlot(player, var23);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             var16.decrStackSize(var23.stackSize);
                             var16.putStack(var17);
-                            var16.onPickupFromSlot(p_75144_4_, var23);
+                            var16.onPickupFromSlot(player, var23);
                         }
-                    }
-                    else if (!var16.getHasStack() && var17 != null && var16.isItemValid(var17))
-                    {
-                        var6.setInventorySlotContents(p_75144_2_, (ItemStack)null);
+                    } else if (!var16.getHasStack() && var17 != null && var16.isItemValid(var17)) {
+                        var6.setInventorySlotContents(button, (ItemStack) null);
                         var16.putStack(var17);
                     }
                 }
-            }
-            else if (p_75144_3_ == 3 && p_75144_4_.capabilities.isCreativeMode && var6.getItemStack() == null && p_75144_1_ >= 0)
-            {
-                var16 = (Slot)this.inventorySlots.get(p_75144_1_);
+            } else if (mode == 3 && player.capabilities.isCreativeMode && var6.getItemStack() == null && slot >= 0) {
+                var16 = (Slot) this.inventorySlots.get(slot);
 
-                if (var16 != null && var16.getHasStack())
-                {
+                if (var16 != null && var16.getHasStack()) {
                     var17 = var16.getStack().copy();
                     var17.stackSize = var17.getMaxStackSize();
                     var6.setItemStack(var17);
                 }
-            }
-            else if (p_75144_3_ == 4 && var6.getItemStack() == null && p_75144_1_ >= 0)
-            {
-                var16 = (Slot)this.inventorySlots.get(p_75144_1_);
+            } else if (mode == 4 && var6.getItemStack() == null && slot >= 0) {
+                var16 = (Slot) this.inventorySlots.get(slot);
 
-                if (var16 != null && var16.getHasStack() && var16.canTakeStack(p_75144_4_))
-                {
-                    var17 = var16.decrStackSize(p_75144_2_ == 0 ? 1 : var16.getStack().stackSize);
-                    var16.onPickupFromSlot(p_75144_4_, var17);
-                    p_75144_4_.dropPlayerItemWithRandomChoice(var17, true);
+                if (var16 != null && var16.getHasStack() && var16.canTakeStack(player)) {
+                    var17 = var16.decrStackSize(button == 0 ? 1 : var16.getStack().stackSize);
+                    var16.onPickupFromSlot(player, var17);
+                    player.dropPlayerItemWithRandomChoice(var17, true);
                 }
-            }
-            else if (p_75144_3_ == 6 && p_75144_1_ >= 0)
-            {
-                var16 = (Slot)this.inventorySlots.get(p_75144_1_);
+            } else if (mode == 6 && slot >= 0) {
+                var16 = (Slot) this.inventorySlots.get(slot);
                 var17 = var6.getItemStack();
 
-                if (var17 != null && (var16 == null || !var16.getHasStack() || !var16.canTakeStack(p_75144_4_)))
-                {
-                    var9 = p_75144_2_ == 0 ? 0 : this.inventorySlots.size() - 1;
-                    var21 = p_75144_2_ == 0 ? 1 : -1;
+                if (var17 != null && (var16 == null || !var16.getHasStack() || !var16.canTakeStack(player))) {
+                    var9 = button == 0 ? 0 : this.inventorySlots.size() - 1;
+                    var21 = button == 0 ? 1 : -1;
 
-                    for (int var22 = 0; var22 < 2; ++var22)
-                    {
-                        for (int var24 = var9; var24 >= 0 && var24 < this.inventorySlots.size() && var17.stackSize < var17.getMaxStackSize(); var24 += var21)
-                        {
-                            Slot var25 = (Slot)this.inventorySlots.get(var24);
+                    for (int var22 = 0; var22 < 2; ++var22) {
+                        for (int var24 = var9; var24 >= 0 && var24 < this.inventorySlots.size() && var17.stackSize < var17.getMaxStackSize(); var24 += var21) {
+                            Slot var25 = (Slot) this.inventorySlots.get(var24);
 
-                            if (var25.getHasStack() && func_94527_a(var25, var17, true) && var25.canTakeStack(p_75144_4_) && this.func_94530_a(var17, var25) && (var22 != 0 || var25.getStack().stackSize != var25.getStack().getMaxStackSize()))
-                            {
+                            if (var25.getHasStack() && func_94527_a(var25, var17, true) && var25.canTakeStack(player) && this.func_94530_a(var17, var25) && (var22 != 0 || var25.getStack().stackSize != var25.getStack().getMaxStackSize())) {
                                 int var14 = Math.min(var17.getMaxStackSize() - var17.stackSize, var25.getStack().stackSize);
                                 ItemStack var15 = var25.decrStackSize(var14);
                                 var17.stackSize += var14;
 
-                                if (var15.stackSize <= 0)
-                                {
-                                    var25.putStack((ItemStack)null);
+                                if (var15.stackSize <= 0) {
+                                    var25.putStack((ItemStack) null);
                                 }
 
-                                var25.onPickupFromSlot(p_75144_4_, var15);
+                                var25.onPickupFromSlot(player, var15);
                             }
                         }
                     }

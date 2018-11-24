@@ -131,10 +131,14 @@ public class NetworkManager extends SimpleChannelInboundHandler
         {
             if (p_channelRead0_2_.hasPriority())
             {
+				//if (!(p_channelRead0_2_ instanceof S00PacketKeepAlive))
+                	//System.out.println("receivedPacket (priority=true): " + p_channelRead0_2_);
                 p_channelRead0_2_.processPacket(this.netHandler);
             }
             else
             {
+				//if (!(p_channelRead0_2_ instanceof S3BPacketScoreboardObjective || p_channelRead0_2_ instanceof S03PacketTimeUpdate || p_channelRead0_2_ instanceof S3EPacketTeams))
+                	//System.out.println("receivedPacket (priority=false): " + p_channelRead0_2_);
                 this.receivedPacketsQueue.add(p_channelRead0_2_);
             }
         }
@@ -159,11 +163,14 @@ public class NetworkManager extends SimpleChannelInboundHandler
     {
         if (this.channel != null && this.channel.isOpen())
         {
+            //if (!(p_150725_1_ instanceof C03PacketPlayer || p_150725_1_ instanceof C00PacketKeepAlive))
+                //System.out.println("outboundPacket (priority=true): " + p_150725_1_);
             this.flushOutboundQueue();
             this.dispatchPacket(p_150725_1_, p_150725_2_);
         }
         else
         {
+			//System.out.println("outboundPacket (priority=false): " + p_150725_1_);
             this.outboundPacketsQueue.add(new NetworkManager.InboundHandlerTuplePacketListener(p_150725_1_, p_150725_2_));
         }
     }

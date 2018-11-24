@@ -905,13 +905,13 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     {
         this.playerEntity.func_143004_u();
 
-        if (this.playerEntity.openContainer.windowId == p_147351_1_.func_149548_c() && this.playerEntity.openContainer.isPlayerNotUsingContainer(this.playerEntity))
+        if (this.playerEntity.openContainer.windowId == p_147351_1_.windowId() && this.playerEntity.openContainer.isPlayerNotUsingContainer(this.playerEntity))
         {
-            ItemStack var2 = this.playerEntity.openContainer.slotClick(p_147351_1_.func_149544_d(), p_147351_1_.func_149543_e(), p_147351_1_.func_149542_h(), this.playerEntity);
+            ItemStack var2 = this.playerEntity.openContainer.slotClick(p_147351_1_.slot(), p_147351_1_.button(), p_147351_1_.mode(), this.playerEntity);
 
-            if (ItemStack.areItemStacksEqual(p_147351_1_.func_149546_g(), var2))
+            if (ItemStack.areItemStacksEqual(p_147351_1_.clickedItem(), var2))
             {
-                this.playerEntity.playerNetServerHandler.sendPacket(new S32PacketConfirmTransaction(p_147351_1_.func_149548_c(), p_147351_1_.func_149547_f(), true));
+                this.playerEntity.playerNetServerHandler.sendPacket(new S32PacketConfirmTransaction(p_147351_1_.windowId(), p_147351_1_.actionNumber(), true));
                 this.playerEntity.isChangingQuantityOnly = true;
                 this.playerEntity.openContainer.detectAndSendChanges();
                 this.playerEntity.updateHeldItem();
@@ -919,8 +919,8 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
             }
             else
             {
-                this.field_147372_n.addKey(this.playerEntity.openContainer.windowId, Short.valueOf(p_147351_1_.func_149547_f()));
-                this.playerEntity.playerNetServerHandler.sendPacket(new S32PacketConfirmTransaction(p_147351_1_.func_149548_c(), p_147351_1_.func_149547_f(), false));
+                this.field_147372_n.addKey(this.playerEntity.openContainer.windowId, Short.valueOf(p_147351_1_.actionNumber()));
+                this.playerEntity.playerNetServerHandler.sendPacket(new S32PacketConfirmTransaction(p_147351_1_.windowId(), p_147351_1_.actionNumber(), false));
                 this.playerEntity.openContainer.setPlayerIsPresent(this.playerEntity, false);
                 ArrayList var3 = new ArrayList();
 

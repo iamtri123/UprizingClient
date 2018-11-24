@@ -12,7 +12,6 @@ public class S2FPacketSetSlot extends Packet
     private int field_149179_a;
     private int field_149177_b;
     private ItemStack field_149178_c;
-    private static final String __OBFID = "CL_00001296";
 
     public S2FPacketSetSlot() {}
 
@@ -48,12 +47,12 @@ public class S2FPacketSetSlot extends Packet
         p_148840_1_.writeItemStackToBuffer(this.field_149178_c);
     }
 
-    public int func_149175_c()
+    public int windowId()
     {
         return this.field_149179_a;
     }
 
-    public int func_149173_d()
+    public int slot()
     {
         return this.field_149177_b;
     }

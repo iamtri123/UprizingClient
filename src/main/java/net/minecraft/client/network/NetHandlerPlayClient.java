@@ -1128,7 +1128,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     {
         EntityClientPlayerMP var2 = this.gameController.thePlayer;
 
-        if (p_147266_1_.func_149175_c() == -1)
+        if (p_147266_1_.windowId() == -1)
         {
             var2.inventory.setItemStack(p_147266_1_.func_149174_e());
         }
@@ -1142,20 +1142,20 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
                 var3 = var4.func_147056_g() != CreativeTabs.tabInventory.getTabIndex();
             }
 
-            if (p_147266_1_.func_149175_c() == 0 && p_147266_1_.func_149173_d() >= 36 && p_147266_1_.func_149173_d() < 45)
+            if (p_147266_1_.windowId() == 0 && p_147266_1_.slot() >= 36 && p_147266_1_.slot() < 45)
             {
-                ItemStack var5 = var2.inventoryContainer.getSlot(p_147266_1_.func_149173_d()).getStack();
+                ItemStack var5 = var2.inventoryContainer.getSlot(p_147266_1_.slot()).getStack();
 
                 if (p_147266_1_.func_149174_e() != null && (var5 == null || var5.stackSize < p_147266_1_.func_149174_e().stackSize))
                 {
                     p_147266_1_.func_149174_e().animationsToGo = 5;
                 }
 
-                var2.inventoryContainer.putStackInSlot(p_147266_1_.func_149173_d(), p_147266_1_.func_149174_e());
+                var2.inventoryContainer.putStackInSlot(p_147266_1_.slot(), p_147266_1_.func_149174_e());
             }
-            else if (p_147266_1_.func_149175_c() == var2.openContainer.windowId && (p_147266_1_.func_149175_c() != 0 || !var3))
+            else if (p_147266_1_.windowId() == var2.openContainer.windowId && (p_147266_1_.windowId() != 0 || !var3))
             {
-                var2.openContainer.putStackInSlot(p_147266_1_.func_149173_d(), p_147266_1_.func_149174_e());
+                var2.openContainer.putStackInSlot(p_147266_1_.slot(), p_147266_1_.func_149174_e());
             }
         }
     }

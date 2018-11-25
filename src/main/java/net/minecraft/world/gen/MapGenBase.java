@@ -17,7 +17,7 @@ public class MapGenBase
     protected World worldObj;
     private static final String __OBFID = "CL_00000394";
 
-    public void func_151539_a(IChunkProvider p_151539_1_, World p_151539_2_, int p_151539_3_, int p_151539_4_, Block[] p_151539_5_)
+    public void generate(IChunkProvider p_151539_1_, World p_151539_2_, int p_151539_3_, int p_151539_4_, Block[] p_151539_5_)
     {
         int var6 = this.range;
         this.worldObj = p_151539_2_;
@@ -37,5 +37,5 @@ public class MapGenBase
         }
     }
 
-    protected void func_151538_a(World p_151538_1_, int p_151538_2_, int p_151538_3_, int p_151538_4_, int p_151538_5_, Block[] p_151538_6_) {}
+    protected void func_151538_a(World worldIn, int p_151538_2_, int p_151538_3_, int p_151538_4_, int p_151538_5_, Block[] p_151538_6_) {}
 }

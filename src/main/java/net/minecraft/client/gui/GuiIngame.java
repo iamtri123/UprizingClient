@@ -49,7 +49,7 @@ public class GuiIngame extends Gui
 
     /** ChatGUI instance that retains all previous chat data */
     private final GuiNewChat persistantChatGUI;
-    private final GuiStreamIndicator field_152127_m;
+    private final GuiStreamIndicator streamIndicator;
     private int updateCounter;
 
     /** The string specifying which record music is playing */
@@ -73,7 +73,7 @@ public class GuiIngame extends Gui
     {
         this.mc = p_i46379_1_;
         this.persistantChatGUI = new GuiNewChat(p_i46379_1_);
-        this.field_152127_m = new GuiStreamIndicator(this.mc);
+        this.streamIndicator = new GuiStreamIndicator(this.mc);
     }
 
     /**
@@ -138,7 +138,7 @@ public class GuiIngame extends Gui
 
             if (this.mc.playerController.shouldDrawHUD())
             {
-                this.func_110327_a(var6, var7);
+                this.renderIcons(var6, var7);
             }
 
             this.mc.mcProfiler.startSection("actionBar");
@@ -383,7 +383,7 @@ public class GuiIngame extends Gui
             this.mc.mcProfiler.endSection();
         }
 
-        ScoreObjective var37 = this.mc.theWorld.getScoreboard().func_96539_a(1);
+        ScoreObjective var37 = this.mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
 
         if (var37 != null)
         {
@@ -396,10 +396,10 @@ public class GuiIngame extends Gui
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, (float)(var7 - 48), 0.0F);
         this.mc.mcProfiler.startSection("chat");
-        this.persistantChatGUI.func_146230_a(this.updateCounter);
+        this.persistantChatGUI.drawChat(this.updateCounter);
         this.mc.mcProfiler.endSection();
         GL11.glPopMatrix();
-        var37 = this.mc.theWorld.getScoreboard().func_96539_a(0);
+        var37 = this.mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(0);
 
         if (this.mc.gameSettings.keyBindPlayerList.getIsKeyPressed() && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.playerInfoList.size() > 1 || var37 != null))
         {
@@ -447,7 +447,7 @@ public class GuiIngame extends Gui
 
                         if (var28 - var27 > 5)
                         {
-                            Score var29 = var37.getScoreboard().func_96529_a(var48.name, var37);
+                            Score var29 = var37.getScoreboard().getValueFromObjective(var48.name, var37);
                             String var30 = EnumChatFormatting.YELLOW + "" + var29.getScorePoints();
                             var8.drawStringWithShadow(var30, var28 - var8.getStringWidth(var30), var23, 16777215);
                         }
@@ -500,12 +500,12 @@ public class GuiIngame extends Gui
         GL11.glEnable(GL11.GL_ALPHA_TEST);
     }
 
-    public void func_152126_a(float p_152126_1_, float p_152126_2_)
+    public void renderStreamIndicator(float p_152126_1_, float p_152126_2_)
     {
-        this.field_152127_m.func_152437_a((int)(p_152126_1_ - 10.0F), 10);
+        this.streamIndicator.render((int)(p_152126_1_ - 10.0F), 10);
     }
 
-    private void func_110327_a(int p_110327_1_, int p_110327_2_)
+    private void renderIcons(int p_110327_1_, int p_110327_2_)
     {
         boolean var3 = this.mc.thePlayer.hurtResistantTime / 3 % 2 == 1;
 
@@ -944,7 +944,7 @@ public class GuiIngame extends Gui
         }
 
         ++this.updateCounter;
-        this.field_152127_m.func_152439_a();
+        this.streamIndicator.func_152439_a();
 
         if (this.mc.thePlayer != null)
         {
@@ -972,10 +972,10 @@ public class GuiIngame extends Gui
 
     public void setRecordPlayingMessage(String p_73833_1_)
     {
-        this.func_110326_a(I18n.format("record.nowPlaying", p_73833_1_), true);
+        this.setRecordPlaying(I18n.format("record.nowPlaying", p_73833_1_), true);
     }
 
-    public void func_110326_a(String p_110326_1_, boolean p_110326_2_)
+    public void setRecordPlaying(String p_110326_1_, boolean p_110326_2_)
     {
         this.recordPlaying = p_110326_1_;
         this.recordPlayingUpFor = 60;

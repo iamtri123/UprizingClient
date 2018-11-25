@@ -49,14 +49,14 @@ public class DestroyBlockProgress
      * inserts damage value into this partially destroyed Block. -1 causes client renderer to delete it, otherwise
      * ranges from 1 to 10
      */
-    public void setPartialBlockDamage(int p_73107_1_)
+    public void setPartialBlockDamage(int damage)
     {
-        if (p_73107_1_ > 10)
+        if (damage > 10)
         {
-            p_73107_1_ = 10;
+            damage = 10;
         }
 
-        this.partialBlockProgress = p_73107_1_;
+        this.partialBlockProgress = damage;
     }
 
     public int getPartialBlockDamage()

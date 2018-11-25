@@ -83,7 +83,7 @@ public class EntitySilverfish extends EntityMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -91,12 +91,12 @@ public class EntitySilverfish extends EntityMob
         }
         else
         {
-            if (this.allySummonCooldown <= 0 && (p_70097_1_ instanceof EntityDamageSource || p_70097_1_ == DamageSource.magic))
+            if (this.allySummonCooldown <= 0 && (source instanceof EntityDamageSource || source == DamageSource.magic))
             {
                 this.allySummonCooldown = 20;
             }
 
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 
@@ -112,12 +112,12 @@ public class EntitySilverfish extends EntityMob
         }
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.silverfish.step", 0.15F, 1.0F);
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Item.getItemById(0);
     }
@@ -169,7 +169,7 @@ public class EntitySilverfish extends EntityMob
                                     }
                                     else
                                     {
-                                        this.worldObj.func_147480_a(var1 + var6, var2 + var5, var3 + var7, false);
+                                        this.worldObj.breakBlock(var1 + var6, var2 + var5, var3 + var7, false);
                                     }
 
                                     Blocks.monster_egg.onBlockDestroyedByPlayer(this.worldObj, var1 + var6, var2 + var5, var3 + var7, 0);

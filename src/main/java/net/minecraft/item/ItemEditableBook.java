@@ -19,18 +19,18 @@ public class ItemEditableBook extends Item
 
     public static boolean validBookTagContents(NBTTagCompound p_77828_0_)
     {
-        if (!ItemWritableBook.func_150930_a(p_77828_0_))
+        if (!ItemWritableBook.validBookPageTagContents(p_77828_0_))
         {
             return false;
         }
-        else if (!p_77828_0_.func_150297_b("title", 8))
+        else if (!p_77828_0_.hasKey("title", 8))
         {
             return false;
         }
         else
         {
             String var1 = p_77828_0_.getString("title");
-            return (var1 != null && var1.length() <= 16) && p_77828_0_.func_150297_b("author", 8);
+            return (var1 != null && var1.length() <= 16) && p_77828_0_.hasKey("author", 8);
         }
     }
 
@@ -70,10 +70,10 @@ public class ItemEditableBook extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        p_77659_3_.displayGUIBook(p_77659_1_);
-        return p_77659_1_;
+        player.displayGUIBook(itemStackIn);
+        return itemStackIn;
     }
 
     /**

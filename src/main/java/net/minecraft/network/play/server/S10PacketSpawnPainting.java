@@ -32,32 +32,32 @@ public class S10PacketSpawnPainting extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148973_a = p_148837_1_.readVarIntFromBuffer();
-        this.field_148968_f = p_148837_1_.readStringFromBuffer(EntityPainting.EnumArt.maxArtTitleLength);
-        this.field_148971_b = p_148837_1_.readInt();
-        this.field_148972_c = p_148837_1_.readInt();
-        this.field_148969_d = p_148837_1_.readInt();
-        this.field_148970_e = p_148837_1_.readInt();
+        this.field_148973_a = data.readVarIntFromBuffer();
+        this.field_148968_f = data.readStringFromBuffer(EntityPainting.EnumArt.maxArtTitleLength);
+        this.field_148971_b = data.readInt();
+        this.field_148972_c = data.readInt();
+        this.field_148969_d = data.readInt();
+        this.field_148970_e = data.readInt();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeVarIntToBuffer(this.field_148973_a);
-        p_148840_1_.writeStringToBuffer(this.field_148968_f);
-        p_148840_1_.writeInt(this.field_148971_b);
-        p_148840_1_.writeInt(this.field_148972_c);
-        p_148840_1_.writeInt(this.field_148969_d);
-        p_148840_1_.writeInt(this.field_148970_e);
+        data.writeVarIntToBuffer(this.field_148973_a);
+        data.writeStringToBuffer(this.field_148968_f);
+        data.writeInt(this.field_148971_b);
+        data.writeInt(this.field_148972_c);
+        data.writeInt(this.field_148969_d);
+        data.writeInt(this.field_148970_e);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleSpawnPainting(this);
+        handler.handleSpawnPainting(this);
     }
 
     /**
@@ -98,8 +98,8 @@ public class S10PacketSpawnPainting extends Packet
         return this.field_148968_f;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

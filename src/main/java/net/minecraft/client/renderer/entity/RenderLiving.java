@@ -17,9 +17,9 @@ public abstract class RenderLiving extends RendererLivingEntity
         super(p_i1262_1_, p_i1262_2_);
     }
 
-    protected boolean func_110813_b(EntityLiving p_110813_1_)
+    protected boolean canRenderName(EntityLiving targetEntity)
     {
-        return super.func_110813_b(p_110813_1_) && (p_110813_1_.getAlwaysRenderNameTagForRender() || p_110813_1_.hasCustomNameTag() && p_110813_1_ == this.renderManager.field_147941_i);
+        return super.canRenderName(targetEntity) && (targetEntity.getAlwaysRenderNameTagForRender() || targetEntity.hasCustomNameTag() && targetEntity == this.renderManager.field_147941_i);
     }
 
     /**
@@ -126,9 +126,9 @@ public abstract class RenderLiving extends RendererLivingEntity
         }
     }
 
-    protected boolean func_110813_b(EntityLivingBase p_110813_1_)
+    protected boolean canRenderName(EntityLivingBase targetEntity)
     {
-        return this.func_110813_b((EntityLiving)p_110813_1_);
+        return this.canRenderName((EntityLiving)targetEntity);
     }
 
     /**

@@ -29,22 +29,22 @@ public class S14PacketEntity extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149074_a = p_148837_1_.readInt();
+        this.field_149074_a = data.readInt();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149074_a);
+        data.writeInt(this.field_149074_a);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleEntityMovement(this);
+        handler.handleEntityMovement(this);
     }
 
     /**
@@ -95,9 +95,9 @@ public class S14PacketEntity extends Packet
         return this.field_149069_g;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 
     public static class S15PacketEntityRelMove extends S14PacketEntity
@@ -114,20 +114,20 @@ public class S14PacketEntity extends Packet
             this.field_149070_d = p_i45203_4_;
         }
 
-        public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+        public void readPacketData(PacketBuffer data) throws IOException
         {
-            super.readPacketData(p_148837_1_);
-            this.field_149072_b = p_148837_1_.readByte();
-            this.field_149073_c = p_148837_1_.readByte();
-            this.field_149070_d = p_148837_1_.readByte();
+            super.readPacketData(data);
+            this.field_149072_b = data.readByte();
+            this.field_149073_c = data.readByte();
+            this.field_149070_d = data.readByte();
         }
 
-        public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+        public void writePacketData(PacketBuffer data) throws IOException
         {
-            super.writePacketData(p_148840_1_);
-            p_148840_1_.writeByte(this.field_149072_b);
-            p_148840_1_.writeByte(this.field_149073_c);
-            p_148840_1_.writeByte(this.field_149070_d);
+            super.writePacketData(data);
+            data.writeByte(this.field_149072_b);
+            data.writeByte(this.field_149073_c);
+            data.writeByte(this.field_149070_d);
         }
 
         public String serialize()
@@ -135,9 +135,9 @@ public class S14PacketEntity extends Packet
             return super.serialize() + String.format(", xa=%d, ya=%d, za=%d", Byte.valueOf(this.field_149072_b), Byte.valueOf(this.field_149073_c), Byte.valueOf(this.field_149070_d));
         }
 
-        public void processPacket(INetHandler p_148833_1_)
+        public void processPacket(INetHandler handler)
         {
-            super.processPacket((INetHandlerPlayClient)p_148833_1_);
+            super.processPacket((INetHandlerPlayClient)handler);
         }
     }
 
@@ -158,18 +158,18 @@ public class S14PacketEntity extends Packet
             this.field_149069_g = true;
         }
 
-        public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+        public void readPacketData(PacketBuffer data) throws IOException
         {
-            super.readPacketData(p_148837_1_);
-            this.field_149071_e = p_148837_1_.readByte();
-            this.field_149068_f = p_148837_1_.readByte();
+            super.readPacketData(data);
+            this.field_149071_e = data.readByte();
+            this.field_149068_f = data.readByte();
         }
 
-        public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+        public void writePacketData(PacketBuffer data) throws IOException
         {
-            super.writePacketData(p_148840_1_);
-            p_148840_1_.writeByte(this.field_149071_e);
-            p_148840_1_.writeByte(this.field_149068_f);
+            super.writePacketData(data);
+            data.writeByte(this.field_149071_e);
+            data.writeByte(this.field_149068_f);
         }
 
         public String serialize()
@@ -177,9 +177,9 @@ public class S14PacketEntity extends Packet
             return super.serialize() + String.format(", yRot=%d, xRot=%d", Byte.valueOf(this.field_149071_e), Byte.valueOf(this.field_149068_f));
         }
 
-        public void processPacket(INetHandler p_148833_1_)
+        public void processPacket(INetHandler handler)
         {
-            super.processPacket((INetHandlerPlayClient)p_148833_1_);
+            super.processPacket((INetHandlerPlayClient)handler);
         }
     }
 
@@ -203,24 +203,24 @@ public class S14PacketEntity extends Packet
             this.field_149069_g = true;
         }
 
-        public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+        public void readPacketData(PacketBuffer data) throws IOException
         {
-            super.readPacketData(p_148837_1_);
-            this.field_149072_b = p_148837_1_.readByte();
-            this.field_149073_c = p_148837_1_.readByte();
-            this.field_149070_d = p_148837_1_.readByte();
-            this.field_149071_e = p_148837_1_.readByte();
-            this.field_149068_f = p_148837_1_.readByte();
+            super.readPacketData(data);
+            this.field_149072_b = data.readByte();
+            this.field_149073_c = data.readByte();
+            this.field_149070_d = data.readByte();
+            this.field_149071_e = data.readByte();
+            this.field_149068_f = data.readByte();
         }
 
-        public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+        public void writePacketData(PacketBuffer data) throws IOException
         {
-            super.writePacketData(p_148840_1_);
-            p_148840_1_.writeByte(this.field_149072_b);
-            p_148840_1_.writeByte(this.field_149073_c);
-            p_148840_1_.writeByte(this.field_149070_d);
-            p_148840_1_.writeByte(this.field_149071_e);
-            p_148840_1_.writeByte(this.field_149068_f);
+            super.writePacketData(data);
+            data.writeByte(this.field_149072_b);
+            data.writeByte(this.field_149073_c);
+            data.writeByte(this.field_149070_d);
+            data.writeByte(this.field_149071_e);
+            data.writeByte(this.field_149068_f);
         }
 
         public String serialize()
@@ -228,9 +228,9 @@ public class S14PacketEntity extends Packet
             return super.serialize() + String.format(", xa=%d, ya=%d, za=%d, yRot=%d, xRot=%d", Byte.valueOf(this.field_149072_b), Byte.valueOf(this.field_149073_c), Byte.valueOf(this.field_149070_d), Byte.valueOf(this.field_149071_e), Byte.valueOf(this.field_149068_f));
         }
 
-        public void processPacket(INetHandler p_148833_1_)
+        public void processPacket(INetHandler handler)
         {
-            super.processPacket((INetHandlerPlayClient)p_148833_1_);
+            super.processPacket((INetHandlerPlayClient)handler);
         }
     }
 }

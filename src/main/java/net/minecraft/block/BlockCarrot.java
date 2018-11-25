@@ -13,16 +13,16 @@ public class BlockCarrot extends BlockCrops
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (p_149691_2_ < 7)
+        if (meta < 7)
         {
-            if (p_149691_2_ == 6)
+            if (meta == 6)
             {
-                p_149691_2_ = 5;
+                meta = 5;
             }
 
-            return this.field_149868_a[p_149691_2_ >> 1];
+            return this.field_149868_a[meta >> 1];
         }
         else
         {
@@ -30,23 +30,23 @@ public class BlockCarrot extends BlockCrops
         }
     }
 
-    protected Item func_149866_i()
+    protected Item getSeed()
     {
         return Items.carrot;
     }
 
-    protected Item func_149865_P()
+    protected Item getCrop()
     {
         return Items.carrot;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_149868_a = new IIcon[4];
 
         for (int var2 = 0; var2 < this.field_149868_a.length; ++var2)
         {
-            this.field_149868_a[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_stage_" + var2);
+            this.field_149868_a[var2] = reg.registerIcon(this.getTextureName() + "_stage_" + var2);
         }
     }
 }

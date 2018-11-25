@@ -37,7 +37,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget
             else
             {
                 this.theOwnerAttacker = var1.getAITarget();
-                int var2 = var1.func_142015_aE();
+                int var2 = var1.getRevengeTimer();
                 return var2 != this.field_142051_e && this.isSuitableTarget(this.theOwnerAttacker, false) && this.theDefendingTameable.func_142018_a(this.theOwnerAttacker, var1);
             }
         }
@@ -53,7 +53,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget
 
         if (var1 != null)
         {
-            this.field_142051_e = var1.func_142015_aE();
+            this.field_142051_e = var1.getRevengeTimer();
         }
 
         super.startExecuting();

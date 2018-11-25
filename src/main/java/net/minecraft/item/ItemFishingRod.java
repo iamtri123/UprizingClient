@@ -39,33 +39,33 @@ public class ItemFishingRod extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        if (p_77659_3_.fishEntity != null)
+        if (player.fishEntity != null)
         {
-            int var4 = p_77659_3_.fishEntity.func_146034_e();
-            p_77659_1_.damageItem(var4, p_77659_3_);
-            p_77659_3_.swingItem();
+            int var4 = player.fishEntity.handleHookRetraction();
+            itemStackIn.damageItem(var4, player);
+            player.swingItem();
         }
         else
         {
-            p_77659_2_.playSoundAtEntity(p_77659_3_, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+            worldIn.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-            if (!p_77659_2_.isClient)
+            if (!worldIn.isClient)
             {
-                p_77659_2_.spawnEntityInWorld(new EntityFishHook(p_77659_2_, p_77659_3_));
+                worldIn.spawnEntityInWorld(new EntityFishHook(worldIn, player));
             }
 
-            p_77659_3_.swingItem();
+            player.swingItem();
         }
 
-        return p_77659_1_;
+        return itemStackIn;
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        this.itemIcon = p_94581_1_.registerIcon(this.getIconString() + "_uncast");
-        this.theIcon = p_94581_1_.registerIcon(this.getIconString() + "_cast");
+        this.itemIcon = register.registerIcon(this.getIconString() + "_uncast");
+        this.theIcon = register.registerIcon(this.getIconString() + "_cast");
     }
 
     public IIcon func_94597_g()

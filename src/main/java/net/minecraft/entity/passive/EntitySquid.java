@@ -83,7 +83,7 @@ public class EntitySquid extends EntityWaterMob
         return 0.4F;
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Item.getItemById(0);
     }

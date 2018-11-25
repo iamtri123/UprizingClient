@@ -15,14 +15,14 @@ public class BlockHay extends BlockRotatedPillar
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    protected IIcon func_150163_b(int p_150163_1_)
+    protected IIcon getSideIcon(int p_150163_1_)
     {
         return this.blockIcon;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.field_150164_N = p_149651_1_.registerIcon(this.getTextureName() + "_top");
-        this.blockIcon = p_149651_1_.registerIcon(this.getTextureName() + "_side");
+        this.field_150164_N = reg.registerIcon(this.getTextureName() + "_top");
+        this.blockIcon = reg.registerIcon(this.getTextureName() + "_side");
     }
 }

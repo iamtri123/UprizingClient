@@ -43,11 +43,11 @@ public abstract class StructureComponent
         var1.setTag("BB", this.boundingBox.func_151535_h());
         var1.setInteger("O", this.coordBaseMode);
         var1.setInteger("GD", this.componentType);
-        this.func_143012_a(var1);
+        this.writeStructureToNBT(var1);
         return var1;
     }
 
-    protected abstract void func_143012_a(NBTTagCompound p_143012_1_);
+    protected abstract void writeStructureToNBT(NBTTagCompound p_143012_1_);
 
     public void func_143009_a(World p_143009_1_, NBTTagCompound p_143009_2_)
     {
@@ -58,10 +58,10 @@ public abstract class StructureComponent
 
         this.coordBaseMode = p_143009_2_.getInteger("O");
         this.componentType = p_143009_2_.getInteger("GD");
-        this.func_143011_b(p_143009_2_);
+        this.readStructureFromNBT(p_143009_2_);
     }
 
-    protected abstract void func_143011_b(NBTTagCompound p_143011_1_);
+    protected abstract void readStructureFromNBT(NBTTagCompound p_143011_1_);
 
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
@@ -222,7 +222,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected int func_151555_a(Block p_151555_1_, int p_151555_2_)
+    protected int getMetadataWithOffset(Block p_151555_1_, int p_151555_2_)
     {
         if (p_151555_1_ == Blocks.rail)
         {
@@ -552,7 +552,7 @@ public abstract class StructureComponent
         return p_151555_2_;
     }
 
-    protected void func_151550_a(World p_151550_1_, Block p_151550_2_, int p_151550_3_, int p_151550_4_, int p_151550_5_, int p_151550_6_, StructureBoundingBox p_151550_7_)
+    protected void placeBlockAtCurrentPosition(World p_151550_1_, Block p_151550_2_, int p_151550_3_, int p_151550_4_, int p_151550_5_, int p_151550_6_, StructureBoundingBox p_151550_7_)
     {
         int var8 = this.getXWithOffset(p_151550_4_, p_151550_6_);
         int var9 = this.getYWithOffset(p_151550_5_);
@@ -564,7 +564,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected Block func_151548_a(World p_151548_1_, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_)
+    protected Block getBlockAtCurrentPosition(World p_151548_1_, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_)
     {
         int var6 = this.getXWithOffset(p_151548_2_, p_151548_4_);
         int var7 = this.getYWithOffset(p_151548_3_);
@@ -584,13 +584,13 @@ public abstract class StructureComponent
             {
                 for (int var11 = p_74878_5_; var11 <= p_74878_8_; ++var11)
                 {
-                    this.func_151550_a(p_74878_1_, Blocks.air, 0, var10, var9, var11, p_74878_2_);
+                    this.placeBlockAtCurrentPosition(p_74878_1_, Blocks.air, 0, var10, var9, var11, p_74878_2_);
                 }
             }
         }
     }
 
-    protected void func_151549_a(World p_151549_1_, StructureBoundingBox p_151549_2_, int p_151549_3_, int p_151549_4_, int p_151549_5_, int p_151549_6_, int p_151549_7_, int p_151549_8_, Block p_151549_9_, Block p_151549_10_, boolean p_151549_11_)
+    protected void fillWithBlocks(World p_151549_1_, StructureBoundingBox p_151549_2_, int p_151549_3_, int p_151549_4_, int p_151549_5_, int p_151549_6_, int p_151549_7_, int p_151549_8_, Block p_151549_9_, Block p_151549_10_, boolean p_151549_11_)
     {
         for (int var12 = p_151549_4_; var12 <= p_151549_7_; ++var12)
         {
@@ -598,15 +598,15 @@ public abstract class StructureComponent
             {
                 for (int var14 = p_151549_5_; var14 <= p_151549_8_; ++var14)
                 {
-                    if (!p_151549_11_ || this.func_151548_a(p_151549_1_, var13, var12, var14, p_151549_2_).getMaterial() != Material.air)
+                    if (!p_151549_11_ || this.getBlockAtCurrentPosition(p_151549_1_, var13, var12, var14, p_151549_2_).getMaterial() != Material.air)
                     {
                         if (var12 != p_151549_4_ && var12 != p_151549_7_ && var13 != p_151549_3_ && var13 != p_151549_6_ && var14 != p_151549_5_ && var14 != p_151549_8_)
                         {
-                            this.func_151550_a(p_151549_1_, p_151549_10_, 0, var13, var12, var14, p_151549_2_);
+                            this.placeBlockAtCurrentPosition(p_151549_1_, p_151549_10_, 0, var13, var12, var14, p_151549_2_);
                         }
                         else
                         {
-                            this.func_151550_a(p_151549_1_, p_151549_9_, 0, var13, var12, var14, p_151549_2_);
+                            this.placeBlockAtCurrentPosition(p_151549_1_, p_151549_9_, 0, var13, var12, var14, p_151549_2_);
                         }
                     }
                 }
@@ -614,7 +614,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void func_151556_a(World p_151556_1_, StructureBoundingBox p_151556_2_, int p_151556_3_, int p_151556_4_, int p_151556_5_, int p_151556_6_, int p_151556_7_, int p_151556_8_, Block p_151556_9_, int p_151556_10_, Block p_151556_11_, int p_151556_12_, boolean p_151556_13_)
+    protected void fillWithMetadataBlocks(World p_151556_1_, StructureBoundingBox p_151556_2_, int p_151556_3_, int p_151556_4_, int p_151556_5_, int p_151556_6_, int p_151556_7_, int p_151556_8_, Block p_151556_9_, int p_151556_10_, Block p_151556_11_, int p_151556_12_, boolean p_151556_13_)
     {
         for (int var14 = p_151556_4_; var14 <= p_151556_7_; ++var14)
         {
@@ -622,15 +622,15 @@ public abstract class StructureComponent
             {
                 for (int var16 = p_151556_5_; var16 <= p_151556_8_; ++var16)
                 {
-                    if (!p_151556_13_ || this.func_151548_a(p_151556_1_, var15, var14, var16, p_151556_2_).getMaterial() != Material.air)
+                    if (!p_151556_13_ || this.getBlockAtCurrentPosition(p_151556_1_, var15, var14, var16, p_151556_2_).getMaterial() != Material.air)
                     {
                         if (var14 != p_151556_4_ && var14 != p_151556_7_ && var15 != p_151556_3_ && var15 != p_151556_6_ && var16 != p_151556_5_ && var16 != p_151556_8_)
                         {
-                            this.func_151550_a(p_151556_1_, p_151556_11_, p_151556_12_, var15, var14, var16, p_151556_2_);
+                            this.placeBlockAtCurrentPosition(p_151556_1_, p_151556_11_, p_151556_12_, var15, var14, var16, p_151556_2_);
                         }
                         else
                         {
-                            this.func_151550_a(p_151556_1_, p_151556_9_, p_151556_10_, var15, var14, var16, p_151556_2_);
+                            this.placeBlockAtCurrentPosition(p_151556_1_, p_151556_9_, p_151556_10_, var15, var14, var16, p_151556_2_);
                         }
                     }
                 }
@@ -650,17 +650,17 @@ public abstract class StructureComponent
             {
                 for (int var14 = p_74882_5_; var14 <= p_74882_8_; ++var14)
                 {
-                    if (!p_74882_9_ || this.func_151548_a(p_74882_1_, var13, var12, var14, p_74882_2_).getMaterial() != Material.air)
+                    if (!p_74882_9_ || this.getBlockAtCurrentPosition(p_74882_1_, var13, var12, var14, p_74882_2_).getMaterial() != Material.air)
                     {
                         p_74882_11_.selectBlocks(p_74882_10_, var13, var12, var14, var12 == p_74882_4_ || var12 == p_74882_7_ || var13 == p_74882_3_ || var13 == p_74882_6_ || var14 == p_74882_5_ || var14 == p_74882_8_);
-                        this.func_151550_a(p_74882_1_, p_74882_11_.func_151561_a(), p_74882_11_.getSelectedBlockMetaData(), var13, var12, var14, p_74882_2_);
+                        this.placeBlockAtCurrentPosition(p_74882_1_, p_74882_11_.func_151561_a(), p_74882_11_.getSelectedBlockMetaData(), var13, var12, var14, p_74882_2_);
                     }
                 }
             }
         }
     }
 
-    protected void func_151551_a(World p_151551_1_, StructureBoundingBox p_151551_2_, Random p_151551_3_, float p_151551_4_, int p_151551_5_, int p_151551_6_, int p_151551_7_, int p_151551_8_, int p_151551_9_, int p_151551_10_, Block p_151551_11_, Block p_151551_12_, boolean p_151551_13_)
+    protected void randomlyFillWithBlocks(World p_151551_1_, StructureBoundingBox p_151551_2_, Random p_151551_3_, float p_151551_4_, int p_151551_5_, int p_151551_6_, int p_151551_7_, int p_151551_8_, int p_151551_9_, int p_151551_10_, Block p_151551_11_, Block p_151551_12_, boolean p_151551_13_)
     {
         for (int var14 = p_151551_6_; var14 <= p_151551_9_; ++var14)
         {
@@ -668,15 +668,15 @@ public abstract class StructureComponent
             {
                 for (int var16 = p_151551_7_; var16 <= p_151551_10_; ++var16)
                 {
-                    if (p_151551_3_.nextFloat() <= p_151551_4_ && (!p_151551_13_ || this.func_151548_a(p_151551_1_, var15, var14, var16, p_151551_2_).getMaterial() != Material.air))
+                    if (p_151551_3_.nextFloat() <= p_151551_4_ && (!p_151551_13_ || this.getBlockAtCurrentPosition(p_151551_1_, var15, var14, var16, p_151551_2_).getMaterial() != Material.air))
                     {
                         if (var14 != p_151551_6_ && var14 != p_151551_9_ && var15 != p_151551_5_ && var15 != p_151551_8_ && var16 != p_151551_7_ && var16 != p_151551_10_)
                         {
-                            this.func_151550_a(p_151551_1_, p_151551_12_, 0, var15, var14, var16, p_151551_2_);
+                            this.placeBlockAtCurrentPosition(p_151551_1_, p_151551_12_, 0, var15, var14, var16, p_151551_2_);
                         }
                         else
                         {
-                            this.func_151550_a(p_151551_1_, p_151551_11_, 0, var15, var14, var16, p_151551_2_);
+                            this.placeBlockAtCurrentPosition(p_151551_1_, p_151551_11_, 0, var15, var14, var16, p_151551_2_);
                         }
                     }
                 }
@@ -688,7 +688,7 @@ public abstract class StructureComponent
     {
         if (p_151552_3_.nextFloat() < p_151552_4_)
         {
-            this.func_151550_a(p_151552_1_, p_151552_8_, p_151552_9_, p_151552_5_, p_151552_6_, p_151552_7_, p_151552_2_);
+            this.placeBlockAtCurrentPosition(p_151552_1_, p_151552_8_, p_151552_9_, p_151552_5_, p_151552_6_, p_151552_7_, p_151552_2_);
         }
     }
 
@@ -712,13 +712,13 @@ public abstract class StructureComponent
                 {
                     float var21 = ((float)var20 - var15) / (var13 * 0.5F);
 
-                    if (!p_151547_10_ || this.func_151548_a(p_151547_1_, var18, var16, var20, p_151547_2_).getMaterial() != Material.air)
+                    if (!p_151547_10_ || this.getBlockAtCurrentPosition(p_151547_1_, var18, var16, var20, p_151547_2_).getMaterial() != Material.air)
                     {
                         float var22 = var19 * var19 + var17 * var17 + var21 * var21;
 
                         if (var22 <= 1.05F)
                         {
-                            this.func_151550_a(p_151547_1_, p_151547_9_, 0, var18, var16, var20, p_151547_2_);
+                            this.placeBlockAtCurrentPosition(p_151547_1_, p_151547_9_, 0, var18, var16, var20, p_151547_2_);
                         }
                     }
                 }
@@ -799,12 +799,12 @@ public abstract class StructureComponent
 
         if (p_74869_2_.isVecInside(var10, var11, var12) && p_74869_1_.getBlock(var10, var11, var12) != Blocks.dispenser)
         {
-            p_74869_1_.setBlock(var10, var11, var12, Blocks.dispenser, this.func_151555_a(Blocks.dispenser, p_74869_7_), 2);
+            p_74869_1_.setBlock(var10, var11, var12, Blocks.dispenser, this.getMetadataWithOffset(Blocks.dispenser, p_74869_7_), 2);
             TileEntityDispenser var13 = (TileEntityDispenser)p_74869_1_.getTileEntity(var10, var11, var12);
 
             if (var13 != null)
             {
-                WeightedRandomChestContent.func_150706_a(p_74869_3_, p_74869_8_, var13, p_74869_9_);
+                WeightedRandomChestContent.generateDispenserContents(p_74869_3_, p_74869_8_, var13, p_74869_9_);
             }
 
             return true;
@@ -823,7 +823,7 @@ public abstract class StructureComponent
 
         if (p_74881_2_.isVecInside(var8, var9, var10))
         {
-            ItemDoor.func_150924_a(p_74881_1_, var8, var9, var10, p_74881_7_, Blocks.wooden_door);
+            ItemDoor.placeDoorBlock(p_74881_1_, var8, var9, var10, p_74881_7_, Blocks.wooden_door);
         }
     }
 

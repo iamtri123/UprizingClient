@@ -23,11 +23,11 @@ public class KeyBinding implements Comparable
     private int presses;
     private static final String __OBFID = "CL_00000628";
 
-    public static void onTick(int p_74507_0_)
+    public static void onTick(int keyCode)
     {
-        if (p_74507_0_ != 0)
+        if (keyCode != 0)
         {
-            KeyBinding var1 = (KeyBinding)hash.lookup(p_74507_0_);
+            KeyBinding var1 = (KeyBinding)hash.lookup(keyCode);
 
             if (var1 != null)
             {
@@ -36,15 +36,15 @@ public class KeyBinding implements Comparable
         }
     }
 
-    public static void setKeyBindState(int p_74510_0_, boolean p_74510_1_)
+    public static void setKeyBindState(int keyCode, boolean pressed)
     {
-        if (p_74510_0_ != 0)
+        if (keyCode != 0)
         {
-            KeyBinding var2 = (KeyBinding)hash.lookup(p_74510_0_);
+            KeyBinding var2 = (KeyBinding)hash.lookup(keyCode);
 
             if (var2 != null)
             {
-                var2.pressed = p_74510_1_;
+                var2.pressed = pressed;
             }
         }
     }
@@ -72,20 +72,20 @@ public class KeyBinding implements Comparable
         }
     }
 
-    public static Set func_151467_c()
+    public static Set getKeybinds()
     {
         return keybindSet;
     }
 
-    public KeyBinding(String p_i45001_1_, int p_i45001_2_, String p_i45001_3_)
+    public KeyBinding(String description, int keyCode, String category)
     {
-        this.keyDescription = p_i45001_1_;
-        this.keyCode = p_i45001_2_;
-        this.keyCodeDefault = p_i45001_2_;
-        this.keyCategory = p_i45001_3_;
+        this.keyDescription = description;
+        this.keyCode = keyCode;
+        this.keyCodeDefault = keyCode;
+        this.keyCategory = category;
         keybindArray.add(this);
-        hash.addKey(p_i45001_2_, this);
-        keybindSet.add(p_i45001_3_);
+        hash.addKey(keyCode, this);
+        keybindSet.add(category);
     }
 
     public boolean getIsKeyPressed()
@@ -132,9 +132,9 @@ public class KeyBinding implements Comparable
         return this.keyCode;
     }
 
-    public void setKeyCode(int p_151462_1_)
+    public void setKeyCode(int keyCode)
     {
-        this.keyCode = p_151462_1_;
+        this.keyCode = keyCode;
     }
 
     public int compareTo(KeyBinding p_compareTo_1_)

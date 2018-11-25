@@ -16,13 +16,13 @@ public class GuiMemoryErrorScreen extends GuiScreen
         this.buttonList.add(new GuiOptionButton(1, this.width / 2 - 155 + 160, this.height / 4 + 120 + 12, I18n.format("menu.quit")));
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.id == 0)
+        if (button.id == 0)
         {
             this.mc.displayGuiScreen(new GuiMainMenu());
         }
-        else if (p_146284_1_.id == 1)
+        else if (button.id == 1)
         {
             this.mc.shutdown();
         }
@@ -31,7 +31,7 @@ public class GuiMemoryErrorScreen extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_) {}
+    protected void keyTyped(char typedChar, int keyCode) {}
 
     /**
      * Draws the screen and all the components in it.

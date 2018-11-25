@@ -42,17 +42,17 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
         this.field_147395_c = p_i45059_3_;
     }
 
-    public void handleEncryptionRequest(S01PacketEncryptionRequest p_147389_1_)
+    public void handleEncryptionRequest(S01PacketEncryptionRequest packetIn)
     {
         final SecretKey var2 = CryptManager.createNewSharedKey();
-        String var3 = p_147389_1_.func_149609_c();
-        PublicKey var4 = p_147389_1_.func_149608_d();
+        String var3 = packetIn.func_149609_c();
+        PublicKey var4 = packetIn.func_149608_d();
         String var5 = (new BigInteger(CryptManager.getServerIdHash(var3, var4, var2))).toString(16);
-        boolean var6 = this.field_147394_b.func_147104_D() == null || !this.field_147394_b.func_147104_D().func_152585_d();
+        boolean var6 = this.field_147394_b.getCurrentServerData() == null || !this.field_147394_b.getCurrentServerData().isLanServer();
 
         try
         {
-            this.func_147391_c().joinServer(this.field_147394_b.getSession().func_148256_e(), this.field_147394_b.getSession().getToken(), var5);
+            this.func_147391_c().joinServer(this.field_147394_b.getSession().getProfile(), this.field_147394_b.getSession().getToken(), var5);
         }
         catch (AuthenticationUnavailableException var8)
         {
@@ -79,7 +79,7 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
             }
         }
 
-        this.field_147393_d.scheduleOutboundPacket(new C01PacketEncryptionResponse(var2, var4, p_147389_1_.func_149607_e()), new GenericFutureListener()
+        this.field_147393_d.scheduleOutboundPacket(new C01PacketEncryptionResponse(var2, var4, packetIn.func_149607_e()), new GenericFutureListener()
             {
                 private static final String __OBFID = "CL_00000877";
                 public void operationComplete(Future p_operationComplete_1_)
@@ -94,7 +94,7 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
         return (new YggdrasilAuthenticationService(this.field_147394_b.getProxy(), UUID.randomUUID().toString())).createMinecraftSessionService();
     }
 
-    public void handleLoginSuccess(S02PacketLoginSuccess p_147390_1_)
+    public void handleLoginSuccess(S02PacketLoginSuccess packetIn)
     {
         this.field_147393_d.setConnectionState(EnumConnectionState.PLAY);
     }
@@ -102,20 +102,20 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
     /**
      * Invoked when disconnecting, the parameter is a ChatComponent describing the reason for termination
      */
-    public void onDisconnect(IChatComponent p_147231_1_)
+    public void onDisconnect(IChatComponent reason)
     {
-        this.field_147394_b.displayGuiScreen(new GuiDisconnected(this.field_147395_c, "connect.failed", p_147231_1_));
+        this.field_147394_b.displayGuiScreen(new GuiDisconnected(this.field_147395_c, "connect.failed", reason));
     }
 
     /**
      * Allows validation of the connection state transition. Parameters: from, to (connection state). Typically throws
      * IllegalStateException or UnsupportedOperationException if validation fails
      */
-    public void onConnectionStateTransition(EnumConnectionState p_147232_1_, EnumConnectionState p_147232_2_)
+    public void onConnectionStateTransition(EnumConnectionState oldState, EnumConnectionState newState)
     {
-        logger.debug("Switching protocol from " + p_147232_1_ + " to " + p_147232_2_);
+        logger.debug("Switching protocol from " + oldState + " to " + newState);
 
-        if (p_147232_2_ == EnumConnectionState.PLAY)
+        if (newState == EnumConnectionState.PLAY)
         {
             this.field_147393_d.setNetHandler(new NetHandlerPlayClient(this.field_147394_b, this.field_147395_c, this.field_147393_d));
         }
@@ -127,8 +127,8 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
      */
     public void onNetworkTick() {}
 
-    public void handleDisconnect(S00PacketDisconnect p_147388_1_)
+    public void handleDisconnect(S00PacketDisconnect packetIn)
     {
-        this.field_147393_d.closeChannel(p_147388_1_.func_149603_c());
+        this.field_147393_d.closeChannel(packetIn.func_149603_c());
     }
 }

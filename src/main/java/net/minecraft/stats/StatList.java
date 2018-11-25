@@ -79,7 +79,7 @@ public class StatList
 
     /** the number of mobs you have killed */
     public static StatBase mobKillsStat = (new StatBasic("stat.mobKills", new ChatComponentTranslation("stat.mobKills"))).registerStat();
-    public static StatBase field_151186_x = (new StatBasic("stat.animalsBred", new ChatComponentTranslation("stat.animalsBred"))).registerStat();
+    public static StatBase animalsBredStat = (new StatBasic("stat.animalsBred", new ChatComponentTranslation("stat.animalsBred"))).registerStat();
 
     /** counts the number of times you've killed a player */
     public static StatBase playerKillsStat = (new StatBasic("stat.playerKills", new ChatComponentTranslation("stat.playerKills"))).registerStat();
@@ -270,7 +270,7 @@ public class StatList
         return var1 == null ? null : (new StatBase("stat.entityKilledBy." + var1, new ChatComponentTranslation("stat.entityKilledBy", new ChatComponentTranslation("entity." + var1 + ".name")))).registerStat();
     }
 
-    public static StatBase func_151177_a(String p_151177_0_)
+    public static StatBase getOneShotStat(String p_151177_0_)
     {
         return (StatBase)oneShotStats.get(p_151177_0_);
     }

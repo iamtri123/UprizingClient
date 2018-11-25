@@ -25,7 +25,7 @@ public class BlockRailDetector extends BlockRailBase
         this.setTickRandomly(true);
     }
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
         return 20;
     }
@@ -38,15 +38,15 @@ public class BlockRailDetector extends BlockRailBase
         return true;
     }
 
-    public void onEntityCollidedWithBlock(World p_149670_1_, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity p_149670_5_)
+    public void onEntityCollidedWithBlock(World worldIn, int x, int y, int z, Entity entityIn)
     {
-        if (!p_149670_1_.isClient)
+        if (!worldIn.isClient)
         {
-            int var6 = p_149670_1_.getBlockMetadata(p_149670_2_, p_149670_3_, p_149670_4_);
+            int var6 = worldIn.getBlockMetadata(x, y, z);
 
             if ((var6 & 8) == 0)
             {
-                this.func_150054_a(p_149670_1_, p_149670_2_, p_149670_3_, p_149670_4_, var6);
+                this.func_150054_a(worldIn, x, y, z, var6);
             }
         }
     }
@@ -54,27 +54,27 @@ public class BlockRailDetector extends BlockRailBase
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!p_149674_1_.isClient)
+        if (!worldIn.isClient)
         {
-            int var6 = p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_);
+            int var6 = worldIn.getBlockMetadata(x, y, z);
 
             if ((var6 & 8) != 0)
             {
-                this.func_150054_a(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, var6);
+                this.func_150054_a(worldIn, x, y, z, var6);
             }
         }
     }
 
-    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
+    public int isProvidingWeakPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return (p_149709_1_.getBlockMetadata(p_149709_2_, p_149709_3_, p_149709_4_) & 8) != 0 ? 15 : 0;
+        return (worldIn.getBlockMetadata(x, y, z) & 8) != 0 ? 15 : 0;
     }
 
-    public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_)
+    public int isProvidingStrongPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return (p_149748_1_.getBlockMetadata(p_149748_2_, p_149748_3_, p_149748_4_) & 8) == 0 ? 0 : (p_149748_5_ == 1 ? 15 : 0);
+        return (worldIn.getBlockMetadata(x, y, z) & 8) == 0 ? 0 : (side == 1 ? 15 : 0);
     }
 
     private void func_150054_a(World p_150054_1_, int p_150054_2_, int p_150054_3_, int p_150054_4_, int p_150054_5_)
@@ -107,16 +107,16 @@ public class BlockRailDetector extends BlockRailBase
 
         if (var7)
         {
-            p_150054_1_.scheduleBlockUpdate(p_150054_2_, p_150054_3_, p_150054_4_, this, this.func_149738_a(p_150054_1_));
+            p_150054_1_.scheduleBlockUpdate(p_150054_2_, p_150054_3_, p_150054_4_, this, this.tickRate(p_150054_1_));
         }
 
-        p_150054_1_.func_147453_f(p_150054_2_, p_150054_3_, p_150054_4_, this);
+        p_150054_1_.updateNeighborsAboutBlockChange(p_150054_2_, p_150054_3_, p_150054_4_, this);
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
-        this.func_150054_a(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_, p_149726_1_.getBlockMetadata(p_149726_2_, p_149726_3_, p_149726_4_));
+        super.onBlockAdded(worldIn, x, y, z);
+        this.func_150054_a(worldIn, x, y, z, worldIn.getBlockMetadata(x, y, z));
     }
 
     public boolean hasComparatorInputOverride()
@@ -124,19 +124,19 @@ public class BlockRailDetector extends BlockRailBase
         return true;
     }
 
-    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_)
+    public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side)
     {
-        if ((p_149736_1_.getBlockMetadata(p_149736_2_, p_149736_3_, p_149736_4_) & 8) > 0)
+        if ((worldIn.getBlockMetadata(x, y, z) & 8) > 0)
         {
             float var6 = 0.125F;
-            List var7 = p_149736_1_.getEntitiesWithinAABB(EntityMinecartCommandBlock.class, AxisAlignedBB.getBoundingBox((double)((float)p_149736_2_ + var6), (double)p_149736_3_, (double)((float)p_149736_4_ + var6), (double)((float)(p_149736_2_ + 1) - var6), (double)((float)(p_149736_3_ + 1) - var6), (double)((float)(p_149736_4_ + 1) - var6)));
+            List var7 = worldIn.getEntitiesWithinAABB(EntityMinecartCommandBlock.class, AxisAlignedBB.getBoundingBox((double)((float)x + var6), (double)y, (double)((float)z + var6), (double)((float)(x + 1) - var6), (double)((float)(y + 1) - var6), (double)((float)(z + 1) - var6)));
 
             if (var7.size() > 0)
             {
-                return ((EntityMinecartCommandBlock)var7.get(0)).func_145822_e().func_145760_g();
+                return ((EntityMinecartCommandBlock)var7.get(0)).func_145822_e().getSuccessCount();
             }
 
-            List var8 = p_149736_1_.selectEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getBoundingBox((double)((float)p_149736_2_ + var6), (double)p_149736_3_, (double)((float)p_149736_4_ + var6), (double)((float)(p_149736_2_ + 1) - var6), (double)((float)(p_149736_3_ + 1) - var6), (double)((float)(p_149736_4_ + 1) - var6)), IEntitySelector.selectInventories);
+            List var8 = worldIn.selectEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getBoundingBox((double)((float)x + var6), (double)y, (double)((float)z + var6), (double)((float)(x + 1) - var6), (double)((float)(y + 1) - var6), (double)((float)(z + 1) - var6)), IEntitySelector.selectInventories);
 
             if (var8.size() > 0)
             {
@@ -147,18 +147,18 @@ public class BlockRailDetector extends BlockRailBase
         return 0;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_150055_b = new IIcon[2];
-        this.field_150055_b[0] = p_149651_1_.registerIcon(this.getTextureName());
-        this.field_150055_b[1] = p_149651_1_.registerIcon(this.getTextureName() + "_powered");
+        this.field_150055_b[0] = reg.registerIcon(this.getTextureName());
+        this.field_150055_b[1] = reg.registerIcon(this.getTextureName() + "_powered");
     }
 
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return (p_149691_2_ & 8) != 0 ? this.field_150055_b[1] : this.field_150055_b[0];
+        return (meta & 8) != 0 ? this.field_150055_b[1] : this.field_150055_b[0];
     }
 }

@@ -26,7 +26,7 @@ public class RenderBiped extends RenderLiving
 {
     protected ModelBiped modelBipedMain;
     protected float field_77070_b;
-    protected ModelBiped field_82423_g;
+    protected ModelBiped modelArmourChestplate;
     protected ModelBiped field_82425_h;
     private static final Map field_110859_k = Maps.newHashMap();
 
@@ -49,7 +49,7 @@ public class RenderBiped extends RenderLiving
 
     protected void func_82421_b()
     {
-        this.field_82423_g = new ModelBiped(1.0F);
+        this.modelArmourChestplate = new ModelBiped(1.0F);
         this.field_82425_h = new ModelBiped(0.5F);
     }
 
@@ -87,7 +87,7 @@ public class RenderBiped extends RenderLiving
             {
                 ItemArmor var6 = (ItemArmor)var5;
                 this.bindTexture(func_110857_a(var6, p_77032_2_));
-                ModelBiped var7 = p_77032_2_ == 2 ? this.field_82425_h : this.field_82423_g;
+                ModelBiped var7 = p_77032_2_ == 2 ? this.field_82425_h : this.modelArmourChestplate;
                 var7.bipedHead.showModel = p_77032_2_ == 0;
                 var7.bipedHeadwear.showModel = p_77032_2_ == 0;
                 var7.bipedBody.showModel = p_77032_2_ == 1 || p_77032_2_ == 2;
@@ -166,9 +166,9 @@ public class RenderBiped extends RenderLiving
         }
 
         super.doRender(p_76986_1_, p_76986_2_, var11, p_76986_6_, p_76986_8_, p_76986_9_);
-        this.field_82423_g.aimedBow = this.field_82425_h.aimedBow = this.modelBipedMain.aimedBow = false;
-        this.field_82423_g.isSneak = this.field_82425_h.isSneak = this.modelBipedMain.isSneak = false;
-        this.field_82423_g.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = 0;
+        this.modelArmourChestplate.aimedBow = this.field_82425_h.aimedBow = this.modelBipedMain.aimedBow = false;
+        this.modelArmourChestplate.isSneak = this.field_82425_h.isSneak = this.modelBipedMain.isSneak = false;
+        this.modelArmourChestplate.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = 0;
     }
 
     /**
@@ -181,8 +181,8 @@ public class RenderBiped extends RenderLiving
 
     protected void func_82420_a(EntityLiving p_82420_1_, ItemStack p_82420_2_)
     {
-        this.field_82423_g.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = p_82420_2_ != null ? 1 : 0;
-        this.field_82423_g.isSneak = this.field_82425_h.isSneak = this.modelBipedMain.isSneak = p_82420_1_.isSneaking();
+        this.modelArmourChestplate.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = p_82420_2_ != null ? 1 : 0;
+        this.modelArmourChestplate.isSneak = this.field_82425_h.isSneak = this.modelBipedMain.isSneak = p_82420_1_.isSneaking();
     }
 
     protected void renderEquippedItems(EntityLiving p_77029_1_, float p_77029_2_)
@@ -222,11 +222,11 @@ public class RenderBiped extends RenderLiving
                 {
                     NBTTagCompound var8 = var4.getTagCompound();
 
-                    if (var8.func_150297_b("SkullOwner", 10))
+                    if (var8.hasKey("SkullOwner", 10))
                     {
-                        var7 = NBTUtil.func_152459_a(var8.getCompoundTag("SkullOwner"));
+                        var7 = NBTUtil.readGameProfileFromNBT(var8.getCompoundTag("SkullOwner"));
                     }
-                    else if (var8.func_150297_b("SkullOwner", 8) && !StringUtils.isNullOrEmpty(var8.getString("SkullOwner")))
+                    else if (var8.hasKey("SkullOwner", 8) && !StringUtils.isNullOrEmpty(var8.getString("SkullOwner")))
                     {
                         var7 = new GameProfile((UUID)null, var8.getString("SkullOwner"));
                     }

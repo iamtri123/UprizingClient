@@ -50,7 +50,7 @@ public class GuiFlatPresets extends GuiScreen
         this.field_146436_r = I18n.format("createWorld.customize.presets.list");
         this.field_146433_u = new GuiTextField(this.fontRendererObj, 50, 40, this.width - 100, 20);
         this.field_146435_s = new GuiFlatPresets.ListSlot();
-        this.field_146433_u.func_146203_f(1230);
+        this.field_146433_u.setMaxStringLength(1230);
         this.field_146433_u.setText(this.field_146432_g.func_146384_e());
         this.buttonList.add(this.field_146434_t = new GuiButton(0, this.width / 2 - 155, this.height - 28, 150, 20, I18n.format("createWorld.customize.presets.select")));
         this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height - 28, 150, 20, I18n.format("gui.cancel")));
@@ -77,22 +77,22 @@ public class GuiFlatPresets extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        if (!this.field_146433_u.textboxKeyTyped(p_73869_1_, p_73869_2_))
+        if (!this.field_146433_u.textboxKeyTyped(typedChar, keyCode))
         {
-            super.keyTyped(p_73869_1_, p_73869_2_);
+            super.keyTyped(typedChar, keyCode);
         }
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.id == 0 && this.func_146430_p())
+        if (button.id == 0 && this.func_146430_p())
         {
             this.field_146432_g.func_146383_a(this.field_146433_u.getText());
             this.mc.displayGuiScreen(this.field_146432_g);
         }
-        else if (p_146284_1_.id == 1)
+        else if (button.id == 1)
         {
             this.mc.displayGuiScreen(this.field_146432_g);
         }
@@ -104,7 +104,7 @@ public class GuiFlatPresets extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.field_146435_s.func_148128_a(mouseX, mouseY, partialTicks);
+        this.field_146435_s.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, this.field_146438_h, this.width / 2, 8, 16777215);
         this.drawString(this.fontRendererObj, this.field_146439_i, 50, 30, 10526880);
         this.drawString(this.fontRendererObj, this.field_146436_r, 50, 70, 10526880);

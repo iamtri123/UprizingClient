@@ -95,7 +95,7 @@ public class RenderMinecart extends Render
         }
 
         int var33 = p_76986_1_.getDisplayTileOffset();
-        Block var28 = p_76986_1_.func_145820_n();
+        Block var28 = p_76986_1_.getDisplayTile();
         int var29 = p_76986_1_.getDisplayTileData();
 
         if (var28.getRenderType() != -1)

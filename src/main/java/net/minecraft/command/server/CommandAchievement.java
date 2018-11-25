@@ -32,34 +32,34 @@ public class CommandAchievement extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.achievement.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length >= 2)
+        if (args.length >= 2)
         {
-            StatBase var3 = StatList.func_151177_a(p_71515_2_[1]);
+            StatBase var3 = StatList.getOneShotStat(args[1]);
 
-            if (var3 == null && !p_71515_2_[1].equals("*"))
+            if (var3 == null && !args[1].equals("*"))
             {
-                throw new CommandException("commands.achievement.unknownAchievement", p_71515_2_[1]);
+                throw new CommandException("commands.achievement.unknownAchievement", args[1]);
             }
 
             EntityPlayerMP var4;
 
-            if (p_71515_2_.length >= 3)
+            if (args.length >= 3)
             {
-                var4 = getPlayer(p_71515_1_, p_71515_2_[2]);
+                var4 = getPlayer(sender, args[2]);
             }
             else
             {
-                var4 = getCommandSenderAsPlayer(p_71515_1_);
+                var4 = getCommandSenderAsPlayer(sender);
             }
 
-            if (p_71515_2_[0].equalsIgnoreCase("give"))
+            if (args[0].equalsIgnoreCase("give"))
             {
                 if (var3 == null)
                 {
@@ -71,7 +71,7 @@ public class CommandAchievement extends CommandBase
                         var4.triggerAchievement(var6);
                     }
 
-                    func_152373_a(p_71515_1_, this, "commands.achievement.give.success.all", var4.getCommandSenderName());
+                    notifyOperators(sender, this, "commands.achievement.give.success.all", var4.getCommandSenderName());
                 }
                 else
                 {
@@ -80,7 +80,7 @@ public class CommandAchievement extends CommandBase
                         Achievement var9 = (Achievement)var3;
                         ArrayList var10;
 
-                        for (var10 = Lists.newArrayList(); var9.parentAchievement != null && !var4.func_147099_x().hasAchievementUnlocked(var9.parentAchievement); var9 = var9.parentAchievement)
+                        for (var10 = Lists.newArrayList(); var9.parentAchievement != null && !var4.getStatFile().hasAchievementUnlocked(var9.parentAchievement); var9 = var9.parentAchievement)
                         {
                             var10.add(var9.parentAchievement);
                         }
@@ -95,7 +95,7 @@ public class CommandAchievement extends CommandBase
                     }
 
                     var4.triggerAchievement(var3);
-                    func_152373_a(p_71515_1_, this, "commands.achievement.give.success.one", var4.getCommandSenderName(), var3.func_150955_j());
+                    notifyOperators(sender, this, "commands.achievement.give.success.one", var4.getCommandSenderName(), var3.func_150955_j());
                 }
 
                 return;
@@ -108,15 +108,15 @@ public class CommandAchievement extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        if (p_71516_2_.length == 1)
+        if (args.length == 1)
         {
-            return getListOfStringsMatchingLastWord(p_71516_2_, "give");
+            return getListOfStringsMatchingLastWord(args, "give");
         }
-        else if (p_71516_2_.length != 2)
+        else if (args.length != 2)
         {
-            return p_71516_2_.length == 3 ? getListOfStringsMatchingLastWord(p_71516_2_, MinecraftServer.getServer().getAllUsernames()) : null;
+            return args.length == 3 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : null;
         }
         else
         {
@@ -129,15 +129,15 @@ public class CommandAchievement extends CommandBase
                 var3.add(var5.statId);
             }
 
-            return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, var3);
+            return getListOfStringsFromIterableMatchingLastWord(args, var3);
         }
     }
 
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_)
+    public boolean isUsernameIndex(String[] args, int index)
     {
-        return p_82358_2_ == 2;
+        return index == 2;
     }
 }

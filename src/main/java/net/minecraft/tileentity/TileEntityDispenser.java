@@ -25,35 +25,35 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
-        return this.field_146022_i[p_70301_1_];
+        return this.field_146022_i[slotIn];
     }
 
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (this.field_146022_i[p_70298_1_] != null)
+        if (this.field_146022_i[index] != null)
         {
             ItemStack var3;
 
-            if (this.field_146022_i[p_70298_1_].stackSize <= p_70298_2_)
+            if (this.field_146022_i[index].stackSize <= count)
             {
-                var3 = this.field_146022_i[p_70298_1_];
-                this.field_146022_i[p_70298_1_] = null;
+                var3 = this.field_146022_i[index];
+                this.field_146022_i[index] = null;
                 this.onInventoryChanged();
                 return var3;
             }
             else
             {
-                var3 = this.field_146022_i[p_70298_1_].splitStack(p_70298_2_);
+                var3 = this.field_146022_i[index].splitStack(count);
 
-                if (this.field_146022_i[p_70298_1_].stackSize == 0)
+                if (this.field_146022_i[index].stackSize == 0)
                 {
-                    this.field_146022_i[p_70298_1_] = null;
+                    this.field_146022_i[index] = null;
                 }
 
                 this.onInventoryChanged();
@@ -70,12 +70,12 @@ public class TileEntityDispenser extends TileEntity implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (this.field_146022_i[p_70304_1_] != null)
+        if (this.field_146022_i[index] != null)
         {
-            ItemStack var2 = this.field_146022_i[p_70304_1_];
-            this.field_146022_i[p_70304_1_] = null;
+            ItemStack var2 = this.field_146022_i[index];
+            this.field_146022_i[index] = null;
             return var2;
         }
         else
@@ -103,13 +103,13 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        this.field_146022_i[p_70299_1_] = p_70299_2_;
+        this.field_146022_i[index] = stack;
 
-        if (p_70299_2_ != null && p_70299_2_.stackSize > this.getInventoryStackLimit())
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
         {
-            p_70299_2_.stackSize = this.getInventoryStackLimit();
+            stack.stackSize = this.getInventoryStackLimit();
         }
 
         this.onInventoryChanged();
@@ -153,10 +153,10 @@ public class TileEntityDispenser extends TileEntity implements IInventory
         return this.field_146020_a != null;
     }
 
-    public void readFromNBT(NBTTagCompound p_145839_1_)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(p_145839_1_);
-        NBTTagList var2 = p_145839_1_.getTagList("Items", 10);
+        super.readFromNBT(compound);
+        NBTTagList var2 = compound.getTagList("Items", 10);
         this.field_146022_i = new ItemStack[this.getSizeInventory()];
 
         for (int var3 = 0; var3 < var2.tagCount(); ++var3)
@@ -170,15 +170,15 @@ public class TileEntityDispenser extends TileEntity implements IInventory
             }
         }
 
-        if (p_145839_1_.func_150297_b("CustomName", 8))
+        if (compound.hasKey("CustomName", 8))
         {
-            this.field_146020_a = p_145839_1_.getString("CustomName");
+            this.field_146020_a = compound.getString("CustomName");
         }
     }
 
-    public void writeToNBT(NBTTagCompound p_145841_1_)
+    public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(p_145841_1_);
+        super.writeToNBT(compound);
         NBTTagList var2 = new NBTTagList();
 
         for (int var3 = 0; var3 < this.field_146022_i.length; ++var3)
@@ -192,11 +192,11 @@ public class TileEntityDispenser extends TileEntity implements IInventory
             }
         }
 
-        p_145841_1_.setTag("Items", var2);
+        compound.setTag("Items", var2);
 
         if (this.isInventoryNameLocalized())
         {
-            p_145841_1_.setString("CustomName", this.field_146020_a);
+            compound.setString("CustomName", this.field_146020_a);
         }
     }
 
@@ -211,9 +211,9 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) == this && p_70300_1_.getDistanceSq((double) this.field_145851_c + 0.5D, (double) this.field_145848_d + 0.5D, (double) this.field_145849_e + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     public void openInventory() {}
@@ -223,7 +223,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return true;
     }

@@ -51,7 +51,7 @@ public class ItemPotion extends Item
      */
     public List getEffects(ItemStack p_77832_1_)
     {
-        if (p_77832_1_.hasTagCompound() && p_77832_1_.getTagCompound().func_150297_b("CustomPotionEffects", 9))
+        if (p_77832_1_.hasTagCompound() && p_77832_1_.getTagCompound().hasKey("CustomPotionEffects", 9))
         {
             ArrayList var7 = new ArrayList();
             NBTTagList var3 = p_77832_1_.getTagCompound().getTagList("CustomPotionEffects", 10);
@@ -146,7 +146,7 @@ public class ItemPotion extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack p_77661_1_)
+    public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.drink;
     }
@@ -154,28 +154,28 @@ public class ItemPotion extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        if (isSplash(p_77659_1_.getItemDamage()))
+        if (isSplash(itemStackIn.getItemDamage()))
         {
-            if (!p_77659_3_.capabilities.isCreativeMode)
+            if (!player.capabilities.isCreativeMode)
             {
-                --p_77659_1_.stackSize;
+                --itemStackIn.stackSize;
             }
 
-            p_77659_2_.playSoundAtEntity(p_77659_3_, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+            worldIn.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-            if (!p_77659_2_.isClient)
+            if (!worldIn.isClient)
             {
-                p_77659_2_.spawnEntityInWorld(new EntityPotion(p_77659_2_, p_77659_3_, p_77659_1_));
+                worldIn.spawnEntityInWorld(new EntityPotion(worldIn, player, itemStackIn));
             }
 
-            return p_77659_1_;
+            return itemStackIn;
         }
         else
         {
-            p_77659_3_.setItemInUse(p_77659_1_, this.getMaxItemUseDuration(p_77659_1_));
-            return p_77659_1_;
+            player.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
+            return itemStackIn;
         }
     }
 
@@ -451,11 +451,11 @@ public class ItemPotion extends Item
         }
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        this.field_94590_d = p_94581_1_.registerIcon(this.getIconString() + "_" + "bottle_drinkable");
-        this.field_94591_c = p_94581_1_.registerIcon(this.getIconString() + "_" + "bottle_splash");
-        this.field_94592_ct = p_94581_1_.registerIcon(this.getIconString() + "_" + "overlay");
+        this.field_94590_d = register.registerIcon(this.getIconString() + "_" + "bottle_drinkable");
+        this.field_94591_c = register.registerIcon(this.getIconString() + "_" + "bottle_splash");
+        this.field_94592_ct = register.registerIcon(this.getIconString() + "_" + "overlay");
     }
 
     public static IIcon func_94589_d(String p_94589_0_)

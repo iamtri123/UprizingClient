@@ -52,7 +52,7 @@ public class PlayerSelector
 
             for (int var4 = 0; var4 < var3.length; ++var4)
             {
-                var3[var4] = var2[var4].func_145748_c_();
+                var3[var4] = var2[var4].getFormattedCommandSenderName();
             }
 
             return CommandBase.joinNiceString(var3);

@@ -108,7 +108,7 @@ public class SharedMonsterAttributes
     {
         p_111258_0_.setBaseValue(p_111258_1_.getDouble("Base"));
 
-        if (p_111258_1_.func_150297_b("Modifiers", 9))
+        if (p_111258_1_.hasKey("Modifiers", 9))
         {
             NBTTagList var2 = p_111258_1_.getTagList("Modifiers", 10);
 

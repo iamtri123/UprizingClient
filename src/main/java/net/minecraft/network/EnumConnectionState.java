@@ -230,18 +230,18 @@ public enum EnumConnectionState
             this.func_150751_a(1, C01PacketEncryptionResponse.class);
         }
     };
-    private static final TIntObjectMap field_150764_e = new TIntObjectHashMap();
-    private static final Map field_150761_f = Maps.newHashMap();
-    private final int field_150762_g;
+    private static final TIntObjectMap STATES_BY_ID = new TIntObjectHashMap();
+    private static final Map STATES_BY_CLASS = Maps.newHashMap();
+    private final int id;
     private final BiMap field_150769_h;
     private final BiMap field_150770_i;
     private static final String __OBFID = "CL_00001245";
 
-    EnumConnectionState(int p_i45152_3_)
+    EnumConnectionState(int protocolId)
     {
         this.field_150769_h = HashBiMap.create();
         this.field_150770_i = HashBiMap.create();
-        this.field_150762_g = p_i45152_3_;
+        this.id = protocolId;
     }
 
     protected EnumConnectionState func_150751_a(int p_150751_1_, Class p_150751_2_)
@@ -310,19 +310,19 @@ public enum EnumConnectionState
         return p_150754_1_ ? this.func_150753_a() : this.func_150755_b();
     }
 
-    public int func_150759_c()
+    public int getId()
     {
-        return this.field_150762_g;
+        return this.id;
     }
 
-    public static EnumConnectionState func_150760_a(int p_150760_0_)
+    public static EnumConnectionState getById(int stateId)
     {
-        return (EnumConnectionState)field_150764_e.get(p_150760_0_);
+        return (EnumConnectionState)STATES_BY_ID.get(stateId);
     }
 
-    public static EnumConnectionState func_150752_a(Packet p_150752_0_)
+    public static EnumConnectionState getFromPacket(Packet packetIn)
     {
-        return (EnumConnectionState)field_150761_f.get(p_150752_0_.getClass());
+        return (EnumConnectionState)STATES_BY_CLASS.get(packetIn.getClass());
     }
 
     EnumConnectionState(String ignore1, int ignore2, int p_i1197_3_, Object p_i1197_4_)
@@ -337,19 +337,19 @@ public enum EnumConnectionState
         for (int var2 = 0; var2 < var1; ++var2)
         {
             EnumConnectionState var3 = var0[var2];
-            field_150764_e.put(var3.func_150759_c(), var3);
+            STATES_BY_ID.put(var3.getId(), var3);
             Iterator var4 = Iterables.concat(var3.func_150755_b().values(), var3.func_150753_a().values()).iterator();
 
             while (var4.hasNext())
             {
                 Class var5 = (Class)var4.next();
 
-                if (field_150761_f.containsKey(var5) && field_150761_f.get(var5) != var3)
+                if (STATES_BY_CLASS.containsKey(var5) && STATES_BY_CLASS.get(var5) != var3)
                 {
-                    throw new Error("Packet " + var5 + " is already assigned to protocol " + field_150761_f.get(var5) + " - can\'t reassign to " + var3);
+                    throw new Error("Packet " + var5 + " is already assigned to protocol " + STATES_BY_CLASS.get(var5) + " - can\'t reassign to " + var3);
                 }
 
-                field_150761_f.put(var5, var3);
+                STATES_BY_CLASS.put(var5, var3);
             }
         }
     }

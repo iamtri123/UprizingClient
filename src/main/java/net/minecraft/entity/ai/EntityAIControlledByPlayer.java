@@ -161,9 +161,9 @@ public class EntityAIControlledByPlayer extends EntityAIBase
         if (var4 != var17 || var6 != var18)
         {
             Block var20 = this.thisEntity.worldObj.getBlock(var4, var5, var6);
-            boolean var21 = !this.func_151498_a(var20) && (var20.getMaterial() != Material.air || !this.func_151498_a(this.thisEntity.worldObj.getBlock(var4, var5 - 1, var6)));
+            boolean var21 = !this.isStairOrSlab(var20) && (var20.getMaterial() != Material.air || !this.isStairOrSlab(this.thisEntity.worldObj.getBlock(var4, var5 - 1, var6)));
 
-            if (var21 && PathFinder.func_82565_a(this.thisEntity, var17, var5, var18, var19, false, false, true) == 0 && PathFinder.func_82565_a(this.thisEntity, var4, var5 + 1, var6, var19, false, false, true) == 1 && PathFinder.func_82565_a(this.thisEntity, var17, var5 + 1, var18, var19, false, false, true) == 1)
+            if (var21 && PathFinder.canEntityStandAt(this.thisEntity, var17, var5, var18, var19, false, false, true) == 0 && PathFinder.canEntityStandAt(this.thisEntity, var4, var5 + 1, var6, var19, false, false, true) == 1 && PathFinder.canEntityStandAt(this.thisEntity, var17, var5 + 1, var18, var19, false, false, true) == 1)
             {
                 var2.getJumpHelper().setJumping();
             }
@@ -189,7 +189,7 @@ public class EntityAIControlledByPlayer extends EntityAIBase
         this.thisEntity.moveEntityWithHeading(0.0F, var7);
     }
 
-    private boolean func_151498_a(Block p_151498_1_)
+    private boolean isStairOrSlab(Block p_151498_1_)
     {
         return p_151498_1_.getRenderType() == 10 || p_151498_1_ instanceof BlockSlab;
     }

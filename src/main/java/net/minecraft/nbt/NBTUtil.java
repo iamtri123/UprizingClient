@@ -10,19 +10,19 @@ public final class NBTUtil
 {
     private static final String __OBFID = "CL_00001901";
 
-    public static GameProfile func_152459_a(NBTTagCompound p_152459_0_)
+    public static GameProfile readGameProfileFromNBT(NBTTagCompound compound)
     {
         String var1 = null;
         String var2 = null;
 
-        if (p_152459_0_.func_150297_b("Name", 8))
+        if (compound.hasKey("Name", 8))
         {
-            var1 = p_152459_0_.getString("Name");
+            var1 = compound.getString("Name");
         }
 
-        if (p_152459_0_.func_150297_b("Id", 8))
+        if (compound.hasKey("Id", 8))
         {
-            var2 = p_152459_0_.getString("Id");
+            var2 = compound.getString("Id");
         }
 
         if (StringUtils.isNullOrEmpty(var1) && StringUtils.isNullOrEmpty(var2))
@@ -44,10 +44,10 @@ public final class NBTUtil
 
             GameProfile var4 = new GameProfile(var3, var1);
 
-            if (p_152459_0_.func_150297_b("Properties", 10))
+            if (compound.hasKey("Properties", 10))
             {
-                NBTTagCompound var5 = p_152459_0_.getCompoundTag("Properties");
-                Iterator var6 = var5.func_150296_c().iterator();
+                NBTTagCompound var5 = compound.getCompoundTag("Properties");
+                Iterator var6 = var5.getKeySet().iterator();
 
                 while (var6.hasNext())
                 {
@@ -59,7 +59,7 @@ public final class NBTUtil
                         NBTTagCompound var10 = var8.getCompoundTagAt(var9);
                         String var11 = var10.getString("Value");
 
-                        if (var10.func_150297_b("Signature", 8))
+                        if (var10.hasKey("Signature", 8))
                         {
                             var4.getProperties().put(var7, new Property(var7, var11, var10.getString("Signature")));
                         }
@@ -75,22 +75,22 @@ public final class NBTUtil
         }
     }
 
-    public static void func_152460_a(NBTTagCompound p_152460_0_, GameProfile p_152460_1_)
+    public static void writeGameProfileToNBT(NBTTagCompound compound, GameProfile profile)
     {
-        if (!StringUtils.isNullOrEmpty(p_152460_1_.getName()))
+        if (!StringUtils.isNullOrEmpty(profile.getName()))
         {
-            p_152460_0_.setString("Name", p_152460_1_.getName());
+            compound.setString("Name", profile.getName());
         }
 
-        if (p_152460_1_.getId() != null)
+        if (profile.getId() != null)
         {
-            p_152460_0_.setString("Id", p_152460_1_.getId().toString());
+            compound.setString("Id", profile.getId().toString());
         }
 
-        if (!p_152460_1_.getProperties().isEmpty())
+        if (!profile.getProperties().isEmpty())
         {
             NBTTagCompound var2 = new NBTTagCompound();
-            Iterator var3 = p_152460_1_.getProperties().keySet().iterator();
+            Iterator var3 = profile.getProperties().keySet().iterator();
 
             while (var3.hasNext())
             {
@@ -98,7 +98,7 @@ public final class NBTUtil
                 NBTTagList var5 = new NBTTagList();
                 NBTTagCompound var8;
 
-                for (Iterator var6 = p_152460_1_.getProperties().get(var4).iterator(); var6.hasNext(); var5.appendTag(var8))
+                for (Iterator var6 = profile.getProperties().get(var4).iterator(); var6.hasNext(); var5.appendTag(var8))
                 {
                     Property var7 = (Property)var6.next();
                     var8 = new NBTTagCompound();
@@ -113,7 +113,7 @@ public final class NBTUtil
                 var2.setTag(var4, var5);
             }
 
-            p_152460_0_.setTag("Properties", var2);
+            compound.setTag("Properties", var2);
         }
     }
 }

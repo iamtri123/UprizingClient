@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 public abstract class InventoryEffectRenderer extends GuiContainer
 {
-    private boolean field_147045_u;
+    private boolean hasActivePotionEffects;
     private static final String __OBFID = "CL_00000755";
 
     public InventoryEffectRenderer(Container p_i1089_1_)
@@ -28,8 +28,8 @@ public abstract class InventoryEffectRenderer extends GuiContainer
 
         if (!this.mc.thePlayer.getActivePotionEffects().isEmpty())
         {
-            this.field_147003_i = 160 + (this.width - this.field_146999_f - 200) / 2;
-            this.field_147045_u = true;
+            this.guiLeft = 160 + (this.width - this.xSize - 200) / 2;
+            this.hasActivePotionEffects = true;
         }
     }
 
@@ -40,16 +40,16 @@ public abstract class InventoryEffectRenderer extends GuiContainer
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        if (this.field_147045_u)
+        if (this.hasActivePotionEffects)
         {
-            this.func_147044_g();
+            this.drawActivePotionEffects();
         }
     }
 
-    private void func_147044_g()
+    private void drawActivePotionEffects()
     {
-        int var1 = this.field_147003_i - 124;
-        int var2 = this.field_147009_r;
+        int var1 = this.guiLeft - 124;
+        int var2 = this.guiTop;
         boolean var3 = true;
         Collection var4 = this.mc.thePlayer.getActivePotionEffects();
 
@@ -69,7 +69,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                 PotionEffect var7 = (PotionEffect)var6.next();
                 Potion var8 = Potion.potionTypes[var7.getPotionID()];
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.mc.getTextureManager().bindTexture(field_147001_a);
+                this.mc.getTextureManager().bindTexture(inventoryBackground);
                 this.drawTexturedModalRect(var1, var2, 0, 166, 140, 32);
 
                 if (var8.hasStatusIcon())

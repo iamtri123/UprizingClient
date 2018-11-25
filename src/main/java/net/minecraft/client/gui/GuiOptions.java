@@ -14,14 +14,14 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
 {
     private static final GameSettings.Options[] field_146440_f = {GameSettings.Options.FOV, GameSettings.Options.DIFFICULTY};
     private final GuiScreen field_146441_g;
-    private final GameSettings field_146443_h;
+    private final GameSettings game_settings_1;
     protected String field_146442_a = "Options";
     private static final String __OBFID = "CL_00000700";
 
     public GuiOptions(GuiScreen p_i1046_1_, GameSettings p_i1046_2_)
     {
         this.field_146441_g = p_i1046_1_;
-        this.field_146443_h = p_i1046_2_;
+        this.game_settings_1 = p_i1046_2_;
     }
 
     /**
@@ -44,7 +44,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
             }
             else
             {
-                GuiOptionButton var6 = new GuiOptionButton(var5.returnEnumOrdinal(), this.width / 2 - 155 + var1 % 2 * 160, this.height / 6 - 12 + 24 * (var1 >> 1), var5, this.field_146443_h.getKeyBinding(var5));
+                GuiOptionButton var6 = new GuiOptionButton(var5.returnEnumOrdinal(), this.width / 2 - 155 + var1 % 2 * 160, this.height / 6 - 12 + 24 * (var1 >> 1), var5, this.game_settings_1.getKeyBinding(var5));
 
                 if (var5 == GameSettings.Options.DIFFICULTY && this.mc.theWorld != null && this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled())
                 {
@@ -61,13 +61,13 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(new GuiButton(8675309, this.width / 2 + 5, this.height / 6 + 48 - 6, 150, 20, "Super Secret Settings...")
         {
             private static final String __OBFID = "CL_00000701";
-            public void playPressSound(SoundHandler p_146113_1_)
+            public void playPressSound(SoundHandler soundHandlerIn)
             {
-                SoundEventAccessorComposite var2 = p_146113_1_.func_147686_a(SoundCategory.ANIMALS, SoundCategory.BLOCKS, SoundCategory.MOBS, SoundCategory.PLAYERS, SoundCategory.WEATHER);
+                SoundEventAccessorComposite var2 = soundHandlerIn.getRandomSoundFromCategories(SoundCategory.ANIMALS, SoundCategory.BLOCKS, SoundCategory.MOBS, SoundCategory.PLAYERS, SoundCategory.WEATHER);
 
                 if (var2 != null)
                 {
-                    p_146113_1_.playSound(PositionedSoundRecord.func_147674_a(var2.func_148729_c(), 0.5F));
+                    soundHandlerIn.playSound(PositionedSoundRecord.createPositionedSoundRecord(var2.getSoundEventLocation(), 0.5F));
                 }
             }
         });
@@ -82,77 +82,77 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done")));
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.enabled)
+        if (button.enabled)
         {
-            if (p_146284_1_.id < 100 && p_146284_1_ instanceof GuiOptionButton)
+            if (button.id < 100 && button instanceof GuiOptionButton)
             {
-                this.field_146443_h.setOptionValue(((GuiOptionButton)p_146284_1_).func_146136_c(), 1);
-                p_146284_1_.displayString = this.field_146443_h.getKeyBinding(GameSettings.Options.getEnumOptions(p_146284_1_.id));
+                this.game_settings_1.setOptionValue(((GuiOptionButton)button).returnEnumOptions(), 1);
+                button.displayString = this.game_settings_1.getKeyBinding(GameSettings.Options.getEnumOptions(button.id));
             }
 
-            if (p_146284_1_.id == 8675309)
+            if (button.id == 8675309)
             {
                 this.mc.entityRenderer.activateNextShader();
             }
 
-            if (p_146284_1_.id == 101)
+            if (button.id == 101)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new GuiVideoSettings(this, this.field_146443_h));
+                this.mc.displayGuiScreen(new GuiVideoSettings(this, this.game_settings_1));
             }
 
-            if (p_146284_1_.id == 100)
+            if (button.id == 100)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new GuiControls(this, this.field_146443_h));
+                this.mc.displayGuiScreen(new GuiControls(this, this.game_settings_1));
             }
 
-            if (p_146284_1_.id == 102)
+            if (button.id == 102)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new GuiLanguage(this, this.field_146443_h, this.mc.getLanguageManager()));
+                this.mc.displayGuiScreen(new GuiLanguage(this, this.game_settings_1, this.mc.getLanguageManager()));
             }
 
-            if (p_146284_1_.id == 103)
+            if (button.id == 103)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new ScreenChatOptions(this, this.field_146443_h));
+                this.mc.displayGuiScreen(new ScreenChatOptions(this, this.game_settings_1));
             }
 
-            if (p_146284_1_.id == 104)
+            if (button.id == 104)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new GuiSnooper(this, this.field_146443_h));
+                this.mc.displayGuiScreen(new GuiSnooper(this, this.game_settings_1));
             }
 
-            if (p_146284_1_.id == 200)
+            if (button.id == 200)
             {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(this.field_146441_g);
             }
 
-            if (p_146284_1_.id == 105)
+            if (button.id == 105)
             {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiScreenResourcePacks(this));
             }
 
-            if (p_146284_1_.id == 106)
+            if (button.id == 106)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new GuiScreenOptionsSounds(this, this.field_146443_h));
+                this.mc.displayGuiScreen(new GuiScreenOptionsSounds(this, this.game_settings_1));
             }
 
-            if (p_146284_1_.id == 107)
+            if (button.id == 107)
             {
                 this.mc.gameSettings.saveOptions();
-                IStream var2 = this.mc.func_152346_Z();
+                IStream var2 = this.mc.getTwitchStream();
 
                 if (var2.func_152936_l() && var2.func_152928_D())
                 {
-                    this.mc.displayGuiScreen(new GuiStreamOptions(this, this.field_146443_h));
+                    this.mc.displayGuiScreen(new GuiStreamOptions(this, this.game_settings_1));
                 }
                 else
                 {

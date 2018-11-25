@@ -36,17 +36,17 @@ public class S01PacketJoinGame extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149206_a = p_148837_1_.readInt();
-        short var2 = p_148837_1_.readUnsignedByte();
+        this.field_149206_a = data.readInt();
+        short var2 = data.readUnsignedByte();
         this.field_149204_b = (var2 & 8) == 8;
         int var3 = var2 & -9;
         this.field_149205_c = WorldSettings.GameType.getByID(var3);
-        this.field_149202_d = p_148837_1_.readByte();
-        this.field_149203_e = EnumDifficulty.getDifficultyEnum(p_148837_1_.readUnsignedByte());
-        this.field_149200_f = p_148837_1_.readUnsignedByte();
-        this.field_149201_g = WorldType.parseWorldType(p_148837_1_.readStringFromBuffer(16));
+        this.field_149202_d = data.readByte();
+        this.field_149203_e = EnumDifficulty.getDifficultyEnum(data.readUnsignedByte());
+        this.field_149200_f = data.readUnsignedByte();
+        this.field_149201_g = WorldType.parseWorldType(data.readStringFromBuffer(16));
 
         if (this.field_149201_g == null)
         {
@@ -57,9 +57,9 @@ public class S01PacketJoinGame extends Packet
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149206_a);
+        data.writeInt(this.field_149206_a);
         int var2 = this.field_149205_c.getID();
 
         if (this.field_149204_b)
@@ -67,16 +67,16 @@ public class S01PacketJoinGame extends Packet
             var2 |= 8;
         }
 
-        p_148840_1_.writeByte(var2);
-        p_148840_1_.writeByte(this.field_149202_d);
-        p_148840_1_.writeByte(this.field_149203_e.getDifficultyId());
-        p_148840_1_.writeByte(this.field_149200_f);
-        p_148840_1_.writeStringToBuffer(this.field_149201_g.getWorldTypeName());
+        data.writeByte(var2);
+        data.writeByte(this.field_149202_d);
+        data.writeByte(this.field_149203_e.getDifficultyId());
+        data.writeByte(this.field_149200_f);
+        data.writeStringToBuffer(this.field_149201_g.getWorldTypeName());
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleJoinGame(this);
+        handler.handleJoinGame(this);
     }
 
     /**
@@ -122,8 +122,8 @@ public class S01PacketJoinGame extends Packet
         return this.field_149201_g;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

@@ -37,33 +37,33 @@ public class S2APacketParticles extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149236_a = p_148837_1_.readStringFromBuffer(64);
-        this.field_149234_b = p_148837_1_.readFloat();
-        this.field_149235_c = p_148837_1_.readFloat();
-        this.field_149232_d = p_148837_1_.readFloat();
-        this.field_149233_e = p_148837_1_.readFloat();
-        this.field_149230_f = p_148837_1_.readFloat();
-        this.field_149231_g = p_148837_1_.readFloat();
-        this.field_149237_h = p_148837_1_.readFloat();
-        this.field_149238_i = p_148837_1_.readInt();
+        this.field_149236_a = data.readStringFromBuffer(64);
+        this.field_149234_b = data.readFloat();
+        this.field_149235_c = data.readFloat();
+        this.field_149232_d = data.readFloat();
+        this.field_149233_e = data.readFloat();
+        this.field_149230_f = data.readFloat();
+        this.field_149231_g = data.readFloat();
+        this.field_149237_h = data.readFloat();
+        this.field_149238_i = data.readInt();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(this.field_149236_a);
-        p_148840_1_.writeFloat(this.field_149234_b);
-        p_148840_1_.writeFloat(this.field_149235_c);
-        p_148840_1_.writeFloat(this.field_149232_d);
-        p_148840_1_.writeFloat(this.field_149233_e);
-        p_148840_1_.writeFloat(this.field_149230_f);
-        p_148840_1_.writeFloat(this.field_149231_g);
-        p_148840_1_.writeFloat(this.field_149237_h);
-        p_148840_1_.writeInt(this.field_149238_i);
+        data.writeStringToBuffer(this.field_149236_a);
+        data.writeFloat(this.field_149234_b);
+        data.writeFloat(this.field_149235_c);
+        data.writeFloat(this.field_149232_d);
+        data.writeFloat(this.field_149233_e);
+        data.writeFloat(this.field_149230_f);
+        data.writeFloat(this.field_149231_g);
+        data.writeFloat(this.field_149237_h);
+        data.writeInt(this.field_149238_i);
     }
 
     public String func_149228_c()
@@ -111,13 +111,13 @@ public class S2APacketParticles extends Packet
         return this.field_149238_i;
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleParticles(this);
+        handler.handleParticles(this);
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

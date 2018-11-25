@@ -35,7 +35,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
     private boolean showSlotBG = true;
     private boolean hasListHeader;
     protected int headerPadding;
-    private boolean field_148164_v = true;
+    private boolean enabled = true;
 
     public GuiSlotUprizing(Minecraft par1Minecraft, int par2, int par3, int par4, int par5, int par6) {
         this.mc = par1Minecraft;
@@ -48,7 +48,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
         this.right = par2;
     }
 
-    public void func_148122_a(int p_148122_1_, int p_148122_2_, int p_148122_3_, int p_148122_4_) {
+    public void setDimensions(int p_148122_1_, int p_148122_2_, int p_148122_3_, int p_148122_4_) {
         this.width = p_148122_1_;
         this.height = p_148122_2_;
         this.top = p_148122_3_;
@@ -100,7 +100,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
     protected void func_148142_b(int p_148142_1_, int p_148142_2_) {
     }
 
-    public int func_148124_c(int p_148124_1_, int p_148124_2_) {
+    public int getSlotIndexFromScreenCoords(int p_148124_1_, int p_148124_2_) {
         int var3 = this.left + this.width / 2 - getListWidth() / 2;
         int var4 = this.left + this.width / 2 + getListWidth() / 2;
         int var5 = p_148124_2_ - this.top - this.headerPadding + (int) this.amountScrolled - 4;
@@ -137,7 +137,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
         return (int) this.amountScrolled;
     }
 
-    public boolean func_148141_e(int p_148141_1_) {
+    public boolean isMouseYWithinSlotBounds(int p_148141_1_) {
         return (p_148141_1_ >= this.top) && (p_148141_1_ <= this.bottom);
     }
 
@@ -169,7 +169,7 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
         int var5 = getScrollBarX();
         int var6 = var5 + 6;
         if ((p_148128_1_ > this.left) && (p_148128_1_ < this.right) && (p_148128_2_ > this.top) && (p_148128_2_ < this.bottom)) {
-            if ((Mouse.isButtonDown(0)) && (func_148125_i())) {
+            if ((Mouse.isButtonDown(0)) && (getEnabled())) {
                 if (this.initialClickY == -1.0F) {
                     boolean var15 = true;
                     if ((p_148128_2_ >= this.top) && (p_148128_2_ <= this.bottom)) {
@@ -324,12 +324,12 @@ public abstract class GuiSlotUprizing { // TODO: Optimize
         GL11.glDisable(3042);
     }
 
-    public void func_148143_b(boolean p_148143_1_) {
-        this.field_148164_v = p_148143_1_;
+    public void setEnabled(boolean p_148143_1_) {
+        this.enabled = p_148143_1_;
     }
 
-    public boolean func_148125_i() {
-        return this.field_148164_v;
+    public boolean getEnabled() {
+        return this.enabled;
     }
 
     public int getListWidth() {

@@ -50,7 +50,7 @@ public class MapGenScatteredFeature extends MapGenStructure
         }
     }
 
-    public String func_143025_a()
+    public String getStructureName()
     {
         return "Temple";
     }

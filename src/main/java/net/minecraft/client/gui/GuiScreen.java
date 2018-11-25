@@ -41,7 +41,7 @@ public class GuiScreen extends Gui
 
     /** A list of all the labels in this container. */
     protected List labelList = new ArrayList();
-    public boolean field_146291_p;
+    public boolean allowUserInput;
 
     /** The FontRenderer used by GuiScreen */
     protected FontRenderer fontRendererObj;
@@ -50,7 +50,7 @@ public class GuiScreen extends Gui
     private GuiButton selectedButton;
     private int eventButton;
     private long lastMouseEvent;
-    private int field_146298_h;
+    private int touchValue;
     private static final String __OBFID = "CL_00000710";
 
     /**
@@ -67,16 +67,16 @@ public class GuiScreen extends Gui
 
         for (var4 = 0; var4 < this.labelList.size(); ++var4)
         {
-            ((GuiLabel)this.labelList.get(var4)).func_146159_a(this.mc, mouseX, mouseY);
+            ((GuiLabel)this.labelList.get(var4)).drawLabel(this.mc, mouseX, mouseY);
         }
     }
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        if (p_73869_2_ == 1)
+        if (keyCode == 1)
         {
             this.mc.displayGuiScreen((GuiScreen)null);
             this.mc.setIngameFocus();
@@ -107,11 +107,11 @@ public class GuiScreen extends Gui
     /**
      * Stores the given string in the system clipboard
      */
-    public static void setClipboardString(String p_146275_0_)
+    public static void setClipboardString(String copyText)
     {
         try
         {
-            StringSelection var1 = new StringSelection(p_146275_0_);
+            StringSelection var1 = new StringSelection(copyText);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(var1, (ClipboardOwner)null);
         }
         catch (Exception var2)
@@ -119,34 +119,34 @@ public class GuiScreen extends Gui
         }
     }
 
-    protected void func_146285_a(ItemStack p_146285_1_, int p_146285_2_, int p_146285_3_) {
-        List<String> var4 = p_146285_1_.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
+    protected void renderToolTip(ItemStack itemIn, int x, int y) {
+        List<String> var4 = itemIn.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
 
         for (int var5 = 0; var5 < var4.size(); ++var5) {
             if (var5 == 0) {
-                var4.set(var5, p_146285_1_.getRarity().rarityColor + var4.get(var5));
+                var4.set(var5, itemIn.getRarity().rarityColor + var4.get(var5));
             } else {
                 var4.set(var5, EnumChatFormatting.GRAY + var4.get(var5));
             }
         }
 
-        this.func_146283_a(var4, p_146285_2_, p_146285_3_);
+        this.drawHoveringText(var4, x, y);
     }
 
-    protected void func_146279_a(String p_146279_1_, int p_146279_2_, int p_146279_3_)
+    protected void drawCreativeTabHoveringText(String tabName, int mouseX, int mouseY)
     {
-        this.func_146283_a(Arrays.asList(p_146279_1_), p_146279_2_, p_146279_3_);
+        this.drawHoveringText(Arrays.asList(tabName), mouseX, mouseY);
     }
 
-    protected void func_146283_a(List<String> p_146283_1_, int p_146283_2_, int p_146283_3_)
+    protected void drawHoveringText(List<String> textLines, int x, int y)
     {
-        if (!p_146283_1_.isEmpty()) {
+        if (!textLines.isEmpty()) {
 			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 			RenderHelper.disableStandardItemLighting();
 			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			int var4 = 0;
-			Iterator<String> var5 = p_146283_1_.iterator();
+			Iterator<String> var5 = textLines.iterator();
 
 			while (var5.hasNext()) {
 				String var6 = var5.next();
@@ -157,12 +157,12 @@ public class GuiScreen extends Gui
 				}
 			}
 
-			int var14 = p_146283_2_ + 12;
-			int var15 = p_146283_3_ - 12;
+			int var14 = x + 12;
+			int var15 = y - 12;
 			int var8 = 8;
 
-			if (p_146283_1_.size() > 1) {
-				var8 += 2 + (p_146283_1_.size() - 1) * 10;
+			if (textLines.size() > 1) {
+				var8 += 2 + (textLines.size() - 1) * 10;
 			}
 
 			if (var14 + var4 > this.width) {
@@ -188,8 +188,8 @@ public class GuiScreen extends Gui
 			this.drawGradientRect(var14 - 3, var15 - 3, var14 + var4 + 3, var15 - 3 + 1, var10, var10);
 			this.drawGradientRect(var14 - 3, var15 + var8 + 2, var14 + var4 + 3, var15 + var8 + 3, var11, var11);
 
-			for (int var12 = 0; var12 < p_146283_1_.size(); ++var12) {
-				String var13 = p_146283_1_.get(var12);
+			for (int var12 = 0; var12 < textLines.size(); ++var12) {
+				String var13 = textLines.get(var12);
 				this.fontRendererObj.drawStringWithShadow(var13, var14, var15, -1);
 
 				if (var12 == 0) {
@@ -229,29 +229,29 @@ public class GuiScreen extends Gui
         }
     }
 
-    protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_)
+    protected void mouseMovedOrUp(int mouseX, int mouseY, int state)
     {
-        if (this.selectedButton != null && p_146286_3_ == 0)
+        if (this.selectedButton != null && state == 0)
         {
-            this.selectedButton.mouseReleased(p_146286_1_, p_146286_2_);
+            this.selectedButton.mouseReleased(mouseX, mouseY);
             this.selectedButton = null;
         }
     }
 
-    protected void mouseClickMove(int p_146273_1_, int p_146273_2_, int p_146273_3_, long p_146273_4_) {}
+    protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {}
 
-    protected void actionPerformed(GuiButton p_146284_1_) {}
+    protected void actionPerformed(GuiButton button) {}
 
     /**
      * Causes the screen to lay out its subcomponents again. This is the equivalent of the Java call
      * Container.validate()
      */
-    public void setWorldAndResolution(Minecraft p_146280_1_, int p_146280_2_, int p_146280_3_)
+    public void setWorldAndResolution(Minecraft mc, int width, int height)
     {
-        this.mc = p_146280_1_;
-        this.fontRendererObj = p_146280_1_.fontRenderer;
-        this.width = p_146280_2_;
-        this.height = p_146280_3_;
+        this.mc = mc;
+        this.fontRendererObj = mc.fontRenderer;
+        this.width = width;
+        this.height = height;
         this.buttonList.clear();
         this.initGui();
     }
@@ -294,7 +294,7 @@ public class GuiScreen extends Gui
 
         if (Mouse.getEventButtonState())
         {
-            if (this.mc.gameSettings.touchscreen && this.field_146298_h++ > 0)
+            if (this.mc.gameSettings.touchscreen && this.touchValue++ > 0)
             {
                 return;
             }
@@ -305,7 +305,7 @@ public class GuiScreen extends Gui
         }
         else if (var3 != -1)
         {
-            if (this.mc.gameSettings.touchscreen && --this.field_146298_h > 0)
+            if (this.mc.gameSettings.touchscreen && --this.touchValue > 0)
             {
                 return;
             }
@@ -330,7 +330,7 @@ public class GuiScreen extends Gui
             this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
         }
 
-        this.mc.func_152348_aa();
+        this.mc.dispatchKeypresses();
     }
 
     /**
@@ -345,10 +345,10 @@ public class GuiScreen extends Gui
 
     public void drawDefaultBackground()
     {
-        this.func_146270_b(0);
+        this.drawWorldBackground(0);
     }
 
-    public void func_146270_b(int p_146270_1_)
+    public void drawWorldBackground(int tint)
     {
         if (this.mc.theWorld != null)
         {
@@ -356,11 +356,11 @@ public class GuiScreen extends Gui
         }
         else
         {
-            this.func_146278_c(p_146270_1_);
+            this.drawBackground(tint);
         }
     }
 
-    public void func_146278_c(int p_146278_1_)
+    public void drawBackground(int tint)
     {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
@@ -370,10 +370,10 @@ public class GuiScreen extends Gui
         float var3 = 32.0F;
         var2.startDrawingQuads();
         var2.setColorOpaque_I(4210752);
-        var2.addVertexWithUV(0.0D, (double)this.height, 0.0D, 0.0D, (double)((float)this.height / var3 + (float)p_146278_1_));
-        var2.addVertexWithUV((double)this.width, (double)this.height, 0.0D, (double)((float)this.width / var3), (double)((float)this.height / var3 + (float)p_146278_1_));
-        var2.addVertexWithUV((double)this.width, 0.0D, 0.0D, (double)((float)this.width / var3), (double)p_146278_1_);
-        var2.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, (double)p_146278_1_);
+        var2.addVertexWithUV(0.0D, (double)this.height, 0.0D, 0.0D, (double)((float)this.height / var3 + (float)tint));
+        var2.addVertexWithUV((double)this.width, (double)this.height, 0.0D, (double)((float)this.width / var3), (double)((float)this.height / var3 + (float)tint));
+        var2.addVertexWithUV((double)this.width, 0.0D, 0.0D, (double)((float)this.width / var3), (double)tint);
+        var2.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, (double)tint);
         var2.draw();
     }
 
@@ -385,7 +385,7 @@ public class GuiScreen extends Gui
         return true;
     }
 
-    public void confirmClicked(boolean p_73878_1_, int p_73878_2_) {}
+    public void confirmClicked(boolean result, int id) {}
 
     /**
      * Returns true if either windows ctrl key is down or if either mac meta key is down

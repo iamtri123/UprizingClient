@@ -23,28 +23,28 @@ public class CommandGameMode extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.gamemode.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length > 0)
+        if (args.length > 0)
         {
-            WorldSettings.GameType var3 = this.getGameModeFromCommand(p_71515_1_, p_71515_2_[0]);
-            EntityPlayerMP var4 = p_71515_2_.length >= 2 ? getPlayer(p_71515_1_, p_71515_2_[1]) : getCommandSenderAsPlayer(p_71515_1_);
+            WorldSettings.GameType var3 = this.getGameModeFromCommand(sender, args[0]);
+            EntityPlayerMP var4 = args.length >= 2 ? getPlayer(sender, args[1]) : getCommandSenderAsPlayer(sender);
             var4.setGameType(var3);
             var4.fallDistance = 0.0F;
             ChatComponentTranslation var5 = new ChatComponentTranslation("gameMode." + var3.getName());
 
-            if (var4 != p_71515_1_)
+            if (var4 != sender)
             {
-                func_152374_a(p_71515_1_, this, 1, "commands.gamemode.success.other", var4.getCommandSenderName(), var5);
+                notifyOperators(sender, this, 1, "commands.gamemode.success.other", var4.getCommandSenderName(), var5);
             }
             else
             {
-                func_152374_a(p_71515_1_, this, 1, "commands.gamemode.success.self", var5);
+                notifyOperators(sender, this, 1, "commands.gamemode.success.self", var5);
             }
         }
         else
@@ -64,9 +64,9 @@ public class CommandGameMode extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, "survival", "creative", "adventure"): (p_71516_2_.length == 2 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getListOfPlayerUsernames()) : null);
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, "survival", "creative", "adventure"): (args.length == 2 ? getListOfStringsMatchingLastWord(args, this.getListOfPlayerUsernames()) : null);
     }
 
     /**
@@ -80,8 +80,8 @@ public class CommandGameMode extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_)
+    public boolean isUsernameIndex(String[] args, int index)
     {
-        return p_82358_2_ == 1;
+        return index == 1;
     }
 }

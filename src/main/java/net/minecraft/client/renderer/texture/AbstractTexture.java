@@ -15,7 +15,7 @@ public abstract class AbstractTexture implements ITextureObject
         return this.glTextureId;
     }
 
-    public void func_147631_c()
+    public void deleteGlTexture()
     {
         if (this.glTextureId != -1)
         {

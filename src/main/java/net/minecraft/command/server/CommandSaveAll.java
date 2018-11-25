@@ -17,15 +17,15 @@ public class CommandSaveAll extends CommandBase
         return "save-all";
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.save.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
         MinecraftServer var3 = MinecraftServer.getServer();
-        p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.start"));
+        sender.addChatMessage(new ChatComponentTranslation("commands.save.start"));
 
         if (var3.getConfigurationManager() != null)
         {
@@ -50,9 +50,9 @@ public class CommandSaveAll extends CommandBase
                 }
             }
 
-            if (p_71515_2_.length > 0 && "flush".equals(p_71515_2_[0]))
+            if (args.length > 0 && "flush".equals(args[0]))
             {
-                p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.flushStart"));
+                sender.addChatMessage(new ChatComponentTranslation("commands.save.flushStart"));
 
                 for (var4 = 0; var4 < var3.worldServers.length; ++var4)
                 {
@@ -66,15 +66,15 @@ public class CommandSaveAll extends CommandBase
                     }
                 }
 
-                p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.save.flushEnd"));
+                sender.addChatMessage(new ChatComponentTranslation("commands.save.flushEnd"));
             }
         }
         catch (MinecraftException var7)
         {
-            func_152373_a(p_71515_1_, this, "commands.save.failed", var7.getMessage());
+            notifyOperators(sender, this, "commands.save.failed", var7.getMessage());
             return;
         }
 
-        func_152373_a(p_71515_1_, this, "commands.save.success");
+        notifyOperators(sender, this, "commands.save.success");
     }
 }

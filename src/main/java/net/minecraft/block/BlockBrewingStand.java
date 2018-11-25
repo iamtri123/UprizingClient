@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 
 public class BlockBrewingStand extends BlockContainer
 {
-    private final Random field_149961_a = new Random();
-    private IIcon field_149960_b;
+    private final Random rand = new Random();
+    private IIcon iconBrewingStandBase;
     private static final String __OBFID = "CL_00000207";
 
     public BlockBrewingStand()
@@ -46,7 +46,7 @@ public class BlockBrewingStand extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityBrewingStand();
     }
@@ -56,12 +56,12 @@ public class BlockBrewingStand extends BlockContainer
         return false;
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider)
     {
         this.setBlockBounds(0.4375F, 0.0F, 0.4375F, 0.5625F, 0.875F, 0.5625F);
-        super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+        super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         this.setBlockBoundsForItemRender();
-        super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+        super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
     }
 
     /**
@@ -75,19 +75,19 @@ public class BlockBrewingStand extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        if (p_149727_1_.isClient)
+        if (worldIn.isClient)
         {
             return true;
         }
         else
         {
-            TileEntityBrewingStand var10 = (TileEntityBrewingStand)p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_);
+            TileEntityBrewingStand var10 = (TileEntityBrewingStand)worldIn.getTileEntity(x, y, z);
 
             if (var10 != null)
             {
-                p_149727_5_.func_146098_a(var10);
+                player.func_146098_a(var10);
             }
 
             return true;
@@ -97,28 +97,28 @@ public class BlockBrewingStand extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        if (p_149689_6_.hasDisplayName())
+        if (itemIn.hasDisplayName())
         {
-            ((TileEntityBrewingStand)p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).func_145937_a(p_149689_6_.getDisplayName());
+            ((TileEntityBrewingStand)worldIn.getTileEntity(x, y, z)).func_145937_a(itemIn.getDisplayName());
         }
     }
 
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        double var6 = (double)((float)p_149734_2_ + 0.4F + p_149734_5_.nextFloat() * 0.2F);
-        double var8 = (double)((float)p_149734_3_ + 0.7F + p_149734_5_.nextFloat() * 0.3F);
-        double var10 = (double)((float)p_149734_4_ + 0.4F + p_149734_5_.nextFloat() * 0.2F);
-        p_149734_1_.spawnParticle("smoke", var6, var8, var10, 0.0D, 0.0D, 0.0D);
+        double var6 = (double)((float)x + 0.4F + random.nextFloat() * 0.2F);
+        double var8 = (double)((float)y + 0.7F + random.nextFloat() * 0.3F);
+        double var10 = (double)((float)z + 0.4F + random.nextFloat() * 0.2F);
+        worldIn.spawnParticle("smoke", var6, var8, var10, 0.0D, 0.0D, 0.0D);
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        TileEntity var7 = p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+        TileEntity var7 = worldIn.getTileEntity(x, y, z);
 
         if (var7 instanceof TileEntityBrewingStand)
         {
@@ -130,13 +130,13 @@ public class BlockBrewingStand extends BlockContainer
 
                 if (var10 != null)
                 {
-                    float var11 = this.field_149961_a.nextFloat() * 0.8F + 0.1F;
-                    float var12 = this.field_149961_a.nextFloat() * 0.8F + 0.1F;
-                    float var13 = this.field_149961_a.nextFloat() * 0.8F + 0.1F;
+                    float var11 = this.rand.nextFloat() * 0.8F + 0.1F;
+                    float var12 = this.rand.nextFloat() * 0.8F + 0.1F;
+                    float var13 = this.rand.nextFloat() * 0.8F + 0.1F;
 
                     while (var10.stackSize > 0)
                     {
-                        int var14 = this.field_149961_a.nextInt(21) + 10;
+                        int var14 = this.rand.nextInt(21) + 10;
 
                         if (var14 > var10.stackSize)
                         {
@@ -144,21 +144,21 @@ public class BlockBrewingStand extends BlockContainer
                         }
 
                         var10.stackSize -= var14;
-                        EntityItem var15 = new EntityItem(p_149749_1_, (double)((float)p_149749_2_ + var11), (double)((float)p_149749_3_ + var12), (double)((float)p_149749_4_ + var13), new ItemStack(var10.getItem(), var14, var10.getItemDamage()));
+                        EntityItem var15 = new EntityItem(worldIn, (double)((float)x + var11), (double)((float)y + var12), (double)((float)z + var13), new ItemStack(var10.getItem(), var14, var10.getItemDamage()));
                         float var16 = 0.05F;
-                        var15.motionX = (double)((float)this.field_149961_a.nextGaussian() * var16);
-                        var15.motionY = (double)((float)this.field_149961_a.nextGaussian() * var16 + 0.2F);
-                        var15.motionZ = (double)((float)this.field_149961_a.nextGaussian() * var16);
-                        p_149749_1_.spawnEntityInWorld(var15);
+                        var15.motionX = (double)((float)this.rand.nextGaussian() * var16);
+                        var15.motionY = (double)((float)this.rand.nextGaussian() * var16 + 0.2F);
+                        var15.motionZ = (double)((float)this.rand.nextGaussian() * var16);
+                        worldIn.spawnEntityInWorld(var15);
                     }
                 }
             }
         }
 
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.brewing_stand;
     }
@@ -166,7 +166,7 @@ public class BlockBrewingStand extends BlockContainer
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Items.brewing_stand;
     }
@@ -176,19 +176,19 @@ public class BlockBrewingStand extends BlockContainer
         return true;
     }
 
-    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_)
+    public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side)
     {
-        return Container.calcRedstoneFromInventory((IInventory)p_149736_1_.getTileEntity(p_149736_2_, p_149736_3_, p_149736_4_));
+        return Container.calcRedstoneFromInventory((IInventory)worldIn.getTileEntity(x, y, z));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        super.registerBlockIcons(p_149651_1_);
-        this.field_149960_b = p_149651_1_.registerIcon(this.getTextureName() + "_base");
+        super.registerBlockIcons(reg);
+        this.iconBrewingStandBase = reg.registerIcon(this.getTextureName() + "_base");
     }
 
-    public IIcon func_149959_e()
+    public IIcon getIconBrewingStandBase()
     {
-        return this.field_149960_b;
+        return this.iconBrewingStandBase;
     }
 }

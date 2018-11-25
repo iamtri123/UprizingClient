@@ -427,8 +427,8 @@ public class RenderGlobal implements IWorldAccess
     {
         if (this.theWorld != null)
         {
-            Blocks.leaves.func_150122_b(Config.isTreesFancy());
-            Blocks.leaves2.func_150122_b(Config.isTreesFancy());
+            Blocks.leaves.setGraphicsLevel(Config.isTreesFancy());
+            Blocks.leaves2.setGraphicsLevel(Config.isTreesFancy());
             this.renderDistanceChunks = this.mc.gameSettings.renderDistanceChunks;
             WrUpdates.clearAllUpdates();
             int numChunks;
@@ -573,8 +573,8 @@ public class RenderGlobal implements IWorldAccess
             double var6 = p_147589_1_.prevPosY + (p_147589_1_.posY - p_147589_1_.prevPosY) * (double)p_147589_3_;
             double var8 = p_147589_1_.prevPosZ + (p_147589_1_.posZ - p_147589_1_.prevPosZ) * (double)p_147589_3_;
             this.theWorld.theProfiler.startSection("prepare");
-            TileEntityRendererDispatcher.instance.func_147542_a(this.theWorld, this.mc.getTextureManager(), this.mc.fontRenderer, this.mc.renderViewEntity, p_147589_3_);
-            RenderManager.instance.func_147938_a(this.theWorld, this.mc.getTextureManager(), this.mc.fontRenderer, this.mc.renderViewEntity, this.mc.pointedEntity, this.mc.gameSettings, p_147589_3_);
+            TileEntityRendererDispatcher.instance.cacheActiveRenderInfo(this.theWorld, this.mc.getTextureManager(), this.mc.fontRenderer, this.mc.renderViewEntity, p_147589_3_);
+            RenderManager.instance.cacheActiveRenderInfo(this.theWorld, this.mc.getTextureManager(), this.mc.fontRenderer, this.mc.renderViewEntity, this.mc.pointedEntity, this.mc.gameSettings, p_147589_3_);
 
             if (pass == 0)
             {
@@ -636,7 +636,7 @@ public class RenderGlobal implements IWorldAccess
 
                     if (var19.isInRangeToRender3d(var4, var6, var8))
                     {
-                        RenderManager.instance.func_147937_a(var19, p_147589_3_);
+                        RenderManager.instance.renderEntitySimple(var19, p_147589_3_);
                     }
                 }
             }
@@ -678,7 +678,7 @@ public class RenderGlobal implements IWorldAccess
                         }
 
                         this.renderedEntity = var19;
-                        RenderManager.instance.func_147937_a(var19, p_147589_3_);
+                        RenderManager.instance.renderEntitySimple(var19, p_147589_3_);
                         this.renderedEntity = null;
                     }
                 }
@@ -707,9 +707,9 @@ public class RenderGlobal implements IWorldAccess
 
                             if (distSq > 256.0D)
                             {
-                                FontRenderer fr = TileEntityRendererDispatcher.instance.func_147548_a();
+                                FontRenderer fr = TileEntityRendererDispatcher.instance.getFontRenderer();
                                 fr.enabled = false;
-                                TileEntityRendererDispatcher.instance.func_147544_a(var27, p_147589_3_);
+                                TileEntityRendererDispatcher.instance.renderTileEntity(var27, p_147589_3_);
                                 ++this.countTileEntitiesRendered;
                                 fr.enabled = true;
                                 continue;
@@ -718,7 +718,7 @@ public class RenderGlobal implements IWorldAccess
 
                         if (var30 == TileEntityChest.class)
                         {
-                            Block var31 = this.theWorld.getBlock(var27.field_145851_c, var27.field_145848_d, var27.field_145849_e);
+                            Block var31 = this.theWorld.getBlock(var27.xCoord, var27.yCoord, var27.zCoord);
 
                             if (!(var31 instanceof BlockChest))
                             {
@@ -726,7 +726,7 @@ public class RenderGlobal implements IWorldAccess
                             }
                         }
 
-                        TileEntityRendererDispatcher.instance.func_147544_a(var27, p_147589_3_);
+                        TileEntityRendererDispatcher.instance.renderTileEntity(var27, p_147589_3_);
                         ++this.countTileEntitiesRendered;
                     }
                 }
@@ -770,9 +770,9 @@ public class RenderGlobal implements IWorldAccess
         {
             Entity var3 = (Entity)var1.get(var2);
 
-            if (RenderManager.instance.getEntityRenderObject(var3).func_147905_a())
+            if (RenderManager.instance.getEntityRenderObject(var3).isStaticEntity())
             {
-                this.displayListEntitiesDirty = this.displayListEntitiesDirty || !RenderManager.instance.func_147936_a(var3, 0.0F, true);
+                this.displayListEntitiesDirty = this.displayListEntitiesDirty || !RenderManager.instance.renderEntityStatic(var3, 0.0F, true);
             }
         }
 
@@ -2450,17 +2450,17 @@ public class RenderGlobal implements IWorldAccess
 
         if (var6 != null)
         {
-            this.mc.getSoundHandler().func_147683_b(var6);
+            this.mc.getSoundHandler().stopSound(var6);
             this.mapSoundPositions.remove(var5);
         }
 
         if (par1Str != null)
         {
-            ItemRecord var7 = ItemRecord.func_150926_b(par1Str);
+            ItemRecord var7 = ItemRecord.getRecord(par1Str);
 
             if (var7 != null)
             {
-                this.mc.ingameGUI.setRecordPlayingMessage(var7.func_150927_i());
+                this.mc.ingameGUI.setRecordPlayingMessage(var7.getRecordNameLocal());
             }
 
             ResourceLocation resource = null;
@@ -2475,7 +2475,7 @@ public class RenderGlobal implements IWorldAccess
                 resource = new ResourceLocation(par1Str);
             }
 
-            PositionedSoundRecord var8 = PositionedSoundRecord.func_147675_a(resource, (float)par2, (float)par3, (float)par4);
+            PositionedSoundRecord var8 = PositionedSoundRecord.createRecordSoundAtPosition(resource, (float)par2, (float)par3, (float)par4);
             this.mapSoundPositions.put(var5, var8);
             this.mc.getSoundHandler().playSound(var8);
         }
@@ -2946,7 +2946,7 @@ public class RenderGlobal implements IWorldAccess
             case 1005:
                 if (Item.getItemById(par6) instanceof ItemRecord)
                 {
-                    this.theWorld.playRecord("records." + ((ItemRecord)Item.getItemById(par6)).field_150929_a, par3, par4, par5);
+                    this.theWorld.playRecord("records." + ((ItemRecord)Item.getItemById(par6)).recordName, par3, par4, par5);
                 }
                 else
                 {
@@ -3036,7 +3036,7 @@ public class RenderGlobal implements IWorldAccess
                     this.mc.getSoundHandler().playSound(new PositionedSoundRecord(new ResourceLocation(var8.stepSound.func_150495_a()), (var8.stepSound.func_150497_c() + 1.0F) / 2.0F, var8.stepSound.func_150494_d() * 0.8F, (float)par3 + 0.5F, (float)par4 + 0.5F, (float)par5 + 0.5F));
                 }
 
-                this.mc.effectRenderer.func_147215_a(par3, par4, par5, var8, par6 >> 12 & 255);
+                this.mc.effectRenderer.addBlockDestroyEffects(par3, par4, par5, var8, par6 >> 12 & 255);
                 break;
 
             case 2002:
@@ -3249,7 +3249,7 @@ public class RenderGlobal implements IWorldAccess
 
             if (blockType == Blocks.enchanting_table)
             {
-                return AxisAlignedBB.getBoundingBox((double)te.field_145851_c, (double)te.field_145848_d, (double)te.field_145849_e, (double)(te.field_145851_c + 1), (double)(te.field_145848_d + 1), (double)(te.field_145849_e + 1));
+                return AxisAlignedBB.getBoundingBox((double)te.xCoord, (double)te.yCoord, (double)te.zCoord, (double)(te.xCoord + 1), (double)(te.yCoord + 1), (double)(te.zCoord + 1));
             }
             else if (blockType != Blocks.chest && blockType != Blocks.trapped_chest)
             {
@@ -3267,7 +3267,7 @@ public class RenderGlobal implements IWorldAccess
 
                 if (blockType != null && blockType != Blocks.beacon)
                 {
-                    blockAabb = blockType.getCollisionBoundingBoxFromPool(te.getWorldObj(), te.field_145851_c, te.field_145848_d, te.field_145849_e);
+                    blockAabb = blockType.getCollisionBoundingBoxFromPool(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord);
 
                     if (blockAabb != null)
                     {
@@ -3279,7 +3279,7 @@ public class RenderGlobal implements IWorldAccess
             }
             else
             {
-                return AxisAlignedBB.getBoundingBox((double)(te.field_145851_c - 1), (double)te.field_145848_d, (double)(te.field_145849_e - 1), (double)(te.field_145851_c + 2), (double)(te.field_145848_d + 2), (double)(te.field_145849_e + 2));
+                return AxisAlignedBB.getBoundingBox((double)(te.xCoord - 1), (double)te.yCoord, (double)(te.zCoord - 1), (double)(te.xCoord + 2), (double)(te.yCoord + 2), (double)(te.zCoord + 2));
             }
         }
     }

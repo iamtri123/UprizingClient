@@ -21,21 +21,21 @@ public class ContainerHorseInventory extends Container
         this.addSlotToContainer(new Slot(p_i1817_2_, 0, 8, 18)
         {
             private static final String __OBFID = "CL_00001752";
-            public boolean isItemValid(ItemStack p_75214_1_)
+            public boolean isItemValid(ItemStack stack)
             {
-                return super.isItemValid(p_75214_1_) && p_75214_1_.getItem() == Items.saddle && !this.getHasStack();
+                return super.isItemValid(stack) && stack.getItem() == Items.saddle && !this.getHasStack();
             }
         });
         this.addSlotToContainer(new Slot(p_i1817_2_, 1, 8, 36)
         {
             private static final String __OBFID = "CL_00001753";
-            public boolean isItemValid(ItemStack p_75214_1_)
+            public boolean isItemValid(ItemStack stack)
             {
-                return super.isItemValid(p_75214_1_) && p_i1817_3_.func_110259_cr() && EntityHorse.func_146085_a(p_75214_1_.getItem());
+                return super.isItemValid(stack) && p_i1817_3_.canWearArmor() && EntityHorse.func_146085_a(stack.getItem());
             }
-            public boolean func_111238_b()
+            public boolean canBeHovered()
             {
-                return p_i1817_3_.func_110259_cr();
+                return p_i1817_3_.canWearArmor();
             }
         });
         int var6;
@@ -66,25 +66,25 @@ public class ContainerHorseInventory extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.field_111243_a.isUseableByPlayer(p_75145_1_) && this.theHorse.isEntityAlive() && this.theHorse.getDistanceToEntity(p_75145_1_) < 8.0F;
+        return this.field_111243_a.isUseableByPlayer(player) && this.theHorse.isEntityAlive() && this.theHorse.getDistanceToEntity(player) < 8.0F;
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ < this.field_111243_a.getSizeInventory())
+            if (index < this.field_111243_a.getSizeInventory())
             {
                 if (!this.mergeItemStack(var5, this.field_111243_a.getSizeInventory(), this.inventorySlots.size(), true))
                 {

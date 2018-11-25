@@ -30,77 +30,77 @@ public class BlockQuartz extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (p_149691_2_ != 2 && p_149691_2_ != 3 && p_149691_2_ != 4)
+        if (meta != 2 && meta != 3 && meta != 4)
         {
-            if (p_149691_1_ != 1 && (p_149691_1_ != 0 || p_149691_2_ != 1))
+            if (side != 1 && (side != 0 || meta != 1))
             {
-                if (p_149691_1_ == 0)
+                if (side == 0)
                 {
                     return this.field_150188_Q;
                 }
                 else
                 {
-                    if (p_149691_2_ < 0 || p_149691_2_ >= this.field_150192_M.length)
+                    if (meta < 0 || meta >= this.field_150192_M.length)
                     {
-                        p_149691_2_ = 0;
+                        meta = 0;
                     }
 
-                    return this.field_150192_M[p_149691_2_];
+                    return this.field_150192_M[meta];
                 }
             }
             else
             {
-                return p_149691_2_ == 1 ? this.field_150193_N : this.field_150190_P;
+                return meta == 1 ? this.field_150193_N : this.field_150190_P;
             }
         }
         else
         {
-            return p_149691_2_ == 2 && (p_149691_1_ == 1 || p_149691_1_ == 0) ? this.field_150194_O : (p_149691_2_ == 3 && (p_149691_1_ == 5 || p_149691_1_ == 4) ? this.field_150194_O : (p_149691_2_ == 4 && (p_149691_1_ == 2 || p_149691_1_ == 3) ? this.field_150194_O : this.field_150192_M[p_149691_2_]));
+            return meta == 2 && (side == 1 || side == 0) ? this.field_150194_O : (meta == 3 && (side == 5 || side == 4) ? this.field_150194_O : (meta == 4 && (side == 2 || side == 3) ? this.field_150194_O : this.field_150192_M[meta]));
         }
     }
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta)
     {
-        if (p_149660_9_ == 2)
+        if (meta == 2)
         {
-            switch (p_149660_5_)
+            switch (side)
             {
                 case 0:
                 case 1:
-                    p_149660_9_ = 2;
+                    meta = 2;
                     break;
 
                 case 2:
                 case 3:
-                    p_149660_9_ = 4;
+                    meta = 4;
                     break;
 
                 case 4:
                 case 5:
-                    p_149660_9_ = 3;
+                    meta = 3;
             }
         }
 
-        return p_149660_9_;
+        return meta;
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_ != 3 && p_149692_1_ != 4 ? p_149692_1_ : 2;
+        return meta != 3 && meta != 4 ? meta : 2;
     }
 
     /**
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int p_149644_1_)
+    protected ItemStack createStackedBlock(int meta)
     {
-        return p_149644_1_ != 3 && p_149644_1_ != 4 ? super.createStackedBlock(p_149644_1_) : new ItemStack(Item.getItemFromBlock(this), 1, 2);
+        return meta != 3 && meta != 4 ? super.createStackedBlock(meta) : new ItemStack(Item.getItemFromBlock(this), 1, 2);
     }
 
     /**
@@ -111,14 +111,14 @@ public class BlockQuartz extends Block
         return 39;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 1));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 2));
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 1));
+        list.add(new ItemStack(itemIn, 1, 2));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_150192_M = new IIcon[field_150189_b.length];
 
@@ -130,18 +130,18 @@ public class BlockQuartz extends Block
             }
             else
             {
-                this.field_150192_M[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + field_150189_b[var2]);
+                this.field_150192_M[var2] = reg.registerIcon(this.getTextureName() + "_" + field_150189_b[var2]);
             }
         }
 
-        this.field_150190_P = p_149651_1_.registerIcon(this.getTextureName() + "_" + "top");
-        this.field_150193_N = p_149651_1_.registerIcon(this.getTextureName() + "_" + "chiseled_top");
-        this.field_150194_O = p_149651_1_.registerIcon(this.getTextureName() + "_" + "lines_top");
-        this.field_150188_Q = p_149651_1_.registerIcon(this.getTextureName() + "_" + "bottom");
+        this.field_150190_P = reg.registerIcon(this.getTextureName() + "_" + "top");
+        this.field_150193_N = reg.registerIcon(this.getTextureName() + "_" + "chiseled_top");
+        this.field_150194_O = reg.registerIcon(this.getTextureName() + "_" + "lines_top");
+        this.field_150188_Q = reg.registerIcon(this.getTextureName() + "_" + "bottom");
     }
 
-    public MapColor getMapColor(int p_149728_1_)
+    public MapColor getMapColor(int meta)
     {
-        return MapColor.field_151677_p;
+        return MapColor.quartzColor;
     }
 }

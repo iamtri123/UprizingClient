@@ -87,7 +87,7 @@ public class ItemSign extends Item
 
                 if (var12 != null)
                 {
-                    p_77648_2_.func_146100_a(var12);
+                    p_77648_2_.displayGUIEditSign(var12);
                 }
 
                 return true;

@@ -18,31 +18,31 @@ public class BlockDragonEgg extends Block
         this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 1.0F, 0.9375F);
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        p_149726_1_.scheduleBlockUpdate(p_149726_2_, p_149726_3_, p_149726_4_, this, this.func_149738_a(p_149726_1_));
+        worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, this, this.func_149738_a(p_149695_1_));
+        worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        this.func_150018_e(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+        this.func_150018_e(worldIn, x, y, z);
     }
 
     private void func_150018_e(World p_150018_1_, int p_150018_2_, int p_150018_3_, int p_150018_4_)
     {
-        if (BlockFalling.func_149831_e(p_150018_1_, p_150018_2_, p_150018_3_ - 1, p_150018_4_) && p_150018_3_ >= 0)
+        if (BlockFalling.canFallBelow(p_150018_1_, p_150018_2_, p_150018_3_ - 1, p_150018_4_) && p_150018_3_ >= 0)
         {
             byte var5 = 32;
 
-            if (!BlockFalling.field_149832_M && p_150018_1_.checkChunksExist(p_150018_2_ - var5, p_150018_3_ - var5, p_150018_4_ - var5, p_150018_2_ + var5, p_150018_3_ + var5, p_150018_4_ + var5))
+            if (!BlockFalling.fallInstantly && p_150018_1_.checkChunksExist(p_150018_2_ - var5, p_150018_3_ - var5, p_150018_4_ - var5, p_150018_2_ + var5, p_150018_3_ + var5, p_150018_4_ + var5))
             {
                 EntityFallingBlock var6 = new EntityFallingBlock(p_150018_1_, (double)((float)p_150018_2_ + 0.5F), (double)((float)p_150018_3_ + 0.5F), (double)((float)p_150018_4_ + 0.5F), this);
                 p_150018_1_.spawnEntityInWorld(var6);
@@ -51,7 +51,7 @@ public class BlockDragonEgg extends Block
             {
                 p_150018_1_.setBlockToAir(p_150018_2_, p_150018_3_, p_150018_4_);
 
-                while (BlockFalling.func_149831_e(p_150018_1_, p_150018_2_, p_150018_3_ - 1, p_150018_4_) && p_150018_3_ > 0)
+                while (BlockFalling.canFallBelow(p_150018_1_, p_150018_2_, p_150018_3_ - 1, p_150018_4_) && p_150018_3_ > 0)
                 {
                     --p_150018_3_;
                 }
@@ -67,18 +67,18 @@ public class BlockDragonEgg extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        this.func_150019_m(p_149727_1_, p_149727_2_, p_149727_3_, p_149727_4_);
+        this.func_150019_m(worldIn, x, y, z);
         return true;
     }
 
     /**
      * Called when a player hits the block. Args: world, x, y, z, player
      */
-    public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_)
+    public void onBlockClicked(World worldIn, int x, int y, int z, EntityPlayer player)
     {
-        this.func_150019_m(p_149699_1_, p_149699_2_, p_149699_3_, p_149699_4_);
+        this.func_150019_m(worldIn, x, y, z);
     }
 
     private void func_150019_m(World p_150019_1_, int p_150019_2_, int p_150019_3_, int p_150019_4_)
@@ -121,7 +121,7 @@ public class BlockDragonEgg extends Block
         }
     }
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
         return 5;
     }
@@ -136,7 +136,7 @@ public class BlockDragonEgg extends Block
         return false;
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
         return true;
     }
@@ -152,7 +152,7 @@ public class BlockDragonEgg extends Block
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemById(0);
     }

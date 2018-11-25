@@ -24,33 +24,33 @@ public class BlockStoneBrick extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (p_149691_2_ < 0 || p_149691_2_ >= field_150141_b.length)
+        if (meta < 0 || meta >= field_150141_b.length)
         {
-            p_149691_2_ = 0;
+            meta = 0;
         }
 
-        return this.field_150143_M[p_149691_2_];
+        return this.field_150143_M[meta];
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
         for (int var4 = 0; var4 < 4; ++var4)
         {
-            p_149666_3_.add(new ItemStack(p_149666_1_, 1, var4));
+            list.add(new ItemStack(itemIn, 1, var4));
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_150143_M = new IIcon[field_150141_b.length];
 
@@ -63,7 +63,7 @@ public class BlockStoneBrick extends Block
                 var3 = var3 + "_" + field_150141_b[var2];
             }
 
-            this.field_150143_M[var2] = p_149651_1_.registerIcon(var3);
+            this.field_150143_M[var2] = reg.registerIcon(var3);
         }
     }
 }

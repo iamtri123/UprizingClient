@@ -160,7 +160,7 @@ public class EntityTrackerEntry
                     EntityPlayer var28 = (EntityPlayer)var27.next();
                     EntityPlayerMP var29 = (EntityPlayerMP)var28;
                     var26.updateVisiblePlayers(var29, var24);
-                    Packet var30 = Items.filled_map.func_150911_c(var24, this.myEntity.worldObj, var29);
+                    Packet var30 = Items.filled_map.createMapDataPacket(var24, this.myEntity.worldObj, var29);
 
                     if (var30 != null)
                     {
@@ -169,7 +169,7 @@ public class EntityTrackerEntry
                 }
             }
 
-            this.func_111190_b();
+            this.sendMetadataToAllAssociatedPlayers();
         }
         else if (this.ticks % this.updateFrequency == 0 || this.myEntity.isAirBorne || this.myEntity.getDataWatcher().hasChanges())
         {
@@ -237,7 +237,7 @@ public class EntityTrackerEntry
                     this.func_151259_a((Packet)var10);
                 }
 
-                this.func_111190_b();
+                this.sendMetadataToAllAssociatedPlayers();
 
                 if (var11)
                 {
@@ -270,7 +270,7 @@ public class EntityTrackerEntry
                 this.lastScaledXPosition = this.myEntity.myEntitySize.multiplyBy32AndRound(this.myEntity.posX);
                 this.lastScaledYPosition = MathHelper.floor_double(this.myEntity.posY * 32.0D);
                 this.lastScaledZPosition = this.myEntity.myEntitySize.multiplyBy32AndRound(this.myEntity.posZ);
-                this.func_111190_b();
+                this.sendMetadataToAllAssociatedPlayers();
                 this.ridingEntity = true;
             }
 
@@ -294,7 +294,7 @@ public class EntityTrackerEntry
         }
     }
 
-    private void func_111190_b()
+    private void sendMetadataToAllAssociatedPlayers()
     {
         DataWatcher var1 = this.myEntity.getDataWatcher();
 
@@ -496,7 +496,7 @@ public class EntityTrackerEntry
         {
             if (this.myEntity instanceof EntityFishHook)
             {
-                EntityPlayer var8 = ((EntityFishHook)this.myEntity).field_146042_b;
+                EntityPlayer var8 = ((EntityFishHook)this.myEntity).angler;
                 return new S0EPacketSpawnObject(this.myEntity, 90, var8 != null ? var8.getEntityId() : this.myEntity.getEntityId());
             }
             else if (this.myEntity instanceof EntityArrow)
@@ -576,7 +576,7 @@ public class EntityTrackerEntry
                 else if (this.myEntity instanceof EntityFallingBlock)
                 {
                     EntityFallingBlock var5 = (EntityFallingBlock)this.myEntity;
-                    return new S0EPacketSpawnObject(this.myEntity, 70, Block.getIdFromBlock(var5.func_145805_f()) | var5.field_145814_a << 16);
+                    return new S0EPacketSpawnObject(this.myEntity, 70, Block.getIdFromBlock(var5.getBlock()) | var5.metadata << 16);
                 }
                 else if (this.myEntity instanceof EntityPainting)
                 {

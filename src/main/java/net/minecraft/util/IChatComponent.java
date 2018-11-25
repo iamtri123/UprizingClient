@@ -18,19 +18,19 @@ import java.util.Map.Entry;
 
 public interface IChatComponent extends Iterable
 {
-    IChatComponent setChatStyle(ChatStyle p_150255_1_);
+    IChatComponent setChatStyle(ChatStyle style);
 
     ChatStyle getChatStyle();
 
     /**
      * Appends the given text to the end of this component.
      */
-    IChatComponent appendText(String p_150258_1_);
+    IChatComponent appendText(String text);
 
     /**
      * Appends the given component to the end of this one.
      */
-    IChatComponent appendSibling(IChatComponent p_150257_1_);
+    IChatComponent appendSibling(IChatComponent component);
 
     /**
      * Gets the text of this component, without any special formatting codes added, for chat.  TODO: why is this two
@@ -61,7 +61,7 @@ public interface IChatComponent extends Iterable
 
     class Serializer implements JsonDeserializer, JsonSerializer
     {
-        private static final Gson field_150700_a;
+        private static final Gson GSON;
         private static final String __OBFID = "CL_00001263";
 
         public IChatComponent deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_)
@@ -166,9 +166,9 @@ public interface IChatComponent extends Iterable
             }
         }
 
-        private void func_150695_a(ChatStyle p_150695_1_, JsonObject p_150695_2_, JsonSerializationContext p_150695_3_)
+        private void serializeChatStyle(ChatStyle style, JsonObject object, JsonSerializationContext ctx)
         {
-            JsonElement var4 = p_150695_3_.serialize(p_150695_1_);
+            JsonElement var4 = ctx.serialize(style);
 
             if (var4.isJsonObject())
             {
@@ -178,7 +178,7 @@ public interface IChatComponent extends Iterable
                 while (var6.hasNext())
                 {
                     Entry var7 = (Entry)var6.next();
-                    p_150695_2_.add((String)var7.getKey(), (JsonElement)var7.getValue());
+                    object.add((String)var7.getKey(), (JsonElement)var7.getValue());
                 }
             }
         }
@@ -195,7 +195,7 @@ public interface IChatComponent extends Iterable
 
                 if (!p_serialize_1_.getChatStyle().isEmpty())
                 {
-                    this.func_150695_a(p_serialize_1_.getChatStyle(), var4, p_serialize_3_);
+                    this.serializeChatStyle(p_serialize_1_.getChatStyle(), var4, p_serialize_3_);
                 }
 
                 if (!p_serialize_1_.getSiblings().isEmpty())
@@ -254,14 +254,14 @@ public interface IChatComponent extends Iterable
             }
         }
 
-        public static String func_150696_a(IChatComponent p_150696_0_)
+        public static String componentToJson(IChatComponent component)
         {
-            return field_150700_a.toJson(p_150696_0_);
+            return GSON.toJson(component);
         }
 
-        public static IChatComponent func_150699_a(String p_150699_0_)
+        public static IChatComponent jsonToComponent(String json)
         {
-            return (IChatComponent)field_150700_a.fromJson(p_150699_0_, IChatComponent.class);
+            return (IChatComponent)GSON.fromJson(json, IChatComponent.class);
         }
 
         public JsonElement serialize(Object p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
@@ -275,7 +275,7 @@ public interface IChatComponent extends Iterable
             var0.registerTypeHierarchyAdapter(IChatComponent.class, new IChatComponent.Serializer());
             var0.registerTypeHierarchyAdapter(ChatStyle.class, new ChatStyle.Serializer());
             var0.registerTypeAdapterFactory(new EnumTypeAdapterFactory());
-            field_150700_a = var0.create();
+            GSON = var0.create();
         }
     }
 }

@@ -81,25 +81,25 @@ public class ContainerWorkbench extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.worldObj.getBlock(this.posX, this.posY, this.posZ) == Blocks.crafting_table && p_75145_1_.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
+        return this.worldObj.getBlock(this.posX, this.posY, this.posZ) == Blocks.crafting_table && player.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ == 0)
+            if (index == 0)
             {
                 if (!this.mergeItemStack(var5, 10, 46, true))
                 {
@@ -108,14 +108,14 @@ public class ContainerWorkbench extends Container
 
                 var4.onSlotChange(var5, var3);
             }
-            else if (p_82846_2_ >= 10 && p_82846_2_ < 37)
+            else if (index >= 10 && index < 37)
             {
                 if (!this.mergeItemStack(var5, 37, 46, false))
                 {
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 37 && p_82846_2_ < 46)
+            else if (index >= 37 && index < 46)
             {
                 if (!this.mergeItemStack(var5, 10, 37, false))
                 {
@@ -141,7 +141,7 @@ public class ContainerWorkbench extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;

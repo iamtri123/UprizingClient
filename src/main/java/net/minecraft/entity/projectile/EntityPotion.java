@@ -154,17 +154,17 @@ public class EntityPotion extends EntityThrowable
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
 
-        if (p_70037_1_.func_150297_b("Potion", 10))
+        if (tagCompund.hasKey("Potion", 10))
         {
-            this.potionDamage = ItemStack.loadItemStackFromNBT(p_70037_1_.getCompoundTag("Potion"));
+            this.potionDamage = ItemStack.loadItemStackFromNBT(tagCompund.getCompoundTag("Potion"));
         }
         else
         {
-            this.setPotionDamage(p_70037_1_.getInteger("potionValue"));
+            this.setPotionDamage(tagCompund.getInteger("potionValue"));
         }
 
         if (this.potionDamage == null)
@@ -176,13 +176,13 @@ public class EntityPotion extends EntityThrowable
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
+        super.writeEntityToNBT(tagCompound);
 
         if (this.potionDamage != null)
         {
-            p_70014_1_.setTag("Potion", this.potionDamage.writeToNBT(new NBTTagCompound()));
+            tagCompound.setTag("Potion", this.potionDamage.writeToNBT(new NBTTagCompound()));
         }
     }
 }

@@ -68,7 +68,7 @@ public class Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack p_75214_1_)
+    public boolean isItemValid(ItemStack stack)
     {
         return true;
     }
@@ -148,7 +148,7 @@ public class Slot
         return true;
     }
 
-    public boolean func_111238_b()
+    public boolean canBeHovered()
     {
         return true;
     }

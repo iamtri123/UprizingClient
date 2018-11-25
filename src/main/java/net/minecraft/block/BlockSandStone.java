@@ -26,22 +26,22 @@ public class BlockSandStone extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (p_149691_1_ != 1 && (p_149691_1_ != 0 || p_149691_2_ != 1 && p_149691_2_ != 2))
+        if (side != 1 && (side != 0 || meta != 1 && meta != 2))
         {
-            if (p_149691_1_ == 0)
+            if (side == 0)
             {
                 return this.field_150160_O;
             }
             else
             {
-                if (p_149691_2_ < 0 || p_149691_2_ >= this.field_150158_M.length)
+                if (meta < 0 || meta >= this.field_150158_M.length)
                 {
-                    p_149691_2_ = 0;
+                    meta = 0;
                 }
 
-                return this.field_150158_M[p_149691_2_];
+                return this.field_150158_M[meta];
             }
         }
         else
@@ -53,28 +53,28 @@ public class BlockSandStone extends Block
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 1));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 2));
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 1));
+        list.add(new ItemStack(itemIn, 1, 2));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_150158_M = new IIcon[field_150156_b.length];
 
         for (int var2 = 0; var2 < this.field_150158_M.length; ++var2)
         {
-            this.field_150158_M[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + field_150156_b[var2]);
+            this.field_150158_M[var2] = reg.registerIcon(this.getTextureName() + "_" + field_150156_b[var2]);
         }
 
-        this.field_150159_N = p_149651_1_.registerIcon(this.getTextureName() + "_top");
-        this.field_150160_O = p_149651_1_.registerIcon(this.getTextureName() + "_bottom");
+        this.field_150159_N = reg.registerIcon(this.getTextureName() + "_top");
+        this.field_150160_O = reg.registerIcon(this.getTextureName() + "_bottom");
     }
 }

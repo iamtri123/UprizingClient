@@ -9,35 +9,35 @@ import net.minecraft.util.IChatComponent;
 
 public class S00PacketDisconnect extends Packet
 {
-    private IChatComponent field_149605_a;
+    private IChatComponent reason;
     private static final String __OBFID = "CL_00001377";
 
     public S00PacketDisconnect() {}
 
-    public S00PacketDisconnect(IChatComponent p_i45269_1_)
+    public S00PacketDisconnect(IChatComponent reasonIn)
     {
-        this.field_149605_a = p_i45269_1_;
+        this.reason = reasonIn;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149605_a = IChatComponent.Serializer.func_150699_a(p_148837_1_.readStringFromBuffer(32767));
+        this.reason = IChatComponent.Serializer.jsonToComponent(data.readStringFromBuffer(32767));
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(IChatComponent.Serializer.func_150696_a(this.field_149605_a));
+        data.writeStringToBuffer(IChatComponent.Serializer.componentToJson(this.reason));
     }
 
-    public void processPacket(INetHandlerLoginClient p_148833_1_)
+    public void processPacket(INetHandlerLoginClient handler)
     {
-        p_148833_1_.handleDisconnect(this);
+        handler.handleDisconnect(this);
     }
 
     /**
@@ -51,11 +51,11 @@ public class S00PacketDisconnect extends Packet
 
     public IChatComponent func_149603_c()
     {
-        return this.field_149605_a;
+        return this.reason;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerLoginClient)p_148833_1_);
+        this.processPacket((INetHandlerLoginClient)handler);
     }
 }

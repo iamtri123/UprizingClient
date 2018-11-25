@@ -12,12 +12,12 @@ import org.lwjgl.opengl.GL12;
 
 public class RenderFireball extends Render
 {
-    private final float field_77002_a;
+    private final float scale;
     private static final String __OBFID = "CL_00000995";
 
     public RenderFireball(float p_i1254_1_)
     {
-        this.field_77002_a = p_i1254_1_;
+        this.scale = p_i1254_1_;
     }
 
     /**
@@ -32,7 +32,7 @@ public class RenderFireball extends Render
         this.bindEntityTexture(p_76986_1_);
         GL11.glTranslatef((float)p_76986_2_, (float)p_76986_4_, (float)p_76986_6_);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        float var10 = this.field_77002_a;
+        float var10 = this.scale;
         GL11.glScalef(var10 / 1.0F, var10 / 1.0F, var10 / 1.0F);
         IIcon var11 = Items.fire_charge.getIconFromDamage(0);
         Tessellator var12 = Tessellator.instance;

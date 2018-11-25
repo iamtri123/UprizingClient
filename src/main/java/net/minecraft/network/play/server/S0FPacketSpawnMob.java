@@ -84,44 +84,44 @@ public class S0FPacketSpawnMob extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149042_a = p_148837_1_.readVarIntFromBuffer();
-        this.field_149040_b = p_148837_1_.readByte() & 255;
-        this.field_149041_c = p_148837_1_.readInt();
-        this.field_149038_d = p_148837_1_.readInt();
-        this.field_149039_e = p_148837_1_.readInt();
-        this.field_149048_i = p_148837_1_.readByte();
-        this.field_149045_j = p_148837_1_.readByte();
-        this.field_149046_k = p_148837_1_.readByte();
-        this.field_149036_f = p_148837_1_.readShort();
-        this.field_149037_g = p_148837_1_.readShort();
-        this.field_149047_h = p_148837_1_.readShort();
-        this.field_149044_m = DataWatcher.readWatchedListFromPacketBuffer(p_148837_1_);
+        this.field_149042_a = data.readVarIntFromBuffer();
+        this.field_149040_b = data.readByte() & 255;
+        this.field_149041_c = data.readInt();
+        this.field_149038_d = data.readInt();
+        this.field_149039_e = data.readInt();
+        this.field_149048_i = data.readByte();
+        this.field_149045_j = data.readByte();
+        this.field_149046_k = data.readByte();
+        this.field_149036_f = data.readShort();
+        this.field_149037_g = data.readShort();
+        this.field_149047_h = data.readShort();
+        this.field_149044_m = DataWatcher.readWatchedListFromPacketBuffer(data);
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeVarIntToBuffer(this.field_149042_a);
-        p_148840_1_.writeByte(this.field_149040_b & 255);
-        p_148840_1_.writeInt(this.field_149041_c);
-        p_148840_1_.writeInt(this.field_149038_d);
-        p_148840_1_.writeInt(this.field_149039_e);
-        p_148840_1_.writeByte(this.field_149048_i);
-        p_148840_1_.writeByte(this.field_149045_j);
-        p_148840_1_.writeByte(this.field_149046_k);
-        p_148840_1_.writeShort(this.field_149036_f);
-        p_148840_1_.writeShort(this.field_149037_g);
-        p_148840_1_.writeShort(this.field_149047_h);
-        this.field_149043_l.func_151509_a(p_148840_1_);
+        data.writeVarIntToBuffer(this.field_149042_a);
+        data.writeByte(this.field_149040_b & 255);
+        data.writeInt(this.field_149041_c);
+        data.writeInt(this.field_149038_d);
+        data.writeInt(this.field_149039_e);
+        data.writeByte(this.field_149048_i);
+        data.writeByte(this.field_149045_j);
+        data.writeByte(this.field_149046_k);
+        data.writeShort(this.field_149036_f);
+        data.writeShort(this.field_149037_g);
+        data.writeShort(this.field_149047_h);
+        this.field_149043_l.func_151509_a(data);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleSpawnMob(this);
+        handler.handleSpawnMob(this);
     }
 
     public List func_149027_c()
@@ -197,8 +197,8 @@ public class S0FPacketSpawnMob extends Packet
         return this.field_149046_k;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

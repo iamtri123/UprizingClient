@@ -18,14 +18,14 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class TileEntityBeacon extends TileEntity implements IInventory
 {
-    public static final Potion[][] field_146009_a = {{Potion.moveSpeed, Potion.digSpeed}, {Potion.resistance, Potion.jump}, {Potion.damageBoost}, {Potion.regeneration}};
+    public static final Potion[][] effectsList = {{Potion.moveSpeed, Potion.digSpeed}, {Potion.resistance, Potion.jump}, {Potion.damageBoost}, {Potion.regeneration}};
     private long field_146016_i;
     private float field_146014_j;
-    private boolean field_146015_k;
-    private int field_146012_l = -1;
-    private int field_146013_m;
-    private int field_146010_n;
-    private ItemStack field_146011_o;
+    private boolean isComplete;
+    private int levels = -1;
+    private int primaryEffect;
+    private int secondaryEffect;
+    private ItemStack payment;
     private String field_146008_p;
     private static final String __OBFID = "CL_00000339";
 
@@ -40,17 +40,17 @@ public class TileEntityBeacon extends TileEntity implements IInventory
 
     private void func_146000_x()
     {
-        if (this.field_146015_k && this.field_146012_l > 0 && !this.worldObj.isClient && this.field_146013_m > 0)
+        if (this.isComplete && this.levels > 0 && !this.worldObj.isClient && this.primaryEffect > 0)
         {
-            double var1 = (double)(this.field_146012_l * 10 + 10);
+            double var1 = (double)(this.levels * 10 + 10);
             byte var3 = 0;
 
-            if (this.field_146012_l >= 4 && this.field_146013_m == this.field_146010_n)
+            if (this.levels >= 4 && this.primaryEffect == this.secondaryEffect)
             {
                 var3 = 1;
             }
 
-            AxisAlignedBB var4 = AxisAlignedBB.getBoundingBox((double)this.field_145851_c, (double)this.field_145848_d, (double)this.field_145849_e, (double)(this.field_145851_c + 1), (double)(this.field_145848_d + 1), (double)(this.field_145849_e + 1)).expand(var1, var1, var1);
+            AxisAlignedBB var4 = AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 1), (double)(this.zCoord + 1)).expand(var1, var1, var1);
             var4.maxY = (double)this.worldObj.getHeight();
             List var5 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, var4);
             Iterator var6 = var5.iterator();
@@ -59,17 +59,17 @@ public class TileEntityBeacon extends TileEntity implements IInventory
             while (var6.hasNext())
             {
                 var7 = (EntityPlayer)var6.next();
-                var7.addPotionEffect(new PotionEffect(this.field_146013_m, 180, var3, true));
+                var7.addPotionEffect(new PotionEffect(this.primaryEffect, 180, var3, true));
             }
 
-            if (this.field_146012_l >= 4 && this.field_146013_m != this.field_146010_n && this.field_146010_n > 0)
+            if (this.levels >= 4 && this.primaryEffect != this.secondaryEffect && this.secondaryEffect > 0)
             {
                 var6 = var5.iterator();
 
                 while (var6.hasNext())
                 {
                     var7 = (EntityPlayer)var6.next();
-                    var7.addPotionEffect(new PotionEffect(this.field_146010_n, 180, 0, true));
+                    var7.addPotionEffect(new PotionEffect(this.secondaryEffect, 180, 0, true));
                 }
             }
         }
@@ -77,21 +77,21 @@ public class TileEntityBeacon extends TileEntity implements IInventory
 
     private void func_146003_y()
     {
-        int var1 = this.field_146012_l;
+        int var1 = this.levels;
 
-        if (!this.worldObj.canBlockSeeTheSky(this.field_145851_c, this.field_145848_d + 1, this.field_145849_e))
+        if (!this.worldObj.canBlockSeeTheSky(this.xCoord, this.yCoord + 1, this.zCoord))
         {
-            this.field_146015_k = false;
-            this.field_146012_l = 0;
+            this.isComplete = false;
+            this.levels = 0;
         }
         else
         {
-            this.field_146015_k = true;
-            this.field_146012_l = 0;
+            this.isComplete = true;
+            this.levels = 0;
 
-            for (int var2 = 1; var2 <= 4; this.field_146012_l = var2++)
+            for (int var2 = 1; var2 <= 4; this.levels = var2++)
             {
-                int var3 = this.field_145848_d - var2;
+                int var3 = this.yCoord - var2;
 
                 if (var3 < 0)
                 {
@@ -100,9 +100,9 @@ public class TileEntityBeacon extends TileEntity implements IInventory
 
                 boolean var4 = true;
 
-                for (int var5 = this.field_145851_c - var2; var5 <= this.field_145851_c + var2 && var4; ++var5)
+                for (int var5 = this.xCoord - var2; var5 <= this.xCoord + var2 && var4; ++var5)
                 {
-                    for (int var6 = this.field_145849_e - var2; var6 <= this.field_145849_e + var2; ++var6)
+                    for (int var6 = this.zCoord - var2; var6 <= this.zCoord + var2; ++var6)
                     {
                         Block var7 = this.worldObj.getBlock(var5, var3, var6);
 
@@ -120,27 +120,27 @@ public class TileEntityBeacon extends TileEntity implements IInventory
                 }
             }
 
-            if (this.field_146012_l == 0)
+            if (this.levels == 0)
             {
-                this.field_146015_k = false;
+                this.isComplete = false;
             }
         }
 
-        if (!this.worldObj.isClient && this.field_146012_l == 4 && var1 < this.field_146012_l)
+        if (!this.worldObj.isClient && this.levels == 4 && var1 < this.levels)
         {
-            Iterator var8 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((double)this.field_145851_c, (double)this.field_145848_d, (double)this.field_145849_e, (double)this.field_145851_c, (double)(this.field_145848_d - 4), (double)this.field_145849_e).expand(10.0D, 5.0D, 10.0D)).iterator();
+            Iterator var8 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, (double)this.xCoord, (double)(this.yCoord - 4), (double)this.zCoord).expand(10.0D, 5.0D, 10.0D)).iterator();
 
             while (var8.hasNext())
             {
                 EntityPlayer var9 = (EntityPlayer)var8.next();
-                var9.triggerAchievement(AchievementList.field_150965_K);
+                var9.triggerAchievement(AchievementList.fullBeacon);
             }
         }
     }
 
-    public float func_146002_i()
+    public float shouldBeamRender()
     {
-        if (!this.field_146015_k)
+        if (!this.isComplete)
         {
             return 0.0F;
         }
@@ -170,33 +170,33 @@ public class TileEntityBeacon extends TileEntity implements IInventory
         }
     }
 
-    public int func_146007_j()
+    public int getPrimaryEffect()
     {
-        return this.field_146013_m;
+        return this.primaryEffect;
     }
 
-    public int func_146006_k()
+    public int getSecondaryEffect()
     {
-        return this.field_146010_n;
+        return this.secondaryEffect;
     }
 
-    public int func_145998_l()
+    public int getLevels()
     {
-        return this.field_146012_l;
+        return this.levels;
     }
 
     public void func_146005_c(int p_146005_1_)
     {
-        this.field_146012_l = p_146005_1_;
+        this.levels = p_146005_1_;
     }
 
-    public void func_146001_d(int p_146001_1_)
+    public void setPrimaryEffect(int p_146001_1_)
     {
-        this.field_146013_m = 0;
+        this.primaryEffect = 0;
 
-        for (int var2 = 0; var2 < this.field_146012_l && var2 < 3; ++var2)
+        for (int var2 = 0; var2 < this.levels && var2 < 3; ++var2)
         {
-            Potion[] var3 = field_146009_a[var2];
+            Potion[] var3 = effectsList[var2];
             int var4 = var3.length;
 
             for (int var5 = 0; var5 < var4; ++var5)
@@ -205,22 +205,22 @@ public class TileEntityBeacon extends TileEntity implements IInventory
 
                 if (var6.id == p_146001_1_)
                 {
-                    this.field_146013_m = p_146001_1_;
+                    this.primaryEffect = p_146001_1_;
                     return;
                 }
             }
         }
     }
 
-    public void func_146004_e(int p_146004_1_)
+    public void setSecondaryEffect(int p_146004_1_)
     {
-        this.field_146010_n = 0;
+        this.secondaryEffect = 0;
 
-        if (this.field_146012_l >= 4)
+        if (this.levels >= 4)
         {
             for (int var2 = 0; var2 < 4; ++var2)
             {
-                Potion[] var3 = field_146009_a[var2];
+                Potion[] var3 = effectsList[var2];
                 int var4 = var3.length;
 
                 for (int var5 = 0; var5 < var4; ++var5)
@@ -229,7 +229,7 @@ public class TileEntityBeacon extends TileEntity implements IInventory
 
                     if (var6.id == p_146004_1_)
                     {
-                        this.field_146010_n = p_146004_1_;
+                        this.secondaryEffect = p_146004_1_;
                         return;
                     }
                 }
@@ -244,7 +244,7 @@ public class TileEntityBeacon extends TileEntity implements IInventory
     {
         NBTTagCompound var1 = new NBTTagCompound();
         this.writeToNBT(var1);
-        return new S35PacketUpdateTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e, 3, var1);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, var1);
     }
 
     public double getMaxRenderDistanceSquared()
@@ -252,20 +252,20 @@ public class TileEntityBeacon extends TileEntity implements IInventory
         return 65536.0D;
     }
 
-    public void readFromNBT(NBTTagCompound p_145839_1_)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(p_145839_1_);
-        this.field_146013_m = p_145839_1_.getInteger("Primary");
-        this.field_146010_n = p_145839_1_.getInteger("Secondary");
-        this.field_146012_l = p_145839_1_.getInteger("Levels");
+        super.readFromNBT(compound);
+        this.primaryEffect = compound.getInteger("Primary");
+        this.secondaryEffect = compound.getInteger("Secondary");
+        this.levels = compound.getInteger("Levels");
     }
 
-    public void writeToNBT(NBTTagCompound p_145841_1_)
+    public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(p_145841_1_);
-        p_145841_1_.setInteger("Primary", this.field_146013_m);
-        p_145841_1_.setInteger("Secondary", this.field_146010_n);
-        p_145841_1_.setInteger("Levels", this.field_146012_l);
+        super.writeToNBT(compound);
+        compound.setInteger("Primary", this.primaryEffect);
+        compound.setInteger("Secondary", this.secondaryEffect);
+        compound.setInteger("Levels", this.levels);
     }
 
     /**
@@ -279,29 +279,29 @@ public class TileEntityBeacon extends TileEntity implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
-        return p_70301_1_ == 0 ? this.field_146011_o : null;
+        return slotIn == 0 ? this.payment : null;
     }
 
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (p_70298_1_ == 0 && this.field_146011_o != null)
+        if (index == 0 && this.payment != null)
         {
-            if (p_70298_2_ >= this.field_146011_o.stackSize)
+            if (count >= this.payment.stackSize)
             {
-                ItemStack var3 = this.field_146011_o;
-                this.field_146011_o = null;
+                ItemStack var3 = this.payment;
+                this.payment = null;
                 return var3;
             }
             else
             {
-                this.field_146011_o.stackSize -= p_70298_2_;
-                return new ItemStack(this.field_146011_o.getItem(), p_70298_2_, this.field_146011_o.getItemDamage());
+                this.payment.stackSize -= count;
+                return new ItemStack(this.payment.getItem(), count, this.payment.getItemDamage());
             }
         }
         else
@@ -314,12 +314,12 @@ public class TileEntityBeacon extends TileEntity implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (p_70304_1_ == 0 && this.field_146011_o != null)
+        if (index == 0 && this.payment != null)
         {
-            ItemStack var2 = this.field_146011_o;
-            this.field_146011_o = null;
+            ItemStack var2 = this.payment;
+            this.payment = null;
             return var2;
         }
         else
@@ -331,11 +331,11 @@ public class TileEntityBeacon extends TileEntity implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        if (p_70299_1_ == 0)
+        if (index == 0)
         {
-            this.field_146011_o = p_70299_2_;
+            this.payment = stack;
         }
     }
 
@@ -374,9 +374,9 @@ public class TileEntityBeacon extends TileEntity implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) == this && p_70300_1_.getDistanceSq((double) this.field_145851_c + 0.5D, (double) this.field_145848_d + 0.5D, (double) this.field_145849_e + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     public void openInventory() {}
@@ -386,8 +386,8 @@ public class TileEntityBeacon extends TileEntity implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return p_94041_2_.getItem() == Items.emerald || p_94041_2_.getItem() == Items.diamond || p_94041_2_.getItem() == Items.gold_ingot || p_94041_2_.getItem() == Items.iron_ingot;
+        return stack.getItem() == Items.emerald || stack.getItem() == Items.diamond || stack.getItem() == Items.gold_ingot || stack.getItem() == Items.iron_ingot;
     }
 }

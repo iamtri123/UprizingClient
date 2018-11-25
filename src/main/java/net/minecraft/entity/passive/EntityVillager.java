@@ -223,30 +223,30 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("Profession", this.getProfession());
-        p_70014_1_.setInteger("Riches", this.wealth);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("Profession", this.getProfession());
+        tagCompound.setInteger("Riches", this.wealth);
 
         if (this.buyingList != null)
         {
-            p_70014_1_.setTag("Offers", this.buyingList.getRecipiesAsTags());
+            tagCompound.setTag("Offers", this.buyingList.getRecipiesAsTags());
         }
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.setProfession(p_70037_1_.getInteger("Profession"));
-        this.wealth = p_70037_1_.getInteger("Riches");
+        super.readEntityFromNBT(tagCompund);
+        this.setProfession(tagCompund.getInteger("Profession"));
+        this.wealth = tagCompund.getInteger("Riches");
 
-        if (p_70037_1_.func_150297_b("Offers", 10))
+        if (tagCompund.hasKey("Offers", 10))
         {
-            NBTTagCompound var2 = p_70037_1_.getCompoundTag("Offers");
+            NBTTagCompound var2 = tagCompund.getCompoundTag("Offers");
             this.buyingList = new MerchantRecipeList(var2);
         }
     }
@@ -416,7 +416,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
         }
     }
 
-    public void func_110297_a_(ItemStack p_110297_1_)
+    public void verifySellingItem(ItemStack p_110297_1_)
     {
         if (!this.worldObj.isClient && this.livingSoundTime > -this.getTalkInterval() + 20)
         {

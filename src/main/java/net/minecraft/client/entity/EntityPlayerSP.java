@@ -83,7 +83,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public EntityPlayerSP(Minecraft p_i1238_1_, World p_i1238_2_, Session p_i1238_3_, int p_i1238_4_)
     {
-        super(p_i1238_2_, p_i1238_3_.func_148256_e());
+        super(p_i1238_2_, p_i1238_3_.getProfile());
         this.mc = p_i1238_1_;
         this.dimension = p_i1238_4_;
     }
@@ -181,7 +181,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 }
 
                 if (this.timeInPortal == 0.0F) {
-                    this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("portal.trigger"), this.rand.nextFloat() * 0.4F + 0.8F));
+                    this.mc.getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("portal.trigger"), this.rand.nextFloat() * 0.4F + 0.8F));
                 }
 
                 this.timeInPortal += 0.0125F;
@@ -226,10 +226,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 this.ySize = 0.2F;
             }
 
-            this.func_145771_j(this.posX - (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double) this.width * 0.35D);
-            this.func_145771_j(this.posX - (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double) this.width * 0.35D);
-            this.func_145771_j(this.posX + (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double) this.width * 0.35D);
-            this.func_145771_j(this.posX + (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double) this.width * 0.35D);
+            this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double) this.width * 0.35D);
+            this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double) this.width * 0.35D);
+            this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double) this.width * 0.35D);
+            this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double) this.width * 0.35D);
             boolean var4 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
 			final boolean var5 = this.movementInput.moveForward >= var2;
@@ -320,7 +320,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
                 if (var1 && !this.movementInput.jump) {
                     this.horseJumpPowerCounter = -10;
-                    this.func_110318_g();
+                    this.sendHorseJump();
                 } else if (!var1 && this.movementInput.jump) {
                     this.horseJumpPowerCounter = 0;
                     this.horseJumpPower = 0.0F;
@@ -395,7 +395,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
         this.mc.displayGuiScreen((GuiScreen)null);
     }
 
-    public void func_146100_a(TileEntity p_146100_1_)
+    public void displayGUIEditSign(TileEntity p_146100_1_)
     {
         if (p_146100_1_ instanceof TileEntitySign)
         {
@@ -556,7 +556,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public void addChatComponentMessage(IChatComponent p_146105_1_)
     {
-        this.mc.ingameGUI.getChatGUI().func_146227_a(p_146105_1_);
+        this.mc.ingameGUI.getChatGUI().printChatMessage(p_146105_1_);
     }
 
     private boolean isBlockTranslucent(int p_71153_1_, int p_71153_2_, int p_71153_3_)
@@ -564,13 +564,13 @@ public class EntityPlayerSP extends AbstractClientPlayer
         return this.worldObj.getBlock(p_71153_1_, p_71153_2_, p_71153_3_).isNormalCube();
     }
 
-    protected boolean func_145771_j(double p_145771_1_, double p_145771_3_, double p_145771_5_)
+    protected boolean pushOutOfBlocks(double x, double y, double z)
     {
-        int var7 = MathHelper.floor_double(p_145771_1_);
-        int var8 = MathHelper.floor_double(p_145771_3_);
-        int var9 = MathHelper.floor_double(p_145771_5_);
-        double var10 = p_145771_1_ - (double)var7;
-        double var12 = p_145771_5_ - (double)var9;
+        int var7 = MathHelper.floor_double(x);
+        int var8 = MathHelper.floor_double(y);
+        int var9 = MathHelper.floor_double(z);
+        double var10 = x - (double)var7;
+        double var12 = z - (double)var9;
 
         if (this.isBlockTranslucent(var7, var8, var9) || this.isBlockTranslucent(var7, var8 + 1, var9))
         {
@@ -634,10 +634,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Set sprinting switch for Entity.
      */
-    public void setSprinting(boolean p_70031_1_)
+    public void setSprinting(boolean sprinting)
     {
-        super.setSprinting(p_70031_1_);
-        this.sprintingTicksLeft = p_70031_1_ ? 600 : 0;
+        super.setSprinting(sprinting);
+        this.sprintingTicksLeft = sprinting ? 600 : 0;
     }
 
     /**
@@ -656,17 +656,17 @@ public class EntityPlayerSP extends AbstractClientPlayer
      * (like "I fetched this block for you by ID, but I'd like you to know that every time you do this, I die a little
      * inside"), and errors (like "it's not called iron_pixacke, silly").
      */
-    public void addChatMessage(IChatComponent p_145747_1_)
+    public void addChatMessage(IChatComponent message)
     {
-        this.mc.ingameGUI.getChatGUI().func_146227_a(p_145747_1_);
+        this.mc.ingameGUI.getChatGUI().printChatMessage(message);
     }
 
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_)
+    public boolean canCommandSenderUseCommand(int permissionLevel, String command)
     {
-        return p_70003_1_ <= 0;
+        return permissionLevel <= 0;
     }
 
     /**
@@ -677,9 +677,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
         return new ChunkCoordinates(MathHelper.floor_double(this.posX + 0.5D), MathHelper.floor_double(this.posY + 0.5D), MathHelper.floor_double(this.posZ + 0.5D));
     }
 
-    public void playSound(String p_85030_1_, float p_85030_2_, float p_85030_3_)
+    public void playSound(String name, float volume, float pitch)
     {
-        this.worldObj.playSound(this.posX, this.posY - (double)this.yOffset, this.posZ, p_85030_1_, p_85030_2_, p_85030_3_, false);
+        this.worldObj.playSound(this.posX, this.posY - (double)this.yOffset, this.posZ, name, volume, pitch, false);
     }
 
     /**
@@ -700,5 +700,5 @@ public class EntityPlayerSP extends AbstractClientPlayer
         return this.horseJumpPower;
     }
 
-    protected void func_110318_g() {}
+    protected void sendHorseJump() {}
 }

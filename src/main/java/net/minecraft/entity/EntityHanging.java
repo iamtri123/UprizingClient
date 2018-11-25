@@ -225,9 +225,9 @@ public abstract class EntityHanging extends Entity
     /**
      * Called when a player attacks an entity. If this returns true the attack will not happen.
      */
-    public boolean hitByEntity(Entity p_85031_1_)
+    public boolean hitByEntity(Entity entityIn)
     {
-        return p_85031_1_ instanceof EntityPlayer && this.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) p_85031_1_), 0.0F);
+        return entityIn instanceof EntityPlayer && this.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) entityIn), 0.0F);
     }
 
     public void func_145781_i(int p_145781_1_)
@@ -238,7 +238,7 @@ public abstract class EntityHanging extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -250,7 +250,7 @@ public abstract class EntityHanging extends Entity
             {
                 this.setDead();
                 this.setBeenAttacked();
-                this.onBroken(p_70097_1_.getEntity());
+                this.onBroken(source.getEntity());
             }
 
             return true;
@@ -260,9 +260,9 @@ public abstract class EntityHanging extends Entity
     /**
      * Tries to moves the entity by the passed in displacement. Args: x, y, z
      */
-    public void moveEntity(double p_70091_1_, double p_70091_3_, double p_70091_5_)
+    public void moveEntity(double x, double y, double z)
     {
-        if (!this.worldObj.isClient && !this.isDead && p_70091_1_ * p_70091_1_ + p_70091_3_ * p_70091_3_ + p_70091_5_ * p_70091_5_ > 0.0D)
+        if (!this.worldObj.isClient && !this.isDead && x * x + y * y + z * z > 0.0D)
         {
             this.setDead();
             this.onBroken((Entity)null);
@@ -272,9 +272,9 @@ public abstract class EntityHanging extends Entity
     /**
      * Adds to the current velocity of the entity. Args: x, y, z
      */
-    public void addVelocity(double p_70024_1_, double p_70024_3_, double p_70024_5_)
+    public void addVelocity(double x, double y, double z)
     {
-        if (!this.worldObj.isClient && !this.isDead && p_70024_1_ * p_70024_1_ + p_70024_3_ * p_70024_3_ + p_70024_5_ * p_70024_5_ > 0.0D)
+        if (!this.worldObj.isClient && !this.isDead && x * x + y * y + z * z > 0.0D)
         {
             this.setDead();
             this.onBroken((Entity)null);
@@ -284,44 +284,44 @@ public abstract class EntityHanging extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setByte("Direction", (byte)this.hangingDirection);
-        p_70014_1_.setInteger("TileX", this.field_146063_b);
-        p_70014_1_.setInteger("TileY", this.field_146064_c);
-        p_70014_1_.setInteger("TileZ", this.field_146062_d);
+        tagCompound.setByte("Direction", (byte)this.hangingDirection);
+        tagCompound.setInteger("TileX", this.field_146063_b);
+        tagCompound.setInteger("TileY", this.field_146064_c);
+        tagCompound.setInteger("TileZ", this.field_146062_d);
 
         switch (this.hangingDirection)
         {
             case 0:
-                p_70014_1_.setByte("Dir", (byte)2);
+                tagCompound.setByte("Dir", (byte)2);
                 break;
 
             case 1:
-                p_70014_1_.setByte("Dir", (byte)1);
+                tagCompound.setByte("Dir", (byte)1);
                 break;
 
             case 2:
-                p_70014_1_.setByte("Dir", (byte)0);
+                tagCompound.setByte("Dir", (byte)0);
                 break;
 
             case 3:
-                p_70014_1_.setByte("Dir", (byte)3);
+                tagCompound.setByte("Dir", (byte)3);
         }
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        if (p_70037_1_.func_150297_b("Direction", 99))
+        if (tagCompund.hasKey("Direction", 99))
         {
-            this.hangingDirection = p_70037_1_.getByte("Direction");
+            this.hangingDirection = tagCompund.getByte("Direction");
         }
         else
         {
-            switch (p_70037_1_.getByte("Dir"))
+            switch (tagCompund.getByte("Dir"))
             {
                 case 0:
                     this.hangingDirection = 2;
@@ -340,9 +340,9 @@ public abstract class EntityHanging extends Entity
             }
         }
 
-        this.field_146063_b = p_70037_1_.getInteger("TileX");
-        this.field_146064_c = p_70037_1_.getInteger("TileY");
-        this.field_146062_d = p_70037_1_.getInteger("TileZ");
+        this.field_146063_b = tagCompund.getInteger("TileX");
+        this.field_146064_c = tagCompund.getInteger("TileY");
+        this.field_146062_d = tagCompund.getInteger("TileZ");
         this.setDirection(this.hangingDirection);
     }
 

@@ -122,17 +122,17 @@ public class MerchantRecipe
         NBTTagCompound var3 = p_77390_1_.getCompoundTag("sell");
         this.itemToSell = ItemStack.loadItemStackFromNBT(var3);
 
-        if (p_77390_1_.func_150297_b("buyB", 10))
+        if (p_77390_1_.hasKey("buyB", 10))
         {
             this.secondItemToBuy = ItemStack.loadItemStackFromNBT(p_77390_1_.getCompoundTag("buyB"));
         }
 
-        if (p_77390_1_.func_150297_b("uses", 99))
+        if (p_77390_1_.hasKey("uses", 99))
         {
             this.toolUses = p_77390_1_.getInteger("uses");
         }
 
-        if (p_77390_1_.func_150297_b("maxUses", 99))
+        if (p_77390_1_.hasKey("maxUses", 99))
         {
             this.maxTradeUses = p_77390_1_.getInteger("maxUses");
         }

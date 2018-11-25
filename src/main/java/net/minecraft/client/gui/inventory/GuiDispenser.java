@@ -9,29 +9,29 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiDispenser extends GuiContainer
 {
-    private static final ResourceLocation field_147088_v = new ResourceLocation("textures/gui/container/dispenser.png");
-    public TileEntityDispenser field_147089_u;
+    private static final ResourceLocation dispenserGuiTextures = new ResourceLocation("textures/gui/container/dispenser.png");
+    public TileEntityDispenser tileDispenser;
     private static final String __OBFID = "CL_00000765";
 
     public GuiDispenser(InventoryPlayer p_i46384_1_, TileEntityDispenser p_i46384_2_)
     {
         super(new ContainerDispenser(p_i46384_1_, p_i46384_2_));
-        this.field_147089_u = p_i46384_2_;
+        this.tileDispenser = p_i46384_2_;
     }
 
-    protected void func_146979_b(int p_146979_1_, int p_146979_2_)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        String var3 = this.field_147089_u.isInventoryNameLocalized() ? this.field_147089_u.getInventoryName() : I18n.format(this.field_147089_u.getInventoryName());
-        this.fontRendererObj.drawString(var3, this.field_146999_f / 2 - this.fontRendererObj.getStringWidth(var3) / 2, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.field_147000_g - 96 + 2, 4210752);
+        String var3 = this.tileDispenser.isInventoryNameLocalized() ? this.tileDispenser.getInventoryName() : I18n.format(this.tileDispenser.getInventoryName());
+        this.fontRendererObj.drawString(var3, this.xSize / 2 - this.fontRendererObj.getStringWidth(var3) / 2, 6, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
-    protected void func_146976_a(float p_146976_1_, int p_146976_2_, int p_146976_3_)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(field_147088_v);
-        int var4 = (this.width - this.field_146999_f) / 2;
-        int var5 = (this.height - this.field_147000_g) / 2;
-        this.drawTexturedModalRect(var4, var5, 0, 0, this.field_146999_f, this.field_147000_g);
+        this.mc.getTextureManager().bindTexture(dispenserGuiTextures);
+        int var4 = (this.width - this.xSize) / 2;
+        int var5 = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
     }
 }

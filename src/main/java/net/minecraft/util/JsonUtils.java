@@ -227,15 +227,15 @@ public class JsonUtils
         }
     }
 
-    public static JsonObject func_152754_s(JsonObject p_152754_0_, String p_152754_1_)
+    public static JsonObject getJsonObject(JsonObject base, String key)
     {
-        if (p_152754_0_.has(p_152754_1_))
+        if (base.has(key))
         {
-            return getJsonElementAsJsonObject(p_152754_0_.get(p_152754_1_), p_152754_1_);
+            return getJsonElementAsJsonObject(base.get(key), key);
         }
         else
         {
-            throw new JsonSyntaxException("Missing " + p_152754_1_ + ", expected to find a JsonObject");
+            throw new JsonSyntaxException("Missing " + key + ", expected to find a JsonObject");
         }
     }
 

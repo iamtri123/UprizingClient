@@ -8,7 +8,7 @@ import net.minecraft.network.play.INetHandlerPlayClient;
 
 public class S34PacketMaps extends Packet
 {
-    private int field_149191_a;
+    private int mapId;
     private byte[] field_149190_b;
     private static final String __OBFID = "CL_00001311";
 
@@ -16,33 +16,33 @@ public class S34PacketMaps extends Packet
 
     public S34PacketMaps(int p_i45202_1_, byte[] p_i45202_2_)
     {
-        this.field_149191_a = p_i45202_1_;
+        this.mapId = p_i45202_1_;
         this.field_149190_b = p_i45202_2_;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149191_a = p_148837_1_.readVarIntFromBuffer();
-        this.field_149190_b = new byte[p_148837_1_.readUnsignedShort()];
-        p_148837_1_.readBytes(this.field_149190_b);
+        this.mapId = data.readVarIntFromBuffer();
+        this.field_149190_b = new byte[data.readUnsignedShort()];
+        data.readBytes(this.field_149190_b);
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeVarIntToBuffer(this.field_149191_a);
-        p_148840_1_.writeShort(this.field_149190_b.length);
-        p_148840_1_.writeBytes(this.field_149190_b);
+        data.writeVarIntToBuffer(this.mapId);
+        data.writeShort(this.field_149190_b.length);
+        data.writeBytes(this.field_149190_b);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleMaps(this);
+        handler.handleMaps(this);
     }
 
     /**
@@ -50,21 +50,21 @@ public class S34PacketMaps extends Packet
      */
     public String serialize()
     {
-        return String.format("id=%d, length=%d", Integer.valueOf(this.field_149191_a), Integer.valueOf(this.field_149190_b.length));
+        return String.format("id=%d, length=%d", Integer.valueOf(this.mapId), Integer.valueOf(this.field_149190_b.length));
     }
 
-    public int func_149188_c()
+    public int getMapId()
     {
-        return this.field_149191_a;
+        return this.mapId;
     }
 
-    public byte[] func_149187_d()
+    public byte[] getData()
     {
         return this.field_149190_b;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

@@ -60,19 +60,19 @@ public class EntitySlime extends EntityLiving implements IMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("Size", this.getSlimeSize() - 1);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("Size", this.getSlimeSize() - 1);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        int var2 = p_70037_1_.getInteger("Size");
+        super.readEntityFromNBT(tagCompund);
+        int var2 = tagCompund.getInteger("Size");
 
         if (var2 < 0)
         {
@@ -234,13 +234,13 @@ public class EntitySlime extends EntityLiving implements IMob
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer p_70100_1_)
+    public void onCollideWithPlayer(EntityPlayer entityIn)
     {
         if (this.canDamagePlayer())
         {
             int var2 = this.getSlimeSize();
 
-            if (this.canEntityBeSeen(p_70100_1_) && this.getDistanceSqToEntity(p_70100_1_) < 0.6D * (double)var2 * 0.6D * (double)var2 && p_70100_1_.attackEntityFrom(DamageSource.causeMobDamage(this), (float)this.getAttackStrength()))
+            if (this.canEntityBeSeen(entityIn) && this.getDistanceSqToEntity(entityIn) < 0.6D * (double)var2 * 0.6D * (double)var2 && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)this.getAttackStrength()))
             {
                 this.playSound("mob.attack", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
             }
@@ -279,7 +279,7 @@ public class EntitySlime extends EntityLiving implements IMob
         return "mob.slime." + (this.getSlimeSize() > 1 ? "big" : "small");
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return this.getSlimeSize() == 1 ? Items.slime_ball : Item.getItemById(0);
     }

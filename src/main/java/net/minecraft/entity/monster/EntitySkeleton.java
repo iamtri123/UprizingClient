@@ -104,7 +104,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
         return "mob.skeleton.death";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.skeleton.step", 0.15F, 1.0F);
     }
@@ -214,7 +214,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
         }
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.arrow;
     }
@@ -233,7 +233,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
 
             for (var4 = 0; var4 < var3; ++var4)
             {
-                this.func_145779_a(Items.coal, 1);
+                this.dropItem(Items.coal, 1);
             }
         }
         else
@@ -242,7 +242,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
 
             for (var4 = 0; var4 < var3; ++var4)
             {
-                this.func_145779_a(Items.arrow, 1);
+                this.dropItem(Items.arrow, 1);
             }
         }
 
@@ -250,7 +250,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.bone, 1);
+            this.dropItem(Items.bone, 1);
         }
     }
 
@@ -289,7 +289,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
             this.enchantEquipment();
         }
 
-        this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * this.worldObj.func_147462_b(this.posX, this.posY, this.posZ));
+        this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * this.worldObj.getTensionFactorForBlock(this.posX, this.posY, this.posZ));
 
         if (this.getEquipmentInSlot(4) == null)
         {
@@ -382,13 +382,13 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
 
-        if (p_70037_1_.func_150297_b("SkeletonType", 99))
+        if (tagCompund.hasKey("SkeletonType", 99))
         {
-            byte var2 = p_70037_1_.getByte("SkeletonType");
+            byte var2 = tagCompund.getByte("SkeletonType");
             this.setSkeletonType(var2);
         }
 
@@ -398,20 +398,20 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setByte("SkeletonType", (byte)this.getSkeletonType());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setByte("SkeletonType", (byte)this.getSkeletonType());
     }
 
     /**
      * Sets the held item, or an armor slot. Slot 0 is held item. Slot 1-4 is armor. Params: Item, slot
      */
-    public void setCurrentItemOrArmor(int p_70062_1_, ItemStack p_70062_2_)
+    public void setCurrentItemOrArmor(int slotIn, ItemStack itemStackIn)
     {
-        super.setCurrentItemOrArmor(p_70062_1_, p_70062_2_);
+        super.setCurrentItemOrArmor(slotIn, itemStackIn);
 
-        if (!this.worldObj.isClient && p_70062_1_ == 0)
+        if (!this.worldObj.isClient && slotIn == 0)
         {
             this.setCombatTask();
         }

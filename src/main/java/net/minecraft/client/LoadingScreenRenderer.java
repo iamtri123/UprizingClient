@@ -198,7 +198,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
                     this.field_146588_g.framebufferRender(var6 * var5, var7 * var5);
                 }
 
-                this.mc.func_147120_f();
+                this.mc.resetSize();
 
                 try
                 {
@@ -211,5 +211,5 @@ public class LoadingScreenRenderer implements IProgressUpdate
         }
     }
 
-    public void func_146586_a() {}
+    public void setDoneWorking() {}
 }

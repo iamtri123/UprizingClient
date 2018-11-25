@@ -69,18 +69,18 @@ public class EntityPainting extends EntityHanging
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setString("Motive", this.art.title);
-        super.writeEntityToNBT(p_70014_1_);
+        tagCompound.setString("Motive", this.art.title);
+        super.writeEntityToNBT(tagCompound);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        String var2 = p_70037_1_.getString("Motive");
+        String var2 = tagCompund.getString("Motive");
         EntityPainting.EnumArt[] var3 = EntityPainting.EnumArt.values();
         int var4 = var3.length;
 
@@ -99,7 +99,7 @@ public class EntityPainting extends EntityHanging
             this.art = EntityPainting.EnumArt.Kebab;
         }
 
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
     }
 
     public int getWidthPixels()

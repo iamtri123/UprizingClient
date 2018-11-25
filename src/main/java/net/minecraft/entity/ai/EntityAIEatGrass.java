@@ -8,15 +8,15 @@ import net.minecraft.world.World;
 
 public class EntityAIEatGrass extends EntityAIBase
 {
-    private final EntityLiving field_151500_b;
-    private final World field_151501_c;
-    int field_151502_a;
+    private final EntityLiving grassEaterEntity;
+    private final World entityWorld;
+    int eatingGrassTimer;
     private static final String __OBFID = "CL_00001582";
 
     public EntityAIEatGrass(EntityLiving p_i45314_1_)
     {
-        this.field_151500_b = p_i45314_1_;
-        this.field_151501_c = p_i45314_1_.worldObj;
+        this.grassEaterEntity = p_i45314_1_;
+        this.entityWorld = p_i45314_1_.worldObj;
         this.setMutexBits(7);
     }
 
@@ -25,16 +25,16 @@ public class EntityAIEatGrass extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        if (this.field_151500_b.getRNG().nextInt(this.field_151500_b.isChild() ? 50 : 1000) != 0)
+        if (this.grassEaterEntity.getRNG().nextInt(this.grassEaterEntity.isChild() ? 50 : 1000) != 0)
         {
             return false;
         }
         else
         {
-            int var1 = MathHelper.floor_double(this.field_151500_b.posX);
-            int var2 = MathHelper.floor_double(this.field_151500_b.posY);
-            int var3 = MathHelper.floor_double(this.field_151500_b.posZ);
-            return this.field_151501_c.getBlock(var1, var2, var3) == Blocks.tallgrass && this.field_151501_c.getBlockMetadata(var1, var2, var3) == 1 || this.field_151501_c.getBlock(var1, var2 - 1, var3) == Blocks.grass;
+            int var1 = MathHelper.floor_double(this.grassEaterEntity.posX);
+            int var2 = MathHelper.floor_double(this.grassEaterEntity.posY);
+            int var3 = MathHelper.floor_double(this.grassEaterEntity.posZ);
+            return this.entityWorld.getBlock(var1, var2, var3) == Blocks.tallgrass && this.entityWorld.getBlockMetadata(var1, var2, var3) == 1 || this.entityWorld.getBlock(var1, var2 - 1, var3) == Blocks.grass;
         }
     }
 
@@ -43,9 +43,9 @@ public class EntityAIEatGrass extends EntityAIBase
      */
     public void startExecuting()
     {
-        this.field_151502_a = 40;
-        this.field_151501_c.setEntityState(this.field_151500_b, (byte)10);
-        this.field_151500_b.getNavigator().clearPathEntity();
+        this.eatingGrassTimer = 40;
+        this.entityWorld.setEntityState(this.grassEaterEntity, (byte)10);
+        this.grassEaterEntity.getNavigator().clearPathEntity();
     }
 
     /**
@@ -53,7 +53,7 @@ public class EntityAIEatGrass extends EntityAIBase
      */
     public void resetTask()
     {
-        this.field_151502_a = 0;
+        this.eatingGrassTimer = 0;
     }
 
     /**
@@ -61,12 +61,12 @@ public class EntityAIEatGrass extends EntityAIBase
      */
     public boolean continueExecuting()
     {
-        return this.field_151502_a > 0;
+        return this.eatingGrassTimer > 0;
     }
 
-    public int func_151499_f()
+    public int getEatingGrassTimer()
     {
-        return this.field_151502_a;
+        return this.eatingGrassTimer;
     }
 
     /**
@@ -74,32 +74,32 @@ public class EntityAIEatGrass extends EntityAIBase
      */
     public void updateTask()
     {
-        this.field_151502_a = Math.max(0, this.field_151502_a - 1);
+        this.eatingGrassTimer = Math.max(0, this.eatingGrassTimer - 1);
 
-        if (this.field_151502_a == 4)
+        if (this.eatingGrassTimer == 4)
         {
-            int var1 = MathHelper.floor_double(this.field_151500_b.posX);
-            int var2 = MathHelper.floor_double(this.field_151500_b.posY);
-            int var3 = MathHelper.floor_double(this.field_151500_b.posZ);
+            int var1 = MathHelper.floor_double(this.grassEaterEntity.posX);
+            int var2 = MathHelper.floor_double(this.grassEaterEntity.posY);
+            int var3 = MathHelper.floor_double(this.grassEaterEntity.posZ);
 
-            if (this.field_151501_c.getBlock(var1, var2, var3) == Blocks.tallgrass)
+            if (this.entityWorld.getBlock(var1, var2, var3) == Blocks.tallgrass)
             {
-                if (this.field_151501_c.getGameRules().getGameRuleBooleanValue("mobGriefing"))
+                if (this.entityWorld.getGameRules().getGameRuleBooleanValue("mobGriefing"))
                 {
-                    this.field_151501_c.func_147480_a(var1, var2, var3, false);
+                    this.entityWorld.breakBlock(var1, var2, var3, false);
                 }
 
-                this.field_151500_b.eatGrassBonus();
+                this.grassEaterEntity.eatGrassBonus();
             }
-            else if (this.field_151501_c.getBlock(var1, var2 - 1, var3) == Blocks.grass)
+            else if (this.entityWorld.getBlock(var1, var2 - 1, var3) == Blocks.grass)
             {
-                if (this.field_151501_c.getGameRules().getGameRuleBooleanValue("mobGriefing"))
+                if (this.entityWorld.getGameRules().getGameRuleBooleanValue("mobGriefing"))
                 {
-                    this.field_151501_c.playAuxSFX(2001, var1, var2 - 1, var3, Block.getIdFromBlock(Blocks.grass));
-                    this.field_151501_c.setBlock(var1, var2 - 1, var3, Blocks.dirt, 0, 2);
+                    this.entityWorld.playAuxSFX(2001, var1, var2 - 1, var3, Block.getIdFromBlock(Blocks.grass));
+                    this.entityWorld.setBlock(var1, var2 - 1, var3, Blocks.dirt, 0, 2);
                 }
 
-                this.field_151500_b.eatGrassBonus();
+                this.grassEaterEntity.eatGrassBonus();
             }
         }
     }

@@ -27,39 +27,39 @@ public class BlockFlower extends BlockBush
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (p_149691_2_ >= this.field_149861_N.length)
+        if (meta >= this.field_149861_N.length)
         {
-            p_149691_2_ = 0;
+            meta = 0;
         }
 
-        return this.field_149861_N[p_149691_2_];
+        return this.field_149861_N[meta];
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_149861_N = new IIcon[field_149860_M[this.field_149862_O].length];
 
         for (int var2 = 0; var2 < this.field_149861_N.length; ++var2)
         {
-            this.field_149861_N[var2] = p_149651_1_.registerIcon(field_149860_M[this.field_149862_O][var2]);
+            this.field_149861_N[var2] = reg.registerIcon(field_149860_M[this.field_149862_O][var2]);
         }
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
         for (int var4 = 0; var4 < this.field_149861_N.length; ++var4)
         {
-            p_149666_3_.add(new ItemStack(p_149666_1_, 1, var4));
+            list.add(new ItemStack(itemIn, 1, var4));
         }
     }
 

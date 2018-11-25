@@ -36,7 +36,7 @@ public class WorldGenMegaPineTree extends WorldGenHugeTrees
 
                 if (var8.getMaterial() == Material.air || var8.getMaterial() == Material.leaves)
                 {
-                    this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var7, p_76484_5_, Blocks.log, this.woodMetadata);
+                    this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var7, p_76484_5_, Blocks.log, this.woodMetadata);
                 }
 
                 if (var7 < var6 - 1)
@@ -45,21 +45,21 @@ public class WorldGenMegaPineTree extends WorldGenHugeTrees
 
                     if (var8.getMaterial() == Material.air || var8.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var7, p_76484_5_, Blocks.log, this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var7, p_76484_5_, Blocks.log, this.woodMetadata);
                     }
 
                     var8 = p_76484_1_.getBlock(p_76484_3_ + 1, p_76484_4_ + var7, p_76484_5_ + 1);
 
                     if (var8.getMaterial() == Material.air || var8.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var7, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var7, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
                     }
 
                     var8 = p_76484_1_.getBlock(p_76484_3_, p_76484_4_ + var7, p_76484_5_ + 1);
 
                     if (var8.getMaterial() == Material.air || var8.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var7, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var7, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
                     }
                 }
             }
@@ -134,7 +134,7 @@ public class WorldGenMegaPineTree extends WorldGenHugeTrees
 
             if (var6 == Blocks.grass || var6 == Blocks.dirt)
             {
-                this.func_150516_a(p_150540_1_, p_150540_2_, var5, p_150540_4_, Blocks.dirt, 2);
+                this.setBlockAndNotifyAdequately(p_150540_1_, p_150540_2_, var5, p_150540_4_, Blocks.dirt, 2);
                 break;
             }
 

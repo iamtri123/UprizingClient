@@ -32,9 +32,9 @@ public class EntityFireworkRocket extends Entity
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double p_70112_1_)
+    public boolean isInRangeToRenderDist(double distance)
     {
-        return p_70112_1_ < 4096.0D;
+        return distance < 4096.0D;
     }
 
     public EntityFireworkRocket(World p_i1763_1_, double p_i1763_2_, double p_i1763_4_, double p_i1763_6_, ItemStack p_i1763_8_)
@@ -67,17 +67,17 @@ public class EntityFireworkRocket extends Entity
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double p_70016_1_, double p_70016_3_, double p_70016_5_)
+    public void setVelocity(double x, double y, double z)
     {
-        this.motionX = p_70016_1_;
-        this.motionY = p_70016_3_;
-        this.motionZ = p_70016_5_;
+        this.motionX = x;
+        this.motionY = y;
+        this.motionZ = z;
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
-            float var7 = MathHelper.sqrt_double(p_70016_1_ * p_70016_1_ + p_70016_5_ * p_70016_5_);
-            this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(p_70016_1_, p_70016_5_) * 180.0D / Math.PI);
-            this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(p_70016_3_, (double)var7) * 180.0D / Math.PI);
+            float var7 = MathHelper.sqrt_double(x * x + z * z);
+            this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(x, z) * 180.0D / Math.PI);
+            this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(y, (double)var7) * 180.0D / Math.PI);
         }
     }
 
@@ -159,28 +159,28 @@ public class EntityFireworkRocket extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setInteger("Life", this.fireworkAge);
-        p_70014_1_.setInteger("LifeTime", this.lifetime);
+        tagCompound.setInteger("Life", this.fireworkAge);
+        tagCompound.setInteger("LifeTime", this.lifetime);
         ItemStack var2 = this.dataWatcher.getWatchableObjectItemStack(8);
 
         if (var2 != null)
         {
             NBTTagCompound var3 = new NBTTagCompound();
             var2.writeToNBT(var3);
-            p_70014_1_.setTag("FireworksItem", var3);
+            tagCompound.setTag("FireworksItem", var3);
         }
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        this.fireworkAge = p_70037_1_.getInteger("Life");
-        this.lifetime = p_70037_1_.getInteger("LifeTime");
-        NBTTagCompound var2 = p_70037_1_.getCompoundTag("FireworksItem");
+        this.fireworkAge = tagCompund.getInteger("Life");
+        this.lifetime = tagCompund.getInteger("LifeTime");
+        NBTTagCompound var2 = tagCompund.getCompoundTag("FireworksItem");
 
         if (var2 != null)
         {

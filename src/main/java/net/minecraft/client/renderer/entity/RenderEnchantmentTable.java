@@ -19,11 +19,11 @@ public class RenderEnchantmentTable extends TileEntitySpecialRenderer
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float)p_147500_2_ + 0.5F, (float)p_147500_4_ + 0.75F, (float)p_147500_6_ + 0.5F);
-        float var9 = (float)p_147500_1_.field_145926_a + p_147500_8_;
+        float var9 = (float)p_147500_1_.tickCount + p_147500_8_;
         GL11.glTranslatef(0.0F, 0.1F + MathHelper.sin(var9 * 0.1F) * 0.01F, 0.0F);
         float var10;
 
-        for (var10 = p_147500_1_.field_145928_o - p_147500_1_.field_145925_p; var10 >= (float)Math.PI; var10 -= ((float)Math.PI * 2F))
+        for (var10 = p_147500_1_.bookRotation - p_147500_1_.bookRotationPrev; var10 >= (float)Math.PI; var10 -= ((float)Math.PI * 2F))
         {
         }
 
@@ -32,12 +32,12 @@ public class RenderEnchantmentTable extends TileEntitySpecialRenderer
             var10 += ((float)Math.PI * 2F);
         }
 
-        float var11 = p_147500_1_.field_145925_p + var10 * p_147500_8_;
+        float var11 = p_147500_1_.bookRotationPrev + var10 * p_147500_8_;
         GL11.glRotatef(-var11 * 180.0F / (float)Math.PI, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(80.0F, 0.0F, 0.0F, 1.0F);
         this.bindTexture(field_147540_b);
-        float var12 = p_147500_1_.field_145931_j + (p_147500_1_.field_145933_i - p_147500_1_.field_145931_j) * p_147500_8_ + 0.25F;
-        float var13 = p_147500_1_.field_145931_j + (p_147500_1_.field_145933_i - p_147500_1_.field_145931_j) * p_147500_8_ + 0.75F;
+        float var12 = p_147500_1_.pageFlipPrev + (p_147500_1_.pageFlip - p_147500_1_.pageFlipPrev) * p_147500_8_ + 0.25F;
+        float var13 = p_147500_1_.pageFlipPrev + (p_147500_1_.pageFlip - p_147500_1_.pageFlipPrev) * p_147500_8_ + 0.75F;
         var12 = (var12 - (float)MathHelper.truncateDoubleToInt((double)var12)) * 1.6F - 0.3F;
         var13 = (var13 - (float)MathHelper.truncateDoubleToInt((double)var13)) * 1.6F - 0.3F;
 
@@ -61,7 +61,7 @@ public class RenderEnchantmentTable extends TileEntitySpecialRenderer
             var13 = 1.0F;
         }
 
-        float var14 = p_147500_1_.field_145927_n + (p_147500_1_.field_145930_m - p_147500_1_.field_145927_n) * p_147500_8_;
+        float var14 = p_147500_1_.bookSpreadPrev + (p_147500_1_.bookSpread - p_147500_1_.bookSpreadPrev) * p_147500_8_;
         GL11.glEnable(GL11.GL_CULL_FACE);
         this.field_147541_c.render((Entity)null, var9, var12, var13, var14, 0.0F, 0.0625F);
         GL11.glPopMatrix();

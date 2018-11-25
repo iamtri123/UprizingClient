@@ -24,17 +24,17 @@ public class BlockStainedGlass extends BlockBreakable
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return field_149998_a[p_149691_2_ % field_149998_a.length];
+        return field_149998_a[meta % field_149998_a.length];
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
     public static int func_149997_b(int p_149997_0_)
@@ -42,11 +42,11 @@ public class BlockStainedGlass extends BlockBreakable
         return ~p_149997_0_ & 15;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
         for (int var4 = 0; var4 < field_149998_a.length; ++var4)
         {
-            p_149666_3_.add(new ItemStack(p_149666_1_, 1, var4));
+            list.add(new ItemStack(itemIn, 1, var4));
         }
     }
 
@@ -58,18 +58,18 @@ public class BlockStainedGlass extends BlockBreakable
         return 1;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         for (int var2 = 0; var2 < field_149998_a.length; ++var2)
         {
-            field_149998_a[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + ItemDye.field_150921_b[func_149997_b(var2)]);
+            field_149998_a[var2] = reg.registerIcon(this.getTextureName() + "_" + ItemDye.dyeIcons[func_149997_b(var2)]);
         }
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 0;
     }

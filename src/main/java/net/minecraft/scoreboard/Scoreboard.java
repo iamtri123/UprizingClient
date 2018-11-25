@@ -14,7 +14,7 @@ public class Scoreboard
     private final Map scoreObjectives = new HashMap();
     private final Map scoreObjectiveCriterias = new HashMap();
     private final Map field_96544_c = new HashMap();
-    private final ScoreObjective[] field_96541_d = new ScoreObjective[3];
+    private final ScoreObjective[] objectiveDisplaySlots = new ScoreObjective[3];
 
     /** Map of teamnames to ScorePlayerTeam instances */
     private final Map teams = new HashMap();
@@ -63,7 +63,7 @@ public class Scoreboard
         return var2 == null ? new ArrayList() : new ArrayList(var2);
     }
 
-    public Score func_96529_a(String p_96529_1_, ScoreObjective p_96529_2_)
+    public Score getValueFromObjective(String p_96529_1_, ScoreObjective p_96529_2_)
     {
         Object var3 = (Map)this.field_96544_c.get(p_96529_1_);
 
@@ -84,7 +84,7 @@ public class Scoreboard
         return var4;
     }
 
-    public Collection<Score> func_96534_i(ScoreObjective p_96534_1_)
+    public Collection<Score> getSortedScores(ScoreObjective p_96534_1_)
     {
         ArrayList<Score> var2 = new ArrayList<>();
         Iterator var3 = this.field_96544_c.values().iterator();
@@ -100,7 +100,7 @@ public class Scoreboard
             }
         }
 
-        Collections.sort(var2, Score.field_96658_a);
+        Collections.sort(var2, Score.scoreComparator);
         return var2;
     }
 
@@ -157,9 +157,9 @@ public class Scoreboard
 
         for (int var2 = 0; var2 < 3; ++var2)
         {
-            if (this.func_96539_a(var2) == p_96519_1_)
+            if (this.getObjectiveInDisplaySlot(var2) == p_96519_1_)
             {
-                this.func_96530_a(var2, (ScoreObjective)null);
+                this.setObjectiveInDisplaySlot(var2, (ScoreObjective)null);
             }
         }
 
@@ -181,14 +181,14 @@ public class Scoreboard
         this.func_96533_c(p_96519_1_);
     }
 
-    public void func_96530_a(int p_96530_1_, ScoreObjective p_96530_2_)
+    public void setObjectiveInDisplaySlot(int p_96530_1_, ScoreObjective p_96530_2_)
     {
-        this.field_96541_d[p_96530_1_] = p_96530_2_;
+        this.objectiveDisplaySlots[p_96530_1_] = p_96530_2_;
     }
 
-    public ScoreObjective func_96539_a(int p_96539_1_)
+    public ScoreObjective getObjectiveInDisplaySlot(int p_96539_1_)
     {
-        return this.field_96541_d[p_96539_1_];
+        return this.objectiveDisplaySlots[p_96539_1_];
     }
 
     /**
@@ -215,7 +215,7 @@ public class Scoreboard
         {
             var2 = new ScorePlayerTeam(this, p_96527_1_);
             this.teams.put(p_96527_1_, var2);
-            this.func_96523_a(var2);
+            this.broadcastTeamCreated(var2);
             return var2;
         }
     }
@@ -249,7 +249,7 @@ public class Scoreboard
 
             if (this.getPlayersTeam(p_151392_1_) != null)
             {
-                this.func_96524_g(p_151392_1_);
+                this.removePlayerFromTeams(p_151392_1_);
             }
 
             this.teamMemberships.put(p_151392_1_, var3);
@@ -258,7 +258,7 @@ public class Scoreboard
         }
     }
 
-    public boolean func_96524_g(String p_96524_1_)
+    public boolean removePlayerFromTeams(String p_96524_1_)
     {
         ScorePlayerTeam var2 = this.getPlayersTeam(p_96524_1_);
 
@@ -324,9 +324,9 @@ public class Scoreboard
 
     public void func_96516_a(String p_96516_1_) {}
 
-    public void func_96523_a(ScorePlayerTeam p_96523_1_) {}
+    public void broadcastTeamCreated(ScorePlayerTeam p_96523_1_) {}
 
-    public void func_96538_b(ScorePlayerTeam p_96538_1_) {}
+    public void broadcastTeamRemoved(ScorePlayerTeam p_96538_1_) {}
 
     public void func_96513_c(ScorePlayerTeam p_96513_1_) {}
 

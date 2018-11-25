@@ -25,7 +25,7 @@ public class TextureAtlasSprite implements IIcon
     protected List framesTextureData = Lists.newArrayList();
     private AnimationMetadataSection animationMetadata;
     protected boolean rotated;
-    private boolean field_147966_k;
+    private boolean useAnisotropicFiltering;
     protected int originX;
     protected int originY;
     protected int width;
@@ -66,7 +66,7 @@ public class TextureAtlasSprite implements IIcon
         this.minV = (float)par4 / (float)par2 + var7;
         this.maxV = (float)(par4 + this.height) / (float)par2 - var7;
 
-        if (this.field_147966_k)
+        if (this.useAnisotropicFiltering)
         {
             float var8 = 8.0F / (float)par1;
             float var9 = 8.0F / (float)par2;
@@ -196,13 +196,13 @@ public class TextureAtlasSprite implements IIcon
 
             if (var1 != var3 && var3 >= 0 && var3 < this.framesTextureData.size())
             {
-                TextureUtil.func_147955_a((int[][])((int[][])this.framesTextureData.get(var3)), this.width, this.height, this.originX, this.originY, false, false);
+                TextureUtil.uploadTextureMipmap((int[][])((int[][])this.framesTextureData.get(var3)), this.width, this.height, this.originX, this.originY, false, false);
                 this.uploadedFrameIndex = var3;
             }
         }
     }
 
-    public int[][] func_147965_a(int p_147965_1_)
+    public int[][] getFrameTextureData(int p_147965_1_)
     {
         return (int[][])((int[][])this.framesTextureData.get(p_147965_1_));
     }
@@ -222,10 +222,10 @@ public class TextureAtlasSprite implements IIcon
         this.height = par1;
     }
 
-    public void func_147964_a(BufferedImage[] p_147964_1_, AnimationMetadataSection p_147964_2_, boolean p_147964_3_)
+    public void loadSprite(BufferedImage[] p_147964_1_, AnimationMetadataSection p_147964_2_, boolean p_147964_3_)
     {
         this.resetSprite();
-        this.field_147966_k = p_147964_3_;
+        this.useAnisotropicFiltering = p_147964_3_;
         int var4 = p_147964_1_[0].getWidth();
         int var5 = p_147964_1_[0].getHeight();
         this.width = var4;
@@ -263,8 +263,8 @@ public class TextureAtlasSprite implements IIcon
                 throw new RuntimeException("broken aspect ratio and not an animation");
             }
 
-            this.func_147961_a(var6);
-            this.framesTextureData.add(this.func_147960_a(var6, var4, var5));
+            this.fixTransparentPixels(var6);
+            this.framesTextureData.add(this.prepareAnisotropicFiltering(var6, var4, var5));
         }
         else
         {
@@ -288,7 +288,7 @@ public class TextureAtlasSprite implements IIcon
                     }
 
                     this.allocateFrameTextureData(var11);
-                    this.framesTextureData.set(var11, this.func_147960_a(func_147962_a(var6, var121, var9, var11), var121, var9));
+                    this.framesTextureData.set(var11, this.prepareAnisotropicFiltering(getFrameTextureData(var6, var121, var9, var11), var121, var9));
                 }
 
                 this.animationMetadata = p_147964_2_;
@@ -299,7 +299,7 @@ public class TextureAtlasSprite implements IIcon
 
                 for (var11 = 0; var11 < var7; ++var11)
                 {
-                    this.framesTextureData.add(this.func_147960_a(func_147962_a(var6, var121, var9, var11), var121, var9));
+                    this.framesTextureData.add(this.prepareAnisotropicFiltering(getFrameTextureData(var6, var121, var9, var11), var121, var9));
                     var131.add(new AnimationFrame(var11, -1));
                 }
 
@@ -308,7 +308,7 @@ public class TextureAtlasSprite implements IIcon
         }
     }
 
-    public void func_147963_d(int p_147963_1_)
+    public void generateMipmaps(int p_147963_1_)
     {
         ArrayList var2 = Lists.newArrayList();
 
@@ -320,7 +320,7 @@ public class TextureAtlasSprite implements IIcon
             {
                 try
                 {
-                    var2.add(TextureUtil.func_147949_a(p_147963_1_, this.width, var4));
+                    var2.add(TextureUtil.generateMipmapData(p_147963_1_, this.width, var4));
                 }
                 catch (Throwable var8)
                 {
@@ -363,7 +363,7 @@ public class TextureAtlasSprite implements IIcon
         this.setFramesTextureData(var2);
     }
 
-    private void func_147961_a(int[][] p_147961_1_)
+    private void fixTransparentPixels(int[][] p_147961_1_)
     {
         int[] var2 = p_147961_1_[0];
         int var3 = 0;
@@ -399,9 +399,9 @@ public class TextureAtlasSprite implements IIcon
         }
     }
 
-    private int[][] func_147960_a(int[][] p_147960_1_, int p_147960_2_, int p_147960_3_)
+    private int[][] prepareAnisotropicFiltering(int[][] p_147960_1_, int p_147960_2_, int p_147960_3_)
     {
-        if (!this.field_147966_k)
+        if (!this.useAnisotropicFiltering)
         {
             return p_147960_1_;
         }
@@ -417,7 +417,7 @@ public class TextureAtlasSprite implements IIcon
                 {
                     int[] var7 = new int[(p_147960_2_ + 16 >> var5) * (p_147960_3_ + 16 >> var5)];
                     System.arraycopy(var6, 0, var7, 0, var6.length);
-                    var4[var5] = TextureUtil.func_147948_a(var7, p_147960_2_ >> var5, p_147960_3_ >> var5, 8 >> var5);
+                    var4[var5] = TextureUtil.prepareAnisotropicData(var7, p_147960_2_ >> var5, p_147960_3_ >> var5, 8 >> var5);
                 }
             }
 
@@ -436,7 +436,7 @@ public class TextureAtlasSprite implements IIcon
         }
     }
 
-    private static int[][] func_147962_a(int[][] p_147962_0_, int p_147962_1_, int p_147962_2_, int p_147962_3_)
+    private static int[][] getFrameTextureData(int[][] p_147962_0_, int p_147962_1_, int p_147962_2_, int p_147962_3_)
     {
         int[][] var4 = new int[p_147962_0_.length][];
 

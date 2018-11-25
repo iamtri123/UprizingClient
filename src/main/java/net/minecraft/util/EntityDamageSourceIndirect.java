@@ -25,12 +25,12 @@ public class EntityDamageSourceIndirect extends EntityDamageSource
         return this.indirectEntity;
     }
 
-    public IChatComponent func_151519_b(EntityLivingBase p_151519_1_)
+    public IChatComponent getDeathMessage(EntityLivingBase p_151519_1_)
     {
-        IChatComponent var2 = this.indirectEntity == null ? this.damageSourceEntity.func_145748_c_() : this.indirectEntity.func_145748_c_();
+        IChatComponent var2 = this.indirectEntity == null ? this.damageSourceEntity.getFormattedCommandSenderName() : this.indirectEntity.getFormattedCommandSenderName();
         ItemStack var3 = this.indirectEntity instanceof EntityLivingBase ? ((EntityLivingBase)this.indirectEntity).getHeldItem() : null;
         String var4 = "death.attack." + this.damageType;
         String var5 = var4 + ".item";
-        return var3 != null && var3.hasDisplayName() && StatCollector.canTranslate(var5) ? new ChatComponentTranslation(var5, p_151519_1_.func_145748_c_(), var2, var3.func_151000_E()): new ChatComponentTranslation(var4, p_151519_1_.func_145748_c_(), var2);
+        return var3 != null && var3.hasDisplayName() && StatCollector.canTranslate(var5) ? new ChatComponentTranslation(var5, p_151519_1_.getFormattedCommandSenderName(), var2, var3.func_151000_E()): new ChatComponentTranslation(var4, p_151519_1_.getFormattedCommandSenderName(), var2);
     }
 }

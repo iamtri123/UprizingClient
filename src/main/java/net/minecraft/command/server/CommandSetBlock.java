@@ -31,30 +31,30 @@ public class CommandSetBlock extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.setblock.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length >= 4)
+        if (args.length >= 4)
         {
-            int var3 = p_71515_1_.getPlayerCoordinates().posX;
-            int var4 = p_71515_1_.getPlayerCoordinates().posY;
-            int var5 = p_71515_1_.getPlayerCoordinates().posZ;
-            var3 = MathHelper.floor_double(func_110666_a(p_71515_1_, (double)var3, p_71515_2_[0]));
-            var4 = MathHelper.floor_double(func_110666_a(p_71515_1_, (double)var4, p_71515_2_[1]));
-            var5 = MathHelper.floor_double(func_110666_a(p_71515_1_, (double)var5, p_71515_2_[2]));
-            Block var6 = CommandBase.getBlockByText(p_71515_1_, p_71515_2_[3]);
+            int var3 = sender.getPlayerCoordinates().posX;
+            int var4 = sender.getPlayerCoordinates().posY;
+            int var5 = sender.getPlayerCoordinates().posZ;
+            var3 = MathHelper.floor_double(clamp_coord(sender, (double)var3, args[0]));
+            var4 = MathHelper.floor_double(clamp_coord(sender, (double)var4, args[1]));
+            var5 = MathHelper.floor_double(clamp_coord(sender, (double)var5, args[2]));
+            Block var6 = CommandBase.getBlockByText(sender, args[3]);
             int var7 = 0;
 
-            if (p_71515_2_.length >= 5)
+            if (args.length >= 5)
             {
-                var7 = parseIntBounded(p_71515_1_, p_71515_2_[4], 0, 15);
+                var7 = parseIntBounded(sender, args[4], 0, 15);
             }
 
-            World var8 = p_71515_1_.getEntityWorld();
+            World var8 = sender.getEntityWorld();
 
             if (!var8.blockExists(var3, var4, var5))
             {
@@ -65,9 +65,9 @@ public class CommandSetBlock extends CommandBase
                 NBTTagCompound var9 = new NBTTagCompound();
                 boolean var10 = false;
 
-                if (p_71515_2_.length >= 7 && var6.hasTileEntity())
+                if (args.length >= 7 && var6.hasTileEntity())
                 {
-                    String var11 = func_147178_a(p_71515_1_, p_71515_2_, 6).getUnformattedText();
+                    String var11 = getChatComponentFromNthArg(sender, args, 6).getUnformattedText();
 
                     try
                     {
@@ -87,13 +87,13 @@ public class CommandSetBlock extends CommandBase
                     }
                 }
 
-                if (p_71515_2_.length >= 6)
+                if (args.length >= 6)
                 {
-                    if (p_71515_2_[5].equals("destroy"))
+                    if (args[5].equals("destroy"))
                     {
-                        var8.func_147480_a(var3, var4, var5, true);
+                        var8.breakBlock(var3, var4, var5, true);
                     }
-                    else if (p_71515_2_[5].equals("keep") && !var8.isAirBlock(var3, var4, var5))
+                    else if (args[5].equals("keep") && !var8.isAirBlock(var3, var4, var5))
                     {
                         throw new CommandException("commands.setblock.noChange");
                     }
@@ -118,7 +118,7 @@ public class CommandSetBlock extends CommandBase
                         }
                     }
 
-                    func_152373_a(p_71515_1_, this, "commands.setblock.success");
+                    notifyOperators(sender, this, "commands.setblock.success");
                 }
             }
         }
@@ -131,8 +131,8 @@ public class CommandSetBlock extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 4 ? getListOfStringsFromIterableMatchingLastWord(p_71516_2_, Block.blockRegistry.getKeys()) : (p_71516_2_.length == 6 ? getListOfStringsMatchingLastWord(p_71516_2_, "replace", "destroy", "keep"): null);
+        return args.length == 4 ? getListOfStringsFromIterableMatchingLastWord(args, Block.blockRegistry.getKeys()) : (args.length == 6 ? getListOfStringsMatchingLastWord(args, "replace", "destroy", "keep"): null);
     }
 }

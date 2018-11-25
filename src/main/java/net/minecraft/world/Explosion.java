@@ -94,7 +94,7 @@ public class Explosion
 
                             if (var25.getMaterial() != Material.air)
                             {
-                                float var26 = this.exploder != null ? this.exploder.func_145772_a(this, this.worldObj, var22, var23, var24, var25) : var25.getExplosionResistance(this.exploder);
+                                float var26 = this.exploder != null ? this.exploder.getExplosionResistance(this, this.worldObj, var22, var23, var24, var25) : var25.getExplosionResistance(this.exploder);
                                 var14 -= (var26 + 0.3F) * var21;
                             }
 
@@ -189,9 +189,9 @@ public class Explosion
             while (var2.hasNext())
             {
                 var3 = (ChunkPosition)var2.next();
-                var4 = var3.field_151329_a;
-                var5 = var3.field_151327_b;
-                var6 = var3.field_151328_c;
+                var4 = var3.chunkPosX;
+                var5 = var3.chunkPosY;
+                var6 = var3.chunkPosZ;
                 var7 = this.worldObj.getBlock(var4, var5, var6);
 
                 if (p_77279_1_)
@@ -235,9 +235,9 @@ public class Explosion
             while (var2.hasNext())
             {
                 var3 = (ChunkPosition)var2.next();
-                var4 = var3.field_151329_a;
-                var5 = var3.field_151327_b;
-                var6 = var3.field_151328_c;
+                var4 = var3.chunkPosX;
+                var5 = var3.chunkPosY;
+                var6 = var3.chunkPosZ;
                 var7 = this.worldObj.getBlock(var4, var5, var6);
                 Block var24 = this.worldObj.getBlock(var4, var5 - 1, var6);
 

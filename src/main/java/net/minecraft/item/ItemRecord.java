@@ -14,12 +14,12 @@ import net.minecraft.world.World;
 public class ItemRecord extends Item
 {
     private static final Map field_150928_b = new HashMap();
-    public final String field_150929_a;
+    public final String recordName;
     private static final String __OBFID = "CL_00000057";
 
     protected ItemRecord(String p_i45350_1_)
     {
-        this.field_150929_a = p_i45350_1_;
+        this.recordName = p_i45350_1_;
         this.maxStackSize = 1;
         this.setCreativeTab(CreativeTabs.tabMisc);
         field_150928_b.put(p_i45350_1_, this);
@@ -64,12 +64,12 @@ public class ItemRecord extends Item
      */
     public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List p_77624_3_, boolean p_77624_4_)
     {
-        p_77624_3_.add(this.func_150927_i());
+        p_77624_3_.add(this.getRecordNameLocal());
     }
 
-    public String func_150927_i()
+    public String getRecordNameLocal()
     {
-        return StatCollector.translateToLocal("item.record." + this.field_150929_a + ".desc");
+        return StatCollector.translateToLocal("item.record." + this.recordName + ".desc");
     }
 
     /**
@@ -80,7 +80,7 @@ public class ItemRecord extends Item
         return EnumRarity.rare;
     }
 
-    public static ItemRecord func_150926_b(String p_150926_0_)
+    public static ItemRecord getRecord(String p_150926_0_)
     {
         return (ItemRecord)field_150928_b.get(p_150926_0_);
     }

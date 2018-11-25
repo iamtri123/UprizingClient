@@ -52,9 +52,9 @@ public class BlockSkull extends BlockContainer
         return false;
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        int var5 = p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_) & 7;
+        int var5 = worldIn.getBlockMetadata(x, y, z) & 7;
 
         switch (var5)
         {
@@ -84,25 +84,25 @@ public class BlockSkull extends BlockContainer
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        this.setBlockBoundsBasedOnState(p_149668_1_, p_149668_2_, p_149668_3_, p_149668_4_);
-        return super.getCollisionBoundingBoxFromPool(p_149668_1_, p_149668_2_, p_149668_3_, p_149668_4_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        return super.getCollisionBoundingBoxFromPool(worldIn, x, y, z);
     }
 
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        int var7 = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
-        p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, var7, 2);
+        int var7 = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+        worldIn.setBlockMetadataWithNotify(x, y, z, var7, 2);
     }
 
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntitySkull();
     }
@@ -110,7 +110,7 @@ public class BlockSkull extends BlockContainer
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Items.skull;
     }
@@ -118,71 +118,71 @@ public class BlockSkull extends BlockContainer
     /**
      * Get the block's damage value (for use with pick block).
      */
-    public int getDamageValue(World p_149643_1_, int p_149643_2_, int p_149643_3_, int p_149643_4_)
+    public int getDamageValue(World worldIn, int x, int y, int z)
     {
-        TileEntity var5 = p_149643_1_.getTileEntity(p_149643_2_, p_149643_3_, p_149643_4_);
-        return var5 != null && var5 instanceof TileEntitySkull ? ((TileEntitySkull)var5).func_145904_a() : super.getDamageValue(p_149643_1_, p_149643_2_, p_149643_3_, p_149643_4_);
+        TileEntity var5 = worldIn.getTileEntity(x, y, z);
+        return var5 != null && var5 instanceof TileEntitySkull ? ((TileEntitySkull)var5).getSkullType() : super.getDamageValue(worldIn, x, y, z);
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_) {}
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, int meta, float chance, int fortune) {}
 
     /**
      * Called when the block is attempted to be harvested
      */
-    public void onBlockHarvested(World p_149681_1_, int p_149681_2_, int p_149681_3_, int p_149681_4_, int p_149681_5_, EntityPlayer p_149681_6_)
+    public void onBlockHarvested(World worldIn, int x, int y, int z, int meta, EntityPlayer player)
     {
-        if (p_149681_6_.capabilities.isCreativeMode)
+        if (player.capabilities.isCreativeMode)
         {
-            p_149681_5_ |= 8;
-            p_149681_1_.setBlockMetadataWithNotify(p_149681_2_, p_149681_3_, p_149681_4_, p_149681_5_, 4);
+            meta |= 8;
+            worldIn.setBlockMetadataWithNotify(x, y, z, meta, 4);
         }
 
-        super.onBlockHarvested(p_149681_1_, p_149681_2_, p_149681_3_, p_149681_4_, p_149681_5_, p_149681_6_);
+        super.onBlockHarvested(worldIn, x, y, z, meta, player);
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        if (!p_149749_1_.isClient)
+        if (!worldIn.isClient)
         {
-            if ((p_149749_6_ & 8) == 0)
+            if ((meta & 8) == 0)
             {
-                ItemStack var7 = new ItemStack(Items.skull, 1, this.getDamageValue(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_));
-                TileEntitySkull var8 = (TileEntitySkull)p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+                ItemStack var7 = new ItemStack(Items.skull, 1, this.getDamageValue(worldIn, x, y, z));
+                TileEntitySkull var8 = (TileEntitySkull)worldIn.getTileEntity(x, y, z);
 
-                if (var8.func_145904_a() == 3 && var8.func_152108_a() != null)
+                if (var8.getSkullType() == 3 && var8.func_152108_a() != null)
                 {
                     var7.setTagCompound(new NBTTagCompound());
                     NBTTagCompound var9 = new NBTTagCompound();
-                    NBTUtil.func_152460_a(var9, var8.func_152108_a());
+                    NBTUtil.writeGameProfileToNBT(var9, var8.func_152108_a());
                     var7.getTagCompound().setTag("SkullOwner", var9);
                 }
 
-                this.dropBlockAsItem_do(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, var7);
+                this.dropBlockAsItem_do(worldIn, x, y, z, var7);
             }
 
-            super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+            super.breakBlock(worldIn, x, y, z, blockBroken, meta);
         }
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.skull;
     }
 
-    public void func_149965_a(World p_149965_1_, int p_149965_2_, int p_149965_3_, int p_149965_4_, TileEntitySkull p_149965_5_)
+    public void makeWither(World p_149965_1_, int p_149965_2_, int p_149965_3_, int p_149965_4_, TileEntitySkull p_149965_5_)
     {
-        if (p_149965_5_.func_145904_a() == 1 && p_149965_3_ >= 2 && p_149965_1_.difficultySetting != EnumDifficulty.PEACEFUL && !p_149965_1_.isClient)
+        if (p_149965_5_.getSkullType() == 1 && p_149965_3_ >= 2 && p_149965_1_.difficultySetting != EnumDifficulty.PEACEFUL && !p_149965_1_.isClient)
         {
             int var6;
             EntityWither var7;
@@ -219,7 +219,7 @@ public class BlockSkull extends BlockContainer
                             while (var8.hasNext())
                             {
                                 var9 = (EntityPlayer)var8.next();
-                                var9.triggerAchievement(AchievementList.field_150963_I);
+                                var9.triggerAchievement(AchievementList.spawnWither);
                             }
                         }
 
@@ -270,7 +270,7 @@ public class BlockSkull extends BlockContainer
                             while (var8.hasNext())
                             {
                                 var9 = (EntityPlayer)var8.next();
-                                var9.triggerAchievement(AchievementList.field_150963_I);
+                                var9.triggerAchievement(AchievementList.spawnWither);
                             }
                         }
 
@@ -304,18 +304,18 @@ public class BlockSkull extends BlockContainer
         else
         {
             TileEntity var6 = p_149966_1_.getTileEntity(p_149966_2_, p_149966_3_, p_149966_4_);
-            return (var6 != null && var6 instanceof TileEntitySkull) && ((TileEntitySkull) var6).func_145904_a() == p_149966_5_;
+            return (var6 != null && var6 instanceof TileEntitySkull) && ((TileEntitySkull) var6).getSkullType() == p_149966_5_;
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_) {}
+    public void registerBlockIcons(IIconRegister reg) {}
 
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return Blocks.soul_sand.getBlockTextureFromSide(p_149691_1_);
+        return Blocks.soul_sand.getBlockTextureFromSide(side);
     }
 
     /**

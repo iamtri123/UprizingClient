@@ -53,7 +53,7 @@ public class TileEntityEnderChestRenderer extends TileEntitySpecialRenderer
 
         GL11.glRotatef((float)var10, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-        float var11 = p_147500_1_.field_145975_i + (p_147500_1_.field_145972_a - p_147500_1_.field_145975_i) * p_147500_8_;
+        float var11 = p_147500_1_.prevLidAngle + (p_147500_1_.field_145972_a - p_147500_1_.prevLidAngle) * p_147500_8_;
         var11 = 1.0F - var11;
         var11 = 1.0F - var11 * var11 * var11;
         this.field_147521_c.chestLid.rotateAngleX = -(var11 * (float)Math.PI / 2.0F);

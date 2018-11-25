@@ -7,9 +7,9 @@ public abstract class Team
     /**
      * Same as ==
      */
-    public boolean isSameTeam(Team p_142054_1_)
+    public boolean isSameTeam(Team other)
     {
-        return p_142054_1_ != null && this == p_142054_1_;
+        return other != null && this == other;
     }
 
     /**
@@ -17,7 +17,7 @@ public abstract class Team
      */
     public abstract String getRegisteredName();
 
-    public abstract String func_142053_d(String p_142053_1_);
+    public abstract String formatString(String input);
 
     public abstract boolean func_98297_h();
 

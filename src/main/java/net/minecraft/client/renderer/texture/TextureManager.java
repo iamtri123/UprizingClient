@@ -165,7 +165,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
         }
     }
 
-    public void func_147645_c(ResourceLocation p_147645_1_)
+    public void deleteTexture(ResourceLocation p_147645_1_)
     {
         ITextureObject var2 = this.getTexture(p_147645_1_);
 

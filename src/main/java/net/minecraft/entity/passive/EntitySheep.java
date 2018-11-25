@@ -29,10 +29,10 @@ import net.minecraft.world.World;
 
 public class EntitySheep extends EntityAnimal
 {
-    private final InventoryCrafting field_90016_e = new InventoryCrafting(new Container()
+    private final InventoryCrafting inventoryCrafting = new InventoryCrafting(new Container()
     {
         private static final String __OBFID = "CL_00001649";
-        public boolean canInteractWith(EntityPlayer p_75145_1_)
+        public boolean canInteractWith(EntityPlayer player)
         {
             return false;
         }
@@ -48,7 +48,7 @@ public class EntitySheep extends EntityAnimal
      * tick.
      */
     private int sheepTimer;
-    private final EntityAIEatGrass field_146087_bs = new EntityAIEatGrass(this);
+    private final EntityAIEatGrass entityAIEatGrass = new EntityAIEatGrass(this);
     private static final String __OBFID = "CL_00001648";
 
     public EntitySheep(World p_i1691_1_)
@@ -61,12 +61,12 @@ public class EntitySheep extends EntityAnimal
         this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
         this.tasks.addTask(3, new EntityAITempt(this, 1.1D, Items.wheat, false));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1.1D));
-        this.tasks.addTask(5, this.field_146087_bs);
+        this.tasks.addTask(5, this.entityAIEatGrass);
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.field_90016_e.setInventorySlotContents(0, new ItemStack(Items.dye, 1, 0));
-        this.field_90016_e.setInventorySlotContents(1, new ItemStack(Items.dye, 1, 0));
+        this.inventoryCrafting.setInventorySlotContents(0, new ItemStack(Items.dye, 1, 0));
+        this.inventoryCrafting.setInventorySlotContents(1, new ItemStack(Items.dye, 1, 0));
     }
 
     /**
@@ -79,7 +79,7 @@ public class EntitySheep extends EntityAnimal
 
     protected void updateAITasks()
     {
-        this.sheepTimer = this.field_146087_bs.func_151499_f();
+        this.sheepTimer = this.entityAIEatGrass.getEatingGrassTimer();
         super.updateAITasks();
     }
 
@@ -121,7 +121,7 @@ public class EntitySheep extends EntityAnimal
         }
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Item.getItemFromBlock(Blocks.wool);
     }
@@ -138,12 +138,12 @@ public class EntitySheep extends EntityAnimal
         }
     }
 
-    public float func_70894_j(float p_70894_1_)
+    public float getHeadRotationPointY(float p_70894_1_)
     {
         return this.sheepTimer <= 0 ? 0.0F : (this.sheepTimer >= 4 && this.sheepTimer <= 36 ? 1.0F : (this.sheepTimer < 4 ? ((float)this.sheepTimer - p_70894_1_) / 4.0F : -((float)(this.sheepTimer - 40) - p_70894_1_) / 4.0F));
     }
 
-    public float func_70890_k(float p_70890_1_)
+    public float getHeadRotationAngleX(float p_70890_1_)
     {
         if (this.sheepTimer > 4 && this.sheepTimer <= 36)
         {
@@ -189,21 +189,21 @@ public class EntitySheep extends EntityAnimal
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setBoolean("Sheared", this.getSheared());
-        p_70014_1_.setByte("Color", (byte)this.getFleeceColor());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setBoolean("Sheared", this.getSheared());
+        tagCompound.setByte("Color", (byte)this.getFleeceColor());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.setSheared(p_70037_1_.getBoolean("Sheared"));
-        this.setFleeceColor(p_70037_1_.getByte("Color"));
+        super.readEntityFromNBT(tagCompund);
+        this.setSheared(tagCompund.getBoolean("Sheared"));
+        this.setFleeceColor(tagCompund.getByte("Color"));
     }
 
     /**
@@ -230,7 +230,7 @@ public class EntitySheep extends EntityAnimal
         return "mob.sheep.say";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.sheep.step", 0.15F, 1.0F);
     }
@@ -284,7 +284,7 @@ public class EntitySheep extends EntityAnimal
     {
         EntitySheep var2 = (EntitySheep)p_90011_1_;
         EntitySheep var3 = new EntitySheep(this.worldObj);
-        int var4 = this.func_90014_a(this, var2);
+        int var4 = this.getDyeBasedOnParents(this, var2);
         var3.setFleeceColor(15 - var4);
         return var3;
     }
@@ -310,13 +310,13 @@ public class EntitySheep extends EntityAnimal
         return p_110161_1_;
     }
 
-    private int func_90014_a(EntityAnimal p_90014_1_, EntityAnimal p_90014_2_)
+    private int getDyeBasedOnParents(EntityAnimal p_90014_1_, EntityAnimal p_90014_2_)
     {
-        int var3 = this.func_90013_b(p_90014_1_);
-        int var4 = this.func_90013_b(p_90014_2_);
-        this.field_90016_e.getStackInSlot(0).setItemDamage(var3);
-        this.field_90016_e.getStackInSlot(1).setItemDamage(var4);
-        ItemStack var5 = CraftingManager.getInstance().findMatchingRecipe(this.field_90016_e, ((EntitySheep)p_90014_1_).worldObj);
+        int var3 = this.getDyeFromFleeceColor(p_90014_1_);
+        int var4 = this.getDyeFromFleeceColor(p_90014_2_);
+        this.inventoryCrafting.getStackInSlot(0).setItemDamage(var3);
+        this.inventoryCrafting.getStackInSlot(1).setItemDamage(var4);
+        ItemStack var5 = CraftingManager.getInstance().findMatchingRecipe(this.inventoryCrafting, ((EntitySheep)p_90014_1_).worldObj);
         int var6;
 
         if (var5 != null && var5.getItem() == Items.dye)
@@ -331,7 +331,7 @@ public class EntitySheep extends EntityAnimal
         return var6;
     }
 
-    private int func_90013_b(EntityAnimal p_90013_1_)
+    private int getDyeFromFleeceColor(EntityAnimal p_90013_1_)
     {
         return 15 - ((EntitySheep)p_90013_1_).getFleeceColor();
     }

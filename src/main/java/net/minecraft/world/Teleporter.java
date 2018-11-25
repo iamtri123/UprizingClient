@@ -29,10 +29,10 @@ public class Teleporter
     private final List destinationCoordinateKeys = new ArrayList();
     private static final String __OBFID = "CL_00000153";
 
-    public Teleporter(WorldServer p_i1963_1_)
+    public Teleporter(WorldServer worldIn)
     {
-        this.worldServerInstance = p_i1963_1_;
-        this.random = new Random(p_i1963_1_.getSeed());
+        this.worldServerInstance = worldIn;
+        this.random = new Random(worldIn.getSeed());
     }
 
     /**

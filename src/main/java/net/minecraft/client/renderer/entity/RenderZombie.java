@@ -33,9 +33,9 @@ public class RenderZombie extends RenderBiped
 
     protected void func_82421_b()
     {
-        this.field_82423_g = new ModelZombie(1.0F, true);
+        this.modelArmourChestplate = new ModelZombie(1.0F, true);
         this.field_82425_h = new ModelZombie(0.5F, true);
-        this.field_82437_k = this.field_82423_g;
+        this.field_82437_k = this.modelArmourChestplate;
         this.field_82435_l = this.field_82425_h;
         this.field_82436_m = new ModelZombieVillager(1.0F, 0.0F, true);
         this.field_82433_n = new ModelZombieVillager(0.5F, 0.0F, true);
@@ -89,13 +89,13 @@ public class RenderZombie extends RenderBiped
             }
 
             this.mainModel = this.zombieVillagerModel;
-            this.field_82423_g = this.field_82436_m;
+            this.modelArmourChestplate = this.field_82436_m;
             this.field_82425_h = this.field_82433_n;
         }
         else
         {
             this.mainModel = this.field_82434_o;
-            this.field_82423_g = this.field_82437_k;
+            this.modelArmourChestplate = this.field_82437_k;
             this.field_82425_h = this.field_82435_l;
         }
 

@@ -32,8 +32,8 @@ public class TileEntityRendererDispatcher
     public static double staticPlayerX;
     public static double staticPlayerY;
     public static double staticPlayerZ;
-    public TextureManager field_147553_e;
-    public World field_147550_f;
+    public TextureManager renderEngine;
+    public World worldObj;
     public EntityLivingBase field_147551_g;
     public float field_147562_h;
     public float field_147563_i;
@@ -85,14 +85,14 @@ public class TileEntityRendererDispatcher
         return p_147547_1_ == null ? null : this.getSpecialRendererByClass(p_147547_1_.getClass());
     }
 
-    public void func_147542_a(World p_147542_1_, TextureManager p_147542_2_, FontRenderer p_147542_3_, EntityLivingBase p_147542_4_, float p_147542_5_)
+    public void cacheActiveRenderInfo(World p_147542_1_, TextureManager p_147542_2_, FontRenderer p_147542_3_, EntityLivingBase p_147542_4_, float p_147542_5_)
     {
-        if (this.field_147550_f != p_147542_1_)
+        if (this.worldObj != p_147542_1_)
         {
             this.func_147543_a(p_147542_1_);
         }
 
-        this.field_147553_e = p_147542_2_;
+        this.renderEngine = p_147542_2_;
         this.field_147551_g = p_147542_4_;
         this.field_147557_n = p_147542_3_;
         this.field_147562_h = p_147542_4_.prevRotationYaw + (p_147542_4_.rotationYaw - p_147542_4_.prevRotationYaw) * p_147542_5_;
@@ -102,20 +102,20 @@ public class TileEntityRendererDispatcher
         this.field_147558_l = p_147542_4_.lastTickPosZ + (p_147542_4_.posZ - p_147542_4_.lastTickPosZ) * (double)p_147542_5_;
     }
 
-    public void func_147544_a(TileEntity p_147544_1_, float p_147544_2_)
+    public void renderTileEntity(TileEntity p_147544_1_, float p_147544_2_)
     {
         if (p_147544_1_.getDistanceFrom(this.field_147560_j, this.field_147561_k, this.field_147558_l) < p_147544_1_.getMaxRenderDistanceSquared())
         {
-            int var3 = this.field_147550_f.getLightBrightnessForSkyBlocks(p_147544_1_.field_145851_c, p_147544_1_.field_145848_d, p_147544_1_.field_145849_e, 0);
+            int var3 = this.worldObj.getLightBrightnessForSkyBlocks(p_147544_1_.xCoord, p_147544_1_.yCoord, p_147544_1_.zCoord, 0);
             int var4 = var3 % 65536;
             int var5 = var3 / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)var4 / 1.0F, (float)var5 / 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.func_147549_a(p_147544_1_, (double)p_147544_1_.field_145851_c - staticPlayerX, (double)p_147544_1_.field_145848_d - staticPlayerY, (double)p_147544_1_.field_145849_e - staticPlayerZ, p_147544_2_);
+            this.renderTileEntityAt(p_147544_1_, (double)p_147544_1_.xCoord - staticPlayerX, (double)p_147544_1_.yCoord - staticPlayerY, (double)p_147544_1_.zCoord - staticPlayerZ, p_147544_2_);
         }
     }
 
-    public void func_147549_a(TileEntity p_147549_1_, double p_147549_2_, double p_147549_4_, double p_147549_6_, float p_147549_8_)
+    public void renderTileEntityAt(TileEntity p_147549_1_, double p_147549_2_, double p_147549_4_, double p_147549_6_, float p_147549_8_)
     {
         TileEntitySpecialRenderer var9 = this.getSpecialRenderer(p_147549_1_);
 
@@ -129,7 +129,7 @@ public class TileEntityRendererDispatcher
             {
                 CrashReport var11 = CrashReport.makeCrashReport(var13, "Rendering Block Entity");
                 CrashReportCategory var12 = var11.makeCategory("Block Entity Details");
-                p_147549_1_.func_145828_a(var12);
+                p_147549_1_.addInfoToCrashReport(var12);
                 throw new ReportedException(var11);
             }
         }
@@ -137,7 +137,7 @@ public class TileEntityRendererDispatcher
 
     public void func_147543_a(World p_147543_1_)
     {
-        this.field_147550_f = p_147543_1_;
+        this.worldObj = p_147543_1_;
         Iterator var2 = this.mapSpecialRenderers.values().iterator();
 
         while (var2.hasNext())
@@ -146,12 +146,12 @@ public class TileEntityRendererDispatcher
 
             if (var3 != null)
             {
-                var3.func_147496_a(p_147543_1_);
+                var3.onWorldChange(p_147543_1_);
             }
         }
     }
 
-    public FontRenderer func_147548_a()
+    public FontRenderer getFontRenderer()
     {
         return this.field_147557_n;
     }

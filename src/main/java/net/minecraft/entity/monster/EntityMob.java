@@ -75,15 +75,15 @@ public abstract class EntityMob extends EntityCreature implements IMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
             return false;
         }
-        else if (super.attackEntityFrom(p_70097_1_, p_70097_2_))
+        else if (super.attackEntityFrom(source, amount))
         {
-            Entity var3 = p_70097_1_.getEntity();
+            Entity var3 = source.getEntity();
 
             if (this.riddenByEntity != var3 && this.ridingEntity != var3)
             {

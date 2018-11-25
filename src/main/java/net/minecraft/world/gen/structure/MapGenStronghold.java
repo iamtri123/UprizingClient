@@ -69,7 +69,7 @@ public class MapGenStronghold extends MapGenStructure
         }
     }
 
-    public String func_143025_a()
+    public String getStructureName()
     {
         return "Stronghold";
     }
@@ -88,12 +88,12 @@ public class MapGenStronghold extends MapGenStructure
                 double var8 = (1.25D * (double)var6 + var3.nextDouble()) * this.field_82671_h * (double)var6;
                 int var10 = (int)Math.round(Math.cos(var4) * var8);
                 int var11 = (int)Math.round(Math.sin(var4) * var8);
-                ChunkPosition var12 = this.worldObj.getWorldChunkManager().func_150795_a((var10 << 4) + 8, (var11 << 4) + 8, 112, this.field_151546_e, var3);
+                ChunkPosition var12 = this.worldObj.getWorldChunkManager().findBiomePosition((var10 << 4) + 8, (var11 << 4) + 8, 112, this.field_151546_e, var3);
 
                 if (var12 != null)
                 {
-                    var10 = var12.field_151329_a >> 4;
-                    var11 = var12.field_151328_c >> 4;
+                    var10 = var12.chunkPosX >> 4;
+                    var11 = var12.chunkPosZ >> 4;
                 }
 
                 this.structureCoords[var7] = new ChunkCoordIntPair(var10, var11);

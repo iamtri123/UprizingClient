@@ -31,16 +31,16 @@ public class BlockSign extends BlockContainer
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return Blocks.planks.getBlockTextureFromSide(p_149691_1_);
+        return Blocks.planks.getBlockTextureFromSide(side);
     }
 
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
         return null;
     }
@@ -48,17 +48,17 @@ public class BlockSign extends BlockContainer
     /**
      * Returns the bounding box of the wired rectangular prism to render.
      */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int p_149633_2_, int p_149633_3_, int p_149633_4_)
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        this.setBlockBoundsBasedOnState(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
-        return super.getSelectedBoundingBoxFromPool(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        return super.getSelectedBoundingBoxFromPool(worldIn, x, y, z);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
         if (!this.field_149967_b)
         {
-            int var5 = p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_);
+            int var5 = worldIn.getBlockMetadata(x, y, z);
             float var6 = 0.28125F;
             float var7 = 0.78125F;
             float var8 = 0.0F;
@@ -101,7 +101,7 @@ public class BlockSign extends BlockContainer
         return false;
     }
 
-    public boolean getBlocksMovement(IBlockAccess p_149655_1_, int p_149655_2_, int p_149655_3_, int p_149655_4_)
+    public boolean getBlocksMovement(IBlockAccess worldIn, int x, int y, int z)
     {
         return true;
     }
@@ -114,7 +114,7 @@ public class BlockSign extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         try
         {
@@ -126,39 +126,39 @@ public class BlockSign extends BlockContainer
         }
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.sign;
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
         boolean var6 = false;
 
         if (this.field_149967_b)
         {
-            if (!p_149695_1_.getBlock(p_149695_2_, p_149695_3_ - 1, p_149695_4_).getMaterial().isSolid())
+            if (!worldIn.getBlock(x, y - 1, z).getMaterial().isSolid())
             {
                 var6 = true;
             }
         }
         else
         {
-            int var7 = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
+            int var7 = worldIn.getBlockMetadata(x, y, z);
 
-            var6 = var7 != 2 || !p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ + 1).getMaterial().isSolid();
+            var6 = var7 != 2 || !worldIn.getBlock(x, y, z + 1).getMaterial().isSolid();
 
-            if (var7 == 3 && p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ - 1).getMaterial().isSolid())
+            if (var7 == 3 && worldIn.getBlock(x, y, z - 1).getMaterial().isSolid())
             {
                 var6 = false;
             }
 
-            if (var7 == 4 && p_149695_1_.getBlock(p_149695_2_ + 1, p_149695_3_, p_149695_4_).getMaterial().isSolid())
+            if (var7 == 4 && worldIn.getBlock(x + 1, y, z).getMaterial().isSolid())
             {
                 var6 = false;
             }
 
-            if (var7 == 5 && p_149695_1_.getBlock(p_149695_2_ - 1, p_149695_3_, p_149695_4_).getMaterial().isSolid())
+            if (var7 == 5 && worldIn.getBlock(x - 1, y, z).getMaterial().isSolid())
             {
                 var6 = false;
             }
@@ -166,20 +166,20 @@ public class BlockSign extends BlockContainer
 
         if (var6)
         {
-            this.dropBlockAsItem(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_), 0);
-            p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_, p_149695_4_);
+            this.dropBlockAsItem(worldIn, x, y, z, worldIn.getBlockMetadata(x, y, z), 0);
+            worldIn.setBlockToAir(x, y, z);
         }
 
-        super.onNeighborBlockChange(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
     }
 
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Items.sign;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_) {}
+    public void registerBlockIcons(IIconRegister reg) {}
 }

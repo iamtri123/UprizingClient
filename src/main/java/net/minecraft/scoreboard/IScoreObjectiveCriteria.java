@@ -6,14 +6,14 @@ import java.util.Map;
 
 public interface IScoreObjectiveCriteria
 {
-    Map field_96643_a = new HashMap();
-    IScoreObjectiveCriteria field_96641_b = new ScoreDummyCriteria("dummy");
+    Map INSTANCES = new HashMap();
+    IScoreObjectiveCriteria DUMMY = new ScoreDummyCriteria("dummy");
     IScoreObjectiveCriteria deathCount = new ScoreDummyCriteria("deathCount");
     IScoreObjectiveCriteria playerKillCount = new ScoreDummyCriteria("playerKillCount");
     IScoreObjectiveCriteria totalKillCount = new ScoreDummyCriteria("totalKillCount");
     IScoreObjectiveCriteria health = new ScoreHealthCriteria("health");
 
-    String func_96636_a();
+    String getName();
 
     int func_96635_a(List p_96635_1_);
 

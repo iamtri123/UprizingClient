@@ -161,19 +161,19 @@ public class EntityIronGolem extends EntityGolem
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setBoolean("PlayerCreated", this.isPlayerCreated());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setBoolean("PlayerCreated", this.isPlayerCreated());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.setPlayerCreated(p_70037_1_.getBoolean("PlayerCreated"));
+        super.readEntityFromNBT(tagCompund);
+        this.setPlayerCreated(tagCompund.getBoolean("PlayerCreated"));
     }
 
     public boolean attackEntityAsMob(Entity p_70652_1_)
@@ -240,7 +240,7 @@ public class EntityIronGolem extends EntityGolem
         return "mob.irongolem.death";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.irongolem.walk", 1.0F, 1.0F);
     }
@@ -255,14 +255,14 @@ public class EntityIronGolem extends EntityGolem
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145778_a(Item.getItemFromBlock(Blocks.red_flower), 1, 0.0F);
+            this.dropItemWithOffset(Item.getItemFromBlock(Blocks.red_flower), 1, 0.0F);
         }
 
         var4 = 3 + this.rand.nextInt(3);
 
         for (int var5 = 0; var5 < var4; ++var5)
         {
-            this.func_145779_a(Items.iron_ingot, 1);
+            this.dropItem(Items.iron_ingot, 1);
         }
     }
 

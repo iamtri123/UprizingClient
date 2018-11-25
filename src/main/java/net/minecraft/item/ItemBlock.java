@@ -12,13 +12,13 @@ import net.minecraft.world.World;
 
 public class ItemBlock extends Item
 {
-    protected final Block field_150939_a;
+    protected final Block blockInstance;
     private IIcon field_150938_b;
     private static final String __OBFID = "CL_00001772";
 
     public ItemBlock(Block p_i45328_1_)
     {
-        this.field_150939_a = p_i45328_1_;
+        this.blockInstance = p_i45328_1_;
     }
 
     /**
@@ -35,7 +35,7 @@ public class ItemBlock extends Item
      */
     public int getSpriteNumber()
     {
-        return this.field_150939_a.getItemIconName() != null ? 1 : 0;
+        return this.blockInstance.getItemIconName() != null ? 1 : 0;
     }
 
     /**
@@ -43,7 +43,7 @@ public class ItemBlock extends Item
      */
     public IIcon getIconFromDamage(int p_77617_1_)
     {
-        return this.field_150938_b != null ? this.field_150938_b : this.field_150939_a.getBlockTextureFromSide(1);
+        return this.field_150938_b != null ? this.field_150938_b : this.blockInstance.getBlockTextureFromSide(1);
     }
 
     /**
@@ -99,24 +99,24 @@ public class ItemBlock extends Item
         {
             return false;
         }
-        else if (p_77648_5_ == 255 && this.field_150939_a.getMaterial().isSolid())
+        else if (p_77648_5_ == 255 && this.blockInstance.getMaterial().isSolid())
         {
             return false;
         }
-        else if (p_77648_3_.canPlaceEntityOnSide(this.field_150939_a, p_77648_4_, p_77648_5_, p_77648_6_, false, p_77648_7_, p_77648_2_, p_77648_1_))
+        else if (p_77648_3_.canPlaceEntityOnSide(this.blockInstance, p_77648_4_, p_77648_5_, p_77648_6_, false, p_77648_7_, p_77648_2_, p_77648_1_))
         {
             int var12 = this.getMetadata(p_77648_1_.getItemDamage());
-            int var13 = this.field_150939_a.onBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_, var12);
+            int var13 = this.blockInstance.onBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_, var12);
 
-            if (p_77648_3_.setBlock(p_77648_4_, p_77648_5_, p_77648_6_, this.field_150939_a, var13, 3))
+            if (p_77648_3_.setBlock(p_77648_4_, p_77648_5_, p_77648_6_, this.blockInstance, var13, 3))
             {
-                if (p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_) == this.field_150939_a)
+                if (p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_) == this.blockInstance)
                 {
-                    this.field_150939_a.onBlockPlacedBy(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_2_, p_77648_1_);
-                    this.field_150939_a.onPostBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, var13);
+                    this.blockInstance.onBlockPlacedBy(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_2_, p_77648_1_);
+                    this.blockInstance.onPostBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, var13);
                 }
 
-                p_77648_3_.playSoundEffect((double)((float)p_77648_4_ + 0.5F), (double)((float)p_77648_5_ + 0.5F), (double)((float)p_77648_6_ + 0.5F), this.field_150939_a.stepSound.func_150496_b(), (this.field_150939_a.stepSound.func_150497_c() + 1.0F) / 2.0F, this.field_150939_a.stepSound.func_150494_d() * 0.8F);
+                p_77648_3_.playSoundEffect((double)((float)p_77648_4_ + 0.5F), (double)((float)p_77648_5_ + 0.5F), (double)((float)p_77648_6_ + 0.5F), this.blockInstance.stepSound.func_150496_b(), (this.blockInstance.stepSound.func_150497_c() + 1.0F) / 2.0F, this.blockInstance.stepSound.func_150494_d() * 0.8F);
                 --p_77648_1_.stackSize;
             }
 
@@ -169,16 +169,16 @@ public class ItemBlock extends Item
             }
         }
 
-        return p_150936_1_.canPlaceEntityOnSide(this.field_150939_a, p_150936_2_, p_150936_3_, p_150936_4_, false, p_150936_5_, (Entity)null, p_150936_7_);
+        return p_150936_1_.canPlaceEntityOnSide(this.blockInstance, p_150936_2_, p_150936_3_, p_150936_4_, false, p_150936_5_, (Entity)null, p_150936_7_);
     }
 
     /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
-        return this.field_150939_a.getUnlocalizedName();
+        return this.blockInstance.getUnlocalizedName();
     }
 
     /**
@@ -186,7 +186,7 @@ public class ItemBlock extends Item
      */
     public String getUnlocalizedName()
     {
-        return this.field_150939_a.getUnlocalizedName();
+        return this.blockInstance.getUnlocalizedName();
     }
 
     /**
@@ -194,7 +194,7 @@ public class ItemBlock extends Item
      */
     public CreativeTabs getCreativeTab()
     {
-        return this.field_150939_a.getCreativeTabToDisplayOn();
+        return this.blockInstance.getCreativeTabToDisplayOn();
     }
 
     /**
@@ -202,16 +202,16 @@ public class ItemBlock extends Item
      */
     public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List p_150895_3_)
     {
-        this.field_150939_a.getSubBlocks(p_150895_1_, p_150895_2_, p_150895_3_);
+        this.blockInstance.getSubBlocks(p_150895_1_, p_150895_2_, p_150895_3_);
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        String var2 = this.field_150939_a.getItemIconName();
+        String var2 = this.blockInstance.getItemIconName();
 
         if (var2 != null)
         {
-            this.field_150938_b = p_94581_1_.registerIcon(var2);
+            this.field_150938_b = register.registerIcon(var2);
         }
     }
 }

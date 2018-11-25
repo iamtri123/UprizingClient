@@ -29,9 +29,9 @@ public class TileEntity
 
     /** the instance of the world the tile entity is in. */
     protected World worldObj;
-    public int field_145851_c;
-    public int field_145848_d;
-    public int field_145849_e;
+    public int xCoord;
+    public int yCoord;
+    public int zCoord;
     protected boolean tileEntityInvalid;
     public int blockMetadata = -1;
 
@@ -39,16 +39,16 @@ public class TileEntity
     public Block blockType;
     private static final String __OBFID = "CL_00000340";
 
-    private static void func_145826_a(Class p_145826_0_, String p_145826_1_)
+    private static void addMapping(Class cl, String id)
     {
-        if (nameToClassMap.containsKey(p_145826_1_))
+        if (nameToClassMap.containsKey(id))
         {
-            throw new IllegalArgumentException("Duplicate id: " + p_145826_1_);
+            throw new IllegalArgumentException("Duplicate id: " + id);
         }
         else
         {
-            nameToClassMap.put(p_145826_1_, p_145826_0_);
-            classToNameMap.put(p_145826_0_, p_145826_1_);
+            nameToClassMap.put(id, cl);
+            classToNameMap.put(cl, id);
         }
     }
 
@@ -63,9 +63,9 @@ public class TileEntity
     /**
      * Sets the worldObj for this tileEntity.
      */
-    public void setWorldObj(World p_145834_1_)
+    public void setWorldObj(World worldIn)
     {
-        this.worldObj = p_145834_1_;
+        this.worldObj = worldIn;
     }
 
     /**
@@ -76,14 +76,14 @@ public class TileEntity
         return this.worldObj != null;
     }
 
-    public void readFromNBT(NBTTagCompound p_145839_1_)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        this.field_145851_c = p_145839_1_.getInteger("x");
-        this.field_145848_d = p_145839_1_.getInteger("y");
-        this.field_145849_e = p_145839_1_.getInteger("z");
+        this.xCoord = compound.getInteger("x");
+        this.yCoord = compound.getInteger("y");
+        this.zCoord = compound.getInteger("z");
     }
 
-    public void writeToNBT(NBTTagCompound p_145841_1_)
+    public void writeToNBT(NBTTagCompound compound)
     {
         String var2 = (String)classToNameMap.get(this.getClass());
 
@@ -93,10 +93,10 @@ public class TileEntity
         }
         else
         {
-            p_145841_1_.setString("id", var2);
-            p_145841_1_.setInteger("x", this.field_145851_c);
-            p_145841_1_.setInteger("y", this.field_145848_d);
-            p_145841_1_.setInteger("z", this.field_145849_e);
+            compound.setString("id", var2);
+            compound.setInteger("x", this.xCoord);
+            compound.setInteger("y", this.yCoord);
+            compound.setInteger("z", this.zCoord);
         }
     }
 
@@ -105,13 +105,13 @@ public class TileEntity
     /**
      * Creates a new entity and loads its data from the specified NBT.
      */
-    public static TileEntity createAndLoadEntity(NBTTagCompound p_145827_0_)
+    public static TileEntity createAndLoadEntity(NBTTagCompound nbt)
     {
         TileEntity var1 = null;
 
         try
         {
-            Class var2 = (Class)nameToClassMap.get(p_145827_0_.getString("id"));
+            Class var2 = (Class)nameToClassMap.get(nbt.getString("id"));
 
             if (var2 != null)
             {
@@ -125,11 +125,11 @@ public class TileEntity
 
         if (var1 != null)
         {
-            var1.readFromNBT(p_145827_0_);
+            var1.readFromNBT(nbt);
         }
         else
         {
-            logger.warn("Skipping BlockEntity with id " + p_145827_0_.getString("id"));
+            logger.warn("Skipping BlockEntity with id " + nbt.getString("id"));
         }
 
         return var1;
@@ -139,7 +139,7 @@ public class TileEntity
     {
         if (this.blockMetadata == -1)
         {
-            this.blockMetadata = this.worldObj.getBlockMetadata(this.field_145851_c, this.field_145848_d, this.field_145849_e);
+            this.blockMetadata = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
         }
 
         return this.blockMetadata;
@@ -152,12 +152,12 @@ public class TileEntity
     {
         if (this.worldObj != null)
         {
-            this.blockMetadata = this.worldObj.getBlockMetadata(this.field_145851_c, this.field_145848_d, this.field_145849_e);
-            this.worldObj.func_147476_b(this.field_145851_c, this.field_145848_d, this.field_145849_e, this);
+            this.blockMetadata = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
+            this.worldObj.markTileEntityChunkModified(this.xCoord, this.yCoord, this.zCoord, this);
 
             if (this.getBlockType() != Blocks.air)
             {
-                this.worldObj.func_147453_f(this.field_145851_c, this.field_145848_d, this.field_145849_e, this.getBlockType());
+                this.worldObj.updateNeighborsAboutBlockChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
             }
         }
     }
@@ -167,9 +167,9 @@ public class TileEntity
      */
     public double getDistanceFrom(double p_145835_1_, double p_145835_3_, double p_145835_5_)
     {
-        double var7 = (double)this.field_145851_c + 0.5D - p_145835_1_;
-        double var9 = (double)this.field_145848_d + 0.5D - p_145835_3_;
-        double var11 = (double)this.field_145849_e + 0.5D - p_145835_5_;
+        double var7 = (double)this.xCoord + 0.5D - p_145835_1_;
+        double var9 = (double)this.yCoord + 0.5D - p_145835_3_;
+        double var11 = (double)this.zCoord + 0.5D - p_145835_5_;
         return var7 * var7 + var9 * var9 + var11 * var11;
     }
 
@@ -185,7 +185,7 @@ public class TileEntity
     {
         if (this.blockType == null)
         {
-            this.blockType = this.worldObj.getBlock(this.field_145851_c, this.field_145848_d, this.field_145849_e);
+            this.blockType = this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
         }
 
         return this.blockType;
@@ -220,7 +220,7 @@ public class TileEntity
         this.tileEntityInvalid = false;
     }
 
-    public boolean receiveClientEvent(int p_145842_1_, int p_145842_2_)
+    public boolean receiveClientEvent(int id, int type)
     {
         return false;
     }
@@ -231,9 +231,9 @@ public class TileEntity
         this.blockMetadata = -1;
     }
 
-    public void func_145828_a(CrashReportCategory p_145828_1_)
+    public void addInfoToCrashReport(CrashReportCategory reportCategory)
     {
-        p_145828_1_.addCrashSectionCallable("Name", new Callable()
+        reportCategory.addCrashSectionCallable("Name", new Callable()
         {
             private static final String __OBFID = "CL_00000341";
             public String call()
@@ -241,13 +241,13 @@ public class TileEntity
                 return (String)TileEntity.classToNameMap.get(TileEntity.this.getClass()) + " // " + TileEntity.this.getClass().getCanonicalName();
             }
         });
-        CrashReportCategory.func_147153_a(p_145828_1_, this.field_145851_c, this.field_145848_d, this.field_145849_e, this.getBlockType(), this.getBlockMetadata());
-        p_145828_1_.addCrashSectionCallable("Actual block type", new Callable()
+        CrashReportCategory.addBlockInfo(reportCategory, this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), this.getBlockMetadata());
+        reportCategory.addCrashSectionCallable("Actual block type", new Callable()
         {
             private static final String __OBFID = "CL_00000343";
             public String call()
             {
-                int var1 = Block.getIdFromBlock(TileEntity.this.worldObj.getBlock(TileEntity.this.field_145851_c, TileEntity.this.field_145848_d, TileEntity.this.field_145849_e));
+                int var1 = Block.getIdFromBlock(TileEntity.this.worldObj.getBlock(TileEntity.this.xCoord, TileEntity.this.yCoord, TileEntity.this.zCoord));
 
                 try
                 {
@@ -259,12 +259,12 @@ public class TileEntity
                 }
             }
         });
-        p_145828_1_.addCrashSectionCallable("Actual block data value", new Callable()
+        reportCategory.addCrashSectionCallable("Actual block data value", new Callable()
         {
             private static final String __OBFID = "CL_00000344";
             public String call()
             {
-                int var1 = TileEntity.this.worldObj.getBlockMetadata(TileEntity.this.field_145851_c, TileEntity.this.field_145848_d, TileEntity.this.field_145849_e);
+                int var1 = TileEntity.this.worldObj.getBlockMetadata(TileEntity.this.xCoord, TileEntity.this.yCoord, TileEntity.this.zCoord);
 
                 if (var1 < 0)
                 {
@@ -281,25 +281,25 @@ public class TileEntity
 
     static
     {
-        func_145826_a(TileEntityFurnace.class, "Furnace");
-        func_145826_a(TileEntityChest.class, "Chest");
-        func_145826_a(TileEntityEnderChest.class, "EnderChest");
-        func_145826_a(BlockJukebox.TileEntityJukebox.class, "RecordPlayer");
-        func_145826_a(TileEntityDispenser.class, "Trap");
-        func_145826_a(TileEntityDropper.class, "Dropper");
-        func_145826_a(TileEntitySign.class, "Sign");
-        func_145826_a(TileEntityMobSpawner.class, "MobSpawner");
-        func_145826_a(TileEntityNote.class, "Music");
-        func_145826_a(TileEntityPiston.class, "Piston");
-        func_145826_a(TileEntityBrewingStand.class, "Cauldron");
-        func_145826_a(TileEntityEnchantmentTable.class, "EnchantTable");
-        func_145826_a(TileEntityEndPortal.class, "Airportal");
-        func_145826_a(TileEntityCommandBlock.class, "Control");
-        func_145826_a(TileEntityBeacon.class, "Beacon");
-        func_145826_a(TileEntitySkull.class, "Skull");
-        func_145826_a(TileEntityDaylightDetector.class, "DLDetector");
-        func_145826_a(TileEntityHopper.class, "Hopper");
-        func_145826_a(TileEntityComparator.class, "Comparator");
-        func_145826_a(TileEntityFlowerPot.class, "FlowerPot");
+        addMapping(TileEntityFurnace.class, "Furnace");
+        addMapping(TileEntityChest.class, "Chest");
+        addMapping(TileEntityEnderChest.class, "EnderChest");
+        addMapping(BlockJukebox.TileEntityJukebox.class, "RecordPlayer");
+        addMapping(TileEntityDispenser.class, "Trap");
+        addMapping(TileEntityDropper.class, "Dropper");
+        addMapping(TileEntitySign.class, "Sign");
+        addMapping(TileEntityMobSpawner.class, "MobSpawner");
+        addMapping(TileEntityNote.class, "Music");
+        addMapping(TileEntityPiston.class, "Piston");
+        addMapping(TileEntityBrewingStand.class, "Cauldron");
+        addMapping(TileEntityEnchantmentTable.class, "EnchantTable");
+        addMapping(TileEntityEndPortal.class, "Airportal");
+        addMapping(TileEntityCommandBlock.class, "Control");
+        addMapping(TileEntityBeacon.class, "Beacon");
+        addMapping(TileEntitySkull.class, "Skull");
+        addMapping(TileEntityDaylightDetector.class, "DLDetector");
+        addMapping(TileEntityHopper.class, "Hopper");
+        addMapping(TileEntityComparator.class, "Comparator");
+        addMapping(TileEntityFlowerPot.class, "FlowerPot");
     }
 }

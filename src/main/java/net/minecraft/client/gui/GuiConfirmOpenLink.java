@@ -4,20 +4,20 @@ import net.minecraft.client.resources.I18n;
 
 public class GuiConfirmOpenLink extends GuiYesNo
 {
-    private final String field_146363_r;
-    private final String field_146362_s;
-    private final String field_146361_t;
-    private boolean field_146360_u = true;
+    private final String openLinkWarning;
+    private final String copyLinkButtonText;
+    private final String linkText;
+    private boolean showSecurityWarning = true;
     private static final String __OBFID = "CL_00000683";
 
     public GuiConfirmOpenLink(GuiYesNoCallback p_i1084_1_, String p_i1084_2_, int p_i1084_3_, boolean p_i1084_4_)
     {
         super(p_i1084_1_, I18n.format(p_i1084_4_ ? "chat.link.confirmTrusted" : "chat.link.confirm"), p_i1084_2_, p_i1084_3_);
-        this.field_146352_g = I18n.format(p_i1084_4_ ? "chat.link.open" : "gui.yes");
-        this.field_146356_h = I18n.format(p_i1084_4_ ? "gui.cancel" : "gui.no");
-        this.field_146362_s = I18n.format("chat.copy");
-        this.field_146363_r = I18n.format("chat.link.warning");
-        this.field_146361_t = p_i1084_2_;
+        this.confirmButtonText = I18n.format(p_i1084_4_ ? "chat.link.open" : "gui.yes");
+        this.cancelButtonText = I18n.format(p_i1084_4_ ? "gui.cancel" : "gui.no");
+        this.copyLinkButtonText = I18n.format("chat.copy");
+        this.openLinkWarning = I18n.format("chat.link.warning");
+        this.linkText = p_i1084_2_;
     }
 
     /**
@@ -25,24 +25,24 @@ public class GuiConfirmOpenLink extends GuiYesNo
      */
     public void initGui()
     {
-        this.buttonList.add(new GuiButton(0, this.width / 3 - 83 + 0, this.height / 6 + 96, 100, 20, this.field_146352_g));
-        this.buttonList.add(new GuiButton(2, this.width / 3 - 83 + 105, this.height / 6 + 96, 100, 20, this.field_146362_s));
-        this.buttonList.add(new GuiButton(1, this.width / 3 - 83 + 210, this.height / 6 + 96, 100, 20, this.field_146356_h));
+        this.buttonList.add(new GuiButton(0, this.width / 3 - 83 + 0, this.height / 6 + 96, 100, 20, this.confirmButtonText));
+        this.buttonList.add(new GuiButton(2, this.width / 3 - 83 + 105, this.height / 6 + 96, 100, 20, this.copyLinkButtonText));
+        this.buttonList.add(new GuiButton(1, this.width / 3 - 83 + 210, this.height / 6 + 96, 100, 20, this.cancelButtonText));
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.id == 2)
+        if (button.id == 2)
         {
-            this.func_146359_e();
+            this.copyLinkToClipboard();
         }
 
-        this.field_146355_a.confirmClicked(p_146284_1_.id == 0, this.field_146357_i);
+        this.parentScreen.confirmClicked(button.id == 0, this.parentButtonClickedId);
     }
 
-    public void func_146359_e()
+    public void copyLinkToClipboard()
     {
-        setClipboardString(this.field_146361_t);
+        setClipboardString(this.linkText);
     }
 
     /**
@@ -52,14 +52,14 @@ public class GuiConfirmOpenLink extends GuiYesNo
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        if (this.field_146360_u)
+        if (this.showSecurityWarning)
         {
-            this.drawCenteredString(this.fontRendererObj, this.field_146363_r, this.width / 2, 110, 16764108);
+            this.drawCenteredString(this.fontRendererObj, this.openLinkWarning, this.width / 2, 110, 16764108);
         }
     }
 
-    public void func_146358_g()
+    public void disableSecurityWarning()
     {
-        this.field_146360_u = false;
+        this.showSecurityWarning = false;
     }
 }

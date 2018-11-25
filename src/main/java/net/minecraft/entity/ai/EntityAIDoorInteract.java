@@ -15,7 +15,7 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
     protected int entityPosX;
     protected int entityPosY;
     protected int entityPosZ;
-    protected BlockDoor field_151504_e;
+    protected BlockDoor doorBlock;
 
     /**
      * If is true then the Entity has stopped Door Interaction and compoleted the task.
@@ -55,9 +55,9 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
 
                     if (this.theEntity.getDistanceSq((double)this.entityPosX, this.theEntity.posY, (double)this.entityPosZ) <= 2.25D)
                     {
-                        this.field_151504_e = this.func_151503_a(this.entityPosX, this.entityPosY, this.entityPosZ);
+                        this.doorBlock = this.getWoodenDoorBlock(this.entityPosX, this.entityPosY, this.entityPosZ);
 
-                        if (this.field_151504_e != null)
+                        if (this.doorBlock != null)
                         {
                             return true;
                         }
@@ -67,8 +67,8 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
                 this.entityPosX = MathHelper.floor_double(this.theEntity.posX);
                 this.entityPosY = MathHelper.floor_double(this.theEntity.posY + 1.0D);
                 this.entityPosZ = MathHelper.floor_double(this.theEntity.posZ);
-                this.field_151504_e = this.func_151503_a(this.entityPosX, this.entityPosY, this.entityPosZ);
-                return this.field_151504_e != null;
+                this.doorBlock = this.getWoodenDoorBlock(this.entityPosX, this.entityPosY, this.entityPosZ);
+                return this.doorBlock != null;
             }
             else
             {
@@ -110,7 +110,7 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
         }
     }
 
-    private BlockDoor func_151503_a(int p_151503_1_, int p_151503_2_, int p_151503_3_)
+    private BlockDoor getWoodenDoorBlock(int p_151503_1_, int p_151503_2_, int p_151503_3_)
     {
         Block var4 = this.theEntity.worldObj.getBlock(p_151503_1_, p_151503_2_, p_151503_3_);
         return var4 != Blocks.wooden_door ? null : (BlockDoor)var4;

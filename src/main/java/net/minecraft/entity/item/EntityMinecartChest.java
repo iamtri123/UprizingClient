@@ -23,7 +23,7 @@ public class EntityMinecartChest extends EntityMinecartContainer
     public void killMinecart(DamageSource p_94095_1_)
     {
         super.killMinecart(p_94095_1_);
-        this.func_145778_a(Item.getItemFromBlock(Blocks.chest), 1, 0.0F);
+        this.dropItemWithOffset(Item.getItemFromBlock(Blocks.chest), 1, 0.0F);
     }
 
     /**
@@ -39,7 +39,7 @@ public class EntityMinecartChest extends EntityMinecartContainer
         return 1;
     }
 
-    public Block func_145817_o()
+    public Block getDefaultDisplayTile()
     {
         return Blocks.chest;
     }

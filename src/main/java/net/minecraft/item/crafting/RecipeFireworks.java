@@ -102,7 +102,7 @@ public class RecipeFireworks implements IRecipe
                     {
                         ItemStack var26 = p_77569_1_.getStackInSlot(var24);
 
-                        if (var26 != null && var26.getItem() == Items.firework_charge && var26.hasTagCompound() && var26.getTagCompound().func_150297_b("Explosion", 10))
+                        if (var26 != null && var26.getItem() == Items.firework_charge && var26.hasTagCompound() && var26.getTagCompound().hasKey("Explosion", 10))
                         {
                             var23.appendTag(var26.getTagCompound().getCompoundTag("Explosion"));
                         }
@@ -132,7 +132,7 @@ public class RecipeFireworks implements IRecipe
                     {
                         if (var14.getItem() == Items.dye)
                         {
-                            var12.add(Integer.valueOf(ItemDye.field_150922_c[var14.getItemDamage()]));
+                            var12.add(Integer.valueOf(ItemDye.dyeColors[var14.getItemDamage()]));
                         }
                         else if (var14.getItem() == Items.glowstone_dust)
                         {
@@ -186,7 +186,7 @@ public class RecipeFireworks implements IRecipe
                     {
                         if (var11.getItem() == Items.dye)
                         {
-                            var15.add(Integer.valueOf(ItemDye.field_150922_c[var11.getItemDamage()]));
+                            var15.add(Integer.valueOf(ItemDye.dyeColors[var11.getItemDamage()]));
                         }
                         else if (var11.getItem() == Items.firework_charge)
                         {

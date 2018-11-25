@@ -41,7 +41,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
     /**
      * Returns the color this block should be rendered. Used by leaves.
      */
-    public int getRenderColor(int p_149741_1_)
+    public int getRenderColor(int meta)
     {
         return ColorizerFoliage.getFoliageColorBasic();
     }
@@ -50,7 +50,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
      */
-    public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_)
+    public int colorMultiplier(IBlockAccess worldIn, int x, int y, int z)
     {
         int var5 = 0;
         int var6 = 0;
@@ -60,7 +60,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
         {
             for (int var9 = -1; var9 <= 1; ++var9)
             {
-                int var10 = p_149720_1_.getBiomeGenForCoords(p_149720_2_ + var9, p_149720_4_ + var8).getBiomeFoliageColor(p_149720_2_ + var9, p_149720_3_, p_149720_4_ + var8);
+                int var10 = worldIn.getBiomeGenForCoords(x + var9, z + var8).getBiomeFoliageColor(x + var9, y, z + var8);
                 var5 += (var10 & 16711680) >> 16;
                 var6 += (var10 & 65280) >> 8;
                 var7 += var10 & 255;
@@ -70,12 +70,12 @@ public abstract class BlockLeaves extends BlockLeavesBase
         return (var5 / 9 & 255) << 16 | (var6 / 9 & 255) << 8 | var7 / 9 & 255;
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
         byte var7 = 1;
         int var8 = var7 + 1;
 
-        if (p_149749_1_.checkChunksExist(p_149749_2_ - var8, p_149749_3_ - var8, p_149749_4_ - var8, p_149749_2_ + var8, p_149749_3_ + var8, p_149749_4_ + var8))
+        if (worldIn.checkChunksExist(x - var8, y - var8, z - var8, x + var8, y + var8, z + var8))
         {
             for (int var9 = -var7; var9 <= var7; ++var9)
             {
@@ -83,10 +83,10 @@ public abstract class BlockLeaves extends BlockLeavesBase
                 {
                     for (int var11 = -var7; var11 <= var7; ++var11)
                     {
-                        if (p_149749_1_.getBlock(p_149749_2_ + var9, p_149749_3_ + var10, p_149749_4_ + var11).getMaterial() == Material.leaves)
+                        if (worldIn.getBlock(x + var9, y + var10, z + var11).getMaterial() == Material.leaves)
                         {
-                            int var12 = p_149749_1_.getBlockMetadata(p_149749_2_ + var9, p_149749_3_ + var10, p_149749_4_ + var11);
-                            p_149749_1_.setBlockMetadataWithNotify(p_149749_2_ + var9, p_149749_3_ + var10, p_149749_4_ + var11, var12 | 8, 4);
+                            int var12 = worldIn.getBlockMetadata(x + var9, y + var10, z + var11);
+                            worldIn.setBlockMetadataWithNotify(x + var9, y + var10, z + var11, var12 | 8, 4);
                         }
                     }
                 }
@@ -97,11 +97,11 @@ public abstract class BlockLeaves extends BlockLeavesBase
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!p_149674_1_.isClient)
+        if (!worldIn.isClient)
         {
-            int var6 = p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_);
+            int var6 = worldIn.getBlockMetadata(x, y, z);
 
             if ((var6 & 8) != 0 && (var6 & 4) == 0)
             {
@@ -118,7 +118,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
 
                 int var12;
 
-                if (p_149674_1_.checkChunksExist(p_149674_2_ - var8, p_149674_3_ - var8, p_149674_4_ - var8, p_149674_2_ + var8, p_149674_3_ + var8, p_149674_4_ + var8))
+                if (worldIn.checkChunksExist(x - var8, y - var8, z - var8, x + var8, y + var8, z + var8))
                 {
                     int var13;
                     int var14;
@@ -129,7 +129,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
                         {
                             for (var14 = -var7; var14 <= var7; ++var14)
                             {
-                                Block var15 = p_149674_1_.getBlock(p_149674_2_ + var12, p_149674_3_ + var13, p_149674_4_ + var14);
+                                Block var15 = worldIn.getBlock(x + var12, y + var13, z + var14);
 
                                 if (var15 != Blocks.log && var15 != Blocks.log2)
                                 {
@@ -200,11 +200,11 @@ public abstract class BlockLeaves extends BlockLeavesBase
 
                 if (var12 >= 0)
                 {
-                    p_149674_1_.setBlockMetadataWithNotify(p_149674_2_, p_149674_3_, p_149674_4_, var6 & -9, 4);
+                    worldIn.setBlockMetadataWithNotify(x, y, z, var6 & -9, 4);
                 }
                 else
                 {
-                    this.func_150126_e(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+                    this.removeLeaves(worldIn, x, y, z);
                 }
             }
         }
@@ -213,18 +213,18 @@ public abstract class BlockLeaves extends BlockLeavesBase
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (p_149734_1_.canLightningStrikeAt(p_149734_2_, p_149734_3_ + 1, p_149734_4_) && !World.doesBlockHaveSolidTopSurface(p_149734_1_, p_149734_2_, p_149734_3_ - 1, p_149734_4_) && p_149734_5_.nextInt(15) == 1)
+        if (worldIn.canLightningStrikeAt(x, y + 1, z) && !World.doesBlockHaveSolidTopSurface(worldIn, x, y - 1, z) && random.nextInt(15) == 1)
         {
-            double var6 = (double)((float)p_149734_2_ + p_149734_5_.nextFloat());
-            double var8 = (double)p_149734_3_ - 0.05D;
-            double var10 = (double)((float)p_149734_4_ + p_149734_5_.nextFloat());
-            p_149734_1_.spawnParticle("dripWater", var6, var8, var10, 0.0D, 0.0D, 0.0D);
+            double var6 = (double)((float)x + random.nextFloat());
+            double var8 = (double)y - 0.05D;
+            double var10 = (double)((float)z + random.nextFloat());
+            worldIn.spawnParticle("dripWater", var6, var8, var10, 0.0D, 0.0D, 0.0D);
         }
     }
 
-    private void func_150126_e(World p_150126_1_, int p_150126_2_, int p_150126_3_, int p_150126_4_)
+    private void removeLeaves(World p_150126_1_, int p_150126_2_, int p_150126_3_, int p_150126_4_)
     {
         this.dropBlockAsItem(p_150126_1_, p_150126_2_, p_150126_3_, p_150126_4_, p_150126_1_.getBlockMetadata(p_150126_2_, p_150126_3_, p_150126_4_), 0);
         p_150126_1_.setBlockToAir(p_150126_2_, p_150126_3_, p_150126_4_);
@@ -233,12 +233,12 @@ public abstract class BlockLeaves extends BlockLeavesBase
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
-        return p_149745_1_.nextInt(20) == 0 ? 1 : 0;
+        return random.nextInt(20) == 0 ? 1 : 0;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemFromBlock(Blocks.sapling);
     }
@@ -246,15 +246,15 @@ public abstract class BlockLeaves extends BlockLeavesBase
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, int meta, float chance, int fortune)
     {
-        if (!p_149690_1_.isClient)
+        if (!worldIn.isClient)
         {
-            int var8 = this.func_150123_b(p_149690_5_);
+            int var8 = this.func_150123_b(meta);
 
-            if (p_149690_7_ > 0)
+            if (fortune > 0)
             {
-                var8 -= 2 << p_149690_7_;
+                var8 -= 2 << fortune;
 
                 if (var8 < 10)
                 {
@@ -262,17 +262,17 @@ public abstract class BlockLeaves extends BlockLeavesBase
                 }
             }
 
-            if (p_149690_1_.rand.nextInt(var8) == 0)
+            if (worldIn.rand.nextInt(var8) == 0)
             {
-                Item var9 = this.getItemDropped(p_149690_5_, p_149690_1_.rand, p_149690_7_);
-                this.dropBlockAsItem_do(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, new ItemStack(var9, 1, this.damageDropped(p_149690_5_)));
+                Item var9 = this.getItemDropped(meta, worldIn.rand, fortune);
+                this.dropBlockAsItem_do(worldIn, x, y, z, new ItemStack(var9, 1, this.damageDropped(meta)));
             }
 
             var8 = 200;
 
-            if (p_149690_7_ > 0)
+            if (fortune > 0)
             {
-                var8 -= 10 << p_149690_7_;
+                var8 -= 10 << fortune;
 
                 if (var8 < 40)
                 {
@@ -280,7 +280,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
                 }
             }
 
-            this.func_150124_c(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, p_149690_5_, var8);
+            this.func_150124_c(worldIn, x, y, z, meta, var8);
         }
     }
 
@@ -291,25 +291,25 @@ public abstract class BlockLeaves extends BlockLeavesBase
         return 20;
     }
 
-    public void harvestBlock(World p_149636_1_, EntityPlayer p_149636_2_, int p_149636_3_, int p_149636_4_, int p_149636_5_, int p_149636_6_)
+    public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta)
     {
-        if (!p_149636_1_.isClient && p_149636_2_.getCurrentEquippedItem() != null && p_149636_2_.getCurrentEquippedItem().getItem() == Items.shears)
+        if (!worldIn.isClient && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == Items.shears)
         {
-            p_149636_2_.addStat(StatList.mineBlockStatArray[Block.getIdFromBlock(this)], 1);
-            this.dropBlockAsItem_do(p_149636_1_, p_149636_3_, p_149636_4_, p_149636_5_, new ItemStack(Item.getItemFromBlock(this), 1, p_149636_6_ & 3));
+            player.addStat(StatList.mineBlockStatArray[Block.getIdFromBlock(this)], 1);
+            this.dropBlockAsItem_do(worldIn, x, y, z, new ItemStack(Item.getItemFromBlock(this), 1, meta & 3));
         }
         else
         {
-            super.harvestBlock(p_149636_1_, p_149636_2_, p_149636_3_, p_149636_4_, p_149636_5_, p_149636_6_);
+            super.harvestBlock(worldIn, player, x, y, z, meta);
         }
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_ & 3;
+        return meta & 3;
     }
 
     public boolean isOpaqueCube()
@@ -320,9 +320,9 @@ public abstract class BlockLeaves extends BlockLeavesBase
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public abstract IIcon getIcon(int p_149691_1_, int p_149691_2_);
+    public abstract IIcon getIcon(int side, int meta);
 
-    public void func_150122_b(boolean p_150122_1_)
+    public void setGraphicsLevel(boolean p_150122_1_)
     {
         this.field_150121_P = p_150122_1_;
         this.field_150127_b = p_150122_1_ ? 0 : 1;
@@ -332,9 +332,9 @@ public abstract class BlockLeaves extends BlockLeavesBase
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int p_149644_1_)
+    protected ItemStack createStackedBlock(int meta)
     {
-        return new ItemStack(Item.getItemFromBlock(this), 1, p_149644_1_ & 3);
+        return new ItemStack(Item.getItemFromBlock(this), 1, meta & 3);
     }
 
     public abstract String[] func_150125_e();

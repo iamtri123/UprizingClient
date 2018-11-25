@@ -51,7 +51,7 @@ public class ContainerEnchantment extends Container
         this.addSlotToContainer(new Slot(this.tableInventory, 0, 25, 47)
         {
             private static final String __OBFID = "CL_00001747";
-            public boolean isItemValid(ItemStack p_75214_1_)
+            public boolean isItemValid(ItemStack stack)
             {
                 return true;
             }
@@ -190,24 +190,24 @@ public class ContainerEnchantment extends Container
     /**
      * enchants the item on the table using the specified slot; also deducts XP from player
      */
-    public boolean enchantItem(EntityPlayer p_75140_1_, int p_75140_2_)
+    public boolean enchantItem(EntityPlayer player, int id)
     {
         ItemStack var3 = this.tableInventory.getStackInSlot(0);
 
-        if (this.enchantLevels[p_75140_2_] > 0 && var3 != null && (p_75140_1_.experienceLevel >= this.enchantLevels[p_75140_2_] || p_75140_1_.capabilities.isCreativeMode))
+        if (this.enchantLevels[id] > 0 && var3 != null && (player.experienceLevel >= this.enchantLevels[id] || player.capabilities.isCreativeMode))
         {
             if (!this.worldPointer.isClient)
             {
-                List var4 = EnchantmentHelper.buildEnchantmentList(this.rand, var3, this.enchantLevels[p_75140_2_]);
+                List var4 = EnchantmentHelper.buildEnchantmentList(this.rand, var3, this.enchantLevels[id]);
                 boolean var5 = var3.getItem() == Items.book;
 
                 if (var4 != null)
                 {
-                    p_75140_1_.addExperienceLevel(-this.enchantLevels[p_75140_2_]);
+                    player.addExperienceLevel(-this.enchantLevels[id]);
 
                     if (var5)
                     {
-                        var3.func_150996_a(Items.enchanted_book);
+                        var3.setItem(Items.enchanted_book);
                     }
 
                     int var6 = var5 && var4.size() > 1 ? this.rand.nextInt(var4.size()) : -1;
@@ -259,25 +259,25 @@ public class ContainerEnchantment extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.worldPointer.getBlock(this.posX, this.posY, this.posZ) == Blocks.enchanting_table && p_75145_1_.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
+        return this.worldPointer.getBlock(this.posX, this.posY, this.posZ) == Blocks.enchanting_table && player.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ == 0)
+            if (index == 0)
             {
                 if (!this.mergeItemStack(var5, 1, 37, true))
                 {
@@ -317,7 +317,7 @@ public class ContainerEnchantment extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;

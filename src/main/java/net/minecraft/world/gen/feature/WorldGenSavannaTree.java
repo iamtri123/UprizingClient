@@ -96,7 +96,7 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
 
                         if (var17.getMaterial() == Material.air || var17.getMaterial() == Material.leaves)
                         {
-                            this.func_150516_a(p_76484_1_, var23, var16, var13, Blocks.log2, 0);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, var23, var16, var13, Blocks.log2, 0);
                             var14 = var16;
                         }
                     }
@@ -148,7 +148,7 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
 
                                 if (var20.getMaterial() == Material.air || var20.getMaterial() == Material.leaves)
                                 {
-                                    this.func_150516_a(p_76484_1_, var23, var19, var13, Blocks.log2, 0);
+                                    this.setBlockAndNotifyAdequately(p_76484_1_, var23, var19, var13, Blocks.log2, 0);
                                     var14 = var19;
                                 }
                             }
@@ -199,7 +199,7 @@ public class WorldGenSavannaTree extends WorldGenAbstractTree
 
         if (var5.getMaterial() == Material.air || var5.getMaterial() == Material.leaves)
         {
-            this.func_150516_a(p_150525_1_, p_150525_2_, p_150525_3_, p_150525_4_, Blocks.leaves2, 0);
+            this.setBlockAndNotifyAdequately(p_150525_1_, p_150525_2_, p_150525_3_, p_150525_4_, Blocks.leaves2, 0);
         }
     }
 }

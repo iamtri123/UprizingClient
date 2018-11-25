@@ -27,7 +27,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
 
     public void renderTileEntityAt(TileEntitySkull p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_)
     {
-        this.func_152674_a((float)p_147500_2_, (float)p_147500_4_, (float)p_147500_6_, p_147500_1_.getBlockMetadata() & 7, (float)(p_147500_1_.func_145906_b() * 360) / 16.0F, p_147500_1_.func_145904_a(), p_147500_1_.func_152108_a());
+        this.func_152674_a((float)p_147500_2_, (float)p_147500_4_, (float)p_147500_6_, p_147500_1_.getBlockMetadata() & 7, (float)(p_147500_1_.getSkullRotation() * 360) / 16.0F, p_147500_1_.getSkullType(), p_147500_1_.func_152108_a());
     }
 
     public void func_147497_a(TileEntityRendererDispatcher p_147497_1_)
@@ -62,11 +62,11 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
                 if (p_152674_7_ != null)
                 {
                     Minecraft var10 = Minecraft.getMinecraft();
-                    Map var11 = var10.func_152342_ad().func_152788_a(p_152674_7_);
+                    Map var11 = var10.getSkinManager().loadSkinFromCache(p_152674_7_);
 
                     if (var11.containsKey(Type.SKIN))
                     {
-                        var9 = var10.func_152342_ad().func_152792_a((MinecraftProfileTexture)var11.get(Type.SKIN), Type.SKIN);
+                        var9 = var10.getSkinManager().loadSkin((MinecraftProfileTexture)var11.get(Type.SKIN), Type.SKIN);
                     }
                 }
 

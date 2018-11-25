@@ -28,15 +28,15 @@ public class NBTTagString extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput p_74734_1_) throws IOException
+    void write(DataOutput output) throws IOException
     {
-        p_74734_1_.writeUTF(this.data);
+        output.writeUTF(this.data);
     }
 
-    void func_152446_a(DataInput p_152446_1_, int p_152446_2_, NBTSizeTracker p_152446_3_) throws IOException
+    void read(DataInput input, int depth, NBTSizeTracker sizeTracker) throws IOException
     {
-        this.data = p_152446_1_.readUTF();
-        p_152446_3_.func_152450_a((long)(16 * this.data.length()));
+        this.data = input.readUTF();
+        sizeTracker.addSpaceRead((long)(16 * this.data.length()));
     }
 
     /**
@@ -78,7 +78,7 @@ public class NBTTagString extends NBTBase
         return super.hashCode() ^ this.data.hashCode();
     }
 
-    public String func_150285_a_()
+    public String getString()
     {
         return this.data;
     }

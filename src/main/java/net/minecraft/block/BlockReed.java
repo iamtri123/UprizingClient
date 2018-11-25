@@ -24,45 +24,45 @@ public class BlockReed extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (p_149674_1_.getBlock(p_149674_2_, p_149674_3_ - 1, p_149674_4_) == Blocks.reeds || this.func_150170_e(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_))
+        if (worldIn.getBlock(x, y - 1, z) == Blocks.reeds || this.func_150170_e(worldIn, x, y, z))
         {
-            if (p_149674_1_.isAirBlock(p_149674_2_, p_149674_3_ + 1, p_149674_4_))
+            if (worldIn.isAirBlock(x, y + 1, z))
             {
                 int var6;
 
-                for (var6 = 1; p_149674_1_.getBlock(p_149674_2_, p_149674_3_ - var6, p_149674_4_) == this; ++var6)
+                for (var6 = 1; worldIn.getBlock(x, y - var6, z) == this; ++var6)
                 {
                 }
 
                 if (var6 < 3)
                 {
-                    int var7 = p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_);
+                    int var7 = worldIn.getBlockMetadata(x, y, z);
 
                     if (var7 == 15)
                     {
-                        p_149674_1_.setBlock(p_149674_2_, p_149674_3_ + 1, p_149674_4_, this);
-                        p_149674_1_.setBlockMetadataWithNotify(p_149674_2_, p_149674_3_, p_149674_4_, 0, 4);
+                        worldIn.setBlock(x, y + 1, z, this);
+                        worldIn.setBlockMetadataWithNotify(x, y, z, 0, 4);
                     }
                     else
                     {
-                        p_149674_1_.setBlockMetadataWithNotify(p_149674_2_, p_149674_3_, p_149674_4_, var7 + 1, 4);
+                        worldIn.setBlockMetadataWithNotify(x, y, z, var7 + 1, 4);
                     }
                 }
             }
         }
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        Block var5 = p_149742_1_.getBlock(p_149742_2_, p_149742_3_ - 1, p_149742_4_);
-        return var5 == this || (var5 == Blocks.grass || var5 == Blocks.dirt || var5 == Blocks.sand && (p_149742_1_.getBlock(p_149742_2_ - 1, p_149742_3_ - 1, p_149742_4_).getMaterial() == Material.water || (p_149742_1_.getBlock(p_149742_2_ + 1, p_149742_3_ - 1, p_149742_4_).getMaterial() == Material.water || (p_149742_1_.getBlock(p_149742_2_, p_149742_3_ - 1, p_149742_4_ - 1).getMaterial() == Material.water || p_149742_1_.getBlock(p_149742_2_, p_149742_3_ - 1, p_149742_4_ + 1).getMaterial() == Material.water))));
+        Block var5 = worldIn.getBlock(x, y - 1, z);
+        return var5 == this || (var5 == Blocks.grass || var5 == Blocks.dirt || var5 == Blocks.sand && (worldIn.getBlock(x - 1, y - 1, z).getMaterial() == Material.water || (worldIn.getBlock(x + 1, y - 1, z).getMaterial() == Material.water || (worldIn.getBlock(x, y - 1, z - 1).getMaterial() == Material.water || worldIn.getBlock(x, y - 1, z + 1).getMaterial() == Material.water))));
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        this.func_150170_e(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_);
+        this.func_150170_e(worldIn, x, y, z);
     }
 
     protected final boolean func_150170_e(World p_150170_1_, int p_150170_2_, int p_150170_3_, int p_150170_4_)
@@ -82,21 +82,21 @@ public class BlockReed extends Block
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World p_149718_1_, int p_149718_2_, int p_149718_3_, int p_149718_4_)
+    public boolean canBlockStay(World worldIn, int x, int y, int z)
     {
-        return this.canPlaceBlockAt(p_149718_1_, p_149718_2_, p_149718_3_, p_149718_4_);
+        return this.canPlaceBlockAt(worldIn, x, y, z);
     }
 
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
         return null;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.reeds;
     }
@@ -122,7 +122,7 @@ public class BlockReed extends Block
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Items.reeds;
     }
@@ -131,8 +131,8 @@ public class BlockReed extends Block
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
      */
-    public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_)
+    public int colorMultiplier(IBlockAccess worldIn, int x, int y, int z)
     {
-        return p_149720_1_.getBiomeGenForCoords(p_149720_2_, p_149720_4_).getBiomeGrassColor(p_149720_2_, p_149720_3_, p_149720_4_);
+        return worldIn.getBiomeGenForCoords(x, z).getBiomeGrassColor(x, y, z);
     }
 }

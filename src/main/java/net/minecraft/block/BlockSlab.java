@@ -13,13 +13,13 @@ import net.minecraft.world.World;
 
 public abstract class BlockSlab extends Block
 {
-    protected final boolean field_150004_a;
+    protected final boolean isFullBlock;
     private static final String __OBFID = "CL_00000253";
 
     public BlockSlab(boolean p_i45410_1_, Material p_i45410_2_)
     {
         super(p_i45410_2_);
-        this.field_150004_a = p_i45410_1_;
+        this.isFullBlock = p_i45410_1_;
 
         if (p_i45410_1_)
         {
@@ -33,15 +33,15 @@ public abstract class BlockSlab extends Block
         this.setLightOpacity(255);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        if (this.field_150004_a)
+        if (this.isFullBlock)
         {
             this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         }
         else
         {
-            boolean var5 = (p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_) & 8) != 0;
+            boolean var5 = (worldIn.getBlockMetadata(x, y, z) & 8) != 0;
 
             if (var5)
             {
@@ -59,7 +59,7 @@ public abstract class BlockSlab extends Block
      */
     public void setBlockBoundsForItemRender()
     {
-        if (this.field_150004_a)
+        if (this.isFullBlock)
         {
             this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         }
@@ -69,60 +69,60 @@ public abstract class BlockSlab extends Block
         }
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider)
     {
-        this.setBlockBoundsBasedOnState(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_);
-        super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
     }
 
     public boolean isOpaqueCube()
     {
-        return this.field_150004_a;
+        return this.isFullBlock;
     }
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta)
     {
-        return this.field_150004_a ? p_149660_9_ : (p_149660_5_ != 0 && (p_149660_5_ == 1 || (double)p_149660_7_ <= 0.5D) ? p_149660_9_ : p_149660_9_ | 8);
+        return this.isFullBlock ? meta : (side != 0 && (side == 1 || (double)subY <= 0.5D) ? meta : meta | 8);
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
-        return this.field_150004_a ? 2 : 1;
+        return this.isFullBlock ? 2 : 1;
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_ & 7;
+        return meta & 7;
     }
 
     public boolean renderAsNormalBlock()
     {
-        return this.field_150004_a;
+        return this.isFullBlock;
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        if (this.field_150004_a)
+        if (this.isFullBlock)
         {
-            return super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
+            return super.shouldSideBeRendered(worldIn, x, y, z, side);
         }
-        else if (p_149646_5_ != 1 && p_149646_5_ != 0 && !super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_))
+        else if (side != 1 && side != 0 && !super.shouldSideBeRendered(worldIn, x, y, z, side))
         {
             return false;
         }
         else
         {
-            int var6 = p_149646_2_ + Facing.offsetsXForSide[Facing.oppositeSide[p_149646_5_]];
-            int var7 = p_149646_3_ + Facing.offsetsYForSide[Facing.oppositeSide[p_149646_5_]];
-            int var8 = p_149646_4_ + Facing.offsetsZForSide[Facing.oppositeSide[p_149646_5_]];
-            boolean var9 = (p_149646_1_.getBlockMetadata(var6, var7, var8) & 8) != 0;
-            return var9 ? (p_149646_5_ == 0 || (p_149646_5_ == 1 && super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_) || (!func_150003_a(p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_)) || (p_149646_1_.getBlockMetadata(p_149646_2_, p_149646_3_, p_149646_4_) & 8) == 0))) : (p_149646_5_ == 1 || (p_149646_5_ == 0 && super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_) || (!func_150003_a(p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_)) || (p_149646_1_.getBlockMetadata(p_149646_2_, p_149646_3_, p_149646_4_) & 8) != 0)));
+            int var6 = x + Facing.offsetsXForSide[Facing.oppositeSide[side]];
+            int var7 = y + Facing.offsetsYForSide[Facing.oppositeSide[side]];
+            int var8 = z + Facing.offsetsZForSide[Facing.oppositeSide[side]];
+            boolean var9 = (worldIn.getBlockMetadata(var6, var7, var8) & 8) != 0;
+            return var9 ? (side == 0 || (side == 1 && super.shouldSideBeRendered(worldIn, x, y, z, side) || (!func_150003_a(worldIn.getBlock(x, y, z)) || (worldIn.getBlockMetadata(x, y, z) & 8) == 0))) : (side == 1 || (side == 0 && super.shouldSideBeRendered(worldIn, x, y, z, side) || (!func_150003_a(worldIn.getBlock(x, y, z)) || (worldIn.getBlockMetadata(x, y, z) & 8) != 0)));
         }
     }
 
@@ -131,20 +131,20 @@ public abstract class BlockSlab extends Block
         return p_150003_0_ == Blocks.stone_slab || p_150003_0_ == Blocks.wooden_slab;
     }
 
-    public abstract String func_150002_b(int p_150002_1_);
+    public abstract String getFullSlabName(int p_150002_1_);
 
     /**
      * Get the block's damage value (for use with pick block).
      */
-    public int getDamageValue(World p_149643_1_, int p_149643_2_, int p_149643_3_, int p_149643_4_)
+    public int getDamageValue(World worldIn, int x, int y, int z)
     {
-        return super.getDamageValue(p_149643_1_, p_149643_2_, p_149643_3_, p_149643_4_) & 7;
+        return super.getDamageValue(worldIn, x, y, z) & 7;
     }
 
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return func_150003_a(this) ? Item.getItemFromBlock(this) : (this == Blocks.double_stone_slab ? Item.getItemFromBlock(Blocks.stone_slab) : (this == Blocks.double_wooden_slab ? Item.getItemFromBlock(Blocks.wooden_slab) : Item.getItemFromBlock(Blocks.stone_slab)));
     }

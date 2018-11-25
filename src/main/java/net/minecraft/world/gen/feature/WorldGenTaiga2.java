@@ -93,7 +93,7 @@ public class WorldGenTaiga2 extends WorldGenAbstractTree
 
                                 if ((Math.abs(var18) != var22 || Math.abs(var20) != var22 || var22 <= 0) && !p_76484_1_.getBlock(var17, var16, var19).func_149730_j())
                                 {
-                                    this.func_150516_a(p_76484_1_, var17, var16, var19, Blocks.leaves, 1);
+                                    this.setBlockAndNotifyAdequately(p_76484_1_, var17, var16, var19, Blocks.leaves, 1);
                                 }
                             }
                         }
@@ -123,7 +123,7 @@ public class WorldGenTaiga2 extends WorldGenAbstractTree
 
                         if (var25.getMaterial() == Material.air || var25.getMaterial() == Material.leaves)
                         {
-                            this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var16, p_76484_5_, Blocks.log, 1);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var16, p_76484_5_, Blocks.log, 1);
                         }
                     }
 

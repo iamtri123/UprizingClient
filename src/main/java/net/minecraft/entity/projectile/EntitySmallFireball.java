@@ -95,7 +95,7 @@ public class EntitySmallFireball extends EntityFireball
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         return false;
     }

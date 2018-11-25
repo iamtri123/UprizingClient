@@ -15,16 +15,16 @@ public class BlockPotato extends BlockCrops
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (p_149691_2_ < 7)
+        if (meta < 7)
         {
-            if (p_149691_2_ == 6)
+            if (meta == 6)
             {
-                p_149691_2_ = 5;
+                meta = 5;
             }
 
-            return this.field_149869_a[p_149691_2_ >> 1];
+            return this.field_149869_a[meta >> 1];
         }
         else
         {
@@ -32,12 +32,12 @@ public class BlockPotato extends BlockCrops
         }
     }
 
-    protected Item func_149866_i()
+    protected Item getSeed()
     {
         return Items.potato;
     }
 
-    protected Item func_149865_P()
+    protected Item getCrop()
     {
         return Items.potato;
     }
@@ -45,26 +45,26 @@ public class BlockPotato extends BlockCrops
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, int meta, float chance, int fortune)
     {
-        super.dropBlockAsItemWithChance(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, p_149690_5_, p_149690_6_, p_149690_7_);
+        super.dropBlockAsItemWithChance(worldIn, x, y, z, meta, chance, fortune);
 
-        if (!p_149690_1_.isClient)
+        if (!worldIn.isClient)
         {
-            if (p_149690_5_ >= 7 && p_149690_1_.rand.nextInt(50) == 0)
+            if (meta >= 7 && worldIn.rand.nextInt(50) == 0)
             {
-                this.dropBlockAsItem_do(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, new ItemStack(Items.poisonous_potato));
+                this.dropBlockAsItem_do(worldIn, x, y, z, new ItemStack(Items.poisonous_potato));
             }
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_149869_a = new IIcon[4];
 
         for (int var2 = 0; var2 < this.field_149869_a.length; ++var2)
         {
-            this.field_149869_a[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_stage_" + var2);
+            this.field_149869_a[var2] = reg.registerIcon(this.getTextureName() + "_stage_" + var2);
         }
     }
 }

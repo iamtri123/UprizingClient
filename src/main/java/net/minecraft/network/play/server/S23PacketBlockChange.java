@@ -31,30 +31,30 @@ public class S23PacketBlockChange extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148887_a = p_148837_1_.readInt();
-        this.field_148885_b = p_148837_1_.readUnsignedByte();
-        this.field_148886_c = p_148837_1_.readInt();
-        this.field_148883_d = Block.getBlockById(p_148837_1_.readVarIntFromBuffer());
-        this.field_148884_e = p_148837_1_.readUnsignedByte();
+        this.field_148887_a = data.readInt();
+        this.field_148885_b = data.readUnsignedByte();
+        this.field_148886_c = data.readInt();
+        this.field_148883_d = Block.getBlockById(data.readVarIntFromBuffer());
+        this.field_148884_e = data.readUnsignedByte();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_148887_a);
-        p_148840_1_.writeByte(this.field_148885_b);
-        p_148840_1_.writeInt(this.field_148886_c);
-        p_148840_1_.writeVarIntToBuffer(Block.getIdFromBlock(this.field_148883_d));
-        p_148840_1_.writeByte(this.field_148884_e);
+        data.writeInt(this.field_148887_a);
+        data.writeByte(this.field_148885_b);
+        data.writeInt(this.field_148886_c);
+        data.writeVarIntToBuffer(Block.getIdFromBlock(this.field_148883_d));
+        data.writeByte(this.field_148884_e);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleBlockChange(this);
+        handler.handleBlockChange(this);
     }
 
     /**
@@ -90,8 +90,8 @@ public class S23PacketBlockChange extends Packet
         return this.field_148884_e;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

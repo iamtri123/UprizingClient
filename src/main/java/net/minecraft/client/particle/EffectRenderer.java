@@ -222,7 +222,7 @@ public class EffectRenderer
         }
     }
 
-    public void func_147215_a(int p_147215_1_, int p_147215_2_, int p_147215_3_, Block p_147215_4_, int p_147215_5_)
+    public void addBlockDestroyEffects(int p_147215_1_, int p_147215_2_, int p_147215_3_, Block p_147215_4_, int p_147215_5_)
     {
         if (p_147215_4_.getMaterial() != Material.air)
         {

@@ -15,14 +15,14 @@ import org.lwjgl.opengl.GL12;
 
 public class GuiInventory extends InventoryEffectRenderer
 {
-    private float field_147048_u;
-    private float field_147047_v;
+    private float oldMouseX;
+    private float oldMouseY;
     private static final String __OBFID = "CL_00000761";
 
     public GuiInventory(EntityPlayer p_i1094_1_)
     {
         super(p_i1094_1_.inventoryContainer);
-        this.field_146291_p = true;
+        this.allowUserInput = true;
     }
 
     /**
@@ -53,7 +53,7 @@ public class GuiInventory extends InventoryEffectRenderer
         }
     }
 
-    protected void func_146979_b(int p_146979_1_, int p_146979_2_)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         this.fontRendererObj.drawString(I18n.format("container.crafting"), 86, 16, 4210752);
     }
@@ -64,21 +64,21 @@ public class GuiInventory extends InventoryEffectRenderer
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.field_147048_u = (float)mouseX;
-        this.field_147047_v = (float)mouseY;
+        this.oldMouseX = (float)mouseX;
+        this.oldMouseY = (float)mouseY;
     }
 
-    protected void func_146976_a(float p_146976_1_, int p_146976_2_, int p_146976_3_)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(field_147001_a);
-        int var4 = this.field_147003_i;
-        int var5 = this.field_147009_r;
-        this.drawTexturedModalRect(var4, var5, 0, 0, this.field_146999_f, this.field_147000_g);
-        func_147046_a(var4 + 51, var5 + 75, 30, (float)(var4 + 51) - this.field_147048_u, (float)(var5 + 75 - 50) - this.field_147047_v, this.mc.thePlayer);
+        this.mc.getTextureManager().bindTexture(inventoryBackground);
+        int var4 = this.guiLeft;
+        int var5 = this.guiTop;
+        this.drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
+        drawEntityOnScreen(var4 + 51, var5 + 75, 30, (float)(var4 + 51) - this.oldMouseX, (float)(var5 + 75 - 50) - this.oldMouseY, this.mc.thePlayer);
     }
 
-    public static void func_147046_a(int p_147046_0_, int p_147046_1_, int p_147046_2_, float p_147046_3_, float p_147046_4_, EntityLivingBase p_147046_5_)
+    public static void drawEntityOnScreen(int p_147046_0_, int p_147046_1_, int p_147046_2_, float p_147046_3_, float p_147046_4_, EntityLivingBase p_147046_5_)
     {
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
         GL11.glPushMatrix();
@@ -101,7 +101,7 @@ public class GuiInventory extends InventoryEffectRenderer
         p_147046_5_.prevRotationYawHead = p_147046_5_.rotationYaw;
         GL11.glTranslatef(0.0F, p_147046_5_.yOffset, 0.0F);
         RenderManager.instance.playerViewY = 180.0F;
-        RenderManager.instance.func_147940_a(p_147046_5_, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
+        RenderManager.instance.renderEntityWithPosYaw(p_147046_5_, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
         p_147046_5_.renderYawOffset = var6;
         p_147046_5_.rotationYaw = var7;
         p_147046_5_.rotationPitch = var8;
@@ -115,16 +115,16 @@ public class GuiInventory extends InventoryEffectRenderer
         OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.id == 0)
+        if (button.id == 0)
         {
-            this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.thePlayer.func_146107_m()));
+            this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.thePlayer.getStatFileWriter()));
         }
 
-        if (p_146284_1_.id == 1)
+        if (button.id == 1)
         {
-            this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.func_146107_m()));
+            this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.getStatFileWriter()));
         }
     }
 }

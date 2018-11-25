@@ -10,69 +10,69 @@ import net.minecraft.world.World;
 
 public class C02PacketUseEntity extends Packet
 {
-    private int field_149567_a;
-    private C02PacketUseEntity.Action field_149566_b;
+    private int entityId;
+    private C02PacketUseEntity.Action action;
     private static final String __OBFID = "CL_00001357";
 
     public C02PacketUseEntity() {}
 
     public C02PacketUseEntity(Entity p_i45251_1_, C02PacketUseEntity.Action p_i45251_2_)
     {
-        this.field_149567_a = p_i45251_1_.getEntityId();
-        this.field_149566_b = p_i45251_2_;
+        this.entityId = p_i45251_1_.getEntityId();
+        this.action = p_i45251_2_;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149567_a = p_148837_1_.readInt();
-        this.field_149566_b = C02PacketUseEntity.Action.field_151421_c[p_148837_1_.readByte() % C02PacketUseEntity.Action.field_151421_c.length];
+        this.entityId = data.readInt();
+        this.action = C02PacketUseEntity.Action.ACTIONS[data.readByte() % C02PacketUseEntity.Action.ACTIONS.length];
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149567_a);
-        p_148840_1_.writeByte(this.field_149566_b.field_151418_d);
+        data.writeInt(this.entityId);
+        data.writeByte(this.action.id);
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processUseEntity(this);
+        handler.processUseEntity(this);
     }
 
-    public Entity func_149564_a(World p_149564_1_)
+    public Entity getEntityFromWorld(World worldIn)
     {
-        return p_149564_1_.getEntityByID(this.field_149567_a);
+        return worldIn.getEntityByID(this.entityId);
     }
 
-    public C02PacketUseEntity.Action func_149565_c()
+    public C02PacketUseEntity.Action getAction()
     {
-        return this.field_149566_b;
+        return this.action;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 
     public enum Action
     {
         INTERACT("INTERACT", 0, 0),
         ATTACK("ATTACK", 1, 1);
-        private static final C02PacketUseEntity.Action[] field_151421_c = new C02PacketUseEntity.Action[values().length];
-        private final int field_151418_d;
+        private static final C02PacketUseEntity.Action[] ACTIONS = new C02PacketUseEntity.Action[values().length];
+        private final int id;
 
         private static final C02PacketUseEntity.Action[] $VALUES = {INTERACT, ATTACK};
         private static final String __OBFID = "CL_00001358";
 
-        Action(String p_i45250_1_, int p_i45250_2_, int p_i45250_3_)
+        Action(String p_i45250_1_, int p_i45250_2_, int actionId)
         {
-            this.field_151418_d = p_i45250_3_;
+            this.id = actionId;
         }
 
         static {
@@ -82,7 +82,7 @@ public class C02PacketUseEntity extends Packet
             for (int var2 = 0; var2 < var1; ++var2)
             {
                 C02PacketUseEntity.Action var3 = var0[var2];
-                field_151421_c[var3.field_151418_d] = var3;
+                ACTIONS[var3.id] = var3;
             }
         }
     }

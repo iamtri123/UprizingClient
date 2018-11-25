@@ -100,16 +100,16 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
         CommandBase.setAdminCommander(this);
     }
 
-    public void func_152372_a(ICommandSender p_152372_1_, ICommand p_152372_2_, int p_152372_3_, String p_152372_4_, Object ... p_152372_5_)
+    public void notifyOperators(ICommandSender sender, ICommand command, int p_152372_3_, String msgFormat, Object ... msgParams)
     {
         boolean var6 = true;
 
-        if (p_152372_1_ instanceof CommandBlockLogic && !MinecraftServer.getServer().worldServers[0].getGameRules().getGameRuleBooleanValue("commandBlockOutput"))
+        if (sender instanceof CommandBlockLogic && !MinecraftServer.getServer().worldServers[0].getGameRules().getGameRuleBooleanValue("commandBlockOutput"))
         {
             var6 = false;
         }
 
-        ChatComponentTranslation var7 = new ChatComponentTranslation("chat.type.admin", p_152372_1_.getCommandSenderName(), new ChatComponentTranslation(p_152372_4_, p_152372_5_));
+        ChatComponentTranslation var7 = new ChatComponentTranslation("chat.type.admin", sender.getCommandSenderName(), new ChatComponentTranslation(msgFormat, msgParams));
         var7.getChatStyle().setColor(EnumChatFormatting.GRAY);
         var7.getChatStyle().setItalic(Boolean.valueOf(true));
 
@@ -121,21 +121,21 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
             {
                 EntityPlayer var9 = (EntityPlayer)var8.next();
 
-                if (var9 != p_152372_1_ && MinecraftServer.getServer().getConfigurationManager().func_152596_g(var9.getGameProfile()) && p_152372_2_.canCommandSenderUseCommand(var9) && (!(p_152372_1_ instanceof RConConsoleSource) || MinecraftServer.getServer().func_152363_m()))
+                if (var9 != sender && MinecraftServer.getServer().getConfigurationManager().canSendCommands(var9.getGameProfile()) && command.canCommandSenderUseCommand(var9) && (!(sender instanceof RConConsoleSource) || MinecraftServer.getServer().func_152363_m()))
                 {
                     var9.addChatMessage(var7);
                 }
             }
         }
 
-        if (p_152372_1_ != MinecraftServer.getServer())
+        if (sender != MinecraftServer.getServer())
         {
             MinecraftServer.getServer().addChatMessage(var7);
         }
 
         if ((p_152372_3_ & 1) != 1)
         {
-            p_152372_1_.addChatMessage(new ChatComponentTranslation(p_152372_4_, p_152372_5_));
+            sender.addChatMessage(new ChatComponentTranslation(msgFormat, msgParams));
         }
     }
 }

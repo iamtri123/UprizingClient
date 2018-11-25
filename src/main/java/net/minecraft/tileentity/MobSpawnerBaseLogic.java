@@ -31,7 +31,7 @@ public abstract class MobSpawnerBaseLogic
 
     /** A counter for spawn tries. */
     private int spawnCount = 4;
-    private Entity field_98291_j;
+    private Entity cachedEntity;
     private int maxNearbyEntities = 6;
 
     /** The distance from which a player activates the spawner. */
@@ -136,7 +136,7 @@ public abstract class MobSpawnerBaseLogic
 
                     if (var11 == null || var11.getCanSpawnHere())
                     {
-                        this.func_98265_a(var13);
+                        this.spawnEntity(var13);
                         this.getSpawnerWorld().playAuxSFX(2004, this.getSpawnerX(), this.getSpawnerY(), this.getSpawnerZ(), 0);
 
                         if (var11 != null)
@@ -156,13 +156,13 @@ public abstract class MobSpawnerBaseLogic
         }
     }
 
-    public Entity func_98265_a(Entity p_98265_1_)
+    public Entity spawnEntity(Entity p_98265_1_)
     {
         if (this.getRandomMinecart() != null)
         {
             NBTTagCompound var2 = new NBTTagCompound();
             p_98265_1_.writeToNBTOptional(var2);
-            Iterator var3 = this.getRandomMinecart().field_98222_b.func_150296_c().iterator();
+            Iterator var3 = this.getRandomMinecart().field_98222_b.getKeySet().iterator();
 
             while (var3.hasNext())
             {
@@ -180,7 +180,7 @@ public abstract class MobSpawnerBaseLogic
 
             NBTTagCompound var11;
 
-            for (Entity var10 = p_98265_1_; var2.func_150297_b("Riding", 10); var2 = var11)
+            for (Entity var10 = p_98265_1_; var2.hasKey("Riding", 10); var2 = var11)
             {
                 var11 = var2.getCompoundTag("Riding");
                 Entity var12 = EntityList.createEntityByName(var11.getString("id"), p_98265_1_.worldObj);
@@ -189,7 +189,7 @@ public abstract class MobSpawnerBaseLogic
                 {
                     NBTTagCompound var6 = new NBTTagCompound();
                     var12.writeToNBTOptional(var6);
-                    Iterator var7 = var11.func_150296_c().iterator();
+                    Iterator var7 = var11.getKeySet().iterator();
 
                     while (var7.hasNext())
                     {
@@ -246,7 +246,7 @@ public abstract class MobSpawnerBaseLogic
         this.mobID = p_98270_1_.getString("EntityId");
         this.spawnDelay = p_98270_1_.getShort("Delay");
 
-        if (p_98270_1_.func_150297_b("SpawnPotentials", 9))
+        if (p_98270_1_.hasKey("SpawnPotentials", 9))
         {
             this.minecartToSpawn = new ArrayList();
             NBTTagList var2 = p_98270_1_.getTagList("SpawnPotentials", 10);
@@ -261,7 +261,7 @@ public abstract class MobSpawnerBaseLogic
             this.minecartToSpawn = null;
         }
 
-        if (p_98270_1_.func_150297_b("SpawnData", 10))
+        if (p_98270_1_.hasKey("SpawnData", 10))
         {
             this.setRandomMinecart(new MobSpawnerBaseLogic.WeightedRandomMinecart(p_98270_1_.getCompoundTag("SpawnData"), this.mobID));
         }
@@ -270,27 +270,27 @@ public abstract class MobSpawnerBaseLogic
             this.setRandomMinecart((MobSpawnerBaseLogic.WeightedRandomMinecart)null);
         }
 
-        if (p_98270_1_.func_150297_b("MinSpawnDelay", 99))
+        if (p_98270_1_.hasKey("MinSpawnDelay", 99))
         {
             this.minSpawnDelay = p_98270_1_.getShort("MinSpawnDelay");
             this.maxSpawnDelay = p_98270_1_.getShort("MaxSpawnDelay");
             this.spawnCount = p_98270_1_.getShort("SpawnCount");
         }
 
-        if (p_98270_1_.func_150297_b("MaxNearbyEntities", 99))
+        if (p_98270_1_.hasKey("MaxNearbyEntities", 99))
         {
             this.maxNearbyEntities = p_98270_1_.getShort("MaxNearbyEntities");
             this.activatingRangeFromPlayer = p_98270_1_.getShort("RequiredPlayerRange");
         }
 
-        if (p_98270_1_.func_150297_b("SpawnRange", 99))
+        if (p_98270_1_.hasKey("SpawnRange", 99))
         {
             this.spawnRange = p_98270_1_.getShort("SpawnRange");
         }
 
         if (this.getSpawnerWorld() != null && this.getSpawnerWorld().isClient)
         {
-            this.field_98291_j = null;
+            this.cachedEntity = null;
         }
     }
 
@@ -333,16 +333,16 @@ public abstract class MobSpawnerBaseLogic
         }
     }
 
-    public Entity func_98281_h()
+    public Entity getEntityToRender()
     {
-        if (this.field_98291_j == null)
+        if (this.cachedEntity == null)
         {
             Entity var1 = EntityList.createEntityByName(this.getEntityNameToSpawn(), (World)null);
-            var1 = this.func_98265_a(var1);
-            this.field_98291_j = var1;
+            var1 = this.spawnEntity(var1);
+            this.cachedEntity = var1;
         }
 
-        return this.field_98291_j;
+        return this.cachedEntity;
     }
 
     /**

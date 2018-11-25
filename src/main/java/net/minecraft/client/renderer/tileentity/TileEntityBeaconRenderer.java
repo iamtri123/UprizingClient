@@ -10,18 +10,18 @@ import org.lwjgl.opengl.GL11;
 
 public class TileEntityBeaconRenderer extends TileEntitySpecialRenderer
 {
-    private static final ResourceLocation field_147523_b = new ResourceLocation("textures/entity/beacon_beam.png");
+    private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
     private static final String __OBFID = "CL_00000962";
 
     public void renderTileEntityAt(TileEntityBeacon p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_)
     {
-        float var9 = p_147500_1_.func_146002_i();
+        float var9 = p_147500_1_.shouldBeamRender();
         GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
 
         if (var9 > 0.0F)
         {
             Tessellator var10 = Tessellator.instance;
-            this.bindTexture(field_147523_b);
+            this.bindTexture(beaconBeam);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
             GL11.glDisable(GL11.GL_LIGHTING);

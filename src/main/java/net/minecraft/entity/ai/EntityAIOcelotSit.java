@@ -51,7 +51,7 @@ public class EntityAIOcelotSit extends EntityAIBase
         this.field_151492_c = 0;
         this.field_151489_d = 0;
         this.field_151490_e = this.field_151493_a.getRNG().nextInt(this.field_151493_a.getRNG().nextInt(1200) + 1200) + 1200;
-        this.field_151493_a.func_70907_r().setSitting(false);
+        this.field_151493_a.getAISit().setSitting(false);
     }
 
     /**
@@ -68,7 +68,7 @@ public class EntityAIOcelotSit extends EntityAIBase
     public void updateTask()
     {
         ++this.field_151492_c;
-        this.field_151493_a.func_70907_r().setSitting(false);
+        this.field_151493_a.getAISit().setSitting(false);
 
         if (this.field_151493_a.getDistanceSq((double)this.field_151487_f, (double)(this.field_151488_g + 1), (double)this.field_151494_h) > 1.0D)
         {
@@ -122,7 +122,7 @@ public class EntityAIOcelotSit extends EntityAIBase
         {
             TileEntityChest var7 = (TileEntityChest)p_151486_1_.getTileEntity(p_151486_2_, p_151486_3_, p_151486_4_);
 
-            if (var7.field_145987_o < 1)
+            if (var7.numPlayersUsing < 1)
             {
                 return true;
             }
@@ -134,7 +134,7 @@ public class EntityAIOcelotSit extends EntityAIBase
                 return true;
             }
 
-            if (var5 == Blocks.bed && !BlockBed.func_149975_b(var6))
+            if (var5 == Blocks.bed && !BlockBed.isBlockHeadOfBed(var6))
             {
                 return true;
             }

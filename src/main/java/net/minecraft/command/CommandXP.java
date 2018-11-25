@@ -21,20 +21,20 @@ public class CommandXP extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.xp.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length <= 0)
+        if (args.length <= 0)
         {
             throw new WrongUsageException("commands.xp.usage");
         }
         else
         {
-            String var4 = p_71515_2_[0];
+            String var4 = args[0];
             boolean var5 = var4.endsWith("l") || var4.endsWith("L");
 
             if (var5 && var4.length() > 1)
@@ -42,7 +42,7 @@ public class CommandXP extends CommandBase
                 var4 = var4.substring(0, var4.length() - 1);
             }
 
-            int var6 = parseInt(p_71515_1_, var4);
+            int var6 = parseInt(sender, var4);
             boolean var7 = var6 < 0;
 
             if (var7)
@@ -52,13 +52,13 @@ public class CommandXP extends CommandBase
 
             EntityPlayerMP var3;
 
-            if (p_71515_2_.length > 1)
+            if (args.length > 1)
             {
-                var3 = getPlayer(p_71515_1_, p_71515_2_[1]);
+                var3 = getPlayer(sender, args[1]);
             }
             else
             {
-                var3 = getCommandSenderAsPlayer(p_71515_1_);
+                var3 = getCommandSenderAsPlayer(sender);
             }
 
             if (var5)
@@ -66,12 +66,12 @@ public class CommandXP extends CommandBase
                 if (var7)
                 {
                     var3.addExperienceLevel(-var6);
-                    func_152373_a(p_71515_1_, this, "commands.xp.success.negative.levels", Integer.valueOf(var6), var3.getCommandSenderName());
+                    notifyOperators(sender, this, "commands.xp.success.negative.levels", Integer.valueOf(var6), var3.getCommandSenderName());
                 }
                 else
                 {
                     var3.addExperienceLevel(var6);
-                    func_152373_a(p_71515_1_, this, "commands.xp.success.levels", Integer.valueOf(var6), var3.getCommandSenderName());
+                    notifyOperators(sender, this, "commands.xp.success.levels", Integer.valueOf(var6), var3.getCommandSenderName());
                 }
             }
             else
@@ -82,7 +82,7 @@ public class CommandXP extends CommandBase
                 }
 
                 var3.addExperience(var6);
-                func_152373_a(p_71515_1_, this, "commands.xp.success", Integer.valueOf(var6), var3.getCommandSenderName());
+                notifyOperators(sender, this, "commands.xp.success", Integer.valueOf(var6), var3.getCommandSenderName());
             }
         }
     }
@@ -90,9 +90,9 @@ public class CommandXP extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 2 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getAllUsernames()) : null;
+        return args.length == 2 ? getListOfStringsMatchingLastWord(args, this.getAllUsernames()) : null;
     }
 
     protected String[] getAllUsernames()
@@ -103,8 +103,8 @@ public class CommandXP extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_)
+    public boolean isUsernameIndex(String[] args, int index)
     {
-        return p_82358_2_ == 1;
+        return index == 1;
     }
 }

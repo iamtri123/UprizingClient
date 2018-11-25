@@ -19,47 +19,47 @@ public class ItemMinecart extends Item
     {
         private final BehaviorDefaultDispenseItem behaviourDefaultDispenseItem = new BehaviorDefaultDispenseItem();
         private static final String __OBFID = "CL_00000050";
-        public ItemStack dispenseStack(IBlockSource p_82487_1_, ItemStack p_82487_2_)
+        public ItemStack dispenseStack(IBlockSource source, ItemStack stack)
         {
-            EnumFacing var3 = BlockDispenser.func_149937_b(p_82487_1_.getBlockMetadata());
-            World var4 = p_82487_1_.getWorld();
-            double var5 = p_82487_1_.getX() + (double)((float)var3.getFrontOffsetX() * 1.125F);
-            double var7 = p_82487_1_.getY() + (double)((float)var3.getFrontOffsetY() * 1.125F);
-            double var9 = p_82487_1_.getZ() + (double)((float)var3.getFrontOffsetZ() * 1.125F);
-            int var11 = p_82487_1_.getXInt() + var3.getFrontOffsetX();
-            int var12 = p_82487_1_.getYInt() + var3.getFrontOffsetY();
-            int var13 = p_82487_1_.getZInt() + var3.getFrontOffsetZ();
+            EnumFacing var3 = BlockDispenser.getFacingDirection(source.getBlockMetadata());
+            World var4 = source.getWorld();
+            double var5 = source.getX() + (double)((float)var3.getFrontOffsetX() * 1.125F);
+            double var7 = source.getY() + (double)((float)var3.getFrontOffsetY() * 1.125F);
+            double var9 = source.getZ() + (double)((float)var3.getFrontOffsetZ() * 1.125F);
+            int var11 = source.getXInt() + var3.getFrontOffsetX();
+            int var12 = source.getYInt() + var3.getFrontOffsetY();
+            int var13 = source.getZInt() + var3.getFrontOffsetZ();
             Block var14 = var4.getBlock(var11, var12, var13);
             double var15;
 
-            if (BlockRailBase.func_150051_a(var14))
+            if (BlockRailBase.isRailBlock(var14))
             {
                 var15 = 0.0D;
             }
             else
             {
-                if (var14.getMaterial() != Material.air || !BlockRailBase.func_150051_a(var4.getBlock(var11, var12 - 1, var13)))
+                if (var14.getMaterial() != Material.air || !BlockRailBase.isRailBlock(var4.getBlock(var11, var12 - 1, var13)))
                 {
-                    return this.behaviourDefaultDispenseItem.dispense(p_82487_1_, p_82487_2_);
+                    return this.behaviourDefaultDispenseItem.dispense(source, stack);
                 }
 
                 var15 = -1.0D;
             }
 
-            EntityMinecart var17 = EntityMinecart.createMinecart(var4, var5, var7 + var15, var9, ((ItemMinecart)p_82487_2_.getItem()).minecartType);
+            EntityMinecart var17 = EntityMinecart.createMinecart(var4, var5, var7 + var15, var9, ((ItemMinecart)stack.getItem()).minecartType);
 
-            if (p_82487_2_.hasDisplayName())
+            if (stack.hasDisplayName())
             {
-                var17.setMinecartName(p_82487_2_.getDisplayName());
+                var17.setMinecartName(stack.getDisplayName());
             }
 
             var4.spawnEntityInWorld(var17);
-            p_82487_2_.splitStack(1);
-            return p_82487_2_;
+            stack.splitStack(1);
+            return stack;
         }
-        protected void playDispenseSound(IBlockSource p_82485_1_)
+        protected void playDispenseSound(IBlockSource source)
         {
-            p_82485_1_.getWorld().playAuxSFX(1000, p_82485_1_.getXInt(), p_82485_1_.getYInt(), p_82485_1_.getZInt(), 0);
+            source.getWorld().playAuxSFX(1000, source.getXInt(), source.getYInt(), source.getZInt(), 0);
         }
     };
     public int minecartType;
@@ -79,7 +79,7 @@ public class ItemMinecart extends Item
      */
     public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
     {
-        if (BlockRailBase.func_150051_a(p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_)))
+        if (BlockRailBase.isRailBlock(p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_)))
         {
             if (!p_77648_3_.isClient)
             {

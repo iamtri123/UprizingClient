@@ -8,45 +8,45 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C16PacketClientStatus extends Packet
 {
-    private C16PacketClientStatus.EnumState field_149437_a;
+    private C16PacketClientStatus.EnumState status;
     private static final String __OBFID = "CL_00001348";
 
     public C16PacketClientStatus() {}
 
-    public C16PacketClientStatus(C16PacketClientStatus.EnumState p_i45242_1_)
+    public C16PacketClientStatus(C16PacketClientStatus.EnumState statusIn)
     {
-        this.field_149437_a = p_i45242_1_;
+        this.status = statusIn;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149437_a = C16PacketClientStatus.EnumState.field_151404_e[p_148837_1_.readByte() % C16PacketClientStatus.EnumState.field_151404_e.length];
+        this.status = C16PacketClientStatus.EnumState.BY_ID[data.readByte() % C16PacketClientStatus.EnumState.BY_ID.length];
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeByte(this.field_149437_a.field_151403_d);
+        data.writeByte(this.status.id);
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processClientStatus(this);
+        handler.processClientStatus(this);
     }
 
-    public C16PacketClientStatus.EnumState func_149435_c()
+    public C16PacketClientStatus.EnumState getStatus()
     {
-        return this.field_149437_a;
+        return this.status;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 
     public enum EnumState
@@ -54,15 +54,15 @@ public class C16PacketClientStatus extends Packet
         PERFORM_RESPAWN("PERFORM_RESPAWN", 0, 0),
         REQUEST_STATS("REQUEST_STATS", 1, 1),
         OPEN_INVENTORY_ACHIEVEMENT("OPEN_INVENTORY_ACHIEVEMENT", 2, 2);
-        private final int field_151403_d;
-        private static final C16PacketClientStatus.EnumState[] field_151404_e = new C16PacketClientStatus.EnumState[values().length];
+        private final int id;
+        private static final C16PacketClientStatus.EnumState[] BY_ID = new C16PacketClientStatus.EnumState[values().length];
 
         private static final C16PacketClientStatus.EnumState[] $VALUES = {PERFORM_RESPAWN, REQUEST_STATS, OPEN_INVENTORY_ACHIEVEMENT};
         private static final String __OBFID = "CL_00001349";
 
-        EnumState(String p_i45241_1_, int p_i45241_2_, int p_i45241_3_)
+        EnumState(String p_i45241_1_, int p_i45241_2_, int statusId)
         {
-            this.field_151403_d = p_i45241_3_;
+            this.id = statusId;
         }
 
         static {
@@ -72,7 +72,7 @@ public class C16PacketClientStatus extends Packet
             for (int var2 = 0; var2 < var1; ++var2)
             {
                 C16PacketClientStatus.EnumState var3 = var0[var2];
-                field_151404_e[var3.field_151403_d] = var3;
+                BY_ID[var3.id] = var3;
             }
         }
     }

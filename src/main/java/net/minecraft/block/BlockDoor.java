@@ -31,16 +31,16 @@ public class BlockDoor extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
         return this.field_150016_b[0];
     }
 
-    public IIcon getIcon(IBlockAccess p_149673_1_, int p_149673_2_, int p_149673_3_, int p_149673_4_, int p_149673_5_)
+    public IIcon getIcon(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        if (p_149673_5_ != 1 && p_149673_5_ != 0)
+        if (side != 1 && side != 0)
         {
-            int var6 = this.func_150012_g(p_149673_1_, p_149673_2_, p_149673_3_, p_149673_4_);
+            int var6 = this.getFullMetadata(worldIn, x, y, z);
             int var7 = var6 & 3;
             boolean var8 = (var6 & 4) != 0;
             boolean var9 = false;
@@ -48,38 +48,38 @@ public class BlockDoor extends Block
 
             if (var8)
             {
-                if (var7 == 0 && p_149673_5_ == 2)
+                if (var7 == 0 && side == 2)
                 {
                     var9 = !var9;
                 }
-                else if (var7 == 1 && p_149673_5_ == 5)
+                else if (var7 == 1 && side == 5)
                 {
                     var9 = !var9;
                 }
-                else if (var7 == 2 && p_149673_5_ == 3)
+                else if (var7 == 2 && side == 3)
                 {
                     var9 = !var9;
                 }
-                else if (var7 == 3 && p_149673_5_ == 4)
+                else if (var7 == 3 && side == 4)
                 {
                     var9 = !var9;
                 }
             }
             else
             {
-                if (var7 == 0 && p_149673_5_ == 5)
+                if (var7 == 0 && side == 5)
                 {
                     var9 = !var9;
                 }
-                else if (var7 == 1 && p_149673_5_ == 3)
+                else if (var7 == 1 && side == 3)
                 {
                     var9 = !var9;
                 }
-                else if (var7 == 2 && p_149673_5_ == 4)
+                else if (var7 == 2 && side == 4)
                 {
                     var9 = !var9;
                 }
-                else if (var7 == 3 && p_149673_5_ == 2)
+                else if (var7 == 3 && side == 2)
                 {
                     var9 = !var9;
                 }
@@ -98,12 +98,12 @@ public class BlockDoor extends Block
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_150017_a = new IIcon[2];
         this.field_150016_b = new IIcon[2];
-        this.field_150017_a[0] = p_149651_1_.registerIcon(this.getTextureName() + "_upper");
-        this.field_150016_b[0] = p_149651_1_.registerIcon(this.getTextureName() + "_lower");
+        this.field_150017_a[0] = reg.registerIcon(this.getTextureName() + "_upper");
+        this.field_150016_b[0] = reg.registerIcon(this.getTextureName() + "_lower");
         this.field_150017_a[1] = new IconFlipped(this.field_150017_a[0], true, false);
         this.field_150016_b[1] = new IconFlipped(this.field_150016_b[0], true, false);
     }
@@ -113,9 +113,9 @@ public class BlockDoor extends Block
         return false;
     }
 
-    public boolean getBlocksMovement(IBlockAccess p_149655_1_, int p_149655_2_, int p_149655_3_, int p_149655_4_)
+    public boolean getBlocksMovement(IBlockAccess worldIn, int x, int y, int z)
     {
-        int var5 = this.func_150012_g(p_149655_1_, p_149655_2_, p_149655_3_, p_149655_4_);
+        int var5 = this.getFullMetadata(worldIn, x, y, z);
         return (var5 & 4) != 0;
     }
 
@@ -135,35 +135,35 @@ public class BlockDoor extends Block
     /**
      * Returns the bounding box of the wired rectangular prism to render.
      */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int p_149633_2_, int p_149633_3_, int p_149633_4_)
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        this.setBlockBoundsBasedOnState(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
-        return super.getSelectedBoundingBoxFromPool(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        return super.getSelectedBoundingBoxFromPool(worldIn, x, y, z);
     }
 
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        this.setBlockBoundsBasedOnState(p_149668_1_, p_149668_2_, p_149668_3_, p_149668_4_);
-        return super.getCollisionBoundingBoxFromPool(p_149668_1_, p_149668_2_, p_149668_3_, p_149668_4_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        return super.getCollisionBoundingBoxFromPool(worldIn, x, y, z);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        this.func_150011_b(this.func_150012_g(p_149719_1_, p_149719_2_, p_149719_3_, p_149719_4_));
+        this.func_150011_b(this.getFullMetadata(worldIn, x, y, z));
     }
 
     public int func_150013_e(IBlockAccess p_150013_1_, int p_150013_2_, int p_150013_3_, int p_150013_4_)
     {
-        return this.func_150012_g(p_150013_1_, p_150013_2_, p_150013_3_, p_150013_4_) & 3;
+        return this.getFullMetadata(p_150013_1_, p_150013_2_, p_150013_3_, p_150013_4_) & 3;
     }
 
     public boolean func_150015_f(IBlockAccess p_150015_1_, int p_150015_2_, int p_150015_3_, int p_150015_4_)
     {
-        return (this.func_150012_g(p_150015_1_, p_150015_2_, p_150015_3_, p_150015_4_) & 4) != 0;
+        return (this.getFullMetadata(p_150015_1_, p_150015_2_, p_150015_3_, p_150015_4_) & 4) != 0;
     }
 
     private void func_150011_b(int p_150011_1_)
@@ -251,12 +251,12 @@ public class BlockDoor extends Block
     /**
      * Called when a player hits the block. Args: world, x, y, z, player
      */
-    public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_) {}
+    public void onBlockClicked(World worldIn, int x, int y, int z, EntityPlayer player) {}
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
         if (this.blockMaterial == Material.iron)
         {
@@ -264,29 +264,29 @@ public class BlockDoor extends Block
         }
         else
         {
-            int var10 = this.func_150012_g(p_149727_1_, p_149727_2_, p_149727_3_, p_149727_4_);
+            int var10 = this.getFullMetadata(worldIn, x, y, z);
             int var11 = var10 & 7;
             var11 ^= 4;
 
             if ((var10 & 8) == 0)
             {
-                p_149727_1_.setBlockMetadataWithNotify(p_149727_2_, p_149727_3_, p_149727_4_, var11, 2);
-                p_149727_1_.markBlockRangeForRenderUpdate(p_149727_2_, p_149727_3_, p_149727_4_, p_149727_2_, p_149727_3_, p_149727_4_);
+                worldIn.setBlockMetadataWithNotify(x, y, z, var11, 2);
+                worldIn.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
             }
             else
             {
-                p_149727_1_.setBlockMetadataWithNotify(p_149727_2_, p_149727_3_ - 1, p_149727_4_, var11, 2);
-                p_149727_1_.markBlockRangeForRenderUpdate(p_149727_2_, p_149727_3_ - 1, p_149727_4_, p_149727_2_, p_149727_3_, p_149727_4_);
+                worldIn.setBlockMetadataWithNotify(x, y - 1, z, var11, 2);
+                worldIn.markBlockRangeForRenderUpdate(x, y - 1, z, x, y, z);
             }
 
-            p_149727_1_.playAuxSFXAtEntity(p_149727_5_, 1003, p_149727_2_, p_149727_3_, p_149727_4_, 0);
+            worldIn.playAuxSFXAtEntity(player, 1003, x, y, z, 0);
             return true;
         }
     }
 
     public void func_150014_a(World p_150014_1_, int p_150014_2_, int p_150014_3_, int p_150014_4_, boolean p_150014_5_)
     {
-        int var6 = this.func_150012_g(p_150014_1_, p_150014_2_, p_150014_3_, p_150014_4_);
+        int var6 = this.getFullMetadata(p_150014_1_, p_150014_2_, p_150014_3_, p_150014_4_);
         boolean var7 = (var6 & 4) != 0;
 
         if (var7 != p_150014_5_)
@@ -309,76 +309,76 @@ public class BlockDoor extends Block
         }
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        int var6 = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
+        int var6 = worldIn.getBlockMetadata(x, y, z);
 
         if ((var6 & 8) == 0)
         {
             boolean var7 = false;
 
-            if (p_149695_1_.getBlock(p_149695_2_, p_149695_3_ + 1, p_149695_4_) != this)
+            if (worldIn.getBlock(x, y + 1, z) != this)
             {
-                p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_, p_149695_4_);
+                worldIn.setBlockToAir(x, y, z);
                 var7 = true;
             }
 
-            if (!World.doesBlockHaveSolidTopSurface(p_149695_1_, p_149695_2_, p_149695_3_ - 1, p_149695_4_))
+            if (!World.doesBlockHaveSolidTopSurface(worldIn, x, y - 1, z))
             {
-                p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_, p_149695_4_);
+                worldIn.setBlockToAir(x, y, z);
                 var7 = true;
 
-                if (p_149695_1_.getBlock(p_149695_2_, p_149695_3_ + 1, p_149695_4_) == this)
+                if (worldIn.getBlock(x, y + 1, z) == this)
                 {
-                    p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_ + 1, p_149695_4_);
+                    worldIn.setBlockToAir(x, y + 1, z);
                 }
             }
 
             if (var7)
             {
-                if (!p_149695_1_.isClient)
+                if (!worldIn.isClient)
                 {
-                    this.dropBlockAsItem(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, var6, 0);
+                    this.dropBlockAsItem(worldIn, x, y, z, var6, 0);
                 }
             }
             else
             {
-                boolean var8 = p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_, p_149695_4_) || p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_ + 1, p_149695_4_);
+                boolean var8 = worldIn.isBlockIndirectlyGettingPowered(x, y, z) || worldIn.isBlockIndirectlyGettingPowered(x, y + 1, z);
 
-                if ((var8 || p_149695_5_.canProvidePower()) && p_149695_5_ != this)
+                if ((var8 || neighbor.canProvidePower()) && neighbor != this)
                 {
-                    this.func_150014_a(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, var8);
+                    this.func_150014_a(worldIn, x, y, z, var8);
                 }
             }
         }
         else
         {
-            if (p_149695_1_.getBlock(p_149695_2_, p_149695_3_ - 1, p_149695_4_) != this)
+            if (worldIn.getBlock(x, y - 1, z) != this)
             {
-                p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_, p_149695_4_);
+                worldIn.setBlockToAir(x, y, z);
             }
 
-            if (p_149695_5_ != this)
+            if (neighbor != this)
             {
-                this.onNeighborBlockChange(p_149695_1_, p_149695_2_, p_149695_3_ - 1, p_149695_4_, p_149695_5_);
+                this.onNeighborBlockChange(worldIn, x, y - 1, z, neighbor);
             }
         }
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
-        return (p_149650_1_ & 8) != 0 ? null : (this.blockMaterial == Material.iron ? Items.iron_door : Items.wooden_door);
+        return (meta & 8) != 0 ? null : (this.blockMaterial == Material.iron ? Items.iron_door : Items.wooden_door);
     }
 
-    public MovingObjectPosition collisionRayTrace(World p_149731_1_, int p_149731_2_, int p_149731_3_, int p_149731_4_, Vec3 p_149731_5_, Vec3 p_149731_6_)
+    public MovingObjectPosition collisionRayTrace(World worldIn, int x, int y, int z, Vec3 startVec, Vec3 endVec)
     {
-        this.setBlockBoundsBasedOnState(p_149731_1_, p_149731_2_, p_149731_3_, p_149731_4_);
-        return super.collisionRayTrace(p_149731_1_, p_149731_2_, p_149731_3_, p_149731_4_, p_149731_5_, p_149731_6_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        return super.collisionRayTrace(worldIn, x, y, z, startVec, endVec);
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        return p_149742_3_ < 255 && (World.doesBlockHaveSolidTopSurface(p_149742_1_, p_149742_2_, p_149742_3_ - 1, p_149742_4_) && super.canPlaceBlockAt(p_149742_1_, p_149742_2_, p_149742_3_, p_149742_4_) && super.canPlaceBlockAt(p_149742_1_, p_149742_2_, p_149742_3_ + 1, p_149742_4_));
+        return y < 255 && (World.doesBlockHaveSolidTopSurface(worldIn, x, y - 1, z) && super.canPlaceBlockAt(worldIn, x, y, z) && super.canPlaceBlockAt(worldIn, x, y + 1, z));
     }
 
     public int getMobilityFlag()
@@ -386,7 +386,7 @@ public class BlockDoor extends Block
         return 1;
     }
 
-    public int func_150012_g(IBlockAccess p_150012_1_, int p_150012_2_, int p_150012_3_, int p_150012_4_)
+    public int getFullMetadata(IBlockAccess p_150012_1_, int p_150012_2_, int p_150012_3_, int p_150012_4_)
     {
         int var5 = p_150012_1_.getBlockMetadata(p_150012_2_, p_150012_3_, p_150012_4_);
         boolean var6 = (var5 & 8) != 0;
@@ -411,7 +411,7 @@ public class BlockDoor extends Block
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return this.blockMaterial == Material.iron ? Items.iron_door : Items.wooden_door;
     }
@@ -419,11 +419,11 @@ public class BlockDoor extends Block
     /**
      * Called when the block is attempted to be harvested
      */
-    public void onBlockHarvested(World p_149681_1_, int p_149681_2_, int p_149681_3_, int p_149681_4_, int p_149681_5_, EntityPlayer p_149681_6_)
+    public void onBlockHarvested(World worldIn, int x, int y, int z, int meta, EntityPlayer player)
     {
-        if (p_149681_6_.capabilities.isCreativeMode && (p_149681_5_ & 8) != 0 && p_149681_1_.getBlock(p_149681_2_, p_149681_3_ - 1, p_149681_4_) == this)
+        if (player.capabilities.isCreativeMode && (meta & 8) != 0 && worldIn.getBlock(x, y - 1, z) == this)
         {
-            p_149681_1_.setBlockToAir(p_149681_2_, p_149681_3_ - 1, p_149681_4_);
+            worldIn.setBlockToAir(x, y - 1, z);
         }
     }
 }

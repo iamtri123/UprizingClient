@@ -127,11 +127,11 @@ public class EntityAIMate extends EntityAIBase
 
             if (var2 != null)
             {
-                var2.triggerAchievement(StatList.field_151186_x);
+                var2.triggerAchievement(StatList.animalsBredStat);
 
                 if (this.theAnimal instanceof EntityCow)
                 {
-                    var2.triggerAchievement(AchievementList.field_150962_H);
+                    var2.triggerAchievement(AchievementList.breedCow);
                 }
             }
 

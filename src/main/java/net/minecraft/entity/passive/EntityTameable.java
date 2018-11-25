@@ -30,37 +30,37 @@ public abstract class EntityTameable extends EntityAnimal implements IEntityOwna
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
+        super.writeEntityToNBT(tagCompound);
 
         if (this.func_152113_b() == null)
         {
-            p_70014_1_.setString("OwnerUUID", "");
+            tagCompound.setString("OwnerUUID", "");
         }
         else
         {
-            p_70014_1_.setString("OwnerUUID", this.func_152113_b());
+            tagCompound.setString("OwnerUUID", this.func_152113_b());
         }
 
-        p_70014_1_.setBoolean("Sitting", this.isSitting());
+        tagCompound.setBoolean("Sitting", this.isSitting());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
         String var2 = "";
 
-        if (p_70037_1_.func_150297_b("OwnerUUID", 8))
+        if (tagCompund.hasKey("OwnerUUID", 8))
         {
-            var2 = p_70037_1_.getString("OwnerUUID");
+            var2 = tagCompund.getString("OwnerUUID");
         }
         else
         {
-            String var3 = p_70037_1_.getString("Owner");
+            String var3 = tagCompund.getString("Owner");
             var2 = PreYggdrasilConverter.func_152719_a(var3);
         }
 
@@ -70,8 +70,8 @@ public abstract class EntityTameable extends EntityAnimal implements IEntityOwna
             this.setTamed(true);
         }
 
-        this.aiSit.setSitting(p_70037_1_.getBoolean("Sitting"));
-        this.setSitting(p_70037_1_.getBoolean("Sitting"));
+        this.aiSit.setSitting(tagCompund.getBoolean("Sitting"));
+        this.setSitting(tagCompund.getBoolean("Sitting"));
     }
 
     /**
@@ -164,7 +164,7 @@ public abstract class EntityTameable extends EntityAnimal implements IEntityOwna
         try
         {
             UUID var1 = UUID.fromString(this.func_152113_b());
-            return var1 == null ? null : this.worldObj.func_152378_a(var1);
+            return var1 == null ? null : this.worldObj.getPlayerEntityByUUID(var1);
         }
         catch (IllegalArgumentException var2)
         {
@@ -177,7 +177,7 @@ public abstract class EntityTameable extends EntityAnimal implements IEntityOwna
         return p_152114_1_ == this.getOwner();
     }
 
-    public EntityAISit func_70907_r()
+    public EntityAISit getAISit()
     {
         return this.aiSit;
     }

@@ -99,17 +99,17 @@ public class EntityTNTPrimed extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setByte("Fuse", (byte)this.fuse);
+        tagCompound.setByte("Fuse", (byte)this.fuse);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        this.fuse = p_70037_1_.getByte("Fuse");
+        this.fuse = tagCompund.getByte("Fuse");
     }
 
     public float getShadowSize()

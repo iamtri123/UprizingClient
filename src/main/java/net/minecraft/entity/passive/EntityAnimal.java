@@ -25,7 +25,7 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimals
      * represent being in Love-Mode)
      */
     private int breeding;
-    private EntityPlayer field_146084_br;
+    private EntityPlayer playerInLove;
     private static final String __OBFID = "CL_00001638";
 
     public EntityAnimal(World p_i1681_1_)
@@ -157,18 +157,18 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimals
 
         if (var2 != null)
         {
-            if (this.field_146084_br == null && p_70876_1_.func_146083_cb() != null)
+            if (this.playerInLove == null && p_70876_1_.func_146083_cb() != null)
             {
-                this.field_146084_br = p_70876_1_.func_146083_cb();
+                this.playerInLove = p_70876_1_.func_146083_cb();
             }
 
-            if (this.field_146084_br != null)
+            if (this.playerInLove != null)
             {
-                this.field_146084_br.triggerAchievement(StatList.field_151186_x);
+                this.playerInLove.triggerAchievement(StatList.animalsBredStat);
 
                 if (this instanceof EntityCow)
                 {
-                    this.field_146084_br.triggerAchievement(AchievementList.field_150962_H);
+                    this.playerInLove.triggerAchievement(AchievementList.breedCow);
                 }
             }
 
@@ -198,7 +198,7 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimals
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -220,7 +220,7 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimals
 
             this.entityToAttack = null;
             this.inLove = 0;
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 
@@ -236,19 +236,19 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimals
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("InLove", this.inLove);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("InLove", this.inLove);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.inLove = p_70037_1_.getInteger("InLove");
+        super.readEntityFromNBT(tagCompund);
+        this.inLove = tagCompund.getInteger("InLove");
     }
 
     /**
@@ -378,7 +378,7 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimals
                 }
             }
 
-            this.func_146082_f(p_70085_1_);
+            this.setInLove(p_70085_1_);
             return true;
         }
         else
@@ -387,17 +387,17 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimals
         }
     }
 
-    public void func_146082_f(EntityPlayer p_146082_1_)
+    public void setInLove(EntityPlayer p_146082_1_)
     {
         this.inLove = 600;
-        this.field_146084_br = p_146082_1_;
+        this.playerInLove = p_146082_1_;
         this.entityToAttack = null;
         this.worldObj.setEntityState(this, (byte)18);
     }
 
     public EntityPlayer func_146083_cb()
     {
-        return this.field_146084_br;
+        return this.playerInLove;
     }
 
     /**

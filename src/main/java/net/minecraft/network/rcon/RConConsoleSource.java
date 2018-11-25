@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 
 public class RConConsoleSource implements ICommandSender
 {
-    public static final RConConsoleSource field_70010_a = new RConConsoleSource();
-    private final StringBuffer field_70009_b = new StringBuffer();
+    public static final RConConsoleSource instance = new RConConsoleSource();
+    private final StringBuffer buffer = new StringBuffer();
     private static final String __OBFID = "CL_00001800";
 
     /**
@@ -21,7 +21,7 @@ public class RConConsoleSource implements ICommandSender
         return "Rcon";
     }
 
-    public IChatComponent func_145748_c_()
+    public IChatComponent getFormattedCommandSenderName()
     {
         return new ChatComponentText(this.getCommandSenderName());
     }
@@ -32,15 +32,15 @@ public class RConConsoleSource implements ICommandSender
      * (like "I fetched this block for you by ID, but I'd like you to know that every time you do this, I die a little
      * inside"), and errors (like "it's not called iron_pixacke, silly").
      */
-    public void addChatMessage(IChatComponent p_145747_1_)
+    public void addChatMessage(IChatComponent message)
     {
-        this.field_70009_b.append(p_145747_1_.getUnformattedText());
+        this.buffer.append(message.getUnformattedText());
     }
 
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_)
+    public boolean canCommandSenderUseCommand(int permissionLevel, String command)
     {
         return true;
     }

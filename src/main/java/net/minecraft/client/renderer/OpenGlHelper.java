@@ -50,10 +50,10 @@ public class OpenGlHelper
     public static boolean framebufferSupported;
     private static boolean field_153213_x;
     private static boolean field_153214_y;
-    public static int field_153207_o;
-    public static int field_153208_p;
-    public static int field_153209_q;
-    public static int field_153210_r;
+    public static int GL_LINK_STATUS;
+    public static int GL_COMPILE_STATUS;
+    public static int GL_VERTEX_SHADER;
+    public static int GL_FRAGMENT_SHADER;
     public static boolean anisotropicFilteringSupported;
     public static int anisotropicFilteringMax;
     private static boolean field_153215_z;
@@ -172,19 +172,19 @@ public class OpenGlHelper
             {
                 field_153196_B = field_153196_B + "OpenGL 2.1 is supported.\n";
                 field_153214_y = false;
-                field_153207_o = 35714;
-                field_153208_p = 35713;
-                field_153209_q = 35633;
-                field_153210_r = 35632;
+                GL_LINK_STATUS = 35714;
+                GL_COMPILE_STATUS = 35713;
+                GL_VERTEX_SHADER = 35633;
+                GL_FRAGMENT_SHADER = 35632;
             }
             else
             {
                 field_153196_B = field_153196_B + "ARB_shader_objects, ARB_vertex_shader, and ARB_fragment_shader are supported.\n";
                 field_153214_y = true;
-                field_153207_o = 35714;
-                field_153208_p = 35713;
-                field_153209_q = 35633;
-                field_153210_r = 35632;
+                GL_LINK_STATUS = 35714;
+                GL_COMPILE_STATUS = 35713;
+                GL_VERTEX_SHADER = 35633;
+                GL_FRAGMENT_SHADER = 35632;
             }
         }
         else
@@ -209,12 +209,12 @@ public class OpenGlHelper
         return field_153196_B;
     }
 
-    public static int func_153175_a(int p_153175_0_, int p_153175_1_)
+    public static int glGetProgrami(int p_153175_0_, int p_153175_1_)
     {
         return field_153214_y ? ARBShaderObjects.glGetObjectParameteriARB(p_153175_0_, p_153175_1_) : GL20.glGetProgrami(p_153175_0_, p_153175_1_);
     }
 
-    public static void func_153178_b(int p_153178_0_, int p_153178_1_)
+    public static void glAttachShader(int p_153178_0_, int p_153178_1_)
     {
         if (field_153214_y)
         {
@@ -226,7 +226,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153180_a(int p_153180_0_)
+    public static void glDeleteShader(int p_153180_0_)
     {
         if (field_153214_y)
         {
@@ -238,12 +238,12 @@ public class OpenGlHelper
         }
     }
 
-    public static int func_153195_b(int p_153195_0_)
+    public static int glCreateShader(int p_153195_0_)
     {
         return field_153214_y ? ARBShaderObjects.glCreateShaderObjectARB(p_153195_0_) : GL20.glCreateShader(p_153195_0_);
     }
 
-    public static void func_153169_a(int p_153169_0_, ByteBuffer p_153169_1_)
+    public static void glShaderSource(int p_153169_0_, ByteBuffer p_153169_1_)
     {
         if (field_153214_y)
         {
@@ -255,7 +255,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153170_c(int p_153170_0_)
+    public static void glCompileShader(int p_153170_0_)
     {
         if (field_153214_y)
         {
@@ -267,22 +267,22 @@ public class OpenGlHelper
         }
     }
 
-    public static int func_153157_c(int p_153157_0_, int p_153157_1_)
+    public static int glGetShaderi(int p_153157_0_, int p_153157_1_)
     {
         return field_153214_y ? ARBShaderObjects.glGetObjectParameteriARB(p_153157_0_, p_153157_1_) : GL20.glGetShaderi(p_153157_0_, p_153157_1_);
     }
 
-    public static String func_153158_d(int p_153158_0_, int p_153158_1_)
+    public static String glGetShaderInfoLog(int p_153158_0_, int p_153158_1_)
     {
         return field_153214_y ? ARBShaderObjects.glGetInfoLogARB(p_153158_0_, p_153158_1_) : GL20.glGetShaderInfoLog(p_153158_0_, p_153158_1_);
     }
 
-    public static String func_153166_e(int p_153166_0_, int p_153166_1_)
+    public static String glGetProgramInfoLog(int p_153166_0_, int p_153166_1_)
     {
         return field_153214_y ? ARBShaderObjects.glGetInfoLogARB(p_153166_0_, p_153166_1_) : GL20.glGetProgramInfoLog(p_153166_0_, p_153166_1_);
     }
 
-    public static void func_153161_d(int p_153161_0_)
+    public static void glUseProgram(int p_153161_0_)
     {
         if (field_153214_y)
         {
@@ -294,12 +294,12 @@ public class OpenGlHelper
         }
     }
 
-    public static int func_153183_d()
+    public static int glCreateProgram()
     {
         return field_153214_y ? ARBShaderObjects.glCreateProgramObjectARB() : GL20.glCreateProgram();
     }
 
-    public static void func_153187_e(int p_153187_0_)
+    public static void glDeleteProgram(int p_153187_0_)
     {
         if (field_153214_y)
         {
@@ -311,7 +311,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153179_f(int p_153179_0_)
+    public static void glLinkProgram(int p_153179_0_)
     {
         if (field_153214_y)
         {
@@ -323,12 +323,12 @@ public class OpenGlHelper
         }
     }
 
-    public static int func_153194_a(int p_153194_0_, CharSequence p_153194_1_)
+    public static int glGetUniformLocation(int p_153194_0_, CharSequence p_153194_1_)
     {
         return field_153214_y ? ARBShaderObjects.glGetUniformLocationARB(p_153194_0_, p_153194_1_) : GL20.glGetUniformLocation(p_153194_0_, p_153194_1_);
     }
 
-    public static void func_153181_a(int p_153181_0_, IntBuffer p_153181_1_)
+    public static void glUniform1(int p_153181_0_, IntBuffer p_153181_1_)
     {
         if (field_153214_y)
         {
@@ -340,7 +340,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153163_f(int p_153163_0_, int p_153163_1_)
+    public static void glUniform1i(int p_153163_0_, int p_153163_1_)
     {
         if (field_153214_y)
         {
@@ -352,7 +352,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153168_a(int p_153168_0_, FloatBuffer p_153168_1_)
+    public static void glUniform1(int p_153168_0_, FloatBuffer p_153168_1_)
     {
         if (field_153214_y)
         {
@@ -364,7 +364,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153182_b(int p_153182_0_, IntBuffer p_153182_1_)
+    public static void glUniform2(int p_153182_0_, IntBuffer p_153182_1_)
     {
         if (field_153214_y)
         {
@@ -376,7 +376,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153177_b(int p_153177_0_, FloatBuffer p_153177_1_)
+    public static void glUniform2(int p_153177_0_, FloatBuffer p_153177_1_)
     {
         if (field_153214_y)
         {
@@ -388,7 +388,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153192_c(int p_153192_0_, IntBuffer p_153192_1_)
+    public static void glUniform3(int p_153192_0_, IntBuffer p_153192_1_)
     {
         if (field_153214_y)
         {
@@ -400,7 +400,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153191_c(int p_153191_0_, FloatBuffer p_153191_1_)
+    public static void glUniform3(int p_153191_0_, FloatBuffer p_153191_1_)
     {
         if (field_153214_y)
         {
@@ -412,7 +412,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153162_d(int p_153162_0_, IntBuffer p_153162_1_)
+    public static void glUniform4(int p_153162_0_, IntBuffer p_153162_1_)
     {
         if (field_153214_y)
         {
@@ -424,7 +424,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153159_d(int p_153159_0_, FloatBuffer p_153159_1_)
+    public static void glUniform4(int p_153159_0_, FloatBuffer p_153159_1_)
     {
         if (field_153214_y)
         {
@@ -436,7 +436,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153173_a(int p_153173_0_, boolean p_153173_1_, FloatBuffer p_153173_2_)
+    public static void glUniformMatrix2(int p_153173_0_, boolean p_153173_1_, FloatBuffer p_153173_2_)
     {
         if (field_153214_y)
         {
@@ -448,7 +448,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153189_b(int p_153189_0_, boolean p_153189_1_, FloatBuffer p_153189_2_)
+    public static void glUniformMatrix3(int p_153189_0_, boolean p_153189_1_, FloatBuffer p_153189_2_)
     {
         if (field_153214_y)
         {
@@ -460,7 +460,7 @@ public class OpenGlHelper
         }
     }
 
-    public static void func_153160_c(int p_153160_0_, boolean p_153160_1_, FloatBuffer p_153160_2_)
+    public static void glUniformMatrix4(int p_153160_0_, boolean p_153160_1_, FloatBuffer p_153160_2_)
     {
         if (field_153214_y)
         {
@@ -472,7 +472,7 @@ public class OpenGlHelper
         }
     }
 
-    public static int func_153164_b(int p_153164_0_, CharSequence p_153164_1_)
+    public static int glGetAttribLocation(int p_153164_0_, CharSequence p_153164_1_)
     {
         return field_153214_y ? ARBVertexShader.glGetAttribLocationARB(p_153164_0_, p_153164_1_) : GL20.glGetAttribLocation(p_153164_0_, p_153164_1_);
     }

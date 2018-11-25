@@ -35,22 +35,22 @@ public class GuiWinGame extends GuiScreen
 
         if ((float)this.field_146581_h > var1)
         {
-            this.func_146574_g();
+            this.sendRespawnPacket();
         }
     }
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        if (p_73869_2_ == 1)
+        if (keyCode == 1)
         {
-            this.func_146574_g();
+            this.sendRespawnPacket();
         }
     }
 
-    private void func_146574_g()
+    private void sendRespawnPacket()
     {
         this.mc.thePlayer.sendQueue.addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.PERFORM_RESPAWN));
         this.mc.displayGuiScreen((GuiScreen)null);
@@ -122,7 +122,7 @@ public class GuiWinGame extends GuiScreen
         }
     }
 
-    private void func_146575_b(int p_146575_1_, int p_146575_2_, float p_146575_3_)
+    private void drawWinGameScreen(int p_146575_1_, int p_146575_2_, float p_146575_3_)
     {
         Tessellator var4 = Tessellator.instance;
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
@@ -161,7 +161,7 @@ public class GuiWinGame extends GuiScreen
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.func_146575_b(mouseX, mouseY, partialTicks);
+        this.drawWinGameScreen(mouseX, mouseY, partialTicks);
         Tessellator var4 = Tessellator.instance;
         short var5 = 274;
         int var6 = this.width / 2 - var5 / 2;

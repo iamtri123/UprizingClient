@@ -8,71 +8,71 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C0CPacketInput extends Packet
 {
-    private float field_149624_a;
-    private float field_149622_b;
-    private boolean field_149623_c;
-    private boolean field_149621_d;
+    private float strafeSpeed;
+    private float forwardSpeed;
+    private boolean jumping;
+    private boolean sneaking;
     private static final String __OBFID = "CL_00001367";
 
     public C0CPacketInput() {}
 
     public C0CPacketInput(float p_i45261_1_, float p_i45261_2_, boolean p_i45261_3_, boolean p_i45261_4_)
     {
-        this.field_149624_a = p_i45261_1_;
-        this.field_149622_b = p_i45261_2_;
-        this.field_149623_c = p_i45261_3_;
-        this.field_149621_d = p_i45261_4_;
+        this.strafeSpeed = p_i45261_1_;
+        this.forwardSpeed = p_i45261_2_;
+        this.jumping = p_i45261_3_;
+        this.sneaking = p_i45261_4_;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149624_a = p_148837_1_.readFloat();
-        this.field_149622_b = p_148837_1_.readFloat();
-        this.field_149623_c = p_148837_1_.readBoolean();
-        this.field_149621_d = p_148837_1_.readBoolean();
+        this.strafeSpeed = data.readFloat();
+        this.forwardSpeed = data.readFloat();
+        this.jumping = data.readBoolean();
+        this.sneaking = data.readBoolean();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeFloat(this.field_149624_a);
-        p_148840_1_.writeFloat(this.field_149622_b);
-        p_148840_1_.writeBoolean(this.field_149623_c);
-        p_148840_1_.writeBoolean(this.field_149621_d);
+        data.writeFloat(this.strafeSpeed);
+        data.writeFloat(this.forwardSpeed);
+        data.writeBoolean(this.jumping);
+        data.writeBoolean(this.sneaking);
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processInput(this);
+        handler.processInput(this);
     }
 
-    public float func_149620_c()
+    public float getStrafeSpeed()
     {
-        return this.field_149624_a;
+        return this.strafeSpeed;
     }
 
-    public float func_149616_d()
+    public float getForwardSpeed()
     {
-        return this.field_149622_b;
+        return this.forwardSpeed;
     }
 
-    public boolean func_149618_e()
+    public boolean isJumping()
     {
-        return this.field_149623_c;
+        return this.jumping;
     }
 
-    public boolean func_149617_f()
+    public boolean isSneaking()
     {
-        return this.field_149621_d;
+        return this.sneaking;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 }

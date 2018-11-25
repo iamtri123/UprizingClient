@@ -121,7 +121,7 @@ public class PathNavigate
         this.canSwim = p_75495_1_;
     }
 
-    public float func_111269_d()
+    public float getPathSearchRange()
     {
         return (float)this.pathSearchRange.getAttributeValue();
     }
@@ -131,7 +131,7 @@ public class PathNavigate
      */
     public PathEntity getPathToXYZ(double p_75488_1_, double p_75488_3_, double p_75488_5_)
     {
-        return !this.canNavigate() ? null : this.worldObj.getEntityPathToXYZ(this.theEntity, MathHelper.floor_double(p_75488_1_), (int)p_75488_3_, MathHelper.floor_double(p_75488_5_), this.func_111269_d(), this.canPassOpenWoodenDoors, this.canPassClosedWoodenDoors, this.avoidsWater, this.canSwim);
+        return !this.canNavigate() ? null : this.worldObj.getEntityPathToXYZ(this.theEntity, MathHelper.floor_double(p_75488_1_), (int)p_75488_3_, MathHelper.floor_double(p_75488_5_), this.getPathSearchRange(), this.canPassOpenWoodenDoors, this.canPassClosedWoodenDoors, this.avoidsWater, this.canSwim);
     }
 
     /**
@@ -148,7 +148,7 @@ public class PathNavigate
      */
     public PathEntity getPathToEntityLiving(Entity p_75494_1_)
     {
-        return !this.canNavigate() ? null : this.worldObj.getPathEntityToEntity(this.theEntity, p_75494_1_, this.func_111269_d(), this.canPassOpenWoodenDoors, this.canPassClosedWoodenDoors, this.avoidsWater, this.canSwim);
+        return !this.canNavigate() ? null : this.worldObj.getPathEntityToEntity(this.theEntity, p_75494_1_, this.getPathSearchRange(), this.canPassOpenWoodenDoors, this.canPassClosedWoodenDoors, this.avoidsWater, this.canSwim);
     }
 
     /**

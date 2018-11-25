@@ -43,5 +43,5 @@ public class NpcMerchant implements IMerchant
 
     public void useRecipe(MerchantRecipe p_70933_1_) {}
 
-    public void func_110297_a_(ItemStack p_110297_1_) {}
+    public void verifySellingItem(ItemStack p_110297_1_) {}
 }

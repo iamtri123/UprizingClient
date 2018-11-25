@@ -58,8 +58,8 @@ public class GuiMenu extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char p_73869_1_, int p_73869_2_) {
-		if (p_73869_2_ == 1) {
+	protected void keyTyped(char typedChar, int keyCode) {
+		if (keyCode == 1) {
 			mc.displayGuiScreen(null);
 			mc.setIngameFocus();
 		}
@@ -85,20 +85,20 @@ public class GuiMenu extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_) {
-		if (p_146286_3_ == 0 && draggable != null) {
+	protected void mouseMovedOrUp(int mouseX, int mouseY, int state) {
+		if (state == 0 && draggable != null) {
 			draggable = null;
 		}
 	}
 
 	@Override
-	protected void mouseClickMove(int p_146273_1_, int p_146273_2_, int p_146273_3_, long p_146273_4_) {
+	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
 		if (draggable == null) return;
 
-		draggable.move(p_146273_1_ - lastMouseX, p_146273_2_ - lastMouseY);
+		draggable.move(mouseX - lastMouseX, mouseY - lastMouseY);
 
-		lastMouseX = p_146273_1_;
-		lastMouseY = p_146273_2_;
+		lastMouseX = mouseX;
+		lastMouseY = mouseY;
 	}
 
 	@Override

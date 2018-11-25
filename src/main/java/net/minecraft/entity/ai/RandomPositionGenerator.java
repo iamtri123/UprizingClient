@@ -61,7 +61,7 @@ public class RandomPositionGenerator
         if (p_75462_0_.hasHome())
         {
             double var11 = (double)(p_75462_0_.getHomePosition().getDistanceSquared(MathHelper.floor_double(p_75462_0_.posX), MathHelper.floor_double(p_75462_0_.posY), MathHelper.floor_double(p_75462_0_.posZ)) + 4.0F);
-            double var13 = (double)(p_75462_0_.func_110174_bM() + (float)p_75462_1_);
+            double var13 = (double)(p_75462_0_.getMaximumHomeDistance() + (float)p_75462_1_);
             var10 = var11 < var13 * var13;
         }
         else

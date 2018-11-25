@@ -39,15 +39,15 @@ public class BlockDispenser extends BlockContainer
         this.setCreativeTab(CreativeTabs.tabRedstone);
     }
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
         return 4;
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
-        this.func_149938_m(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+        super.onBlockAdded(worldIn, x, y, z);
+        this.func_149938_m(worldIn, x, y, z);
     }
 
     private void func_149938_m(World p_149938_1_, int p_149938_2_, int p_149938_3_, int p_149938_4_)
@@ -87,36 +87,36 @@ public class BlockDispenser extends BlockContainer
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        int var3 = p_149691_2_ & 7;
-        return p_149691_1_ == var3 ? (var3 != 1 && var3 != 0 ? this.field_149945_N : this.field_149946_O) : (var3 != 1 && var3 != 0 ? (p_149691_1_ != 1 && p_149691_1_ != 0 ? this.blockIcon : this.field_149944_M) : this.field_149944_M);
+        int var3 = meta & 7;
+        return side == var3 ? (var3 != 1 && var3 != 0 ? this.field_149945_N : this.field_149946_O) : (var3 != 1 && var3 != 0 ? (side != 1 && side != 0 ? this.blockIcon : this.field_149944_M) : this.field_149944_M);
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon("furnace_side");
-        this.field_149944_M = p_149651_1_.registerIcon("furnace_top");
-        this.field_149945_N = p_149651_1_.registerIcon(this.getTextureName() + "_front_horizontal");
-        this.field_149946_O = p_149651_1_.registerIcon(this.getTextureName() + "_front_vertical");
+        this.blockIcon = reg.registerIcon("furnace_side");
+        this.field_149944_M = reg.registerIcon("furnace_top");
+        this.field_149945_N = reg.registerIcon(this.getTextureName() + "_front_horizontal");
+        this.field_149946_O = reg.registerIcon(this.getTextureName() + "_front_vertical");
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        if (p_149727_1_.isClient)
+        if (worldIn.isClient)
         {
             return true;
         }
         else
         {
-            TileEntityDispenser var10 = (TileEntityDispenser)p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_);
+            TileEntityDispenser var10 = (TileEntityDispenser)worldIn.getTileEntity(x, y, z);
 
             if (var10 != null)
             {
-                p_149727_5_.func_146102_a(var10);
+                player.func_146102_a(var10);
             }
 
             return true;
@@ -155,38 +155,38 @@ public class BlockDispenser extends BlockContainer
         return (IBehaviorDispenseItem)dispenseBehaviorRegistry.getObject(p_149940_1_.getItem());
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        boolean var6 = p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_, p_149695_4_) || p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_ + 1, p_149695_4_);
-        int var7 = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
+        boolean var6 = worldIn.isBlockIndirectlyGettingPowered(x, y, z) || worldIn.isBlockIndirectlyGettingPowered(x, y + 1, z);
+        int var7 = worldIn.getBlockMetadata(x, y, z);
         boolean var8 = (var7 & 8) != 0;
 
         if (var6 && !var8)
         {
-            p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, this, this.func_149738_a(p_149695_1_));
-            p_149695_1_.setBlockMetadataWithNotify(p_149695_2_, p_149695_3_, p_149695_4_, var7 | 8, 4);
+            worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
+            worldIn.setBlockMetadataWithNotify(x, y, z, var7 | 8, 4);
         }
         else if (!var6 && var8)
         {
-            p_149695_1_.setBlockMetadataWithNotify(p_149695_2_, p_149695_3_, p_149695_4_, var7 & -9, 4);
+            worldIn.setBlockMetadataWithNotify(x, y, z, var7 & -9, 4);
         }
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!p_149674_1_.isClient)
+        if (!worldIn.isClient)
         {
-            this.func_149941_e(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+            this.func_149941_e(worldIn, x, y, z);
         }
     }
 
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityDispenser();
     }
@@ -194,20 +194,20 @@ public class BlockDispenser extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        int var7 = BlockPistonBase.func_150071_a(p_149689_1_, p_149689_2_, p_149689_3_, p_149689_4_, p_149689_5_);
-        p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, var7, 2);
+        int var7 = BlockPistonBase.determineOrientation(worldIn, x, y, z, placer);
+        worldIn.setBlockMetadataWithNotify(x, y, z, var7, 2);
 
-        if (p_149689_6_.hasDisplayName())
+        if (itemIn.hasDisplayName())
         {
-            ((TileEntityDispenser)p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).func_146018_a(p_149689_6_.getDisplayName());
+            ((TileEntityDispenser)worldIn.getTileEntity(x, y, z)).func_146018_a(itemIn.getDisplayName());
         }
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        TileEntityDispenser var7 = (TileEntityDispenser)p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+        TileEntityDispenser var7 = (TileEntityDispenser)worldIn.getTileEntity(x, y, z);
 
         if (var7 != null)
         {
@@ -231,7 +231,7 @@ public class BlockDispenser extends BlockContainer
                         }
 
                         var9.stackSize -= var13;
-                        EntityItem var14 = new EntityItem(p_149749_1_, (double)((float)p_149749_2_ + var10), (double)((float)p_149749_3_ + var11), (double)((float)p_149749_4_ + var12), new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
+                        EntityItem var14 = new EntityItem(worldIn, (double)((float)x + var10), (double)((float)y + var11), (double)((float)z + var12), new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
 
                         if (var9.hasTagCompound())
                         {
@@ -242,27 +242,27 @@ public class BlockDispenser extends BlockContainer
                         var14.motionX = (double)((float)this.field_149942_b.nextGaussian() * var15);
                         var14.motionY = (double)((float)this.field_149942_b.nextGaussian() * var15 + 0.2F);
                         var14.motionZ = (double)((float)this.field_149942_b.nextGaussian() * var15);
-                        p_149749_1_.spawnEntityInWorld(var14);
+                        worldIn.spawnEntityInWorld(var14);
                     }
                 }
             }
 
-            p_149749_1_.func_147453_f(p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_);
+            worldIn.updateNeighborsAboutBlockChange(x, y, z, blockBroken);
         }
 
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
-    public static IPosition func_149939_a(IBlockSource p_149939_0_)
+    public static IPosition getIPositionFromBlockSource(IBlockSource p_149939_0_)
     {
-        EnumFacing var1 = func_149937_b(p_149939_0_.getBlockMetadata());
+        EnumFacing var1 = getFacingDirection(p_149939_0_.getBlockMetadata());
         double var2 = p_149939_0_.getX() + 0.7D * (double)var1.getFrontOffsetX();
         double var4 = p_149939_0_.getY() + 0.7D * (double)var1.getFrontOffsetY();
         double var6 = p_149939_0_.getZ() + 0.7D * (double)var1.getFrontOffsetZ();
         return new PositionImpl(var2, var4, var6);
     }
 
-    public static EnumFacing func_149937_b(int p_149937_0_)
+    public static EnumFacing getFacingDirection(int p_149937_0_)
     {
         return EnumFacing.getFront(p_149937_0_ & 7);
     }
@@ -272,8 +272,8 @@ public class BlockDispenser extends BlockContainer
         return true;
     }
 
-    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_)
+    public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side)
     {
-        return Container.calcRedstoneFromInventory((IInventory)p_149736_1_.getTileEntity(p_149736_2_, p_149736_3_, p_149736_4_));
+        return Container.calcRedstoneFromInventory((IInventory)worldIn.getTileEntity(x, y, z));
     }
 }

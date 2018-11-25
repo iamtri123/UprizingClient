@@ -149,26 +149,26 @@ public class EntityArrow extends Entity implements IProjectile
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double p_70056_1_, double p_70056_3_, double p_70056_5_, float p_70056_7_, float p_70056_8_, int p_70056_9_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int rotationIncrements)
     {
-        this.setPosition(p_70056_1_, p_70056_3_, p_70056_5_);
-        this.setRotation(p_70056_7_, p_70056_8_);
+        this.setPosition(x, y, z);
+        this.setRotation(yaw, pitch);
     }
 
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double p_70016_1_, double p_70016_3_, double p_70016_5_)
+    public void setVelocity(double x, double y, double z)
     {
-        this.motionX = p_70016_1_;
-        this.motionY = p_70016_3_;
-        this.motionZ = p_70016_5_;
+        this.motionX = x;
+        this.motionY = y;
+        this.motionZ = z;
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
-            float var7 = MathHelper.sqrt_double(p_70016_1_ * p_70016_1_ + p_70016_5_ * p_70016_5_);
-            this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(p_70016_1_, p_70016_5_) * 180.0D / Math.PI);
-            this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(p_70016_3_, (double)var7) * 180.0D / Math.PI);
+            float var7 = MathHelper.sqrt_double(x * x + z * z);
+            this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(x, z) * 180.0D / Math.PI);
+            this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(y, (double)var7) * 180.0D / Math.PI);
             this.prevRotationPitch = this.rotationPitch;
             this.prevRotationYaw = this.rotationYaw;
             this.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
@@ -236,7 +236,7 @@ public class EntityArrow extends Entity implements IProjectile
             ++this.ticksInAir;
             Vec3 var17 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
             Vec3 var3 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition var4 = this.worldObj.func_147447_a(var17, var3, false, true, false);
+            MovingObjectPosition var4 = this.worldObj.rayTraceBlocks(var17, var3, false, true, false);
             var17 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
             var3 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
@@ -455,66 +455,66 @@ public class EntityArrow extends Entity implements IProjectile
             this.motionZ *= (double)var22;
             this.motionY -= (double)var11;
             this.setPosition(this.posX, this.posY, this.posZ);
-            this.func_145775_I();
+            this.doBlockCollisions();
         }
     }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setShort("xTile", (short)this.field_145791_d);
-        p_70014_1_.setShort("yTile", (short)this.field_145792_e);
-        p_70014_1_.setShort("zTile", (short)this.field_145789_f);
-        p_70014_1_.setShort("life", (short)this.ticksInGround);
-        p_70014_1_.setByte("inTile", (byte)Block.getIdFromBlock(this.field_145790_g));
-        p_70014_1_.setByte("inData", (byte)this.inData);
-        p_70014_1_.setByte("shake", (byte)this.arrowShake);
-        p_70014_1_.setByte("inGround", (byte)(this.inGround ? 1 : 0));
-        p_70014_1_.setByte("pickup", (byte)this.canBePickedUp);
-        p_70014_1_.setDouble("damage", this.damage);
+        tagCompound.setShort("xTile", (short)this.field_145791_d);
+        tagCompound.setShort("yTile", (short)this.field_145792_e);
+        tagCompound.setShort("zTile", (short)this.field_145789_f);
+        tagCompound.setShort("life", (short)this.ticksInGround);
+        tagCompound.setByte("inTile", (byte)Block.getIdFromBlock(this.field_145790_g));
+        tagCompound.setByte("inData", (byte)this.inData);
+        tagCompound.setByte("shake", (byte)this.arrowShake);
+        tagCompound.setByte("inGround", (byte)(this.inGround ? 1 : 0));
+        tagCompound.setByte("pickup", (byte)this.canBePickedUp);
+        tagCompound.setDouble("damage", this.damage);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        this.field_145791_d = p_70037_1_.getShort("xTile");
-        this.field_145792_e = p_70037_1_.getShort("yTile");
-        this.field_145789_f = p_70037_1_.getShort("zTile");
-        this.ticksInGround = p_70037_1_.getShort("life");
-        this.field_145790_g = Block.getBlockById(p_70037_1_.getByte("inTile") & 255);
-        this.inData = p_70037_1_.getByte("inData") & 255;
-        this.arrowShake = p_70037_1_.getByte("shake") & 255;
-        this.inGround = p_70037_1_.getByte("inGround") == 1;
+        this.field_145791_d = tagCompund.getShort("xTile");
+        this.field_145792_e = tagCompund.getShort("yTile");
+        this.field_145789_f = tagCompund.getShort("zTile");
+        this.ticksInGround = tagCompund.getShort("life");
+        this.field_145790_g = Block.getBlockById(tagCompund.getByte("inTile") & 255);
+        this.inData = tagCompund.getByte("inData") & 255;
+        this.arrowShake = tagCompund.getByte("shake") & 255;
+        this.inGround = tagCompund.getByte("inGround") == 1;
 
-        if (p_70037_1_.func_150297_b("damage", 99))
+        if (tagCompund.hasKey("damage", 99))
         {
-            this.damage = p_70037_1_.getDouble("damage");
+            this.damage = tagCompund.getDouble("damage");
         }
 
-        if (p_70037_1_.func_150297_b("pickup", 99))
+        if (tagCompund.hasKey("pickup", 99))
         {
-            this.canBePickedUp = p_70037_1_.getByte("pickup");
+            this.canBePickedUp = tagCompund.getByte("pickup");
         }
-        else if (p_70037_1_.func_150297_b("player", 99))
+        else if (tagCompund.hasKey("player", 99))
         {
-            this.canBePickedUp = p_70037_1_.getBoolean("player") ? 1 : 0;
+            this.canBePickedUp = tagCompund.getBoolean("player") ? 1 : 0;
         }
     }
 
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer p_70100_1_)
+    public void onCollideWithPlayer(EntityPlayer entityIn)
     {
         if (!this.worldObj.isClient && this.inGround && this.arrowShake <= 0)
         {
-            boolean var2 = this.canBePickedUp == 1 || this.canBePickedUp == 2 && p_70100_1_.capabilities.isCreativeMode;
+            boolean var2 = this.canBePickedUp == 1 || this.canBePickedUp == 2 && entityIn.capabilities.isCreativeMode;
 
-            if (this.canBePickedUp == 1 && !p_70100_1_.inventory.addItemStackToInventory(new ItemStack(Items.arrow, 1)))
+            if (this.canBePickedUp == 1 && !entityIn.inventory.addItemStackToInventory(new ItemStack(Items.arrow, 1)))
             {
                 var2 = false;
             }
@@ -522,7 +522,7 @@ public class EntityArrow extends Entity implements IProjectile
             if (var2)
             {
                 this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                p_70100_1_.onItemPickup(this, 1);
+                entityIn.onItemPickup(this, 1);
                 this.setDead();
             }
         }

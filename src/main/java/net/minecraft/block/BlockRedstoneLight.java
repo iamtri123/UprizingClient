@@ -23,32 +23,32 @@ public class BlockRedstoneLight extends Block
         }
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        if (!p_149726_1_.isClient)
+        if (!worldIn.isClient)
         {
-            if (this.field_150171_a && !p_149726_1_.isBlockIndirectlyGettingPowered(p_149726_2_, p_149726_3_, p_149726_4_))
+            if (this.field_150171_a && !worldIn.isBlockIndirectlyGettingPowered(x, y, z))
             {
-                p_149726_1_.scheduleBlockUpdate(p_149726_2_, p_149726_3_, p_149726_4_, this, 4);
+                worldIn.scheduleBlockUpdate(x, y, z, this, 4);
             }
-            else if (!this.field_150171_a && p_149726_1_.isBlockIndirectlyGettingPowered(p_149726_2_, p_149726_3_, p_149726_4_))
+            else if (!this.field_150171_a && worldIn.isBlockIndirectlyGettingPowered(x, y, z))
             {
-                p_149726_1_.setBlock(p_149726_2_, p_149726_3_, p_149726_4_, Blocks.lit_redstone_lamp, 0, 2);
+                worldIn.setBlock(x, y, z, Blocks.lit_redstone_lamp, 0, 2);
             }
         }
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        if (!p_149695_1_.isClient)
+        if (!worldIn.isClient)
         {
-            if (this.field_150171_a && !p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_, p_149695_4_))
+            if (this.field_150171_a && !worldIn.isBlockIndirectlyGettingPowered(x, y, z))
             {
-                p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, this, 4);
+                worldIn.scheduleBlockUpdate(x, y, z, this, 4);
             }
-            else if (!this.field_150171_a && p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_, p_149695_4_))
+            else if (!this.field_150171_a && worldIn.isBlockIndirectlyGettingPowered(x, y, z))
             {
-                p_149695_1_.setBlock(p_149695_2_, p_149695_3_, p_149695_4_, Blocks.lit_redstone_lamp, 0, 2);
+                worldIn.setBlock(x, y, z, Blocks.lit_redstone_lamp, 0, 2);
             }
         }
     }
@@ -56,15 +56,15 @@ public class BlockRedstoneLight extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!p_149674_1_.isClient && this.field_150171_a && !p_149674_1_.isBlockIndirectlyGettingPowered(p_149674_2_, p_149674_3_, p_149674_4_))
+        if (!worldIn.isClient && this.field_150171_a && !worldIn.isBlockIndirectlyGettingPowered(x, y, z))
         {
-            p_149674_1_.setBlock(p_149674_2_, p_149674_3_, p_149674_4_, Blocks.redstone_lamp, 0, 2);
+            worldIn.setBlock(x, y, z, Blocks.redstone_lamp, 0, 2);
         }
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemFromBlock(Blocks.redstone_lamp);
     }
@@ -72,7 +72,7 @@ public class BlockRedstoneLight extends Block
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemFromBlock(Blocks.redstone_lamp);
     }
@@ -81,7 +81,7 @@ public class BlockRedstoneLight extends Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int p_149644_1_)
+    protected ItemStack createStackedBlock(int meta)
     {
         return new ItemStack(Blocks.redstone_lamp);
     }

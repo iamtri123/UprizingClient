@@ -85,7 +85,7 @@ public class WorldInfo
         this.theGameRules = new GameRules();
         this.randomSeed = p_i2157_1_.getLong("RandomSeed");
 
-        if (p_i2157_1_.func_150297_b("generatorName", 8))
+        if (p_i2157_1_.hasKey("generatorName", 8))
         {
             String var2 = p_i2157_1_.getString("generatorName");
             this.terrainType = WorldType.parseWorldType(var2);
@@ -98,7 +98,7 @@ public class WorldInfo
             {
                 int var3 = 0;
 
-                if (p_i2157_1_.func_150297_b("generatorVersion", 99))
+                if (p_i2157_1_.hasKey("generatorVersion", 99))
                 {
                     var3 = p_i2157_1_.getInteger("generatorVersion");
                 }
@@ -106,7 +106,7 @@ public class WorldInfo
                 this.terrainType = this.terrainType.getWorldTypeForGeneratorVersion(var3);
             }
 
-            if (p_i2157_1_.func_150297_b("generatorOptions", 8))
+            if (p_i2157_1_.hasKey("generatorOptions", 8))
             {
                 this.generatorOptions = p_i2157_1_.getString("generatorOptions");
             }
@@ -114,7 +114,7 @@ public class WorldInfo
 
         this.theGameType = WorldSettings.GameType.getByID(p_i2157_1_.getInteger("GameType"));
 
-        if (p_i2157_1_.func_150297_b("MapFeatures", 99))
+        if (p_i2157_1_.hasKey("MapFeatures", 99))
         {
             this.mapFeaturesEnabled = p_i2157_1_.getBoolean("MapFeatures");
         }
@@ -128,7 +128,7 @@ public class WorldInfo
         this.spawnZ = p_i2157_1_.getInteger("SpawnZ");
         this.totalTime = p_i2157_1_.getLong("Time");
 
-        if (p_i2157_1_.func_150297_b("DayTime", 99))
+        if (p_i2157_1_.hasKey("DayTime", 99))
         {
             this.worldTime = p_i2157_1_.getLong("DayTime");
         }
@@ -147,7 +147,7 @@ public class WorldInfo
         this.thundering = p_i2157_1_.getBoolean("thundering");
         this.hardcore = p_i2157_1_.getBoolean("hardcore");
 
-        if (p_i2157_1_.func_150297_b("initialized", 99))
+        if (p_i2157_1_.hasKey("initialized", 99))
         {
             this.initialized = p_i2157_1_.getBoolean("initialized");
         }
@@ -156,7 +156,7 @@ public class WorldInfo
             this.initialized = true;
         }
 
-        if (p_i2157_1_.func_150297_b("allowCommands", 99))
+        if (p_i2157_1_.hasKey("allowCommands", 99))
         {
             this.allowCommands = p_i2157_1_.getBoolean("allowCommands");
         }
@@ -165,13 +165,13 @@ public class WorldInfo
             this.allowCommands = this.theGameType == WorldSettings.GameType.CREATIVE;
         }
 
-        if (p_i2157_1_.func_150297_b("Player", 10))
+        if (p_i2157_1_.hasKey("Player", 10))
         {
             this.playerTag = p_i2157_1_.getCompoundTag("Player");
             this.dimension = this.playerTag.getInteger("Dimension");
         }
 
-        if (p_i2157_1_.func_150297_b("GameRules", 10))
+        if (p_i2157_1_.hasKey("GameRules", 10))
         {
             this.theGameRules.readGameRulesFromNBT(p_i2157_1_.getCompoundTag("GameRules"));
         }

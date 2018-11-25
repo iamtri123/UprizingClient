@@ -224,9 +224,9 @@ public class WorldServerOF extends WorldServer
             this.worldInfo.setThunderTime(0);
             this.worldInfo.setThundering(false);
             this.setThunderStrength(0.0F);
-            this.func_73046_m().getConfigurationManager().func_148540_a(new S2BPacketChangeGameState(2, 0.0F));
-            this.func_73046_m().getConfigurationManager().func_148540_a(new S2BPacketChangeGameState(7, 0.0F));
-            this.func_73046_m().getConfigurationManager().func_148540_a(new S2BPacketChangeGameState(8, 0.0F));
+            this.func_73046_m().getConfigurationManager().sendPacketToAllPlayers(new S2BPacketChangeGameState(2, 0.0F));
+            this.func_73046_m().getConfigurationManager().sendPacketToAllPlayers(new S2BPacketChangeGameState(7, 0.0F));
+            this.func_73046_m().getConfigurationManager().sendPacketToAllPlayers(new S2BPacketChangeGameState(8, 0.0F));
         }
     }
 
@@ -347,7 +347,7 @@ public class WorldServerOF extends WorldServer
     {
         super.setActivePlayerChunksAndCheckLight();
         this.limitedChunkSet.clear();
-        int viewDistance = this.func_152379_p();
+        int viewDistance = this.getRenderDistanceChunks();
 
         if (viewDistance > 10)
         {
@@ -389,7 +389,7 @@ public class WorldServerOF extends WorldServer
 
     public void addChunkToTickOnce(int cx, int cz)
     {
-        int viewDistance = this.func_152379_p();
+        int viewDistance = this.getRenderDistanceChunks();
 
         if (viewDistance > 10)
         {

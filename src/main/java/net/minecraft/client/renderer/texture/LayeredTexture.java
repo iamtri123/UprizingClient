@@ -26,7 +26,7 @@ public class LayeredTexture extends AbstractTexture
 
     public void loadTexture(IResourceManager p_110551_1_) throws IOException
     {
-        this.func_147631_c();
+        this.deleteGlTexture();
         BufferedImage var2 = null;
 
         try

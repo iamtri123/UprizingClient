@@ -74,25 +74,25 @@ public class ContainerMerchant extends Container
 
     public void updateProgressBar(int p_75137_1_, int p_75137_2_) {}
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.theMerchant.getCustomer() == p_75145_1_;
+        return this.theMerchant.getCustomer() == player;
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ == 2)
+            if (index == 2)
             {
                 if (!this.mergeItemStack(var5, 3, 39, true))
                 {
@@ -101,16 +101,16 @@ public class ContainerMerchant extends Container
 
                 var4.onSlotChange(var5, var3);
             }
-            else if (p_82846_2_ != 0 && p_82846_2_ != 1)
+            else if (index != 0 && index != 1)
             {
-                if (p_82846_2_ >= 3 && p_82846_2_ < 30)
+                if (index >= 3 && index < 30)
                 {
                     if (!this.mergeItemStack(var5, 30, 39, false))
                     {
                         return null;
                     }
                 }
-                else if (p_82846_2_ >= 30 && p_82846_2_ < 39 && !this.mergeItemStack(var5, 3, 30, false))
+                else if (index >= 30 && index < 39 && !this.mergeItemStack(var5, 3, 30, false))
                 {
                     return null;
                 }
@@ -134,7 +134,7 @@ public class ContainerMerchant extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;

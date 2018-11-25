@@ -156,7 +156,7 @@ public class ResourcePackRepository
         return this.dirResourcepacks;
     }
 
-    public void func_148526_a(String p_148526_1_)
+    public void obtainResourcePack(String p_148526_1_)
     {
         String var2 = p_148526_1_.substring(p_148526_1_.lastIndexOf("/") + 1);
 
@@ -182,10 +182,10 @@ public class ResourcePackRepository
         var3.put("X-Minecraft-Version", "1.7.10");
         this.field_148533_g = true;
         Minecraft.getMinecraft().displayGuiScreen(var4);
-        HttpUtil.func_151223_a(p_148528_2_, p_148528_1_, new HttpUtil.DownloadListener()
+        HttpUtil.downloadResourcePack(p_148528_2_, p_148528_1_, new HttpUtil.DownloadListener()
         {
             private static final String __OBFID = "CL_00001089";
-            public void func_148522_a(File p_148522_1_)
+            public void onDownloadComplete(File p_148522_1_)
             {
                 if (ResourcePackRepository.this.field_148533_g)
                 {
@@ -197,7 +197,7 @@ public class ResourcePackRepository
         }, var3, 52428800, var4, Minecraft.getMinecraft().getProxy());
     }
 
-    public IResourcePack func_148530_e()
+    public IResourcePack getResourcePackInstance()
     {
         return this.field_148532_f;
     }

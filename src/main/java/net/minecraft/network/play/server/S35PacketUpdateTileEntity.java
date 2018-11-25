@@ -9,80 +9,80 @@ import net.minecraft.network.play.INetHandlerPlayClient;
 
 public class S35PacketUpdateTileEntity extends Packet
 {
-    private int field_148863_a;
-    private int field_148861_b;
-    private int field_148862_c;
-    private int field_148859_d;
-    private NBTTagCompound field_148860_e;
+    private int x;
+    private int y;
+    private int z;
+    private int metadata;
+    private NBTTagCompound nbt;
     private static final String __OBFID = "CL_00001285";
 
     public S35PacketUpdateTileEntity() {}
 
-    public S35PacketUpdateTileEntity(int p_i45175_1_, int p_i45175_2_, int p_i45175_3_, int p_i45175_4_, NBTTagCompound p_i45175_5_)
+    public S35PacketUpdateTileEntity(int xcoord, int ycoord, int zcoord, int meta, NBTTagCompound nbtTag)
     {
-        this.field_148863_a = p_i45175_1_;
-        this.field_148861_b = p_i45175_2_;
-        this.field_148862_c = p_i45175_3_;
-        this.field_148859_d = p_i45175_4_;
-        this.field_148860_e = p_i45175_5_;
+        this.x = xcoord;
+        this.y = ycoord;
+        this.z = zcoord;
+        this.metadata = meta;
+        this.nbt = nbtTag;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148863_a = p_148837_1_.readInt();
-        this.field_148861_b = p_148837_1_.readShort();
-        this.field_148862_c = p_148837_1_.readInt();
-        this.field_148859_d = p_148837_1_.readUnsignedByte();
-        this.field_148860_e = p_148837_1_.readNBTTagCompoundFromBuffer();
+        this.x = data.readInt();
+        this.y = data.readShort();
+        this.z = data.readInt();
+        this.metadata = data.readUnsignedByte();
+        this.nbt = data.readNBTTagCompoundFromBuffer();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_148863_a);
-        p_148840_1_.writeShort(this.field_148861_b);
-        p_148840_1_.writeInt(this.field_148862_c);
-        p_148840_1_.writeByte((byte)this.field_148859_d);
-        p_148840_1_.writeNBTTagCompoundToBuffer(this.field_148860_e);
+        data.writeInt(this.x);
+        data.writeShort(this.y);
+        data.writeInt(this.z);
+        data.writeByte((byte)this.metadata);
+        data.writeNBTTagCompoundToBuffer(this.nbt);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleUpdateTileEntity(this);
+        handler.handleUpdateTileEntity(this);
     }
 
-    public int func_148856_c()
+    public int getX()
     {
-        return this.field_148863_a;
+        return this.x;
     }
 
-    public int func_148855_d()
+    public int getY()
     {
-        return this.field_148861_b;
+        return this.y;
     }
 
-    public int func_148854_e()
+    public int getZ()
     {
-        return this.field_148862_c;
+        return this.z;
     }
 
-    public int func_148853_f()
+    public int getTileEntityType()
     {
-        return this.field_148859_d;
+        return this.metadata;
     }
 
-    public NBTTagCompound func_148857_g()
+    public NBTTagCompound getNbtCompound()
     {
-        return this.field_148860_e;
+        return this.nbt;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

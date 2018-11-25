@@ -53,7 +53,7 @@ public class ItemDoor extends Item
                 else
                 {
                     int var12 = MathHelper.floor_double((double)((p_77648_2_.rotationYaw + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
-                    func_150924_a(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, var12, var11);
+                    placeDoorBlock(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, var12, var11);
                     --p_77648_1_.stackSize;
                     return true;
                 }
@@ -65,7 +65,7 @@ public class ItemDoor extends Item
         }
     }
 
-    public static void func_150924_a(World p_150924_0_, int p_150924_1_, int p_150924_2_, int p_150924_3_, int p_150924_4_, Block p_150924_5_)
+    public static void placeDoorBlock(World p_150924_0_, int p_150924_1_, int p_150924_2_, int p_150924_3_, int p_150924_4_, Block p_150924_5_)
     {
         byte var6 = 0;
         byte var7 = 0;

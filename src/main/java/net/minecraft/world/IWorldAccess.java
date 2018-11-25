@@ -25,7 +25,7 @@ public interface IWorldAccess
     /**
      * Plays the specified sound. Arg: soundName, x, y, z, volume, pitch
      */
-    void playSound(String p_72704_1_, double p_72704_2_, double p_72704_4_, double p_72704_6_, float p_72704_8_, float p_72704_9_);
+    void playSound(String soundName, double x, double y, double z, float volume, float pitch);
 
     /**
      * Plays sound to all near players except the player reference given

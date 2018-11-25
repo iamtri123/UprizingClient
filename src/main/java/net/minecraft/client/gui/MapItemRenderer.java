@@ -14,14 +14,14 @@ import org.lwjgl.opengl.GL11;
 
 public class MapItemRenderer
 {
-    private static final ResourceLocation field_148253_a = new ResourceLocation("textures/map/map_icons.png");
-    private final TextureManager field_148251_b;
-    private final Map field_148252_c = Maps.newHashMap();
+    private static final ResourceLocation mapIcons = new ResourceLocation("textures/map/map_icons.png");
+    private final TextureManager textureManager;
+    private final Map loadedMaps = Maps.newHashMap();
     private static final String __OBFID = "CL_00000663";
 
     public MapItemRenderer(TextureManager p_i45009_1_)
     {
-        this.field_148251_b = p_i45009_1_;
+        this.textureManager = p_i45009_1_;
     }
 
     public void func_148246_a(MapData p_148246_1_)
@@ -36,12 +36,12 @@ public class MapItemRenderer
 
     private MapItemRenderer.Instance func_148248_b(MapData p_148248_1_)
     {
-        MapItemRenderer.Instance var2 = (MapItemRenderer.Instance)this.field_148252_c.get(p_148248_1_.mapName);
+        MapItemRenderer.Instance var2 = (MapItemRenderer.Instance)this.loadedMaps.get(p_148248_1_.mapName);
 
         if (var2 == null)
         {
             var2 = new MapItemRenderer.Instance(p_148248_1_, null);
-            this.field_148252_c.put(p_148248_1_.mapName, var2);
+            this.loadedMaps.put(p_148248_1_.mapName, var2);
         }
 
         return var2;
@@ -49,15 +49,15 @@ public class MapItemRenderer
 
     public void func_148249_a()
     {
-        Iterator var1 = this.field_148252_c.values().iterator();
+        Iterator var1 = this.loadedMaps.values().iterator();
 
         while (var1.hasNext())
         {
             MapItemRenderer.Instance var2 = (MapItemRenderer.Instance)var1.next();
-            this.field_148251_b.func_147645_c(var2.field_148240_d);
+            this.textureManager.deleteTexture(var2.field_148240_d);
         }
 
-        this.field_148252_c.clear();
+        this.loadedMaps.clear();
     }
 
     class Instance
@@ -73,7 +73,7 @@ public class MapItemRenderer
             this.field_148242_b = p_i45007_2_;
             this.field_148243_c = new DynamicTexture(128, 128);
             this.field_148241_e = this.field_148243_c.getTextureData();
-            this.field_148240_d = MapItemRenderer.this.field_148251_b.getDynamicTextureLocation("map/" + p_i45007_2_.mapName, this.field_148243_c);
+            this.field_148240_d = MapItemRenderer.this.textureManager.getDynamicTextureLocation("map/" + p_i45007_2_.mapName, this.field_148243_c);
 
             for (int var3 = 0; var3 < this.field_148241_e.length; ++var3)
             {
@@ -106,7 +106,7 @@ public class MapItemRenderer
             byte var3 = 0;
             Tessellator var4 = Tessellator.instance;
             float var5 = 0.0F;
-            MapItemRenderer.this.field_148251_b.bindTexture(this.field_148240_d);
+            MapItemRenderer.this.textureManager.bindTexture(this.field_148240_d);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(1, 771, 0, 1);
             GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -118,7 +118,7 @@ public class MapItemRenderer
             var4.draw();
             GL11.glEnable(GL11.GL_ALPHA_TEST);
             GL11.glDisable(GL11.GL_BLEND);
-            MapItemRenderer.this.field_148251_b.bindTexture(MapItemRenderer.field_148253_a);
+            MapItemRenderer.this.textureManager.bindTexture(MapItemRenderer.mapIcons);
             int var6 = 0;
             Iterator var7 = this.field_148242_b.playersVisibleOnMap.values().iterator();
 

@@ -200,11 +200,11 @@ public class RenderPlayer extends RendererLivingEntity
                 {
                     NBTTagCompound var6 = var3.getTagCompound();
 
-                    if (var6.func_150297_b("SkullOwner", 10))
+                    if (var6.hasKey("SkullOwner", 10))
                     {
-                        var5 = NBTUtil.func_152459_a(var6.getCompoundTag("SkullOwner"));
+                        var5 = NBTUtil.readGameProfileFromNBT(var6.getCompoundTag("SkullOwner"));
                     }
-                    else if (var6.func_150297_b("SkullOwner", 8) && !StringUtils.isNullOrEmpty(var6.getString("SkullOwner")))
+                    else if (var6.hasKey("SkullOwner", 8) && !StringUtils.isNullOrEmpty(var6.getString("SkullOwner")))
                     {
                         var5 = new GameProfile((UUID)null, var6.getString("SkullOwner"));
                     }
@@ -218,7 +218,7 @@ public class RenderPlayer extends RendererLivingEntity
 
         float var7;
 
-        if (p_77029_1_.getCommandSenderName().equals("deadmau5") && p_77029_1_.func_152123_o())
+        if (p_77029_1_.getCommandSenderName().equals("deadmau5") && p_77029_1_.hasSkin())
         {
             this.bindTexture(p_77029_1_.getLocationSkin());
 
@@ -240,7 +240,7 @@ public class RenderPlayer extends RendererLivingEntity
             }
         }
 
-        boolean var21 = p_77029_1_.func_152122_n();
+        boolean var21 = p_77029_1_.hasCape();
         float var11;
 
         if (var21 && !p_77029_1_.isInvisible() && !p_77029_1_.getHideCape())
@@ -401,31 +401,31 @@ public class RenderPlayer extends RendererLivingEntity
         GL11.glScalef(var3, var3, var3);
     }
 
-    protected void func_96449_a(AbstractClientPlayer p_96449_1_, double p_96449_2_, double p_96449_4_, double p_96449_6_, String p_96449_8_, float p_96449_9_, double p_96449_10_)
+    protected void renderOffsetLivingLabel(AbstractClientPlayer p_96449_1_, double p_96449_2_, double p_96449_4_, double p_96449_6_, String p_96449_8_, float p_96449_9_, double p_96449_10_)
     {
         if (p_96449_10_ < 100.0D)
         {
             Scoreboard var12 = p_96449_1_.getWorldScoreboard();
-            ScoreObjective var13 = var12.func_96539_a(2);
+            ScoreObjective var13 = var12.getObjectiveInDisplaySlot(2);
 
             if (var13 != null)
             {
-                Score var14 = var12.func_96529_a(p_96449_1_.getCommandSenderName(), var13);
+                Score var14 = var12.getValueFromObjective(p_96449_1_.getCommandSenderName(), var13);
 
                 if (p_96449_1_.isPlayerSleeping())
                 {
-                    this.func_147906_a(p_96449_1_, var14.getScorePoints() + " " + var13.getDisplayName(), p_96449_2_, p_96449_4_ - 1.5D, p_96449_6_, 64);
+                    this.renderLivingLabel(p_96449_1_, var14.getScorePoints() + " " + var13.getDisplayName(), p_96449_2_, p_96449_4_ - 1.5D, p_96449_6_, 64);
                 }
                 else
                 {
-                    this.func_147906_a(p_96449_1_, var14.getScorePoints() + " " + var13.getDisplayName(), p_96449_2_, p_96449_4_, p_96449_6_, 64);
+                    this.renderLivingLabel(p_96449_1_, var14.getScorePoints() + " " + var13.getDisplayName(), p_96449_2_, p_96449_4_, p_96449_6_, 64);
                 }
 
                 p_96449_4_ += (double)((float)this.getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * p_96449_9_);
             }
         }
 
-        super.func_96449_a(p_96449_1_, p_96449_2_, p_96449_4_, p_96449_6_, p_96449_8_, p_96449_9_, p_96449_10_);
+        super.renderOffsetLivingLabel(p_96449_1_, p_96449_2_, p_96449_4_, p_96449_6_, p_96449_8_, p_96449_9_, p_96449_10_);
     }
 
     public void renderFirstPersonArm(EntityPlayer p_82441_1_)
@@ -466,9 +466,9 @@ public class RenderPlayer extends RendererLivingEntity
         }
     }
 
-    protected void func_96449_a(EntityLivingBase p_96449_1_, double p_96449_2_, double p_96449_4_, double p_96449_6_, String p_96449_8_, float p_96449_9_, double p_96449_10_)
+    protected void renderOffsetLivingLabel(EntityLivingBase p_96449_1_, double p_96449_2_, double p_96449_4_, double p_96449_6_, String p_96449_8_, float p_96449_9_, double p_96449_10_)
     {
-        this.func_96449_a((AbstractClientPlayer)p_96449_1_, p_96449_2_, p_96449_4_, p_96449_6_, p_96449_8_, p_96449_9_, p_96449_10_);
+        this.renderOffsetLivingLabel((AbstractClientPlayer)p_96449_1_, p_96449_2_, p_96449_4_, p_96449_6_, p_96449_8_, p_96449_9_, p_96449_10_);
     }
 
     /**

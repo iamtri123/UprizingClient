@@ -6,9 +6,9 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiOptionSlider extends GuiButton
 {
-    private float field_146134_p;
-    public boolean field_146135_o;
-    private final GameSettings.Options field_146133_q;
+    private float sliderValue;
+    public boolean dragging;
+    private final GameSettings.Options options;
     private final float field_146132_r;
     private final float field_146131_s;
     private static final String __OBFID = "CL_00000680";
@@ -21,16 +21,16 @@ public class GuiOptionSlider extends GuiButton
     public GuiOptionSlider(int p_i45017_1_, int p_i45017_2_, int p_i45017_3_, GameSettings.Options p_i45017_4_, float p_i45017_5_, float p_i45017_6_)
     {
         super(p_i45017_1_, p_i45017_2_, p_i45017_3_, 150, 20, "");
-        this.field_146134_p = 1.0F;
-        this.field_146133_q = p_i45017_4_;
+        this.sliderValue = 1.0F;
+        this.options = p_i45017_4_;
         this.field_146132_r = p_i45017_5_;
         this.field_146131_s = p_i45017_6_;
         Minecraft var7 = Minecraft.getMinecraft();
-        this.field_146134_p = p_i45017_4_.normalizeValue(var7.gameSettings.getOptionFloatValue(p_i45017_4_));
+        this.sliderValue = p_i45017_4_.normalizeValue(var7.gameSettings.getOptionFloatValue(p_i45017_4_));
         this.displayString = var7.gameSettings.getKeyBinding(p_i45017_4_);
     }
 
-    public int getHoverState(boolean p_146114_1_)
+    public int getHoverState(boolean mouseOver)
     {
         return 0;
     }
@@ -38,33 +38,33 @@ public class GuiOptionSlider extends GuiButton
     /**
      * Fired when the mouse button is dragged. Equivalent of MouseListener.mouseDragged(MouseEvent e).
      */
-    protected void mouseDragged(Minecraft p_146119_1_, int p_146119_2_, int p_146119_3_)
+    protected void mouseDragged(Minecraft mc, int mouseX, int mouseY)
     {
         if (this.visible)
         {
-            if (this.field_146135_o)
+            if (this.dragging)
             {
-                this.field_146134_p = (float)(p_146119_2_ - (this.xPosition + 4)) / (float)(this.width - 8);
+                this.sliderValue = (float)(mouseX - (this.xPosition + 4)) / (float)(this.width - 8);
 
-                if (this.field_146134_p < 0.0F)
+                if (this.sliderValue < 0.0F)
                 {
-                    this.field_146134_p = 0.0F;
+                    this.sliderValue = 0.0F;
                 }
 
-                if (this.field_146134_p > 1.0F)
+                if (this.sliderValue > 1.0F)
                 {
-                    this.field_146134_p = 1.0F;
+                    this.sliderValue = 1.0F;
                 }
 
-                float var4 = this.field_146133_q.denormalizeValue(this.field_146134_p);
-                p_146119_1_.gameSettings.setOptionFloatValue(this.field_146133_q, var4);
-                this.field_146134_p = this.field_146133_q.normalizeValue(var4);
-                this.displayString = p_146119_1_.gameSettings.getKeyBinding(this.field_146133_q);
+                float var4 = this.options.denormalizeValue(this.sliderValue);
+                mc.gameSettings.setOptionFloatValue(this.options, var4);
+                this.sliderValue = this.options.normalizeValue(var4);
+                this.displayString = mc.gameSettings.getKeyBinding(this.options);
             }
 
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.drawTexturedModalRect(this.xPosition + (int)(this.field_146134_p * (float)(this.width - 8)), this.yPosition, 0, 66, 4, 20);
-            this.drawTexturedModalRect(this.xPosition + (int)(this.field_146134_p * (float)(this.width - 8)) + 4, this.yPosition, 196, 66, 4, 20);
+            this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)), this.yPosition, 0, 66, 4, 20);
+            this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (float)(this.width - 8)) + 4, this.yPosition, 196, 66, 4, 20);
         }
     }
 
@@ -76,21 +76,21 @@ public class GuiOptionSlider extends GuiButton
     {
         if (super.mousePressed(mc, mouseX, mouseY))
         {
-            this.field_146134_p = (float)(mouseX - (this.xPosition + 4)) / (float)(this.width - 8);
+            this.sliderValue = (float)(mouseX - (this.xPosition + 4)) / (float)(this.width - 8);
 
-            if (this.field_146134_p < 0.0F)
+            if (this.sliderValue < 0.0F)
             {
-                this.field_146134_p = 0.0F;
+                this.sliderValue = 0.0F;
             }
 
-            if (this.field_146134_p > 1.0F)
+            if (this.sliderValue > 1.0F)
             {
-                this.field_146134_p = 1.0F;
+                this.sliderValue = 1.0F;
             }
 
-            mc.gameSettings.setOptionFloatValue(this.field_146133_q, this.field_146133_q.denormalizeValue(this.field_146134_p));
-            this.displayString = mc.gameSettings.getKeyBinding(this.field_146133_q);
-            this.field_146135_o = true;
+            mc.gameSettings.setOptionFloatValue(this.options, this.options.denormalizeValue(this.sliderValue));
+            this.displayString = mc.gameSettings.getKeyBinding(this.options);
+            this.dragging = true;
             return true;
         }
         else
@@ -102,8 +102,8 @@ public class GuiOptionSlider extends GuiButton
     /**
      * Fired when the mouse button is released. Equivalent of MouseListener.mouseReleased(MouseEvent e).
      */
-    public void mouseReleased(int p_146118_1_, int p_146118_2_)
+    public void mouseReleased(int mouseX, int mouseY)
     {
-        this.field_146135_o = false;
+        this.dragging = false;
     }
 }

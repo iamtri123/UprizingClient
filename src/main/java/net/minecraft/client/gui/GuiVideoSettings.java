@@ -11,11 +11,11 @@ import optifine.GuiQualitySettingsOF;
 
 public class GuiVideoSettings extends GuiScreen
 {
-    private final GuiScreen field_146498_f;
-    protected String field_146500_a = "Video Settings";
-    private final GameSettings field_146499_g;
+    private final GuiScreen parentGuiScreen;
+    protected String screenTitle = "Video Settings";
+    private final GameSettings guiGameSettings;
     private boolean is64bit;
-    private static final GameSettings.Options[] field_146502_i = {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.ADVANCED_OPENGL, GameSettings.Options.GAMMA, GameSettings.Options.CHUNK_LOADING, GameSettings.Options.FOG_FANCY, GameSettings.Options.FOG_START, GameSettings.Options.ANAGLYPH};
+    private static final GameSettings.Options[] videoOptions = {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.ADVANCED_OPENGL, GameSettings.Options.GAMMA, GameSettings.Options.CHUNK_LOADING, GameSettings.Options.FOG_FANCY, GameSettings.Options.FOG_START, GameSettings.Options.ANAGLYPH};
     private static final String __OBFID = "CL_00000718";
     private int lastMouseX = 0;
     private int lastMouseY = 0;
@@ -24,8 +24,8 @@ public class GuiVideoSettings extends GuiScreen
 
     public GuiVideoSettings(GuiScreen par1GuiScreen, GameSettings par2GameSettings)
     {
-        this.field_146498_f = par1GuiScreen;
-        this.field_146499_g = par2GameSettings;
+        this.parentGuiScreen = par1GuiScreen;
+        this.guiGameSettings = par2GameSettings;
     }
 
     /**
@@ -33,7 +33,7 @@ public class GuiVideoSettings extends GuiScreen
      */
     public void initGui()
     {
-        this.field_146500_a = I18n.format("options.videoTitle");
+        this.screenTitle = I18n.format("options.videoTitle");
         this.buttonList.clear();
         this.is64bit = false;
         String[] var1 = {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
@@ -54,7 +54,7 @@ public class GuiVideoSettings extends GuiScreen
 
         boolean var12 = false;
         boolean var111 = !this.is64bit;
-        GameSettings.Options[] var13 = field_146502_i;
+        GameSettings.Options[] var13 = videoOptions;
         int var14 = var13.length;
         boolean var11 = false;
         int x;
@@ -75,7 +75,7 @@ public class GuiVideoSettings extends GuiScreen
                 }
                 else
                 {
-                    this.buttonList.add(new GuiOptionButton(y.returnEnumOrdinal(), x, y1, y, this.field_146499_g.getKeyBinding(y)));
+                    this.buttonList.add(new GuiOptionButton(y.returnEnumOrdinal(), x, y1, y, this.guiGameSettings.getKeyBinding(y)));
                 }
             }
         }
@@ -101,21 +101,21 @@ public class GuiVideoSettings extends GuiScreen
     {
         if (par1GuiButton.enabled)
         {
-            int var2 = this.field_146499_g.guiScale;
+            int var2 = this.guiGameSettings.guiScale;
 
             if (par1GuiButton.id < 200 && par1GuiButton instanceof GuiOptionButton)
             {
-                this.field_146499_g.setOptionValue(((GuiOptionButton)par1GuiButton).func_146136_c(), 1);
-                par1GuiButton.displayString = this.field_146499_g.getKeyBinding(GameSettings.Options.getEnumOptions(par1GuiButton.id));
+                this.guiGameSettings.setOptionValue(((GuiOptionButton)par1GuiButton).returnEnumOptions(), 1);
+                par1GuiButton.displayString = this.guiGameSettings.getKeyBinding(GameSettings.Options.getEnumOptions(par1GuiButton.id));
             }
 
             if (par1GuiButton.id == 200)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(this.field_146498_f);
+                this.mc.displayGuiScreen(this.parentGuiScreen);
             }
 
-            if (this.field_146499_g.guiScale != var2)
+            if (this.guiGameSettings.guiScale != var2)
             {
                 ScaledResolution scr = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
                 int var4 = scr.getScaledWidth();
@@ -126,35 +126,35 @@ public class GuiVideoSettings extends GuiScreen
             if (par1GuiButton.id == 201)
             {
                 this.mc.gameSettings.saveOptions();
-                GuiDetailSettingsOF scr1 = new GuiDetailSettingsOF(this, this.field_146499_g);
+                GuiDetailSettingsOF scr1 = new GuiDetailSettingsOF(this, this.guiGameSettings);
                 this.mc.displayGuiScreen(scr1);
             }
 
             if (par1GuiButton.id == 202)
             {
                 this.mc.gameSettings.saveOptions();
-                GuiQualitySettingsOF scr2 = new GuiQualitySettingsOF(this, this.field_146499_g);
+                GuiQualitySettingsOF scr2 = new GuiQualitySettingsOF(this, this.guiGameSettings);
                 this.mc.displayGuiScreen(scr2);
             }
 
             if (par1GuiButton.id == 211)
             {
                 this.mc.gameSettings.saveOptions();
-                GuiAnimationSettingsOF scr3 = new GuiAnimationSettingsOF(this, this.field_146499_g);
+                GuiAnimationSettingsOF scr3 = new GuiAnimationSettingsOF(this, this.guiGameSettings);
                 this.mc.displayGuiScreen(scr3);
             }
 
             if (par1GuiButton.id == 212)
             {
                 this.mc.gameSettings.saveOptions();
-                GuiPerformanceSettingsOF scr4 = new GuiPerformanceSettingsOF(this, this.field_146499_g);
+                GuiPerformanceSettingsOF scr4 = new GuiPerformanceSettingsOF(this, this.guiGameSettings);
                 this.mc.displayGuiScreen(scr4);
             }
 
             if (par1GuiButton.id == 222)
             {
                 this.mc.gameSettings.saveOptions();
-                GuiOtherSettingsOF scr5 = new GuiOtherSettingsOF(this, this.field_146499_g);
+                GuiOtherSettingsOF scr5 = new GuiOtherSettingsOF(this, this.guiGameSettings);
                 this.mc.displayGuiScreen(scr5);
             }
 
@@ -171,7 +171,7 @@ public class GuiVideoSettings extends GuiScreen
     public void drawScreen(int x, int y, float z)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, this.field_146500_a, this.width / 2, this.is64bit ? 20 : 5, 16777215);
+        this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, this.is64bit ? 20 : 5, 16777215);
         String ver = Config.getVersion();
         String ed = "HD_U";
 
@@ -195,7 +195,7 @@ public class GuiVideoSettings extends GuiScreen
         int lenMc = this.fontRendererObj.getStringWidth(verMc);
         this.drawString(this.fontRendererObj, verMc, this.width - lenMc - 2, this.height - 10, 8421504);
 
-        if (!this.is64bit && this.field_146499_g.renderDistanceChunks > 8)
+        if (!this.is64bit && this.guiGameSettings.renderDistanceChunks > 8)
         {
         }
 

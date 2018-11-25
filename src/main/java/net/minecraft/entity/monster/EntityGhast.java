@@ -49,21 +49,21 @@ public class EntityGhast extends EntityFlying implements IMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
             return false;
         }
-        else if ("fireball".equals(p_70097_1_.getDamageType()) && p_70097_1_.getEntity() instanceof EntityPlayer)
+        else if ("fireball".equals(source.getDamageType()) && source.getEntity() instanceof EntityPlayer)
         {
-            super.attackEntityFrom(p_70097_1_, 1000.0F);
-            ((EntityPlayer)p_70097_1_.getEntity()).triggerAchievement(AchievementList.ghast);
+            super.attackEntityFrom(source, 1000.0F);
+            ((EntityPlayer)source.getEntity()).triggerAchievement(AchievementList.ghast);
             return true;
         }
         else
         {
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 
@@ -240,7 +240,7 @@ public class EntityGhast extends EntityFlying implements IMob
         return "mob.ghast.death";
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.gunpowder;
     }
@@ -255,14 +255,14 @@ public class EntityGhast extends EntityFlying implements IMob
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.ghast_tear, 1);
+            this.dropItem(Items.ghast_tear, 1);
         }
 
         var3 = this.rand.nextInt(3) + this.rand.nextInt(1 + p_70628_2_);
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.gunpowder, 1);
+            this.dropItem(Items.gunpowder, 1);
         }
     }
 
@@ -293,22 +293,22 @@ public class EntityGhast extends EntityFlying implements IMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("ExplosionPower", this.explosionStrength);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("ExplosionPower", this.explosionStrength);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
 
-        if (p_70037_1_.func_150297_b("ExplosionPower", 99))
+        if (tagCompund.hasKey("ExplosionPower", 99))
         {
-            this.explosionStrength = p_70037_1_.getInteger("ExplosionPower");
+            this.explosionStrength = tagCompund.getInteger("ExplosionPower");
         }
     }
 }

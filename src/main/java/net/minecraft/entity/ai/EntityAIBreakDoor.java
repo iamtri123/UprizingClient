@@ -20,7 +20,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
      */
     public boolean shouldExecute()
     {
-        return super.shouldExecute() && (this.theEntity.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing") && !this.field_151504_e.func_150015_f(this.theEntity.worldObj, this.entityPosX, this.entityPosY, this.entityPosZ));
+        return super.shouldExecute() && (this.theEntity.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing") && !this.doorBlock.func_150015_f(this.theEntity.worldObj, this.entityPosX, this.entityPosY, this.entityPosZ));
     }
 
     /**
@@ -38,7 +38,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
     public boolean continueExecuting()
     {
         double var1 = this.theEntity.getDistanceSq((double)this.entityPosX, (double)this.entityPosY, (double)this.entityPosZ);
-        return this.breakingTime <= 240 && !this.field_151504_e.func_150015_f(this.theEntity.worldObj, this.entityPosX, this.entityPosY, this.entityPosZ) && var1 < 4.0D;
+        return this.breakingTime <= 240 && !this.doorBlock.func_150015_f(this.theEntity.worldObj, this.entityPosX, this.entityPosY, this.entityPosZ) && var1 < 4.0D;
     }
 
     /**
@@ -75,7 +75,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
         {
             this.theEntity.worldObj.setBlockToAir(this.entityPosX, this.entityPosY, this.entityPosZ);
             this.theEntity.worldObj.playAuxSFX(1012, this.entityPosX, this.entityPosY, this.entityPosZ, 0);
-            this.theEntity.worldObj.playAuxSFX(2001, this.entityPosX, this.entityPosY, this.entityPosZ, Block.getIdFromBlock(this.field_151504_e));
+            this.theEntity.worldObj.playAuxSFX(2001, this.entityPosX, this.entityPosY, this.entityPosZ, Block.getIdFromBlock(this.doorBlock));
         }
     }
 }

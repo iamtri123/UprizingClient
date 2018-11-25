@@ -84,7 +84,7 @@ public class EntitySnowman extends EntityGolem implements IRangedAttackMob
         }
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.snowball;
     }
@@ -98,7 +98,7 @@ public class EntitySnowman extends EntityGolem implements IRangedAttackMob
 
         for (int var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.snowball, 1);
+            this.dropItem(Items.snowball, 1);
         }
     }
 

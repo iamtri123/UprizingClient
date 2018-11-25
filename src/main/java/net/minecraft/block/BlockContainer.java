@@ -14,21 +14,21 @@ public abstract class BlockContainer extends Block implements ITileEntityProvide
         this.isBlockContainer = true;
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+        super.onBlockAdded(worldIn, x, y, z);
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
-        p_149749_1_.removeTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
+        worldIn.removeTileEntity(x, y, z);
     }
 
-    public boolean onBlockEventReceived(World p_149696_1_, int p_149696_2_, int p_149696_3_, int p_149696_4_, int p_149696_5_, int p_149696_6_)
+    public boolean onBlockEventReceived(World worldIn, int x, int y, int z, int eventId, int eventData)
     {
-        super.onBlockEventReceived(p_149696_1_, p_149696_2_, p_149696_3_, p_149696_4_, p_149696_5_, p_149696_6_);
-        TileEntity var7 = p_149696_1_.getTileEntity(p_149696_2_, p_149696_3_, p_149696_4_);
-        return var7 != null && var7.receiveClientEvent(p_149696_5_, p_149696_6_);
+        super.onBlockEventReceived(worldIn, x, y, z, eventId, eventData);
+        TileEntity var7 = worldIn.getTileEntity(x, y, z);
+        return var7 != null && var7.receiveClientEvent(eventId, eventData);
     }
 }

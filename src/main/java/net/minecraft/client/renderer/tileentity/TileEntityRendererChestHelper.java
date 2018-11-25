@@ -13,19 +13,19 @@ public class TileEntityRendererChestHelper
     private final TileEntityEnderChest field_147716_d = new TileEntityEnderChest();
     private static final String __OBFID = "CL_00000946";
 
-    public void func_147715_a(Block p_147715_1_, int p_147715_2_, float p_147715_3_)
+    public void renderChest(Block p_147715_1_, int p_147715_2_, float p_147715_3_)
     {
         if (p_147715_1_ == Blocks.ender_chest)
         {
-            TileEntityRendererDispatcher.instance.func_147549_a(this.field_147716_d, 0.0D, 0.0D, 0.0D, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(this.field_147716_d, 0.0D, 0.0D, 0.0D, 0.0F);
         }
         else if (p_147715_1_ == Blocks.trapped_chest)
         {
-            TileEntityRendererDispatcher.instance.func_147549_a(this.field_147718_c, 0.0D, 0.0D, 0.0D, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(this.field_147718_c, 0.0D, 0.0D, 0.0D, 0.0F);
         }
         else
         {
-            TileEntityRendererDispatcher.instance.func_147549_a(this.field_147717_b, 0.0D, 0.0D, 0.0D, 0.0F);
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(this.field_147717_b, 0.0D, 0.0D, 0.0D, 0.0F);
         }
     }
 }

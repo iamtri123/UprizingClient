@@ -23,7 +23,7 @@ public class MapGenNetherBridge extends MapGenStructure
         this.spawnList.add(new BiomeGenBase.SpawnListEntry(EntityMagmaCube.class, 3, 4, 4));
     }
 
-    public String func_143025_a()
+    public String getStructureName()
     {
         return "Fortress";
     }

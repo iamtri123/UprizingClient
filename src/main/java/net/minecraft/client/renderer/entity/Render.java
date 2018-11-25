@@ -29,7 +29,7 @@ public abstract class Render
      * Determines the darkness of the object's shadow. Higher value makes a darker shadow.
      */
     protected float shadowOpaque = 1.0F;
-    private final boolean field_147908_f = false;
+    private final boolean staticEntity = false;
     private static final String __OBFID = "CL_00000992";
 
     /**
@@ -45,9 +45,9 @@ public abstract class Render
      */
     protected abstract ResourceLocation getEntityTexture(Entity p_110775_1_);
 
-    public boolean func_147905_a()
+    public boolean isStaticEntity()
     {
-        return this.field_147908_f;
+        return this.staticEntity;
     }
 
     protected void bindEntityTexture(Entity p_110777_1_)
@@ -66,8 +66,8 @@ public abstract class Render
     private void renderEntityOnFire(Entity p_76977_1_, double p_76977_2_, double p_76977_4_, double p_76977_6_, float p_76977_8_)
     {
         GL11.glDisable(GL11.GL_LIGHTING);
-        IIcon var9 = Blocks.fire.func_149840_c(0);
-        IIcon var10 = Blocks.fire.func_149840_c(1);
+        IIcon var9 = Blocks.fire.getFireIcon(0);
+        IIcon var10 = Blocks.fire.getFireIcon(1);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)p_76977_2_, (float)p_76977_4_, (float)p_76977_6_);
         float var11 = p_76977_1_.width * 1.4F;
@@ -337,7 +337,7 @@ public abstract class Render
 
     public void updateIcons(IIconRegister p_94143_1_) {}
 
-    protected void func_147906_a(Entity p_147906_1_, String p_147906_2_, double p_147906_3_, double p_147906_5_, double p_147906_7_, int p_147906_9_)
+    protected void renderLivingLabel(Entity p_147906_1_, String p_147906_2_, double p_147906_3_, double p_147906_5_, double p_147906_7_, int p_147906_9_)
     {
         double var10 = p_147906_1_.getDistanceSqToEntity(this.renderManager.livingPlayer);
 

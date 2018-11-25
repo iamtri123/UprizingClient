@@ -84,9 +84,9 @@ public class StatisticsFile extends StatFileWriter
         {
             this.field_150886_g = true;
 
-            if (this.field_150890_c.func_147136_ar())
+            if (this.field_150890_c.isAnnouncingPlayerAchievements())
             {
-                this.field_150890_c.getConfigurationManager().func_148539_a(new ChatComponentTranslation("chat.type.achievement", p_150873_1_.func_145748_c_(), p_150873_2_.func_150955_j()));
+                this.field_150890_c.getConfigurationManager().sendChatMsg(new ChatComponentTranslation("chat.type.achievement", p_150873_1_.getFormattedCommandSenderName(), p_150873_2_.func_150955_j()));
             }
         }
     }
@@ -116,7 +116,7 @@ public class StatisticsFile extends StatFileWriter
             while (var5.hasNext())
             {
                 Entry var6 = (Entry)var5.next();
-                StatBase var7 = StatList.func_151177_a((String)var6.getKey());
+                StatBase var7 = StatList.getOneShotStat((String)var6.getKey());
 
                 if (var7 != null)
                 {
@@ -183,7 +183,7 @@ public class StatisticsFile extends StatFileWriter
                 }
                 catch (Throwable var6)
                 {
-                    logger.warn("Couldn\'t save statistic " + ((StatBase)var3.getKey()).func_150951_e() + ": error serializing progress", var6);
+                    logger.warn("Couldn\'t save statistic " + ((StatBase)var3.getKey()).getStatName() + ": error serializing progress", var6);
                 }
 
                 var1.add(((StatBase)var3.getKey()).statId, var4);

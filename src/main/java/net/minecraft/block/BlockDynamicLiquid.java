@@ -26,28 +26,28 @@ public class BlockDynamicLiquid extends BlockLiquid
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        int var6 = this.func_149804_e(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+        int var6 = this.func_149804_e(worldIn, x, y, z);
         byte var7 = 1;
 
-        if (this.blockMaterial == Material.lava && !p_149674_1_.provider.isHellWorld)
+        if (this.blockMaterial == Material.lava && !worldIn.provider.isHellWorld)
         {
             var7 = 2;
         }
 
         boolean var8 = true;
-        int var9 = this.func_149738_a(p_149674_1_);
+        int var9 = this.tickRate(worldIn);
         int var11;
 
         if (var6 > 0)
         {
             byte var10 = -100;
             this.field_149815_a = 0;
-            int var13 = this.func_149810_a(p_149674_1_, p_149674_2_ - 1, p_149674_3_, p_149674_4_, var10);
-            var13 = this.func_149810_a(p_149674_1_, p_149674_2_ + 1, p_149674_3_, p_149674_4_, var13);
-            var13 = this.func_149810_a(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_ - 1, var13);
-            var13 = this.func_149810_a(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_ + 1, var13);
+            int var13 = this.func_149810_a(worldIn, x - 1, y, z, var10);
+            var13 = this.func_149810_a(worldIn, x + 1, y, z, var13);
+            var13 = this.func_149810_a(worldIn, x, y, z - 1, var13);
+            var13 = this.func_149810_a(worldIn, x, y, z + 1, var13);
             var11 = var13 + var7;
 
             if (var11 >= 8 || var13 < 0)
@@ -55,9 +55,9 @@ public class BlockDynamicLiquid extends BlockLiquid
                 var11 = -1;
             }
 
-            if (this.func_149804_e(p_149674_1_, p_149674_2_, p_149674_3_ + 1, p_149674_4_) >= 0)
+            if (this.func_149804_e(worldIn, x, y + 1, z) >= 0)
             {
-                int var12 = this.func_149804_e(p_149674_1_, p_149674_2_, p_149674_3_ + 1, p_149674_4_);
+                int var12 = this.func_149804_e(worldIn, x, y + 1, z);
 
                 if (var12 >= 8)
                 {
@@ -71,17 +71,17 @@ public class BlockDynamicLiquid extends BlockLiquid
 
             if (this.field_149815_a >= 2 && this.blockMaterial == Material.water)
             {
-                if (p_149674_1_.getBlock(p_149674_2_, p_149674_3_ - 1, p_149674_4_).getMaterial().isSolid())
+                if (worldIn.getBlock(x, y - 1, z).getMaterial().isSolid())
                 {
                     var11 = 0;
                 }
-                else if (p_149674_1_.getBlock(p_149674_2_, p_149674_3_ - 1, p_149674_4_).getMaterial() == this.blockMaterial && p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_ - 1, p_149674_4_) == 0)
+                else if (worldIn.getBlock(x, y - 1, z).getMaterial() == this.blockMaterial && worldIn.getBlockMetadata(x, y - 1, z) == 0)
                 {
                     var11 = 0;
                 }
             }
 
-            if (this.blockMaterial == Material.lava && var6 < 8 && var11 < 8 && var11 > var6 && p_149674_5_.nextInt(4) != 0)
+            if (this.blockMaterial == Material.lava && var6 < 8 && var11 < 8 && var11 > var6 && random.nextInt(4) != 0)
             {
                 var9 *= 4;
             }
@@ -90,7 +90,7 @@ public class BlockDynamicLiquid extends BlockLiquid
             {
                 if (var8)
                 {
-                    this.func_149811_n(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+                    this.func_149811_n(worldIn, x, y, z);
                 }
             }
             else
@@ -99,42 +99,42 @@ public class BlockDynamicLiquid extends BlockLiquid
 
                 if (var11 < 0)
                 {
-                    p_149674_1_.setBlockToAir(p_149674_2_, p_149674_3_, p_149674_4_);
+                    worldIn.setBlockToAir(x, y, z);
                 }
                 else
                 {
-                    p_149674_1_.setBlockMetadataWithNotify(p_149674_2_, p_149674_3_, p_149674_4_, var11, 2);
-                    p_149674_1_.scheduleBlockUpdate(p_149674_2_, p_149674_3_, p_149674_4_, this, var9);
-                    p_149674_1_.notifyBlocksOfNeighborChange(p_149674_2_, p_149674_3_, p_149674_4_, this);
+                    worldIn.setBlockMetadataWithNotify(x, y, z, var11, 2);
+                    worldIn.scheduleBlockUpdate(x, y, z, this, var9);
+                    worldIn.notifyBlocksOfNeighborChange(x, y, z, this);
                 }
             }
         }
         else
         {
-            this.func_149811_n(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+            this.func_149811_n(worldIn, x, y, z);
         }
 
-        if (this.func_149809_q(p_149674_1_, p_149674_2_, p_149674_3_ - 1, p_149674_4_))
+        if (this.func_149809_q(worldIn, x, y - 1, z))
         {
-            if (this.blockMaterial == Material.lava && p_149674_1_.getBlock(p_149674_2_, p_149674_3_ - 1, p_149674_4_).getMaterial() == Material.water)
+            if (this.blockMaterial == Material.lava && worldIn.getBlock(x, y - 1, z).getMaterial() == Material.water)
             {
-                p_149674_1_.setBlock(p_149674_2_, p_149674_3_ - 1, p_149674_4_, Blocks.stone);
-                this.func_149799_m(p_149674_1_, p_149674_2_, p_149674_3_ - 1, p_149674_4_);
+                worldIn.setBlock(x, y - 1, z, Blocks.stone);
+                this.func_149799_m(worldIn, x, y - 1, z);
                 return;
             }
 
             if (var6 >= 8)
             {
-                this.func_149813_h(p_149674_1_, p_149674_2_, p_149674_3_ - 1, p_149674_4_, var6);
+                this.func_149813_h(worldIn, x, y - 1, z, var6);
             }
             else
             {
-                this.func_149813_h(p_149674_1_, p_149674_2_, p_149674_3_ - 1, p_149674_4_, var6 + 8);
+                this.func_149813_h(worldIn, x, y - 1, z, var6 + 8);
             }
         }
-        else if (var6 >= 0 && (var6 == 0 || this.func_149807_p(p_149674_1_, p_149674_2_, p_149674_3_ - 1, p_149674_4_)))
+        else if (var6 >= 0 && (var6 == 0 || this.func_149807_p(worldIn, x, y - 1, z)))
         {
-            boolean[] var14 = this.func_149808_o(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+            boolean[] var14 = this.func_149808_o(worldIn, x, y, z);
             var11 = var6 + var7;
 
             if (var6 >= 8)
@@ -149,22 +149,22 @@ public class BlockDynamicLiquid extends BlockLiquid
 
             if (var14[0])
             {
-                this.func_149813_h(p_149674_1_, p_149674_2_ - 1, p_149674_3_, p_149674_4_, var11);
+                this.func_149813_h(worldIn, x - 1, y, z, var11);
             }
 
             if (var14[1])
             {
-                this.func_149813_h(p_149674_1_, p_149674_2_ + 1, p_149674_3_, p_149674_4_, var11);
+                this.func_149813_h(worldIn, x + 1, y, z, var11);
             }
 
             if (var14[2])
             {
-                this.func_149813_h(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_ - 1, var11);
+                this.func_149813_h(worldIn, x, y, z - 1, var11);
             }
 
             if (var14[3])
             {
-                this.func_149813_h(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_ + 1, var11);
+                this.func_149813_h(worldIn, x, y, z + 1, var11);
             }
         }
     }
@@ -340,17 +340,17 @@ public class BlockDynamicLiquid extends BlockLiquid
         return var5 != this.blockMaterial && (var5 != Material.lava && !this.func_149807_p(p_149809_1_, p_149809_2_, p_149809_3_, p_149809_4_));
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+        super.onBlockAdded(worldIn, x, y, z);
 
-        if (p_149726_1_.getBlock(p_149726_2_, p_149726_3_, p_149726_4_) == this)
+        if (worldIn.getBlock(x, y, z) == this)
         {
-            p_149726_1_.scheduleBlockUpdate(p_149726_2_, p_149726_3_, p_149726_4_, this, this.func_149738_a(p_149726_1_));
+            worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
         }
     }
 
-    public boolean func_149698_L()
+    public boolean requiresUpdates()
     {
         return true;
     }

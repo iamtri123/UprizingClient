@@ -21,27 +21,27 @@ import net.minecraft.world.World;
 public class BlockFurnace extends BlockContainer
 {
     private final Random field_149933_a = new Random();
-    private final boolean field_149932_b;
+    private final boolean isBurning;
     private static boolean field_149934_M;
-    private IIcon field_149935_N;
-    private IIcon field_149936_O;
+    private IIcon iconTop;
+    private IIcon iconFront;
     private static final String __OBFID = "CL_00000248";
 
     protected BlockFurnace(boolean p_i45407_1_)
     {
         super(Material.rock);
-        this.field_149932_b = p_i45407_1_;
+        this.isBurning = p_i45407_1_;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemFromBlock(Blocks.furnace);
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
-        this.func_149930_e(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+        super.onBlockAdded(worldIn, x, y, z);
+        this.func_149930_e(worldIn, x, y, z);
     }
 
     private void func_149930_e(World p_149930_1_, int p_149930_2_, int p_149930_3_, int p_149930_4_)
@@ -81,51 +81,51 @@ public class BlockFurnace extends BlockContainer
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_1_ == 1 ? this.field_149935_N : (p_149691_1_ == 0 ? this.field_149935_N : (p_149691_1_ != p_149691_2_ ? this.blockIcon : this.field_149936_O));
+        return side == 1 ? this.iconTop : (side == 0 ? this.iconTop : (side != meta ? this.blockIcon : this.iconFront));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon("furnace_side");
-        this.field_149936_O = p_149651_1_.registerIcon(this.field_149932_b ? "furnace_front_on" : "furnace_front_off");
-        this.field_149935_N = p_149651_1_.registerIcon("furnace_top");
+        this.blockIcon = reg.registerIcon("furnace_side");
+        this.iconFront = reg.registerIcon(this.isBurning ? "furnace_front_on" : "furnace_front_off");
+        this.iconTop = reg.registerIcon("furnace_top");
     }
 
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (this.field_149932_b)
+        if (this.isBurning)
         {
-            int var6 = p_149734_1_.getBlockMetadata(p_149734_2_, p_149734_3_, p_149734_4_);
-            float var7 = (float)p_149734_2_ + 0.5F;
-            float var8 = (float)p_149734_3_ + 0.0F + p_149734_5_.nextFloat() * 6.0F / 16.0F;
-            float var9 = (float)p_149734_4_ + 0.5F;
+            int var6 = worldIn.getBlockMetadata(x, y, z);
+            float var7 = (float)x + 0.5F;
+            float var8 = (float)y + 0.0F + random.nextFloat() * 6.0F / 16.0F;
+            float var9 = (float)z + 0.5F;
             float var10 = 0.52F;
-            float var11 = p_149734_5_.nextFloat() * 0.6F - 0.3F;
+            float var11 = random.nextFloat() * 0.6F - 0.3F;
 
             if (var6 == 4)
             {
-                p_149734_1_.spawnParticle("smoke", (double)(var7 - var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
-                p_149734_1_.spawnParticle("flame", (double)(var7 - var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("smoke", (double)(var7 - var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("flame", (double)(var7 - var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
             }
             else if (var6 == 5)
             {
-                p_149734_1_.spawnParticle("smoke", (double)(var7 + var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
-                p_149734_1_.spawnParticle("flame", (double)(var7 + var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("smoke", (double)(var7 + var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("flame", (double)(var7 + var10), (double)var8, (double)(var9 + var11), 0.0D, 0.0D, 0.0D);
             }
             else if (var6 == 2)
             {
-                p_149734_1_.spawnParticle("smoke", (double)(var7 + var11), (double)var8, (double)(var9 - var10), 0.0D, 0.0D, 0.0D);
-                p_149734_1_.spawnParticle("flame", (double)(var7 + var11), (double)var8, (double)(var9 - var10), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("smoke", (double)(var7 + var11), (double)var8, (double)(var9 - var10), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("flame", (double)(var7 + var11), (double)var8, (double)(var9 - var10), 0.0D, 0.0D, 0.0D);
             }
             else if (var6 == 3)
             {
-                p_149734_1_.spawnParticle("smoke", (double)(var7 + var11), (double)var8, (double)(var9 + var10), 0.0D, 0.0D, 0.0D);
-                p_149734_1_.spawnParticle("flame", (double)(var7 + var11), (double)var8, (double)(var9 + var10), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("smoke", (double)(var7 + var11), (double)var8, (double)(var9 + var10), 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("flame", (double)(var7 + var11), (double)var8, (double)(var9 + var10), 0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -133,26 +133,26 @@ public class BlockFurnace extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        if (p_149727_1_.isClient)
+        if (worldIn.isClient)
         {
             return true;
         }
         else
         {
-            TileEntityFurnace var10 = (TileEntityFurnace)p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_);
+            TileEntityFurnace var10 = (TileEntityFurnace)worldIn.getTileEntity(x, y, z);
 
             if (var10 != null)
             {
-                p_149727_5_.func_146101_a(var10);
+                player.func_146101_a(var10);
             }
 
             return true;
         }
     }
 
-    public static void func_149931_a(boolean p_149931_0_, World p_149931_1_, int p_149931_2_, int p_149931_3_, int p_149931_4_)
+    public static void updateFurnaceBlockState(boolean p_149931_0_, World p_149931_1_, int p_149931_2_, int p_149931_3_, int p_149931_4_)
     {
         int var5 = p_149931_1_.getBlockMetadata(p_149931_2_, p_149931_3_, p_149931_4_);
         TileEntity var6 = p_149931_1_.getTileEntity(p_149931_2_, p_149931_3_, p_149931_4_);
@@ -180,7 +180,7 @@ public class BlockFurnace extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityFurnace();
     }
@@ -188,41 +188,41 @@ public class BlockFurnace extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        int var7 = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int var7 = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (var7 == 0)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 2, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 2, 2);
         }
 
         if (var7 == 1)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 5, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 5, 2);
         }
 
         if (var7 == 2)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 3, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 3, 2);
         }
 
         if (var7 == 3)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 4, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 4, 2);
         }
 
-        if (p_149689_6_.hasDisplayName())
+        if (itemIn.hasDisplayName())
         {
-            ((TileEntityFurnace)p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).func_145951_a(p_149689_6_.getDisplayName());
+            ((TileEntityFurnace)worldIn.getTileEntity(x, y, z)).setCustomInventoryName(itemIn.getDisplayName());
         }
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
         if (!field_149934_M)
         {
-            TileEntityFurnace var7 = (TileEntityFurnace)p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+            TileEntityFurnace var7 = (TileEntityFurnace)worldIn.getTileEntity(x, y, z);
 
             if (var7 != null)
             {
@@ -246,7 +246,7 @@ public class BlockFurnace extends BlockContainer
                             }
 
                             var9.stackSize -= var13;
-                            EntityItem var14 = new EntityItem(p_149749_1_, (double)((float)p_149749_2_ + var10), (double)((float)p_149749_3_ + var11), (double)((float)p_149749_4_ + var12), new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
+                            EntityItem var14 = new EntityItem(worldIn, (double)((float)x + var10), (double)((float)y + var11), (double)((float)z + var12), new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
 
                             if (var9.hasTagCompound())
                             {
@@ -257,16 +257,16 @@ public class BlockFurnace extends BlockContainer
                             var14.motionX = (double)((float)this.field_149933_a.nextGaussian() * var15);
                             var14.motionY = (double)((float)this.field_149933_a.nextGaussian() * var15 + 0.2F);
                             var14.motionZ = (double)((float)this.field_149933_a.nextGaussian() * var15);
-                            p_149749_1_.spawnEntityInWorld(var14);
+                            worldIn.spawnEntityInWorld(var14);
                         }
                     }
                 }
 
-                p_149749_1_.func_147453_f(p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_);
+                worldIn.updateNeighborsAboutBlockChange(x, y, z, blockBroken);
             }
         }
 
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
     public boolean hasComparatorInputOverride()
@@ -274,15 +274,15 @@ public class BlockFurnace extends BlockContainer
         return true;
     }
 
-    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_)
+    public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side)
     {
-        return Container.calcRedstoneFromInventory((IInventory)p_149736_1_.getTileEntity(p_149736_2_, p_149736_3_, p_149736_4_));
+        return Container.calcRedstoneFromInventory((IInventory)worldIn.getTileEntity(x, y, z));
     }
 
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemFromBlock(Blocks.furnace);
     }

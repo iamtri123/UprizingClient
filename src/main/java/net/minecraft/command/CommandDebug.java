@@ -30,25 +30,25 @@ public class CommandDebug extends CommandBase
         return 3;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.debug.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length == 1)
+        if (args.length == 1)
         {
-            if (p_71515_2_[0].equals("start"))
+            if (args[0].equals("start"))
             {
-                func_152373_a(p_71515_1_, this, "commands.debug.start");
+                notifyOperators(sender, this, "commands.debug.start");
                 MinecraftServer.getServer().enableProfiling();
                 this.field_147206_b = MinecraftServer.getSystemTimeMillis();
                 this.field_147207_c = MinecraftServer.getServer().getTickCounter();
                 return;
             }
 
-            if (p_71515_2_[0].equals("stop"))
+            if (args[0].equals("stop"))
             {
                 if (!MinecraftServer.getServer().theProfiler.profilingEnabled)
                 {
@@ -61,7 +61,7 @@ public class CommandDebug extends CommandBase
                 int var8 = var5 - this.field_147207_c;
                 this.func_147205_a(var6, var8);
                 MinecraftServer.getServer().theProfiler.profilingEnabled = false;
-                func_152373_a(p_71515_1_, this, "commands.debug.stop", Float.valueOf((float)var6 / 1000.0F), Integer.valueOf(var8));
+                notifyOperators(sender, this, "commands.debug.stop", Float.valueOf((float)var6 / 1000.0F), Integer.valueOf(var8));
                 return;
             }
         }
@@ -157,8 +157,8 @@ public class CommandDebug extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, "start", "stop"): null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, "start", "stop"): null;
     }
 }

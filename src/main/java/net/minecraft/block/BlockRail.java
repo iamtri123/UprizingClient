@@ -17,22 +17,22 @@ public class BlockRail extends BlockRailBase
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_2_ >= 6 ? this.field_150056_b : this.blockIcon;
+        return meta >= 6 ? this.field_150056_b : this.blockIcon;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        super.registerBlockIcons(p_149651_1_);
-        this.field_150056_b = p_149651_1_.registerIcon(this.getTextureName() + "_turned");
+        super.registerBlockIcons(reg);
+        this.field_150056_b = reg.registerIcon(this.getTextureName() + "_turned");
     }
 
-    protected void func_150048_a(World p_150048_1_, int p_150048_2_, int p_150048_3_, int p_150048_4_, int p_150048_5_, int p_150048_6_, Block p_150048_7_)
+    protected void onRedstoneSignal(World p_150048_1_, int p_150048_2_, int p_150048_3_, int p_150048_4_, int p_150048_5_, int p_150048_6_, Block p_150048_7_)
     {
-        if (p_150048_7_.canProvidePower() && (new BlockRailBase.Rail(p_150048_1_, p_150048_2_, p_150048_3_, p_150048_4_)).func_150650_a() == 3)
+        if (p_150048_7_.canProvidePower() && (new BlockRailBase.Rail(p_150048_1_, p_150048_2_, p_150048_3_, p_150048_4_)).countAdjacentRails() == 3)
         {
-            this.func_150052_a(p_150048_1_, p_150048_2_, p_150048_3_, p_150048_4_, false);
+            this.refreshTrackShape(p_150048_1_, p_150048_2_, p_150048_3_, p_150048_4_, false);
         }
     }
 }

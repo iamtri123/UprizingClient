@@ -179,7 +179,7 @@ public class MapStorage
                 DataInputStream var2 = new DataInputStream(new FileInputStream(var1));
                 NBTTagCompound var3 = CompressedStreamTools.read(var2);
                 var2.close();
-                Iterator var4 = var3.func_150296_c().iterator();
+                Iterator var4 = var3.getKeySet().iterator();
 
                 while (var4.hasNext())
                 {
@@ -189,7 +189,7 @@ public class MapStorage
                     if (var6 instanceof NBTTagShort)
                     {
                         NBTTagShort var7 = (NBTTagShort)var6;
-                        short var9 = var7.func_150289_e();
+                        short var9 = var7.getShort();
                         this.idCounts.put(var5, Short.valueOf(var9));
                     }
                 }

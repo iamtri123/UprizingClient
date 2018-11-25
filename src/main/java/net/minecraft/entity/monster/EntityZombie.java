@@ -243,9 +243,9 @@ public class EntityZombie extends EntityMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        if (!super.attackEntityFrom(p_70097_1_, p_70097_2_))
+        if (!super.attackEntityFrom(source, amount))
         {
             return false;
         }
@@ -258,9 +258,9 @@ public class EntityZombie extends EntityMob
                 var3 = (EntityLivingBase)this.getEntityToAttack();
             }
 
-            if (var3 == null && p_70097_1_.getEntity() instanceof EntityLivingBase)
+            if (var3 == null && source.getEntity() instanceof EntityLivingBase)
             {
-                var3 = (EntityLivingBase)p_70097_1_.getEntity();
+                var3 = (EntityLivingBase)source.getEntity();
             }
 
             if (var3 != null && this.worldObj.difficultySetting == EnumDifficulty.HARD && (double)this.rand.nextFloat() < this.getEntityAttribute(field_110186_bp).getAttributeValue())
@@ -357,12 +357,12 @@ public class EntityZombie extends EntityMob
         return "mob.zombie.death";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.rotten_flesh;
     }
@@ -380,15 +380,15 @@ public class EntityZombie extends EntityMob
         switch (this.rand.nextInt(3))
         {
             case 0:
-                this.func_145779_a(Items.iron_ingot, 1);
+                this.dropItem(Items.iron_ingot, 1);
                 break;
 
             case 1:
-                this.func_145779_a(Items.carrot, 1);
+                this.dropItem(Items.carrot, 1);
                 break;
 
             case 2:
-                this.func_145779_a(Items.potato, 1);
+                this.dropItem(Items.potato, 1);
         }
     }
 
@@ -417,57 +417,57 @@ public class EntityZombie extends EntityMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
+        super.writeEntityToNBT(tagCompound);
 
         if (this.isChild())
         {
-            p_70014_1_.setBoolean("IsBaby", true);
+            tagCompound.setBoolean("IsBaby", true);
         }
 
         if (this.isVillager())
         {
-            p_70014_1_.setBoolean("IsVillager", true);
+            tagCompound.setBoolean("IsVillager", true);
         }
 
-        p_70014_1_.setInteger("ConversionTime", this.isConverting() ? this.conversionTime : -1);
-        p_70014_1_.setBoolean("CanBreakDoors", this.func_146072_bX());
+        tagCompound.setInteger("ConversionTime", this.isConverting() ? this.conversionTime : -1);
+        tagCompound.setBoolean("CanBreakDoors", this.func_146072_bX());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
 
-        if (p_70037_1_.getBoolean("IsBaby"))
+        if (tagCompund.getBoolean("IsBaby"))
         {
             this.setChild(true);
         }
 
-        if (p_70037_1_.getBoolean("IsVillager"))
+        if (tagCompund.getBoolean("IsVillager"))
         {
             this.setVillager(true);
         }
 
-        if (p_70037_1_.func_150297_b("ConversionTime", 99) && p_70037_1_.getInteger("ConversionTime") > -1)
+        if (tagCompund.hasKey("ConversionTime", 99) && tagCompund.getInteger("ConversionTime") > -1)
         {
-            this.startConversion(p_70037_1_.getInteger("ConversionTime"));
+            this.startConversion(tagCompund.getInteger("ConversionTime"));
         }
 
-        this.func_146070_a(p_70037_1_.getBoolean("CanBreakDoors"));
+        this.func_146070_a(tagCompund.getBoolean("CanBreakDoors"));
     }
 
     /**
      * This method gets called when the entity kills another one.
      */
-    public void onKillEntity(EntityLivingBase p_70074_1_)
+    public void onKillEntity(EntityLivingBase entityLivingIn)
     {
-        super.onKillEntity(p_70074_1_);
+        super.onKillEntity(entityLivingIn);
 
-        if ((this.worldObj.difficultySetting == EnumDifficulty.NORMAL || this.worldObj.difficultySetting == EnumDifficulty.HARD) && p_70074_1_ instanceof EntityVillager)
+        if ((this.worldObj.difficultySetting == EnumDifficulty.NORMAL || this.worldObj.difficultySetting == EnumDifficulty.HARD) && entityLivingIn instanceof EntityVillager)
         {
             if (this.worldObj.difficultySetting != EnumDifficulty.HARD && this.rand.nextBoolean())
             {
@@ -475,12 +475,12 @@ public class EntityZombie extends EntityMob
             }
 
             EntityZombie var2 = new EntityZombie(this.worldObj);
-            var2.copyLocationAndAnglesFrom(p_70074_1_);
-            this.worldObj.removeEntity(p_70074_1_);
+            var2.copyLocationAndAnglesFrom(entityLivingIn);
+            this.worldObj.removeEntity(entityLivingIn);
             var2.onSpawnWithEgg((IEntityLivingData)null);
             var2.setVillager(true);
 
-            if (p_70074_1_.isChild())
+            if (entityLivingIn.isChild())
             {
                 var2.setChild(true);
             }
@@ -493,7 +493,7 @@ public class EntityZombie extends EntityMob
     public IEntityLivingData onSpawnWithEgg(IEntityLivingData p_110161_1_)
     {
         Object p_110161_1_1 = super.onSpawnWithEgg(p_110161_1_);
-        float var2 = this.worldObj.func_147462_b(this.posX, this.posY, this.posZ);
+        float var2 = this.worldObj.getTensionFactorForBlock(this.posX, this.posY, this.posZ);
         this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * var2);
 
         if (p_110161_1_1 == null)
@@ -553,7 +553,7 @@ public class EntityZombie extends EntityMob
         }
 
         this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextDouble() * 0.05000000074505806D, 0));
-        double var8 = this.rand.nextDouble() * 1.5D * (double)this.worldObj.func_147462_b(this.posX, this.posY, this.posZ);
+        double var8 = this.rand.nextDouble() * 1.5D * (double)this.worldObj.getTensionFactorForBlock(this.posX, this.posY, this.posZ);
 
         if (var8 > 1.0D)
         {
@@ -708,11 +708,11 @@ public class EntityZombie extends EntityMob
     /**
      * Sets the width and height of the entity. Args: width, height
      */
-    protected final void setSize(float p_70105_1_, float p_70105_2_)
+    protected final void setSize(float width, float height)
     {
         boolean var3 = this.field_146074_bv > 0.0F && this.field_146073_bw > 0.0F;
-        this.field_146074_bv = p_70105_1_;
-        this.field_146073_bw = p_70105_2_;
+        this.field_146074_bv = width;
+        this.field_146073_bw = height;
 
         if (!var3)
         {

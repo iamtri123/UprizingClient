@@ -61,7 +61,7 @@ public final class WorldSettings
         return this;
     }
 
-    public WorldSettings func_82750_a(String p_82750_1_)
+    public WorldSettings setWorldName(String p_82750_1_)
     {
         this.field_82751_h = p_82750_1_;
         return this;

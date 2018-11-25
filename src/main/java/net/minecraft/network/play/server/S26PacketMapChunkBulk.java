@@ -81,11 +81,11 @@ public class S26PacketMapChunkBulk extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        short var2 = p_148837_1_.readShort();
-        this.field_149261_g = p_148837_1_.readInt();
-        this.field_149267_h = p_148837_1_.readBoolean();
+        short var2 = data.readShort();
+        this.field_149261_g = data.readInt();
+        this.field_149267_h = data.readBoolean();
         this.field_149266_a = new int[var2];
         this.field_149264_b = new int[var2];
         this.field_149265_c = new int[var2];
@@ -97,7 +97,7 @@ public class S26PacketMapChunkBulk extends Packet
             field_149268_i = new byte[this.field_149261_g];
         }
 
-        p_148837_1_.readBytes(field_149268_i, 0, this.field_149261_g);
+        data.readBytes(field_149268_i, 0, this.field_149261_g);
         byte[] var3 = new byte[S21PacketChunkData.func_149275_c() * var2];
         Inflater var4 = new Inflater();
         var4.setInput(field_149268_i, 0, this.field_149261_g);
@@ -119,10 +119,10 @@ public class S26PacketMapChunkBulk extends Packet
 
         for (int var6 = 0; var6 < var2; ++var6)
         {
-            this.field_149266_a[var6] = p_148837_1_.readInt();
-            this.field_149264_b[var6] = p_148837_1_.readInt();
-            this.field_149265_c[var6] = p_148837_1_.readShort();
-            this.field_149262_d[var6] = p_148837_1_.readShort();
+            this.field_149266_a[var6] = data.readInt();
+            this.field_149264_b[var6] = data.readInt();
+            this.field_149265_c[var6] = data.readShort();
+            this.field_149262_d[var6] = data.readShort();
             int var7 = 0;
             int var8 = 0;
             int var9;
@@ -150,25 +150,25 @@ public class S26PacketMapChunkBulk extends Packet
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeShort(this.field_149266_a.length);
-        p_148840_1_.writeInt(this.field_149261_g);
-        p_148840_1_.writeBoolean(this.field_149267_h);
-        p_148840_1_.writeBytes(this.field_149263_e, 0, this.field_149261_g);
+        data.writeShort(this.field_149266_a.length);
+        data.writeInt(this.field_149261_g);
+        data.writeBoolean(this.field_149267_h);
+        data.writeBytes(this.field_149263_e, 0, this.field_149261_g);
 
         for (int var2 = 0; var2 < this.field_149266_a.length; ++var2)
         {
-            p_148840_1_.writeInt(this.field_149266_a[var2]);
-            p_148840_1_.writeInt(this.field_149264_b[var2]);
-            p_148840_1_.writeShort((short)(this.field_149265_c[var2] & 65535));
-            p_148840_1_.writeShort((short)(this.field_149262_d[var2] & 65535));
+            data.writeInt(this.field_149266_a[var2]);
+            data.writeInt(this.field_149264_b[var2]);
+            data.writeShort((short)(this.field_149265_c[var2] & 65535));
+            data.writeShort((short)(this.field_149262_d[var2] & 65535));
         }
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleMapChunkBulk(this);
+        handler.handleMapChunkBulk(this);
     }
 
     public int func_149255_a(int p_149255_1_)
@@ -221,8 +221,8 @@ public class S26PacketMapChunkBulk extends Packet
         return this.field_149262_d;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

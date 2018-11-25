@@ -87,19 +87,19 @@ public class EntityPigZombie extends EntityZombie
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setShort("Anger", (short)this.angerLevel);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setShort("Anger", (short)this.angerLevel);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.angerLevel = p_70037_1_.getShort("Anger");
+        super.readEntityFromNBT(tagCompund);
+        this.angerLevel = tagCompund.getShort("Anger");
     }
 
     /**
@@ -114,7 +114,7 @@ public class EntityPigZombie extends EntityZombie
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -122,7 +122,7 @@ public class EntityPigZombie extends EntityZombie
         }
         else
         {
-            Entity var3 = p_70097_1_.getEntity();
+            Entity var3 = source.getEntity();
 
             if (var3 instanceof EntityPlayer)
             {
@@ -142,7 +142,7 @@ public class EntityPigZombie extends EntityZombie
                 this.becomeAngryAt(var3);
             }
 
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 
@@ -190,14 +190,14 @@ public class EntityPigZombie extends EntityZombie
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.rotten_flesh, 1);
+            this.dropItem(Items.rotten_flesh, 1);
         }
 
         var3 = this.rand.nextInt(2 + p_70628_2_);
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.gold_nugget, 1);
+            this.dropItem(Items.gold_nugget, 1);
         }
     }
 
@@ -211,7 +211,7 @@ public class EntityPigZombie extends EntityZombie
 
     protected void dropRareDrop(int p_70600_1_)
     {
-        this.func_145779_a(Items.gold_ingot, 1);
+        this.dropItem(Items.gold_ingot, 1);
     }
 
     /**

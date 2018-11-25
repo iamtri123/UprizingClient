@@ -35,7 +35,7 @@ public class GuiScreenServerList extends GuiScreen
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, I18n.format("selectServer.select")));
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, I18n.format("gui.cancel")));
         this.field_146302_g = new GuiTextField(this.fontRendererObj, this.width / 2 - 100, 116, 200, 20);
-        this.field_146302_g.func_146203_f(128);
+        this.field_146302_g.setMaxStringLength(128);
         this.field_146302_g.setFocused(true);
         this.field_146302_g.setText(this.mc.gameSettings.lastServer);
         ((GuiButton)this.buttonList.get(0)).enabled = this.field_146302_g.getText().length() > 0 && this.field_146302_g.getText().split(":").length > 0;
@@ -51,15 +51,15 @@ public class GuiScreenServerList extends GuiScreen
         this.mc.gameSettings.saveOptions();
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.enabled)
+        if (button.enabled)
         {
-            if (p_146284_1_.id == 1)
+            if (button.id == 1)
             {
                 this.field_146303_a.confirmClicked(false, 0);
             }
-            else if (p_146284_1_.id == 0)
+            else if (button.id == 0)
             {
                 this.field_146301_f.serverIP = this.field_146302_g.getText();
                 this.field_146303_a.confirmClicked(true, 0);
@@ -70,13 +70,13 @@ public class GuiScreenServerList extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        if (this.field_146302_g.textboxKeyTyped(p_73869_1_, p_73869_2_))
+        if (this.field_146302_g.textboxKeyTyped(typedChar, keyCode))
         {
             ((GuiButton)this.buttonList.get(0)).enabled = this.field_146302_g.getText().length() > 0 && this.field_146302_g.getText().split(":").length > 0;
         }
-        else if (p_73869_2_ == 28 || p_73869_2_ == 156)
+        else if (keyCode == 28 || keyCode == 156)
         {
             this.actionPerformed((GuiButton)this.buttonList.get(0));
         }

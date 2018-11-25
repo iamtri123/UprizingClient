@@ -293,7 +293,7 @@ public class EntityTracker
         }
     }
 
-    public void func_151247_a(Entity p_151247_1_, Packet p_151247_2_)
+    public void sendToAllTrackingEntity(Entity p_151247_1_, Packet p_151247_2_)
     {
         EntityTrackerEntry var3 = (EntityTrackerEntry)this.trackedEntityIDs.lookup(p_151247_1_.getEntityId());
 

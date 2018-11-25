@@ -20,7 +20,7 @@ import tv.twitch.chat.StandardChatAPI;
 
 public class ChatController implements IChatCallbacks
 {
-    private static final Logger field_153018_p = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     protected ChatController.ChatListener field_153003_a = null;
     protected String field_153004_b = "";
     protected String field_153005_c = "";
@@ -401,7 +401,7 @@ public class ChatController implements IChatCallbacks
 
     protected void func_152995_h(String p_152995_1_)
     {
-        field_153018_p.error(TwitchStream.field_152949_a, "[Chat controller] {}", p_152995_1_);
+        LOGGER.error(TwitchStream.field_152949_a, "[Chat controller] {}", p_152995_1_);
     }
 
     public interface ChatListener
@@ -428,7 +428,7 @@ public class ChatController implements IChatCallbacks
         private static final ChatController.ChatState[] $VALUES = {Uninitialized, Initialized, Connecting, Connected, Disconnected};
         private static final String __OBFID = "CL_00001817";
 
-        ChatState(String p_i1021_1_, int p_i1021_2_) {}
+        ChatState(String stateName, int id) {}
     }
 
     static final class SwitchChatState

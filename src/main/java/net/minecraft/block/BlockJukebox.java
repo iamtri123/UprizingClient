@@ -27,23 +27,23 @@ public class BlockJukebox extends BlockContainer
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_1_ == 1 ? this.field_149927_a : this.blockIcon;
+        return side == 1 ? this.field_149927_a : this.blockIcon;
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        if (p_149727_1_.getBlockMetadata(p_149727_2_, p_149727_3_, p_149727_4_) == 0)
+        if (worldIn.getBlockMetadata(x, y, z) == 0)
         {
             return false;
         }
         else
         {
-            this.func_149925_e(p_149727_1_, p_149727_2_, p_149727_3_, p_149727_4_);
+            this.func_149925_e(worldIn, x, y, z);
             return true;
         }
     }
@@ -91,35 +91,35 @@ public class BlockJukebox extends BlockContainer
         }
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        this.func_149925_e(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_);
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        this.func_149925_e(worldIn, x, y, z);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, int meta, float chance, int fortune)
     {
-        if (!p_149690_1_.isClient)
+        if (!worldIn.isClient)
         {
-            super.dropBlockAsItemWithChance(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, p_149690_5_, p_149690_6_, 0);
+            super.dropBlockAsItemWithChance(worldIn, x, y, z, meta, chance, 0);
         }
     }
 
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new BlockJukebox.TileEntityJukebox();
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon(this.getTextureName() + "_side");
-        this.field_149927_a = p_149651_1_.registerIcon(this.getTextureName() + "_top");
+        this.blockIcon = reg.registerIcon(this.getTextureName() + "_side");
+        this.field_149927_a = reg.registerIcon(this.getTextureName() + "_top");
     }
 
     public boolean hasComparatorInputOverride()
@@ -127,9 +127,9 @@ public class BlockJukebox extends BlockContainer
         return true;
     }
 
-    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_)
+    public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side)
     {
-        ItemStack var6 = ((BlockJukebox.TileEntityJukebox)p_149736_1_.getTileEntity(p_149736_2_, p_149736_3_, p_149736_4_)).func_145856_a();
+        ItemStack var6 = ((BlockJukebox.TileEntityJukebox)worldIn.getTileEntity(x, y, z)).func_145856_a();
         return var6 == null ? 0 : Item.getIdFromItem(var6.getItem()) + 1 - Item.getIdFromItem(Items.record_13);
     }
 
@@ -138,28 +138,28 @@ public class BlockJukebox extends BlockContainer
         private ItemStack field_145858_a;
         private static final String __OBFID = "CL_00000261";
 
-        public void readFromNBT(NBTTagCompound p_145839_1_)
+        public void readFromNBT(NBTTagCompound compound)
         {
-            super.readFromNBT(p_145839_1_);
+            super.readFromNBT(compound);
 
-            if (p_145839_1_.func_150297_b("RecordItem", 10))
+            if (compound.hasKey("RecordItem", 10))
             {
-                this.func_145857_a(ItemStack.loadItemStackFromNBT(p_145839_1_.getCompoundTag("RecordItem")));
+                this.func_145857_a(ItemStack.loadItemStackFromNBT(compound.getCompoundTag("RecordItem")));
             }
-            else if (p_145839_1_.getInteger("Record") > 0)
+            else if (compound.getInteger("Record") > 0)
             {
-                this.func_145857_a(new ItemStack(Item.getItemById(p_145839_1_.getInteger("Record")), 1, 0));
+                this.func_145857_a(new ItemStack(Item.getItemById(compound.getInteger("Record")), 1, 0));
             }
         }
 
-        public void writeToNBT(NBTTagCompound p_145841_1_)
+        public void writeToNBT(NBTTagCompound compound)
         {
-            super.writeToNBT(p_145841_1_);
+            super.writeToNBT(compound);
 
             if (this.func_145856_a() != null)
             {
-                p_145841_1_.setTag("RecordItem", this.func_145856_a().writeToNBT(new NBTTagCompound()));
-                p_145841_1_.setInteger("Record", Item.getIdFromItem(this.func_145856_a().getItem()));
+                compound.setTag("RecordItem", this.func_145856_a().writeToNBT(new NBTTagCompound()));
+                compound.setInteger("Record", Item.getIdFromItem(this.func_145856_a().getItem()));
             }
         }
 

@@ -8,39 +8,39 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C11PacketEnchantItem extends Packet
 {
-    private int field_149541_a;
-    private int field_149540_b;
+    private int id;
+    private int button;
     private static final String __OBFID = "CL_00001352";
 
     public C11PacketEnchantItem() {}
 
     public C11PacketEnchantItem(int p_i45245_1_, int p_i45245_2_)
     {
-        this.field_149541_a = p_i45245_1_;
-        this.field_149540_b = p_i45245_2_;
+        this.id = p_i45245_1_;
+        this.button = p_i45245_2_;
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processEnchantItem(this);
+        handler.processEnchantItem(this);
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149541_a = p_148837_1_.readByte();
-        this.field_149540_b = p_148837_1_.readByte();
+        this.id = data.readByte();
+        this.button = data.readByte();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeByte(this.field_149541_a);
-        p_148840_1_.writeByte(this.field_149540_b);
+        data.writeByte(this.id);
+        data.writeByte(this.button);
     }
 
     /**
@@ -48,21 +48,21 @@ public class C11PacketEnchantItem extends Packet
      */
     public String serialize()
     {
-        return String.format("id=%d, button=%d", Integer.valueOf(this.field_149541_a), Integer.valueOf(this.field_149540_b));
+        return String.format("id=%d, button=%d", Integer.valueOf(this.id), Integer.valueOf(this.button));
     }
 
-    public int func_149539_c()
+    public int getId()
     {
-        return this.field_149541_a;
+        return this.id;
     }
 
-    public int func_149537_d()
+    public int getButton()
     {
-        return this.field_149540_b;
+        return this.button;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 }

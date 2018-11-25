@@ -41,9 +41,9 @@ public class ItemLeaves extends ItemBlock
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
-        int var2 = p_77667_1_.getItemDamage();
+        int var2 = stack.getItemDamage();
 
         if (var2 < 0 || var2 >= this.field_150940_b.func_150125_e().length)
         {

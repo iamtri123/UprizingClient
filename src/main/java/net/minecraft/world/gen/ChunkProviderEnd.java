@@ -353,12 +353,12 @@ public class ChunkProviderEnd implements IChunkProvider
      */
     public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_)
     {
-        BlockFalling.field_149832_M = true;
+        BlockFalling.fallInstantly = true;
         int var4 = p_73153_2_ * 16;
         int var5 = p_73153_3_ * 16;
         BiomeGenBase var6 = this.endWorld.getBiomeGenForCoords(var4 + 16, var5 + 16);
         var6.decorate(this.endWorld, this.endWorld.rand, var4, var5);
-        BlockFalling.field_149832_M = false;
+        BlockFalling.fallInstantly = false;
     }
 
     /**
@@ -409,7 +409,7 @@ public class ChunkProviderEnd implements IChunkProvider
         return var5.getSpawnableList(p_73155_1_);
     }
 
-    public ChunkPosition func_147416_a(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
+    public ChunkPosition findClosestStructure(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
     {
         return null;
     }

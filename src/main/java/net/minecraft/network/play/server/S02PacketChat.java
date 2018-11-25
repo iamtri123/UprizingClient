@@ -9,46 +9,46 @@ import net.minecraft.util.IChatComponent;
 
 public class S02PacketChat extends Packet
 {
-    private IChatComponent field_148919_a;
-    private boolean field_148918_b;
+    private IChatComponent chatComponent;
+    private boolean isChat;
     private static final String __OBFID = "CL_00001289";
 
     public S02PacketChat()
     {
-        this.field_148918_b = true;
+        this.isChat = true;
     }
 
-    public S02PacketChat(IChatComponent p_i45179_1_)
+    public S02PacketChat(IChatComponent component)
     {
-        this(p_i45179_1_, true);
+        this(component, true);
     }
 
-    public S02PacketChat(IChatComponent p_i45180_1_, boolean p_i45180_2_)
+    public S02PacketChat(IChatComponent component, boolean chat)
     {
-        this.field_148918_b = true;
-        this.field_148919_a = p_i45180_1_;
-        this.field_148918_b = p_i45180_2_;
+        this.isChat = true;
+        this.chatComponent = component;
+        this.isChat = chat;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148919_a = IChatComponent.Serializer.func_150699_a(p_148837_1_.readStringFromBuffer(32767));
+        this.chatComponent = IChatComponent.Serializer.jsonToComponent(data.readStringFromBuffer(32767));
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(IChatComponent.Serializer.func_150696_a(this.field_148919_a));
+        data.writeStringToBuffer(IChatComponent.Serializer.componentToJson(this.chatComponent));
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleChat(this);
+        handler.handleChat(this);
     }
 
     /**
@@ -56,21 +56,21 @@ public class S02PacketChat extends Packet
      */
     public String serialize()
     {
-        return String.format("message=\'%s\'", this.field_148919_a);
+        return String.format("message=\'%s\'", this.chatComponent);
     }
 
     public IChatComponent func_148915_c()
     {
-        return this.field_148919_a;
+        return this.chatComponent;
     }
 
-    public boolean func_148916_d()
+    public boolean isChat()
     {
-        return this.field_148918_b;
+        return this.isChat;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

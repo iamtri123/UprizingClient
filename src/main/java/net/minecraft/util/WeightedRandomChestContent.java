@@ -62,7 +62,7 @@ public class WeightedRandomChestContent extends WeightedRandom.Item
         }
     }
 
-    public static void func_150706_a(Random p_150706_0_, WeightedRandomChestContent[] p_150706_1_, TileEntityDispenser p_150706_2_, int p_150706_3_)
+    public static void generateDispenserContents(Random p_150706_0_, WeightedRandomChestContent[] p_150706_1_, TileEntityDispenser p_150706_2_, int p_150706_3_)
     {
         for (int var4 = 0; var4 < p_150706_3_; ++var4)
         {

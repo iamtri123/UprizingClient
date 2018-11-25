@@ -30,7 +30,7 @@ public class EntityAIArrowAttack extends EntityAIBase
      */
     private final int maxRangedAttackTime;
     private final float field_96562_i;
-    private final float field_82642_h;
+    private final float maxAttackDistance;
     private static final String __OBFID = "CL_00001609";
 
     public EntityAIArrowAttack(IRangedAttackMob p_i1649_1_, double p_i1649_2_, int p_i1649_4_, float p_i1649_5_)
@@ -54,7 +54,7 @@ public class EntityAIArrowAttack extends EntityAIBase
             this.field_96561_g = p_i1650_4_;
             this.maxRangedAttackTime = p_i1650_5_;
             this.field_96562_i = p_i1650_6_;
-            this.field_82642_h = p_i1650_6_ * p_i1650_6_;
+            this.maxAttackDistance = p_i1650_6_ * p_i1650_6_;
             this.setMutexBits(3);
         }
     }
@@ -112,7 +112,7 @@ public class EntityAIArrowAttack extends EntityAIBase
             this.field_75318_f = 0;
         }
 
-        if (var1 <= (double)this.field_82642_h && this.field_75318_f >= 20)
+        if (var1 <= (double)this.maxAttackDistance && this.field_75318_f >= 20)
         {
             this.entityHost.getNavigator().clearPathEntity();
         }
@@ -126,7 +126,7 @@ public class EntityAIArrowAttack extends EntityAIBase
 
         if (--this.rangedAttackTime == 0)
         {
-            if (var1 > (double)this.field_82642_h || !var3)
+            if (var1 > (double)this.maxAttackDistance || !var3)
             {
                 return;
             }

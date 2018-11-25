@@ -121,7 +121,7 @@ public class RenderManager
     public double viewerPosX;
     public double viewerPosY;
     public double viewerPosZ;
-    public static boolean field_85095_o;
+    public static boolean debugBoundingBox;
     private static final String __OBFID = "CL_00000991";
 
     private RenderManager()
@@ -208,7 +208,7 @@ public class RenderManager
         return this.getEntityClassRenderObject(p_78713_1_.getClass());
     }
 
-    public void func_147938_a(World p_147938_1_, TextureManager p_147938_2_, FontRenderer p_147938_3_, EntityLivingBase p_147938_4_, Entity p_147938_5_, GameSettings p_147938_6_, float p_147938_7_)
+    public void cacheActiveRenderInfo(World p_147938_1_, TextureManager p_147938_2_, FontRenderer p_147938_3_, EntityLivingBase p_147938_4_, Entity p_147938_5_, GameSettings p_147938_6_, float p_147938_7_)
     {
         this.worldObj = p_147938_1_;
         this.renderEngine = p_147938_2_;
@@ -245,12 +245,12 @@ public class RenderManager
         this.viewerPosZ = p_147938_4_.lastTickPosZ + (p_147938_4_.posZ - p_147938_4_.lastTickPosZ) * (double)p_147938_7_;
     }
 
-    public boolean func_147937_a(Entity p_147937_1_, float p_147937_2_)
+    public boolean renderEntitySimple(Entity p_147937_1_, float p_147937_2_)
     {
-        return this.func_147936_a(p_147937_1_, p_147937_2_, false);
+        return this.renderEntityStatic(p_147937_1_, p_147937_2_, false);
     }
 
-    public boolean func_147936_a(Entity p_147936_1_, float p_147936_2_, boolean p_147936_3_)
+    public boolean renderEntityStatic(Entity p_147936_1_, float p_147936_2_, boolean p_147936_3_)
     {
         if (p_147936_1_.ticksExisted == 0)
         {
@@ -274,15 +274,15 @@ public class RenderManager
         int var13 = var11 / 65536;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)var12 / 1.0F, (float)var13 / 1.0F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        return this.func_147939_a(p_147936_1_, var4 - renderPosX, var6 - renderPosY, var8 - renderPosZ, var10, p_147936_2_, p_147936_3_);
+        return this.doRenderEntity(p_147936_1_, var4 - renderPosX, var6 - renderPosY, var8 - renderPosZ, var10, p_147936_2_, p_147936_3_);
     }
 
-    public boolean func_147940_a(Entity p_147940_1_, double p_147940_2_, double p_147940_4_, double p_147940_6_, float p_147940_8_, float p_147940_9_)
+    public boolean renderEntityWithPosYaw(Entity p_147940_1_, double p_147940_2_, double p_147940_4_, double p_147940_6_, float p_147940_8_, float p_147940_9_)
     {
-        return this.func_147939_a(p_147940_1_, p_147940_2_, p_147940_4_, p_147940_6_, p_147940_8_, p_147940_9_, false);
+        return this.doRenderEntity(p_147940_1_, p_147940_2_, p_147940_4_, p_147940_6_, p_147940_8_, p_147940_9_, false);
     }
 
-    public boolean func_147939_a(Entity p_147939_1_, double p_147939_2_, double p_147939_4_, double p_147939_6_, float p_147939_8_, float p_147939_9_, boolean p_147939_10_)
+    public boolean doRenderEntity(Entity p_147939_1_, double p_147939_2_, double p_147939_4_, double p_147939_6_, float p_147939_8_, float p_147939_9_, boolean p_147939_10_)
     {
         Render var11 = null;
 
@@ -292,7 +292,7 @@ public class RenderManager
 
             if (var11 != null && this.renderEngine != null)
             {
-                if (!var11.func_147905_a() || p_147939_10_)
+                if (!var11.isStaticEntity() || p_147939_10_)
                 {
                     try
                     {
@@ -312,11 +312,11 @@ public class RenderManager
                         throw new ReportedException(CrashReport.makeCrashReport(var17, "Post-rendering entity in world"));
                     }
 
-                    if (field_85095_o && !p_147939_1_.isInvisible() && !p_147939_10_)
+                    if (debugBoundingBox && !p_147939_1_.isInvisible() && !p_147939_10_)
                     {
                         try
                         {
-                            this.func_85094_b(p_147939_1_, p_147939_2_, p_147939_4_, p_147939_6_, p_147939_8_, p_147939_9_);
+                            this.renderDebugBoundingBox(p_147939_1_, p_147939_2_, p_147939_4_, p_147939_6_, p_147939_8_, p_147939_9_);
                         }
                         catch (Throwable var16)
                         {
@@ -346,7 +346,7 @@ public class RenderManager
         }
     }
 
-    private void func_85094_b(Entity p_85094_1_, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_)
+    private void renderDebugBoundingBox(Entity p_85094_1_, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_)
     {
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_TEXTURE_2D);

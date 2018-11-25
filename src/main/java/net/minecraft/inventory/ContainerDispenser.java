@@ -37,25 +37,25 @@ public class ContainerDispenser extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.tileEntityDispenser.isUseableByPlayer(p_75145_1_);
+        return this.tileEntityDispenser.isUseableByPlayer(player);
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ < 9)
+            if (index < 9)
             {
                 if (!this.mergeItemStack(var5, 9, 45, true))
                 {
@@ -81,7 +81,7 @@ public class ContainerDispenser extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;

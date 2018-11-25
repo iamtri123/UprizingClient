@@ -47,22 +47,22 @@ public class EntityLargeFireball extends EntityFireball
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("ExplosionPower", this.field_92057_e);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("ExplosionPower", this.field_92057_e);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
 
-        if (p_70037_1_.func_150297_b("ExplosionPower", 99))
+        if (tagCompund.hasKey("ExplosionPower", 99))
         {
-            this.field_92057_e = p_70037_1_.getInteger("ExplosionPower");
+            this.field_92057_e = tagCompund.getInteger("ExplosionPower");
         }
     }
 }

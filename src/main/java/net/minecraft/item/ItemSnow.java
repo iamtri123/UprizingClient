@@ -37,9 +37,9 @@ public class ItemSnow extends ItemBlockWithMetadata
                 int var12 = p_77648_3_.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_);
                 int var13 = var12 & 7;
 
-                if (var13 <= 6 && p_77648_3_.checkNoEntityCollision(this.field_150939_a.getCollisionBoundingBoxFromPool(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_)) && p_77648_3_.setBlockMetadataWithNotify(p_77648_4_, p_77648_5_, p_77648_6_, var13 + 1 | var12 & -8, 2))
+                if (var13 <= 6 && p_77648_3_.checkNoEntityCollision(this.blockInstance.getCollisionBoundingBoxFromPool(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_)) && p_77648_3_.setBlockMetadataWithNotify(p_77648_4_, p_77648_5_, p_77648_6_, var13 + 1 | var12 & -8, 2))
                 {
-                    p_77648_3_.playSoundEffect((double)((float)p_77648_4_ + 0.5F), (double)((float)p_77648_5_ + 0.5F), (double)((float)p_77648_6_ + 0.5F), this.field_150939_a.stepSound.func_150496_b(), (this.field_150939_a.stepSound.func_150497_c() + 1.0F) / 2.0F, this.field_150939_a.stepSound.func_150494_d() * 0.8F);
+                    p_77648_3_.playSoundEffect((double)((float)p_77648_4_ + 0.5F), (double)((float)p_77648_5_ + 0.5F), (double)((float)p_77648_6_ + 0.5F), this.blockInstance.stepSound.func_150496_b(), (this.blockInstance.stepSound.func_150497_c() + 1.0F) / 2.0F, this.blockInstance.stepSound.func_150494_d() * 0.8F);
                     --p_77648_1_.stackSize;
                     return true;
                 }

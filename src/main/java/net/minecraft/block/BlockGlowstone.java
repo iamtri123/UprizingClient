@@ -21,26 +21,26 @@ public class BlockGlowstone extends Block
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
-    public int quantityDroppedWithBonus(int p_149679_1_, Random p_149679_2_)
+    public int quantityDroppedWithBonus(int maxBonus, Random random)
     {
-        return MathHelper.clamp_int(this.quantityDropped(p_149679_2_) + p_149679_2_.nextInt(p_149679_1_ + 1), 1, 4);
+        return MathHelper.clamp_int(this.quantityDropped(random) + random.nextInt(maxBonus + 1), 1, 4);
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
-        return 2 + p_149745_1_.nextInt(3);
+        return 2 + random.nextInt(3);
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.glowstone_dust;
     }
 
-    public MapColor getMapColor(int p_149728_1_)
+    public MapColor getMapColor(int meta)
     {
-        return MapColor.field_151658_d;
+        return MapColor.sandColor;
     }
 }

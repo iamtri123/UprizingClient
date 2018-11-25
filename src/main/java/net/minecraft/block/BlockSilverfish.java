@@ -20,7 +20,7 @@ public class BlockSilverfish extends Block
 
     public BlockSilverfish()
     {
-        super(Material.field_151571_B);
+        super(Material.clay);
         this.setHardness(0.0F);
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
@@ -28,49 +28,49 @@ public class BlockSilverfish extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        switch (p_149691_2_)
+        switch (meta)
         {
             case 1:
-                return Blocks.cobblestone.getBlockTextureFromSide(p_149691_1_);
+                return Blocks.cobblestone.getBlockTextureFromSide(side);
 
             case 2:
-                return Blocks.stonebrick.getBlockTextureFromSide(p_149691_1_);
+                return Blocks.stonebrick.getBlockTextureFromSide(side);
 
             case 3:
-                return Blocks.stonebrick.getIcon(p_149691_1_, 1);
+                return Blocks.stonebrick.getIcon(side, 1);
 
             case 4:
-                return Blocks.stonebrick.getIcon(p_149691_1_, 2);
+                return Blocks.stonebrick.getIcon(side, 2);
 
             case 5:
-                return Blocks.stonebrick.getIcon(p_149691_1_, 3);
+                return Blocks.stonebrick.getIcon(side, 3);
 
             default:
-                return Blocks.stone.getBlockTextureFromSide(p_149691_1_);
+                return Blocks.stone.getBlockTextureFromSide(side);
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_) {}
+    public void registerBlockIcons(IIconRegister reg) {}
 
-    public void onBlockDestroyedByPlayer(World p_149664_1_, int p_149664_2_, int p_149664_3_, int p_149664_4_, int p_149664_5_)
+    public void onBlockDestroyedByPlayer(World worldIn, int x, int y, int z, int meta)
     {
-        if (!p_149664_1_.isClient)
+        if (!worldIn.isClient)
         {
-            EntitySilverfish var6 = new EntitySilverfish(p_149664_1_);
-            var6.setLocationAndAngles((double)p_149664_2_ + 0.5D, (double)p_149664_3_, (double)p_149664_4_ + 0.5D, 0.0F, 0.0F);
-            p_149664_1_.spawnEntityInWorld(var6);
+            EntitySilverfish var6 = new EntitySilverfish(worldIn);
+            var6.setLocationAndAngles((double)x + 0.5D, (double)y, (double)z + 0.5D, 0.0F, 0.0F);
+            worldIn.spawnEntityInWorld(var6);
             var6.spawnExplosionParticle();
         }
 
-        super.onBlockDestroyedByPlayer(p_149664_1_, p_149664_2_, p_149664_3_, p_149664_4_, p_149664_5_);
+        super.onBlockDestroyedByPlayer(worldIn, x, y, z, meta);
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 0;
     }
@@ -140,9 +140,9 @@ public class BlockSilverfish extends Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int p_149644_1_)
+    protected ItemStack createStackedBlock(int meta)
     {
-        switch (p_149644_1_)
+        switch (meta)
         {
             case 1:
                 return new ItemStack(Blocks.cobblestone);
@@ -167,13 +167,13 @@ public class BlockSilverfish extends Block
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, int meta, float chance, int fortune)
     {
-        if (!p_149690_1_.isClient)
+        if (!worldIn.isClient)
         {
-            EntitySilverfish var8 = new EntitySilverfish(p_149690_1_);
-            var8.setLocationAndAngles((double)p_149690_2_ + 0.5D, (double)p_149690_3_, (double)p_149690_4_ + 0.5D, 0.0F, 0.0F);
-            p_149690_1_.spawnEntityInWorld(var8);
+            EntitySilverfish var8 = new EntitySilverfish(worldIn);
+            var8.setLocationAndAngles((double)x + 0.5D, (double)y, (double)z + 0.5D, 0.0F, 0.0F);
+            worldIn.spawnEntityInWorld(var8);
             var8.spawnExplosionParticle();
         }
     }
@@ -181,16 +181,16 @@ public class BlockSilverfish extends Block
     /**
      * Get the block's damage value (for use with pick block).
      */
-    public int getDamageValue(World p_149643_1_, int p_149643_2_, int p_149643_3_, int p_149643_4_)
+    public int getDamageValue(World worldIn, int x, int y, int z)
     {
-        return p_149643_1_.getBlockMetadata(p_149643_2_, p_149643_3_, p_149643_4_);
+        return worldIn.getBlockMetadata(x, y, z);
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
         for (int var4 = 0; var4 < field_150198_a.length; ++var4)
         {
-            p_149666_3_.add(new ItemStack(p_149666_1_, 1, var4));
+            list.add(new ItemStack(itemIn, 1, var4));
         }
     }
 }

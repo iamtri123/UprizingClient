@@ -32,66 +32,66 @@ public class S24PacketBlockAction extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148876_a = p_148837_1_.readInt();
-        this.field_148874_b = p_148837_1_.readShort();
-        this.field_148875_c = p_148837_1_.readInt();
-        this.field_148872_d = p_148837_1_.readUnsignedByte();
-        this.field_148873_e = p_148837_1_.readUnsignedByte();
-        this.field_148871_f = Block.getBlockById(p_148837_1_.readVarIntFromBuffer() & 4095);
+        this.field_148876_a = data.readInt();
+        this.field_148874_b = data.readShort();
+        this.field_148875_c = data.readInt();
+        this.field_148872_d = data.readUnsignedByte();
+        this.field_148873_e = data.readUnsignedByte();
+        this.field_148871_f = Block.getBlockById(data.readVarIntFromBuffer() & 4095);
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_148876_a);
-        p_148840_1_.writeShort(this.field_148874_b);
-        p_148840_1_.writeInt(this.field_148875_c);
-        p_148840_1_.writeByte(this.field_148872_d);
-        p_148840_1_.writeByte(this.field_148873_e);
-        p_148840_1_.writeVarIntToBuffer(Block.getIdFromBlock(this.field_148871_f) & 4095);
+        data.writeInt(this.field_148876_a);
+        data.writeShort(this.field_148874_b);
+        data.writeInt(this.field_148875_c);
+        data.writeByte(this.field_148872_d);
+        data.writeByte(this.field_148873_e);
+        data.writeVarIntToBuffer(Block.getIdFromBlock(this.field_148871_f) & 4095);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleBlockAction(this);
+        handler.handleBlockAction(this);
     }
 
-    public Block func_148868_c()
+    public Block getBlockType()
     {
         return this.field_148871_f;
     }
 
-    public int func_148867_d()
+    public int getX()
     {
         return this.field_148876_a;
     }
 
-    public int func_148866_e()
+    public int getY()
     {
         return this.field_148874_b;
     }
 
-    public int func_148865_f()
+    public int getZ()
     {
         return this.field_148875_c;
     }
 
-    public int func_148869_g()
+    public int getData1()
     {
         return this.field_148872_d;
     }
 
-    public int func_148864_h()
+    public int getData2()
     {
         return this.field_148873_e;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

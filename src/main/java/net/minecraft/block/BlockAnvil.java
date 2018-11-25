@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 
 public class BlockAnvil extends BlockFalling
 {
-    public static final String[] field_149834_a = {"intact", "slightlyDamaged", "veryDamaged"};
-    private static final String[] field_149835_N = {"anvil_top_damaged_0", "anvil_top_damaged_1", "anvil_top_damaged_2"};
-    public int field_149833_b;
-    private IIcon[] field_149836_O;
+    public static final String[] anvilDamageNames = {"intact", "slightlyDamaged", "veryDamaged"};
+    private static final String[] anvilIconNames = {"anvil_top_damaged_0", "anvil_top_damaged_1", "anvil_top_damaged_2"};
+    public int anvilRenderSide;
+    private IIcon[] anvilIcons;
     private static final String __OBFID = "CL_00000192";
 
     protected BlockAnvil()
@@ -42,12 +42,12 @@ public class BlockAnvil extends BlockFalling
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (this.field_149833_b == 3 && p_149691_1_ == 1)
+        if (this.anvilRenderSide == 3 && side == 1)
         {
-            int var3 = (p_149691_2_ >> 2) % this.field_149836_O.length;
-            return this.field_149836_O[var3];
+            int var3 = (meta >> 2) % this.anvilIcons.length;
+            return this.anvilIcons[var3];
         }
         else
         {
@@ -55,60 +55,60 @@ public class BlockAnvil extends BlockFalling
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon("anvil_base");
-        this.field_149836_O = new IIcon[field_149835_N.length];
+        this.blockIcon = reg.registerIcon("anvil_base");
+        this.anvilIcons = new IIcon[anvilIconNames.length];
 
-        for (int var2 = 0; var2 < this.field_149836_O.length; ++var2)
+        for (int var2 = 0; var2 < this.anvilIcons.length; ++var2)
         {
-            this.field_149836_O[var2] = p_149651_1_.registerIcon(field_149835_N[var2]);
+            this.anvilIcons[var2] = reg.registerIcon(anvilIconNames[var2]);
         }
     }
 
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        int var7 = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        int var8 = p_149689_1_.getBlockMetadata(p_149689_2_, p_149689_3_, p_149689_4_) >> 2;
+        int var7 = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int var8 = worldIn.getBlockMetadata(x, y, z) >> 2;
         ++var7;
         var7 %= 4;
 
         if (var7 == 0)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 2 | var8 << 2, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 2 | var8 << 2, 2);
         }
 
         if (var7 == 1)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 3 | var8 << 2, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 3 | var8 << 2, 2);
         }
 
         if (var7 == 2)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 0 | var8 << 2, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 0 | var8 << 2, 2);
         }
 
         if (var7 == 3)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 1 | var8 << 2, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 1 | var8 << 2, 2);
         }
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        if (p_149727_1_.isClient)
+        if (worldIn.isClient)
         {
             return true;
         }
         else
         {
-            p_149727_5_.displayGUIAnvil(p_149727_2_, p_149727_3_, p_149727_4_);
+            player.displayGUIAnvil(x, y, z);
             return true;
         }
     }
@@ -124,14 +124,14 @@ public class BlockAnvil extends BlockFalling
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_ >> 2;
+        return meta >> 2;
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        int var5 = p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_) & 3;
+        int var5 = worldIn.getBlockMetadata(x, y, z) & 3;
 
         if (var5 != 3 && var5 != 1)
         {
@@ -143,24 +143,24 @@ public class BlockAnvil extends BlockFalling
         }
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 1));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 2));
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 1));
+        list.add(new ItemStack(itemIn, 1, 2));
     }
 
-    protected void func_149829_a(EntityFallingBlock p_149829_1_)
+    protected void onStartFalling(EntityFallingBlock p_149829_1_)
     {
-        p_149829_1_.func_145806_a(true);
+        p_149829_1_.setHurtEntities(true);
     }
 
-    public void func_149828_a(World p_149828_1_, int p_149828_2_, int p_149828_3_, int p_149828_4_, int p_149828_5_)
+    public void playSoundWhenFallen(World p_149828_1_, int p_149828_2_, int p_149828_3_, int p_149828_4_, int p_149828_5_)
     {
         p_149828_1_.playAuxSFX(1022, p_149828_2_, p_149828_3_, p_149828_4_, 0);
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
         return true;
     }

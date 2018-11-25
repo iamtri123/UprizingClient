@@ -26,26 +26,26 @@ public class S1BPacketEntityAttach extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149406_b = p_148837_1_.readInt();
-        this.field_149407_c = p_148837_1_.readInt();
-        this.field_149408_a = p_148837_1_.readUnsignedByte();
+        this.field_149406_b = data.readInt();
+        this.field_149407_c = data.readInt();
+        this.field_149408_a = data.readUnsignedByte();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149406_b);
-        p_148840_1_.writeInt(this.field_149407_c);
-        p_148840_1_.writeByte(this.field_149408_a);
+        data.writeInt(this.field_149406_b);
+        data.writeInt(this.field_149407_c);
+        data.writeByte(this.field_149408_a);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleEntityAttach(this);
+        handler.handleEntityAttach(this);
     }
 
     public int func_149404_c()
@@ -63,8 +63,8 @@ public class S1BPacketEntityAttach extends Packet
         return this.field_149407_c;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

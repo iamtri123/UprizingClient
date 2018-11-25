@@ -13,16 +13,16 @@ public class C00PacketServerQuery extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException {}
+    public void readPacketData(PacketBuffer data) throws IOException {}
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException {}
+    public void writePacketData(PacketBuffer data) throws IOException {}
 
-    public void processPacket(INetHandlerStatusServer p_148833_1_)
+    public void processPacket(INetHandlerStatusServer handler)
     {
-        p_148833_1_.processServerQuery(this);
+        handler.processServerQuery(this);
     }
 
     /**
@@ -34,8 +34,8 @@ public class C00PacketServerQuery extends Packet
         return true;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerStatusServer)p_148833_1_);
+        this.processPacket((INetHandlerStatusServer)handler);
     }
 }

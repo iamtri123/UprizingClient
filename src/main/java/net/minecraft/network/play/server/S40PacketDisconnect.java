@@ -9,35 +9,35 @@ import net.minecraft.util.IChatComponent;
 
 public class S40PacketDisconnect extends Packet
 {
-    private IChatComponent field_149167_a;
+    private IChatComponent reason;
     private static final String __OBFID = "CL_00001298";
 
     public S40PacketDisconnect() {}
 
-    public S40PacketDisconnect(IChatComponent p_i46336_1_)
+    public S40PacketDisconnect(IChatComponent reasonIn)
     {
-        this.field_149167_a = p_i46336_1_;
+        this.reason = reasonIn;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149167_a = IChatComponent.Serializer.func_150699_a(p_148837_1_.readStringFromBuffer(32767));
+        this.reason = IChatComponent.Serializer.jsonToComponent(data.readStringFromBuffer(32767));
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(IChatComponent.Serializer.func_150696_a(this.field_149167_a));
+        data.writeStringToBuffer(IChatComponent.Serializer.componentToJson(this.reason));
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleDisconnect(this);
+        handler.handleDisconnect(this);
     }
 
     /**
@@ -51,11 +51,11 @@ public class S40PacketDisconnect extends Packet
 
     public IChatComponent func_149165_c()
     {
-        return this.field_149167_a;
+        return this.reason;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

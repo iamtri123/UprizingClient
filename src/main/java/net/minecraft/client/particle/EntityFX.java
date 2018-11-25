@@ -189,12 +189,12 @@ public class EntityFX extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_) {}
+    public void writeEntityToNBT(NBTTagCompound tagCompound) {}
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_) {}
+    public void readEntityFromNBT(NBTTagCompound tagCompund) {}
 
     public void setParticleIcon(IIcon p_110125_1_)
     {

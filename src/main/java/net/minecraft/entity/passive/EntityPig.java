@@ -84,19 +84,19 @@ public class EntityPig extends EntityAnimal
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setBoolean("Saddle", this.getSaddled());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setBoolean("Saddle", this.getSaddled());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.setSaddled(p_70037_1_.getBoolean("Saddle"));
+        super.readEntityFromNBT(tagCompund);
+        this.setSaddled(tagCompund.getBoolean("Saddle"));
     }
 
     /**
@@ -123,7 +123,7 @@ public class EntityPig extends EntityAnimal
         return "mob.pig.death";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.pig.step", 0.15F, 1.0F);
     }
@@ -148,7 +148,7 @@ public class EntityPig extends EntityAnimal
         }
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return this.isBurning() ? Items.cooked_porkchop : Items.porkchop;
     }
@@ -164,17 +164,17 @@ public class EntityPig extends EntityAnimal
         {
             if (this.isBurning())
             {
-                this.func_145779_a(Items.cooked_porkchop, 1);
+                this.dropItem(Items.cooked_porkchop, 1);
             }
             else
             {
-                this.func_145779_a(Items.porkchop, 1);
+                this.dropItem(Items.porkchop, 1);
             }
         }
 
         if (this.getSaddled())
         {
-            this.func_145779_a(Items.saddle, 1);
+            this.dropItem(Items.saddle, 1);
         }
     }
 
@@ -204,7 +204,7 @@ public class EntityPig extends EntityAnimal
     /**
      * Called when a lightning bolt hits the entity.
      */
-    public void onStruckByLightning(EntityLightningBolt p_70077_1_)
+    public void onStruckByLightning(EntityLightningBolt lightningBolt)
     {
         if (!this.worldObj.isClient)
         {
@@ -219,11 +219,11 @@ public class EntityPig extends EntityAnimal
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_)
+    protected void fall(float distance)
     {
-        super.fall(p_70069_1_);
+        super.fall(distance);
 
-        if (p_70069_1_ > 5.0F && this.riddenByEntity instanceof EntityPlayer)
+        if (distance > 5.0F && this.riddenByEntity instanceof EntityPlayer)
         {
             ((EntityPlayer)this.riddenByEntity).triggerAchievement(AchievementList.flyPig);
         }

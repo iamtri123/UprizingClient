@@ -24,17 +24,17 @@ public class BlockColored extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return this.field_150033_a[p_149691_2_ % this.field_150033_a.length];
+        return this.field_150033_a[meta % this.field_150033_a.length];
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
     public static int func_150032_b(int p_150032_0_)
@@ -47,26 +47,26 @@ public class BlockColored extends Block
         return ~p_150031_0_ & 15;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
         for (int var4 = 0; var4 < 16; ++var4)
         {
-            p_149666_3_.add(new ItemStack(p_149666_1_, 1, var4));
+            list.add(new ItemStack(itemIn, 1, var4));
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_150033_a = new IIcon[16];
 
         for (int var2 = 0; var2 < this.field_150033_a.length; ++var2)
         {
-            this.field_150033_a[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + ItemDye.field_150921_b[func_150031_c(var2)]);
+            this.field_150033_a[var2] = reg.registerIcon(this.getTextureName() + "_" + ItemDye.dyeIcons[func_150031_c(var2)]);
         }
     }
 
-    public MapColor getMapColor(int p_149728_1_)
+    public MapColor getMapColor(int meta)
     {
-        return MapColor.func_151644_a(p_149728_1_);
+        return MapColor.func_151644_a(meta);
     }
 }

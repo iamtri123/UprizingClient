@@ -132,7 +132,7 @@ public class DemoWorldManager extends ItemInWorldManager
      * Activate the clicked on block, otherwise use the held item. Args: player, world, itemStack, x, y, z, side,
      * xOffset, yOffset, zOffset
      */
-    public boolean activateBlockOrUseItem(EntityPlayer p_73078_1_, World p_73078_2_, ItemStack p_73078_3_, int p_73078_4_, int p_73078_5_, int p_73078_6_, int p_73078_7_, float p_73078_8_, float p_73078_9_, float p_73078_10_)
+    public boolean activateBlockOrUseItem(EntityPlayer player, World worldIn, ItemStack stack, int p_73078_4_, int p_73078_5_, int p_73078_6_, int p_73078_7_, float p_73078_8_, float p_73078_9_, float p_73078_10_)
     {
         if (this.demoTimeExpired)
         {
@@ -141,7 +141,7 @@ public class DemoWorldManager extends ItemInWorldManager
         }
         else
         {
-            return super.activateBlockOrUseItem(p_73078_1_, p_73078_2_, p_73078_3_, p_73078_4_, p_73078_5_, p_73078_6_, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_);
+            return super.activateBlockOrUseItem(player, worldIn, stack, p_73078_4_, p_73078_5_, p_73078_6_, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_);
         }
     }
 }

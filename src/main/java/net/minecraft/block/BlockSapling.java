@@ -36,15 +36,15 @@ public class BlockSapling extends BlockBush implements IGrowable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!p_149674_1_.isClient)
+        if (!worldIn.isClient)
         {
-            super.updateTick(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+            super.updateTick(worldIn, x, y, z, random);
 
-            if (p_149674_1_.getBlockLightValue(p_149674_2_, p_149674_3_ + 1, p_149674_4_) >= 9 && p_149674_5_.nextInt(7) == 0)
+            if (worldIn.getBlockLightValue(x, y + 1, z) >= 9 && random.nextInt(7) == 0)
             {
-                this.func_149879_c(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+                this.markOrGrowMarked(worldIn, x, y, z, random);
             }
         }
     }
@@ -52,13 +52,13 @@ public class BlockSapling extends BlockBush implements IGrowable
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        p_149691_2_ &= 7;
-        return field_149881_b[MathHelper.clamp_int(p_149691_2_, 0, 5)];
+        meta &= 7;
+        return field_149881_b[MathHelper.clamp_int(meta, 0, 5)];
     }
 
-    public void func_149879_c(World p_149879_1_, int p_149879_2_, int p_149879_3_, int p_149879_4_, Random p_149879_5_)
+    public void markOrGrowMarked(World p_149879_1_, int p_149879_2_, int p_149879_3_, int p_149879_4_, Random p_149879_5_)
     {
         int var6 = p_149879_1_.getBlockMetadata(p_149879_2_, p_149879_3_, p_149879_4_);
 
@@ -68,11 +68,11 @@ public class BlockSapling extends BlockBush implements IGrowable
         }
         else
         {
-            this.func_149878_d(p_149879_1_, p_149879_2_, p_149879_3_, p_149879_4_, p_149879_5_);
+            this.growTree(p_149879_1_, p_149879_2_, p_149879_3_, p_149879_4_, p_149879_5_);
         }
     }
 
-    public void func_149878_d(World p_149878_1_, int p_149878_2_, int p_149878_3_, int p_149878_4_, Random p_149878_5_)
+    public void growTree(World p_149878_1_, int p_149878_2_, int p_149878_3_, int p_149878_4_, Random p_149878_5_)
     {
         int var6 = p_149878_1_.getBlockMetadata(p_149878_2_, p_149878_3_, p_149878_4_) & 7;
         Object var7 = p_149878_5_.nextInt(10) == 0 ? new WorldGenBigTree(true) : new WorldGenTrees(true);
@@ -201,41 +201,41 @@ public class BlockSapling extends BlockBush implements IGrowable
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return MathHelper.clamp_int(p_149692_1_ & 7, 0, 5);
+        return MathHelper.clamp_int(meta & 7, 0, 5);
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 1));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 2));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 3));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 4));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 5));
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 1));
+        list.add(new ItemStack(itemIn, 1, 2));
+        list.add(new ItemStack(itemIn, 1, 3));
+        list.add(new ItemStack(itemIn, 1, 4));
+        list.add(new ItemStack(itemIn, 1, 5));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         for (int var2 = 0; var2 < field_149881_b.length; ++var2)
         {
-            field_149881_b[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + field_149882_a[var2]);
+            field_149881_b[var2] = reg.registerIcon(this.getTextureName() + "_" + field_149882_a[var2]);
         }
     }
 
-    public boolean func_149851_a(World p_149851_1_, int p_149851_2_, int p_149851_3_, int p_149851_4_, boolean p_149851_5_)
+    public boolean canFertilize(World worldIn, int x, int y, int z, boolean isClient)
     {
         return true;
     }
 
-    public boolean func_149852_a(World p_149852_1_, Random p_149852_2_, int p_149852_3_, int p_149852_4_, int p_149852_5_)
+    public boolean shouldFertilize(World worldIn, Random random, int x, int y, int z)
     {
-        return (double)p_149852_1_.rand.nextFloat() < 0.45D;
+        return (double)worldIn.rand.nextFloat() < 0.45D;
     }
 
-    public void func_149853_b(World p_149853_1_, Random p_149853_2_, int p_149853_3_, int p_149853_4_, int p_149853_5_)
+    public void fertilize(World worldIn, Random random, int x, int y, int z)
     {
-        this.func_149879_c(p_149853_1_, p_149853_3_, p_149853_4_, p_149853_5_, p_149853_2_);
+        this.markOrGrowMarked(worldIn, x, y, z, random);
     }
 }

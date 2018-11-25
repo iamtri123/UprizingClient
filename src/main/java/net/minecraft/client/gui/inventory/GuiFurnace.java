@@ -9,36 +9,36 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiFurnace extends GuiContainer
 {
-    private static final ResourceLocation field_147087_u = new ResourceLocation("textures/gui/container/furnace.png");
-    private final TileEntityFurnace field_147086_v;
+    private static final ResourceLocation furnaceGuiTextures = new ResourceLocation("textures/gui/container/furnace.png");
+    private final TileEntityFurnace tileFurnace;
     private static final String __OBFID = "CL_00000758";
 
     public GuiFurnace(InventoryPlayer p_i1091_1_, TileEntityFurnace p_i1091_2_)
     {
         super(new ContainerFurnace(p_i1091_1_, p_i1091_2_));
-        this.field_147086_v = p_i1091_2_;
+        this.tileFurnace = p_i1091_2_;
     }
 
-    protected void func_146979_b(int p_146979_1_, int p_146979_2_)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        String var3 = this.field_147086_v.isInventoryNameLocalized() ? this.field_147086_v.getInventoryName() : I18n.format(this.field_147086_v.getInventoryName());
-        this.fontRendererObj.drawString(var3, this.field_146999_f / 2 - this.fontRendererObj.getStringWidth(var3) / 2, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.field_147000_g - 96 + 2, 4210752);
+        String var3 = this.tileFurnace.isInventoryNameLocalized() ? this.tileFurnace.getInventoryName() : I18n.format(this.tileFurnace.getInventoryName());
+        this.fontRendererObj.drawString(var3, this.xSize / 2 - this.fontRendererObj.getStringWidth(var3) / 2, 6, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
-    protected void func_146976_a(float p_146976_1_, int p_146976_2_, int p_146976_3_)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(field_147087_u);
-        int var4 = (this.width - this.field_146999_f) / 2;
-        int var5 = (this.height - this.field_147000_g) / 2;
-        this.drawTexturedModalRect(var4, var5, 0, 0, this.field_146999_f, this.field_147000_g);
+        this.mc.getTextureManager().bindTexture(furnaceGuiTextures);
+        int var4 = (this.width - this.xSize) / 2;
+        int var5 = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
 
-        if (this.field_147086_v.func_145950_i())
+        if (this.tileFurnace.isBurning())
         {
-            int var6 = this.field_147086_v.func_145955_e(13);
+            int var6 = this.tileFurnace.getBurnTimeRemainingScaled(13);
             this.drawTexturedModalRect(var4 + 56, var5 + 36 + 12 - var6, 176, 12 - var6, 14, var6 + 1);
-            var6 = this.field_147086_v.func_145953_d(24);
+            var6 = this.tileFurnace.getCookProgressScaled(24);
             this.drawTexturedModalRect(var4 + 79, var5 + 34, 176, 14, var6 + 1, 16);
         }
     }

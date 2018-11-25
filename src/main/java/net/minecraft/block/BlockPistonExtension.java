@@ -40,39 +40,39 @@ public class BlockPistonExtension extends Block
     /**
      * Called when the block is attempted to be harvested
      */
-    public void onBlockHarvested(World p_149681_1_, int p_149681_2_, int p_149681_3_, int p_149681_4_, int p_149681_5_, EntityPlayer p_149681_6_)
+    public void onBlockHarvested(World worldIn, int x, int y, int z, int meta, EntityPlayer player)
     {
-        if (p_149681_6_.capabilities.isCreativeMode)
+        if (player.capabilities.isCreativeMode)
         {
-            int var7 = func_150085_b(p_149681_5_);
-            Block var8 = p_149681_1_.getBlock(p_149681_2_ - Facing.offsetsXForSide[var7], p_149681_3_ - Facing.offsetsYForSide[var7], p_149681_4_ - Facing.offsetsZForSide[var7]);
+            int var7 = getDirectionMeta(meta);
+            Block var8 = worldIn.getBlock(x - Facing.offsetsXForSide[var7], y - Facing.offsetsYForSide[var7], z - Facing.offsetsZForSide[var7]);
 
             if (var8 == Blocks.piston || var8 == Blocks.sticky_piston)
             {
-                p_149681_1_.setBlockToAir(p_149681_2_ - Facing.offsetsXForSide[var7], p_149681_3_ - Facing.offsetsYForSide[var7], p_149681_4_ - Facing.offsetsZForSide[var7]);
+                worldIn.setBlockToAir(x - Facing.offsetsXForSide[var7], y - Facing.offsetsYForSide[var7], z - Facing.offsetsZForSide[var7]);
             }
         }
 
-        super.onBlockHarvested(p_149681_1_, p_149681_2_, p_149681_3_, p_149681_4_, p_149681_5_, p_149681_6_);
+        super.onBlockHarvested(worldIn, x, y, z, meta, player);
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
-        int var7 = Facing.oppositeSide[func_150085_b(p_149749_6_)];
-        p_149749_2_ += Facing.offsetsXForSide[var7];
-        p_149749_3_ += Facing.offsetsYForSide[var7];
-        p_149749_4_ += Facing.offsetsZForSide[var7];
-        Block var8 = p_149749_1_.getBlock(p_149749_2_, p_149749_3_, p_149749_4_);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
+        int var7 = Facing.oppositeSide[getDirectionMeta(meta)];
+        x += Facing.offsetsXForSide[var7];
+        y += Facing.offsetsYForSide[var7];
+        z += Facing.offsetsZForSide[var7];
+        Block var8 = worldIn.getBlock(x, y, z);
 
         if (var8 == Blocks.piston || var8 == Blocks.sticky_piston)
         {
-            p_149749_6_ = p_149749_1_.getBlockMetadata(p_149749_2_, p_149749_3_, p_149749_4_);
+            meta = worldIn.getBlockMetadata(x, y, z);
 
-            if (BlockPistonBase.func_150075_c(p_149749_6_))
+            if (BlockPistonBase.isExtended(meta))
             {
-                var8.dropBlockAsItem(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_6_, 0);
-                p_149749_1_.setBlockToAir(p_149749_2_, p_149749_3_, p_149749_4_);
+                var8.dropBlockAsItem(worldIn, x, y, z, meta, 0);
+                worldIn.setBlockToAir(x, y, z);
             }
         }
     }
@@ -80,13 +80,13 @@ public class BlockPistonExtension extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        int var3 = func_150085_b(p_149691_2_);
-        return p_149691_1_ == var3 ? (this.field_150088_a != null ? this.field_150088_a : ((p_149691_2_ & 8) != 0 ? BlockPistonBase.func_150074_e("piston_top_sticky") : BlockPistonBase.func_150074_e("piston_top_normal"))) : (var3 < 6 && p_149691_1_ == Facing.oppositeSide[var3] ? BlockPistonBase.func_150074_e("piston_top_normal") : BlockPistonBase.func_150074_e("piston_side"));
+        int var3 = getDirectionMeta(meta);
+        return side == var3 ? (this.field_150088_a != null ? this.field_150088_a : ((meta & 8) != 0 ? BlockPistonBase.getPistonBaseIcon("piston_top_sticky") : BlockPistonBase.getPistonBaseIcon("piston_top_normal"))) : (var3 < 6 && side == Facing.oppositeSide[var3] ? BlockPistonBase.getPistonBaseIcon("piston_top_normal") : BlockPistonBase.getPistonBaseIcon("piston_side"));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_) {}
+    public void registerBlockIcons(IIconRegister reg) {}
 
     /**
      * The type of render function that is called for this block
@@ -106,7 +106,7 @@ public class BlockPistonExtension extends Block
         return false;
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
         return false;
     }
@@ -114,7 +114,7 @@ public class BlockPistonExtension extends Block
     /**
      * checks to see if you can place this block can be placed on that side of a block: BlockLever overrides
      */
-    public boolean canPlaceBlockOnSide(World p_149707_1_, int p_149707_2_, int p_149707_3_, int p_149707_4_, int p_149707_5_)
+    public boolean canPlaceBlockOnSide(World worldIn, int x, int y, int z, int side)
     {
         return false;
     }
@@ -122,73 +122,73 @@ public class BlockPistonExtension extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 0;
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider)
     {
-        int var8 = p_149743_1_.getBlockMetadata(p_149743_2_, p_149743_3_, p_149743_4_);
+        int var8 = worldIn.getBlockMetadata(x, y, z);
         float var9 = 0.25F;
         float var10 = 0.375F;
         float var11 = 0.625F;
         float var12 = 0.25F;
         float var13 = 0.75F;
 
-        switch (func_150085_b(var8))
+        switch (getDirectionMeta(var8))
         {
             case 0:
                 this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 this.setBlockBounds(0.375F, 0.25F, 0.375F, 0.625F, 1.0F, 0.625F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 break;
 
             case 1:
                 this.setBlockBounds(0.0F, 0.75F, 0.0F, 1.0F, 1.0F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 this.setBlockBounds(0.375F, 0.0F, 0.375F, 0.625F, 0.75F, 0.625F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 break;
 
             case 2:
                 this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.25F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 this.setBlockBounds(0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 break;
 
             case 3:
                 this.setBlockBounds(0.0F, 0.0F, 0.75F, 1.0F, 1.0F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 this.setBlockBounds(0.25F, 0.375F, 0.0F, 0.75F, 0.625F, 0.75F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 break;
 
             case 4:
                 this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.25F, 1.0F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 this.setBlockBounds(0.375F, 0.25F, 0.25F, 0.625F, 0.75F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 break;
 
             case 5:
                 this.setBlockBounds(0.75F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
                 this.setBlockBounds(0.0F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         }
 
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        int var5 = p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_);
+        int var5 = worldIn.getBlockMetadata(x, y, z);
         float var6 = 0.25F;
 
-        switch (func_150085_b(var5))
+        switch (getDirectionMeta(var5))
         {
             case 0:
                 this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F);
@@ -215,22 +215,22 @@ public class BlockPistonExtension extends Block
         }
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        int var6 = func_150085_b(p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_));
-        Block var7 = p_149695_1_.getBlock(p_149695_2_ - Facing.offsetsXForSide[var6], p_149695_3_ - Facing.offsetsYForSide[var6], p_149695_4_ - Facing.offsetsZForSide[var6]);
+        int var6 = getDirectionMeta(worldIn.getBlockMetadata(x, y, z));
+        Block var7 = worldIn.getBlock(x - Facing.offsetsXForSide[var6], y - Facing.offsetsYForSide[var6], z - Facing.offsetsZForSide[var6]);
 
         if (var7 != Blocks.piston && var7 != Blocks.sticky_piston)
         {
-            p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_, p_149695_4_);
+            worldIn.setBlockToAir(x, y, z);
         }
         else
         {
-            var7.onNeighborBlockChange(p_149695_1_, p_149695_2_ - Facing.offsetsXForSide[var6], p_149695_3_ - Facing.offsetsYForSide[var6], p_149695_4_ - Facing.offsetsZForSide[var6], p_149695_5_);
+            var7.onNeighborBlockChange(worldIn, x - Facing.offsetsXForSide[var6], y - Facing.offsetsYForSide[var6], z - Facing.offsetsZForSide[var6], neighbor);
         }
     }
 
-    public static int func_150085_b(int p_150085_0_)
+    public static int getDirectionMeta(int p_150085_0_)
     {
         return MathHelper.clamp_int(p_150085_0_ & 7, 0, Facing.offsetsXForSide.length - 1);
     }
@@ -238,9 +238,9 @@ public class BlockPistonExtension extends Block
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
-        int var5 = p_149694_1_.getBlockMetadata(p_149694_2_, p_149694_3_, p_149694_4_);
+        int var5 = worldIn.getBlockMetadata(x, y, z);
         return (var5 & 8) != 0 ? Item.getItemFromBlock(Blocks.sticky_piston) : Item.getItemFromBlock(Blocks.piston);
     }
 }

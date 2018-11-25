@@ -26,7 +26,7 @@ public class ItemMap extends ItemMapBase
         this.setHasSubtypes(true);
     }
 
-    public static MapData func_150912_a(int p_150912_0_, World p_150912_1_)
+    public static MapData loadMapData(int p_150912_0_, World p_150912_1_)
     {
         String var2 = "map_" + p_150912_0_;
         MapData var3 = (MapData)p_150912_1_.loadItemData(MapData.class, var2);
@@ -140,10 +140,10 @@ public class ItemMap extends ItemMapBase
                                                 do
                                                 {
                                                     --var31;
-                                                    var32 = var23.func_150810_a(var29 + var24, var31, var30 + var25);
+                                                    var32 = var23.getBlock(var29 + var24, var31, var30 + var25);
                                                     var33 = var23.getBlockMetadata(var29 + var24, var31, var30 + var25);
                                                 }
-                                                while (var32.getMapColor(var33) == MapColor.field_151660_b && var31 > 0);
+                                                while (var32.getMapColor(var33) == MapColor.airColor && var31 > 0);
 
                                                 if (var31 > 0 && var32.getMaterial().isLiquid())
                                                 {
@@ -152,7 +152,7 @@ public class ItemMap extends ItemMapBase
 
                                                     do
                                                     {
-                                                        var35 = var23.func_150810_a(var29 + var24, var34--, var30 + var25);
+                                                        var35 = var23.getBlock(var29 + var24, var34--, var30 + var25);
                                                         ++var26;
                                                     }
                                                     while (var34 > 0 && var35.getMaterial().isLiquid());
@@ -179,9 +179,9 @@ public class ItemMap extends ItemMapBase
                                     var37 = 0;
                                 }
 
-                                MapColor var38 = (MapColor)Iterables.getFirst(Multisets.copyHighestCountFirst(var22), MapColor.field_151660_b);
+                                MapColor var38 = (MapColor)Iterables.getFirst(Multisets.copyHighestCountFirst(var22), MapColor.airColor);
 
-                                if (var38 == MapColor.field_151662_n)
+                                if (var38 == MapColor.waterColor)
                                 {
                                     var36 = (double)var26 * 0.1D + (double)(var11 + var16 & 1) * 0.2D;
                                     var37 = 1;
@@ -236,26 +236,26 @@ public class ItemMap extends ItemMapBase
      * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
      * update it's contents.
      */
-    public void onUpdate(ItemStack p_77663_1_, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_)
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int p_77663_4_, boolean p_77663_5_)
     {
-        if (!p_77663_2_.isClient)
+        if (!worldIn.isClient)
         {
-            MapData var6 = this.getMapData(p_77663_1_, p_77663_2_);
+            MapData var6 = this.getMapData(stack, worldIn);
 
-            if (p_77663_3_ instanceof EntityPlayer)
+            if (entityIn instanceof EntityPlayer)
             {
-                EntityPlayer var7 = (EntityPlayer)p_77663_3_;
-                var6.updateVisiblePlayers(var7, p_77663_1_);
+                EntityPlayer var7 = (EntityPlayer)entityIn;
+                var6.updateVisiblePlayers(var7, stack);
             }
 
             if (p_77663_5_)
             {
-                this.updateMapData(p_77663_2_, p_77663_3_, var6);
+                this.updateMapData(worldIn, entityIn, var6);
             }
         }
     }
 
-    public Packet func_150911_c(ItemStack p_150911_1_, World p_150911_2_, EntityPlayer p_150911_3_)
+    public Packet createMapDataPacket(ItemStack p_150911_1_, World p_150911_2_, EntityPlayer p_150911_3_)
     {
         byte[] var4 = this.getMapData(p_150911_1_, p_150911_2_).getUpdatePacketData(p_150911_1_, p_150911_2_, p_150911_3_);
         return var4 == null ? null : new S34PacketMaps(p_150911_1_.getItemDamage(), var4);

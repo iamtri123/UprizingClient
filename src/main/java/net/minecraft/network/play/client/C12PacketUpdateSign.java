@@ -8,80 +8,80 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C12PacketUpdateSign extends Packet
 {
-    private int field_149593_a;
-    private int field_149591_b;
-    private int field_149592_c;
-    private String[] field_149590_d;
+    private int x;
+    private int y;
+    private int z;
+    private String[] lines;
     private static final String __OBFID = "CL_00001370";
 
     public C12PacketUpdateSign() {}
 
     public C12PacketUpdateSign(int p_i45264_1_, int p_i45264_2_, int p_i45264_3_, String[] p_i45264_4_)
     {
-        this.field_149593_a = p_i45264_1_;
-        this.field_149591_b = p_i45264_2_;
-        this.field_149592_c = p_i45264_3_;
-        this.field_149590_d = new String[] {p_i45264_4_[0], p_i45264_4_[1], p_i45264_4_[2], p_i45264_4_[3]};
+        this.x = p_i45264_1_;
+        this.y = p_i45264_2_;
+        this.z = p_i45264_3_;
+        this.lines = new String[] {p_i45264_4_[0], p_i45264_4_[1], p_i45264_4_[2], p_i45264_4_[3]};
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149593_a = p_148837_1_.readInt();
-        this.field_149591_b = p_148837_1_.readShort();
-        this.field_149592_c = p_148837_1_.readInt();
-        this.field_149590_d = new String[4];
+        this.x = data.readInt();
+        this.y = data.readShort();
+        this.z = data.readInt();
+        this.lines = new String[4];
 
         for (int var2 = 0; var2 < 4; ++var2)
         {
-            this.field_149590_d[var2] = p_148837_1_.readStringFromBuffer(15);
+            this.lines[var2] = data.readStringFromBuffer(15);
         }
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149593_a);
-        p_148840_1_.writeShort(this.field_149591_b);
-        p_148840_1_.writeInt(this.field_149592_c);
+        data.writeInt(this.x);
+        data.writeShort(this.y);
+        data.writeInt(this.z);
 
         for (int var2 = 0; var2 < 4; ++var2)
         {
-            p_148840_1_.writeStringToBuffer(this.field_149590_d[var2]);
+            data.writeStringToBuffer(this.lines[var2]);
         }
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processUpdateSign(this);
+        handler.processUpdateSign(this);
     }
 
-    public int func_149588_c()
+    public int getX()
     {
-        return this.field_149593_a;
+        return this.x;
     }
 
-    public int func_149586_d()
+    public int getY()
     {
-        return this.field_149591_b;
+        return this.y;
     }
 
-    public int func_149585_e()
+    public int getZ()
     {
-        return this.field_149592_c;
+        return this.z;
     }
 
-    public String[] func_149589_f()
+    public String[] getLines()
     {
-        return this.field_149590_d;
+        return this.lines;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 }

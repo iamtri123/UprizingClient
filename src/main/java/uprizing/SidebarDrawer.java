@@ -21,7 +21,7 @@ public class SidebarDrawer extends Gui {
 
 	public final void draw(ScoreObjective objective, int scaledHeight, int scaledWidth, FontRenderer fontRenderer) {
 		Scoreboard scoreboard = objective.getScoreboard();
-		Collection<Score> scores = scoreboard.func_96534_i(objective);
+		Collection<Score> scores = scoreboard.getSortedScores(objective);
 
 		if (scores.size() <= 15) {
 			int stringWidth = fontRenderer.getStringWidth(objective.getDisplayName());

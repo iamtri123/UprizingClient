@@ -13,15 +13,15 @@ import org.lwjgl.opengl.GL12;
 
 public class TileEntityChestRenderer extends TileEntitySpecialRenderer
 {
-    private static final ResourceLocation field_147507_b = new ResourceLocation("textures/entity/chest/trapped_double.png");
-    private static final ResourceLocation field_147508_c = new ResourceLocation("textures/entity/chest/christmas_double.png");
-    private static final ResourceLocation field_147505_d = new ResourceLocation("textures/entity/chest/normal_double.png");
-    private static final ResourceLocation field_147506_e = new ResourceLocation("textures/entity/chest/trapped.png");
-    private static final ResourceLocation field_147503_f = new ResourceLocation("textures/entity/chest/christmas.png");
-    private static final ResourceLocation field_147504_g = new ResourceLocation("textures/entity/chest/normal.png");
-    private final ModelChest field_147510_h = new ModelChest();
-    private final ModelChest field_147511_i = new ModelLargeChest();
-    private boolean field_147509_j;
+    private static final ResourceLocation textureTrappedDouble = new ResourceLocation("textures/entity/chest/trapped_double.png");
+    private static final ResourceLocation textureChristmasDouble = new ResourceLocation("textures/entity/chest/christmas_double.png");
+    private static final ResourceLocation textureNormalDouble = new ResourceLocation("textures/entity/chest/normal_double.png");
+    private static final ResourceLocation textureTrapped = new ResourceLocation("textures/entity/chest/trapped.png");
+    private static final ResourceLocation textureChristmas = new ResourceLocation("textures/entity/chest/christmas.png");
+    private static final ResourceLocation textureNormal = new ResourceLocation("textures/entity/chest/normal.png");
+    private final ModelChest simpleChest = new ModelChest();
+    private final ModelChest largeChest = new ModelLargeChest();
+    private boolean isChristams;
     private static final String __OBFID = "CL_00000965";
 
     public TileEntityChestRenderer()
@@ -30,7 +30,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
 
         if (var1.get(2) + 1 == 12 && var1.get(5) >= 24 && var1.get(5) <= 26)
         {
-            this.field_147509_j = true;
+            this.isChristams = true;
         }
     }
 
@@ -49,49 +49,49 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
 
             if (var10 instanceof BlockChest && var9 == 0)
             {
-                ((BlockChest)var10).func_149954_e(p_147500_1_.getWorldObj(), p_147500_1_.field_145851_c, p_147500_1_.field_145848_d, p_147500_1_.field_145849_e);
+                ((BlockChest)var10).initMetadata(p_147500_1_.getWorldObj(), p_147500_1_.xCoord, p_147500_1_.yCoord, p_147500_1_.zCoord);
                 var9 = p_147500_1_.getBlockMetadata();
             }
 
-            p_147500_1_.func_145979_i();
+            p_147500_1_.checkForAdjacentChests();
         }
 
-        if (p_147500_1_.field_145992_i == null && p_147500_1_.field_145991_k == null)
+        if (p_147500_1_.adjacentChestZNeg == null && p_147500_1_.adjacentChestXNeg == null)
         {
             ModelChest var14;
 
-            if (p_147500_1_.field_145990_j == null && p_147500_1_.field_145988_l == null)
+            if (p_147500_1_.adjacentChestXPos == null && p_147500_1_.adjacentChestZPos == null)
             {
-                var14 = this.field_147510_h;
+                var14 = this.simpleChest;
 
-                if (p_147500_1_.func_145980_j() == 1)
+                if (p_147500_1_.getChestType() == 1)
                 {
-                    this.bindTexture(field_147506_e);
+                    this.bindTexture(textureTrapped);
                 }
-                else if (this.field_147509_j)
+                else if (this.isChristams)
                 {
-                    this.bindTexture(field_147503_f);
+                    this.bindTexture(textureChristmas);
                 }
                 else
                 {
-                    this.bindTexture(field_147504_g);
+                    this.bindTexture(textureNormal);
                 }
             }
             else
             {
-                var14 = this.field_147511_i;
+                var14 = this.largeChest;
 
-                if (p_147500_1_.func_145980_j() == 1)
+                if (p_147500_1_.getChestType() == 1)
                 {
-                    this.bindTexture(field_147507_b);
+                    this.bindTexture(textureTrappedDouble);
                 }
-                else if (this.field_147509_j)
+                else if (this.isChristams)
                 {
-                    this.bindTexture(field_147508_c);
+                    this.bindTexture(textureChristmasDouble);
                 }
                 else
                 {
-                    this.bindTexture(field_147505_d);
+                    this.bindTexture(textureNormalDouble);
                 }
             }
 
@@ -123,24 +123,24 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
                 var11 = -90;
             }
 
-            if (var9 == 2 && p_147500_1_.field_145990_j != null)
+            if (var9 == 2 && p_147500_1_.adjacentChestXPos != null)
             {
                 GL11.glTranslatef(1.0F, 0.0F, 0.0F);
             }
 
-            if (var9 == 5 && p_147500_1_.field_145988_l != null)
+            if (var9 == 5 && p_147500_1_.adjacentChestZPos != null)
             {
                 GL11.glTranslatef(0.0F, 0.0F, -1.0F);
             }
 
             GL11.glRotatef((float)var11, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            float var12 = p_147500_1_.field_145986_n + (p_147500_1_.field_145989_m - p_147500_1_.field_145986_n) * p_147500_8_;
+            float var12 = p_147500_1_.prevLidAngle + (p_147500_1_.lidAngle - p_147500_1_.prevLidAngle) * p_147500_8_;
             float var13;
 
-            if (p_147500_1_.field_145992_i != null)
+            if (p_147500_1_.adjacentChestZNeg != null)
             {
-                var13 = p_147500_1_.field_145992_i.field_145986_n + (p_147500_1_.field_145992_i.field_145989_m - p_147500_1_.field_145992_i.field_145986_n) * p_147500_8_;
+                var13 = p_147500_1_.adjacentChestZNeg.prevLidAngle + (p_147500_1_.adjacentChestZNeg.lidAngle - p_147500_1_.adjacentChestZNeg.prevLidAngle) * p_147500_8_;
 
                 if (var13 > var12)
                 {
@@ -148,9 +148,9 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
                 }
             }
 
-            if (p_147500_1_.field_145991_k != null)
+            if (p_147500_1_.adjacentChestXNeg != null)
             {
-                var13 = p_147500_1_.field_145991_k.field_145986_n + (p_147500_1_.field_145991_k.field_145989_m - p_147500_1_.field_145991_k.field_145986_n) * p_147500_8_;
+                var13 = p_147500_1_.adjacentChestXNeg.prevLidAngle + (p_147500_1_.adjacentChestXNeg.lidAngle - p_147500_1_.adjacentChestXNeg.prevLidAngle) * p_147500_8_;
 
                 if (var13 > var12)
                 {

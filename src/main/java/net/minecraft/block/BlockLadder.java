@@ -21,24 +21,24 @@ public class BlockLadder extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        this.setBlockBoundsBasedOnState(p_149668_1_, p_149668_2_, p_149668_3_, p_149668_4_);
-        return super.getCollisionBoundingBoxFromPool(p_149668_1_, p_149668_2_, p_149668_3_, p_149668_4_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        return super.getCollisionBoundingBoxFromPool(worldIn, x, y, z);
     }
 
     /**
      * Returns the bounding box of the wired rectangular prism to render.
      */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int p_149633_2_, int p_149633_3_, int p_149633_4_)
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        this.setBlockBoundsBasedOnState(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
-        return super.getSelectedBoundingBoxFromPool(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
+        this.setBlockBoundsBasedOnState(worldIn, x, y, z);
+        return super.getSelectedBoundingBoxFromPool(worldIn, x, y, z);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        this.func_149797_b(p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_));
+        this.func_149797_b(worldIn.getBlockMetadata(x, y, z));
     }
 
     public void func_149797_b(int p_149797_1_)
@@ -84,31 +84,31 @@ public class BlockLadder extends Block
         return 8;
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        return p_149742_1_.getBlock(p_149742_2_ - 1, p_149742_3_, p_149742_4_).isNormalCube() || (p_149742_1_.getBlock(p_149742_2_ + 1, p_149742_3_, p_149742_4_).isNormalCube() || (p_149742_1_.getBlock(p_149742_2_, p_149742_3_, p_149742_4_ - 1).isNormalCube() || p_149742_1_.getBlock(p_149742_2_, p_149742_3_, p_149742_4_ + 1).isNormalCube()));
+        return worldIn.getBlock(x - 1, y, z).isNormalCube() || (worldIn.getBlock(x + 1, y, z).isNormalCube() || (worldIn.getBlock(x, y, z - 1).isNormalCube() || worldIn.getBlock(x, y, z + 1).isNormalCube()));
     }
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta)
     {
-        int var10 = p_149660_9_;
+        int var10 = meta;
 
-        if ((p_149660_9_ == 0 || p_149660_5_ == 2) && p_149660_1_.getBlock(p_149660_2_, p_149660_3_, p_149660_4_ + 1).isNormalCube())
+        if ((meta == 0 || side == 2) && worldIn.getBlock(x, y, z + 1).isNormalCube())
         {
             var10 = 2;
         }
 
-        if ((var10 == 0 || p_149660_5_ == 3) && p_149660_1_.getBlock(p_149660_2_, p_149660_3_, p_149660_4_ - 1).isNormalCube())
+        if ((var10 == 0 || side == 3) && worldIn.getBlock(x, y, z - 1).isNormalCube())
         {
             var10 = 3;
         }
 
-        if ((var10 == 0 || p_149660_5_ == 4) && p_149660_1_.getBlock(p_149660_2_ + 1, p_149660_3_, p_149660_4_).isNormalCube())
+        if ((var10 == 0 || side == 4) && worldIn.getBlock(x + 1, y, z).isNormalCube())
         {
             var10 = 4;
         }
 
-        if ((var10 == 0 || p_149660_5_ == 5) && p_149660_1_.getBlock(p_149660_2_ - 1, p_149660_3_, p_149660_4_).isNormalCube())
+        if ((var10 == 0 || side == 5) && worldIn.getBlock(x - 1, y, z).isNormalCube())
         {
             var10 = 5;
         }
@@ -116,44 +116,44 @@ public class BlockLadder extends Block
         return var10;
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        int var6 = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
+        int var6 = worldIn.getBlockMetadata(x, y, z);
         boolean var7 = false;
 
-        if (var6 == 2 && p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ + 1).isNormalCube())
+        if (var6 == 2 && worldIn.getBlock(x, y, z + 1).isNormalCube())
         {
             var7 = true;
         }
 
-        if (var6 == 3 && p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ - 1).isNormalCube())
+        if (var6 == 3 && worldIn.getBlock(x, y, z - 1).isNormalCube())
         {
             var7 = true;
         }
 
-        if (var6 == 4 && p_149695_1_.getBlock(p_149695_2_ + 1, p_149695_3_, p_149695_4_).isNormalCube())
+        if (var6 == 4 && worldIn.getBlock(x + 1, y, z).isNormalCube())
         {
             var7 = true;
         }
 
-        if (var6 == 5 && p_149695_1_.getBlock(p_149695_2_ - 1, p_149695_3_, p_149695_4_).isNormalCube())
+        if (var6 == 5 && worldIn.getBlock(x - 1, y, z).isNormalCube())
         {
             var7 = true;
         }
 
         if (!var7)
         {
-            this.dropBlockAsItem(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, var6, 0);
-            p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_, p_149695_4_);
+            this.dropBlockAsItem(worldIn, x, y, z, var6, 0);
+            worldIn.setBlockToAir(x, y, z);
         }
 
-        super.onNeighborBlockChange(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 1;
     }

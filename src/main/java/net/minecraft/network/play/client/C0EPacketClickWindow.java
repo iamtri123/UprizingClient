@@ -10,84 +10,84 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C0EPacketClickWindow extends Packet {
 
-    private int field_149554_a;
-    private int field_149552_b;
-    private int field_149553_c;
-    private short field_149550_d;
-    private ItemStack field_149551_e;
-    private int field_149549_f;
+    private int windowId;
+    private int slotId;
+    private int usedButton;
+    private short actionNumber;
+    private ItemStack clickedItem;
+    private int mode;
 
     public C0EPacketClickWindow() {}
 
     public C0EPacketClickWindow(int p_i45246_1_, int p_i45246_2_, int p_i45246_3_, int p_i45246_4_, ItemStack p_i45246_5_, short p_i45246_6_) {
-        this.field_149554_a = p_i45246_1_;
-        this.field_149552_b = p_i45246_2_;
-        this.field_149553_c = p_i45246_3_;
-        this.field_149551_e = p_i45246_5_ != null ? p_i45246_5_.copy() : null;
-        this.field_149550_d = p_i45246_6_;
-        this.field_149549_f = p_i45246_4_;
+        this.windowId = p_i45246_1_;
+        this.slotId = p_i45246_2_;
+        this.usedButton = p_i45246_3_;
+        this.clickedItem = p_i45246_5_ != null ? p_i45246_5_.copy() : null;
+        this.actionNumber = p_i45246_6_;
+        this.mode = p_i45246_4_;
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_) {
-        p_148833_1_.processClickWindow(this);
+    public void processPacket(INetHandlerPlayServer handler) {
+        handler.processClickWindow(this);
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException {
-        this.field_149554_a = p_148837_1_.readByte();
-        this.field_149552_b = p_148837_1_.readShort();
-        this.field_149553_c = p_148837_1_.readByte();
-        this.field_149550_d = p_148837_1_.readShort();
-        this.field_149549_f = p_148837_1_.readByte();
-        this.field_149551_e = p_148837_1_.readItemStackFromBuffer();
+    public void readPacketData(PacketBuffer data) throws IOException {
+        this.windowId = data.readByte();
+        this.slotId = data.readShort();
+        this.usedButton = data.readByte();
+        this.actionNumber = data.readShort();
+        this.mode = data.readByte();
+        this.clickedItem = data.readItemStackFromBuffer();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException {
-        p_148840_1_.writeByte(this.field_149554_a);
-        p_148840_1_.writeShort(this.field_149552_b);
-        p_148840_1_.writeByte(this.field_149553_c);
-        p_148840_1_.writeShort(this.field_149550_d);
-        p_148840_1_.writeByte(this.field_149549_f);
-        p_148840_1_.writeItemStackToBuffer(this.field_149551_e);
+    public void writePacketData(PacketBuffer data) throws IOException {
+        data.writeByte(this.windowId);
+        data.writeShort(this.slotId);
+        data.writeByte(this.usedButton);
+        data.writeShort(this.actionNumber);
+        data.writeByte(this.mode);
+        data.writeItemStackToBuffer(this.clickedItem);
     }
 
     /**
      * Returns a string formatted as comma separated [field]=[value] values. Used by Minecraft for logging purposes.
      */
     public String serialize() {
-        return this.field_149551_e != null ? String.format("id=%d, slot=%d, button=%d, type=%d, itemid=%d, itemcount=%d, itemaux=%d", this.field_149554_a, this.field_149552_b, this.field_149553_c, this.field_149549_f, Item.getIdFromItem(this.field_149551_e.getItem()), this.field_149551_e.stackSize, this.field_149551_e.getItemDamage()) : String.format("id=%d, slot=%d, button=%d, type=%d, itemid=-1", this.field_149554_a, this.field_149552_b, this.field_149553_c, this.field_149549_f);
+        return this.clickedItem != null ? String.format("id=%d, slot=%d, button=%d, type=%d, itemid=%d, itemcount=%d, itemaux=%d", this.windowId, this.slotId, this.usedButton, this.mode, Item.getIdFromItem(this.clickedItem.getItem()), this.clickedItem.stackSize, this.clickedItem.getItemDamage()) : String.format("id=%d, slot=%d, button=%d, type=%d, itemid=-1", this.windowId, this.slotId, this.usedButton, this.mode);
     }
 
     public int windowId() {
-        return this.field_149554_a;
+        return this.windowId;
     }
 
     public int slot() {
-        return this.field_149552_b;
+        return this.slotId;
     }
 
     public int button() {
-        return this.field_149553_c;
+        return this.usedButton;
     }
 
     public short actionNumber() {
-        return this.field_149550_d;
+        return this.actionNumber;
     }
 
     public ItemStack clickedItem() {
-        return this.field_149551_e;
+        return this.clickedItem;
     }
 
     public int mode() {
-        return this.field_149549_f;
+        return this.mode;
     }
 
-    public void processPacket(INetHandler p_148833_1_) {
-        this.processPacket((INetHandlerPlayServer) p_148833_1_);
+    public void processPacket(INetHandler handler) {
+        this.processPacket((INetHandlerPlayServer) handler);
     }
 }

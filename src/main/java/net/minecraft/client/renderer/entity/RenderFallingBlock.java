@@ -31,8 +31,8 @@ public class RenderFallingBlock extends Render
      */
     public void doRender(EntityFallingBlock p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
     {
-        World var10 = p_76986_1_.func_145807_e();
-        Block var11 = p_76986_1_.func_145805_f();
+        World var10 = p_76986_1_.getWorldObj();
+        Block var11 = p_76986_1_.getBlock();
         int var12 = MathHelper.floor_double(p_76986_1_.posX);
         int var13 = MathHelper.floor_double(p_76986_1_.posY);
         int var14 = MathHelper.floor_double(p_76986_1_.posZ);
@@ -51,7 +51,7 @@ public class RenderFallingBlock extends Render
                 var15 = Tessellator.instance;
                 var15.startDrawingQuads();
                 var15.setTranslation((double)((float)(-var12) - 0.5F), (double)((float)(-var13) - 0.5F), (double)((float)(-var14) - 0.5F));
-                this.field_147920_a.renderBlockAnvilMetadata((BlockAnvil)var11, var12, var13, var14, p_76986_1_.field_145814_a);
+                this.field_147920_a.renderBlockAnvilMetadata((BlockAnvil)var11, var12, var13, var14, p_76986_1_.metadata);
                 var15.setTranslation(0.0D, 0.0D, 0.0D);
                 var15.draw();
             }
@@ -68,7 +68,7 @@ public class RenderFallingBlock extends Render
             else
             {
                 this.field_147920_a.setRenderBoundsFromBlock(var11);
-                this.field_147920_a.renderBlockSandFalling(var11, var10, var12, var13, var14, p_76986_1_.field_145814_a);
+                this.field_147920_a.renderBlockSandFalling(var11, var10, var12, var13, var14, p_76986_1_.metadata);
             }
 
             GL11.glEnable(GL11.GL_LIGHTING);

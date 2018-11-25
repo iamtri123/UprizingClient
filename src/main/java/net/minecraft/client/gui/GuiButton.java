@@ -22,26 +22,26 @@ public class GuiButton extends Gui
     public boolean visible;
     protected boolean hovered;
 
-    public GuiButton(int p_i1020_1_, int p_i1020_2_, int p_i1020_3_, String buttonText)
+    public GuiButton(int buttonId, int x, int y, String buttonText)
     {
-        this(p_i1020_1_, p_i1020_2_, p_i1020_3_, 200, 20, buttonText);
+        this(buttonId, x, y, 200, 20, buttonText);
     }
 
-    public GuiButton(int p_i46323_1_, int p_i46323_2_, int p_i46323_3_, int p_i46323_4_, int p_i46323_5_, String p_i46323_6_)
+    public GuiButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
     {
         this.width = 200;
         this.height = 20;
         this.enabled = true;
         this.visible = true;
-        this.id = p_i46323_1_;
-        this.xPosition = p_i46323_2_;
-        this.yPosition = p_i46323_3_;
-        this.width = p_i46323_4_;
-        this.height = p_i46323_5_;
-        this.displayString = p_i46323_6_;
+        this.id = buttonId;
+        this.xPosition = x;
+        this.yPosition = y;
+        this.width = widthIn;
+        this.height = heightIn;
+        this.displayString = buttonText;
     }
 
-    public int getHoverState(boolean p_146114_1_)
+    public int getHoverState(boolean mouseOver)
     {
         byte var2 = 1;
 
@@ -49,7 +49,7 @@ public class GuiButton extends Gui
         {
             var2 = 0;
         }
-        else if (p_146114_1_)
+        else if (mouseOver)
         {
             var2 = 2;
         }
@@ -60,12 +60,12 @@ public class GuiButton extends Gui
     /**
      * Draws this button to the screen.
      */
-    public void drawButton(Minecraft p_146112_1_, int mouseX, int mouseY)
+    public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
         if (this.visible)
         {
-            FontRenderer var4 = p_146112_1_.fontRenderer;
-            p_146112_1_.getTextureManager().bindTexture(buttonTextures);
+            FontRenderer var4 = mc.fontRenderer;
+            mc.getTextureManager().bindTexture(buttonTextures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
             int var5 = this.getHoverState(this.hovered);
@@ -74,7 +74,7 @@ public class GuiButton extends Gui
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + var5 * 20, this.width / 2, this.height);
             this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + var5 * 20, this.width / 2, this.height);
-            this.mouseDragged(p_146112_1_, mouseX, mouseY);
+            this.mouseDragged(mc, mouseX, mouseY);
             int var6 = 14737632;
 
             if (!this.enabled)
@@ -93,12 +93,12 @@ public class GuiButton extends Gui
     /**
      * Fired when the mouse button is dragged. Equivalent of MouseListener.mouseDragged(MouseEvent e).
      */
-    protected void mouseDragged(Minecraft p_146119_1_, int p_146119_2_, int p_146119_3_) {}
+    protected void mouseDragged(Minecraft mc, int mouseX, int mouseY) {}
 
     /**
      * Fired when the mouse button is released. Equivalent of MouseListener.mouseReleased(MouseEvent e).
      */
-    public void mouseReleased(int p_146118_1_, int p_146118_2_) {}
+    public void mouseReleased(int mouseX, int mouseY) {}
 
     /**
      * Returns true if the mouse has been pressed on this control. Equivalent of MouseListener.mousePressed(MouseEvent
@@ -109,24 +109,24 @@ public class GuiButton extends Gui
         return this.enabled && this.visible && mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
     }
 
-    public boolean func_146115_a()
+    public boolean isMouseOver()
     {
         return this.hovered;
     }
 
-    public void func_146111_b(int p_146111_1_, int p_146111_2_) {}
+    public void drawButtonForegroundLayer(int mouseX, int mouseY) {}
 
-    public void playPressSound(SoundHandler p_146113_1_)
+    public void playPressSound(SoundHandler soundHandlerIn)
     {
-        p_146113_1_.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+        soundHandlerIn.playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press"), 1.0F));
     }
 
-    public int func_146117_b()
+    public int getButtonWidth()
     {
         return this.width;
     }
 
-    public int func_154310_c()
+    public int getButtonHeight()
     {
         return this.height;
     }

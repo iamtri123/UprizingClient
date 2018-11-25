@@ -8,8 +8,8 @@ import org.apache.logging.log4j.MarkerManager;
 
 public class NetworkStatistics
 {
-    private static final Logger field_152478_a = LogManager.getLogger();
-    private static final Marker field_152479_b = MarkerManager.getMarker("NETSTAT_MARKER", NetworkManager.field_152461_c);
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Marker NETSTAT_MARKER = MarkerManager.getMarker("NETSTAT_MARKER", NetworkManager.logMarkerStat);
     private final NetworkStatistics.Tracker field_152480_c = new NetworkStatistics.Tracker();
     private final NetworkStatistics.Tracker field_152481_d = new NetworkStatistics.Tracker();
     private static final String __OBFID = "CL_00001897";
@@ -76,54 +76,54 @@ public class NetworkStatistics
 
     public static class PacketStat
     {
-        private final int field_152482_a;
-        private final NetworkStatistics.PacketStatData field_152483_b;
+        private final int packetId;
+        private final NetworkStatistics.PacketStatData data;
         private static final String __OBFID = "CL_00001895";
 
-        public PacketStat(int p_i1188_1_, NetworkStatistics.PacketStatData p_i1188_2_)
+        public PacketStat(int id, NetworkStatistics.PacketStatData statData)
         {
-            this.field_152482_a = p_i1188_1_;
-            this.field_152483_b = p_i1188_2_;
+            this.packetId = id;
+            this.data = statData;
         }
 
         public String toString()
         {
-            return "PacketStat(" + this.field_152482_a + ")" + this.field_152483_b;
+            return "PacketStat(" + this.packetId + ")" + this.data;
         }
     }
 
     static class PacketStatData
     {
-        private final long field_152496_a;
-        private final int field_152497_b;
-        private final double field_152498_c;
+        private final long totalBytes;
+        private final int count;
+        private final double averageBytes;
         private static final String __OBFID = "CL_00001893";
 
         private PacketStatData(long p_i46399_1_, int p_i46399_3_, double p_i46399_4_)
         {
-            this.field_152496_a = p_i46399_1_;
-            this.field_152497_b = p_i46399_3_;
-            this.field_152498_c = p_i46399_4_;
+            this.totalBytes = p_i46399_1_;
+            this.count = p_i46399_3_;
+            this.averageBytes = p_i46399_4_;
         }
 
         public NetworkStatistics.PacketStatData func_152494_a(long p_152494_1_)
         {
-            return new NetworkStatistics.PacketStatData(p_152494_1_ + this.field_152496_a, this.field_152497_b + 1, (double)((p_152494_1_ + this.field_152496_a) / (long)(this.field_152497_b + 1)));
+            return new NetworkStatistics.PacketStatData(p_152494_1_ + this.totalBytes, this.count + 1, (double)((p_152494_1_ + this.totalBytes) / (long)(this.count + 1)));
         }
 
-        public long func_152493_a()
+        public long getTotalBytes()
         {
-            return this.field_152496_a;
+            return this.totalBytes;
         }
 
-        public int func_152495_b()
+        public int getCount()
         {
-            return this.field_152497_b;
+            return this.count;
         }
 
         public String toString()
         {
-            return "{totalBytes=" + this.field_152496_a + ", count=" + this.field_152497_b + ", averageBytes=" + this.field_152498_c + '}';
+            return "{totalBytes=" + this.totalBytes + ", count=" + this.count + ", averageBytes=" + this.averageBytes + '}';
         }
 
         PacketStatData(long p_i1185_1_, int p_i1185_3_, double p_i1185_4_, Object p_i1185_6_)
@@ -166,9 +166,9 @@ public class NetworkStatistics
             }
             catch (Exception var6)
             {
-                if (NetworkStatistics.field_152478_a.isDebugEnabled())
+                if (NetworkStatistics.LOGGER.isDebugEnabled())
                 {
-                    NetworkStatistics.field_152478_a.debug(NetworkStatistics.field_152479_b, "NetStat failed with packetId: " + p_152488_1_, var6);
+                    NetworkStatistics.LOGGER.debug(NetworkStatistics.NETSTAT_MARKER, "NetStat failed with packetId: " + p_152488_1_, var6);
                 }
             }
         }
@@ -179,7 +179,7 @@ public class NetworkStatistics
 
             for (int var3 = 0; var3 < 100; ++var3)
             {
-                var1 += ((NetworkStatistics.PacketStatData)this.field_152490_a[var3].get()).func_152493_a();
+                var1 += ((NetworkStatistics.PacketStatData)this.field_152490_a[var3].get()).getTotalBytes();
             }
 
             return var1;
@@ -191,7 +191,7 @@ public class NetworkStatistics
 
             for (int var3 = 0; var3 < 100; ++var3)
             {
-                var1 += (long)((NetworkStatistics.PacketStatData)this.field_152490_a[var3].get()).func_152495_b();
+                var1 += (long)((NetworkStatistics.PacketStatData)this.field_152490_a[var3].get()).getCount();
             }
 
             return var1;
@@ -206,7 +206,7 @@ public class NetworkStatistics
             {
                 NetworkStatistics.PacketStatData var4 = (NetworkStatistics.PacketStatData)this.field_152490_a[var3].get();
 
-                if (var4.field_152496_a > var2.field_152496_a)
+                if (var4.totalBytes > var2.totalBytes)
                 {
                     var1 = var3;
                     var2 = var4;
@@ -225,7 +225,7 @@ public class NetworkStatistics
             {
                 NetworkStatistics.PacketStatData var4 = (NetworkStatistics.PacketStatData)this.field_152490_a[var3].get();
 
-                if (var4.field_152497_b > var2.field_152497_b)
+                if (var4.count > var2.count)
                 {
                     var1 = var3;
                     var2 = var4;

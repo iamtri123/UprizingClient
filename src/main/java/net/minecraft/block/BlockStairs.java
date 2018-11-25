@@ -40,7 +40,7 @@ public class BlockStairs extends Block
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
         if (this.field_150152_N)
         {
@@ -70,7 +70,7 @@ public class BlockStairs extends Block
         return 10;
     }
 
-    public void func_150147_e(IBlockAccess p_150147_1_, int p_150147_2_, int p_150147_3_, int p_150147_4_)
+    public void setBaseBounds(IBlockAccess p_150147_1_, int p_150147_2_, int p_150147_3_, int p_150147_4_)
     {
         int var5 = p_150147_1_.getBlockMetadata(p_150147_2_, p_150147_3_, p_150147_4_);
 
@@ -84,7 +84,7 @@ public class BlockStairs extends Block
         }
     }
 
-    public static boolean func_150148_a(Block p_150148_0_)
+    public static boolean isBlockStairs(Block p_150148_0_)
     {
         return p_150148_0_ instanceof BlockStairs;
     }
@@ -92,7 +92,7 @@ public class BlockStairs extends Block
     private boolean func_150146_f(IBlockAccess p_150146_1_, int p_150146_2_, int p_150146_3_, int p_150146_4_, int p_150146_5_)
     {
         Block var6 = p_150146_1_.getBlock(p_150146_2_, p_150146_3_, p_150146_4_);
-        return func_150148_a(var6) && p_150146_1_.getBlockMetadata(p_150146_2_, p_150146_3_, p_150146_4_) == p_150146_5_;
+        return isBlockStairs(var6) && p_150146_1_.getBlockMetadata(p_150146_2_, p_150146_3_, p_150146_4_) == p_150146_5_;
     }
 
     public boolean func_150145_f(IBlockAccess p_150145_1_, int p_150145_2_, int p_150145_3_, int p_150145_4_)
@@ -124,7 +124,7 @@ public class BlockStairs extends Block
             var14 = p_150145_1_.getBlock(p_150145_2_ + 1, p_150145_3_, p_150145_4_);
             var15 = p_150145_1_.getBlockMetadata(p_150145_2_ + 1, p_150145_3_, p_150145_4_);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var16 = var15 & 3;
 
@@ -147,7 +147,7 @@ public class BlockStairs extends Block
             var14 = p_150145_1_.getBlock(p_150145_2_ - 1, p_150145_3_, p_150145_4_);
             var15 = p_150145_1_.getBlockMetadata(p_150145_2_ - 1, p_150145_3_, p_150145_4_);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var16 = var15 & 3;
 
@@ -170,7 +170,7 @@ public class BlockStairs extends Block
             var14 = p_150145_1_.getBlock(p_150145_2_, p_150145_3_, p_150145_4_ + 1);
             var15 = p_150145_1_.getBlockMetadata(p_150145_2_, p_150145_3_, p_150145_4_ + 1);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var16 = var15 & 3;
 
@@ -191,7 +191,7 @@ public class BlockStairs extends Block
             var14 = p_150145_1_.getBlock(p_150145_2_, p_150145_3_, p_150145_4_ - 1);
             var15 = p_150145_1_.getBlockMetadata(p_150145_2_, p_150145_3_, p_150145_4_ - 1);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var16 = var15 & 3;
 
@@ -239,7 +239,7 @@ public class BlockStairs extends Block
             var14 = p_150144_1_.getBlock(p_150144_2_ - 1, p_150144_3_, p_150144_4_);
             var15 = p_150144_1_.getBlockMetadata(p_150144_2_ - 1, p_150144_3_, p_150144_4_);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var16 = var15 & 3;
 
@@ -262,7 +262,7 @@ public class BlockStairs extends Block
             var14 = p_150144_1_.getBlock(p_150144_2_ + 1, p_150144_3_, p_150144_4_);
             var15 = p_150144_1_.getBlockMetadata(p_150144_2_ + 1, p_150144_3_, p_150144_4_);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var9 = 0.5F;
                 var10 = 1.0F;
@@ -287,7 +287,7 @@ public class BlockStairs extends Block
             var14 = p_150144_1_.getBlock(p_150144_2_, p_150144_3_, p_150144_4_ - 1);
             var15 = p_150144_1_.getBlockMetadata(p_150144_2_, p_150144_3_, p_150144_4_ - 1);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var11 = 0.0F;
                 var12 = 0.5F;
@@ -310,7 +310,7 @@ public class BlockStairs extends Block
             var14 = p_150144_1_.getBlock(p_150144_2_, p_150144_3_, p_150144_4_ + 1);
             var15 = p_150144_1_.getBlockMetadata(p_150144_2_, p_150144_3_, p_150144_4_ + 1);
 
-            if (func_150148_a(var14) && (var5 & 4) == (var15 & 4))
+            if (isBlockStairs(var14) && (var5 & 4) == (var15 & 4))
             {
                 var16 = var15 & 3;
 
@@ -335,16 +335,16 @@ public class BlockStairs extends Block
         return var13;
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider)
     {
-        this.func_150147_e(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_);
-        super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
-        boolean var8 = this.func_150145_f(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_);
-        super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+        this.setBaseBounds(worldIn, x, y, z);
+        super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
+        boolean var8 = this.func_150145_f(worldIn, x, y, z);
+        super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
 
-        if (var8 && this.func_150144_g(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_))
+        if (var8 && this.func_150144_g(worldIn, x, y, z))
         {
-            super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+            super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         }
 
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
@@ -353,35 +353,35 @@ public class BlockStairs extends Block
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        this.field_150149_b.randomDisplayTick(p_149734_1_, p_149734_2_, p_149734_3_, p_149734_4_, p_149734_5_);
+        this.field_150149_b.randomDisplayTick(worldIn, x, y, z, random);
     }
 
     /**
      * Called when a player hits the block. Args: world, x, y, z, player
      */
-    public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_)
+    public void onBlockClicked(World worldIn, int x, int y, int z, EntityPlayer player)
     {
-        this.field_150149_b.onBlockClicked(p_149699_1_, p_149699_2_, p_149699_3_, p_149699_4_, p_149699_5_);
+        this.field_150149_b.onBlockClicked(worldIn, x, y, z, player);
     }
 
-    public void onBlockDestroyedByPlayer(World p_149664_1_, int p_149664_2_, int p_149664_3_, int p_149664_4_, int p_149664_5_)
+    public void onBlockDestroyedByPlayer(World worldIn, int x, int y, int z, int meta)
     {
-        this.field_150149_b.onBlockDestroyedByPlayer(p_149664_1_, p_149664_2_, p_149664_3_, p_149664_4_, p_149664_5_);
+        this.field_150149_b.onBlockDestroyedByPlayer(worldIn, x, y, z, meta);
     }
 
-    public int getBlockBrightness(IBlockAccess p_149677_1_, int p_149677_2_, int p_149677_3_, int p_149677_4_)
+    public int getBlockBrightness(IBlockAccess worldIn, int x, int y, int z)
     {
-        return this.field_150149_b.getBlockBrightness(p_149677_1_, p_149677_2_, p_149677_3_, p_149677_4_);
+        return this.field_150149_b.getBlockBrightness(worldIn, x, y, z);
     }
 
     /**
      * Returns how much this block can resist explosions from the passed in entity.
      */
-    public float getExplosionResistance(Entity p_149638_1_)
+    public float getExplosionResistance(Entity exploder)
     {
-        return this.field_150149_b.getExplosionResistance(p_149638_1_);
+        return this.field_150149_b.getExplosionResistance(exploder);
     }
 
     /**
@@ -395,27 +395,27 @@ public class BlockStairs extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return this.field_150149_b.getIcon(p_149691_1_, this.field_150151_M);
+        return this.field_150149_b.getIcon(side, this.field_150151_M);
     }
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
-        return this.field_150149_b.func_149738_a(p_149738_1_);
+        return this.field_150149_b.tickRate(worldIn);
     }
 
     /**
      * Returns the bounding box of the wired rectangular prism to render.
      */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World p_149633_1_, int p_149633_2_, int p_149633_3_, int p_149633_4_)
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        return this.field_150149_b.getSelectedBoundingBoxFromPool(p_149633_1_, p_149633_2_, p_149633_3_, p_149633_4_);
+        return this.field_150149_b.getSelectedBoundingBoxFromPool(worldIn, x, y, z);
     }
 
-    public void velocityToAddToEntity(World p_149640_1_, int p_149640_2_, int p_149640_3_, int p_149640_4_, Entity p_149640_5_, Vec3 p_149640_6_)
+    public void velocityToAddToEntity(World worldIn, int x, int y, int z, Entity entityIn, Vec3 velocity)
     {
-        this.field_150149_b.velocityToAddToEntity(p_149640_1_, p_149640_2_, p_149640_3_, p_149640_4_, p_149640_5_, p_149640_6_);
+        this.field_150149_b.velocityToAddToEntity(worldIn, x, y, z, entityIn, velocity);
     }
 
     public boolean isCollidable()
@@ -427,57 +427,57 @@ public class BlockStairs extends Block
      * Returns whether this block is collideable based on the arguments passed in \n@param par1 block metaData \n@param
      * par2 whether the player right-clicked while holding a boat
      */
-    public boolean canCollideCheck(int p_149678_1_, boolean p_149678_2_)
+    public boolean canCollideCheck(int meta, boolean includeLiquid)
     {
-        return this.field_150149_b.canCollideCheck(p_149678_1_, p_149678_2_);
+        return this.field_150149_b.canCollideCheck(meta, includeLiquid);
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        return this.field_150149_b.canPlaceBlockAt(p_149742_1_, p_149742_2_, p_149742_3_, p_149742_4_);
+        return this.field_150149_b.canPlaceBlockAt(worldIn, x, y, z);
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        this.onNeighborBlockChange(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_, Blocks.air);
-        this.field_150149_b.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+        this.onNeighborBlockChange(worldIn, x, y, z, Blocks.air);
+        this.field_150149_b.onBlockAdded(worldIn, x, y, z);
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        this.field_150149_b.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        this.field_150149_b.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
-    public void onEntityWalking(World p_149724_1_, int p_149724_2_, int p_149724_3_, int p_149724_4_, Entity p_149724_5_)
+    public void onEntityWalking(World worldIn, int x, int y, int z, Entity entityIn)
     {
-        this.field_150149_b.onEntityWalking(p_149724_1_, p_149724_2_, p_149724_3_, p_149724_4_, p_149724_5_);
+        this.field_150149_b.onEntityWalking(worldIn, x, y, z, entityIn);
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        this.field_150149_b.updateTick(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+        this.field_150149_b.updateTick(worldIn, x, y, z, random);
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        return this.field_150149_b.onBlockActivated(p_149727_1_, p_149727_2_, p_149727_3_, p_149727_4_, p_149727_5_, 0, 0.0F, 0.0F, 0.0F);
+        return this.field_150149_b.onBlockActivated(worldIn, x, y, z, player, 0, 0.0F, 0.0F, 0.0F);
     }
 
     /**
      * Called upon the block being destroyed by an explosion
      */
-    public void onBlockDestroyedByExplosion(World p_149723_1_, int p_149723_2_, int p_149723_3_, int p_149723_4_, Explosion p_149723_5_)
+    public void onBlockDestroyedByExplosion(World worldIn, int x, int y, int z, Explosion explosionIn)
     {
-        this.field_150149_b.onBlockDestroyedByExplosion(p_149723_1_, p_149723_2_, p_149723_3_, p_149723_4_, p_149723_5_);
+        this.field_150149_b.onBlockDestroyedByExplosion(worldIn, x, y, z, explosionIn);
     }
 
-    public MapColor getMapColor(int p_149728_1_)
+    public MapColor getMapColor(int meta)
     {
         return this.field_150149_b.getMapColor(this.field_150151_M);
     }
@@ -485,41 +485,41 @@ public class BlockStairs extends Block
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        int var7 = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        int var8 = p_149689_1_.getBlockMetadata(p_149689_2_, p_149689_3_, p_149689_4_) & 4;
+        int var7 = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int var8 = worldIn.getBlockMetadata(x, y, z) & 4;
 
         if (var7 == 0)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 2 | var8, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 2 | var8, 2);
         }
 
         if (var7 == 1)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 1 | var8, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 1 | var8, 2);
         }
 
         if (var7 == 2)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 3 | var8, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 3 | var8, 2);
         }
 
         if (var7 == 3)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 0 | var8, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 0 | var8, 2);
         }
     }
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta)
     {
-        return p_149660_5_ != 0 && (p_149660_5_ == 1 || (double)p_149660_7_ <= 0.5D) ? p_149660_9_ : p_149660_9_ | 4;
+        return side != 0 && (side == 1 || (double)subY <= 0.5D) ? meta : meta | 4;
     }
 
-    public MovingObjectPosition collisionRayTrace(World p_149731_1_, int p_149731_2_, int p_149731_3_, int p_149731_4_, Vec3 p_149731_5_, Vec3 p_149731_6_)
+    public MovingObjectPosition collisionRayTrace(World worldIn, int x, int y, int z, Vec3 startVec, Vec3 endVec)
     {
         MovingObjectPosition[] var7 = new MovingObjectPosition[8];
-        int var8 = p_149731_1_.getBlockMetadata(p_149731_2_, p_149731_3_, p_149731_4_);
+        int var8 = worldIn.getBlockMetadata(x, y, z);
         int var9 = var8 & 3;
         boolean var10 = (var8 & 4) == 4;
         int[] var11 = field_150150_a[var9 + (var10 ? 4 : 0)];
@@ -543,7 +543,7 @@ public class BlockStairs extends Block
                 }
             }
 
-            var7[var12] = super.collisionRayTrace(p_149731_1_, p_149731_2_, p_149731_3_, p_149731_4_, p_149731_5_, p_149731_6_);
+            var7[var12] = super.collisionRayTrace(worldIn, x, y, z, startVec, endVec);
         }
 
         int[] var21 = var11;
@@ -566,7 +566,7 @@ public class BlockStairs extends Block
 
             if (var18 != null)
             {
-                double var19 = var18.hitVec.squareDistanceTo(p_149731_6_);
+                double var19 = var18.hitVec.squareDistanceTo(endVec);
 
                 if (var19 > var24)
                 {
@@ -579,5 +579,5 @@ public class BlockStairs extends Block
         return var22;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_) {}
+    public void registerBlockIcons(IIconRegister reg) {}
 }

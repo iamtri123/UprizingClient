@@ -384,7 +384,7 @@ public class FontRenderer implements IResourceManagerReloadListener
         return var6;
     }
 
-    private String func_147647_b(String p_147647_1_)
+    private String bidiReorder(String p_147647_1_)
     {
         try
         {
@@ -580,7 +580,7 @@ public class FontRenderer implements IResourceManagerReloadListener
     {
         if (this.bidiFlag)
         {
-            int var7 = this.getStringWidth(this.func_147647_b(par1Str));
+            int var7 = this.getStringWidth(this.bidiReorder(par1Str));
             par2 = par2 + par4 - var7;
         }
 
@@ -600,7 +600,7 @@ public class FontRenderer implements IResourceManagerReloadListener
         {
             if (this.bidiFlag)
             {
-                par1Str = this.func_147647_b(par1Str);
+                par1Str = this.bidiReorder(par1Str);
             }
 
             if ((par4 & -67108864) == 0)

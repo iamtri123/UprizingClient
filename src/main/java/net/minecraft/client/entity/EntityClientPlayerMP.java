@@ -52,7 +52,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
 
     /** has the client player's health been set? */
     private boolean hasSetHealth;
-    private String field_142022_ce;
+    private String clientBrand;
     private static final String __OBFID = "CL_00000887";
 
     public EntityClientPlayerMP(Minecraft p_i45064_1_, World p_i45064_2_, Session p_i45064_3_, NetHandlerPlayClient p_i45064_4_, StatFileWriter p_i45064_5_)
@@ -65,7 +65,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         return false;
     }
@@ -78,13 +78,13 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Called when a player mounts an entity. e.g. mounts a pig, mounts a boat.
      */
-    public void mountEntity(Entity p_70078_1_)
+    public void mountEntity(Entity entityIn)
     {
-        super.mountEntity(p_70078_1_);
+        super.mountEntity(entityIn);
 
-        if (p_70078_1_ instanceof EntityMinecart)
+        if (entityIn instanceof EntityMinecart)
         {
-            this.mc.getSoundHandler().playSound(new MovingSoundMinecartRiding(this, (EntityMinecart)p_70078_1_));
+            this.mc.getSoundHandler().playSound(new MovingSoundMinecartRiding(this, (EntityMinecart)entityIn));
         }
     }
 
@@ -303,27 +303,27 @@ public class EntityClientPlayerMP extends EntityPlayerSP
         this.sendQueue.addToSendQueue(new C13PacketPlayerAbilities(this.capabilities));
     }
 
-    protected void func_110318_g()
+    protected void sendHorseJump()
     {
         this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, 6, (int)(this.getHorseJumpPower() * 100.0F)));
     }
 
-    public void func_110322_i()
+    public void sendHorseInteraction()
     {
         this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, 7));
     }
 
-    public void func_142020_c(String p_142020_1_)
+    public void setClientBrand(String brand)
     {
-        this.field_142022_ce = p_142020_1_;
+        this.clientBrand = brand;
     }
 
-    public String func_142021_k()
+    public String getClientBrand()
     {
-        return this.field_142022_ce;
+        return this.clientBrand;
     }
 
-    public StatFileWriter func_146107_m()
+    public StatFileWriter getStatFileWriter()
     {
         return this.field_146108_bO;
     }

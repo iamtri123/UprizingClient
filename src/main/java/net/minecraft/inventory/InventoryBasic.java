@@ -11,13 +11,13 @@ public class InventoryBasic implements IInventory
     private final int slotsCount;
     private final ItemStack[] inventoryContents;
     private List field_70480_d;
-    private boolean field_94051_e;
+    private boolean hasCustomName;
     private static final String __OBFID = "CL_00001514";
 
     public InventoryBasic(String p_i1561_1_, boolean p_i1561_2_, int p_i1561_3_)
     {
         this.inventoryTitle = p_i1561_1_;
-        this.field_94051_e = p_i1561_2_;
+        this.hasCustomName = p_i1561_2_;
         this.slotsCount = p_i1561_3_;
         this.inventoryContents = new ItemStack[p_i1561_3_];
     }
@@ -40,35 +40,35 @@ public class InventoryBasic implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
-        return p_70301_1_ >= 0 && p_70301_1_ < this.inventoryContents.length ? this.inventoryContents[p_70301_1_] : null;
+        return slotIn >= 0 && slotIn < this.inventoryContents.length ? this.inventoryContents[slotIn] : null;
     }
 
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (this.inventoryContents[p_70298_1_] != null)
+        if (this.inventoryContents[index] != null)
         {
             ItemStack var3;
 
-            if (this.inventoryContents[p_70298_1_].stackSize <= p_70298_2_)
+            if (this.inventoryContents[index].stackSize <= count)
             {
-                var3 = this.inventoryContents[p_70298_1_];
-                this.inventoryContents[p_70298_1_] = null;
+                var3 = this.inventoryContents[index];
+                this.inventoryContents[index] = null;
                 this.onInventoryChanged();
                 return var3;
             }
             else
             {
-                var3 = this.inventoryContents[p_70298_1_].splitStack(p_70298_2_);
+                var3 = this.inventoryContents[index].splitStack(count);
 
-                if (this.inventoryContents[p_70298_1_].stackSize == 0)
+                if (this.inventoryContents[index].stackSize == 0)
                 {
-                    this.inventoryContents[p_70298_1_] = null;
+                    this.inventoryContents[index] = null;
                 }
 
                 this.onInventoryChanged();
@@ -85,12 +85,12 @@ public class InventoryBasic implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (this.inventoryContents[p_70304_1_] != null)
+        if (this.inventoryContents[index] != null)
         {
-            ItemStack var2 = this.inventoryContents[p_70304_1_];
-            this.inventoryContents[p_70304_1_] = null;
+            ItemStack var2 = this.inventoryContents[index];
+            this.inventoryContents[index] = null;
             return var2;
         }
         else
@@ -102,13 +102,13 @@ public class InventoryBasic implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        this.inventoryContents[p_70299_1_] = p_70299_2_;
+        this.inventoryContents[index] = stack;
 
-        if (p_70299_2_ != null && p_70299_2_.stackSize > this.getInventoryStackLimit())
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
         {
-            p_70299_2_.stackSize = this.getInventoryStackLimit();
+            stack.stackSize = this.getInventoryStackLimit();
         }
 
         this.onInventoryChanged();
@@ -140,12 +140,12 @@ public class InventoryBasic implements IInventory
      */
     public boolean isInventoryNameLocalized()
     {
-        return this.field_94051_e;
+        return this.hasCustomName;
     }
 
     public void func_110133_a(String p_110133_1_)
     {
-        this.field_94051_e = true;
+        this.hasCustomName = true;
         this.inventoryTitle = p_110133_1_;
     }
 
@@ -174,7 +174,7 @@ public class InventoryBasic implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
         return true;
     }
@@ -186,7 +186,7 @@ public class InventoryBasic implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return true;
     }

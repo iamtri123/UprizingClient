@@ -49,62 +49,62 @@ public class S0CPacketSpawnPlayer extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148957_a = p_148837_1_.readVarIntFromBuffer();
-        UUID var2 = UUID.fromString(p_148837_1_.readStringFromBuffer(36));
-        this.field_148955_b = new GameProfile(var2, p_148837_1_.readStringFromBuffer(16));
-        int var3 = p_148837_1_.readVarIntFromBuffer();
+        this.field_148957_a = data.readVarIntFromBuffer();
+        UUID var2 = UUID.fromString(data.readStringFromBuffer(36));
+        this.field_148955_b = new GameProfile(var2, data.readStringFromBuffer(16));
+        int var3 = data.readVarIntFromBuffer();
 
         for (int var4 = 0; var4 < var3; ++var4)
         {
-            String var5 = p_148837_1_.readStringFromBuffer(32767);
-            String var6 = p_148837_1_.readStringFromBuffer(32767);
-            String var7 = p_148837_1_.readStringFromBuffer(32767);
+            String var5 = data.readStringFromBuffer(32767);
+            String var6 = data.readStringFromBuffer(32767);
+            String var7 = data.readStringFromBuffer(32767);
             this.field_148955_b.getProperties().put(var5, new Property(var5, var6, var7));
         }
 
-        this.field_148956_c = p_148837_1_.readInt();
-        this.field_148953_d = p_148837_1_.readInt();
-        this.field_148954_e = p_148837_1_.readInt();
-        this.field_148951_f = p_148837_1_.readByte();
-        this.field_148952_g = p_148837_1_.readByte();
-        this.field_148959_h = p_148837_1_.readShort();
-        this.field_148958_j = DataWatcher.readWatchedListFromPacketBuffer(p_148837_1_);
+        this.field_148956_c = data.readInt();
+        this.field_148953_d = data.readInt();
+        this.field_148954_e = data.readInt();
+        this.field_148951_f = data.readByte();
+        this.field_148952_g = data.readByte();
+        this.field_148959_h = data.readShort();
+        this.field_148958_j = DataWatcher.readWatchedListFromPacketBuffer(data);
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeVarIntToBuffer(this.field_148957_a);
+        data.writeVarIntToBuffer(this.field_148957_a);
         UUID var2 = this.field_148955_b.getId();
-        p_148840_1_.writeStringToBuffer(var2 == null ? "" : var2.toString());
-        p_148840_1_.writeStringToBuffer(this.field_148955_b.getName());
-        p_148840_1_.writeVarIntToBuffer(this.field_148955_b.getProperties().size());
+        data.writeStringToBuffer(var2 == null ? "" : var2.toString());
+        data.writeStringToBuffer(this.field_148955_b.getName());
+        data.writeVarIntToBuffer(this.field_148955_b.getProperties().size());
         Iterator var3 = this.field_148955_b.getProperties().values().iterator();
 
         while (var3.hasNext())
         {
             Property var4 = (Property)var3.next();
-            p_148840_1_.writeStringToBuffer(var4.getName());
-            p_148840_1_.writeStringToBuffer(var4.getValue());
-            p_148840_1_.writeStringToBuffer(var4.getSignature());
+            data.writeStringToBuffer(var4.getName());
+            data.writeStringToBuffer(var4.getValue());
+            data.writeStringToBuffer(var4.getSignature());
         }
 
-        p_148840_1_.writeInt(this.field_148956_c);
-        p_148840_1_.writeInt(this.field_148953_d);
-        p_148840_1_.writeInt(this.field_148954_e);
-        p_148840_1_.writeByte(this.field_148951_f);
-        p_148840_1_.writeByte(this.field_148952_g);
-        p_148840_1_.writeShort(this.field_148959_h);
-        this.field_148960_i.func_151509_a(p_148840_1_);
+        data.writeInt(this.field_148956_c);
+        data.writeInt(this.field_148953_d);
+        data.writeInt(this.field_148954_e);
+        data.writeByte(this.field_148951_f);
+        data.writeByte(this.field_148952_g);
+        data.writeShort(this.field_148959_h);
+        this.field_148960_i.func_151509_a(data);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleSpawnPlayer(this);
+        handler.handleSpawnPlayer(this);
     }
 
     public List func_148944_c()
@@ -165,8 +165,8 @@ public class S0CPacketSpawnPlayer extends Packet
         return this.field_148959_h;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

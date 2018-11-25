@@ -35,42 +35,42 @@ public class CommandBanIp extends CommandBase
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_)
+    public boolean canCommandSenderUseCommand(ICommandSender sender)
     {
-        return MinecraftServer.getServer().getConfigurationManager().getBannedIPs().func_152689_b() && super.canCommandSenderUseCommand(p_71519_1_);
+        return MinecraftServer.getServer().getConfigurationManager().getBannedIPs().isLanServer() && super.canCommandSenderUseCommand(sender);
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.banip.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length >= 1 && p_71515_2_[0].length() > 1)
+        if (args.length >= 1 && args[0].length() > 1)
         {
-            Matcher var3 = field_147211_a.matcher(p_71515_2_[0]);
+            Matcher var3 = field_147211_a.matcher(args[0]);
             IChatComponent var4 = null;
 
-            if (p_71515_2_.length >= 2)
+            if (args.length >= 2)
             {
-                var4 = func_147178_a(p_71515_1_, p_71515_2_, 1);
+                var4 = getChatComponentFromNthArg(sender, args, 1);
             }
 
             if (var3.matches())
             {
-                this.func_147210_a(p_71515_1_, p_71515_2_[0], var4 == null ? null : var4.getUnformattedText());
+                this.func_147210_a(sender, args[0], var4 == null ? null : var4.getUnformattedText());
             }
             else
             {
-                EntityPlayerMP var5 = MinecraftServer.getServer().getConfigurationManager().func_152612_a(p_71515_2_[0]);
+                EntityPlayerMP var5 = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(args[0]);
 
                 if (var5 == null)
                 {
                     throw new PlayerNotFoundException("commands.banip.invalid");
                 }
 
-                this.func_147210_a(p_71515_1_, var5.getPlayerIP(), var4 == null ? null : var4.getUnformattedText());
+                this.func_147210_a(sender, var5.getPlayerIP(), var4 == null ? null : var4.getUnformattedText());
             }
         }
         else
@@ -82,15 +82,15 @@ public class CommandBanIp extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, MinecraftServer.getServer().getAllUsernames()) : null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : null;
     }
 
     protected void func_147210_a(ICommandSender p_147210_1_, String p_147210_2_, String p_147210_3_)
     {
         IPBanEntry var4 = new IPBanEntry(p_147210_2_, (Date)null, p_147210_1_.getCommandSenderName(), (Date)null, p_147210_3_);
-        MinecraftServer.getServer().getConfigurationManager().getBannedIPs().func_152687_a(var4);
+        MinecraftServer.getServer().getConfigurationManager().getBannedIPs().addEntry(var4);
         List var5 = MinecraftServer.getServer().getConfigurationManager().getPlayerList(p_147210_2_);
         String[] var6 = new String[var5.size()];
         int var7 = 0;
@@ -104,11 +104,11 @@ public class CommandBanIp extends CommandBase
 
         if (var5.isEmpty())
         {
-            func_152373_a(p_147210_1_, this, "commands.banip.success", p_147210_2_);
+            notifyOperators(p_147210_1_, this, "commands.banip.success", p_147210_2_);
         }
         else
         {
-            func_152373_a(p_147210_1_, this, "commands.banip.success.players", p_147210_2_, joinNiceString(var6));
+            notifyOperators(p_147210_1_, this, "commands.banip.success.players", p_147210_2_, joinNiceString(var6));
         }
     }
 }

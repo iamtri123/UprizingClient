@@ -36,24 +36,24 @@ import tv.twitch.chat.ChatUserInfo;
 
 public class GuiChat extends GuiScreen implements GuiYesNoCallback
 {
-    private static final Set field_152175_f = Sets.newHashSet("http", "https");
+    private static final Set supportedProtocols = Sets.newHashSet("http", "https");
     private static final Logger logger = LogManager.getLogger();
-    private String field_146410_g = "";
-    private int field_146416_h = -1;
-    private boolean field_146417_i;
-    private boolean field_146414_r;
-    private int field_146413_s;
-    private final List field_146412_t = new ArrayList();
-    private URI field_146411_u;
-    protected GuiTextField field_146415_a;
-    private String field_146409_v = "";
+    private String historyBuffer = "";
+    private int sentHistoryCursor = -1;
+    private boolean playerNamesFound;
+    private boolean waitingOnAutocomplete;
+    private int autocompleteIndex;
+    private final List foundPlayerNames = new ArrayList();
+    private URI clickedURI;
+    protected GuiTextField inputField;
+    private String defaultInputFieldText = "";
     private static final String __OBFID = "CL_00000682";
 
     public GuiChat() {}
 
     public GuiChat(String p_i1024_1_)
     {
-        this.field_146409_v = p_i1024_1_;
+        this.defaultInputFieldText = p_i1024_1_;
     }
 
     /**
@@ -62,13 +62,13 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
     public void initGui()
     {
         Keyboard.enableRepeatEvents(true);
-        this.field_146416_h = this.mc.ingameGUI.getChatGUI().func_146238_c().size();
-        this.field_146415_a = new GuiTextField(this.fontRendererObj, 4, this.height - 12, this.width - 4, 12);
-        this.field_146415_a.func_146203_f(100);
-        this.field_146415_a.func_146185_a(false);
-        this.field_146415_a.setFocused(true);
-        this.field_146415_a.setText(this.field_146409_v);
-        this.field_146415_a.func_146205_d(false);
+        this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
+        this.inputField = new GuiTextField(this.fontRendererObj, 4, this.height - 12, this.width - 4, 12);
+        this.inputField.setMaxStringLength(100);
+        this.inputField.setEnableBackgroundDrawing(false);
+        this.inputField.setFocused(true);
+        this.inputField.setText(this.defaultInputFieldText);
+        this.inputField.setCanLoseFocus(false);
     }
 
     /**
@@ -85,68 +85,68 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
      */
     public void updateScreen()
     {
-        this.field_146415_a.updateCursorCounter();
+        this.inputField.updateCursorCounter();
     }
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        this.field_146414_r = false;
+        this.waitingOnAutocomplete = false;
 
-        if (p_73869_2_ == 15)
+        if (keyCode == 15)
         {
-            this.func_146404_p_();
+            this.autocompletePlayerNames();
         }
         else
         {
-            this.field_146417_i = false;
+            this.playerNamesFound = false;
         }
 
-        if (p_73869_2_ == 1)
+        if (keyCode == 1)
         {
             this.mc.displayGuiScreen((GuiScreen)null);
         }
-        else if (p_73869_2_ != 28 && p_73869_2_ != 156)
+        else if (keyCode != 28 && keyCode != 156)
         {
-            if (p_73869_2_ == 200)
+            if (keyCode == 200)
             {
-                this.func_146402_a(-1);
+                this.getSentHistory(-1);
             }
-            else if (p_73869_2_ == 208)
+            else if (keyCode == 208)
             {
-                this.func_146402_a(1);
+                this.getSentHistory(1);
             }
-            else if (p_73869_2_ == 201)
+            else if (keyCode == 201)
             {
-                this.mc.ingameGUI.getChatGUI().func_146229_b(this.mc.ingameGUI.getChatGUI().func_146232_i() - 1);
+                this.mc.ingameGUI.getChatGUI().scroll(this.mc.ingameGUI.getChatGUI().getLineCount() - 1);
             }
-            else if (p_73869_2_ == 209)
+            else if (keyCode == 209)
             {
-                this.mc.ingameGUI.getChatGUI().func_146229_b(-this.mc.ingameGUI.getChatGUI().func_146232_i() + 1);
+                this.mc.ingameGUI.getChatGUI().scroll(-this.mc.ingameGUI.getChatGUI().getLineCount() + 1);
             }
             else
             {
-                this.field_146415_a.textboxKeyTyped(p_73869_1_, p_73869_2_);
+                this.inputField.textboxKeyTyped(typedChar, keyCode);
             }
         }
         else
         {
-            String var3 = this.field_146415_a.getText().trim();
+            String var3 = this.inputField.getText().trim();
 
             if (var3.length() > 0)
             {
-                this.func_146403_a(var3);
+                this.submitChatMessage(var3);
             }
 
             this.mc.displayGuiScreen((GuiScreen)null);
         }
     }
 
-    public void func_146403_a(String p_146403_1_)
+    public void submitChatMessage(String p_146403_1_)
     {
-        this.mc.ingameGUI.getChatGUI().func_146239_a(p_146403_1_);
+        this.mc.ingameGUI.getChatGUI().addToSentMessages(p_146403_1_);
         this.mc.thePlayer.sendChatMessage(p_146403_1_);
     }
 
@@ -175,7 +175,7 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                 var1 *= 7;
             }
 
-            this.mc.ingameGUI.getChatGUI().func_146229_b(var1);
+            this.mc.ingameGUI.getChatGUI().scroll(var1);
         }
     }
 
@@ -186,7 +186,7 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
     {
         if (mouseButton == 0 && this.mc.gameSettings.chatLinks)
         {
-            IChatComponent var4 = this.mc.ingameGUI.getChatGUI().func_146236_a(Mouse.getX(), Mouse.getY());
+            IChatComponent var4 = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
             if (var4 != null)
             {
@@ -196,7 +196,7 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                 {
                     if (isShiftKeyDown())
                     {
-                        this.field_146415_a.func_146191_b(var4.getUnformattedTextForChat());
+                        this.inputField.writeText(var4.getUnformattedTextForChat());
                     }
                     else
                     {
@@ -208,19 +208,19 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                             {
                                 var6 = new URI(var5.getValue());
 
-                                if (!field_152175_f.contains(var6.getScheme().toLowerCase()))
+                                if (!supportedProtocols.contains(var6.getScheme().toLowerCase()))
                                 {
                                     throw new URISyntaxException(var5.getValue(), "Unsupported protocol: " + var6.getScheme().toLowerCase());
                                 }
 
                                 if (this.mc.gameSettings.chatLinksPrompt)
                                 {
-                                    this.field_146411_u = var6;
+                                    this.clickedURI = var6;
                                     this.mc.displayGuiScreen(new GuiConfirmOpenLink(this, var5.getValue(), 0, false));
                                 }
                                 else
                                 {
-                                    this.func_146407_a(var6);
+                                    this.openLink(var6);
                                 }
                             }
                             catch (URISyntaxException var7)
@@ -231,23 +231,23 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                         else if (var5.getAction() == ClickEvent.Action.OPEN_FILE)
                         {
                             var6 = (new File(var5.getValue())).toURI();
-                            this.func_146407_a(var6);
+                            this.openLink(var6);
                         }
                         else if (var5.getAction() == ClickEvent.Action.SUGGEST_COMMAND)
                         {
-                            this.field_146415_a.setText(var5.getValue());
+                            this.inputField.setText(var5.getValue());
                         }
                         else if (var5.getAction() == ClickEvent.Action.RUN_COMMAND)
                         {
-                            this.func_146403_a(var5.getValue());
+                            this.submitChatMessage(var5.getValue());
                         }
                         else if (var5.getAction() == ClickEvent.Action.TWITCH_USER_INFO)
                         {
-                            ChatUserInfo var8 = this.mc.func_152346_Z().func_152926_a(var5.getValue());
+                            ChatUserInfo var8 = this.mc.getTwitchStream().func_152926_a(var5.getValue());
 
                             if (var8 != null)
                             {
-                                this.mc.displayGuiScreen(new GuiTwitchUserMode(this.mc.func_152346_Z(), var8));
+                                this.mc.displayGuiScreen(new GuiTwitchUserMode(this.mc.getTwitchStream(), var8));
                             }
                             else
                             {
@@ -265,25 +265,25 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
             }
         }
 
-        this.field_146415_a.mouseClicked(mouseX, mouseY, mouseButton);
+        this.inputField.mouseClicked(mouseX, mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    public void confirmClicked(boolean p_73878_1_, int p_73878_2_)
+    public void confirmClicked(boolean result, int id)
     {
-        if (p_73878_2_ == 0)
+        if (id == 0)
         {
-            if (p_73878_1_)
+            if (result)
             {
-                this.func_146407_a(this.field_146411_u);
+                this.openLink(this.clickedURI);
             }
 
-            this.field_146411_u = null;
+            this.clickedURI = null;
             this.mc.displayGuiScreen(this);
         }
     }
 
-    private void func_146407_a(URI p_146407_1_)
+    private void openLink(URI p_146407_1_)
     {
         try
         {
@@ -297,42 +297,42 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    public void func_146404_p_()
+    public void autocompletePlayerNames()
     {
         String var3;
 
-        if (this.field_146417_i)
+        if (this.playerNamesFound)
         {
-            this.field_146415_a.func_146175_b(this.field_146415_a.func_146197_a(-1, this.field_146415_a.func_146198_h(), false) - this.field_146415_a.func_146198_h());
+            this.inputField.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
 
-            if (this.field_146413_s >= this.field_146412_t.size())
+            if (this.autocompleteIndex >= this.foundPlayerNames.size())
             {
-                this.field_146413_s = 0;
+                this.autocompleteIndex = 0;
             }
         }
         else
         {
-            int var1 = this.field_146415_a.func_146197_a(-1, this.field_146415_a.func_146198_h(), false);
-            this.field_146412_t.clear();
-            this.field_146413_s = 0;
-            String var2 = this.field_146415_a.getText().substring(var1).toLowerCase();
-            var3 = this.field_146415_a.getText().substring(0, this.field_146415_a.func_146198_h());
-            this.func_146405_a(var3, var2);
+            int var1 = this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false);
+            this.foundPlayerNames.clear();
+            this.autocompleteIndex = 0;
+            String var2 = this.inputField.getText().substring(var1).toLowerCase();
+            var3 = this.inputField.getText().substring(0, this.inputField.getCursorPosition());
+            this.sendAutocompleteRequest(var3, var2);
 
-            if (this.field_146412_t.isEmpty())
+            if (this.foundPlayerNames.isEmpty())
             {
                 return;
             }
 
-            this.field_146417_i = true;
-            this.field_146415_a.func_146175_b(var1 - this.field_146415_a.func_146198_h());
+            this.playerNamesFound = true;
+            this.inputField.deleteFromCursor(var1 - this.inputField.getCursorPosition());
         }
 
-        if (this.field_146412_t.size() > 1)
+        if (this.foundPlayerNames.size() > 1)
         {
             StringBuilder var4 = new StringBuilder();
 
-            for (Iterator var5 = this.field_146412_t.iterator(); var5.hasNext(); var4.append(var3))
+            for (Iterator var5 = this.foundPlayerNames.iterator(); var5.hasNext(); var4.append(var3))
             {
                 var3 = (String)var5.next();
 
@@ -342,25 +342,25 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                 }
             }
 
-            this.mc.ingameGUI.getChatGUI().func_146234_a(new ChatComponentText(var4.toString()), 1);
+            this.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatComponentText(var4.toString()), 1);
         }
 
-        this.field_146415_a.func_146191_b((String)this.field_146412_t.get(this.field_146413_s++));
+        this.inputField.writeText((String)this.foundPlayerNames.get(this.autocompleteIndex++));
     }
 
-    private void func_146405_a(String p_146405_1_, String p_146405_2_)
+    private void sendAutocompleteRequest(String p_146405_1_, String p_146405_2_)
     {
         if (p_146405_1_.length() >= 1)
         {
             this.mc.thePlayer.sendQueue.addToSendQueue(new C14PacketTabComplete(p_146405_1_));
-            this.field_146414_r = true;
+            this.waitingOnAutocomplete = true;
         }
     }
 
-    public void func_146402_a(int p_146402_1_)
+    public void getSentHistory(int p_146402_1_)
     {
-        int var2 = this.field_146416_h + p_146402_1_;
-        int var3 = this.mc.ingameGUI.getChatGUI().func_146238_c().size();
+        int var2 = this.sentHistoryCursor + p_146402_1_;
+        int var3 = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
 
         if (var2 < 0)
         {
@@ -372,22 +372,22 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
             var2 = var3;
         }
 
-        if (var2 != this.field_146416_h)
+        if (var2 != this.sentHistoryCursor)
         {
             if (var2 == var3)
             {
-                this.field_146416_h = var3;
-                this.field_146415_a.setText(this.field_146410_g);
+                this.sentHistoryCursor = var3;
+                this.inputField.setText(this.historyBuffer);
             }
             else
             {
-                if (this.field_146416_h == var3)
+                if (this.sentHistoryCursor == var3)
                 {
-                    this.field_146410_g = this.field_146415_a.getText();
+                    this.historyBuffer = this.inputField.getText();
                 }
 
-                this.field_146415_a.setText((String)this.mc.ingameGUI.getChatGUI().func_146238_c().get(var2));
-                this.field_146416_h = var2;
+                this.inputField.setText((String)this.mc.ingameGUI.getChatGUI().getSentMessages().get(var2));
+                this.sentHistoryCursor = var2;
             }
         }
     }
@@ -398,8 +398,8 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
-        this.field_146415_a.drawTextBox();
-        IChatComponent var4 = this.mc.ingameGUI.getChatGUI().func_146236_a(Mouse.getX(), Mouse.getY());
+        this.inputField.drawTextBox();
+        IChatComponent var4 = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
         if (var4 != null && var4.getChatStyle().getChatHoverEvent() != null)
         {
@@ -424,24 +424,24 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
 
                 if (var6 != null)
                 {
-                    this.func_146285_a(var6, mouseX, mouseY);
+                    this.renderToolTip(var6, mouseX, mouseY);
                 }
                 else
                 {
-                    this.func_146279_a(EnumChatFormatting.RED + "Invalid Item!", mouseX, mouseY);
+                    this.drawCreativeTabHoveringText(EnumChatFormatting.RED + "Invalid Item!", mouseX, mouseY);
                 }
             }
             else if (var5.getAction() == HoverEvent.Action.SHOW_TEXT)
             {
-                this.func_146283_a(Splitter.on("\n").splitToList(var5.getValue().getFormattedText()), mouseX, mouseY);
+                this.drawHoveringText(Splitter.on("\n").splitToList(var5.getValue().getFormattedText()), mouseX, mouseY);
             }
             else if (var5.getAction() == HoverEvent.Action.SHOW_ACHIEVEMENT)
             {
-                StatBase var12 = StatList.func_151177_a(var5.getValue().getUnformattedText());
+                StatBase var12 = StatList.getOneShotStat(var5.getValue().getUnformattedText());
 
                 if (var12 != null)
                 {
-                    IChatComponent var13 = var12.func_150951_e();
+                    IChatComponent var13 = var12.getStatName();
                     ChatComponentTranslation var8 = new ChatComponentTranslation("stats.tooltip.type." + (var12.isAchievement() ? "achievement" : "statistic"));
                     var8.getChatStyle().setItalic(Boolean.valueOf(true));
                     String var9 = var12 instanceof Achievement ? ((Achievement)var12).getDescription() : null;
@@ -452,11 +452,11 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                         var10.addAll(this.fontRendererObj.listFormattedStringToWidth(var9, 150));
                     }
 
-                    this.func_146283_a(var10, mouseX, mouseY);
+                    this.drawHoveringText(var10, mouseX, mouseY);
                 }
                 else
                 {
-                    this.func_146279_a(EnumChatFormatting.RED + "Invalid statistic/achievement!", mouseX, mouseY);
+                    this.drawCreativeTabHoveringText(EnumChatFormatting.RED + "Invalid statistic/achievement!", mouseX, mouseY);
                 }
             }
 
@@ -466,12 +466,12 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    public void func_146406_a(String[] p_146406_1_)
+    public void onAutocompleteResponse(String[] p_146406_1_)
     {
-        if (this.field_146414_r)
+        if (this.waitingOnAutocomplete)
         {
-            this.field_146417_i = false;
-            this.field_146412_t.clear();
+            this.playerNamesFound = false;
+            this.foundPlayerNames.clear();
             String[] var2 = p_146406_1_;
             int var3 = p_146406_1_.length;
 
@@ -481,22 +481,22 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
 
                 if (var5.length() > 0)
                 {
-                    this.field_146412_t.add(var5);
+                    this.foundPlayerNames.add(var5);
                 }
             }
 
-            String var6 = this.field_146415_a.getText().substring(this.field_146415_a.func_146197_a(-1, this.field_146415_a.func_146198_h(), false));
+            String var6 = this.inputField.getText().substring(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false));
             String var7 = StringUtils.getCommonPrefix(p_146406_1_);
 
             if (var7.length() > 0 && !var6.equalsIgnoreCase(var7))
             {
-                this.field_146415_a.func_146175_b(this.field_146415_a.func_146197_a(-1, this.field_146415_a.func_146198_h(), false) - this.field_146415_a.func_146198_h());
-                this.field_146415_a.func_146191_b(var7);
+                this.inputField.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
+                this.inputField.writeText(var7);
             }
-            else if (this.field_146412_t.size() > 0)
+            else if (this.foundPlayerNames.size() > 0)
             {
-                this.field_146417_i = true;
-                this.func_146404_p_();
+                this.playerNamesFound = true;
+                this.autocompletePlayerNames();
             }
         }
     }

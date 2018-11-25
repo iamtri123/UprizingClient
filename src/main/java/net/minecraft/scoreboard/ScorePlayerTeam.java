@@ -47,7 +47,7 @@ public class ScorePlayerTeam extends Team
         else
         {
             this.teamNameSPT = p_96664_1_;
-            this.theScoreboard.func_96538_b(this);
+            this.theScoreboard.broadcastTeamRemoved(this);
         }
     }
 
@@ -73,7 +73,7 @@ public class ScorePlayerTeam extends Team
         else
         {
             this.namePrefixSPT = p_96666_1_;
-            this.theScoreboard.func_96538_b(this);
+            this.theScoreboard.broadcastTeamRemoved(this);
         }
     }
 
@@ -94,13 +94,13 @@ public class ScorePlayerTeam extends Team
         else
         {
             this.colorSuffix = p_96662_1_;
-            this.theScoreboard.func_96538_b(this);
+            this.theScoreboard.broadcastTeamRemoved(this);
         }
     }
 
-    public String func_142053_d(String p_142053_1_)
+    public String formatString(String input)
     {
-        return this.getColorPrefix() + p_142053_1_ + this.getColorSuffix();
+        return this.getColorPrefix() + input + this.getColorSuffix();
     }
 
     /**
@@ -108,7 +108,7 @@ public class ScorePlayerTeam extends Team
      */
     public static String formatPlayerName(Team p_96667_0_, String p_96667_1_)
     {
-        return p_96667_0_ == null ? p_96667_1_ : p_96667_0_.func_142053_d(p_96667_1_);
+        return p_96667_0_ == null ? p_96667_1_ : p_96667_0_.formatString(p_96667_1_);
     }
 
     public boolean getAllowFriendlyFire()
@@ -119,7 +119,7 @@ public class ScorePlayerTeam extends Team
     public void setAllowFriendlyFire(boolean p_96660_1_)
     {
         this.allowFriendlyFire = p_96660_1_;
-        this.theScoreboard.func_96538_b(this);
+        this.theScoreboard.broadcastTeamRemoved(this);
     }
 
     public boolean func_98297_h()
@@ -130,7 +130,7 @@ public class ScorePlayerTeam extends Team
     public void setSeeFriendlyInvisiblesEnabled(boolean p_98300_1_)
     {
         this.canSeeFriendlyInvisibles = p_98300_1_;
-        this.theScoreboard.func_96538_b(this);
+        this.theScoreboard.broadcastTeamRemoved(this);
     }
 
     public int func_98299_i()

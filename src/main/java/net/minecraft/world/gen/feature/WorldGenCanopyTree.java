@@ -99,10 +99,10 @@ public class WorldGenCanopyTree extends WorldGenAbstractTree
 
                         if (var17.getMaterial() == Material.air || var17.getMaterial() == Material.leaves)
                         {
-                            this.func_150516_a(p_76484_1_, var22, var16, var13, Blocks.log2, 1);
-                            this.func_150516_a(p_76484_1_, var22 + 1, var16, var13, Blocks.log2, 1);
-                            this.func_150516_a(p_76484_1_, var22, var16, var13 + 1, Blocks.log2, 1);
-                            this.func_150516_a(p_76484_1_, var22 + 1, var16, var13 + 1, Blocks.log2, 1);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, var22, var16, var13, Blocks.log2, 1);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, var22 + 1, var16, var13, Blocks.log2, 1);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, var22, var16, var13 + 1, Blocks.log2, 1);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, var22 + 1, var16, var13 + 1, Blocks.log2, 1);
                             var14 = var16;
                         }
                     }
@@ -158,7 +158,7 @@ public class WorldGenCanopyTree extends WorldGenAbstractTree
 
                                 for (var18 = 0; var18 < var25; ++var18)
                                 {
-                                    this.func_150516_a(p_76484_1_, p_76484_3_ + var15, var14 - var18 - 1, p_76484_5_ + var16, Blocks.log2, 1);
+                                    this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + var15, var14 - var18 - 1, p_76484_5_ + var16, Blocks.log2, 1);
                                 }
 
                                 int var19;
@@ -205,7 +205,7 @@ public class WorldGenCanopyTree extends WorldGenAbstractTree
 
         if (var5.getMaterial() == Material.air)
         {
-            this.func_150516_a(p_150526_1_, p_150526_2_, p_150526_3_, p_150526_4_, Blocks.leaves2, 1);
+            this.setBlockAndNotifyAdequately(p_150526_1_, p_150526_2_, p_150526_3_, p_150526_4_, Blocks.leaves2, 1);
         }
     }
 }

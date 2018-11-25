@@ -15,13 +15,13 @@ public abstract class EntityFlying extends EntityLiving
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_) {}
+    protected void fall(float distance) {}
 
     /**
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double p_70064_1_, boolean p_70064_3_) {}
+    protected void updateFallState(double distanceFallenThisTick, boolean isOnGround) {}
 
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward

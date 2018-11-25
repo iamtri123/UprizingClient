@@ -15,13 +15,13 @@ public class GuiButtonLanguage extends GuiButton
     /**
      * Draws this button to the screen.
      */
-    public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_)
+    public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
         if (this.visible)
         {
-            p_146112_1_.getTextureManager().bindTexture(GuiButton.buttonTextures);
+            mc.getTextureManager().bindTexture(GuiButton.buttonTextures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            boolean var4 = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
+            boolean var4 = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
             int var5 = 106;
 
             if (var4)

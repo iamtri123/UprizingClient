@@ -45,7 +45,7 @@ public class GuiScreenWorking extends GuiScreen implements IProgressUpdate
         this.field_146590_g = p_73718_1_;
     }
 
-    public void func_146586_a()
+    public void setDoneWorking()
     {
         this.field_146592_h = true;
     }

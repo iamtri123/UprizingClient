@@ -29,7 +29,7 @@ import org.lwjgl.opengl.GL12;
 public class RenderItem extends Render
 {
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-    private final RenderBlocks field_147913_i = new RenderBlocks();
+    private final RenderBlocks renderBlocksRi = new RenderBlocks();
 
     /** The RNG used in RenderItem (for bobbing itemstacks on the ground) */
     private final Random random = new Random();
@@ -133,7 +133,7 @@ public class RenderItem extends Render
                         GL11.glTranslatef(var18, var19, var20);
                     }
 
-                    this.field_147913_i.renderBlockAsItem(var22, var10.getItemDamage(), 1.0F);
+                    this.renderBlocksRi.renderBlockAsItem(var22, var10.getItemDamage(), 1.0F);
                     GL11.glPopMatrix();
                 }
 
@@ -425,9 +425,9 @@ public class RenderItem extends Render
             }
 
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-            this.field_147913_i.useInventoryTint = this.renderWithColor;
-            this.field_147913_i.renderBlockAsItem(var16, var6, 1.0F);
-            this.field_147913_i.useInventoryTint = true;
+            this.renderBlocksRi.useInventoryTint = this.renderWithColor;
+            this.renderBlocksRi.renderBlockAsItem(var16, var6, 1.0F);
+            this.renderBlocksRi.useInventoryTint = true;
 
             if (var16.getRenderBlockPass() == 0)
             {

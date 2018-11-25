@@ -17,7 +17,7 @@ public class ScaledResolution
         this.scaledWidth = p_i46324_2_;
         this.scaledHeight = p_i46324_3_;
         this.scaleFactor = 1;
-        boolean var4 = p_i46324_1_.func_152349_b();
+        boolean var4 = p_i46324_1_.isUnicode();
         int var5 = p_i46324_1_.gameSettings.guiScale;
 
         if (var5 == 0)

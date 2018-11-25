@@ -34,7 +34,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
 
         if (!var3.isEmpty())
         {
-            SkinManager var4 = Minecraft.getMinecraft().func_152342_ad();
+            SkinManager var4 = Minecraft.getMinecraft().getSkinManager();
             var4.func_152790_a(p_i45074_2_, this, true);
         }
 
@@ -49,12 +49,12 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
         PlayerConfigurations.getPlayerConfiguration(this);
     }
 
-    public boolean func_152122_n()
+    public boolean hasCape()
     {
         return Config.isShowCapes() && (this.locationOfCape != null || this.locationCape != null);
     }
 
-    public boolean func_152123_o()
+    public boolean hasSkin()
     {
         return this.locationSkin != null;
     }
@@ -88,16 +88,16 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
         return new ResourceLocation("skins/" + StringUtils.stripControlCodes(par0Str));
     }
 
-    public void func_152121_a(Type p_152121_1_, ResourceLocation p_152121_2_)
+    public void onSkinAvailable(Type skinPart, ResourceLocation skinLoc)
     {
-        switch (AbstractClientPlayer.SwitchType.field_152630_a[p_152121_1_.ordinal()])
+        switch (AbstractClientPlayer.SwitchType.SKIN_PART_TYPES[skinPart.ordinal()])
         {
             case 1:
-                this.locationSkin = p_152121_2_;
+                this.locationSkin = skinLoc;
                 break;
 
             case 2:
-                this.locationCape = p_152121_2_;
+                this.locationCape = skinLoc;
         }
     }
 
@@ -118,14 +118,14 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
 
     static final class SwitchType
     {
-        static final int[] field_152630_a = new int[Type.values().length];
+        static final int[] SKIN_PART_TYPES = new int[Type.values().length];
         private static final String __OBFID = "CL_00001832";
 
         static
         {
             try
             {
-                field_152630_a[Type.SKIN.ordinal()] = 1;
+                SKIN_PART_TYPES[Type.SKIN.ordinal()] = 1;
             }
             catch (NoSuchFieldError var2)
             {
@@ -133,7 +133,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
 
             try
             {
-                field_152630_a[Type.CAPE.ordinal()] = 2;
+                SKIN_PART_TYPES[Type.CAPE.ordinal()] = 2;
             }
             catch (NoSuchFieldError var1)
             {

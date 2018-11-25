@@ -20,13 +20,13 @@ public class EntityMinecartEmpty extends EntityMinecart
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer p_130002_1_)
+    public boolean interactFirst(EntityPlayer player)
     {
-        if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != p_130002_1_)
+        if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != player)
         {
             return true;
         }
-        else if (this.riddenByEntity != null && this.riddenByEntity != p_130002_1_)
+        else if (this.riddenByEntity != null && this.riddenByEntity != player)
         {
             return false;
         }
@@ -34,7 +34,7 @@ public class EntityMinecartEmpty extends EntityMinecart
         {
             if (!this.worldObj.isClient)
             {
-                p_130002_1_.mountEntity(this);
+                player.mountEntity(this);
             }
 
             return true;

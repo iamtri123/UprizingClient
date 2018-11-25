@@ -34,7 +34,7 @@ public class ItemAppleGold extends ItemFood
     {
         if (!p_77849_2_.isClient)
         {
-            p_77849_3_.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 2400, 0));
+            p_77849_3_.addPotionEffect(new PotionEffect(Potion.absorption.id, 2400, 0));
         }
 
         if (p_77849_1_.getItemDamage() > 0)

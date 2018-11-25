@@ -94,11 +94,11 @@ public class ItemSkull extends Item
                         {
                             NBTTagCompound var14 = p_77648_1_.getTagCompound();
 
-                            if (var14.func_150297_b("SkullOwner", 10))
+                            if (var14.hasKey("SkullOwner", 10))
                             {
-                                var13 = NBTUtil.func_152459_a(var14.getCompoundTag("SkullOwner"));
+                                var13 = NBTUtil.readGameProfileFromNBT(var14.getCompoundTag("SkullOwner"));
                             }
-                            else if (var14.func_150297_b("SkullOwner", 8) && var14.getString("SkullOwner").length() > 0)
+                            else if (var14.hasKey("SkullOwner", 8) && var14.getString("SkullOwner").length() > 0)
                             {
                                 var13 = new GameProfile((UUID)null, var14.getString("SkullOwner"));
                             }
@@ -111,8 +111,8 @@ public class ItemSkull extends Item
                         ((TileEntitySkull)var12).func_152107_a(p_77648_1_.getItemDamage());
                     }
 
-                    ((TileEntitySkull)var12).func_145903_a(var11);
-                    ((BlockSkull)Blocks.skull).func_149965_a(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, (TileEntitySkull)var12);
+                    ((TileEntitySkull)var12).setSkullRotation(var11);
+                    ((BlockSkull)Blocks.skull).makeWither(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, (TileEntitySkull)var12);
                 }
 
                 --p_77648_1_.stackSize;
@@ -158,9 +158,9 @@ public class ItemSkull extends Item
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
-        int var2 = p_77667_1_.getItemDamage();
+        int var2 = stack.getItemDamage();
 
         if (var2 < 0 || var2 >= skullTypes.length)
         {
@@ -174,12 +174,12 @@ public class ItemSkull extends Item
     {
         if (p_77653_1_.getItemDamage() == 3 && p_77653_1_.hasTagCompound())
         {
-            if (p_77653_1_.getTagCompound().func_150297_b("SkullOwner", 10))
+            if (p_77653_1_.getTagCompound().hasKey("SkullOwner", 10))
             {
-                return StatCollector.translateToLocalFormatted("item.skull.player.name", NBTUtil.func_152459_a(p_77653_1_.getTagCompound().getCompoundTag("SkullOwner")).getName());
+                return StatCollector.translateToLocalFormatted("item.skull.player.name", NBTUtil.readGameProfileFromNBT(p_77653_1_.getTagCompound().getCompoundTag("SkullOwner")).getName());
             }
 
-            if (p_77653_1_.getTagCompound().func_150297_b("SkullOwner", 8))
+            if (p_77653_1_.getTagCompound().hasKey("SkullOwner", 8))
             {
                 return StatCollector.translateToLocalFormatted("item.skull.player.name", p_77653_1_.getTagCompound().getString("SkullOwner"));
             }
@@ -188,13 +188,13 @@ public class ItemSkull extends Item
         return super.getItemStackDisplayName(p_77653_1_);
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
         this.field_94586_c = new IIcon[field_94587_a.length];
 
         for (int var2 = 0; var2 < field_94587_a.length; ++var2)
         {
-            this.field_94586_c[var2] = p_94581_1_.registerIcon(this.getIconString() + "_" + field_94587_a[var2]);
+            this.field_94586_c[var2] = register.registerIcon(this.getIconString() + "_" + field_94587_a[var2]);
         }
     }
 }

@@ -16,9 +16,9 @@ public class BlockPressurePlateWeighted extends BlockBasePressurePlate
         this.field_150068_a = p_i45436_3_;
     }
 
-    protected int func_150065_e(World p_150065_1_, int p_150065_2_, int p_150065_3_, int p_150065_4_)
+    protected int getPlateState(World p_150065_1_, int p_150065_2_, int p_150065_3_, int p_150065_4_)
     {
-        int var5 = Math.min(p_150065_1_.getEntitiesWithinAABB(Entity.class, this.func_150061_a(p_150065_2_, p_150065_3_, p_150065_4_)).size(), this.field_150068_a);
+        int var5 = Math.min(p_150065_1_.getEntitiesWithinAABB(Entity.class, this.getSensitiveAABB(p_150065_2_, p_150065_3_, p_150065_4_)).size(), this.field_150068_a);
 
         if (var5 <= 0)
         {
@@ -31,17 +31,17 @@ public class BlockPressurePlateWeighted extends BlockBasePressurePlate
         }
     }
 
-    protected int func_150060_c(int p_150060_1_)
+    protected int getPowerFromMeta(int p_150060_1_)
     {
         return p_150060_1_;
     }
 
-    protected int func_150066_d(int p_150066_1_)
+    protected int getMetaFromPower(int p_150066_1_)
     {
         return p_150066_1_;
     }
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
         return 10;
     }

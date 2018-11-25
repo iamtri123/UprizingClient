@@ -13,18 +13,18 @@ public class ChunkCoordinates implements Comparable
 
     public ChunkCoordinates() {}
 
-    public ChunkCoordinates(int p_i1354_1_, int p_i1354_2_, int p_i1354_3_)
+    public ChunkCoordinates(int x, int y, int z)
     {
-        this.posX = p_i1354_1_;
-        this.posY = p_i1354_2_;
-        this.posZ = p_i1354_3_;
+        this.posX = x;
+        this.posY = y;
+        this.posZ = z;
     }
 
-    public ChunkCoordinates(ChunkCoordinates p_i1355_1_)
+    public ChunkCoordinates(ChunkCoordinates coords)
     {
-        this.posX = p_i1355_1_.posX;
-        this.posY = p_i1355_1_.posY;
-        this.posZ = p_i1355_1_.posZ;
+        this.posX = coords.posX;
+        this.posY = coords.posY;
+        this.posZ = coords.posZ;
     }
 
     public boolean equals(Object p_equals_1_)
@@ -50,30 +50,30 @@ public class ChunkCoordinates implements Comparable
         return this.posY == p_compareTo_1_.posY ? (this.posZ == p_compareTo_1_.posZ ? this.posX - p_compareTo_1_.posX : this.posZ - p_compareTo_1_.posZ) : this.posY - p_compareTo_1_.posY;
     }
 
-    public void set(int p_71571_1_, int p_71571_2_, int p_71571_3_)
+    public void set(int x, int y, int z)
     {
-        this.posX = p_71571_1_;
-        this.posY = p_71571_2_;
-        this.posZ = p_71571_3_;
+        this.posX = x;
+        this.posY = y;
+        this.posZ = z;
     }
 
     /**
      * Returns the squared distance between this coordinates and the coordinates given as argument.
      */
-    public float getDistanceSquared(int p_71569_1_, int p_71569_2_, int p_71569_3_)
+    public float getDistanceSquared(int x, int y, int z)
     {
-        float var4 = (float)(this.posX - p_71569_1_);
-        float var5 = (float)(this.posY - p_71569_2_);
-        float var6 = (float)(this.posZ - p_71569_3_);
+        float var4 = (float)(this.posX - x);
+        float var5 = (float)(this.posY - y);
+        float var6 = (float)(this.posZ - z);
         return var4 * var4 + var5 * var5 + var6 * var6;
     }
 
     /**
      * Return the squared distance between this coordinates and the ChunkCoordinates given as argument.
      */
-    public float getDistanceSquaredToChunkCoordinates(ChunkCoordinates p_82371_1_)
+    public float getDistanceSquaredToChunkCoordinates(ChunkCoordinates other)
     {
-        return this.getDistanceSquared(p_82371_1_.posX, p_82371_1_.posY, p_82371_1_.posZ);
+        return this.getDistanceSquared(other.posX, other.posY, other.posZ);
     }
 
     public String toString()

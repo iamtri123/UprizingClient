@@ -28,39 +28,39 @@ public class CommandGive extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.give.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length < 2)
+        if (args.length < 2)
         {
             throw new WrongUsageException("commands.give.usage");
         }
         else
         {
-            EntityPlayerMP var3 = getPlayer(p_71515_1_, p_71515_2_[0]);
-            Item var4 = getItemByText(p_71515_1_, p_71515_2_[1]);
+            EntityPlayerMP var3 = getPlayer(sender, args[0]);
+            Item var4 = getItemByText(sender, args[1]);
             int var5 = 1;
             int var6 = 0;
 
-            if (p_71515_2_.length >= 3)
+            if (args.length >= 3)
             {
-                var5 = parseIntBounded(p_71515_1_, p_71515_2_[2], 1, 64);
+                var5 = parseIntBounded(sender, args[2], 1, 64);
             }
 
-            if (p_71515_2_.length >= 4)
+            if (args.length >= 4)
             {
-                var6 = parseInt(p_71515_1_, p_71515_2_[3]);
+                var6 = parseInt(sender, args[3]);
             }
 
             ItemStack var7 = new ItemStack(var4, var5, var6);
 
-            if (p_71515_2_.length >= 5)
+            if (args.length >= 5)
             {
-                String var8 = func_147178_a(p_71515_1_, p_71515_2_, 4).getUnformattedText();
+                String var8 = getChatComponentFromNthArg(sender, args, 4).getUnformattedText();
 
                 try
                 {
@@ -68,7 +68,7 @@ public class CommandGive extends CommandBase
 
                     if (!(var9 instanceof NBTTagCompound))
                     {
-                        func_152373_a(p_71515_1_, this, "commands.give.tagError", "Not a valid tag");
+                        notifyOperators(sender, this, "commands.give.tagError", "Not a valid tag");
                         return;
                     }
 
@@ -76,24 +76,24 @@ public class CommandGive extends CommandBase
                 }
                 catch (NBTException var10)
                 {
-                    func_152373_a(p_71515_1_, this, "commands.give.tagError", var10.getMessage());
+                    notifyOperators(sender, this, "commands.give.tagError", var10.getMessage());
                     return;
                 }
             }
 
             EntityItem var11 = var3.dropPlayerItemWithRandomChoice(var7, false);
             var11.delayBeforeCanPickup = 0;
-            var11.func_145797_a(var3.getCommandSenderName());
-            func_152373_a(p_71515_1_, this, "commands.give.success", var7.func_151000_E(), Integer.valueOf(var5), var3.getCommandSenderName());
+            var11.setOwner(var3.getCommandSenderName());
+            notifyOperators(sender, this, "commands.give.success", var7.func_151000_E(), Integer.valueOf(var5), var3.getCommandSenderName());
         }
     }
 
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getPlayers()) : (p_71516_2_.length == 2 ? getListOfStringsFromIterableMatchingLastWord(p_71516_2_, Item.itemRegistry.getKeys()) : null);
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, this.getPlayers()) : (args.length == 2 ? getListOfStringsFromIterableMatchingLastWord(args, Item.itemRegistry.getKeys()) : null);
     }
 
     protected String[] getPlayers()
@@ -104,8 +104,8 @@ public class CommandGive extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_)
+    public boolean isUsernameIndex(String[] args, int index)
     {
-        return p_82358_2_ == 0;
+        return index == 0;
     }
 }

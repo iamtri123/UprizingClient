@@ -28,7 +28,7 @@ public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { //
 
     @Override
     public void initGui() {
-        list = new List();
+        list = new List(width);
         buttonList.add(buttonEdit = new GuiButton(-1, width / 2 - 50, height - 52, 100, 20, "Edit"));
         buttonList.add(buttonDelete = new GuiButton(-2, width / 2 - 50, height - 28, 100, 20, "Delete"));
         buttonList.add(new GuiButton(-3, width / 2 - 154, height - 52, 100, 20, "New Waypoint"));
@@ -63,7 +63,7 @@ public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { //
     public void drawScreen(int par1, int par2, float par3) {
         drawDefaultBackground();
         tooltip = null;
-        list.func_148128_a(par1, par2, par3);
+        list.drawScreen(par1, par2, par3);
 
         drawCenteredString(fontRendererObj, "Waypoints", width / 2, 20, 16777215);
         super.drawScreen(par1, par2, par3);
@@ -104,7 +104,7 @@ public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { //
 
     class List extends GuiSlot {
 
-        public List() {
+        public List(final int width) {
             super(uprizing.getMinecraft(), width, height, 54, height - 65 + 4, 18);
         }
 
@@ -121,7 +121,7 @@ public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { //
             final byte padding = 3;
             final int width = 215;
 
-            if (field_148150_g >= leftEdge + width - 16 - padding && field_148150_g <= leftEdge + width + padding) {
+            if (mouseX >= leftEdge + width - 16 - padding && mouseX <= leftEdge + width + padding) {
                 selectedWaypoint.setEnabled(!selectedWaypoint.isEnabled());
                 uprizing.getWaypointsMod().saveWaypoints();
             } else if (par2) {
@@ -144,8 +144,8 @@ public class GuiWaypointsMenu extends GuiScreen implements GuiYesNoCallback { //
             drawCenteredString(fontRendererObj, waypoint.getName(), width / 2, par3 + 3, waypoint.getUnified());
 
             byte padding = 3;
-            if (field_148150_g >= par2 - padding && field_148162_h >= par3 && field_148150_g <= par2 + 215 + padding && field_148162_h <= par3 + field_148149_f) {
-                if (field_148150_g >= par2 + 215 - 16 - padding && field_148150_g <= par2 + 215 + padding) {
+            if (mouseX >= par2 - padding && mouseY >= par3 && mouseX <= par2 + 215 + padding && mouseY <= par3 + slotHeight) {
+                if (mouseX >= par2 + 215 - 16 - padding && mouseX <= par2 + 215 + padding) {
                     tooltip = waypoint.isEnabled() ? "Disable Waypoint" : "Enable Waypoint";
                 } else {
                     tooltip = "X: " + waypoint.getX() + " Y: " + waypoint.getY() + " Z: " + waypoint.getZ();

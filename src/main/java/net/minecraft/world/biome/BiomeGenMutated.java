@@ -8,18 +8,18 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class BiomeGenMutated extends BiomeGenBase
 {
-    protected BiomeGenBase field_150611_aD;
+    protected BiomeGenBase baseBiome;
     private static final String __OBFID = "CL_00000178";
 
     public BiomeGenMutated(int p_i45381_1_, BiomeGenBase p_i45381_2_)
     {
         super(p_i45381_1_);
-        this.field_150611_aD = p_i45381_2_;
+        this.baseBiome = p_i45381_2_;
         this.func_150557_a(p_i45381_2_.color, true);
         this.biomeName = p_i45381_2_.biomeName + " M";
         this.topBlock = p_i45381_2_.topBlock;
         this.fillerBlock = p_i45381_2_.fillerBlock;
-        this.field_76754_C = p_i45381_2_.field_76754_C;
+        this.fillerBlockMetadata = p_i45381_2_.fillerBlockMetadata;
         this.minHeight = p_i45381_2_.minHeight;
         this.maxHeight = p_i45381_2_.maxHeight;
         this.temperature = p_i45381_2_.temperature;
@@ -39,12 +39,12 @@ public class BiomeGenMutated extends BiomeGenBase
 
     public void decorate(World p_76728_1_, Random p_76728_2_, int p_76728_3_, int p_76728_4_)
     {
-        this.field_150611_aD.theBiomeDecorator.func_150512_a(p_76728_1_, p_76728_2_, this, p_76728_3_, p_76728_4_);
+        this.baseBiome.theBiomeDecorator.decorateChunk(p_76728_1_, p_76728_2_, this, p_76728_3_, p_76728_4_);
     }
 
-    public void func_150573_a(World p_150573_1_, Random p_150573_2_, Block[] p_150573_3_, byte[] p_150573_4_, int p_150573_5_, int p_150573_6_, double p_150573_7_)
+    public void genTerrainBlocks(World p_150573_1_, Random p_150573_2_, Block[] p_150573_3_, byte[] p_150573_4_, int p_150573_5_, int p_150573_6_, double p_150573_7_)
     {
-        this.field_150611_aD.func_150573_a(p_150573_1_, p_150573_2_, p_150573_3_, p_150573_4_, p_150573_5_, p_150573_6_, p_150573_7_);
+        this.baseBiome.genTerrainBlocks(p_150573_1_, p_150573_2_, p_150573_3_, p_150573_4_, p_150573_5_, p_150573_6_, p_150573_7_);
     }
 
     /**
@@ -52,12 +52,12 @@ public class BiomeGenMutated extends BiomeGenBase
      */
     public float getSpawningChance()
     {
-        return this.field_150611_aD.getSpawningChance();
+        return this.baseBiome.getSpawningChance();
     }
 
     public WorldGenAbstractTree func_150567_a(Random p_150567_1_)
     {
-        return this.field_150611_aD.func_150567_a(p_150567_1_);
+        return this.baseBiome.func_150567_a(p_150567_1_);
     }
 
     /**
@@ -65,7 +65,7 @@ public class BiomeGenMutated extends BiomeGenBase
      */
     public int getBiomeFoliageColor(int p_150571_1_, int p_150571_2_, int p_150571_3_)
     {
-        return this.field_150611_aD.getBiomeFoliageColor(p_150571_1_, p_150571_2_, p_150571_2_);
+        return this.baseBiome.getBiomeFoliageColor(p_150571_1_, p_150571_2_, p_150571_2_);
     }
 
     /**
@@ -73,21 +73,21 @@ public class BiomeGenMutated extends BiomeGenBase
      */
     public int getBiomeGrassColor(int p_150558_1_, int p_150558_2_, int p_150558_3_)
     {
-        return this.field_150611_aD.getBiomeGrassColor(p_150558_1_, p_150558_2_, p_150558_2_);
+        return this.baseBiome.getBiomeGrassColor(p_150558_1_, p_150558_2_, p_150558_2_);
     }
 
-    public Class func_150562_l()
+    public Class getBiomeClass()
     {
-        return this.field_150611_aD.func_150562_l();
+        return this.baseBiome.getBiomeClass();
     }
 
-    public boolean func_150569_a(BiomeGenBase p_150569_1_)
+    public boolean isEqualTo(BiomeGenBase p_150569_1_)
     {
-        return this.field_150611_aD.func_150569_a(p_150569_1_);
+        return this.baseBiome.isEqualTo(p_150569_1_);
     }
 
-    public BiomeGenBase.TempCategory func_150561_m()
+    public BiomeGenBase.TempCategory getTempCategory()
     {
-        return this.field_150611_aD.func_150561_m();
+        return this.baseBiome.getTempCategory();
     }
 }

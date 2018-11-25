@@ -9,7 +9,7 @@ public class ItemAnvilBlock extends ItemMultiTexture
 
     public ItemAnvilBlock(Block p_i1826_1_)
     {
-        super(p_i1826_1_, p_i1826_1_, BlockAnvil.field_149834_a);
+        super(p_i1826_1_, p_i1826_1_, BlockAnvil.anvilDamageNames);
     }
 
     /**

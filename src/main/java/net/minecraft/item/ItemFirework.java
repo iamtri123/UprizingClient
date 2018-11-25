@@ -48,7 +48,7 @@ public class ItemFirework extends Item
 
             if (var5 != null)
             {
-                if (var5.func_150297_b("Flight", 99))
+                if (var5.hasKey("Flight", 99))
                 {
                     p_77624_3_.add(StatCollector.translateToLocal("item.fireworks.flight") + " " + var5.getByte("Flight"));
                 }

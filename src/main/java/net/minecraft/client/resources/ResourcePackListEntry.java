@@ -22,11 +22,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
         this.field_148317_a = Minecraft.getMinecraft();
     }
 
-    public void func_148279_a(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
+    public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
     {
         this.func_148313_c();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Gui.func_146110_a(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 32.0F, 32.0F);
+        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 32.0F, 32.0F);
         int var11;
 
         if ((this.field_148317_a.gameSettings.touchscreen || p_148279_9_) && this.func_148310_d())
@@ -41,11 +41,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
             {
                 if (var10 < 32)
                 {
-                    Gui.func_146110_a(p_148279_2_, p_148279_3_, 0.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                    Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 0.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                 }
                 else
                 {
-                    Gui.func_146110_a(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                    Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                 }
             }
             else
@@ -54,11 +54,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
                 {
                     if (var10 < 16)
                     {
-                        Gui.func_146110_a(p_148279_2_, p_148279_3_, 32.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 32.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                     }
                     else
                     {
-                        Gui.func_146110_a(p_148279_2_, p_148279_3_, 32.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 32.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                     }
                 }
 
@@ -66,11 +66,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
                 {
                     if (var10 < 32 && var10 > 16 && var11 < 16)
                     {
-                        Gui.func_146110_a(p_148279_2_, p_148279_3_, 96.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 96.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                     }
                     else
                     {
-                        Gui.func_146110_a(p_148279_2_, p_148279_3_, 96.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 96.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                     }
                 }
 
@@ -78,11 +78,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
                 {
                     if (var10 < 32 && var10 > 16 && var11 > 16)
                     {
-                        Gui.func_146110_a(p_148279_2_, p_148279_3_, 64.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 64.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                     }
                     else
                     {
-                        Gui.func_146110_a(p_148279_2_, p_148279_3_, 64.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 64.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                     }
                 }
             }
@@ -118,12 +118,12 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
 
     protected boolean func_148309_e()
     {
-        return !this.field_148315_b.func_146961_a(this);
+        return !this.field_148315_b.hasResourcePackEntry(this);
     }
 
     protected boolean func_148308_f()
     {
-        return this.field_148315_b.func_146961_a(this);
+        return this.field_148315_b.hasResourcePackEntry(this);
     }
 
     protected boolean func_148314_g()
@@ -140,7 +140,7 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
         return var2 >= 0 && var2 < var1.size() - 1 && ((ResourcePackListEntry)var1.get(var2 + 1)).func_148310_d();
     }
 
-    public boolean func_148278_a(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_)
+    public boolean mousePressed(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_)
     {
         if (this.func_148310_d() && p_148278_5_ <= 32)
         {
@@ -183,5 +183,5 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
         return false;
     }
 
-    public void func_148277_b(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_) {}
+    public void mouseReleased(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_) {}
 }

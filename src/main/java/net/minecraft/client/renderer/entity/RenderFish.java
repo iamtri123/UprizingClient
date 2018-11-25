@@ -50,28 +50,28 @@ public class RenderFish extends Render
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
 
-        if (p_76986_1_.field_146042_b != null)
+        if (p_76986_1_.angler != null)
         {
-            float var20 = p_76986_1_.field_146042_b.getSwingProgress(p_76986_9_);
+            float var20 = p_76986_1_.angler.getSwingProgress(p_76986_9_);
             float var21 = MathHelper.sin(MathHelper.sqrt_float(var20) * (float)Math.PI);
             Vec3 var22 = Vec3.createVectorHelper(-0.5D, 0.03D, 0.8D);
-            var22.rotateAroundX(-(p_76986_1_.field_146042_b.prevRotationPitch + (p_76986_1_.field_146042_b.rotationPitch - p_76986_1_.field_146042_b.prevRotationPitch) * p_76986_9_) * (float)Math.PI / 180.0F);
-            var22.rotateAroundY(-(p_76986_1_.field_146042_b.prevRotationYaw + (p_76986_1_.field_146042_b.rotationYaw - p_76986_1_.field_146042_b.prevRotationYaw) * p_76986_9_) * (float)Math.PI / 180.0F);
+            var22.rotateAroundX(-(p_76986_1_.angler.prevRotationPitch + (p_76986_1_.angler.rotationPitch - p_76986_1_.angler.prevRotationPitch) * p_76986_9_) * (float)Math.PI / 180.0F);
+            var22.rotateAroundY(-(p_76986_1_.angler.prevRotationYaw + (p_76986_1_.angler.rotationYaw - p_76986_1_.angler.prevRotationYaw) * p_76986_9_) * (float)Math.PI / 180.0F);
             var22.rotateAroundY(var21 * 0.5F);
             var22.rotateAroundX(-var21 * 0.7F);
-            double var23 = p_76986_1_.field_146042_b.prevPosX + (p_76986_1_.field_146042_b.posX - p_76986_1_.field_146042_b.prevPosX) * (double)p_76986_9_ + var22.xCoord;
-            double var25 = p_76986_1_.field_146042_b.prevPosY + (p_76986_1_.field_146042_b.posY - p_76986_1_.field_146042_b.prevPosY) * (double)p_76986_9_ + var22.yCoord;
-            double var27 = p_76986_1_.field_146042_b.prevPosZ + (p_76986_1_.field_146042_b.posZ - p_76986_1_.field_146042_b.prevPosZ) * (double)p_76986_9_ + var22.zCoord;
-            double var29 = p_76986_1_.field_146042_b == Minecraft.getMinecraft().thePlayer ? 0.0D : (double)p_76986_1_.field_146042_b.getEyeHeight();
+            double var23 = p_76986_1_.angler.prevPosX + (p_76986_1_.angler.posX - p_76986_1_.angler.prevPosX) * (double)p_76986_9_ + var22.xCoord;
+            double var25 = p_76986_1_.angler.prevPosY + (p_76986_1_.angler.posY - p_76986_1_.angler.prevPosY) * (double)p_76986_9_ + var22.yCoord;
+            double var27 = p_76986_1_.angler.prevPosZ + (p_76986_1_.angler.posZ - p_76986_1_.angler.prevPosZ) * (double)p_76986_9_ + var22.zCoord;
+            double var29 = p_76986_1_.angler == Minecraft.getMinecraft().thePlayer ? 0.0D : (double)p_76986_1_.angler.getEyeHeight();
 
-            if (this.renderManager.options.thirdPersonView > 0 || p_76986_1_.field_146042_b != Minecraft.getMinecraft().thePlayer)
+            if (this.renderManager.options.thirdPersonView > 0 || p_76986_1_.angler != Minecraft.getMinecraft().thePlayer)
             {
-                float var31 = (p_76986_1_.field_146042_b.prevRenderYawOffset + (p_76986_1_.field_146042_b.renderYawOffset - p_76986_1_.field_146042_b.prevRenderYawOffset) * p_76986_9_) * (float)Math.PI / 180.0F;
+                float var31 = (p_76986_1_.angler.prevRenderYawOffset + (p_76986_1_.angler.renderYawOffset - p_76986_1_.angler.prevRenderYawOffset) * p_76986_9_) * (float)Math.PI / 180.0F;
                 double var32 = (double)MathHelper.sin(var31);
                 double var34 = (double)MathHelper.cos(var31);
-                var23 = p_76986_1_.field_146042_b.prevPosX + (p_76986_1_.field_146042_b.posX - p_76986_1_.field_146042_b.prevPosX) * (double)p_76986_9_ - var34 * 0.35D - var32 * 0.85D;
-                var25 = p_76986_1_.field_146042_b.prevPosY + var29 + (p_76986_1_.field_146042_b.posY - p_76986_1_.field_146042_b.prevPosY) * (double)p_76986_9_ - 0.45D;
-                var27 = p_76986_1_.field_146042_b.prevPosZ + (p_76986_1_.field_146042_b.posZ - p_76986_1_.field_146042_b.prevPosZ) * (double)p_76986_9_ - var32 * 0.35D + var34 * 0.85D;
+                var23 = p_76986_1_.angler.prevPosX + (p_76986_1_.angler.posX - p_76986_1_.angler.prevPosX) * (double)p_76986_9_ - var34 * 0.35D - var32 * 0.85D;
+                var25 = p_76986_1_.angler.prevPosY + var29 + (p_76986_1_.angler.posY - p_76986_1_.angler.prevPosY) * (double)p_76986_9_ - 0.45D;
+                var27 = p_76986_1_.angler.prevPosZ + (p_76986_1_.angler.posZ - p_76986_1_.angler.prevPosZ) * (double)p_76986_9_ - var32 * 0.35D + var34 * 0.85D;
             }
 
             double var46 = p_76986_1_.prevPosX + (p_76986_1_.posX - p_76986_1_.prevPosX) * (double)p_76986_9_;

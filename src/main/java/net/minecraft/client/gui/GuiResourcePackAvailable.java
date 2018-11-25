@@ -13,7 +13,7 @@ public class GuiResourcePackAvailable extends GuiResourcePackList
         super(p_i45054_1_, p_i45054_2_, p_i45054_3_, p_i45054_4_);
     }
 
-    protected String func_148202_k()
+    protected String getListHeader()
     {
         return I18n.format("resourcePack.available.title");
     }

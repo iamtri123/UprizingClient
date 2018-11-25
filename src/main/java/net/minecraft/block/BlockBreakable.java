@@ -8,15 +8,15 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockBreakable extends Block
 {
-    private final boolean field_149996_a;
-    private final String field_149995_b;
+    private final boolean ignoreSimilarity;
+    private final String name;
     private static final String __OBFID = "CL_00000254";
 
-    protected BlockBreakable(String p_i45411_1_, Material p_i45411_2_, boolean p_i45411_3_)
+    protected BlockBreakable(String name, Material materialIn, boolean ignoreSimilarity)
     {
-        super(p_i45411_2_);
-        this.field_149996_a = p_i45411_3_;
-        this.field_149995_b = p_i45411_1_;
+        super(materialIn);
+        this.ignoreSimilarity = ignoreSimilarity;
+        this.name = name;
     }
 
     public boolean isOpaqueCube()
@@ -24,13 +24,13 @@ public class BlockBreakable extends Block
         return false;
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        Block var6 = p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_);
+        Block var6 = worldIn.getBlock(x, y, z);
 
         if (this == Blocks.glass || this == Blocks.stained_glass)
         {
-            if (p_149646_1_.getBlockMetadata(p_149646_2_, p_149646_3_, p_149646_4_) != p_149646_1_.getBlockMetadata(p_149646_2_ - Facing.offsetsXForSide[p_149646_5_], p_149646_3_ - Facing.offsetsYForSide[p_149646_5_], p_149646_4_ - Facing.offsetsZForSide[p_149646_5_]))
+            if (worldIn.getBlockMetadata(x, y, z) != worldIn.getBlockMetadata(x - Facing.offsetsXForSide[side], y - Facing.offsetsYForSide[side], z - Facing.offsetsZForSide[side]))
             {
                 return true;
             }
@@ -41,11 +41,11 @@ public class BlockBreakable extends Block
             }
         }
 
-        return this.field_149996_a || var6 != this && super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
+        return this.ignoreSimilarity || var6 != this && super.shouldSideBeRendered(worldIn, x, y, z, side);
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon(this.field_149995_b);
+        this.blockIcon = reg.registerIcon(this.name);
     }
 }

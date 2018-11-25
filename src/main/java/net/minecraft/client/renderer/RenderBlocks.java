@@ -462,7 +462,7 @@ public class RenderBlocks
             this.uvRotateTop = 2;
         }
 
-        if (!BlockEndPortalFrame.func_150020_b(var5))
+        if (!BlockEndPortalFrame.isEnderEyeInserted(var5))
         {
             this.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 0.8125D, 1.0D);
             this.renderStandardBlock(p_147743_1_, p_147743_2_, p_147743_3_, p_147743_4_);
@@ -474,7 +474,7 @@ public class RenderBlocks
             this.renderAllFaces = true;
             this.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 0.8125D, 1.0D);
             this.renderStandardBlock(p_147743_1_, p_147743_2_, p_147743_3_, p_147743_4_);
-            this.setOverrideBlockTexture(p_147743_1_.func_150021_e());
+            this.setOverrideBlockTexture(p_147743_1_.getIconEndPortalFrameEye());
             this.setRenderBounds(0.25D, 0.8125D, 0.25D, 0.75D, 1.0D, 0.75D);
             this.renderStandardBlock(p_147743_1_, p_147743_2_, p_147743_3_, p_147743_4_);
             this.renderAllFaces = false;
@@ -491,8 +491,8 @@ public class RenderBlocks
     {
         Tessellator var5 = Tessellator.instance;
         int var6 = this.blockAccess.getBlockMetadata(p_147773_2_, p_147773_3_, p_147773_4_);
-        int var7 = BlockBed.func_149895_l(var6);
-        boolean var8 = BlockBed.func_149975_b(var6);
+        int var7 = BlockBed.getDirection(var6);
+        boolean var8 = BlockBed.isBlockHeadOfBed(var6);
 
         if (Reflector.ForgeBlock_getBedDirection.exists())
         {
@@ -657,7 +657,7 @@ public class RenderBlocks
     {
         this.setRenderBounds(0.4375D, 0.0D, 0.4375D, 0.5625D, 0.875D, 0.5625D);
         this.renderStandardBlock(p_147741_1_, p_147741_2_, p_147741_3_, p_147741_4_);
-        this.setOverrideBlockTexture(p_147741_1_.func_149959_e());
+        this.setOverrideBlockTexture(p_147741_1_.getIconBrewingStandBase());
         this.renderAllFaces = true;
         this.setRenderBounds(0.5625D, 0.0D, 0.3125D, 0.9375D, 0.125D, 0.6875D);
         this.renderStandardBlock(p_147741_1_, p_147741_2_, p_147741_3_, p_147741_4_);
@@ -761,20 +761,20 @@ public class RenderBlocks
         this.renderFaceXNeg(p_147785_1_, (double)((float)p_147785_2_ + 1.0F - var11), (double)p_147785_3_, (double)p_147785_4_, var151);
         this.renderFaceZPos(p_147785_1_, (double)p_147785_2_, (double)p_147785_3_, (double)((float)p_147785_4_ - 1.0F + var11), var151);
         this.renderFaceZNeg(p_147785_1_, (double)p_147785_2_, (double)p_147785_3_, (double)((float)p_147785_4_ + 1.0F - var11), var151);
-        IIcon var161 = BlockCauldron.func_150026_e("inner");
+        IIcon var161 = BlockCauldron.getCauldronIcon("inner");
         this.renderFaceYPos(p_147785_1_, (double)p_147785_2_, (double)((float)p_147785_3_ - 1.0F + 0.25F), (double)p_147785_4_, var161);
         this.renderFaceYNeg(p_147785_1_, (double)p_147785_2_, (double)((float)p_147785_3_ + 1.0F - 0.75F), (double)p_147785_4_, var161);
         int var13 = this.blockAccess.getBlockMetadata(p_147785_2_, p_147785_3_, p_147785_4_);
 
         if (var13 > 0)
         {
-            IIcon var14 = BlockLiquid.func_149803_e("water_still");
+            IIcon var14 = BlockLiquid.getLiquidIcon("water_still");
             int wc = CustomColorizer.getFluidColor(Blocks.water, this.blockAccess, p_147785_2_, p_147785_3_, p_147785_4_);
             float wr = (float)(wc >> 16 & 255) / 255.0F;
             float wg = (float)(wc >> 8 & 255) / 255.0F;
             float wb = (float)(wc & 255) / 255.0F;
             var5.setColorOpaque_F(wr, wg, wb);
-            this.renderFaceYPos(p_147785_1_, (double)p_147785_2_, (double)((float)p_147785_3_ - 1.0F + BlockCauldron.func_150025_c(var13)), (double)p_147785_4_, var14);
+            this.renderFaceYPos(p_147785_1_, (double)p_147785_2_, (double)((float)p_147785_3_ - 1.0F + BlockCauldron.getRenderLiquidLevel(var13)), (double)p_147785_4_, var14);
         }
 
         return true;
@@ -816,8 +816,8 @@ public class RenderBlocks
 
         if (var211 != null && var211 instanceof TileEntityFlowerPot)
         {
-            Item var221 = ((TileEntityFlowerPot)var211).func_145965_a();
-            int var14 = ((TileEntityFlowerPot)var211).func_145966_b();
+            Item var221 = ((TileEntityFlowerPot)var211).getFlowerPotItem();
+            int var14 = ((TileEntityFlowerPot)var211).getFlowerPotData();
 
             if (var221 instanceof ItemBlock)
             {
@@ -968,7 +968,7 @@ public class RenderBlocks
 
         p_147737_7_ /= 2.0F;
         p_147737_9_ /= 2.0F;
-        p_147737_1_.field_149833_b = p_147737_5_;
+        p_147737_1_.anvilRenderSide = p_147737_5_;
         this.setRenderBounds((double)(0.5F - p_147737_7_), (double)p_147737_6_, (double)(0.5F - p_147737_9_), (double)(0.5F + p_147737_7_), (double)(p_147737_6_ + p_147737_8_), (double)(0.5F + p_147737_9_));
 
         if (p_147737_11_)
@@ -1071,22 +1071,22 @@ public class RenderBlocks
         {
             case 0:
                 var18 = -0.3125D;
-                var14 = BlockRedstoneRepeater.field_149973_b[var7];
+                var14 = BlockRedstoneRepeater.repeaterTorchOffset[var7];
                 break;
 
             case 1:
                 var16 = 0.3125D;
-                var12 = -BlockRedstoneRepeater.field_149973_b[var7];
+                var12 = -BlockRedstoneRepeater.repeaterTorchOffset[var7];
                 break;
 
             case 2:
                 var18 = 0.3125D;
-                var14 = -BlockRedstoneRepeater.field_149973_b[var7];
+                var14 = -BlockRedstoneRepeater.repeaterTorchOffset[var7];
                 break;
 
             case 3:
                 var16 = -0.3125D;
-                var12 = BlockRedstoneRepeater.field_149973_b[var7];
+                var12 = BlockRedstoneRepeater.repeaterTorchOffset[var7];
         }
 
         if (!var11)
@@ -1260,7 +1260,7 @@ public class RenderBlocks
     {
         int var6 = this.blockAccess.getBlockMetadata(p_147731_2_, p_147731_3_, p_147731_4_);
         boolean var7 = p_147731_5_ || (var6 & 8) != 0;
-        int var8 = BlockPistonBase.func_150076_b(var6);
+        int var8 = BlockPistonBase.getPistonOrientation(var6);
         float var9 = 0.25F;
 
         if (var7)
@@ -1374,7 +1374,7 @@ public class RenderBlocks
 
     public void renderPistonRodUD(double p_147763_1_, double p_147763_3_, double p_147763_5_, double p_147763_7_, double p_147763_9_, double p_147763_11_, float p_147763_13_, double p_147763_14_)
     {
-        IIcon var16 = BlockPistonBase.func_150074_e("piston_side");
+        IIcon var16 = BlockPistonBase.getPistonBaseIcon("piston_side");
 
         if (this.hasOverrideBlockTexture())
         {
@@ -1395,7 +1395,7 @@ public class RenderBlocks
 
     public void renderPistonRodSN(double p_147789_1_, double p_147789_3_, double p_147789_5_, double p_147789_7_, double p_147789_9_, double p_147789_11_, float p_147789_13_, double p_147789_14_)
     {
-        IIcon var16 = BlockPistonBase.func_150074_e("piston_side");
+        IIcon var16 = BlockPistonBase.getPistonBaseIcon("piston_side");
 
         if (this.hasOverrideBlockTexture())
         {
@@ -1416,7 +1416,7 @@ public class RenderBlocks
 
     public void renderPistonRodEW(double p_147738_1_, double p_147738_3_, double p_147738_5_, double p_147738_7_, double p_147738_9_, double p_147738_11_, float p_147738_13_, double p_147738_14_)
     {
-        IIcon var16 = BlockPistonBase.func_150074_e("piston_side");
+        IIcon var16 = BlockPistonBase.getPistonBaseIcon("piston_side");
 
         if (this.hasOverrideBlockTexture())
         {
@@ -1445,7 +1445,7 @@ public class RenderBlocks
     public boolean renderPistonExtension(Block p_147809_1_, int p_147809_2_, int p_147809_3_, int p_147809_4_, boolean p_147809_5_)
     {
         int var6 = this.blockAccess.getBlockMetadata(p_147809_2_, p_147809_3_, p_147809_4_);
-        int var7 = BlockPistonExtension.func_150085_b(var6);
+        int var7 = BlockPistonExtension.getDirectionMeta(var6);
         float var8 = 0.25F;
         float var9 = 0.375F;
         float var10 = 0.625F;
@@ -2270,8 +2270,8 @@ public class RenderBlocks
     public boolean renderBlockFire(BlockFire p_147801_1_, int p_147801_2_, int p_147801_3_, int p_147801_4_)
     {
         Tessellator var5 = Tessellator.instance;
-        IIcon var6 = p_147801_1_.func_149840_c(0);
-        IIcon var7 = p_147801_1_.func_149840_c(1);
+        IIcon var6 = p_147801_1_.getFireIcon(0);
+        IIcon var7 = p_147801_1_.getFireIcon(1);
         IIcon var8 = var6;
 
         if (this.hasOverrideBlockTexture())
@@ -2294,7 +2294,7 @@ public class RenderBlocks
         double var30;
         double var32;
 
-        if (!World.doesBlockHaveSolidTopSurface(this.blockAccess, p_147801_2_, p_147801_3_ - 1, p_147801_4_) && !Blocks.fire.func_149844_e(this.blockAccess, p_147801_2_, p_147801_3_ - 1, p_147801_4_))
+        if (!World.doesBlockHaveSolidTopSurface(this.blockAccess, p_147801_2_, p_147801_3_ - 1, p_147801_4_) && !Blocks.fire.canBlockCatchFire(this.blockAccess, p_147801_2_, p_147801_3_ - 1, p_147801_4_))
         {
             float var36 = 0.2F;
             float var19 = 0.0625F;
@@ -2314,7 +2314,7 @@ public class RenderBlocks
                 var9 = var20;
             }
 
-            if (Blocks.fire.func_149844_e(this.blockAccess, p_147801_2_ - 1, p_147801_3_, p_147801_4_))
+            if (Blocks.fire.canBlockCatchFire(this.blockAccess, p_147801_2_ - 1, p_147801_3_, p_147801_4_))
             {
                 var5.addVertexWithUV((double)((float)p_147801_2_ + var36), (double)((float)p_147801_3_ + var17 + var19), (double)(p_147801_4_ + 1), var13, var11);
                 var5.addVertexWithUV((double)(p_147801_2_ + 0), (double)((float)(p_147801_3_ + 0) + var19), (double)(p_147801_4_ + 1), var13, var15);
@@ -2326,7 +2326,7 @@ public class RenderBlocks
                 var5.addVertexWithUV((double)((float)p_147801_2_ + var36), (double)((float)p_147801_3_ + var17 + var19), (double)(p_147801_4_ + 1), var13, var11);
             }
 
-            if (Blocks.fire.func_149844_e(this.blockAccess, p_147801_2_ + 1, p_147801_3_, p_147801_4_))
+            if (Blocks.fire.canBlockCatchFire(this.blockAccess, p_147801_2_ + 1, p_147801_3_, p_147801_4_))
             {
                 var5.addVertexWithUV((double)((float)(p_147801_2_ + 1) - var36), (double)((float)p_147801_3_ + var17 + var19), (double)(p_147801_4_ + 0), var9, var11);
                 var5.addVertexWithUV((double)(p_147801_2_ + 1 - 0), (double)((float)(p_147801_3_ + 0) + var19), (double)(p_147801_4_ + 0), var9, var15);
@@ -2338,7 +2338,7 @@ public class RenderBlocks
                 var5.addVertexWithUV((double)((float)(p_147801_2_ + 1) - var36), (double)((float)p_147801_3_ + var17 + var19), (double)(p_147801_4_ + 0), var9, var11);
             }
 
-            if (Blocks.fire.func_149844_e(this.blockAccess, p_147801_2_, p_147801_3_, p_147801_4_ - 1))
+            if (Blocks.fire.canBlockCatchFire(this.blockAccess, p_147801_2_, p_147801_3_, p_147801_4_ - 1))
             {
                 var5.addVertexWithUV((double)(p_147801_2_ + 0), (double)((float)p_147801_3_ + var17 + var19), (double)((float)p_147801_4_ + var36), var13, var11);
                 var5.addVertexWithUV((double)(p_147801_2_ + 0), (double)((float)(p_147801_3_ + 0) + var19), (double)(p_147801_4_ + 0), var13, var15);
@@ -2350,7 +2350,7 @@ public class RenderBlocks
                 var5.addVertexWithUV((double)(p_147801_2_ + 0), (double)((float)p_147801_3_ + var17 + var19), (double)((float)p_147801_4_ + var36), var13, var11);
             }
 
-            if (Blocks.fire.func_149844_e(this.blockAccess, p_147801_2_, p_147801_3_, p_147801_4_ + 1))
+            if (Blocks.fire.canBlockCatchFire(this.blockAccess, p_147801_2_, p_147801_3_, p_147801_4_ + 1))
             {
                 var5.addVertexWithUV((double)(p_147801_2_ + 1), (double)((float)p_147801_3_ + var17 + var19), (double)((float)(p_147801_4_ + 1) - var36), var9, var11);
                 var5.addVertexWithUV((double)(p_147801_2_ + 1), (double)((float)(p_147801_3_ + 0) + var19), (double)(p_147801_4_ + 1 - 0), var9, var15);
@@ -2362,7 +2362,7 @@ public class RenderBlocks
                 var5.addVertexWithUV((double)(p_147801_2_ + 1), (double)((float)p_147801_3_ + var17 + var19), (double)((float)(p_147801_4_ + 1) - var36), var9, var11);
             }
 
-            if (Blocks.fire.func_149844_e(this.blockAccess, p_147801_2_, p_147801_3_ + 1, p_147801_4_))
+            if (Blocks.fire.canBlockCatchFire(this.blockAccess, p_147801_2_, p_147801_3_ + 1, p_147801_4_))
             {
                 var20 = (double)p_147801_2_ + 0.5D + 0.5D;
                 var22 = (double)p_147801_2_ + 0.5D - 0.5D;
@@ -2478,10 +2478,10 @@ public class RenderBlocks
     {
         Tessellator var5 = Tessellator.instance;
         int var6 = this.blockAccess.getBlockMetadata(p_147788_2_, p_147788_3_, p_147788_4_);
-        IIcon var7 = BlockRedstoneWire.func_150173_e("cross");
-        IIcon var8 = BlockRedstoneWire.func_150173_e("line");
-        IIcon var9 = BlockRedstoneWire.func_150173_e("cross_overlay");
-        IIcon var10 = BlockRedstoneWire.func_150173_e("line_overlay");
+        IIcon var7 = BlockRedstoneWire.getRedstoneWireIcon("cross");
+        IIcon var8 = BlockRedstoneWire.getRedstoneWireIcon("line");
+        IIcon var9 = BlockRedstoneWire.getRedstoneWireIcon("cross_overlay");
+        IIcon var10 = BlockRedstoneWire.getRedstoneWireIcon("line_overlay");
         var5.setBrightness(p_147788_1_.getBlockBrightness(this.blockAccess, p_147788_2_, p_147788_3_, p_147788_4_));
         float var11 = (float)var6 / 15.0F;
         float var12 = var11 * 0.6F + 0.4F;
@@ -2519,29 +2519,29 @@ public class RenderBlocks
         var5.setColorOpaque_F(var12, var13, var14);
         double var151 = 0.015625D;
         double var171 = 0.015625D;
-        boolean var19 = BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_ - 1, p_147788_3_, p_147788_4_, 1) || !this.blockAccess.getBlock(p_147788_2_ - 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_ - 1, p_147788_3_ - 1, p_147788_4_, -1);
-        boolean var20 = BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_ + 1, p_147788_3_, p_147788_4_, 3) || !this.blockAccess.getBlock(p_147788_2_ + 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_ + 1, p_147788_3_ - 1, p_147788_4_, -1);
-        boolean var21 = BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_, p_147788_3_, p_147788_4_ - 1, 2) || !this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ - 1).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_, p_147788_3_ - 1, p_147788_4_ - 1, -1);
-        boolean var22 = BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_, p_147788_3_, p_147788_4_ + 1, 0) || !this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ + 1).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_, p_147788_3_ - 1, p_147788_4_ + 1, -1);
+        boolean var19 = BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_ - 1, p_147788_3_, p_147788_4_, 1) || !this.blockAccess.getBlock(p_147788_2_ - 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_ - 1, p_147788_3_ - 1, p_147788_4_, -1);
+        boolean var20 = BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_ + 1, p_147788_3_, p_147788_4_, 3) || !this.blockAccess.getBlock(p_147788_2_ + 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_ + 1, p_147788_3_ - 1, p_147788_4_, -1);
+        boolean var21 = BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_, p_147788_3_, p_147788_4_ - 1, 2) || !this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ - 1).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_, p_147788_3_ - 1, p_147788_4_ - 1, -1);
+        boolean var22 = BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_, p_147788_3_, p_147788_4_ + 1, 0) || !this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ + 1).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_, p_147788_3_ - 1, p_147788_4_ + 1, -1);
 
         if (!this.blockAccess.getBlock(p_147788_2_, p_147788_3_ + 1, p_147788_4_).isBlockNormalCube())
         {
-            if (this.blockAccess.getBlock(p_147788_2_ - 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_ - 1, p_147788_3_ + 1, p_147788_4_, -1))
+            if (this.blockAccess.getBlock(p_147788_2_ - 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_ - 1, p_147788_3_ + 1, p_147788_4_, -1))
             {
                 var19 = true;
             }
 
-            if (this.blockAccess.getBlock(p_147788_2_ + 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_ + 1, p_147788_3_ + 1, p_147788_4_, -1))
+            if (this.blockAccess.getBlock(p_147788_2_ + 1, p_147788_3_, p_147788_4_).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_ + 1, p_147788_3_ + 1, p_147788_4_, -1))
             {
                 var20 = true;
             }
 
-            if (this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ - 1).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_, p_147788_3_ + 1, p_147788_4_ - 1, -1))
+            if (this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ - 1).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_, p_147788_3_ + 1, p_147788_4_ - 1, -1))
             {
                 var21 = true;
             }
 
-            if (this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ + 1).isBlockNormalCube() && BlockRedstoneWire.func_150174_f(this.blockAccess, p_147788_2_, p_147788_3_ + 1, p_147788_4_ + 1, -1))
+            if (this.blockAccess.getBlock(p_147788_2_, p_147788_3_, p_147788_4_ + 1).isBlockNormalCube() && BlockRedstoneWire.isPowerProviderOrWire(this.blockAccess, p_147788_2_, p_147788_3_ + 1, p_147788_4_ + 1, -1))
             {
                 var22 = true;
             }
@@ -2731,7 +2731,7 @@ public class RenderBlocks
             var7 = ConnectedTextures.getConnectedTexture(this.blockAccess, p_147766_1_, p_147766_2_, p_147766_3_, p_147766_4_, 1, var7);
         }
 
-        if (p_147766_1_.func_150050_e())
+        if (p_147766_1_.isPowered())
         {
             var6 &= 7;
         }
@@ -3064,10 +3064,10 @@ public class RenderBlocks
         double xHalfMax = (double)x + 0.5D + 0.0625D;
         double zHalfMin = (double)z + 0.5D - 0.0625D;
         double zHalfMax = (double)z + 0.5D + 0.0625D;
-        boolean connZNeg = isStainedGlass1 ? ((BlockStainedGlassPane)block).func_150098_a(this.blockAccess.getBlock(x, y, z - 1)) : ((BlockPane)block).func_150098_a(this.blockAccess.getBlock(x, y, z - 1));
-        boolean connZPos = isStainedGlass1 ? ((BlockStainedGlassPane)block).func_150098_a(this.blockAccess.getBlock(x, y, z + 1)) : ((BlockPane)block).func_150098_a(this.blockAccess.getBlock(x, y, z + 1));
-        boolean connXNeg = isStainedGlass1 ? ((BlockStainedGlassPane)block).func_150098_a(this.blockAccess.getBlock(x - 1, y, z)) : ((BlockPane)block).func_150098_a(this.blockAccess.getBlock(x - 1, y, z));
-        boolean connXPos = isStainedGlass1 ? ((BlockStainedGlassPane)block).func_150098_a(this.blockAccess.getBlock(x + 1, y, z)) : ((BlockPane)block).func_150098_a(this.blockAccess.getBlock(x + 1, y, z));
+        boolean connZNeg = isStainedGlass1 ? ((BlockStainedGlassPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x, y, z - 1)) : ((BlockPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x, y, z - 1));
+        boolean connZPos = isStainedGlass1 ? ((BlockStainedGlassPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x, y, z + 1)) : ((BlockPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x, y, z + 1));
+        boolean connXNeg = isStainedGlass1 ? ((BlockStainedGlassPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x - 1, y, z)) : ((BlockPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x - 1, y, z));
+        boolean connXPos = isStainedGlass1 ? ((BlockStainedGlassPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x + 1, y, z)) : ((BlockPane)block).canPaneConnectToBlock(this.blockAccess.getBlock(x + 1, y, z));
         double var58 = 0.001D;
         double var60 = 0.999D;
         double var62 = 0.001D;
@@ -3549,10 +3549,10 @@ public class RenderBlocks
         double var47 = (double)p_147767_2_ + 0.5D + 0.0625D;
         double var49 = (double)p_147767_4_ + 0.5D - 0.0625D;
         double var51 = (double)p_147767_4_ + 0.5D + 0.0625D;
-        boolean var53 = p_147767_1_.func_150098_a(this.blockAccess.getBlock(p_147767_2_, p_147767_3_, p_147767_4_ - 1));
-        boolean var54 = p_147767_1_.func_150098_a(this.blockAccess.getBlock(p_147767_2_, p_147767_3_, p_147767_4_ + 1));
-        boolean var55 = p_147767_1_.func_150098_a(this.blockAccess.getBlock(p_147767_2_ - 1, p_147767_3_, p_147767_4_));
-        boolean var56 = p_147767_1_.func_150098_a(this.blockAccess.getBlock(p_147767_2_ + 1, p_147767_3_, p_147767_4_));
+        boolean var53 = p_147767_1_.canPaneConnectToBlock(this.blockAccess.getBlock(p_147767_2_, p_147767_3_, p_147767_4_ - 1));
+        boolean var54 = p_147767_1_.canPaneConnectToBlock(this.blockAccess.getBlock(p_147767_2_, p_147767_3_, p_147767_4_ + 1));
+        boolean var55 = p_147767_1_.canPaneConnectToBlock(this.blockAccess.getBlock(p_147767_2_ - 1, p_147767_3_, p_147767_4_));
+        boolean var56 = p_147767_1_.canPaneConnectToBlock(this.blockAccess.getBlock(p_147767_2_ + 1, p_147767_3_, p_147767_4_));
         boolean var57 = p_147767_1_.shouldSideBeRendered(this.blockAccess, p_147767_2_, p_147767_3_ + 1, p_147767_4_, 1);
         boolean var58 = p_147767_1_.shouldSideBeRendered(this.blockAccess, p_147767_2_, p_147767_3_ - 1, p_147767_4_, 0);
         double var59 = 0.01D;
@@ -4045,7 +4045,7 @@ public class RenderBlocks
 
         if (var20 && var60 == 0)
         {
-            IIcon var22 = p_147774_1_.field_149891_b[0];
+            IIcon var22 = p_147774_1_.sunflowerIcons[0];
             double var23 = Math.cos((double)var581 * 0.8D) * Math.PI * 0.1D;
             double var25 = Math.cos(var23);
             double var27 = Math.sin(var23);
@@ -4067,7 +4067,7 @@ public class RenderBlocks
             var5.addVertexWithUV(var591 + var53, var14 + 1.0D, var16 + var55, var33, var35);
             var5.addVertexWithUV(var591 + var41, var14 + 0.0D, var16 + var43, var33, var31);
             var5.addVertexWithUV(var591 + var45, var14 + 0.0D, var16 + var47, var29, var31);
-            IIcon var57 = p_147774_1_.field_149891_b[1];
+            IIcon var57 = p_147774_1_.sunflowerIcons[1];
             var29 = (double)var57.getMinU();
             var31 = (double)var57.getMinV();
             var33 = (double)var57.getMaxU();
@@ -4108,7 +4108,7 @@ public class RenderBlocks
 
         var6.setColorOpaque_F(var8, var9, var10);
         var5.setBlockBoundsBasedOnState(this.blockAccess, p_147724_2_, p_147724_3_, p_147724_4_);
-        int var141 = var5.func_149873_e(this.blockAccess, p_147724_2_, p_147724_3_, p_147724_4_);
+        int var141 = var5.getState(this.blockAccess, p_147724_2_, p_147724_3_, p_147724_4_);
 
         if (var141 < 0)
         {
@@ -4305,7 +4305,7 @@ public class RenderBlocks
     public void renderBlockStemBig(BlockStem p_147740_1_, int p_147740_2_, int p_147740_3_, double p_147740_4_, double p_147740_6_, double p_147740_8_, double p_147740_10_)
     {
         Tessellator var12 = Tessellator.instance;
-        IIcon var13 = p_147740_1_.func_149872_i();
+        IIcon var13 = p_147740_1_.getStemIcon();
 
         if (this.hasOverrideBlockTexture())
         {
@@ -4455,7 +4455,7 @@ public class RenderBlocks
             {
                 var13 = true;
                 IIcon var57 = this.getBlockIconFromSideAndMetadata(p_147721_1_, 1, var23);
-                float var58 = (float)BlockLiquid.func_149802_a(this.blockAccess, p_147721_2_, p_147721_3_, p_147721_4_, var22);
+                float var58 = (float)BlockLiquid.getFlowDirection(this.blockAccess, p_147721_2_, p_147721_3_, p_147721_4_, var22);
 
                 if (var58 > -999.0F)
                 {
@@ -4632,11 +4632,11 @@ public class RenderBlocks
 
                 if (var12 >= 8 || var12 == 0)
                 {
-                    var6 += BlockLiquid.func_149801_b(var12) * 10.0F;
+                    var6 += BlockLiquid.getLiquidHeightPercent(var12) * 10.0F;
                     var5 += 10;
                 }
 
-                var6 += BlockLiquid.func_149801_b(var12);
+                var6 += BlockLiquid.getLiquidHeightPercent(var12);
                 ++var5;
             }
             else if (!var11.isSolid())
@@ -4676,9 +4676,9 @@ public class RenderBlocks
     /**
      * Renders a standard cube block at the given coordinates
      */
-    public boolean renderStandardBlock(Block p_147784_1_, int p_147784_2_, int p_147784_3_, int p_147784_4_)
+    public boolean renderStandardBlock(Block blockType, int blockX, int blockY, int blockZ)
     {
-        int var5 = CustomColorizer.getColorMultiplier(p_147784_1_, this.blockAccess, p_147784_2_, p_147784_3_, p_147784_4_);
+        int var5 = CustomColorizer.getColorMultiplier(blockType, this.blockAccess, blockX, blockY, blockZ);
         float var6 = (float)(var5 >> 16 & 255) / 255.0F;
         float var7 = (float)(var5 >> 8 & 255) / 255.0F;
         float var8 = (float)(var5 & 255) / 255.0F;
@@ -4693,7 +4693,7 @@ public class RenderBlocks
             var8 = var11;
         }
 
-        return Minecraft.isAmbientOcclusionEnabled() && p_147784_1_.getLightValue() == 0 ? (this.partialRenderBounds ? this.renderStandardBlockWithAmbientOcclusionPartial(p_147784_1_, p_147784_2_, p_147784_3_, p_147784_4_, var6, var7, var8) : this.renderStandardBlockWithAmbientOcclusion(p_147784_1_, p_147784_2_, p_147784_3_, p_147784_4_, var6, var7, var8)) : this.renderStandardBlockWithColorMultiplier(p_147784_1_, p_147784_2_, p_147784_3_, p_147784_4_, var6, var7, var8);
+        return Minecraft.isAmbientOcclusionEnabled() && blockType.getLightValue() == 0 ? (this.partialRenderBounds ? this.renderStandardBlockWithAmbientOcclusionPartial(blockType, blockX, blockY, blockZ, var6, var7, var8) : this.renderStandardBlockWithAmbientOcclusion(blockType, blockX, blockY, blockZ, var6, var7, var8)) : this.renderStandardBlockWithColorMultiplier(blockType, blockX, blockY, blockZ, var6, var7, var8);
     }
 
     public boolean renderBlockLog(Block p_147742_1_, int p_147742_2_, int p_147742_3_, int p_147742_4_)
@@ -5185,7 +5185,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147751_7_;
                 this.colorBlueBottomRight *= p_147751_7_;
                 this.colorBlueTopRight *= p_147751_7_;
-                this.renderFaceZNeg(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.func_149990_e());
+                this.renderFaceZNeg(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -5339,7 +5339,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147751_7_;
                 this.colorBlueBottomRight *= p_147751_7_;
                 this.colorBlueTopRight *= p_147751_7_;
-                this.renderFaceZPos(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.func_149990_e());
+                this.renderFaceZPos(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -5493,7 +5493,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147751_7_;
                 this.colorBlueBottomRight *= p_147751_7_;
                 this.colorBlueTopRight *= p_147751_7_;
-                this.renderFaceXNeg(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.func_149990_e());
+                this.renderFaceXNeg(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -5647,7 +5647,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147751_7_;
                 this.colorBlueBottomRight *= p_147751_7_;
                 this.colorBlueTopRight *= p_147751_7_;
-                this.renderFaceXPos(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.func_149990_e());
+                this.renderFaceXPos(p_147751_1_, (double)p_147751_2_, (double)p_147751_3_, (double)p_147751_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -6051,7 +6051,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147808_7_;
                 this.colorBlueBottomRight *= p_147808_7_;
                 this.colorBlueTopRight *= p_147808_7_;
-                this.renderFaceZNeg(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.func_149990_e());
+                this.renderFaceZNeg(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -6193,7 +6193,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147808_7_;
                 this.colorBlueBottomRight *= p_147808_7_;
                 this.colorBlueTopRight *= p_147808_7_;
-                this.renderFaceZPos(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.func_149990_e());
+                this.renderFaceZPos(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -6335,7 +6335,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147808_7_;
                 this.colorBlueBottomRight *= p_147808_7_;
                 this.colorBlueTopRight *= p_147808_7_;
-                this.renderFaceXNeg(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.func_149990_e());
+                this.renderFaceXNeg(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -6477,7 +6477,7 @@ public class RenderBlocks
                 this.colorBlueBottomLeft *= p_147808_7_;
                 this.colorBlueBottomRight *= p_147808_7_;
                 this.colorBlueTopRight *= p_147808_7_;
-                this.renderFaceXPos(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.func_149990_e());
+                this.renderFaceXPos(p_147808_1_, (double)p_147808_2_, (double)p_147808_3_, (double)p_147808_4_, BlockGrass.getIconSideOverlay());
             }
 
             var8 = true;
@@ -6618,7 +6618,7 @@ public class RenderBlocks
             if (defaultTexture && fancyGrass && var271 == TextureUtils.iconGrassSide && !this.hasOverrideBlockTexture())
             {
                 var8.setColorOpaque_F(var19 * p_147736_5_, var22 * p_147736_6_, var25 * p_147736_7_);
-                this.renderFaceZNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.func_149990_e());
+                this.renderFaceZNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
             }
 
             var9 = true;
@@ -6670,7 +6670,7 @@ public class RenderBlocks
             if (defaultTexture && fancyGrass && var271 == TextureUtils.iconGrassSide && !this.hasOverrideBlockTexture())
             {
                 var8.setColorOpaque_F(var19 * p_147736_5_, var22 * p_147736_6_, var25 * p_147736_7_);
-                this.renderFaceZPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.func_149990_e());
+                this.renderFaceZPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
             }
 
             var9 = true;
@@ -6722,7 +6722,7 @@ public class RenderBlocks
             if (defaultTexture && fancyGrass && var271 == TextureUtils.iconGrassSide && !this.hasOverrideBlockTexture())
             {
                 var8.setColorOpaque_F(var19 * p_147736_5_, var22 * p_147736_6_, var25 * p_147736_7_);
-                this.renderFaceXNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.func_149990_e());
+                this.renderFaceXNeg(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
             }
 
             var9 = true;
@@ -6774,7 +6774,7 @@ public class RenderBlocks
             if (defaultTexture && fancyGrass && var271 == TextureUtils.iconGrassSide && !this.hasOverrideBlockTexture())
             {
                 var8.setColorOpaque_F(var19 * p_147736_5_, var22 * p_147736_6_, var25 * p_147736_7_);
-                this.renderFaceXPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.func_149990_e());
+                this.renderFaceXPos(p_147736_1_, (double)p_147736_2_, (double)p_147736_3_, (double)p_147736_4_, BlockGrass.getIconSideOverlay());
             }
 
             var9 = true;
@@ -6789,9 +6789,9 @@ public class RenderBlocks
         var5.setBrightness(p_147772_1_.getBlockBrightness(this.blockAccess, p_147772_2_, p_147772_3_, p_147772_4_));
         var5.setColorOpaque_F(1.0F, 1.0F, 1.0F);
         int var6 = this.blockAccess.getBlockMetadata(p_147772_2_, p_147772_3_, p_147772_4_);
-        int var7 = BlockDirectional.func_149895_l(var6);
+        int var7 = BlockDirectional.getDirection(var6);
         int var8 = BlockCocoa.func_149987_c(var6);
-        IIcon var9 = p_147772_1_.func_149988_b(var8);
+        IIcon var9 = p_147772_1_.getCocoaIcon(var8);
         int var10 = 4 + var8 * 2;
         int var11 = 5 + var8 * 2;
         double var12 = 15.0D - (double)var10;
@@ -7051,20 +7051,20 @@ public class RenderBlocks
         boolean var8 = false;
         boolean var9 = false;
 
-        if (p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_ - 1, p_147735_3_, p_147735_4_) || p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_ + 1, p_147735_3_, p_147735_4_))
+        if (p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_ - 1, p_147735_3_, p_147735_4_) || p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_ + 1, p_147735_3_, p_147735_4_))
         {
             var8 = true;
         }
 
-        if (p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ - 1) || p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ + 1))
+        if (p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ - 1) || p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ + 1))
         {
             var9 = true;
         }
 
-        boolean var10 = p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_ - 1, p_147735_3_, p_147735_4_);
-        boolean var11 = p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_ + 1, p_147735_3_, p_147735_4_);
-        boolean var12 = p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ - 1);
-        boolean var13 = p_147735_1_.func_149826_e(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ + 1);
+        boolean var10 = p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_ - 1, p_147735_3_, p_147735_4_);
+        boolean var11 = p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_ + 1, p_147735_3_, p_147735_4_);
+        boolean var12 = p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ - 1);
+        boolean var13 = p_147735_1_.canConnectFenceTo(this.blockAccess, p_147735_2_, p_147735_3_, p_147735_4_ + 1);
 
         if (!var8 && !var9)
         {
@@ -7125,10 +7125,10 @@ public class RenderBlocks
 
     public boolean renderBlockWall(BlockWall p_147807_1_, int p_147807_2_, int p_147807_3_, int p_147807_4_)
     {
-        boolean var5 = p_147807_1_.func_150091_e(this.blockAccess, p_147807_2_ - 1, p_147807_3_, p_147807_4_);
-        boolean var6 = p_147807_1_.func_150091_e(this.blockAccess, p_147807_2_ + 1, p_147807_3_, p_147807_4_);
-        boolean var7 = p_147807_1_.func_150091_e(this.blockAccess, p_147807_2_, p_147807_3_, p_147807_4_ - 1);
-        boolean var8 = p_147807_1_.func_150091_e(this.blockAccess, p_147807_2_, p_147807_3_, p_147807_4_ + 1);
+        boolean var5 = p_147807_1_.canConnectWallTo(this.blockAccess, p_147807_2_ - 1, p_147807_3_, p_147807_4_);
+        boolean var6 = p_147807_1_.canConnectWallTo(this.blockAccess, p_147807_2_ + 1, p_147807_3_, p_147807_4_);
+        boolean var7 = p_147807_1_.canConnectWallTo(this.blockAccess, p_147807_2_, p_147807_3_, p_147807_4_ - 1);
+        boolean var8 = p_147807_1_.canConnectWallTo(this.blockAccess, p_147807_2_, p_147807_3_, p_147807_4_ + 1);
         boolean var9 = var7 && var8 && !var5 && !var6;
         boolean var10 = !var7 && !var8 && var5 && var6;
         boolean var11 = this.blockAccess.isAirBlock(p_147807_2_, p_147807_3_ + 1, p_147807_4_);
@@ -7258,7 +7258,7 @@ public class RenderBlocks
         boolean var5 = true;
         int var6 = this.blockAccess.getBlockMetadata(p_147776_2_, p_147776_3_, p_147776_4_);
         boolean var7 = BlockFenceGate.isFenceGateOpen(var6);
-        int var8 = BlockDirectional.func_149895_l(var6);
+        int var8 = BlockDirectional.getDirection(var6);
         float var9 = 0.375F;
         float var10 = 0.5625F;
         float var11 = 0.75F;
@@ -7500,7 +7500,7 @@ public class RenderBlocks
     public boolean renderBlockHopperMetadata(BlockHopper p_147799_1_, int p_147799_2_, int p_147799_3_, int p_147799_4_, int p_147799_5_, boolean p_147799_6_)
     {
         Tessellator var7 = Tessellator.instance;
-        int var8 = BlockHopper.func_149918_b(p_147799_5_);
+        int var8 = BlockHopper.getDirectionFromMetadata(p_147799_5_);
         double var9 = 0.625D;
         this.setRenderBounds(0.0D, var9, 0.0D, 1.0D, 1.0D, 1.0D);
 
@@ -7559,8 +7559,8 @@ public class RenderBlocks
             var7.setColorOpaque_F(var25, var13, var26);
         }
 
-        IIcon var241 = BlockHopper.func_149916_e("hopper_outside");
-        IIcon var251 = BlockHopper.func_149916_e("hopper_inside");
+        IIcon var241 = BlockHopper.getHopperIcon("hopper_outside");
+        IIcon var251 = BlockHopper.getHopperIcon("hopper_inside");
         var13 = 0.125F;
 
         if (p_147799_6_)
@@ -7675,7 +7675,7 @@ public class RenderBlocks
 
     public boolean renderBlockStairs(BlockStairs p_147722_1_, int p_147722_2_, int p_147722_3_, int p_147722_4_)
     {
-        p_147722_1_.func_150147_e(this.blockAccess, p_147722_2_, p_147722_3_, p_147722_4_);
+        p_147722_1_.setBaseBounds(this.blockAccess, p_147722_2_, p_147722_3_, p_147722_4_);
         this.setRenderBoundsFromBlock(p_147722_1_);
         this.renderStandardBlock(p_147722_1_, p_147722_2_, p_147722_3_, p_147722_4_);
         this.field_152631_f = true;
@@ -8936,7 +8936,7 @@ public class RenderBlocks
             {
                 GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-                TileEntityRendererChestHelper.instance.func_147715_a(p_147800_1_, p_147800_2_, p_147800_3_);
+                TileEntityRendererChestHelper.instance.renderChest(p_147800_1_, p_147800_2_, p_147800_3_);
                 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             }
             else if (var6 == 6)

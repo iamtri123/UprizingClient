@@ -14,16 +14,16 @@ public abstract class Packet
     /**
      * Returns a packet instance, given the params: BiMap<int, (Packet) Class> and (int) id
      */
-    public static Packet generatePacket(BiMap p_148839_0_, int p_148839_1_)
+    public static Packet generatePacket(BiMap protocolMap, int packetId)
     {
         try
         {
-            Class var2 = (Class)p_148839_0_.get(Integer.valueOf(p_148839_1_));
+            Class var2 = (Class)protocolMap.get(Integer.valueOf(packetId));
             return var2 == null ? null : (Packet)var2.newInstance();
         }
         catch (Exception var3)
         {
-            logger.error("Couldn\'t create packet " + p_148839_1_, var3);
+            logger.error("Couldn\'t create packet " + packetId, var3);
             return null;
         }
     }
@@ -32,19 +32,19 @@ public abstract class Packet
      * Will write a byte array to supplied ByteBuf as a separately defined structure by prefixing the byte array with
      * its length
      */
-    public static void writeBlob(ByteBuf p_148838_0_, byte[] p_148838_1_)
+    public static void writeBlob(ByteBuf buffer, byte[] blob)
     {
-        p_148838_0_.writeShort(p_148838_1_.length);
-        p_148838_0_.writeBytes(p_148838_1_);
+        buffer.writeShort(blob.length);
+        buffer.writeBytes(blob);
     }
 
     /**
      * Will read a byte array from the supplied ByteBuf, the first short encountered will be interpreted as the size of
      * the byte array to read in
      */
-    public static byte[] readBlob(ByteBuf p_148834_0_) throws IOException
+    public static byte[] readBlob(ByteBuf buffer) throws IOException
     {
-        short var1 = p_148834_0_.readShort();
+        short var1 = buffer.readShort();
 
         if (var1 < 0)
         {
@@ -53,7 +53,7 @@ public abstract class Packet
         else
         {
             byte[] var2 = new byte[var1];
-            p_148834_0_.readBytes(var2);
+            buffer.readBytes(var2);
             return var2;
         }
     }
@@ -61,14 +61,14 @@ public abstract class Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public abstract void readPacketData(PacketBuffer p_148837_1_) throws IOException;
+    public abstract void readPacketData(PacketBuffer data) throws IOException;
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public abstract void writePacketData(PacketBuffer p_148840_1_) throws IOException;
+    public abstract void writePacketData(PacketBuffer data) throws IOException;
 
-    public abstract void processPacket(INetHandler p_148833_1_);
+    public abstract void processPacket(INetHandler handler);
 
     /**
      * If true, the network manager will process the packet immediately when received, otherwise it will queue it for

@@ -82,7 +82,7 @@ public class BiomeGenForest extends BiomeGenBase
     {
         if (this.field_150632_aF == 1)
         {
-            double var5 = MathHelper.clamp_double((1.0D + field_150606_ad.func_151601_a((double)p_150572_2_ / 48.0D, (double)p_150572_4_ / 48.0D)) / 2.0D, 0.0D, 0.9999D);
+            double var5 = MathHelper.clamp_double((1.0D + plantNoise.func_151601_a((double)p_150572_2_ / 48.0D, (double)p_150572_4_ / 48.0D)) / 2.0D, 0.0D, 0.9999D);
             int var7 = (int)(var5 * (double)BlockFlower.field_149859_a.length);
 
             if (var7 == 1)
@@ -150,15 +150,15 @@ public class BiomeGenForest extends BiomeGenBase
 
             if (var7 == 0)
             {
-                field_150610_ae.func_150548_a(1);
+                genTallFlowers.func_150548_a(1);
             }
             else if (var7 == 1)
             {
-                field_150610_ae.func_150548_a(4);
+                genTallFlowers.func_150548_a(4);
             }
             else if (var7 == 2)
             {
-                field_150610_ae.func_150548_a(5);
+                genTallFlowers.func_150548_a(5);
             }
 
             var8 = 0;
@@ -171,7 +171,7 @@ public class BiomeGenForest extends BiomeGenBase
                     int var13 = p_76728_4_ + p_76728_2_.nextInt(16) + 8;
                     int var11 = p_76728_2_.nextInt(p_76728_1_.getHeightValue(var9, var13) + 32);
 
-                    if (!field_150610_ae.generate(p_76728_1_, p_76728_2_, var9, var11, var13))
+                    if (!genTallFlowers.generate(p_76728_1_, p_76728_2_, var9, var11, var13))
                     {
                         ++var8;
                         continue;
@@ -195,12 +195,12 @@ public class BiomeGenForest extends BiomeGenBase
         return this.field_150632_aF == 3 ? (var4 & 16711422) + 2634762 >> 1 : var4;
     }
 
-    protected BiomeGenBase func_150566_k()
+    protected BiomeGenBase createMutation()
     {
         if (this.biomeID == BiomeGenBase.forest.biomeID)
         {
             BiomeGenForest var1 = new BiomeGenForest(this.biomeID + 128, 1);
-            var1.func_150570_a(new BiomeGenBase.Height(this.minHeight, this.maxHeight + 0.2F));
+            var1.setHeight(new BiomeGenBase.Height(this.minHeight, this.maxHeight + 0.2F));
             var1.setBiomeName("Flower Forest");
             var1.func_150557_a(6976549, true);
             var1.func_76733_a(8233509);
@@ -208,12 +208,12 @@ public class BiomeGenForest extends BiomeGenBase
         }
         else
         {
-            return this.biomeID != BiomeGenBase.field_150583_P.biomeID && this.biomeID != BiomeGenBase.field_150582_Q.biomeID ? new BiomeGenMutated(this.biomeID + 128, this)
+            return this.biomeID != BiomeGenBase.birchForest.biomeID && this.biomeID != BiomeGenBase.birchForestHills.biomeID ? new BiomeGenMutated(this.biomeID + 128, this)
             {
                 private static final String __OBFID = "CL_00000172";
                 public void decorate(World p_76728_1_, Random p_76728_2_, int p_76728_3_, int p_76728_4_)
                 {
-                    this.field_150611_aD.decorate(p_76728_1_, p_76728_2_, p_76728_3_, p_76728_4_);
+                    this.baseBiome.decorate(p_76728_1_, p_76728_2_, p_76728_3_, p_76728_4_);
                 }
             }: new BiomeGenMutated(this.biomeID + 128, this)
             {

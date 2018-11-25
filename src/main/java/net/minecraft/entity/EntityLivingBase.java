@@ -223,14 +223,14 @@ public abstract class EntityLivingBase extends Entity
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double p_70064_1_, boolean p_70064_3_)
+    protected void updateFallState(double distanceFallenThisTick, boolean isOnGround)
     {
         if (!this.isInWater())
         {
             this.handleWaterMovement();
         }
 
-        if (p_70064_3_ && this.fallDistance > 0.0F)
+        if (isOnGround && this.fallDistance > 0.0F)
         {
             int var4 = MathHelper.floor_double(this.posX);
             int var5 = MathHelper.floor_double(this.posY - 0.20000000298023224D - (double)this.yOffset);
@@ -254,7 +254,7 @@ public abstract class EntityLivingBase extends Entity
             var7.onFallenUpon(this.worldObj, var4, var5, var6, this, this.fallDistance);
         }
 
-        super.updateFallState(p_70064_1_, p_70064_3_);
+        super.updateFallState(distanceFallenThisTick, isOnGround);
     }
 
     public boolean canBreatheUnderwater()
@@ -460,7 +460,7 @@ public abstract class EntityLivingBase extends Entity
         return this.entityLivingToAttack;
     }
 
-    public int func_142015_aE()
+    public int getRevengeTimer()
     {
         return this.revengeTimer;
     }
@@ -503,14 +503,14 @@ public abstract class EntityLivingBase extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setFloat("HealF", this.getHealth());
-        p_70014_1_.setShort("Health", (short)((int)Math.ceil((double)this.getHealth())));
-        p_70014_1_.setShort("HurtTime", (short)this.hurtTime);
-        p_70014_1_.setShort("DeathTime", (short)this.deathTime);
-        p_70014_1_.setShort("AttackTime", (short)this.attackTime);
-        p_70014_1_.setFloat("AbsorptionAmount", this.getAbsorptionAmount());
+        tagCompound.setFloat("HealF", this.getHealth());
+        tagCompound.setShort("Health", (short)((int)Math.ceil((double)this.getHealth())));
+        tagCompound.setShort("HurtTime", (short)this.hurtTime);
+        tagCompound.setShort("DeathTime", (short)this.deathTime);
+        tagCompound.setShort("AttackTime", (short)this.attackTime);
+        tagCompound.setFloat("AbsorptionAmount", this.getAbsorptionAmount());
         ItemStack[] var2 = this.getLastActiveItems();
         int var3 = var2.length;
         int var4;
@@ -526,7 +526,7 @@ public abstract class EntityLivingBase extends Entity
             }
         }
 
-        p_70014_1_.setTag("Attributes", SharedMonsterAttributes.writeBaseAttributeMapToNBT(this.getAttributeMap()));
+        tagCompound.setTag("Attributes", SharedMonsterAttributes.writeBaseAttributeMapToNBT(this.getAttributeMap()));
         var2 = this.getLastActiveItems();
         var3 = var2.length;
 
@@ -551,25 +551,25 @@ public abstract class EntityLivingBase extends Entity
                 var6.appendTag(var8.writeCustomPotionEffectToNBT(new NBTTagCompound()));
             }
 
-            p_70014_1_.setTag("ActiveEffects", var6);
+            tagCompound.setTag("ActiveEffects", var6);
         }
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        this.setAbsorptionAmount(p_70037_1_.getFloat("AbsorptionAmount"));
+        this.setAbsorptionAmount(tagCompund.getFloat("AbsorptionAmount"));
 
-        if (p_70037_1_.func_150297_b("Attributes", 9) && this.worldObj != null && !this.worldObj.isClient)
+        if (tagCompund.hasKey("Attributes", 9) && this.worldObj != null && !this.worldObj.isClient)
         {
-            SharedMonsterAttributes.func_151475_a(this.getAttributeMap(), p_70037_1_.getTagList("Attributes", 10));
+            SharedMonsterAttributes.func_151475_a(this.getAttributeMap(), tagCompund.getTagList("Attributes", 10));
         }
 
-        if (p_70037_1_.func_150297_b("ActiveEffects", 9))
+        if (tagCompund.hasKey("ActiveEffects", 9))
         {
-            NBTTagList var2 = p_70037_1_.getTagList("ActiveEffects", 10);
+            NBTTagList var2 = tagCompund.getTagList("ActiveEffects", 10);
 
             for (int var3 = 0; var3 < var2.tagCount(); ++var3)
             {
@@ -583,13 +583,13 @@ public abstract class EntityLivingBase extends Entity
             }
         }
 
-        if (p_70037_1_.func_150297_b("HealF", 99))
+        if (tagCompund.hasKey("HealF", 99))
         {
-            this.setHealth(p_70037_1_.getFloat("HealF"));
+            this.setHealth(tagCompund.getFloat("HealF"));
         }
         else
         {
-            NBTBase var6 = p_70037_1_.getTag("Health");
+            NBTBase var6 = tagCompund.getTag("Health");
 
             if (var6 == null)
             {
@@ -597,17 +597,17 @@ public abstract class EntityLivingBase extends Entity
             }
             else if (var6.getId() == 5)
             {
-                this.setHealth(((NBTTagFloat)var6).func_150288_h());
+                this.setHealth(((NBTTagFloat)var6).getFloat());
             }
             else if (var6.getId() == 2)
             {
-                this.setHealth((float)((NBTTagShort)var6).func_150289_e());
+                this.setHealth((float)((NBTTagShort)var6).getShort());
             }
         }
 
-        this.hurtTime = p_70037_1_.getShort("HurtTime");
-        this.deathTime = p_70037_1_.getShort("DeathTime");
-        this.attackTime = p_70037_1_.getShort("AttackTime");
+        this.hurtTime = tagCompund.getShort("HurtTime");
+        this.deathTime = tagCompund.getShort("DeathTime");
+        this.attackTime = tagCompund.getShort("AttackTime");
     }
 
     protected void updatePotionEffects()
@@ -849,7 +849,7 @@ public abstract class EntityLivingBase extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -867,16 +867,16 @@ public abstract class EntityLivingBase extends Entity
             {
                 return false;
             }
-            else if (p_70097_1_.isFireDamage() && this.isPotionActive(Potion.fireResistance))
+            else if (source.isFireDamage() && this.isPotionActive(Potion.fireResistance))
             {
                 return false;
             }
             else
             {
-                if ((p_70097_1_ == DamageSource.anvil || p_70097_1_ == DamageSource.fallingBlock) && this.getEquipmentInSlot(4) != null)
+                if ((source == DamageSource.anvil || source == DamageSource.fallingBlock) && this.getEquipmentInSlot(4) != null)
                 {
-                    this.getEquipmentInSlot(4).damageItem((int)(p_70097_2_ * 4.0F + this.rand.nextFloat() * p_70097_2_ * 2.0F), this);
-                    p_70097_2_ *= 0.75F;
+                    this.getEquipmentInSlot(4).damageItem((int)(amount * 4.0F + this.rand.nextFloat() * amount * 2.0F), this);
+                    amount *= 0.75F;
                 }
 
                 this.limbSwingAmount = 1.5F;
@@ -884,26 +884,26 @@ public abstract class EntityLivingBase extends Entity
 
                 if ((float)this.hurtResistantTime > (float)this.maxHurtResistantTime / 2.0F)
                 {
-                    if (p_70097_2_ <= this.lastDamage)
+                    if (amount <= this.lastDamage)
                     {
                         return false;
                     }
 
-                    this.damageEntity(p_70097_1_, p_70097_2_ - this.lastDamage);
-                    this.lastDamage = p_70097_2_;
+                    this.damageEntity(source, amount - this.lastDamage);
+                    this.lastDamage = amount;
                     var3 = false;
                 }
                 else
                 {
-                    this.lastDamage = p_70097_2_;
+                    this.lastDamage = amount;
                     this.prevHealth = this.getHealth();
                     this.hurtResistantTime = this.maxHurtResistantTime;
-                    this.damageEntity(p_70097_1_, p_70097_2_);
+                    this.damageEntity(source, amount);
                     this.hurtTime = this.maxHurtTime = 10;
                 }
 
                 this.attackedAtYaw = 0.0F;
-                Entity var4 = p_70097_1_.getEntity();
+                Entity var4 = source.getEntity();
 
                 if (var4 != null)
                 {
@@ -933,7 +933,7 @@ public abstract class EntityLivingBase extends Entity
                 {
                     this.worldObj.setEntityState(this, (byte)2);
 
-                    if (p_70097_1_ != DamageSource.drown)
+                    if (source != DamageSource.drown)
                     {
                         this.setBeenAttacked();
                     }
@@ -949,7 +949,7 @@ public abstract class EntityLivingBase extends Entity
                         }
 
                         this.attackedAtYaw = (float)(Math.atan2(var7, var9) * 180.0D / Math.PI) - this.rotationYaw;
-                        this.knockBack(var4, p_70097_2_, var9, var7);
+                        this.knockBack(var4, amount, var9, var7);
                     }
                     else
                     {
@@ -968,7 +968,7 @@ public abstract class EntityLivingBase extends Entity
                         this.playSound(var10, this.getSoundVolume(), this.getSoundPitch());
                     }
 
-                    this.onDeath(p_70097_1_);
+                    this.onDeath(source);
                 }
                 else
                 {
@@ -1024,7 +1024,7 @@ public abstract class EntityLivingBase extends Entity
         }
 
         this.dead = true;
-        this.func_110142_aN().func_94549_h();
+        this.getCombatTracker().func_94549_h();
 
         if (!this.worldObj.isClient)
         {
@@ -1130,12 +1130,12 @@ public abstract class EntityLivingBase extends Entity
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_)
+    protected void fall(float distance)
     {
-        super.fall(p_70069_1_);
+        super.fall(distance);
         PotionEffect var2 = this.getActivePotionEffect(Potion.jump);
         float var3 = var2 != null ? (float)(var2.getAmplifier() + 1) : 0.0F;
-        int var4 = MathHelper.ceiling_float_int(p_70069_1_ - 3.0F - var3);
+        int var4 = MathHelper.ceiling_float_int(distance - 3.0F - var3);
 
         if (var4 > 0)
         {
@@ -1280,13 +1280,13 @@ public abstract class EntityLivingBase extends Entity
             {
                 float var4 = this.getHealth();
                 this.setHealth(var4 - p_70665_2_);
-                this.func_110142_aN().func_94547_a(p_70665_1_, var4, p_70665_2_);
+                this.getCombatTracker().func_94547_a(p_70665_1_, var4, p_70665_2_);
                 this.setAbsorptionAmount(this.getAbsorptionAmount() - p_70665_2_);
             }
         }
     }
 
-    public CombatTracker func_110142_aN()
+    public CombatTracker getCombatTracker()
     {
         return this._combatTracker;
     }
@@ -1338,7 +1338,7 @@ public abstract class EntityLivingBase extends Entity
 
             if (this.worldObj instanceof WorldServer)
             {
-                ((WorldServer)this.worldObj).getEntityTracker().func_151247_a(this, new S0BPacketAnimation(this, 0));
+                ((WorldServer)this.worldObj).getEntityTracker().sendToAllTrackingEntity(this, new S0BPacketAnimation(this, 0));
             }
         }
     }
@@ -1435,14 +1435,14 @@ public abstract class EntityLivingBase extends Entity
     /**
      * Sets the held item, or an armor slot. Slot 0 is held item. Slot 1-4 is armor. Params: Item, slot
      */
-    public abstract void setCurrentItemOrArmor(int p_70062_1_, ItemStack p_70062_2_);
+    public abstract void setCurrentItemOrArmor(int slotIn, ItemStack itemStackIn);
 
     /**
      * Set sprinting switch for Entity.
      */
-    public void setSprinting(boolean p_70031_1_)
+    public void setSprinting(boolean sprinting)
     {
-        super.setSprinting(p_70031_1_);
+        super.setSprinting(sprinting);
         IAttributeInstance var2 = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
 
         if (var2.getModifier(sprintingSpeedBoostModifierUUID) != null)
@@ -1450,7 +1450,7 @@ public abstract class EntityLivingBase extends Entity
             var2.removeModifier(sprintingSpeedBoostModifier);
         }
 
-        if (p_70031_1_)
+        if (sprinting)
         {
             var2.applyModifier(sprintingSpeedBoostModifier);
         }
@@ -1540,9 +1540,9 @@ public abstract class EntityLivingBase extends Entity
     /**
      * Gets the Icon Index of the item currently held
      */
-    public IIcon getItemIcon(ItemStack p_70620_1_, int p_70620_2_)
+    public IIcon getItemIcon(ItemStack itemStackIn, int p_70620_2_)
     {
-        return p_70620_1_.getItem().requiresMultipleRenderPasses() ? p_70620_1_.getItem().getIconFromDamageForRenderPass(p_70620_1_.getItemDamage(), p_70620_2_) : p_70620_1_.getIconIndex();
+        return itemStackIn.getItem().requiresMultipleRenderPasses() ? itemStackIn.getItem().getIconFromDamageForRenderPass(itemStackIn.getItemDamage(), p_70620_2_) : itemStackIn.getIconIndex();
     }
 
     /**
@@ -1785,7 +1785,7 @@ public abstract class EntityLivingBase extends Entity
 
                 if (!ItemStack.areItemStacksEqual(var4, var3))
                 {
-                    ((WorldServer)this.worldObj).getEntityTracker().func_151247_a(this, new S04PacketEntityEquipment(this.getEntityId(), var2, var4));
+                    ((WorldServer)this.worldObj).getEntityTracker().sendToAllTrackingEntity(this, new S04PacketEntityEquipment(this.getEntityId(), var2, var4));
 
                     if (var3 != null)
                     {
@@ -1803,7 +1803,7 @@ public abstract class EntityLivingBase extends Entity
 
             if (this.ticksExisted % 20 == 0)
             {
-                this.func_110142_aN().func_94549_h();
+                this.getCombatTracker().func_94549_h();
             }
         }
 
@@ -2058,15 +2058,15 @@ public abstract class EntityLivingBase extends Entity
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double p_70056_1_, double p_70056_3_, double p_70056_5_, float p_70056_7_, float p_70056_8_, int p_70056_9_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int rotationIncrements)
     {
         this.yOffset = 0.0F;
-        this.newPosX = p_70056_1_;
-        this.newPosY = p_70056_3_;
-        this.newPosZ = p_70056_5_;
-        this.newRotationYaw = (double)p_70056_7_;
-        this.newRotationPitch = (double)p_70056_8_;
-        this.newPosRotationIncrements = p_70056_9_;
+        this.newPosX = x;
+        this.newPosY = y;
+        this.newPosZ = z;
+        this.newRotationYaw = (double)yaw;
+        this.newRotationPitch = (double)pitch;
+        this.newPosRotationIncrements = rotationIncrements;
     }
 
     /**
@@ -2095,17 +2095,17 @@ public abstract class EntityLivingBase extends Entity
 
             if (p_71001_1_ instanceof EntityItem)
             {
-                var3.func_151247_a(p_71001_1_, new S0DPacketCollectItem(p_71001_1_.getEntityId(), this.getEntityId()));
+                var3.sendToAllTrackingEntity(p_71001_1_, new S0DPacketCollectItem(p_71001_1_.getEntityId(), this.getEntityId()));
             }
 
             if (p_71001_1_ instanceof EntityArrow)
             {
-                var3.func_151247_a(p_71001_1_, new S0DPacketCollectItem(p_71001_1_.getEntityId(), this.getEntityId()));
+                var3.sendToAllTrackingEntity(p_71001_1_, new S0DPacketCollectItem(p_71001_1_.getEntityId(), this.getEntityId()));
             }
 
             if (p_71001_1_ instanceof EntityXPOrb)
             {
-                var3.func_151247_a(p_71001_1_, new S0DPacketCollectItem(p_71001_1_.getEntityId(), this.getEntityId()));
+                var3.sendToAllTrackingEntity(p_71001_1_, new S0DPacketCollectItem(p_71001_1_.getEntityId(), this.getEntityId()));
             }
         }
     }
@@ -2197,7 +2197,7 @@ public abstract class EntityLivingBase extends Entity
         Vec3 var4 = this.getPosition(p_70614_3_);
         Vec3 var5 = this.getLook(p_70614_3_);
         Vec3 var6 = var4.addVector(var5.xCoord * p_70614_1_, var5.yCoord * p_70614_1_, var5.zCoord * p_70614_1_);
-        return this.worldObj.func_147447_a(var4, var6, false, false, true);
+        return this.worldObj.rayTraceBlocks(var4, var6, false, false, true);
     }
 
     /**
@@ -2245,9 +2245,9 @@ public abstract class EntityLivingBase extends Entity
     /**
      * Sets the head's yaw rotation of the entity.
      */
-    public void setRotationYawHead(float p_70034_1_)
+    public void setRotationYawHead(float rotation)
     {
-        this.rotationYawHead = p_70034_1_;
+        this.rotationYawHead = rotation;
     }
 
     public float getAbsorptionAmount()

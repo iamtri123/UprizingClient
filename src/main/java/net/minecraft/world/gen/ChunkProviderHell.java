@@ -261,8 +261,8 @@ public class ChunkProviderHell implements IChunkProvider
         Block[] var3 = new Block[32768];
         this.func_147419_a(p_73154_1_, p_73154_2_, var3);
         this.func_147418_b(p_73154_1_, p_73154_2_, var3);
-        this.netherCaveGenerator.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
-        this.genNetherBridge.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+        this.netherCaveGenerator.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+        this.genNetherBridge.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
         Chunk var4 = new Chunk(this.worldObj, var3, p_73154_1_, p_73154_2_);
         BiomeGenBase[] var5 = this.worldObj.getWorldChunkManager().loadBlockGeneratorData((BiomeGenBase[])null, p_73154_1_ * 16, p_73154_2_ * 16, 16, 16);
         byte[] var6 = var4.getBiomeArray();
@@ -433,7 +433,7 @@ public class ChunkProviderHell implements IChunkProvider
      */
     public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_)
     {
-        BlockFalling.field_149832_M = true;
+        BlockFalling.fallInstantly = true;
         int var4 = p_73153_2_ * 16;
         int var5 = p_73153_3_ * 16;
         this.genNetherBridge.generateStructuresInChunk(this.worldObj, this.hellRNG, p_73153_2_, p_73153_3_);
@@ -514,7 +514,7 @@ public class ChunkProviderHell implements IChunkProvider
             (new WorldGenHellLava(Blocks.flowing_lava, true)).generate(this.worldObj, this.hellRNG, var9, var10, var11);
         }
 
-        BlockFalling.field_149832_M = false;
+        BlockFalling.fallInstantly = false;
     }
 
     /**
@@ -578,7 +578,7 @@ public class ChunkProviderHell implements IChunkProvider
         return var5.getSpawnableList(p_73155_1_);
     }
 
-    public ChunkPosition func_147416_a(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
+    public ChunkPosition findClosestStructure(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
     {
         return null;
     }
@@ -590,6 +590,6 @@ public class ChunkProviderHell implements IChunkProvider
 
     public void recreateStructures(int p_82695_1_, int p_82695_2_)
     {
-        this.genNetherBridge.func_151539_a(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
+        this.genNetherBridge.generate(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
     }
 }

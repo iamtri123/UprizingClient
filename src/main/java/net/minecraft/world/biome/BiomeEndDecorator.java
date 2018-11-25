@@ -15,7 +15,7 @@ public class BiomeEndDecorator extends BiomeDecorator
         this.spikeGen = new WorldGenSpikes(Blocks.end_stone);
     }
 
-    protected void func_150513_a(BiomeGenBase p_150513_1_)
+    protected void genDecorations(BiomeGenBase p_150513_1_)
     {
         this.generateOres();
 

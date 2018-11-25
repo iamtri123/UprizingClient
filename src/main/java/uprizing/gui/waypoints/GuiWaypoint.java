@@ -54,15 +54,15 @@ public class GuiWaypoint extends GuiScreen { // TODO: Optimize
         name.setFocused(true);
 
         x = new GuiTextField(fontRendererObj, width / 2 - 100, height / 6 + 41 + 13, 56, 20);
-        x.func_146203_f(128);
+        x.setMaxStringLength(128);
         x.setText("" + waypoint.getX());
 
         y = new GuiTextField(fontRendererObj, width / 2 - 28, height / 6 + 41 + 13, 56, 20);
-        y.func_146203_f(128);
+        y.setMaxStringLength(128);
         y.setText("" + waypoint.getY());
 
         z = new GuiTextField(fontRendererObj, width / 2 + 44, height / 6 + 41 + 13, 56, 20);
-        z.func_146203_f(128);
+        z.setMaxStringLength(128);
         z.setText("" + waypoint.getZ());
 
         buttonList.add(new GuiButton(0, width / 2 - 155, height / 6 + 168, 150, 20, "Done"));

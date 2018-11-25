@@ -44,7 +44,7 @@ public class BlockEnderChest extends BlockContainer
         return 22;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemFromBlock(Blocks.obsidian);
     }
@@ -52,7 +52,7 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 8;
     }
@@ -65,10 +65,10 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
         byte var7 = 0;
-        int var8 = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int var8 = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (var8 == 0)
         {
@@ -90,31 +90,31 @@ public class BlockEnderChest extends BlockContainer
             var7 = 4;
         }
 
-        p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, var7, 2);
+        worldIn.setBlockMetadataWithNotify(x, y, z, var7, 2);
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        InventoryEnderChest var10 = p_149727_5_.getInventoryEnderChest();
-        TileEntityEnderChest var11 = (TileEntityEnderChest)p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_);
+        InventoryEnderChest var10 = player.getInventoryEnderChest();
+        TileEntityEnderChest var11 = (TileEntityEnderChest)worldIn.getTileEntity(x, y, z);
 
         if (var10 != null && var11 != null)
         {
-            if (p_149727_1_.getBlock(p_149727_2_, p_149727_3_ + 1, p_149727_4_).isNormalCube())
+            if (worldIn.getBlock(x, y + 1, z).isNormalCube())
             {
                 return true;
             }
-            else if (p_149727_1_.isClient)
+            else if (worldIn.isClient)
             {
                 return true;
             }
             else
             {
-                var10.func_146031_a(var11);
-                p_149727_5_.displayGUIChest(var10);
+                var10.setChestTileEntity(var11);
+                player.displayGUIChest(var10);
                 return true;
             }
         }
@@ -127,7 +127,7 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityEnderChest();
     }
@@ -135,31 +135,31 @@ public class BlockEnderChest extends BlockContainer
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
         for (int var6 = 0; var6 < 3; ++var6)
         {
-            double var10000 = (double)((float)p_149734_2_ + p_149734_5_.nextFloat());
-            double var9 = (double)((float)p_149734_3_ + p_149734_5_.nextFloat());
-            var10000 = (double)((float)p_149734_4_ + p_149734_5_.nextFloat());
+            double var10000 = (double)((float)x + random.nextFloat());
+            double var9 = (double)((float)y + random.nextFloat());
+            var10000 = (double)((float)z + random.nextFloat());
             double var13 = 0.0D;
             double var15 = 0.0D;
             double var17 = 0.0D;
-            int var19 = p_149734_5_.nextInt(2) * 2 - 1;
-            int var20 = p_149734_5_.nextInt(2) * 2 - 1;
-            var13 = ((double)p_149734_5_.nextFloat() - 0.5D) * 0.125D;
-            var15 = ((double)p_149734_5_.nextFloat() - 0.5D) * 0.125D;
-            var17 = ((double)p_149734_5_.nextFloat() - 0.5D) * 0.125D;
-            double var11 = (double)p_149734_4_ + 0.5D + 0.25D * (double)var20;
-            var17 = (double)(p_149734_5_.nextFloat() * 1.0F * (float)var20);
-            double var7 = (double)p_149734_2_ + 0.5D + 0.25D * (double)var19;
-            var13 = (double)(p_149734_5_.nextFloat() * 1.0F * (float)var19);
-            p_149734_1_.spawnParticle("portal", var7, var9, var11, var13, var15, var17);
+            int var19 = random.nextInt(2) * 2 - 1;
+            int var20 = random.nextInt(2) * 2 - 1;
+            var13 = ((double)random.nextFloat() - 0.5D) * 0.125D;
+            var15 = ((double)random.nextFloat() - 0.5D) * 0.125D;
+            var17 = ((double)random.nextFloat() - 0.5D) * 0.125D;
+            double var11 = (double)z + 0.5D + 0.25D * (double)var20;
+            var17 = (double)(random.nextFloat() * 1.0F * (float)var20);
+            double var7 = (double)x + 0.5D + 0.25D * (double)var19;
+            var13 = (double)(random.nextFloat() * 1.0F * (float)var19);
+            worldIn.spawnParticle("portal", var7, var9, var11, var13, var15, var17);
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon("obsidian");
+        this.blockIcon = reg.registerIcon("obsidian");
     }
 }

@@ -14,7 +14,7 @@ public class BiomeGenPlains extends BiomeGenBase
     {
         super(p_i1986_1_);
         this.setTemperatureRainfall(0.8F, 0.4F);
-        this.func_150570_a(field_150593_e);
+        this.setHeight(height_LowPlains);
         this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityHorse.class, 5, 2, 6));
         this.theBiomeDecorator.treesPerChunk = -999;
         this.theBiomeDecorator.flowersPerChunk = 4;
@@ -23,7 +23,7 @@ public class BiomeGenPlains extends BiomeGenBase
 
     public String func_150572_a(Random p_150572_1_, int p_150572_2_, int p_150572_3_, int p_150572_4_)
     {
-        double var5 = field_150606_ad.func_151601_a((double)p_150572_2_ / 200.0D, (double)p_150572_4_ / 200.0D);
+        double var5 = plantNoise.func_151601_a((double)p_150572_2_ / 200.0D, (double)p_150572_4_ / 200.0D);
         int var7;
 
         if (var5 < -0.8D)
@@ -44,7 +44,7 @@ public class BiomeGenPlains extends BiomeGenBase
 
     public void decorate(World p_76728_1_, Random p_76728_2_, int p_76728_3_, int p_76728_4_)
     {
-        double var5 = field_150606_ad.func_151601_a((double)(p_76728_3_ + 8) / 200.0D, (double)(p_76728_4_ + 8) / 200.0D);
+        double var5 = plantNoise.func_151601_a((double)(p_76728_3_ + 8) / 200.0D, (double)(p_76728_4_ + 8) / 200.0D);
         int var7;
         int var8;
         int var9;
@@ -59,34 +59,34 @@ public class BiomeGenPlains extends BiomeGenBase
         {
             this.theBiomeDecorator.flowersPerChunk = 4;
             this.theBiomeDecorator.grassPerChunk = 10;
-            field_150610_ae.func_150548_a(2);
+            genTallFlowers.func_150548_a(2);
 
             for (var7 = 0; var7 < 7; ++var7)
             {
                 var8 = p_76728_3_ + p_76728_2_.nextInt(16) + 8;
                 var9 = p_76728_4_ + p_76728_2_.nextInt(16) + 8;
                 var10 = p_76728_2_.nextInt(p_76728_1_.getHeightValue(var8, var9) + 32);
-                field_150610_ae.generate(p_76728_1_, p_76728_2_, var8, var10, var9);
+                genTallFlowers.generate(p_76728_1_, p_76728_2_, var8, var10, var9);
             }
         }
 
         if (this.field_150628_aC)
         {
-            field_150610_ae.func_150548_a(0);
+            genTallFlowers.func_150548_a(0);
 
             for (var7 = 0; var7 < 10; ++var7)
             {
                 var8 = p_76728_3_ + p_76728_2_.nextInt(16) + 8;
                 var9 = p_76728_4_ + p_76728_2_.nextInt(16) + 8;
                 var10 = p_76728_2_.nextInt(p_76728_1_.getHeightValue(var8, var9) + 32);
-                field_150610_ae.generate(p_76728_1_, p_76728_2_, var8, var10, var9);
+                genTallFlowers.generate(p_76728_1_, p_76728_2_, var8, var10, var9);
             }
         }
 
         super.decorate(p_76728_1_, p_76728_2_, p_76728_3_, p_76728_4_);
     }
 
-    protected BiomeGenBase func_150566_k()
+    protected BiomeGenBase createMutation()
     {
         BiomeGenPlains var1 = new BiomeGenPlains(this.biomeID + 128);
         var1.setBiomeName("Sunflower Plains");

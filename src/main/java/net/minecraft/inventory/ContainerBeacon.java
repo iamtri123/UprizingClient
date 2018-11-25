@@ -40,9 +40,9 @@ public class ContainerBeacon extends Container
             this.addSlotToContainer(new Slot(p_i1802_1_, var5, var3 + var5 * 18, 58 + var4));
         }
 
-        this.field_82865_g = p_i1802_2_.func_145998_l();
-        this.field_82867_h = p_i1802_2_.func_146007_j();
-        this.field_82868_i = p_i1802_2_.func_146006_k();
+        this.field_82865_g = p_i1802_2_.getLevels();
+        this.field_82867_h = p_i1802_2_.getPrimaryEffect();
+        this.field_82868_i = p_i1802_2_.getSecondaryEffect();
     }
 
     public void addCraftingToCrafters(ICrafting p_75132_1_)
@@ -62,12 +62,12 @@ public class ContainerBeacon extends Container
 
         if (p_75137_1_ == 1)
         {
-            this.theBeacon.func_146001_d(p_75137_2_);
+            this.theBeacon.setPrimaryEffect(p_75137_2_);
         }
 
         if (p_75137_1_ == 2)
         {
-            this.theBeacon.func_146004_e(p_75137_2_);
+            this.theBeacon.setSecondaryEffect(p_75137_2_);
         }
     }
 
@@ -76,25 +76,25 @@ public class ContainerBeacon extends Container
         return this.theBeacon;
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.theBeacon.isUseableByPlayer(p_75145_1_);
+        return this.theBeacon.isUseableByPlayer(player);
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ == 0)
+            if (index == 0)
             {
                 if (!this.mergeItemStack(var5, 1, 37, true))
                 {
@@ -110,14 +110,14 @@ public class ContainerBeacon extends Container
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 1 && p_82846_2_ < 28)
+            else if (index >= 1 && index < 28)
             {
                 if (!this.mergeItemStack(var5, 28, 37, false))
                 {
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 28 && p_82846_2_ < 37)
+            else if (index >= 28 && index < 37)
             {
                 if (!this.mergeItemStack(var5, 1, 28, false))
                 {
@@ -143,7 +143,7 @@ public class ContainerBeacon extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;
@@ -158,9 +158,9 @@ public class ContainerBeacon extends Container
             super(p_i1801_2_, p_i1801_3_, p_i1801_4_, p_i1801_5_);
         }
 
-        public boolean isItemValid(ItemStack p_75214_1_)
+        public boolean isItemValid(ItemStack stack)
         {
-            return p_75214_1_ != null && (p_75214_1_.getItem() == Items.emerald || p_75214_1_.getItem() == Items.diamond || p_75214_1_.getItem() == Items.gold_ingot || p_75214_1_.getItem() == Items.iron_ingot);
+            return stack != null && (stack.getItem() == Items.emerald || stack.getItem() == Items.diamond || stack.getItem() == Items.gold_ingot || stack.getItem() == Items.iron_ingot);
         }
 
         public int getSlotStackLimit()

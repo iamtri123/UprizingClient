@@ -29,11 +29,11 @@ public abstract class MapGenStructure extends MapGenBase
     protected Map structureMap = new HashMap();
     private static final String __OBFID = "CL_00000505";
 
-    public abstract String func_143025_a();
+    public abstract String getStructureName();
 
-    protected final void func_151538_a(World p_151538_1_, final int p_151538_2_, final int p_151538_3_, int p_151538_4_, int p_151538_5_, Block[] p_151538_6_)
+    protected final void func_151538_a(World worldIn, final int p_151538_2_, final int p_151538_3_, int p_151538_4_, int p_151538_5_, Block[] p_151538_6_)
     {
-        this.func_143027_a(p_151538_1_);
+        this.func_143027_a(worldIn);
 
         if (!this.structureMap.containsKey(Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(p_151538_2_, p_151538_3_))))
         {
@@ -164,7 +164,7 @@ public abstract class MapGenStructure extends MapGenBase
         return var5.getBoundingBox().intersectsWith(p_142038_1_, p_142038_3_, p_142038_1_, p_142038_3_);
     }
 
-    public ChunkPosition func_151545_a(World p_151545_1_, int p_151545_2_, int p_151545_3_, int p_151545_4_)
+    public ChunkPosition getNearestInstance(World p_151545_1_, int p_151545_2_, int p_151545_3_, int p_151545_4_)
     {
         this.worldObj = p_151545_1_;
         this.func_143027_a(p_151545_1_);
@@ -192,9 +192,9 @@ public abstract class MapGenStructure extends MapGenBase
             {
                 StructureComponent var18 = (StructureComponent)var17.getComponents().get(0);
                 var19 = var18.func_151553_a();
-                var20 = var19.field_151329_a - p_151545_2_;
-                var21 = var19.field_151327_b - p_151545_3_;
-                var22 = var19.field_151328_c - p_151545_4_;
+                var20 = var19.chunkPosX - p_151545_2_;
+                var21 = var19.chunkPosY - p_151545_3_;
+                var22 = var19.chunkPosZ - p_151545_4_;
                 var23 = (double)(var20 * var20 + var21 * var21 + var22 * var22);
 
                 if (var23 < var13)
@@ -221,9 +221,9 @@ public abstract class MapGenStructure extends MapGenBase
                 while (var27.hasNext())
                 {
                     var19 = (ChunkPosition)var27.next();
-                    var20 = var19.field_151329_a - p_151545_2_;
-                    var21 = var19.field_151327_b - p_151545_3_;
-                    var22 = var19.field_151328_c - p_151545_4_;
+                    var20 = var19.chunkPosX - p_151545_2_;
+                    var21 = var19.chunkPosY - p_151545_3_;
+                    var22 = var19.chunkPosZ - p_151545_4_;
                     var23 = (double)(var20 * var20 + var21 * var21 + var22 * var22);
 
                     if (var23 < var13)
@@ -255,17 +255,17 @@ public abstract class MapGenStructure extends MapGenBase
     {
         if (this.field_143029_e == null)
         {
-            this.field_143029_e = (MapGenStructureData)p_143027_1_.loadItemData(MapGenStructureData.class, this.func_143025_a());
+            this.field_143029_e = (MapGenStructureData)p_143027_1_.loadItemData(MapGenStructureData.class, this.getStructureName());
 
             if (this.field_143029_e == null)
             {
-                this.field_143029_e = new MapGenStructureData(this.func_143025_a());
-                p_143027_1_.setItemData(this.func_143025_a(), this.field_143029_e);
+                this.field_143029_e = new MapGenStructureData(this.getStructureName());
+                p_143027_1_.setItemData(this.getStructureName(), this.field_143029_e);
             }
             else
             {
                 NBTTagCompound var2 = this.field_143029_e.func_143041_a();
-                Iterator var3 = var2.func_150296_c().iterator();
+                Iterator var3 = var2.getKeySet().iterator();
 
                 while (var3.hasNext())
                 {

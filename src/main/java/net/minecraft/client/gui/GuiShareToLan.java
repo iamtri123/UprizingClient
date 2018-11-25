@@ -48,13 +48,13 @@ public class GuiShareToLan extends GuiScreen
         }
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.id == 102)
+        if (button.id == 102)
         {
             this.mc.displayGuiScreen(this.field_146598_a);
         }
-        else if (p_146284_1_.id == 104)
+        else if (button.id == 104)
         {
             if (this.field_146599_h.equals("survival"))
             {
@@ -71,12 +71,12 @@ public class GuiShareToLan extends GuiScreen
 
             this.func_146595_g();
         }
-        else if (p_146284_1_.id == 103)
+        else if (button.id == 103)
         {
             this.field_146600_i = !this.field_146600_i;
             this.func_146595_g();
         }
-        else if (p_146284_1_.id == 101)
+        else if (button.id == 101)
         {
             this.mc.displayGuiScreen((GuiScreen)null);
             String var2 = this.mc.getIntegratedServer().shareToLAN(WorldSettings.GameType.getByName(this.field_146599_h), this.field_146600_i);
@@ -91,7 +91,7 @@ public class GuiShareToLan extends GuiScreen
                 var3 = new ChatComponentText("commands.publish.failed");
             }
 
-            this.mc.ingameGUI.getChatGUI().func_146227_a((IChatComponent)var3);
+            this.mc.ingameGUI.getChatGUI().printChatMessage((IChatComponent)var3);
         }
     }
 

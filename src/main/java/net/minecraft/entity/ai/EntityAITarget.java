@@ -36,7 +36,7 @@ public abstract class EntityAITarget extends EntityAIBase
      * When nearbyOnly is true, this throttles target searching to avoid excessive pathfinding.
      */
     private int targetSearchDelay;
-    private int field_75298_g;
+    private int targetUnseenTicks;
     private static final String __OBFID = "CL_00001626";
 
     public EntityAITarget(EntityCreature p_i1669_1_, boolean p_i1669_2_)
@@ -80,9 +80,9 @@ public abstract class EntityAITarget extends EntityAIBase
                 {
                     if (this.taskOwner.getEntitySenses().canSee(var1))
                     {
-                        this.field_75298_g = 0;
+                        this.targetUnseenTicks = 0;
                     }
-                    else if (++this.field_75298_g > 60)
+                    else if (++this.targetUnseenTicks > 60)
                     {
                         return false;
                     }
@@ -106,7 +106,7 @@ public abstract class EntityAITarget extends EntityAIBase
     {
         this.targetSearchStatus = 0;
         this.targetSearchDelay = 0;
-        this.field_75298_g = 0;
+        this.targetUnseenTicks = 0;
     }
 
     /**

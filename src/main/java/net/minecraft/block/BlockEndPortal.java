@@ -27,23 +27,23 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityEndPortal();
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
         float var5 = 0.0625F;
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, var5, 1.0F);
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return p_149646_5_ == 0 && super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
+        return side == 0 && super.shouldSideBeRendered(worldIn, x, y, z, side);
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_) {}
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider) {}
 
     public boolean isOpaqueCube()
     {
@@ -58,31 +58,31 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 0;
     }
 
-    public void onEntityCollidedWithBlock(World p_149670_1_, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity p_149670_5_)
+    public void onEntityCollidedWithBlock(World worldIn, int x, int y, int z, Entity entityIn)
     {
-        if (p_149670_5_.ridingEntity == null && p_149670_5_.riddenByEntity == null && !p_149670_1_.isClient)
+        if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isClient)
         {
-            p_149670_5_.travelToDimension(1);
+            entityIn.travelToDimension(1);
         }
     }
 
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        double var6 = (double)((float)p_149734_2_ + p_149734_5_.nextFloat());
-        double var8 = (double)((float)p_149734_3_ + 0.8F);
-        double var10 = (double)((float)p_149734_4_ + p_149734_5_.nextFloat());
+        double var6 = (double)((float)x + random.nextFloat());
+        double var8 = (double)((float)y + 0.8F);
+        double var10 = (double)((float)z + random.nextFloat());
         double var12 = 0.0D;
         double var14 = 0.0D;
         double var16 = 0.0D;
-        p_149734_1_.spawnParticle("smoke", var6, var8, var10, var12, var14, var16);
+        worldIn.spawnParticle("smoke", var6, var8, var10, var12, var14, var16);
     }
 
     /**
@@ -93,13 +93,13 @@ public class BlockEndPortal extends BlockContainer
         return -1;
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
         if (!field_149948_a)
         {
-            if (p_149726_1_.provider.dimensionId != 0)
+            if (worldIn.provider.dimensionId != 0)
             {
-                p_149726_1_.setBlockToAir(p_149726_2_, p_149726_3_, p_149726_4_);
+                worldIn.setBlockToAir(x, y, z);
             }
         }
     }
@@ -107,18 +107,18 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemById(0);
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon("portal");
+        this.blockIcon = reg.registerIcon("portal");
     }
 
-    public MapColor getMapColor(int p_149728_1_)
+    public MapColor getMapColor(int meta)
     {
-        return MapColor.field_151654_J;
+        return MapColor.obsidianColor;
     }
 }

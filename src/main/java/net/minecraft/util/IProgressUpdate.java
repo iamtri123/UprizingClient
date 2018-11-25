@@ -23,5 +23,5 @@ public interface IProgressUpdate
      */
     void setLoadingProgress(int p_73718_1_);
 
-    void func_146586_a();
+    void setDoneWorking();
 }

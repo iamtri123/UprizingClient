@@ -52,11 +52,11 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_) {}
+    protected void keyTyped(char typedChar, int keyCode) {}
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        switch (p_146284_1_.id)
+        switch (button.id)
         {
             case 0:
                 this.mc.thePlayer.respawnPlayer();
@@ -66,13 +66,13 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
             case 1:
                 GuiYesNo var2 = new GuiYesNo(this, I18n.format("deathScreen.quit.confirm"), "", I18n.format("deathScreen.titleScreen"), I18n.format("deathScreen.respawn"), 0);
                 this.mc.displayGuiScreen(var2);
-                var2.func_146350_a(20);
+                var2.setButtonDelay(20);
         }
     }
 
-    public void confirmClicked(boolean p_73878_1_, int p_73878_2_)
+    public void confirmClicked(boolean result, int id)
     {
-        if (p_73878_1_)
+        if (result)
         {
             this.mc.theWorld.sendQuittingDisconnectingPacket();
             this.mc.loadWorld((WorldClient)null);

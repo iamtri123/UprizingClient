@@ -32,33 +32,33 @@ public class InventoryMerchant implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
-        return this.theInventory[p_70301_1_];
+        return this.theInventory[slotIn];
     }
 
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (this.theInventory[p_70298_1_] != null)
+        if (this.theInventory[index] != null)
         {
             ItemStack var3;
 
-            if (p_70298_1_ == 2)
+            if (index == 2)
             {
-                var3 = this.theInventory[p_70298_1_];
-                this.theInventory[p_70298_1_] = null;
+                var3 = this.theInventory[index];
+                this.theInventory[index] = null;
                 return var3;
             }
-            else if (this.theInventory[p_70298_1_].stackSize <= p_70298_2_)
+            else if (this.theInventory[index].stackSize <= count)
             {
-                var3 = this.theInventory[p_70298_1_];
-                this.theInventory[p_70298_1_] = null;
+                var3 = this.theInventory[index];
+                this.theInventory[index] = null;
 
-                if (this.inventoryResetNeededOnSlotChange(p_70298_1_))
+                if (this.inventoryResetNeededOnSlotChange(index))
                 {
                     this.resetRecipeAndSlots();
                 }
@@ -67,14 +67,14 @@ public class InventoryMerchant implements IInventory
             }
             else
             {
-                var3 = this.theInventory[p_70298_1_].splitStack(p_70298_2_);
+                var3 = this.theInventory[index].splitStack(count);
 
-                if (this.theInventory[p_70298_1_].stackSize == 0)
+                if (this.theInventory[index].stackSize == 0)
                 {
-                    this.theInventory[p_70298_1_] = null;
+                    this.theInventory[index] = null;
                 }
 
-                if (this.inventoryResetNeededOnSlotChange(p_70298_1_))
+                if (this.inventoryResetNeededOnSlotChange(index))
                 {
                     this.resetRecipeAndSlots();
                 }
@@ -100,12 +100,12 @@ public class InventoryMerchant implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (this.theInventory[p_70304_1_] != null)
+        if (this.theInventory[index] != null)
         {
-            ItemStack var2 = this.theInventory[p_70304_1_];
-            this.theInventory[p_70304_1_] = null;
+            ItemStack var2 = this.theInventory[index];
+            this.theInventory[index] = null;
             return var2;
         }
         else
@@ -117,16 +117,16 @@ public class InventoryMerchant implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        this.theInventory[p_70299_1_] = p_70299_2_;
+        this.theInventory[index] = stack;
 
-        if (p_70299_2_ != null && p_70299_2_.stackSize > this.getInventoryStackLimit())
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
         {
-            p_70299_2_.stackSize = this.getInventoryStackLimit();
+            stack.stackSize = this.getInventoryStackLimit();
         }
 
-        if (this.inventoryResetNeededOnSlotChange(p_70299_1_))
+        if (this.inventoryResetNeededOnSlotChange(index))
         {
             this.resetRecipeAndSlots();
         }
@@ -162,9 +162,9 @@ public class InventoryMerchant implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return this.theMerchant.getCustomer() == p_70300_1_;
+        return this.theMerchant.getCustomer() == player;
     }
 
     public void openInventory() {}
@@ -174,7 +174,7 @@ public class InventoryMerchant implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return true;
     }
@@ -237,7 +237,7 @@ public class InventoryMerchant implements IInventory
             }
         }
 
-        this.theMerchant.func_110297_a_(this.getStackInSlot(2));
+        this.theMerchant.verifySellingItem(this.getStackInSlot(2));
     }
 
     public MerchantRecipe getCurrentRecipe()

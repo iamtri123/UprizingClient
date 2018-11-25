@@ -78,7 +78,7 @@ public abstract class WorldProvider
         if (this.worldObj.getWorldInfo().getTerrainType() == WorldType.FLAT)
         {
             FlatGeneratorInfo var1 = FlatGeneratorInfo.createFlatGeneratorFromString(this.worldObj.getWorldInfo().getGeneratorOptions());
-            this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.func_150568_d(var1.getBiome()), 0.5F);
+            this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.getBiome(var1.getBiome()), 0.5F);
         }
         else
         {

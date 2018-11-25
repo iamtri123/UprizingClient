@@ -30,11 +30,11 @@ public class BlockLilyPad extends BlockBush
         return 23;
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider)
     {
-        if (p_149743_7_ == null || !(p_149743_7_ instanceof EntityBoat))
+        if (collider == null || !(collider instanceof EntityBoat))
         {
-            super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+            super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         }
     }
 
@@ -42,9 +42,9 @@ public class BlockLilyPad extends BlockBush
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        return AxisAlignedBB.getBoundingBox((double)p_149668_2_ + this.field_149759_B, (double)p_149668_3_ + this.field_149760_C, (double)p_149668_4_ + this.field_149754_D, (double)p_149668_2_ + this.field_149755_E, (double)p_149668_3_ + this.field_149756_F, (double)p_149668_4_ + this.field_149757_G);
+        return AxisAlignedBB.getBoundingBox((double)x + this.field_149759_B, (double)y + this.field_149760_C, (double)z + this.field_149754_D, (double)x + this.field_149755_E, (double)y + this.field_149756_F, (double)z + this.maxZ);
     }
 
     public int getBlockColor()
@@ -55,7 +55,7 @@ public class BlockLilyPad extends BlockBush
     /**
      * Returns the color this block should be rendered. Used by leaves.
      */
-    public int getRenderColor(int p_149741_1_)
+    public int getRenderColor(int meta)
     {
         return 2129968;
     }
@@ -64,21 +64,21 @@ public class BlockLilyPad extends BlockBush
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
      */
-    public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_)
+    public int colorMultiplier(IBlockAccess worldIn, int x, int y, int z)
     {
         return 2129968;
     }
 
-    protected boolean func_149854_a(Block p_149854_1_)
+    protected boolean canPlaceBlockOn(Block ground)
     {
-        return p_149854_1_ == Blocks.water;
+        return ground == Blocks.water;
     }
 
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World p_149718_1_, int p_149718_2_, int p_149718_3_, int p_149718_4_)
+    public boolean canBlockStay(World worldIn, int x, int y, int z)
     {
-        return (p_149718_3_ >= 0 && p_149718_3_ < 256) && (p_149718_1_.getBlock(p_149718_2_, p_149718_3_ - 1, p_149718_4_).getMaterial() == Material.water && p_149718_1_.getBlockMetadata(p_149718_2_, p_149718_3_ - 1, p_149718_4_) == 0);
+        return (y >= 0 && y < 256) && (worldIn.getBlock(x, y - 1, z).getMaterial() == Material.water && worldIn.getBlockMetadata(x, y - 1, z) == 0);
     }
 }

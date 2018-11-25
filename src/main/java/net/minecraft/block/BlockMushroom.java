@@ -19,9 +19,9 @@ public class BlockMushroom extends BlockBush implements IGrowable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (p_149674_5_.nextInt(25) == 0)
+        if (random.nextInt(25) == 0)
         {
             byte var6 = 4;
             int var7 = 5;
@@ -29,13 +29,13 @@ public class BlockMushroom extends BlockBush implements IGrowable
             int var9;
             int var10;
 
-            for (var8 = p_149674_2_ - var6; var8 <= p_149674_2_ + var6; ++var8)
+            for (var8 = x - var6; var8 <= x + var6; ++var8)
             {
-                for (var9 = p_149674_4_ - var6; var9 <= p_149674_4_ + var6; ++var9)
+                for (var9 = z - var6; var9 <= z + var6; ++var9)
                 {
-                    for (var10 = p_149674_3_ - 1; var10 <= p_149674_3_ + 1; ++var10)
+                    for (var10 = y - 1; var10 <= y + 1; ++var10)
                     {
-                        if (p_149674_1_.getBlock(var8, var10, var9) == this)
+                        if (worldIn.getBlock(var8, var10, var9) == this)
                         {
                             --var7;
 
@@ -48,50 +48,50 @@ public class BlockMushroom extends BlockBush implements IGrowable
                 }
             }
 
-            var8 = p_149674_2_ + p_149674_5_.nextInt(3) - 1;
-            var9 = p_149674_3_ + p_149674_5_.nextInt(2) - p_149674_5_.nextInt(2);
-            var10 = p_149674_4_ + p_149674_5_.nextInt(3) - 1;
+            var8 = x + random.nextInt(3) - 1;
+            var9 = y + random.nextInt(2) - random.nextInt(2);
+            var10 = z + random.nextInt(3) - 1;
 
             for (int var11 = 0; var11 < 4; ++var11)
             {
-                if (p_149674_1_.isAirBlock(var8, var9, var10) && this.canBlockStay(p_149674_1_, var8, var9, var10))
+                if (worldIn.isAirBlock(var8, var9, var10) && this.canBlockStay(worldIn, var8, var9, var10))
                 {
-                    p_149674_2_ = var8;
-                    p_149674_3_ = var9;
-                    p_149674_4_ = var10;
+                    x = var8;
+                    y = var9;
+                    z = var10;
                 }
 
-                var8 = p_149674_2_ + p_149674_5_.nextInt(3) - 1;
-                var9 = p_149674_3_ + p_149674_5_.nextInt(2) - p_149674_5_.nextInt(2);
-                var10 = p_149674_4_ + p_149674_5_.nextInt(3) - 1;
+                var8 = x + random.nextInt(3) - 1;
+                var9 = y + random.nextInt(2) - random.nextInt(2);
+                var10 = z + random.nextInt(3) - 1;
             }
 
-            if (p_149674_1_.isAirBlock(var8, var9, var10) && this.canBlockStay(p_149674_1_, var8, var9, var10))
+            if (worldIn.isAirBlock(var8, var9, var10) && this.canBlockStay(worldIn, var8, var9, var10))
             {
-                p_149674_1_.setBlock(var8, var9, var10, this, 0, 2);
+                worldIn.setBlock(var8, var9, var10, this, 0, 2);
             }
         }
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        return super.canPlaceBlockAt(p_149742_1_, p_149742_2_, p_149742_3_, p_149742_4_) && this.canBlockStay(p_149742_1_, p_149742_2_, p_149742_3_, p_149742_4_);
+        return super.canPlaceBlockAt(worldIn, x, y, z) && this.canBlockStay(worldIn, x, y, z);
     }
 
-    protected boolean func_149854_a(Block p_149854_1_)
+    protected boolean canPlaceBlockOn(Block ground)
     {
-        return p_149854_1_.func_149730_j();
+        return ground.func_149730_j();
     }
 
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World p_149718_1_, int p_149718_2_, int p_149718_3_, int p_149718_4_)
+    public boolean canBlockStay(World worldIn, int x, int y, int z)
     {
-        if (p_149718_3_ >= 0 && p_149718_3_ < 256)
+        if (y >= 0 && y < 256)
         {
-            Block var5 = p_149718_1_.getBlock(p_149718_2_, p_149718_3_ - 1, p_149718_4_);
-            return var5 == Blocks.mycelium || var5 == Blocks.dirt && p_149718_1_.getBlockMetadata(p_149718_2_, p_149718_3_ - 1, p_149718_4_) == 2 || p_149718_1_.getFullBlockLightValue(p_149718_2_, p_149718_3_, p_149718_4_) < 13 && this.func_149854_a(var5);
+            Block var5 = worldIn.getBlock(x, y - 1, z);
+            return var5 == Blocks.mycelium || var5 == Blocks.dirt && worldIn.getBlockMetadata(x, y - 1, z) == 2 || worldIn.getFullBlockLightValue(x, y, z) < 13 && this.canPlaceBlockOn(var5);
         }
         else
         {
@@ -99,7 +99,7 @@ public class BlockMushroom extends BlockBush implements IGrowable
         }
     }
 
-    public boolean func_149884_c(World p_149884_1_, int p_149884_2_, int p_149884_3_, int p_149884_4_, Random p_149884_5_)
+    public boolean fertilizeMushroom(World p_149884_1_, int p_149884_2_, int p_149884_3_, int p_149884_4_, Random p_149884_5_)
     {
         int var6 = p_149884_1_.getBlockMetadata(p_149884_2_, p_149884_3_, p_149884_4_);
         p_149884_1_.setBlockToAir(p_149884_2_, p_149884_3_, p_149884_4_);
@@ -125,18 +125,18 @@ public class BlockMushroom extends BlockBush implements IGrowable
         }
     }
 
-    public boolean func_149851_a(World p_149851_1_, int p_149851_2_, int p_149851_3_, int p_149851_4_, boolean p_149851_5_)
+    public boolean canFertilize(World worldIn, int x, int y, int z, boolean isClient)
     {
         return true;
     }
 
-    public boolean func_149852_a(World p_149852_1_, Random p_149852_2_, int p_149852_3_, int p_149852_4_, int p_149852_5_)
+    public boolean shouldFertilize(World worldIn, Random random, int x, int y, int z)
     {
-        return (double)p_149852_2_.nextFloat() < 0.4D;
+        return (double)random.nextFloat() < 0.4D;
     }
 
-    public void func_149853_b(World p_149853_1_, Random p_149853_2_, int p_149853_3_, int p_149853_4_, int p_149853_5_)
+    public void fertilize(World worldIn, Random random, int x, int y, int z)
     {
-        this.func_149884_c(p_149853_1_, p_149853_3_, p_149853_4_, p_149853_5_, p_149853_2_);
+        this.fertilizeMushroom(worldIn, x, y, z, random);
     }
 }

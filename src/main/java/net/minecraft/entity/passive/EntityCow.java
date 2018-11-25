@@ -75,7 +75,7 @@ public class EntityCow extends EntityAnimal
         return "mob.cow.hurt";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.cow.step", 0.15F, 1.0F);
     }
@@ -88,7 +88,7 @@ public class EntityCow extends EntityAnimal
         return 0.4F;
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.leather;
     }
@@ -103,7 +103,7 @@ public class EntityCow extends EntityAnimal
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.leather, 1);
+            this.dropItem(Items.leather, 1);
         }
 
         var3 = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + p_70628_2_);
@@ -112,11 +112,11 @@ public class EntityCow extends EntityAnimal
         {
             if (this.isBurning())
             {
-                this.func_145779_a(Items.cooked_beef, 1);
+                this.dropItem(Items.cooked_beef, 1);
             }
             else
             {
-                this.func_145779_a(Items.beef, 1);
+                this.dropItem(Items.beef, 1);
             }
         }
     }

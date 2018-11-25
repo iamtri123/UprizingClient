@@ -302,12 +302,12 @@ public class EnchantmentHelper
 
     public static int func_151386_g(EntityLivingBase p_151386_0_)
     {
-        return getEnchantmentLevel(Enchantment.field_151370_z.effectId, p_151386_0_.getHeldItem());
+        return getEnchantmentLevel(Enchantment.luckOfTheSea.effectId, p_151386_0_.getHeldItem());
     }
 
     public static int func_151387_h(EntityLivingBase p_151387_0_)
     {
-        return getEnchantmentLevel(Enchantment.field_151369_A.effectId, p_151387_0_.getHeldItem());
+        return getEnchantmentLevel(Enchantment.lure.effectId, p_151387_0_.getHeldItem());
     }
 
     /**
@@ -379,7 +379,7 @@ public class EnchantmentHelper
 
         if (var4)
         {
-            p_77504_1_.func_150996_a(Items.enchanted_book);
+            p_77504_1_.setItem(Items.enchanted_book);
         }
 
         if (var3 != null)

@@ -25,26 +25,26 @@ public class S38PacketPlayerListItem extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149126_a = p_148837_1_.readStringFromBuffer(16);
-        this.field_149124_b = p_148837_1_.readBoolean();
-        this.field_149125_c = p_148837_1_.readShort();
+        this.field_149126_a = data.readStringFromBuffer(16);
+        this.field_149124_b = data.readBoolean();
+        this.field_149125_c = data.readShort();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(this.field_149126_a);
-        p_148840_1_.writeBoolean(this.field_149124_b);
-        p_148840_1_.writeShort(this.field_149125_c);
+        data.writeStringToBuffer(this.field_149126_a);
+        data.writeBoolean(this.field_149124_b);
+        data.writeShort(this.field_149125_c);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handlePlayerListItem(this);
+        handler.handlePlayerListItem(this);
     }
 
     public String func_149122_c()
@@ -62,8 +62,8 @@ public class S38PacketPlayerListItem extends Packet
         return this.field_149125_c;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

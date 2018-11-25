@@ -31,9 +31,9 @@ public class BlockPane extends Block
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
-        return !this.field_150099_b ? null : super.getItemDropped(p_149650_1_, p_149650_2_, p_149650_3_);
+        return !this.field_150099_b ? null : super.getItemDropped(meta, random, fortune);
     }
 
     public boolean isOpaqueCube()
@@ -54,35 +54,35 @@ public class BlockPane extends Block
         return this.blockMaterial == Material.glass ? 41 : 18;
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_) != this && super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
+        return worldIn.getBlock(x, y, z) != this && super.shouldSideBeRendered(worldIn, x, y, z, side);
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider)
     {
-        boolean var8 = this.func_150098_a(p_149743_1_.getBlock(p_149743_2_, p_149743_3_, p_149743_4_ - 1));
-        boolean var9 = this.func_150098_a(p_149743_1_.getBlock(p_149743_2_, p_149743_3_, p_149743_4_ + 1));
-        boolean var10 = this.func_150098_a(p_149743_1_.getBlock(p_149743_2_ - 1, p_149743_3_, p_149743_4_));
-        boolean var11 = this.func_150098_a(p_149743_1_.getBlock(p_149743_2_ + 1, p_149743_3_, p_149743_4_));
+        boolean var8 = this.canPaneConnectToBlock(worldIn.getBlock(x, y, z - 1));
+        boolean var9 = this.canPaneConnectToBlock(worldIn.getBlock(x, y, z + 1));
+        boolean var10 = this.canPaneConnectToBlock(worldIn.getBlock(x - 1, y, z));
+        boolean var11 = this.canPaneConnectToBlock(worldIn.getBlock(x + 1, y, z));
 
         if ((!var10 || !var11) && (var10 || var11 || var8 || var9))
         {
             if (var10 && !var11)
             {
                 this.setBlockBounds(0.0F, 0.0F, 0.4375F, 0.5F, 1.0F, 0.5625F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
             }
             else if (!var10 && var11)
             {
                 this.setBlockBounds(0.5F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
             }
         }
         else
         {
             this.setBlockBounds(0.0F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
-            super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+            super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         }
 
         if ((!var8 || !var9) && (var10 || var11 || var8 || var9))
@@ -90,18 +90,18 @@ public class BlockPane extends Block
             if (var8 && !var9)
             {
                 this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 0.5F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
             }
             else if (!var8 && var9)
             {
                 this.setBlockBounds(0.4375F, 0.0F, 0.5F, 0.5625F, 1.0F, 1.0F);
-                super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+                super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
             }
         }
         else
         {
             this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 1.0F);
-            super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+            super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         }
     }
 
@@ -113,16 +113,16 @@ public class BlockPane extends Block
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
         float var5 = 0.4375F;
         float var6 = 0.5625F;
         float var7 = 0.4375F;
         float var8 = 0.5625F;
-        boolean var9 = this.func_150098_a(p_149719_1_.getBlock(p_149719_2_, p_149719_3_, p_149719_4_ - 1));
-        boolean var10 = this.func_150098_a(p_149719_1_.getBlock(p_149719_2_, p_149719_3_, p_149719_4_ + 1));
-        boolean var11 = this.func_150098_a(p_149719_1_.getBlock(p_149719_2_ - 1, p_149719_3_, p_149719_4_));
-        boolean var12 = this.func_150098_a(p_149719_1_.getBlock(p_149719_2_ + 1, p_149719_3_, p_149719_4_));
+        boolean var9 = this.canPaneConnectToBlock(worldIn.getBlock(x, y, z - 1));
+        boolean var10 = this.canPaneConnectToBlock(worldIn.getBlock(x, y, z + 1));
+        boolean var11 = this.canPaneConnectToBlock(worldIn.getBlock(x - 1, y, z));
+        boolean var12 = this.canPaneConnectToBlock(worldIn.getBlock(x + 1, y, z));
 
         if ((!var11 || !var12) && (var11 || var12 || var9 || var10))
         {
@@ -166,7 +166,7 @@ public class BlockPane extends Block
         return this.field_150102_N;
     }
 
-    public final boolean func_150098_a(Block p_150098_1_)
+    public final boolean canPaneConnectToBlock(Block p_150098_1_)
     {
         return p_150098_1_.func_149730_j() || p_150098_1_ == this || p_150098_1_ == Blocks.glass || p_150098_1_ == Blocks.stained_glass || p_150098_1_ == Blocks.stained_glass_pane || p_150098_1_ instanceof BlockPane;
     }
@@ -180,14 +180,14 @@ public class BlockPane extends Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int p_149644_1_)
+    protected ItemStack createStackedBlock(int meta)
     {
-        return new ItemStack(Item.getItemFromBlock(this), 1, p_149644_1_);
+        return new ItemStack(Item.getItemFromBlock(this), 1, meta);
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon(this.field_150101_M);
-        this.field_150102_N = p_149651_1_.registerIcon(this.field_150100_a);
+        this.blockIcon = reg.registerIcon(this.field_150101_M);
+        this.field_150102_N = reg.registerIcon(this.field_150100_a);
     }
 }

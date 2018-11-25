@@ -19,18 +19,18 @@ public class CommandSetPlayerTimeout extends CommandBase
         return 3;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.setidletimeout.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length == 1)
+        if (args.length == 1)
         {
-            int var3 = parseIntWithMin(p_71515_1_, p_71515_2_[0], 0);
-            MinecraftServer.getServer().func_143006_e(var3);
-            func_152373_a(p_71515_1_, this, "commands.setidletimeout.success", Integer.valueOf(var3));
+            int var3 = parseIntWithMin(sender, args[0], 0);
+            MinecraftServer.getServer().setPlayerIdleTimeout(var3);
+            notifyOperators(sender, this, "commands.setidletimeout.success", Integer.valueOf(var3));
         }
         else
         {

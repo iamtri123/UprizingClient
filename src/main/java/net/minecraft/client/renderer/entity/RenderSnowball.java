@@ -14,14 +14,14 @@ import org.lwjgl.opengl.GL12;
 
 public class RenderSnowball extends Render
 {
-    private final Item field_94151_a;
-    private final int field_94150_f;
+    private final Item itemForRender;
+    private final int metadata;
     private static final String __OBFID = "CL_00001008";
 
     public RenderSnowball(Item p_i1259_1_, int p_i1259_2_)
     {
-        this.field_94151_a = p_i1259_1_;
-        this.field_94150_f = p_i1259_2_;
+        this.itemForRender = p_i1259_1_;
+        this.metadata = p_i1259_2_;
     }
 
     public RenderSnowball(Item p_i1260_1_)
@@ -37,7 +37,7 @@ public class RenderSnowball extends Render
      */
     public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
     {
-        IIcon var10 = this.field_94151_a.getIconFromDamage(this.field_94150_f);
+        IIcon var10 = this.itemForRender.getIconFromDamage(this.metadata);
 
         if (var10 != null)
         {
@@ -56,12 +56,12 @@ public class RenderSnowball extends Render
                 float var15 = (float)(var12 & 255) / 255.0F;
                 GL11.glColor3f(var13, var14, var15);
                 GL11.glPushMatrix();
-                this.func_77026_a(var11, ItemPotion.func_94589_d("overlay"));
+                this.renderEntity(var11, ItemPotion.func_94589_d("overlay"));
                 GL11.glPopMatrix();
                 GL11.glColor3f(1.0F, 1.0F, 1.0F);
             }
 
-            this.func_77026_a(var11, var10);
+            this.renderEntity(var11, var10);
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glPopMatrix();
         }
@@ -75,7 +75,7 @@ public class RenderSnowball extends Render
         return TextureMap.locationItemsTexture;
     }
 
-    private void func_77026_a(Tessellator p_77026_1_, IIcon p_77026_2_)
+    private void renderEntity(Tessellator p_77026_1_, IIcon p_77026_2_)
     {
         float var3 = p_77026_2_.getMinU();
         float var4 = p_77026_2_.getMaxU();

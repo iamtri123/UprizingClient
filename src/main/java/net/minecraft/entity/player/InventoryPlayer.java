@@ -60,11 +60,11 @@ public class InventoryPlayer implements IInventory
         return 9;
     }
 
-    private int func_146029_c(Item p_146029_1_)
+    private int getInventorySlotContainItem(Item itemIn)
     {
         for (int var2 = 0; var2 < this.mainInventory.length; ++var2)
         {
-            if (this.mainInventory[var2] != null && this.mainInventory[var2].getItem() == p_146029_1_)
+            if (this.mainInventory[var2] != null && this.mainInventory[var2].getItem() == itemIn)
             {
                 return var2;
             }
@@ -73,7 +73,7 @@ public class InventoryPlayer implements IInventory
         return -1;
     }
 
-    private int func_146024_c(Item p_146024_1_, int p_146024_2_)
+    private int getInventorySlotContainItemAndDamage(Item p_146024_1_, int p_146024_2_)
     {
         for (int var3 = 0; var3 < this.mainInventory.length; ++var3)
         {
@@ -118,7 +118,7 @@ public class InventoryPlayer implements IInventory
         return -1;
     }
 
-    public void func_146030_a(Item p_146030_1_, int p_146030_2_, boolean p_146030_3_, boolean p_146030_4_)
+    public void setCurrentItem(Item p_146030_1_, int p_146030_2_, boolean p_146030_3_, boolean p_146030_4_)
     {
         boolean var5 = true;
         this.currentItemStack = this.getCurrentItem();
@@ -126,11 +126,11 @@ public class InventoryPlayer implements IInventory
 
         if (p_146030_3_)
         {
-            var7 = this.func_146024_c(p_146030_1_, p_146030_2_);
+            var7 = this.getInventorySlotContainItemAndDamage(p_146030_1_, p_146030_2_);
         }
         else
         {
-            var7 = this.func_146029_c(p_146030_1_);
+            var7 = this.getInventorySlotContainItem(p_146030_1_);
         }
 
         if (var7 >= 0 && var7 < 9)
@@ -232,12 +232,12 @@ public class InventoryPlayer implements IInventory
     {
         if (p_70439_1_ != null)
         {
-            if (this.currentItemStack != null && this.currentItemStack.isItemEnchantable() && this.func_146024_c(this.currentItemStack.getItem(), this.currentItemStack.getItemDamageForDisplay()) == this.currentItem)
+            if (this.currentItemStack != null && this.currentItemStack.isItemEnchantable() && this.getInventorySlotContainItemAndDamage(this.currentItemStack.getItem(), this.currentItemStack.getItemDamageForDisplay()) == this.currentItem)
             {
                 return;
             }
 
-            int var3 = this.func_146024_c(p_70439_1_, p_70439_2_);
+            int var3 = this.getInventorySlotContainItemAndDamage(p_70439_1_, p_70439_2_);
 
             if (var3 >= 0)
             {
@@ -349,7 +349,7 @@ public class InventoryPlayer implements IInventory
 
     public boolean consumeInventoryItem(Item p_146026_1_)
     {
-        int var2 = this.func_146029_c(p_146026_1_);
+        int var2 = this.getInventorySlotContainItem(p_146026_1_);
 
         if (var2 < 0)
         {
@@ -368,7 +368,7 @@ public class InventoryPlayer implements IInventory
 
     public boolean hasItem(Item p_146028_1_)
     {
-        int var2 = this.func_146029_c(p_146028_1_);
+        int var2 = this.getInventorySlotContainItem(p_146028_1_);
         return var2 >= 0;
     }
 
@@ -451,33 +451,33 @@ public class InventoryPlayer implements IInventory
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
         ItemStack[] var3 = this.mainInventory;
 
-        if (p_70298_1_ >= this.mainInventory.length)
+        if (index >= this.mainInventory.length)
         {
             var3 = this.armorInventory;
-            p_70298_1_ -= this.mainInventory.length;
+            index -= this.mainInventory.length;
         }
 
-        if (var3[p_70298_1_] != null)
+        if (var3[index] != null)
         {
             ItemStack var4;
 
-            if (var3[p_70298_1_].stackSize <= p_70298_2_)
+            if (var3[index].stackSize <= count)
             {
-                var4 = var3[p_70298_1_];
-                var3[p_70298_1_] = null;
+                var4 = var3[index];
+                var3[index] = null;
                 return var4;
             }
             else
             {
-                var4 = var3[p_70298_1_].splitStack(p_70298_2_);
+                var4 = var3[index].splitStack(count);
 
-                if (var3[p_70298_1_].stackSize == 0)
+                if (var3[index].stackSize == 0)
                 {
-                    var3[p_70298_1_] = null;
+                    var3[index] = null;
                 }
 
                 return var4;
@@ -493,20 +493,20 @@ public class InventoryPlayer implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
         ItemStack[] var2 = this.mainInventory;
 
-        if (p_70304_1_ >= this.mainInventory.length)
+        if (index >= this.mainInventory.length)
         {
             var2 = this.armorInventory;
-            p_70304_1_ -= this.mainInventory.length;
+            index -= this.mainInventory.length;
         }
 
-        if (var2[p_70304_1_] != null)
+        if (var2[index] != null)
         {
-            ItemStack var3 = var2[p_70304_1_];
-            var2[p_70304_1_] = null;
+            ItemStack var3 = var2[index];
+            var2[index] = null;
             return var3;
         }
         else
@@ -518,26 +518,26 @@ public class InventoryPlayer implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
         ItemStack[] var3 = this.mainInventory;
 
-        if (p_70299_1_ >= var3.length)
+        if (index >= var3.length)
         {
-            p_70299_1_ -= var3.length;
+            index -= var3.length;
             var3 = this.armorInventory;
         }
 
-        var3[p_70299_1_] = p_70299_2_;
+        var3[index] = stack;
     }
 
-    public float func_146023_a(Block p_146023_1_)
+    public float getStrVsBlock(Block p_146023_1_)
     {
         float var2 = 1.0F;
 
         if (this.mainInventory[this.currentItem] != null)
         {
-            var2 *= this.mainInventory[this.currentItem].func_150997_a(p_146023_1_);
+            var2 *= this.mainInventory[this.currentItem].getStrVsBlock(p_146023_1_);
         }
 
         return var2;
@@ -617,17 +617,17 @@ public class InventoryPlayer implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
         ItemStack[] var2 = this.mainInventory;
 
-        if (p_70301_1_ >= var2.length)
+        if (slotIn >= var2.length)
         {
-            p_70301_1_ -= var2.length;
+            slotIn -= var2.length;
             var2 = this.armorInventory;
         }
 
-        return var2[p_70301_1_];
+        return var2[slotIn];
     }
 
     /**
@@ -666,7 +666,7 @@ public class InventoryPlayer implements IInventory
         else
         {
             ItemStack var2 = this.getStackInSlot(this.currentItem);
-            return var2 != null && var2.func_150998_b(p_146025_1_);
+            return var2 != null && var2.canItemHarvestBlock(p_146025_1_);
         }
     }
 
@@ -770,9 +770,9 @@ public class InventoryPlayer implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return !this.player.isDead && p_70300_1_.getDistanceSqToEntity(this.player) <= 64.0D;
+        return !this.player.isDead && player.getDistanceSqToEntity(this.player) <= 64.0D;
     }
 
     /**
@@ -808,7 +808,7 @@ public class InventoryPlayer implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return true;
     }

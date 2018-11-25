@@ -8,89 +8,89 @@ import net.minecraft.network.play.INetHandlerPlayClient;
 
 public class S28PacketEffect extends Packet
 {
-    private int field_149251_a;
-    private int field_149249_b;
-    private int field_149250_c;
-    private int field_149247_d;
-    private int field_149248_e;
-    private boolean field_149246_f;
+    private int soundType;
+    private int soundData;
+    private int xPos;
+    private int yPos;
+    private int zPos;
+    private boolean serverWide;
     private static final String __OBFID = "CL_00001307";
 
     public S28PacketEffect() {}
 
     public S28PacketEffect(int p_i45198_1_, int p_i45198_2_, int p_i45198_3_, int p_i45198_4_, int p_i45198_5_, boolean p_i45198_6_)
     {
-        this.field_149251_a = p_i45198_1_;
-        this.field_149250_c = p_i45198_2_;
-        this.field_149247_d = p_i45198_3_;
-        this.field_149248_e = p_i45198_4_;
-        this.field_149249_b = p_i45198_5_;
-        this.field_149246_f = p_i45198_6_;
+        this.soundType = p_i45198_1_;
+        this.xPos = p_i45198_2_;
+        this.yPos = p_i45198_3_;
+        this.zPos = p_i45198_4_;
+        this.soundData = p_i45198_5_;
+        this.serverWide = p_i45198_6_;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149251_a = p_148837_1_.readInt();
-        this.field_149250_c = p_148837_1_.readInt();
-        this.field_149247_d = p_148837_1_.readByte() & 255;
-        this.field_149248_e = p_148837_1_.readInt();
-        this.field_149249_b = p_148837_1_.readInt();
-        this.field_149246_f = p_148837_1_.readBoolean();
+        this.soundType = data.readInt();
+        this.xPos = data.readInt();
+        this.yPos = data.readByte() & 255;
+        this.zPos = data.readInt();
+        this.soundData = data.readInt();
+        this.serverWide = data.readBoolean();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149251_a);
-        p_148840_1_.writeInt(this.field_149250_c);
-        p_148840_1_.writeByte(this.field_149247_d & 255);
-        p_148840_1_.writeInt(this.field_149248_e);
-        p_148840_1_.writeInt(this.field_149249_b);
-        p_148840_1_.writeBoolean(this.field_149246_f);
+        data.writeInt(this.soundType);
+        data.writeInt(this.xPos);
+        data.writeByte(this.yPos & 255);
+        data.writeInt(this.zPos);
+        data.writeInt(this.soundData);
+        data.writeBoolean(this.serverWide);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleEffect(this);
+        handler.handleEffect(this);
     }
 
-    public boolean func_149244_c()
+    public boolean isSoundServerwide()
     {
-        return this.field_149246_f;
+        return this.serverWide;
     }
 
-    public int func_149242_d()
+    public int getSoundType()
     {
-        return this.field_149251_a;
+        return this.soundType;
     }
 
-    public int func_149241_e()
+    public int getSoundData()
     {
-        return this.field_149249_b;
+        return this.soundData;
     }
 
-    public int func_149240_f()
+    public int getPosX()
     {
-        return this.field_149250_c;
+        return this.xPos;
     }
 
-    public int func_149243_g()
+    public int getPosY()
     {
-        return this.field_149247_d;
+        return this.yPos;
     }
 
-    public int func_149239_h()
+    public int getPosZ()
     {
-        return this.field_149248_e;
+        return this.zPos;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

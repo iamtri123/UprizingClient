@@ -49,7 +49,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         return field_148301_e.serverIP.equals(Constants.ADDRESS_WITH_PORT);
     }
 
-    public void func_148279_a(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
+    public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
     {
         if (!this.field_148301_e.field_78841_f)
         {
@@ -64,7 +64,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
                 {
                     try
                     {
-                        ServerListEntryNormal.this.field_148303_c.func_146789_i().func_147224_a(ServerListEntryNormal.this.field_148301_e);
+                        ServerListEntryNormal.this.field_148303_c.getOldServerPinger().ping(ServerListEntryNormal.this.field_148301_e);
                     }
                     catch (UnknownHostException var2)
                     {
@@ -80,9 +80,9 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
             });
         }
 
-        boolean var10 = this.field_148301_e.field_82821_f > 5;
-        boolean var11 = this.field_148301_e.field_82821_f < 5;
-        boolean var12 = this.field_148301_e.field_82821_f != -213 && (var10 || var11);
+        boolean var10 = this.field_148301_e.version > 5;
+        boolean var11 = this.field_148301_e.version < 5;
+        boolean var12 = this.field_148301_e.version != -213 && (var10 || var11);
         this.field_148300_d.fontRenderer.drawString(this.field_148301_e.serverName, p_148279_2_ + 32 + 3, p_148279_3_ + 1, 16777215);
         List var13 = this.field_148300_d.fontRenderer.listFormattedStringToWidth(this.field_148301_e.serverMOTD, p_148279_4_ - 32 - 2);
 
@@ -103,7 +103,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         {
             var17 = 5;
             var19 = var10 ? "Client out of date!" : "Server out of date!";
-            var18 = this.field_148301_e.field_147412_i;
+            var18 = this.field_148301_e.playerList;
         }
         else if (this.field_148301_e.field_78841_f && this.field_148301_e.pingToServer != -2L)
         {
@@ -139,7 +139,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
             else
             {
                 var19 = this.field_148301_e.pingToServer + "ms";
-                var18 = this.field_148301_e.field_147412_i;
+                var18 = this.field_148301_e.playerList;
             }
         }
         else
@@ -157,19 +157,19 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.field_148300_d.getTextureManager().bindTexture(Gui.icons);
-        Gui.func_146110_a(p_148279_2_ + p_148279_4_ - 15, p_148279_3_, (float)(var16 * 10), (float)(176 + var17 * 8), 10, 8, 256.0F, 256.0F);
+        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_ + p_148279_4_ - 15, p_148279_3_, (float)(var16 * 10), (float)(176 + var17 * 8), 10, 8, 256.0F, 256.0F);
 
-        if (this.field_148301_e.func_147409_e() != null && !this.field_148301_e.func_147409_e().equals(this.field_148299_g))
+        if (this.field_148301_e.getBase64EncodedIconData() != null && !this.field_148301_e.getBase64EncodedIconData().equals(this.field_148299_g))
         {
-            this.field_148299_g = this.field_148301_e.func_147409_e();
-            this.func_148297_b();
-            this.field_148303_c.func_146795_p().saveServerList();
+            this.field_148299_g = this.field_148301_e.getBase64EncodedIconData();
+            this.prepareServerIcon();
+            this.field_148303_c.getServerList().saveServerList();
         }
 
         if (this.field_148305_h != null)
         {
             this.field_148300_d.getTextureManager().bindTexture(this.field_148306_i);
-            Gui.func_146110_a(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 32.0F, 32.0F);
+            Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 32.0F, 32.0F);
         }
 
         int var20 = p_148279_7_ - p_148279_2_;
@@ -185,16 +185,16 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         }
     }
 
-    private void func_148297_b()
+    private void prepareServerIcon()
     {
-        if (this.field_148301_e.func_147409_e() == null)
+        if (this.field_148301_e.getBase64EncodedIconData() == null)
         {
-            this.field_148300_d.getTextureManager().func_147645_c(this.field_148306_i);
+            this.field_148300_d.getTextureManager().deleteTexture(this.field_148306_i);
             this.field_148305_h = null;
         }
         else
         {
-            ByteBuf var2 = Unpooled.copiedBuffer(this.field_148301_e.func_147409_e(), Charsets.UTF_8);
+            ByteBuf var2 = Unpooled.copiedBuffer(this.field_148301_e.getBase64EncodedIconData(), Charsets.UTF_8);
             ByteBuf var3 = Base64.decode(var2);
             BufferedImage var1;
             label74:
@@ -209,7 +209,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
                 catch (Exception var8)
                 {
                     logger.error("Invalid icon for server " + this.field_148301_e.serverName + " (" + this.field_148301_e.serverIP + ")", var8);
-                    this.field_148301_e.func_147407_a((String)null);
+                    this.field_148301_e.setBase64EncodedIconData((String)null);
                 }
                 finally
                 {
@@ -231,22 +231,22 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         }
     }
 
-    public boolean func_148278_a(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_)
+    public boolean mousePressed(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_)
     {
-        this.field_148303_c.func_146790_a(p_148278_1_);
+        this.field_148303_c.selectServer(p_148278_1_);
 
         if (Minecraft.getSystemTime() - this.field_148298_f < 250L)
         {
-            this.field_148303_c.func_146796_h();
+            this.field_148303_c.connectToSelected();
         }
 
         this.field_148298_f = Minecraft.getSystemTime();
         return false;
     }
 
-    public void func_148277_b(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_) {}
+    public void mouseReleased(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_) {}
 
-    public ServerData func_148296_a()
+    public ServerData getServerData()
     {
         return this.field_148301_e;
     }

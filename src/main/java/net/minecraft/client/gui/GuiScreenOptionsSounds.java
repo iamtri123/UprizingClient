@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class GuiScreenOptionsSounds extends GuiScreen
 {
     private final GuiScreen field_146505_f;
-    private final GameSettings field_146506_g;
+    private final GameSettings game_settings_4;
     protected String field_146507_a = "Options";
     private String field_146508_h;
     private static final String __OBFID = "CL_00000716";
@@ -20,7 +20,7 @@ public class GuiScreenOptionsSounds extends GuiScreen
     public GuiScreenOptionsSounds(GuiScreen p_i45025_1_, GameSettings p_i45025_2_)
     {
         this.field_146505_f = p_i45025_1_;
-        this.field_146506_g = p_i45025_2_;
+        this.game_settings_4 = p_i45025_2_;
     }
 
     /**
@@ -50,11 +50,11 @@ public class GuiScreenOptionsSounds extends GuiScreen
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done")));
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.enabled)
+        if (button.enabled)
         {
-            if (p_146284_1_.id == 200)
+            if (button.id == 200)
             {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(this.field_146505_f);
@@ -72,9 +72,9 @@ public class GuiScreenOptionsSounds extends GuiScreen
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    protected String func_146504_a(SoundCategory p_146504_1_)
+    protected String getSoundVolume(SoundCategory p_146504_1_)
     {
-        float var2 = this.field_146506_g.getSoundLevel(p_146504_1_);
+        float var2 = this.game_settings_4.getSoundLevel(p_146504_1_);
         return var2 == 0.0F ? this.field_146508_h : (int)(var2 * 100.0F) + "%";
     }
 
@@ -91,22 +91,22 @@ public class GuiScreenOptionsSounds extends GuiScreen
             super(p_i45024_2_, p_i45024_3_, p_i45024_4_, p_i45024_6_ ? 310 : 150, 20, "");
             this.field_146153_r = p_i45024_5_;
             this.field_146152_s = I18n.format("soundCategory." + p_i45024_5_.getCategoryName());
-            this.displayString = this.field_146152_s + ": " + GuiScreenOptionsSounds.this.func_146504_a(p_i45024_5_);
-            this.field_146156_o = GuiScreenOptionsSounds.this.field_146506_g.getSoundLevel(p_i45024_5_);
+            this.displayString = this.field_146152_s + ": " + GuiScreenOptionsSounds.this.getSoundVolume(p_i45024_5_);
+            this.field_146156_o = GuiScreenOptionsSounds.this.game_settings_4.getSoundLevel(p_i45024_5_);
         }
 
-        public int getHoverState(boolean p_146114_1_)
+        public int getHoverState(boolean mouseOver)
         {
             return 0;
         }
 
-        protected void mouseDragged(Minecraft p_146119_1_, int p_146119_2_, int p_146119_3_)
+        protected void mouseDragged(Minecraft mc, int mouseX, int mouseY)
         {
             if (this.visible)
             {
                 if (this.field_146155_p)
                 {
-                    this.field_146156_o = (float)(p_146119_2_ - (this.xPosition + 4)) / (float)(this.width - 8);
+                    this.field_146156_o = (float)(mouseX - (this.xPosition + 4)) / (float)(this.width - 8);
 
                     if (this.field_146156_o < 0.0F)
                     {
@@ -118,9 +118,9 @@ public class GuiScreenOptionsSounds extends GuiScreen
                         this.field_146156_o = 1.0F;
                     }
 
-                    p_146119_1_.gameSettings.setSoundLevel(this.field_146153_r, this.field_146156_o);
-                    p_146119_1_.gameSettings.saveOptions();
-                    this.displayString = this.field_146152_s + ": " + GuiScreenOptionsSounds.this.func_146504_a(this.field_146153_r);
+                    mc.gameSettings.setSoundLevel(this.field_146153_r, this.field_146156_o);
+                    mc.gameSettings.saveOptions();
+                    this.displayString = this.field_146152_s + ": " + GuiScreenOptionsSounds.this.getSoundVolume(this.field_146153_r);
                 }
 
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -147,7 +147,7 @@ public class GuiScreenOptionsSounds extends GuiScreen
 
                 mc.gameSettings.setSoundLevel(this.field_146153_r, this.field_146156_o);
                 mc.gameSettings.saveOptions();
-                this.displayString = this.field_146152_s + ": " + GuiScreenOptionsSounds.this.func_146504_a(this.field_146153_r);
+                this.displayString = this.field_146152_s + ": " + GuiScreenOptionsSounds.this.getSoundVolume(this.field_146153_r);
                 this.field_146155_p = true;
                 return true;
             }
@@ -157,9 +157,9 @@ public class GuiScreenOptionsSounds extends GuiScreen
             }
         }
 
-        public void playPressSound(SoundHandler p_146113_1_) {}
+        public void playPressSound(SoundHandler soundHandlerIn) {}
 
-        public void mouseReleased(int p_146118_1_, int p_146118_2_)
+        public void mouseReleased(int mouseX, int mouseY)
         {
             if (this.field_146155_p)
             {
@@ -169,10 +169,10 @@ public class GuiScreenOptionsSounds extends GuiScreen
                 }
                 else
                 {
-                    GuiScreenOptionsSounds.this.field_146506_g.getSoundLevel(this.field_146153_r);
+                    GuiScreenOptionsSounds.this.game_settings_4.getSoundLevel(this.field_146153_r);
                 }
 
-                GuiScreenOptionsSounds.this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+                GuiScreenOptionsSounds.this.mc.getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press"), 1.0F));
             }
 
             this.field_146155_p = false;

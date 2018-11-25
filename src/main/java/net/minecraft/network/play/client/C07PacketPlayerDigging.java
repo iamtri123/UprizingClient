@@ -8,80 +8,80 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C07PacketPlayerDigging extends Packet
 {
-    private int field_149511_a;
-    private int field_149509_b;
-    private int field_149510_c;
-    private int field_149507_d;
-    private int field_149508_e;
+    private int diggedBlockX;
+    private int diggedBlockY;
+    private int diggedBlockZ;
+    private int diggingBlockFace;
+    private int status;
     private static final String __OBFID = "CL_00001365";
 
     public C07PacketPlayerDigging() {}
 
     public C07PacketPlayerDigging(int p_i45258_1_, int p_i45258_2_, int p_i45258_3_, int p_i45258_4_, int p_i45258_5_)
     {
-        this.field_149508_e = p_i45258_1_;
-        this.field_149511_a = p_i45258_2_;
-        this.field_149509_b = p_i45258_3_;
-        this.field_149510_c = p_i45258_4_;
-        this.field_149507_d = p_i45258_5_;
+        this.status = p_i45258_1_;
+        this.diggedBlockX = p_i45258_2_;
+        this.diggedBlockY = p_i45258_3_;
+        this.diggedBlockZ = p_i45258_4_;
+        this.diggingBlockFace = p_i45258_5_;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149508_e = p_148837_1_.readUnsignedByte();
-        this.field_149511_a = p_148837_1_.readInt();
-        this.field_149509_b = p_148837_1_.readUnsignedByte();
-        this.field_149510_c = p_148837_1_.readInt();
-        this.field_149507_d = p_148837_1_.readUnsignedByte();
+        this.status = data.readUnsignedByte();
+        this.diggedBlockX = data.readInt();
+        this.diggedBlockY = data.readUnsignedByte();
+        this.diggedBlockZ = data.readInt();
+        this.diggingBlockFace = data.readUnsignedByte();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeByte(this.field_149508_e);
-        p_148840_1_.writeInt(this.field_149511_a);
-        p_148840_1_.writeByte(this.field_149509_b);
-        p_148840_1_.writeInt(this.field_149510_c);
-        p_148840_1_.writeByte(this.field_149507_d);
+        data.writeByte(this.status);
+        data.writeInt(this.diggedBlockX);
+        data.writeByte(this.diggedBlockY);
+        data.writeInt(this.diggedBlockZ);
+        data.writeByte(this.diggingBlockFace);
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processPlayerDigging(this);
+        handler.processPlayerDigging(this);
     }
 
-    public int func_149505_c()
+    public int getDiggedBlockX()
     {
-        return this.field_149511_a;
+        return this.diggedBlockX;
     }
 
-    public int func_149503_d()
+    public int getDiggedBlockY()
     {
-        return this.field_149509_b;
+        return this.diggedBlockY;
     }
 
-    public int func_149502_e()
+    public int getDiggedBlockZ()
     {
-        return this.field_149510_c;
+        return this.diggedBlockZ;
     }
 
-    public int func_149501_f()
+    public int getDiggingBlockFace()
     {
-        return this.field_149507_d;
+        return this.diggingBlockFace;
     }
 
-    public int func_149506_g()
+    public int getDiggedBlockStatus()
     {
-        return this.field_149508_e;
+        return this.status;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 }

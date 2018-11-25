@@ -10,20 +10,20 @@ import java.util.UUID;
 public class Session {
 
     private final String username, playerID, token;
-    private final Session.Type field_152429_d;
+    private final Session.Type sessionType;
 
     public Session(String p_i1098_1_, String p_i1098_2_, String p_i1098_3_) {
         this.username = p_i1098_1_;
         this.playerID = p_i1098_2_;
         this.token = p_i1098_3_;
-        this.field_152429_d = Session.Type.MOJANG;
+        this.sessionType = Session.Type.MOJANG;
     }
 
     public String getSessionID() {
         return "token:" + token + ":" + playerID;
     }
 
-    public GameProfile func_148256_e() {
+    public GameProfile getProfile() {
         try {
             UUID var1 = UUIDTypeAdapter.fromString(this.getPlayerID());
             return new GameProfile(var1, this.getUsername());
@@ -32,8 +32,8 @@ public class Session {
         }
     }
 
-    public Session.Type func_152428_f() {
-        return field_152429_d;
+    public Session.Type getSessionType() {
+        return sessionType;
     }
 
     public enum Type {

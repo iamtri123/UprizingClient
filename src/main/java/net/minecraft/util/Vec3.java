@@ -16,50 +16,50 @@ public class Vec3
      * Static method for creating a new Vec3D given the three x,y,z values. This is only called from the other static
      * method which creates and places it in the list.
      */
-    public static Vec3 createVectorHelper(double p_72443_0_, double p_72443_2_, double p_72443_4_)
+    public static Vec3 createVectorHelper(double x, double y, double z)
     {
-        return new Vec3(p_72443_0_, p_72443_2_, p_72443_4_);
+        return new Vec3(x, y, z);
     }
 
-    protected Vec3(double p_i1108_1_, double p_i1108_3_, double p_i1108_5_)
+    protected Vec3(double x, double y, double z)
     {
-        if (p_i1108_1_ == -0.0D)
+        if (x == -0.0D)
         {
-            p_i1108_1_ = 0.0D;
+            x = 0.0D;
         }
 
-        if (p_i1108_3_ == -0.0D)
+        if (y == -0.0D)
         {
-            p_i1108_3_ = 0.0D;
+            y = 0.0D;
         }
 
-        if (p_i1108_5_ == -0.0D)
+        if (z == -0.0D)
         {
-            p_i1108_5_ = 0.0D;
+            z = 0.0D;
         }
 
-        this.xCoord = p_i1108_1_;
-        this.yCoord = p_i1108_3_;
-        this.zCoord = p_i1108_5_;
+        this.xCoord = x;
+        this.yCoord = y;
+        this.zCoord = z;
     }
 
     /**
      * Sets the x,y,z components of the vector as specified.
      */
-    protected Vec3 setComponents(double p_72439_1_, double p_72439_3_, double p_72439_5_)
+    protected Vec3 setComponents(double x, double y, double z)
     {
-        this.xCoord = p_72439_1_;
-        this.yCoord = p_72439_3_;
-        this.zCoord = p_72439_5_;
+        this.xCoord = x;
+        this.yCoord = y;
+        this.zCoord = z;
         return this;
     }
 
     /**
      * Returns a new vector with the result of the specified vector minus this.
      */
-    public Vec3 subtract(Vec3 p_72444_1_)
+    public Vec3 subtract(Vec3 vec)
     {
-        return createVectorHelper(p_72444_1_.xCoord - this.xCoord, p_72444_1_.yCoord - this.yCoord, p_72444_1_.zCoord - this.zCoord);
+        return createVectorHelper(vec.xCoord - this.xCoord, vec.yCoord - this.yCoord, vec.zCoord - this.zCoord);
     }
 
     /**
@@ -71,58 +71,58 @@ public class Vec3
         return var1 < 1.0E-4D ? createVectorHelper(0.0D, 0.0D, 0.0D) : createVectorHelper(this.xCoord / var1, this.yCoord / var1, this.zCoord / var1);
     }
 
-    public double dotProduct(Vec3 p_72430_1_)
+    public double dotProduct(Vec3 vec)
     {
-        return this.xCoord * p_72430_1_.xCoord + this.yCoord * p_72430_1_.yCoord + this.zCoord * p_72430_1_.zCoord;
+        return this.xCoord * vec.xCoord + this.yCoord * vec.yCoord + this.zCoord * vec.zCoord;
     }
 
     /**
      * Returns a new vector with the result of this vector x the specified vector.
      */
-    public Vec3 crossProduct(Vec3 p_72431_1_)
+    public Vec3 crossProduct(Vec3 vec)
     {
-        return createVectorHelper(this.yCoord * p_72431_1_.zCoord - this.zCoord * p_72431_1_.yCoord, this.zCoord * p_72431_1_.xCoord - this.xCoord * p_72431_1_.zCoord, this.xCoord * p_72431_1_.yCoord - this.yCoord * p_72431_1_.xCoord);
+        return createVectorHelper(this.yCoord * vec.zCoord - this.zCoord * vec.yCoord, this.zCoord * vec.xCoord - this.xCoord * vec.zCoord, this.xCoord * vec.yCoord - this.yCoord * vec.xCoord);
     }
 
     /**
      * Adds the specified x,y,z vector components to this vector and returns the resulting vector. Does not change this
      * vector.
      */
-    public Vec3 addVector(double p_72441_1_, double p_72441_3_, double p_72441_5_)
+    public Vec3 addVector(double x, double y, double z)
     {
-        return createVectorHelper(this.xCoord + p_72441_1_, this.yCoord + p_72441_3_, this.zCoord + p_72441_5_);
+        return createVectorHelper(this.xCoord + x, this.yCoord + y, this.zCoord + z);
     }
 
     /**
      * Euclidean distance between this and the specified vector, returned as double.
      */
-    public double distanceTo(Vec3 p_72438_1_)
+    public double distanceTo(Vec3 vec)
     {
-        double var2 = p_72438_1_.xCoord - this.xCoord;
-        double var4 = p_72438_1_.yCoord - this.yCoord;
-        double var6 = p_72438_1_.zCoord - this.zCoord;
+        double var2 = vec.xCoord - this.xCoord;
+        double var4 = vec.yCoord - this.yCoord;
+        double var6 = vec.zCoord - this.zCoord;
         return (double)MathHelper.sqrt_double(var2 * var2 + var4 * var4 + var6 * var6);
     }
 
     /**
      * The square of the Euclidean distance between this and the specified vector.
      */
-    public double squareDistanceTo(Vec3 p_72436_1_)
+    public double squareDistanceTo(Vec3 vec)
     {
-        double var2 = p_72436_1_.xCoord - this.xCoord;
-        double var4 = p_72436_1_.yCoord - this.yCoord;
-        double var6 = p_72436_1_.zCoord - this.zCoord;
+        double var2 = vec.xCoord - this.xCoord;
+        double var4 = vec.yCoord - this.yCoord;
+        double var6 = vec.zCoord - this.zCoord;
         return var2 * var2 + var4 * var4 + var6 * var6;
     }
 
     /**
      * The square of the Euclidean distance between this and the vector of x,y,z components passed in.
      */
-    public double squareDistanceTo(double p_72445_1_, double p_72445_3_, double p_72445_5_)
+    public double squareDistanceTo(double x, double y, double z)
     {
-        double var7 = p_72445_1_ - this.xCoord;
-        double var9 = p_72445_3_ - this.yCoord;
-        double var11 = p_72445_5_ - this.zCoord;
+        double var7 = x - this.xCoord;
+        double var9 = y - this.yCoord;
+        double var11 = z - this.zCoord;
         return var7 * var7 + var9 * var9 + var11 * var11;
     }
 
@@ -138,11 +138,11 @@ public class Vec3
      * Returns a new vector with x value equal to the second parameter, along the line between this vector and the
      * passed in vector, or null if not possible.
      */
-    public Vec3 getIntermediateWithXValue(Vec3 p_72429_1_, double p_72429_2_)
+    public Vec3 getIntermediateWithXValue(Vec3 vec, double x)
     {
-        double var4 = p_72429_1_.xCoord - this.xCoord;
-        double var6 = p_72429_1_.yCoord - this.yCoord;
-        double var8 = p_72429_1_.zCoord - this.zCoord;
+        double var4 = vec.xCoord - this.xCoord;
+        double var6 = vec.yCoord - this.yCoord;
+        double var8 = vec.zCoord - this.zCoord;
 
         if (var4 * var4 < 1.0000000116860974E-7D)
         {
@@ -150,7 +150,7 @@ public class Vec3
         }
         else
         {
-            double var10 = (p_72429_2_ - this.xCoord) / var4;
+            double var10 = (x - this.xCoord) / var4;
             return var10 >= 0.0D && var10 <= 1.0D ? createVectorHelper(this.xCoord + var4 * var10, this.yCoord + var6 * var10, this.zCoord + var8 * var10) : null;
         }
     }
@@ -159,11 +159,11 @@ public class Vec3
      * Returns a new vector with y value equal to the second parameter, along the line between this vector and the
      * passed in vector, or null if not possible.
      */
-    public Vec3 getIntermediateWithYValue(Vec3 p_72435_1_, double p_72435_2_)
+    public Vec3 getIntermediateWithYValue(Vec3 vec, double y)
     {
-        double var4 = p_72435_1_.xCoord - this.xCoord;
-        double var6 = p_72435_1_.yCoord - this.yCoord;
-        double var8 = p_72435_1_.zCoord - this.zCoord;
+        double var4 = vec.xCoord - this.xCoord;
+        double var6 = vec.yCoord - this.yCoord;
+        double var8 = vec.zCoord - this.zCoord;
 
         if (var6 * var6 < 1.0000000116860974E-7D)
         {
@@ -171,7 +171,7 @@ public class Vec3
         }
         else
         {
-            double var10 = (p_72435_2_ - this.yCoord) / var6;
+            double var10 = (y - this.yCoord) / var6;
             return var10 >= 0.0D && var10 <= 1.0D ? createVectorHelper(this.xCoord + var4 * var10, this.yCoord + var6 * var10, this.zCoord + var8 * var10) : null;
         }
     }
@@ -180,11 +180,11 @@ public class Vec3
      * Returns a new vector with z value equal to the second parameter, along the line between this vector and the
      * passed in vector, or null if not possible.
      */
-    public Vec3 getIntermediateWithZValue(Vec3 p_72434_1_, double p_72434_2_)
+    public Vec3 getIntermediateWithZValue(Vec3 vec, double z)
     {
-        double var4 = p_72434_1_.xCoord - this.xCoord;
-        double var6 = p_72434_1_.yCoord - this.yCoord;
-        double var8 = p_72434_1_.zCoord - this.zCoord;
+        double var4 = vec.xCoord - this.xCoord;
+        double var6 = vec.yCoord - this.yCoord;
+        double var8 = vec.zCoord - this.zCoord;
 
         if (var8 * var8 < 1.0000000116860974E-7D)
         {
@@ -192,7 +192,7 @@ public class Vec3
         }
         else
         {
-            double var10 = (p_72434_2_ - this.zCoord) / var8;
+            double var10 = (z - this.zCoord) / var8;
             return var10 >= 0.0D && var10 <= 1.0D ? createVectorHelper(this.xCoord + var4 * var10, this.yCoord + var6 * var10, this.zCoord + var8 * var10) : null;
         }
     }
@@ -205,10 +205,10 @@ public class Vec3
     /**
      * Rotates the vector around the x axis by the specified angle.
      */
-    public void rotateAroundX(float p_72440_1_)
+    public void rotateAroundX(float angle)
     {
-        float var2 = MathHelper.cos(p_72440_1_);
-        float var3 = MathHelper.sin(p_72440_1_);
+        float var2 = MathHelper.cos(angle);
+        float var3 = MathHelper.sin(angle);
         double var4 = this.xCoord;
         double var6 = this.yCoord * (double)var2 + this.zCoord * (double)var3;
         double var8 = this.zCoord * (double)var2 - this.yCoord * (double)var3;
@@ -218,10 +218,10 @@ public class Vec3
     /**
      * Rotates the vector around the y axis by the specified angle.
      */
-    public void rotateAroundY(float p_72442_1_)
+    public void rotateAroundY(float angle)
     {
-        float var2 = MathHelper.cos(p_72442_1_);
-        float var3 = MathHelper.sin(p_72442_1_);
+        float var2 = MathHelper.cos(angle);
+        float var3 = MathHelper.sin(angle);
         double var4 = this.xCoord * (double)var2 + this.zCoord * (double)var3;
         double var6 = this.yCoord;
         double var8 = this.zCoord * (double)var2 - this.xCoord * (double)var3;
@@ -231,10 +231,10 @@ public class Vec3
     /**
      * Rotates the vector around the z axis by the specified angle.
      */
-    public void rotateAroundZ(float p_72446_1_)
+    public void rotateAroundZ(float angle)
     {
-        float var2 = MathHelper.cos(p_72446_1_);
-        float var3 = MathHelper.sin(p_72446_1_);
+        float var2 = MathHelper.cos(angle);
+        float var3 = MathHelper.sin(angle);
         double var4 = this.xCoord * (double)var2 + this.yCoord * (double)var3;
         double var6 = this.yCoord * (double)var2 - this.xCoord * (double)var3;
         double var8 = this.zCoord;

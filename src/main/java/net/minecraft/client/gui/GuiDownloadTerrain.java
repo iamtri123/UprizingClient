@@ -6,19 +6,19 @@ import net.minecraft.network.play.client.C00PacketKeepAlive;
 
 public class GuiDownloadTerrain extends GuiScreen
 {
-    private final NetHandlerPlayClient field_146594_a;
-    private int field_146593_f;
+    private final NetHandlerPlayClient netHandlerPlayClient;
+    private int progress;
     private static final String __OBFID = "CL_00000708";
 
     public GuiDownloadTerrain(NetHandlerPlayClient p_i45023_1_)
     {
-        this.field_146594_a = p_i45023_1_;
+        this.netHandlerPlayClient = p_i45023_1_;
     }
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_) {}
+    protected void keyTyped(char typedChar, int keyCode) {}
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
@@ -33,16 +33,16 @@ public class GuiDownloadTerrain extends GuiScreen
      */
     public void updateScreen()
     {
-        ++this.field_146593_f;
+        ++this.progress;
 
-        if (this.field_146593_f % 20 == 0)
+        if (this.progress % 20 == 0)
         {
-            this.field_146594_a.addToSendQueue(new C00PacketKeepAlive());
+            this.netHandlerPlayClient.addToSendQueue(new C00PacketKeepAlive());
         }
 
-        if (this.field_146594_a != null)
+        if (this.netHandlerPlayClient != null)
         {
-            this.field_146594_a.onNetworkTick();
+            this.netHandlerPlayClient.onNetworkTick();
         }
     }
 
@@ -51,7 +51,7 @@ public class GuiDownloadTerrain extends GuiScreen
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.func_146278_c(0);
+        this.drawBackground(0);
         this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.downloadingTerrain"), this.width / 2, this.height / 2 - 50, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

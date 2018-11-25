@@ -19,7 +19,7 @@ public class BlockSnowBlock extends Block
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.snowball;
     }
@@ -27,7 +27,7 @@ public class BlockSnowBlock extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 4;
     }
@@ -35,12 +35,12 @@ public class BlockSnowBlock extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (p_149674_1_.getSavedLightValue(EnumSkyBlock.Block, p_149674_2_, p_149674_3_, p_149674_4_) > 11)
+        if (worldIn.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11)
         {
-            this.dropBlockAsItem(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_), 0);
-            p_149674_1_.setBlockToAir(p_149674_2_, p_149674_3_, p_149674_4_);
+            this.dropBlockAsItem(worldIn, x, y, z, worldIn.getBlockMetadata(x, y, z), 0);
+            worldIn.setBlockToAir(x, y, z);
         }
     }
 }

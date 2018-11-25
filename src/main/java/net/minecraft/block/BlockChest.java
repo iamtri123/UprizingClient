@@ -24,14 +24,14 @@ import net.minecraft.world.World;
 
 public class BlockChest extends BlockContainer
 {
-    private final Random field_149955_b = new Random();
-    public final int field_149956_a;
+    private final Random rand = new Random();
+    public final int chestType;
     private static final String __OBFID = "CL_00000214";
 
-    protected BlockChest(int p_i45397_1_)
+    protected BlockChest(int type)
     {
         super(Material.wood);
-        this.field_149956_a = p_i45397_1_;
+        this.chestType = type;
         this.setCreativeTab(CreativeTabs.tabDecorations);
         this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
     }
@@ -54,21 +54,21 @@ public class BlockChest extends BlockContainer
         return 22;
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        if (p_149719_1_.getBlock(p_149719_2_, p_149719_3_, p_149719_4_ - 1) == this)
+        if (worldIn.getBlock(x, y, z - 1) == this)
         {
             this.setBlockBounds(0.0625F, 0.0F, 0.0F, 0.9375F, 0.875F, 0.9375F);
         }
-        else if (p_149719_1_.getBlock(p_149719_2_, p_149719_3_, p_149719_4_ + 1) == this)
+        else if (worldIn.getBlock(x, y, z + 1) == this)
         {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 1.0F);
         }
-        else if (p_149719_1_.getBlock(p_149719_2_ - 1, p_149719_3_, p_149719_4_) == this)
+        else if (worldIn.getBlock(x - 1, y, z) == this)
         {
             this.setBlockBounds(0.0F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
         }
-        else if (p_149719_1_.getBlock(p_149719_2_ + 1, p_149719_3_, p_149719_4_) == this)
+        else if (worldIn.getBlock(x + 1, y, z) == this)
         {
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F, 0.875F, 0.9375F);
         }
@@ -78,47 +78,47 @@ public class BlockChest extends BlockContainer
         }
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
-        this.func_149954_e(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
-        Block var5 = p_149726_1_.getBlock(p_149726_2_, p_149726_3_, p_149726_4_ - 1);
-        Block var6 = p_149726_1_.getBlock(p_149726_2_, p_149726_3_, p_149726_4_ + 1);
-        Block var7 = p_149726_1_.getBlock(p_149726_2_ - 1, p_149726_3_, p_149726_4_);
-        Block var8 = p_149726_1_.getBlock(p_149726_2_ + 1, p_149726_3_, p_149726_4_);
+        super.onBlockAdded(worldIn, x, y, z);
+        this.initMetadata(worldIn, x, y, z);
+        Block var5 = worldIn.getBlock(x, y, z - 1);
+        Block var6 = worldIn.getBlock(x, y, z + 1);
+        Block var7 = worldIn.getBlock(x - 1, y, z);
+        Block var8 = worldIn.getBlock(x + 1, y, z);
 
         if (var5 == this)
         {
-            this.func_149954_e(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_ - 1);
+            this.initMetadata(worldIn, x, y, z - 1);
         }
 
         if (var6 == this)
         {
-            this.func_149954_e(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_ + 1);
+            this.initMetadata(worldIn, x, y, z + 1);
         }
 
         if (var7 == this)
         {
-            this.func_149954_e(p_149726_1_, p_149726_2_ - 1, p_149726_3_, p_149726_4_);
+            this.initMetadata(worldIn, x - 1, y, z);
         }
 
         if (var8 == this)
         {
-            this.func_149954_e(p_149726_1_, p_149726_2_ + 1, p_149726_3_, p_149726_4_);
+            this.initMetadata(worldIn, x + 1, y, z);
         }
     }
 
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        Block var7 = p_149689_1_.getBlock(p_149689_2_, p_149689_3_, p_149689_4_ - 1);
-        Block var8 = p_149689_1_.getBlock(p_149689_2_, p_149689_3_, p_149689_4_ + 1);
-        Block var9 = p_149689_1_.getBlock(p_149689_2_ - 1, p_149689_3_, p_149689_4_);
-        Block var10 = p_149689_1_.getBlock(p_149689_2_ + 1, p_149689_3_, p_149689_4_);
+        Block var7 = worldIn.getBlock(x, y, z - 1);
+        Block var8 = worldIn.getBlock(x, y, z + 1);
+        Block var9 = worldIn.getBlock(x - 1, y, z);
+        Block var10 = worldIn.getBlock(x + 1, y, z);
         byte var11 = 0;
-        int var12 = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int var12 = MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (var12 == 0)
         {
@@ -142,7 +142,7 @@ public class BlockChest extends BlockContainer
 
         if (var7 != this && var8 != this && var9 != this && var10 != this)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, var11, 3);
+            worldIn.setBlockMetadataWithNotify(x, y, z, var11, 3);
         }
         else
         {
@@ -150,38 +150,38 @@ public class BlockChest extends BlockContainer
             {
                 if (var7 == this)
                 {
-                    p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_ - 1, var11, 3);
+                    worldIn.setBlockMetadataWithNotify(x, y, z - 1, var11, 3);
                 }
                 else
                 {
-                    p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_ + 1, var11, 3);
+                    worldIn.setBlockMetadataWithNotify(x, y, z + 1, var11, 3);
                 }
 
-                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, var11, 3);
+                worldIn.setBlockMetadataWithNotify(x, y, z, var11, 3);
             }
 
             if ((var9 == this || var10 == this) && (var11 == 2 || var11 == 3))
             {
                 if (var9 == this)
                 {
-                    p_149689_1_.setBlockMetadataWithNotify(p_149689_2_ - 1, p_149689_3_, p_149689_4_, var11, 3);
+                    worldIn.setBlockMetadataWithNotify(x - 1, y, z, var11, 3);
                 }
                 else
                 {
-                    p_149689_1_.setBlockMetadataWithNotify(p_149689_2_ + 1, p_149689_3_, p_149689_4_, var11, 3);
+                    worldIn.setBlockMetadataWithNotify(x + 1, y, z, var11, 3);
                 }
 
-                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, var11, 3);
+                worldIn.setBlockMetadataWithNotify(x, y, z, var11, 3);
             }
         }
 
-        if (p_149689_6_.hasDisplayName())
+        if (itemIn.hasDisplayName())
         {
-            ((TileEntityChest)p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).func_145976_a(p_149689_6_.getDisplayName());
+            ((TileEntityChest)worldIn.getTileEntity(x, y, z)).setCustomName(itemIn.getDisplayName());
         }
     }
 
-    public void func_149954_e(World p_149954_1_, int p_149954_2_, int p_149954_3_, int p_149954_4_)
+    public void initMetadata(World p_149954_1_, int p_149954_2_, int p_149954_3_, int p_149954_4_)
     {
         if (!p_149954_1_.isClient)
         {
@@ -296,42 +296,42 @@ public class BlockChest extends BlockContainer
         }
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
         int var5 = 0;
 
-        if (p_149742_1_.getBlock(p_149742_2_ - 1, p_149742_3_, p_149742_4_) == this)
+        if (worldIn.getBlock(x - 1, y, z) == this)
         {
             ++var5;
         }
 
-        if (p_149742_1_.getBlock(p_149742_2_ + 1, p_149742_3_, p_149742_4_) == this)
+        if (worldIn.getBlock(x + 1, y, z) == this)
         {
             ++var5;
         }
 
-        if (p_149742_1_.getBlock(p_149742_2_, p_149742_3_, p_149742_4_ - 1) == this)
+        if (worldIn.getBlock(x, y, z - 1) == this)
         {
             ++var5;
         }
 
-        if (p_149742_1_.getBlock(p_149742_2_, p_149742_3_, p_149742_4_ + 1) == this)
+        if (worldIn.getBlock(x, y, z + 1) == this)
         {
             ++var5;
         }
 
-        return var5 <= 1 && (!this.func_149952_n(p_149742_1_, p_149742_2_ - 1, p_149742_3_, p_149742_4_) && (!this.func_149952_n(p_149742_1_, p_149742_2_ + 1, p_149742_3_, p_149742_4_) && (!this.func_149952_n(p_149742_1_, p_149742_2_, p_149742_3_, p_149742_4_ - 1) && !this.func_149952_n(p_149742_1_, p_149742_2_, p_149742_3_, p_149742_4_ + 1))));
+        return var5 <= 1 && (!this.isDoubleChest(worldIn, x - 1, y, z) && (!this.isDoubleChest(worldIn, x + 1, y, z) && (!this.isDoubleChest(worldIn, x, y, z - 1) && !this.isDoubleChest(worldIn, x, y, z + 1))));
     }
 
-    private boolean func_149952_n(World p_149952_1_, int p_149952_2_, int p_149952_3_, int p_149952_4_)
+    private boolean isDoubleChest(World worldIn, int x, int y, int z)
     {
-        return p_149952_1_.getBlock(p_149952_2_, p_149952_3_, p_149952_4_) == this && (p_149952_1_.getBlock(p_149952_2_ - 1, p_149952_3_, p_149952_4_) == this || (p_149952_1_.getBlock(p_149952_2_ + 1, p_149952_3_, p_149952_4_) == this || (p_149952_1_.getBlock(p_149952_2_, p_149952_3_, p_149952_4_ - 1) == this || p_149952_1_.getBlock(p_149952_2_, p_149952_3_, p_149952_4_ + 1) == this)));
+        return worldIn.getBlock(x, y, z) == this && (worldIn.getBlock(x - 1, y, z) == this || (worldIn.getBlock(x + 1, y, z) == this || (worldIn.getBlock(x, y, z - 1) == this || worldIn.getBlock(x, y, z + 1) == this)));
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        super.onNeighborBlockChange(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
-        TileEntityChest var6 = (TileEntityChest)p_149695_1_.getTileEntity(p_149695_2_, p_149695_3_, p_149695_4_);
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
+        TileEntityChest var6 = (TileEntityChest)worldIn.getTileEntity(x, y, z);
 
         if (var6 != null)
         {
@@ -339,9 +339,9 @@ public class BlockChest extends BlockContainer
         }
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        TileEntityChest var7 = (TileEntityChest)p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+        TileEntityChest var7 = (TileEntityChest)worldIn.getTileEntity(x, y, z);
 
         if (var7 != null)
         {
@@ -351,13 +351,13 @@ public class BlockChest extends BlockContainer
 
                 if (var9 != null)
                 {
-                    float var10 = this.field_149955_b.nextFloat() * 0.8F + 0.1F;
-                    float var11 = this.field_149955_b.nextFloat() * 0.8F + 0.1F;
+                    float var10 = this.rand.nextFloat() * 0.8F + 0.1F;
+                    float var11 = this.rand.nextFloat() * 0.8F + 0.1F;
                     EntityItem var14;
 
-                    for (float var12 = this.field_149955_b.nextFloat() * 0.8F + 0.1F; var9.stackSize > 0; p_149749_1_.spawnEntityInWorld(var14))
+                    for (float var12 = this.rand.nextFloat() * 0.8F + 0.1F; var9.stackSize > 0; worldIn.spawnEntityInWorld(var14))
                     {
-                        int var13 = this.field_149955_b.nextInt(21) + 10;
+                        int var13 = this.rand.nextInt(21) + 10;
 
                         if (var13 > var9.stackSize)
                         {
@@ -365,11 +365,11 @@ public class BlockChest extends BlockContainer
                         }
 
                         var9.stackSize -= var13;
-                        var14 = new EntityItem(p_149749_1_, (double)((float)p_149749_2_ + var10), (double)((float)p_149749_3_ + var11), (double)((float)p_149749_4_ + var12), new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
+                        var14 = new EntityItem(worldIn, (double)((float)x + var10), (double)((float)y + var11), (double)((float)z + var12), new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
                         float var15 = 0.05F;
-                        var14.motionX = (double)((float)this.field_149955_b.nextGaussian() * var15);
-                        var14.motionY = (double)((float)this.field_149955_b.nextGaussian() * var15 + 0.2F);
-                        var14.motionZ = (double)((float)this.field_149955_b.nextGaussian() * var15);
+                        var14.motionX = (double)((float)this.rand.nextGaussian() * var15);
+                        var14.motionY = (double)((float)this.rand.nextGaussian() * var15 + 0.2F);
+                        var14.motionZ = (double)((float)this.rand.nextGaussian() * var15);
 
                         if (var9.hasTagCompound())
                         {
@@ -379,35 +379,35 @@ public class BlockChest extends BlockContainer
                 }
             }
 
-            p_149749_1_.func_147453_f(p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_);
+            worldIn.updateNeighborsAboutBlockChange(x, y, z, blockBroken);
         }
 
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        if (p_149727_1_.isClient)
+        if (worldIn.isClient)
         {
             return true;
         }
         else
         {
-            IInventory var10 = this.func_149951_m(p_149727_1_, p_149727_2_, p_149727_3_, p_149727_4_);
+            IInventory var10 = this.getInventory(worldIn, x, y, z);
 
             if (var10 != null)
             {
-                p_149727_5_.displayGUIChest(var10);
+                player.displayGUIChest(var10);
             }
 
             return true;
         }
     }
 
-    public IInventory func_149951_m(World p_149951_1_, int p_149951_2_, int p_149951_3_, int p_149951_4_)
+    public IInventory getInventory(World p_149951_1_, int p_149951_2_, int p_149951_3_, int p_149951_4_)
     {
         Object var5 = (TileEntityChest)p_149951_1_.getTileEntity(p_149951_2_, p_149951_3_, p_149951_4_);
 
@@ -419,23 +419,23 @@ public class BlockChest extends BlockContainer
         {
             return null;
         }
-        else if (func_149953_o(p_149951_1_, p_149951_2_, p_149951_3_, p_149951_4_))
+        else if (isOcelotSittingOnTop(p_149951_1_, p_149951_2_, p_149951_3_, p_149951_4_))
         {
             return null;
         }
-        else if (p_149951_1_.getBlock(p_149951_2_ - 1, p_149951_3_, p_149951_4_) == this && (p_149951_1_.getBlock(p_149951_2_ - 1, p_149951_3_ + 1, p_149951_4_).isNormalCube() || func_149953_o(p_149951_1_, p_149951_2_ - 1, p_149951_3_, p_149951_4_)))
+        else if (p_149951_1_.getBlock(p_149951_2_ - 1, p_149951_3_, p_149951_4_) == this && (p_149951_1_.getBlock(p_149951_2_ - 1, p_149951_3_ + 1, p_149951_4_).isNormalCube() || isOcelotSittingOnTop(p_149951_1_, p_149951_2_ - 1, p_149951_3_, p_149951_4_)))
         {
             return null;
         }
-        else if (p_149951_1_.getBlock(p_149951_2_ + 1, p_149951_3_, p_149951_4_) == this && (p_149951_1_.getBlock(p_149951_2_ + 1, p_149951_3_ + 1, p_149951_4_).isNormalCube() || func_149953_o(p_149951_1_, p_149951_2_ + 1, p_149951_3_, p_149951_4_)))
+        else if (p_149951_1_.getBlock(p_149951_2_ + 1, p_149951_3_, p_149951_4_) == this && (p_149951_1_.getBlock(p_149951_2_ + 1, p_149951_3_ + 1, p_149951_4_).isNormalCube() || isOcelotSittingOnTop(p_149951_1_, p_149951_2_ + 1, p_149951_3_, p_149951_4_)))
         {
             return null;
         }
-        else if (p_149951_1_.getBlock(p_149951_2_, p_149951_3_, p_149951_4_ - 1) == this && (p_149951_1_.getBlock(p_149951_2_, p_149951_3_ + 1, p_149951_4_ - 1).isNormalCube() || func_149953_o(p_149951_1_, p_149951_2_, p_149951_3_, p_149951_4_ - 1)))
+        else if (p_149951_1_.getBlock(p_149951_2_, p_149951_3_, p_149951_4_ - 1) == this && (p_149951_1_.getBlock(p_149951_2_, p_149951_3_ + 1, p_149951_4_ - 1).isNormalCube() || isOcelotSittingOnTop(p_149951_1_, p_149951_2_, p_149951_3_, p_149951_4_ - 1)))
         {
             return null;
         }
-        else if (p_149951_1_.getBlock(p_149951_2_, p_149951_3_, p_149951_4_ + 1) == this && (p_149951_1_.getBlock(p_149951_2_, p_149951_3_ + 1, p_149951_4_ + 1).isNormalCube() || func_149953_o(p_149951_1_, p_149951_2_, p_149951_3_, p_149951_4_ + 1)))
+        else if (p_149951_1_.getBlock(p_149951_2_, p_149951_3_, p_149951_4_ + 1) == this && (p_149951_1_.getBlock(p_149951_2_, p_149951_3_ + 1, p_149951_4_ + 1).isNormalCube() || isOcelotSittingOnTop(p_149951_1_, p_149951_2_, p_149951_3_, p_149951_4_ + 1)))
         {
             return null;
         }
@@ -468,7 +468,7 @@ public class BlockChest extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         TileEntityChest var3 = new TileEntityChest();
         return var3;
@@ -479,10 +479,10 @@ public class BlockChest extends BlockContainer
      */
     public boolean canProvidePower()
     {
-        return this.field_149956_a == 1;
+        return this.chestType == 1;
     }
 
-    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
+    public int isProvidingWeakPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
         if (!this.canProvidePower())
         {
@@ -490,17 +490,17 @@ public class BlockChest extends BlockContainer
         }
         else
         {
-            int var6 = ((TileEntityChest)p_149709_1_.getTileEntity(p_149709_2_, p_149709_3_, p_149709_4_)).field_145987_o;
+            int var6 = ((TileEntityChest)worldIn.getTileEntity(x, y, z)).numPlayersUsing;
             return MathHelper.clamp_int(var6, 0, 15);
         }
     }
 
-    public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_)
+    public int isProvidingStrongPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return p_149748_5_ == 1 ? this.isProvidingWeakPower(p_149748_1_, p_149748_2_, p_149748_3_, p_149748_4_, p_149748_5_) : 0;
+        return side == 1 ? this.isProvidingWeakPower(worldIn, x, y, z, side) : 0;
     }
 
-    private static boolean func_149953_o(World p_149953_0_, int p_149953_1_, int p_149953_2_, int p_149953_3_)
+    private static boolean isOcelotSittingOnTop(World p_149953_0_, int p_149953_1_, int p_149953_2_, int p_149953_3_)
     {
         Iterator var4 = p_149953_0_.getEntitiesWithinAABB(EntityOcelot.class, AxisAlignedBB.getBoundingBox((double)p_149953_1_, (double)(p_149953_2_ + 1), (double)p_149953_3_, (double)(p_149953_1_ + 1), (double)(p_149953_2_ + 2), (double)(p_149953_3_ + 1))).iterator();
         EntityOcelot var6;
@@ -525,13 +525,13 @@ public class BlockChest extends BlockContainer
         return true;
     }
 
-    public int getComparatorInputOverride(World p_149736_1_, int p_149736_2_, int p_149736_3_, int p_149736_4_, int p_149736_5_)
+    public int getComparatorInputOverride(World worldIn, int x, int y, int z, int side)
     {
-        return Container.calcRedstoneFromInventory(this.func_149951_m(p_149736_1_, p_149736_2_, p_149736_3_, p_149736_4_));
+        return Container.calcRedstoneFromInventory(this.getInventory(worldIn, x, y, z));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon("planks_oak");
+        this.blockIcon = reg.registerIcon("planks_oak");
     }
 }

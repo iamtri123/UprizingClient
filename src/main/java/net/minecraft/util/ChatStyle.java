@@ -64,7 +64,7 @@ public class ChatStyle
         {
             return null;
         }
-        public ChatStyle setColor(EnumChatFormatting p_150238_1_)
+        public ChatStyle setColor(EnumChatFormatting colorIn)
         {
             throw new UnsupportedOperationException();
         }
@@ -195,9 +195,9 @@ public class ChatStyle
      * Sets the color for this ChatStyle to the given value.  Only use color values for this; set other values using the
      * specific methods.
      */
-    public ChatStyle setColor(EnumChatFormatting p_150238_1_)
+    public ChatStyle setColor(EnumChatFormatting colorIn)
     {
-        this.color = p_150238_1_;
+        this.color = colorIn;
         return this;
     }
 

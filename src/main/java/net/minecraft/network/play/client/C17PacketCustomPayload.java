@@ -9,9 +9,9 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C17PacketCustomPayload extends Packet
 {
-    private String field_149562_a;
-    private int field_149560_b;
-    private byte[] field_149561_c;
+    private String channel;
+    private int length;
+    private byte[] data;
     private static final String __OBFID = "CL_00001356";
 
     public C17PacketCustomPayload() {}
@@ -23,14 +23,14 @@ public class C17PacketCustomPayload extends Packet
 
     public C17PacketCustomPayload(String p_i45249_1_, byte[] p_i45249_2_)
     {
-        this.field_149562_a = p_i45249_1_;
-        this.field_149561_c = p_i45249_2_;
+        this.channel = p_i45249_1_;
+        this.data = p_i45249_2_;
 
         if (p_i45249_2_ != null)
         {
-            this.field_149560_b = p_i45249_2_.length;
+            this.length = p_i45249_2_.length;
 
-            if (this.field_149560_b >= 32767)
+            if (this.length >= 32767)
             {
                 throw new IllegalArgumentException("Payload may not be larger than 32k");
             }
@@ -40,49 +40,49 @@ public class C17PacketCustomPayload extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149562_a = p_148837_1_.readStringFromBuffer(20);
-        this.field_149560_b = p_148837_1_.readShort();
+        this.channel = data.readStringFromBuffer(20);
+        this.length = data.readShort();
 
-        if (this.field_149560_b > 0 && this.field_149560_b < 32767)
+        if (this.length > 0 && this.length < 32767)
         {
-            this.field_149561_c = new byte[this.field_149560_b];
-            p_148837_1_.readBytes(this.field_149561_c);
+            this.data = new byte[this.length];
+            data.readBytes(this.data);
         }
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(this.field_149562_a);
-        p_148840_1_.writeShort((short)this.field_149560_b);
+        data.writeStringToBuffer(this.channel);
+        data.writeShort((short)this.length);
 
-        if (this.field_149561_c != null)
+        if (this.data != null)
         {
-            p_148840_1_.writeBytes(this.field_149561_c);
+            data.writeBytes(this.data);
         }
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processVanilla250Packet(this);
+        handler.processVanilla250Packet(this);
     }
 
-    public String func_149559_c()
+    public String getChannel()
     {
-        return this.field_149562_a;
+        return this.channel;
     }
 
-    public byte[] func_149558_e()
+    public byte[] getData()
     {
-        return this.field_149561_c;
+        return this.data;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 }

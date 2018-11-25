@@ -12,11 +12,11 @@ public class BlockClay extends Block
 
     public BlockClay()
     {
-        super(Material.field_151571_B);
+        super(Material.clay);
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.clay_ball;
     }
@@ -24,7 +24,7 @@ public class BlockClay extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 4;
     }

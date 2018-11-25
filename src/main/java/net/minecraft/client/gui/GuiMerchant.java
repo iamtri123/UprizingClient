@@ -44,18 +44,18 @@ public class GuiMerchant extends GuiContainer
     public void initGui()
     {
         super.initGui();
-        int var1 = (this.width - this.field_146999_f) / 2;
-        int var2 = (this.height - this.field_147000_g) / 2;
+        int var1 = (this.width - this.xSize) / 2;
+        int var2 = (this.height - this.ySize) / 2;
         this.buttonList.add(this.field_147043_x = new GuiMerchant.MerchantButton(1, var1 + 120 + 27, var2 + 24 - 1, true));
         this.buttonList.add(this.field_147042_y = new GuiMerchant.MerchantButton(2, var1 + 36 - 19, var2 + 24 - 1, false));
         this.field_147043_x.enabled = false;
         this.field_147042_y.enabled = false;
     }
 
-    protected void func_146979_b(int p_146979_1_, int p_146979_2_)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString(this.field_147040_A, this.field_146999_f / 2 - this.fontRendererObj.getStringWidth(this.field_147040_A) / 2, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.field_147000_g - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(this.field_147040_A, this.xSize / 2 - this.fontRendererObj.getStringWidth(this.field_147040_A) / 2, 6, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
     /**
@@ -73,16 +73,16 @@ public class GuiMerchant extends GuiContainer
         }
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
         boolean var2 = false;
 
-        if (p_146284_1_ == this.field_147043_x)
+        if (button == this.field_147043_x)
         {
             ++this.field_147041_z;
             var2 = true;
         }
-        else if (p_146284_1_ == this.field_147042_y)
+        else if (button == this.field_147042_y)
         {
             --this.field_147041_z;
             var2 = true;
@@ -90,7 +90,7 @@ public class GuiMerchant extends GuiContainer
 
         if (var2)
         {
-            ((ContainerMerchant)this.field_147002_h).setCurrentRecipeIndex(this.field_147041_z);
+            ((ContainerMerchant)this.inventorySlots).setCurrentRecipeIndex(this.field_147041_z);
             ByteBuf var3 = Unpooled.buffer();
 
             try
@@ -109,13 +109,13 @@ public class GuiMerchant extends GuiContainer
         }
     }
 
-    protected void func_146976_a(float p_146976_1_, int p_146976_2_, int p_146976_3_)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(field_147038_v);
-        int var4 = (this.width - this.field_146999_f) / 2;
-        int var5 = (this.height - this.field_147000_g) / 2;
-        this.drawTexturedModalRect(var4, var5, 0, 0, this.field_146999_f, this.field_147000_g);
+        int var4 = (this.width - this.xSize) / 2;
+        int var5 = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
         MerchantRecipeList var6 = this.field_147037_w.getRecipes(this.mc.thePlayer);
 
         if (var6 != null && !var6.isEmpty())
@@ -128,8 +128,8 @@ public class GuiMerchant extends GuiContainer
                 this.mc.getTextureManager().bindTexture(field_147038_v);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 GL11.glDisable(GL11.GL_LIGHTING);
-                this.drawTexturedModalRect(this.field_147003_i + 83, this.field_147009_r + 21, 212, 0, 28, 21);
-                this.drawTexturedModalRect(this.field_147003_i + 83, this.field_147009_r + 51, 212, 0, 28, 21);
+                this.drawTexturedModalRect(this.guiLeft + 83, this.guiTop + 21, 212, 0, 28, 21);
+                this.drawTexturedModalRect(this.guiLeft + 83, this.guiTop + 51, 212, 0, 28, 21);
             }
         }
     }
@@ -144,8 +144,8 @@ public class GuiMerchant extends GuiContainer
 
         if (var4 != null && !var4.isEmpty())
         {
-            int var5 = (this.width - this.field_146999_f) / 2;
-            int var6 = (this.height - this.field_147000_g) / 2;
+            int var5 = (this.width - this.xSize) / 2;
+            int var6 = (this.height - this.ySize) / 2;
             int var7 = this.field_147041_z;
             MerchantRecipe var8 = (MerchantRecipe)var4.get(var7);
             GL11.glPushMatrix();
@@ -172,17 +172,17 @@ public class GuiMerchant extends GuiContainer
             itemRender.zLevel = 0.0F;
             GL11.glDisable(GL11.GL_LIGHTING);
 
-            if (this.func_146978_c(36, 24, 16, 16, mouseX, mouseY))
+            if (this.isPointInRegion(36, 24, 16, 16, mouseX, mouseY))
             {
-                this.func_146285_a(var9, mouseX, mouseY);
+                this.renderToolTip(var9, mouseX, mouseY);
             }
-            else if (var10 != null && this.func_146978_c(62, 24, 16, 16, mouseX, mouseY))
+            else if (var10 != null && this.isPointInRegion(62, 24, 16, 16, mouseX, mouseY))
             {
-                this.func_146285_a(var10, mouseX, mouseY);
+                this.renderToolTip(var10, mouseX, mouseY);
             }
-            else if (this.func_146978_c(120, 24, 16, 16, mouseX, mouseY))
+            else if (this.isPointInRegion(120, 24, 16, 16, mouseX, mouseY))
             {
-                this.func_146285_a(var11, mouseX, mouseY);
+                this.renderToolTip(var11, mouseX, mouseY);
             }
 
             GL11.glPopMatrix();
@@ -192,7 +192,7 @@ public class GuiMerchant extends GuiContainer
         }
     }
 
-    public IMerchant func_147035_g()
+    public IMerchant getMerchant()
     {
         return this.field_147037_w;
     }
@@ -208,13 +208,13 @@ public class GuiMerchant extends GuiContainer
             this.field_146157_o = p_i1095_4_;
         }
 
-        public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_)
+        public void drawButton(Minecraft mc, int mouseX, int mouseY)
         {
             if (this.visible)
             {
-                p_146112_1_.getTextureManager().bindTexture(GuiMerchant.field_147038_v);
+                mc.getTextureManager().bindTexture(GuiMerchant.field_147038_v);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                boolean var4 = p_146112_2_ >= this.xPosition && p_146112_3_ >= this.yPosition && p_146112_2_ < this.xPosition + this.width && p_146112_3_ < this.yPosition + this.height;
+                boolean var4 = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
                 int var5 = 0;
                 int var6 = 176;
 

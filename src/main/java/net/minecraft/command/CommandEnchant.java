@@ -24,21 +24,21 @@ public class CommandEnchant extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.enchant.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length < 2)
+        if (args.length < 2)
         {
             throw new WrongUsageException("commands.enchant.usage");
         }
         else
         {
-            EntityPlayerMP var3 = getPlayer(p_71515_1_, p_71515_2_[0]);
-            int var4 = parseIntBounded(p_71515_1_, p_71515_2_[1], 0, Enchantment.enchantmentsList.length - 1);
+            EntityPlayerMP var3 = getPlayer(sender, args[0]);
+            int var4 = parseIntBounded(sender, args[1], 0, Enchantment.enchantmentsList.length - 1);
             int var5 = 1;
             ItemStack var6 = var3.getCurrentEquippedItem();
 
@@ -60,9 +60,9 @@ public class CommandEnchant extends CommandBase
                 }
                 else
                 {
-                    if (p_71515_2_.length >= 3)
+                    if (args.length >= 3)
                     {
-                        var5 = parseIntBounded(p_71515_1_, p_71515_2_[2], var7.getMinLevel(), var7.getMaxLevel());
+                        var5 = parseIntBounded(sender, args[2], var7.getMinLevel(), var7.getMaxLevel());
                     }
 
                     if (var6.hasTagCompound())
@@ -89,7 +89,7 @@ public class CommandEnchant extends CommandBase
                     }
 
                     var6.addEnchantment(var7, var5);
-                    func_152373_a(p_71515_1_, this, "commands.enchant.success");
+                    notifyOperators(sender, this, "commands.enchant.success");
                 }
             }
         }
@@ -98,9 +98,9 @@ public class CommandEnchant extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, this.getListOfPlayers()) : null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, this.getListOfPlayers()) : null;
     }
 
     protected String[] getListOfPlayers()
@@ -111,8 +111,8 @@ public class CommandEnchant extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_)
+    public boolean isUsernameIndex(String[] args, int index)
     {
-        return p_82358_2_ == 0;
+        return index == 0;
     }
 }

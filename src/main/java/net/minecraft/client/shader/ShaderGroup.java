@@ -48,10 +48,10 @@ public class ShaderGroup
         this.mainFramebufferHeight = p_i1050_3_.framebufferHeight;
         this.shaderGroupName = p_i1050_4_.toString();
         this.resetProjectionMatrix();
-        this.func_152765_a(p_i1050_1_, p_i1050_4_);
+        this.parseGroup(p_i1050_1_, p_i1050_4_);
     }
 
-    public void func_152765_a(TextureManager p_152765_1_, ResourceLocation p_152765_2_) throws JsonException
+    public void parseGroup(TextureManager p_152765_1_, ResourceLocation p_152765_2_) throws JsonException
     {
         JsonParser var3 = new JsonParser();
         InputStream var4 = null;
@@ -100,7 +100,7 @@ public class ShaderGroup
 
                     try
                     {
-                        this.func_152764_a(p_152765_1_, var10);
+                        this.parsePass(p_152765_1_, var10);
                     }
                     catch (Exception var18)
                     {
@@ -145,7 +145,7 @@ public class ShaderGroup
         }
     }
 
-    private void func_152764_a(TextureManager p_152764_1_, JsonElement p_152764_2_) throws JsonException
+    private void parsePass(TextureManager p_152764_1_, JsonElement p_152764_2_) throws JsonException
     {
         JsonObject var3 = JsonUtils.getJsonElementAsJsonObject(p_152764_2_, "pass");
         String var4 = JsonUtils.getJsonObjectStringFieldValue(var3, "name");
@@ -257,7 +257,7 @@ public class ShaderGroup
     {
         JsonObject var2 = JsonUtils.getJsonElementAsJsonObject(p_148028_1_, "uniform");
         String var3 = JsonUtils.getJsonObjectStringFieldValue(var2, "name");
-        ShaderUniform var4 = ((Shader)this.listShaders.get(this.listShaders.size() - 1)).getShaderManager().func_147991_a(var3);
+        ShaderUniform var4 = ((Shader)this.listShaders.get(this.listShaders.size() - 1)).getShaderManager().getShaderUniform(var3);
 
         if (var4 == null)
         {
@@ -292,19 +292,19 @@ public class ShaderGroup
                     break;
 
                 case 1:
-                    var4.func_148090_a(var5[0]);
+                    var4.set(var5[0]);
                     break;
 
                 case 2:
-                    var4.func_148087_a(var5[0], var5[1]);
+                    var4.set(var5[0], var5[1]);
                     break;
 
                 case 3:
-                    var4.func_148095_a(var5[0], var5[1], var5[2]);
+                    var4.set(var5[0], var5[1], var5[2]);
                     break;
 
                 case 4:
-                    var4.func_148081_a(var5[0], var5[1], var5[2], var5[3]);
+                    var4.set(var5[0], var5[1], var5[2], var5[3]);
             }
         }
     }

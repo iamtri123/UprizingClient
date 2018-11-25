@@ -407,7 +407,7 @@ public abstract class RendererLivingEntity extends Render
                 double var18 = 0.0D;
                 double var20 = 0.0D;
                 float var22 = 0.0F;
-                this.renderManager.func_147940_a(var4, var16, var18, var20, var22, p_85093_2_);
+                this.renderManager.renderEntityWithPosYaw(var4, var16, var18, var20, var22, p_85093_2_);
                 GL11.glPopMatrix();
             }
 
@@ -456,7 +456,7 @@ public abstract class RendererLivingEntity extends Render
     {
         GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
 
-        if (this.func_110813_b(p_77033_1_))
+        if (this.canRenderName(p_77033_1_))
         {
             float var8 = 1.6F;
             float var9 = 0.016666668F * var8;
@@ -465,7 +465,7 @@ public abstract class RendererLivingEntity extends Render
 
             if (var10 < (double)(var12 * var12))
             {
-                String var13 = p_77033_1_.func_145748_c_().getFormattedText();
+                String var13 = p_77033_1_.getFormattedCommandSenderName().getFormattedText();
 
                 if (p_77033_1_.isSneaking())
                 {
@@ -501,26 +501,26 @@ public abstract class RendererLivingEntity extends Render
                 }
                 else
                 {
-                    this.func_96449_a(p_77033_1_, p_77033_2_, p_77033_4_, p_77033_6_, var13, var9, var10);
+                    this.renderOffsetLivingLabel(p_77033_1_, p_77033_2_, p_77033_4_, p_77033_6_, var13, var9, var10);
                 }
             }
         }
     }
 
-    protected boolean func_110813_b(EntityLivingBase p_110813_1_)
+    protected boolean canRenderName(EntityLivingBase targetEntity)
     {
-        return Minecraft.isGuiEnabled() && p_110813_1_ != this.renderManager.livingPlayer && !p_110813_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) && p_110813_1_.riddenByEntity == null;
+        return Minecraft.isGuiEnabled() && targetEntity != this.renderManager.livingPlayer && !targetEntity.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) && targetEntity.riddenByEntity == null;
     }
 
-    protected void func_96449_a(EntityLivingBase p_96449_1_, double p_96449_2_, double p_96449_4_, double p_96449_6_, String p_96449_8_, float p_96449_9_, double p_96449_10_)
+    protected void renderOffsetLivingLabel(EntityLivingBase p_96449_1_, double p_96449_2_, double p_96449_4_, double p_96449_6_, String p_96449_8_, float p_96449_9_, double p_96449_10_)
     {
         if (p_96449_1_.isPlayerSleeping())
         {
-            this.func_147906_a(p_96449_1_, p_96449_8_, p_96449_2_, p_96449_4_ - 1.5D, p_96449_6_, 64);
+            this.renderLivingLabel(p_96449_1_, p_96449_8_, p_96449_2_, p_96449_4_ - 1.5D, p_96449_6_, 64);
         }
         else
         {
-            this.func_147906_a(p_96449_1_, p_96449_8_, p_96449_2_, p_96449_4_, p_96449_6_, 64);
+            this.renderLivingLabel(p_96449_1_, p_96449_8_, p_96449_2_, p_96449_4_, p_96449_6_, 64);
         }
     }
 

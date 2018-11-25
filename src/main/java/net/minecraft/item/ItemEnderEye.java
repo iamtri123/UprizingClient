@@ -29,7 +29,7 @@ public class ItemEnderEye extends Item
         Block var11 = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
         int var12 = p_77648_3_.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_);
 
-        if (p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_) && var11 == Blocks.end_portal_frame && !BlockEndPortalFrame.func_150020_b(var12))
+        if (p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_) && var11 == Blocks.end_portal_frame && !BlockEndPortalFrame.isEnderEyeInserted(var12))
         {
             if (p_77648_3_.isClient)
             {
@@ -38,7 +38,7 @@ public class ItemEnderEye extends Item
             else
             {
                 p_77648_3_.setBlockMetadataWithNotify(p_77648_4_, p_77648_5_, p_77648_6_, var12 + 4, 2);
-                p_77648_3_.func_147453_f(p_77648_4_, p_77648_5_, p_77648_6_, Blocks.end_portal_frame);
+                p_77648_3_.updateNeighborsAboutBlockChange(p_77648_4_, p_77648_5_, p_77648_6_, Blocks.end_portal_frame);
                 --p_77648_1_.stackSize;
                 int var13;
 
@@ -70,7 +70,7 @@ public class ItemEnderEye extends Item
 
                     if (p_77648_3_.getBlock(var29, p_77648_5_, var21) == Blocks.end_portal_frame)
                     {
-                        if (!BlockEndPortalFrame.func_150020_b(p_77648_3_.getBlockMetadata(var29, p_77648_5_, var21)))
+                        if (!BlockEndPortalFrame.isEnderEyeInserted(p_77648_3_.getBlockMetadata(var29, p_77648_5_, var21)))
                         {
                             var17 = false;
                             break;
@@ -95,7 +95,7 @@ public class ItemEnderEye extends Item
                         var29 += Direction.offsetX[var13] * 4;
                         var21 += Direction.offsetZ[var13] * 4;
 
-                        if (p_77648_3_.getBlock(var29, p_77648_5_, var21) != Blocks.end_portal_frame || !BlockEndPortalFrame.func_150020_b(p_77648_3_.getBlockMetadata(var29, p_77648_5_, var21)))
+                        if (p_77648_3_.getBlock(var29, p_77648_5_, var21) != Blocks.end_portal_frame || !BlockEndPortalFrame.isEnderEyeInserted(p_77648_3_.getBlockMetadata(var29, p_77648_5_, var21)))
                         {
                             var17 = false;
                             break;
@@ -113,7 +113,7 @@ public class ItemEnderEye extends Item
                             var21 += Direction.offsetX[var13] * var29;
                             var30 += Direction.offsetZ[var13] * var29;
 
-                            if (p_77648_3_.getBlock(var21, p_77648_5_, var30) != Blocks.end_portal_frame || !BlockEndPortalFrame.func_150020_b(p_77648_3_.getBlockMetadata(var21, p_77648_5_, var30)))
+                            if (p_77648_3_.getBlock(var21, p_77648_5_, var30) != Blocks.end_portal_frame || !BlockEndPortalFrame.isEnderEyeInserted(p_77648_3_.getBlockMetadata(var21, p_77648_5_, var30)))
                             {
                                 var17 = false;
                                 break;
@@ -149,36 +149,36 @@ public class ItemEnderEye extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        MovingObjectPosition var4 = this.getMovingObjectPositionFromPlayer(p_77659_2_, p_77659_3_, false);
+        MovingObjectPosition var4 = this.getMovingObjectPositionFromPlayer(worldIn, player, false);
 
-        if (var4 != null && var4.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && p_77659_2_.getBlock(var4.blockX, var4.blockY, var4.blockZ) == Blocks.end_portal_frame)
+        if (var4 != null && var4.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && worldIn.getBlock(var4.blockX, var4.blockY, var4.blockZ) == Blocks.end_portal_frame)
         {
-            return p_77659_1_;
+            return itemStackIn;
         }
         else
         {
-            if (!p_77659_2_.isClient)
+            if (!worldIn.isClient)
             {
-                ChunkPosition var5 = p_77659_2_.findClosestStructure("Stronghold", (int)p_77659_3_.posX, (int)p_77659_3_.posY, (int)p_77659_3_.posZ);
+                ChunkPosition var5 = worldIn.findClosestStructure("Stronghold", (int)player.posX, (int)player.posY, (int)player.posZ);
 
                 if (var5 != null)
                 {
-                    EntityEnderEye var6 = new EntityEnderEye(p_77659_2_, p_77659_3_.posX, p_77659_3_.posY + 1.62D - (double)p_77659_3_.yOffset, p_77659_3_.posZ);
-                    var6.moveTowards((double)var5.field_151329_a, var5.field_151327_b, (double)var5.field_151328_c);
-                    p_77659_2_.spawnEntityInWorld(var6);
-                    p_77659_2_.playSoundAtEntity(p_77659_3_, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-                    p_77659_2_.playAuxSFXAtEntity((EntityPlayer)null, 1002, (int)p_77659_3_.posX, (int)p_77659_3_.posY, (int)p_77659_3_.posZ, 0);
+                    EntityEnderEye var6 = new EntityEnderEye(worldIn, player.posX, player.posY + 1.62D - (double)player.yOffset, player.posZ);
+                    var6.moveTowards((double)var5.chunkPosX, var5.chunkPosY, (double)var5.chunkPosZ);
+                    worldIn.spawnEntityInWorld(var6);
+                    worldIn.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+                    worldIn.playAuxSFXAtEntity((EntityPlayer)null, 1002, (int)player.posX, (int)player.posY, (int)player.posZ, 0);
 
-                    if (!p_77659_3_.capabilities.isCreativeMode)
+                    if (!player.capabilities.isCreativeMode)
                     {
-                        --p_77659_1_.stackSize;
+                        --itemStackIn.stackSize;
                     }
                 }
             }
 
-            return p_77659_1_;
+            return itemStackIn;
         }
     }
 }

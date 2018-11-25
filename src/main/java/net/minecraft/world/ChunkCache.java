@@ -83,7 +83,7 @@ public class ChunkCache implements IBlockAccess
 
                 if (var7 != null)
                 {
-                    var4 = var7.func_150810_a(p_147439_1_ & 15, p_147439_2_, p_147439_3_ & 15);
+                    var4 = var7.getBlock(p_147439_1_ & 15, p_147439_2_, p_147439_3_ & 15);
                 }
             }
         }
@@ -91,11 +91,11 @@ public class ChunkCache implements IBlockAccess
         return var4;
     }
 
-    public TileEntity getTileEntity(int p_147438_1_, int p_147438_2_, int p_147438_3_)
+    public TileEntity getTileEntity(int x, int y, int z)
     {
-        int var4 = (p_147438_1_ >> 4) - this.chunkX;
-        int var5 = (p_147438_3_ >> 4) - this.chunkZ;
-        return this.chunkArray[var4][var5].func_150806_e(p_147438_1_ & 15, p_147438_2_, p_147438_3_ & 15);
+        int var4 = (x >> 4) - this.chunkX;
+        int var5 = (z >> 4) - this.chunkZ;
+        return this.chunkArray[var4][var5].getBlockTileEntityInChunk(x & 15, y, z & 15);
     }
 
     /**
@@ -138,17 +138,17 @@ public class ChunkCache implements IBlockAccess
     /**
      * Gets the biome for a given set of x/z coordinates
      */
-    public BiomeGenBase getBiomeGenForCoords(int p_72807_1_, int p_72807_2_)
+    public BiomeGenBase getBiomeGenForCoords(int x, int z)
     {
-        return this.worldObj.getBiomeGenForCoords(p_72807_1_, p_72807_2_);
+        return this.worldObj.getBiomeGenForCoords(x, z);
     }
 
     /**
      * Returns true if the block at the specified coordinates is empty
      */
-    public boolean isAirBlock(int p_147437_1_, int p_147437_2_, int p_147437_3_)
+    public boolean isAirBlock(int x, int y, int z)
     {
-        return this.getBlock(p_147437_1_, p_147437_2_, p_147437_3_).getMaterial() == Material.air;
+        return this.getBlock(x, y, z).getMaterial() == Material.air;
     }
 
     /**
@@ -260,8 +260,8 @@ public class ChunkCache implements IBlockAccess
     /**
      * Is this block powering in the specified direction Args: x, y, z, direction
      */
-    public int isBlockProvidingPowerTo(int p_72879_1_, int p_72879_2_, int p_72879_3_, int p_72879_4_)
+    public int isBlockProvidingPowerTo(int x, int y, int z, int directionIn)
     {
-        return this.getBlock(p_72879_1_, p_72879_2_, p_72879_3_).isProvidingStrongPower(this, p_72879_1_, p_72879_2_, p_72879_3_, p_72879_4_);
+        return this.getBlock(x, y, z).isProvidingStrongPower(this, x, y, z, directionIn);
     }
 }

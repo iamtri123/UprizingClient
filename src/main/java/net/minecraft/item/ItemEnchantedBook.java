@@ -38,7 +38,7 @@ public class ItemEnchantedBook extends Item
 
     public NBTTagList func_92110_g(ItemStack p_92110_1_)
     {
-        return p_92110_1_.stackTagCompound != null && p_92110_1_.stackTagCompound.func_150297_b("StoredEnchantments", 9) ? (NBTTagList)p_92110_1_.stackTagCompound.getTag("StoredEnchantments") : new NBTTagList();
+        return p_92110_1_.stackTagCompound != null && p_92110_1_.stackTagCompound.hasKey("StoredEnchantments", 9) ? (NBTTagList)p_92110_1_.stackTagCompound.getTag("StoredEnchantments") : new NBTTagList();
     }
 
     /**

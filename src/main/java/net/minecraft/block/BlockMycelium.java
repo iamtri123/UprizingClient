@@ -26,58 +26,58 @@ public class BlockMycelium extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_1_ == 1 ? this.field_150200_a : (p_149691_1_ == 0 ? Blocks.dirt.getBlockTextureFromSide(p_149691_1_) : this.blockIcon);
+        return side == 1 ? this.field_150200_a : (side == 0 ? Blocks.dirt.getBlockTextureFromSide(side) : this.blockIcon);
     }
 
-    public IIcon getIcon(IBlockAccess p_149673_1_, int p_149673_2_, int p_149673_3_, int p_149673_4_, int p_149673_5_)
+    public IIcon getIcon(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        if (p_149673_5_ == 1)
+        if (side == 1)
         {
             return this.field_150200_a;
         }
-        else if (p_149673_5_ == 0)
+        else if (side == 0)
         {
-            return Blocks.dirt.getBlockTextureFromSide(p_149673_5_);
+            return Blocks.dirt.getBlockTextureFromSide(side);
         }
         else
         {
-            Material var6 = p_149673_1_.getBlock(p_149673_2_, p_149673_3_ + 1, p_149673_4_).getMaterial();
-            return var6 != Material.field_151597_y && var6 != Material.craftedSnow ? this.blockIcon : this.field_150199_b;
+            Material var6 = worldIn.getBlock(x, y + 1, z).getMaterial();
+            return var6 != Material.snow && var6 != Material.craftedSnow ? this.blockIcon : this.field_150199_b;
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon(this.getTextureName() + "_side");
-        this.field_150200_a = p_149651_1_.registerIcon(this.getTextureName() + "_top");
-        this.field_150199_b = p_149651_1_.registerIcon("grass_side_snowed");
+        this.blockIcon = reg.registerIcon(this.getTextureName() + "_side");
+        this.field_150200_a = reg.registerIcon(this.getTextureName() + "_top");
+        this.field_150199_b = reg.registerIcon("grass_side_snowed");
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!p_149674_1_.isClient)
+        if (!worldIn.isClient)
         {
-            if (p_149674_1_.getBlockLightValue(p_149674_2_, p_149674_3_ + 1, p_149674_4_) < 4 && p_149674_1_.getBlock(p_149674_2_, p_149674_3_ + 1, p_149674_4_).getLightOpacity() > 2)
+            if (worldIn.getBlockLightValue(x, y + 1, z) < 4 && worldIn.getBlock(x, y + 1, z).getLightOpacity() > 2)
             {
-                p_149674_1_.setBlock(p_149674_2_, p_149674_3_, p_149674_4_, Blocks.dirt);
+                worldIn.setBlock(x, y, z, Blocks.dirt);
             }
-            else if (p_149674_1_.getBlockLightValue(p_149674_2_, p_149674_3_ + 1, p_149674_4_) >= 9)
+            else if (worldIn.getBlockLightValue(x, y + 1, z) >= 9)
             {
                 for (int var6 = 0; var6 < 4; ++var6)
                 {
-                    int var7 = p_149674_2_ + p_149674_5_.nextInt(3) - 1;
-                    int var8 = p_149674_3_ + p_149674_5_.nextInt(5) - 3;
-                    int var9 = p_149674_4_ + p_149674_5_.nextInt(3) - 1;
-                    Block var10 = p_149674_1_.getBlock(var7, var8 + 1, var9);
+                    int var7 = x + random.nextInt(3) - 1;
+                    int var8 = y + random.nextInt(5) - 3;
+                    int var9 = z + random.nextInt(3) - 1;
+                    Block var10 = worldIn.getBlock(var7, var8 + 1, var9);
 
-                    if (p_149674_1_.getBlock(var7, var8, var9) == Blocks.dirt && p_149674_1_.getBlockMetadata(var7, var8, var9) == 0 && p_149674_1_.getBlockLightValue(var7, var8 + 1, var9) >= 4 && var10.getLightOpacity() <= 2)
+                    if (worldIn.getBlock(var7, var8, var9) == Blocks.dirt && worldIn.getBlockMetadata(var7, var8, var9) == 0 && worldIn.getBlockLightValue(var7, var8 + 1, var9) >= 4 && var10.getLightOpacity() <= 2)
                     {
-                        p_149674_1_.setBlock(var7, var8, var9, this);
+                        worldIn.setBlock(var7, var8, var9, this);
                     }
                 }
             }
@@ -87,18 +87,18 @@ public class BlockMycelium extends Block
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        super.randomDisplayTick(p_149734_1_, p_149734_2_, p_149734_3_, p_149734_4_, p_149734_5_);
+        super.randomDisplayTick(worldIn, x, y, z, random);
 
-        if (p_149734_5_.nextInt(10) == 0)
+        if (random.nextInt(10) == 0)
         {
-            p_149734_1_.spawnParticle("townaura", (double)((float)p_149734_2_ + p_149734_5_.nextFloat()), (double)((float)p_149734_3_ + 1.1F), (double)((float)p_149734_4_ + p_149734_5_.nextFloat()), 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("townaura", (double)((float)x + random.nextFloat()), (double)((float)y + 1.1F), (double)((float)z + random.nextFloat()), 0.0D, 0.0D, 0.0D);
         }
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
-        return Blocks.dirt.getItemDropped(0, p_149650_2_, p_149650_3_);
+        return Blocks.dirt.getItemDropped(0, random, fortune);
     }
 }

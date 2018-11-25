@@ -40,13 +40,13 @@ import org.apache.commons.io.IOUtils;
 
 public class PlayerProfileCache
 {
-    public static final SimpleDateFormat field_152659_a = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     private final Map field_152661_c = Maps.newHashMap();
     private final Map field_152662_d = Maps.newHashMap();
     private final LinkedList field_152663_e = Lists.newLinkedList();
     private final MinecraftServer field_152664_f;
-    protected final Gson field_152660_b;
-    private final File field_152665_g;
+    protected final Gson gson;
+    private final File usercacheFile;
     private static final ParameterizedType field_152666_h = new ParameterizedType()
     {
         private static final String __OBFID = "CL_00001886";
@@ -68,10 +68,10 @@ public class PlayerProfileCache
     public PlayerProfileCache(MinecraftServer p_i1171_1_, File p_i1171_2_)
     {
         this.field_152664_f = p_i1171_1_;
-        this.field_152665_g = p_i1171_2_;
+        this.usercacheFile = p_i1171_2_;
         GsonBuilder var3 = new GsonBuilder();
         var3.registerTypeHierarchyAdapter(PlayerProfileCache.ProfileEntry.class, new PlayerProfileCache.Serializer(null));
-        this.field_152660_b = var3.create();
+        this.gson = var3.create();
         this.func_152657_b();
     }
 
@@ -90,11 +90,11 @@ public class PlayerProfileCache
                 var2[0] = null;
             }
         };
-        p_152650_0_.func_152359_aw().findProfilesByNames(new String[] {p_152650_1_}, Agent.MINECRAFT, var3);
+        p_152650_0_.getGameProfileRepository().findProfilesByNames(new String[] {p_152650_1_}, Agent.MINECRAFT, var3);
 
         if (!p_152650_0_.isServerInOnlineMode() && var2[0] == null)
         {
-            UUID var4 = EntityPlayer.func_146094_a(new GameProfile((UUID)null, p_152650_1_));
+            UUID var4 = EntityPlayer.getUUID(new GameProfile((UUID)null, p_152650_1_));
             GameProfile var5 = new GameProfile(var4, p_152650_1_);
             var3.onProfileLookupSucceeded(var5);
         }
@@ -142,7 +142,7 @@ public class PlayerProfileCache
         }
     }
 
-    public GameProfile func_152655_a(String p_152655_1_)
+    public GameProfile getGameProfileForUsername(String p_152655_1_)
     {
         String var2 = p_152655_1_.toLowerCase(Locale.ROOT);
         PlayerProfileCache.ProfileEntry var3 = (PlayerProfileCache.ProfileEntry)this.field_152661_c.get(var2);
@@ -228,8 +228,8 @@ public class PlayerProfileCache
         {
             try
             {
-                var2 = Files.newReader(this.field_152665_g, Charsets.UTF_8);
-                var1 = (List)this.field_152660_b.fromJson(var2, field_152666_h);
+                var2 = Files.newReader(this.usercacheFile, Charsets.UTF_8);
+                var1 = (List)this.gson.fromJson(var2, field_152666_h);
                 break label81;
             }
             catch (FileNotFoundException var10)
@@ -271,12 +271,12 @@ public class PlayerProfileCache
 
     public void func_152658_c()
     {
-        String var1 = this.field_152660_b.toJson(this.func_152656_a(1000));
+        String var1 = this.gson.toJson(this.func_152656_a(1000));
         BufferedWriter var2 = null;
 
         try
         {
-            var2 = Files.newWriter(this.field_152665_g, Charsets.UTF_8);
+            var2 = Files.newWriter(this.usercacheFile, Charsets.UTF_8);
             var2.write(var1);
             return;
         }
@@ -360,7 +360,7 @@ public class PlayerProfileCache
             var4.addProperty("name", p_152676_1_.func_152668_a().getName());
             UUID var5 = p_152676_1_.func_152668_a().getId();
             var4.addProperty("uuid", var5 == null ? "" : var5.toString());
-            var4.addProperty("expiresOn", PlayerProfileCache.field_152659_a.format(p_152676_1_.func_152670_b()));
+            var4.addProperty("expiresOn", PlayerProfileCache.dateFormat.format(p_152676_1_.func_152670_b()));
             return var4;
         }
 
@@ -383,7 +383,7 @@ public class PlayerProfileCache
                     {
                         try
                         {
-                            var10 = PlayerProfileCache.field_152659_a.parse(var7.getAsString());
+                            var10 = PlayerProfileCache.dateFormat.parse(var7.getAsString());
                         }
                         catch (ParseException var14)
                         {

@@ -23,15 +23,15 @@ public class EmptyChunk extends Chunk
     /**
      * Checks whether the chunk is at the X/Z location specified
      */
-    public boolean isAtLocation(int p_76600_1_, int p_76600_2_)
+    public boolean isAtLocation(int x, int z)
     {
-        return p_76600_1_ == this.xPosition && p_76600_2_ == this.zPosition;
+        return x == this.xPosition && z == this.zPosition;
     }
 
     /**
      * Returns the value in the height map at this x, z coordinate in the chunk
      */
-    public int getHeightValue(int p_76611_1_, int p_76611_2_)
+    public int getHeightValue(int x, int z)
     {
         return 0;
     }
@@ -46,17 +46,17 @@ public class EmptyChunk extends Chunk
      */
     public void generateSkylightMap() {}
 
-    public Block func_150810_a(int p_150810_1_, int p_150810_2_, int p_150810_3_)
+    public Block getBlock(int p_150810_1_, int p_150810_2_, int p_150810_3_)
     {
         return Blocks.air;
     }
 
-    public int func_150808_b(int p_150808_1_, int p_150808_2_, int p_150808_3_)
+    public int getBlockLightOpacity(int p_150808_1_, int p_150808_2_, int p_150808_3_)
     {
         return 255;
     }
 
-    public boolean func_150807_a(int p_150807_1_, int p_150807_2_, int p_150807_3_, Block p_150807_4_, int p_150807_5_)
+    public boolean setBlockIDWithMetadata(int p_150807_1_, int p_150807_2_, int p_150807_3_, Block p_150807_4_, int p_150807_5_)
     {
         return true;
     }
@@ -122,14 +122,14 @@ public class EmptyChunk extends Chunk
         return false;
     }
 
-    public TileEntity func_150806_e(int p_150806_1_, int p_150806_2_, int p_150806_3_)
+    public TileEntity getBlockTileEntityInChunk(int p_150806_1_, int p_150806_2_, int p_150806_3_)
     {
         return null;
     }
 
     public void addTileEntity(TileEntity p_150813_1_) {}
 
-    public void func_150812_a(int p_150812_1_, int p_150812_2_, int p_150812_3_, TileEntity p_150812_4_) {}
+    public void setBlockTileEntityInChunk(int p_150812_1_, int p_150812_2_, int p_150812_3_, TileEntity p_150812_4_) {}
 
     public void removeTileEntity(int p_150805_1_, int p_150805_2_, int p_150805_3_) {}
 

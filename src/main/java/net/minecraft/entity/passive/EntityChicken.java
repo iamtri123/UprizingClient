@@ -102,7 +102,7 @@ public class EntityChicken extends EntityAnimal
         if (!this.worldObj.isClient && !this.isChild() && !this.func_152116_bZ() && --this.timeUntilNextEgg <= 0)
         {
             this.playSound("mob.chicken.plop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            this.func_145779_a(Items.egg, 1);
+            this.dropItem(Items.egg, 1);
             this.timeUntilNextEgg = this.rand.nextInt(6000) + 6000;
         }
     }
@@ -110,7 +110,7 @@ public class EntityChicken extends EntityAnimal
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_) {}
+    protected void fall(float distance) {}
 
     /**
      * Returns the sound this mob makes while it's alive.
@@ -136,12 +136,12 @@ public class EntityChicken extends EntityAnimal
         return "mob.chicken.hurt";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.chicken.step", 0.15F, 1.0F);
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.feather;
     }
@@ -155,16 +155,16 @@ public class EntityChicken extends EntityAnimal
 
         for (int var4 = 0; var4 < var3; ++var4)
         {
-            this.func_145779_a(Items.feather, 1);
+            this.dropItem(Items.feather, 1);
         }
 
         if (this.isBurning())
         {
-            this.func_145779_a(Items.cooked_chicken, 1);
+            this.dropItem(Items.cooked_chicken, 1);
         }
         else
         {
-            this.func_145779_a(Items.chicken, 1);
+            this.dropItem(Items.chicken, 1);
         }
     }
 
@@ -185,10 +185,10 @@ public class EntityChicken extends EntityAnimal
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.field_152118_bv = p_70037_1_.getBoolean("IsChickenJockey");
+        super.readEntityFromNBT(tagCompund);
+        this.field_152118_bv = tagCompund.getBoolean("IsChickenJockey");
     }
 
     /**
@@ -202,10 +202,10 @@ public class EntityChicken extends EntityAnimal
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setBoolean("IsChickenJockey", this.field_152118_bv);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setBoolean("IsChickenJockey", this.field_152118_bv);
     }
 
     /**

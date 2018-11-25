@@ -35,7 +35,7 @@ public class ItemFireworkCharge extends Item
             if (var3 != null && var3 instanceof NBTTagIntArray)
             {
                 NBTTagIntArray var4 = (NBTTagIntArray)var3;
-                int[] var5 = var4.func_150302_c();
+                int[] var5 = var4.getIntArray();
 
                 if (var5.length == 1)
                 {
@@ -144,10 +144,10 @@ public class ItemFireworkCharge extends Item
 
                 for (int var11 = 0; var11 < 16; ++var11)
                 {
-                    if (var9 == ItemDye.field_150922_c[var11])
+                    if (var9 == ItemDye.dyeColors[var11])
                     {
                         var10 = true;
-                        var5 = var5 + StatCollector.translateToLocal("item.fireworksCharge." + ItemDye.field_150923_a[var11]);
+                        var5 = var5 + StatCollector.translateToLocal("item.fireworksCharge." + ItemDye.dyeColorNames[var11]);
                         break;
                     }
                 }
@@ -185,10 +185,10 @@ public class ItemFireworkCharge extends Item
 
                 for (int var12 = 0; var12 < 16; ++var12)
                 {
-                    if (var18 == ItemDye.field_150922_c[var12])
+                    if (var18 == ItemDye.dyeColors[var12])
                     {
                         var19 = true;
-                        var15 = var15 + StatCollector.translateToLocal("item.fireworksCharge." + ItemDye.field_150923_a[var12]);
+                        var15 = var15 + StatCollector.translateToLocal("item.fireworksCharge." + ItemDye.dyeColorNames[var12]);
                         break;
                     }
                 }
@@ -217,9 +217,9 @@ public class ItemFireworkCharge extends Item
         }
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        super.registerIcons(p_94581_1_);
-        this.field_150904_a = p_94581_1_.registerIcon(this.getIconString() + "_overlay");
+        super.registerIcons(register);
+        this.field_150904_a = register.registerIcon(this.getIconString() + "_overlay");
     }
 }

@@ -22,18 +22,18 @@ public class CommandDifficulty extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.difficulty.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length > 0)
+        if (args.length > 0)
         {
-            EnumDifficulty var3 = this.func_147201_h(p_71515_1_, p_71515_2_[0]);
-            MinecraftServer.getServer().func_147139_a(var3);
-            func_152373_a(p_71515_1_, this, "commands.difficulty.success", new ChatComponentTranslation(var3.getDifficultyResourceKey()));
+            EnumDifficulty var3 = this.func_147201_h(sender, args[0]);
+            MinecraftServer.getServer().setDifficultyForAllWorlds(var3);
+            notifyOperators(sender, this, "commands.difficulty.success", new ChatComponentTranslation(var3.getDifficultyResourceKey()));
         }
         else
         {
@@ -49,8 +49,8 @@ public class CommandDifficulty extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, "peaceful", "easy", "normal", "hard"): null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, "peaceful", "easy", "normal", "hard"): null;
     }
 }

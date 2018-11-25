@@ -127,9 +127,9 @@ public class Achievement extends StatBase
         return true;
     }
 
-    public IChatComponent func_150951_e()
+    public IChatComponent getStatName()
     {
-        IChatComponent var1 = super.func_150951_e();
+        IChatComponent var1 = super.getStatName();
         var1.getChatStyle().setColor(this.getSpecial() ? EnumChatFormatting.DARK_PURPLE : EnumChatFormatting.GREEN);
         return var1;
     }

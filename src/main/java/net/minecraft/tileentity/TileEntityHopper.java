@@ -22,21 +22,21 @@ public class TileEntityHopper extends TileEntity implements IHopper
 {
     private ItemStack[] field_145900_a = new ItemStack[5];
     private String field_145902_i;
-    private int field_145901_j = -1;
+    private int transferCooldown = -1;
     private static final String __OBFID = "CL_00000359";
 
-    public void readFromNBT(NBTTagCompound p_145839_1_)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(p_145839_1_);
-        NBTTagList var2 = p_145839_1_.getTagList("Items", 10);
+        super.readFromNBT(compound);
+        NBTTagList var2 = compound.getTagList("Items", 10);
         this.field_145900_a = new ItemStack[this.getSizeInventory()];
 
-        if (p_145839_1_.func_150297_b("CustomName", 8))
+        if (compound.hasKey("CustomName", 8))
         {
-            this.field_145902_i = p_145839_1_.getString("CustomName");
+            this.field_145902_i = compound.getString("CustomName");
         }
 
-        this.field_145901_j = p_145839_1_.getInteger("TransferCooldown");
+        this.transferCooldown = compound.getInteger("TransferCooldown");
 
         for (int var3 = 0; var3 < var2.tagCount(); ++var3)
         {
@@ -50,9 +50,9 @@ public class TileEntityHopper extends TileEntity implements IHopper
         }
     }
 
-    public void writeToNBT(NBTTagCompound p_145841_1_)
+    public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(p_145841_1_);
+        super.writeToNBT(compound);
         NBTTagList var2 = new NBTTagList();
 
         for (int var3 = 0; var3 < this.field_145900_a.length; ++var3)
@@ -66,12 +66,12 @@ public class TileEntityHopper extends TileEntity implements IHopper
             }
         }
 
-        p_145841_1_.setTag("Items", var2);
-        p_145841_1_.setInteger("TransferCooldown", this.field_145901_j);
+        compound.setTag("Items", var2);
+        compound.setInteger("TransferCooldown", this.transferCooldown);
 
         if (this.isInventoryNameLocalized())
         {
-            p_145841_1_.setString("CustomName", this.field_145902_i);
+            compound.setString("CustomName", this.field_145902_i);
         }
     }
 
@@ -94,34 +94,34 @@ public class TileEntityHopper extends TileEntity implements IHopper
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
-        return this.field_145900_a[p_70301_1_];
+        return this.field_145900_a[slotIn];
     }
 
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (this.field_145900_a[p_70298_1_] != null)
+        if (this.field_145900_a[index] != null)
         {
             ItemStack var3;
 
-            if (this.field_145900_a[p_70298_1_].stackSize <= p_70298_2_)
+            if (this.field_145900_a[index].stackSize <= count)
             {
-                var3 = this.field_145900_a[p_70298_1_];
-                this.field_145900_a[p_70298_1_] = null;
+                var3 = this.field_145900_a[index];
+                this.field_145900_a[index] = null;
                 return var3;
             }
             else
             {
-                var3 = this.field_145900_a[p_70298_1_].splitStack(p_70298_2_);
+                var3 = this.field_145900_a[index].splitStack(count);
 
-                if (this.field_145900_a[p_70298_1_].stackSize == 0)
+                if (this.field_145900_a[index].stackSize == 0)
                 {
-                    this.field_145900_a[p_70298_1_] = null;
+                    this.field_145900_a[index] = null;
                 }
 
                 return var3;
@@ -137,12 +137,12 @@ public class TileEntityHopper extends TileEntity implements IHopper
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (this.field_145900_a[p_70304_1_] != null)
+        if (this.field_145900_a[index] != null)
         {
-            ItemStack var2 = this.field_145900_a[p_70304_1_];
-            this.field_145900_a[p_70304_1_] = null;
+            ItemStack var2 = this.field_145900_a[index];
+            this.field_145900_a[index] = null;
             return var2;
         }
         else
@@ -154,13 +154,13 @@ public class TileEntityHopper extends TileEntity implements IHopper
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        this.field_145900_a[p_70299_1_] = p_70299_2_;
+        this.field_145900_a[index] = stack;
 
-        if (p_70299_2_ != null && p_70299_2_.stackSize > this.getInventoryStackLimit())
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
         {
-            p_70299_2_.stackSize = this.getInventoryStackLimit();
+            stack.stackSize = this.getInventoryStackLimit();
         }
     }
 
@@ -199,9 +199,9 @@ public class TileEntityHopper extends TileEntity implements IHopper
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return this.worldObj.getTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e) == this && p_70300_1_.getDistanceSq((double) this.field_145851_c + 0.5D, (double) this.field_145848_d + 0.5D, (double) this.field_145849_e + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     public void openInventory() {}
@@ -211,7 +211,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return true;
     }
@@ -220,11 +220,11 @@ public class TileEntityHopper extends TileEntity implements IHopper
     {
         if (this.worldObj != null && !this.worldObj.isClient)
         {
-            --this.field_145901_j;
+            --this.transferCooldown;
 
-            if (!this.func_145888_j())
+            if (!this.isOnTransferCooldown())
             {
-                this.func_145896_c(0);
+                this.setTransferCooldown(0);
                 this.func_145887_i();
             }
         }
@@ -234,7 +234,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
     {
         if (this.worldObj != null && !this.worldObj.isClient)
         {
-            if (!this.func_145888_j() && BlockHopper.func_149917_c(this.getBlockMetadata()))
+            if (!this.isOnTransferCooldown() && BlockHopper.getActiveStateFromMetadata(this.getBlockMetadata()))
             {
                 boolean var1 = false;
 
@@ -250,7 +250,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
 
                 if (var1)
                 {
-                    this.func_145896_c(8);
+                    this.setTransferCooldown(8);
                     this.onInventoryChanged();
                     return true;
                 }
@@ -310,7 +310,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
         }
         else
         {
-            int var2 = Facing.oppositeSide[BlockHopper.func_149918_b(this.getBlockMetadata())];
+            int var2 = Facing.oppositeSide[BlockHopper.getDirectionFromMetadata(this.getBlockMetadata())];
 
             if (this.func_152102_a(var1, var2))
             {
@@ -573,7 +573,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
             {
                 if (p_145899_0_ instanceof TileEntityHopper)
                 {
-                    ((TileEntityHopper)p_145899_0_).func_145896_c(8);
+                    ((TileEntityHopper)p_145899_0_).setTransferCooldown(8);
                     p_145899_0_.onInventoryChanged();
                 }
 
@@ -586,8 +586,8 @@ public class TileEntityHopper extends TileEntity implements IHopper
 
     private IInventory func_145895_l()
     {
-        int var1 = BlockHopper.func_149918_b(this.getBlockMetadata());
-        return func_145893_b(this.getWorldObj(), (double)(this.field_145851_c + Facing.offsetsXForSide[var1]), (double)(this.field_145848_d + Facing.offsetsYForSide[var1]), (double)(this.field_145849_e + Facing.offsetsZForSide[var1]));
+        int var1 = BlockHopper.getDirectionFromMetadata(this.getBlockMetadata());
+        return func_145893_b(this.getWorldObj(), (double)(this.xCoord + Facing.offsetsXForSide[var1]), (double)(this.yCoord + Facing.offsetsYForSide[var1]), (double)(this.zCoord + Facing.offsetsZForSide[var1]));
     }
 
     public static IInventory func_145884_b(IHopper p_145884_0_)
@@ -619,7 +619,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
 
                 if (var12 instanceof BlockChest)
                 {
-                    var7 = ((BlockChest)var12).func_149951_m(p_145893_0_, var8, var9, var10);
+                    var7 = ((BlockChest)var12).getInventory(p_145893_0_, var8, var9, var10);
                 }
             }
         }
@@ -647,7 +647,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
      */
     public double getXPos()
     {
-        return (double)this.field_145851_c;
+        return (double)this.xCoord;
     }
 
     /**
@@ -655,7 +655,7 @@ public class TileEntityHopper extends TileEntity implements IHopper
      */
     public double getYPos()
     {
-        return (double)this.field_145848_d;
+        return (double)this.yCoord;
     }
 
     /**
@@ -663,16 +663,16 @@ public class TileEntityHopper extends TileEntity implements IHopper
      */
     public double getZPos()
     {
-        return (double)this.field_145849_e;
+        return (double)this.zCoord;
     }
 
-    public void func_145896_c(int p_145896_1_)
+    public void setTransferCooldown(int p_145896_1_)
     {
-        this.field_145901_j = p_145896_1_;
+        this.transferCooldown = p_145896_1_;
     }
 
-    public boolean func_145888_j()
+    public boolean isOnTransferCooldown()
     {
-        return this.field_145901_j > 0;
+        return this.transferCooldown > 0;
     }
 }

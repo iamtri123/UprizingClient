@@ -16,7 +16,7 @@ public abstract class EntityGolem extends EntityCreature implements IAnimals
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_) {}
+    protected void fall(float distance) {}
 
     /**
      * Returns the sound this mob makes while it's alive.

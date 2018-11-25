@@ -14,7 +14,7 @@ public class NullStream implements IStream
         this.field_152938_a = p_i1006_1_;
     }
 
-    public void func_152923_i() {}
+    public void shutdownStream() {}
 
     public void func_152935_j() {}
 
@@ -37,7 +37,7 @@ public class NullStream implements IStream
 
     public void func_152911_a(Metadata p_152911_1_, long p_152911_2_) {}
 
-    public boolean func_152919_o()
+    public boolean isPaused()
     {
         return false;
     }

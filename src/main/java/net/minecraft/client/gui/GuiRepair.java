@@ -19,17 +19,17 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiRepair extends GuiContainer implements ICrafting
 {
-    private static final ResourceLocation field_147093_u = new ResourceLocation("textures/gui/container/anvil.png");
-    private final ContainerRepair field_147092_v;
-    private GuiTextField field_147091_w;
-    private final InventoryPlayer field_147094_x;
+    private static final ResourceLocation anvilResource = new ResourceLocation("textures/gui/container/anvil.png");
+    private final ContainerRepair anvil;
+    private GuiTextField nameField;
+    private final InventoryPlayer playerInventory;
     private static final String __OBFID = "CL_00000738";
 
     public GuiRepair(InventoryPlayer p_i46381_1_, World p_i46381_2_, int p_i46381_3_, int p_i46381_4_, int p_i46381_5_)
     {
         super(new ContainerRepair(p_i46381_1_, p_i46381_2_, p_i46381_3_, p_i46381_4_, p_i46381_5_, Minecraft.getMinecraft().thePlayer));
-        this.field_147094_x = p_i46381_1_;
-        this.field_147092_v = (ContainerRepair)this.field_147002_h;
+        this.playerInventory = p_i46381_1_;
+        this.anvil = (ContainerRepair)this.inventorySlots;
     }
 
     /**
@@ -39,15 +39,15 @@ public class GuiRepair extends GuiContainer implements ICrafting
     {
         super.initGui();
         Keyboard.enableRepeatEvents(true);
-        int var1 = (this.width - this.field_146999_f) / 2;
-        int var2 = (this.height - this.field_147000_g) / 2;
-        this.field_147091_w = new GuiTextField(this.fontRendererObj, var1 + 62, var2 + 24, 103, 12);
-        this.field_147091_w.func_146193_g(-1);
-        this.field_147091_w.func_146204_h(-1);
-        this.field_147091_w.func_146185_a(false);
-        this.field_147091_w.func_146203_f(40);
-        this.field_147002_h.removeCraftingFromCrafters(this);
-        this.field_147002_h.addCraftingToCrafters(this);
+        int var1 = (this.width - this.xSize) / 2;
+        int var2 = (this.height - this.ySize) / 2;
+        this.nameField = new GuiTextField(this.fontRendererObj, var1 + 62, var2 + 24, 103, 12);
+        this.nameField.setTextColor(-1);
+        this.nameField.setDisabledTextColour(-1);
+        this.nameField.setEnableBackgroundDrawing(false);
+        this.nameField.setMaxStringLength(40);
+        this.inventorySlots.removeCraftingFromCrafters(this);
+        this.inventorySlots.addCraftingToCrafters(this);
     }
 
     /**
@@ -57,31 +57,31 @@ public class GuiRepair extends GuiContainer implements ICrafting
     {
         super.onGuiClosed();
         Keyboard.enableRepeatEvents(false);
-        this.field_147002_h.removeCraftingFromCrafters(this);
+        this.inventorySlots.removeCraftingFromCrafters(this);
     }
 
-    protected void func_146979_b(int p_146979_1_, int p_146979_2_)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_BLEND);
         this.fontRendererObj.drawString(I18n.format("container.repair"), 60, 6, 4210752);
 
-        if (this.field_147092_v.maximumCost > 0)
+        if (this.anvil.maximumCost > 0)
         {
             int var3 = 8453920;
             boolean var4 = true;
-            String var5 = I18n.format("container.repair.cost", Integer.valueOf(this.field_147092_v.maximumCost));
+            String var5 = I18n.format("container.repair.cost", Integer.valueOf(this.anvil.maximumCost));
 
-            if (this.field_147092_v.maximumCost >= 40 && !this.mc.thePlayer.capabilities.isCreativeMode)
+            if (this.anvil.maximumCost >= 40 && !this.mc.thePlayer.capabilities.isCreativeMode)
             {
                 var5 = I18n.format("container.repair.expensive");
                 var3 = 16736352;
             }
-            else if (!this.field_147092_v.getSlot(2).getHasStack())
+            else if (!this.anvil.getSlot(2).getHasStack())
             {
                 var4 = false;
             }
-            else if (!this.field_147092_v.getSlot(2).canTakeStack(this.field_147094_x.player))
+            else if (!this.anvil.getSlot(2).canTakeStack(this.playerInventory.player))
             {
                 var3 = 16736352;
             }
@@ -89,13 +89,13 @@ public class GuiRepair extends GuiContainer implements ICrafting
             if (var4)
             {
                 int var6 = -16777216 | (var3 & 16579836) >> 2 | var3 & -16777216;
-                int var7 = this.field_146999_f - 8 - this.fontRendererObj.getStringWidth(var5);
+                int var7 = this.xSize - 8 - this.fontRendererObj.getStringWidth(var5);
                 byte var8 = 67;
 
                 if (this.fontRendererObj.getUnicodeFlag())
                 {
-                    drawRect(var7 - 3, var8 - 2, this.field_146999_f - 7, var8 + 10, -16777216);
-                    drawRect(var7 - 2, var8 - 1, this.field_146999_f - 8, var8 + 9, -12895429);
+                    drawRect(var7 - 3, var8 - 2, this.xSize - 7, var8 + 10, -16777216);
+                    drawRect(var7 - 2, var8 - 1, this.xSize - 8, var8 + 9, -12895429);
                 }
                 else
                 {
@@ -114,29 +114,29 @@ public class GuiRepair extends GuiContainer implements ICrafting
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        if (this.field_147091_w.textboxKeyTyped(p_73869_1_, p_73869_2_))
+        if (this.nameField.textboxKeyTyped(typedChar, keyCode))
         {
-            this.func_147090_g();
+            this.renameItem();
         }
         else
         {
-            super.keyTyped(p_73869_1_, p_73869_2_);
+            super.keyTyped(typedChar, keyCode);
         }
     }
 
-    private void func_147090_g()
+    private void renameItem()
     {
-        String var1 = this.field_147091_w.getText();
-        Slot var2 = this.field_147092_v.getSlot(0);
+        String var1 = this.nameField.getText();
+        Slot var2 = this.anvil.getSlot(0);
 
         if (var2 != null && var2.getHasStack() && !var2.getStack().hasDisplayName() && var1.equals(var2.getStack().getDisplayName()))
         {
             var1 = "";
         }
 
-        this.field_147092_v.updateItemName(var1);
+        this.anvil.updateItemName(var1);
         this.mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("MC|ItemName", var1.getBytes(Charsets.UTF_8)));
     }
 
@@ -146,7 +146,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        this.field_147091_w.mouseClicked(mouseX, mouseY, mouseButton);
+        this.nameField.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     /**
@@ -157,21 +157,21 @@ public class GuiRepair extends GuiContainer implements ICrafting
         super.drawScreen(mouseX, mouseY, partialTicks);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_BLEND);
-        this.field_147091_w.drawTextBox();
+        this.nameField.drawTextBox();
     }
 
-    protected void func_146976_a(float p_146976_1_, int p_146976_2_, int p_146976_3_)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(field_147093_u);
-        int var4 = (this.width - this.field_146999_f) / 2;
-        int var5 = (this.height - this.field_147000_g) / 2;
-        this.drawTexturedModalRect(var4, var5, 0, 0, this.field_146999_f, this.field_147000_g);
-        this.drawTexturedModalRect(var4 + 59, var5 + 20, 0, this.field_147000_g + (this.field_147092_v.getSlot(0).getHasStack() ? 0 : 16), 110, 16);
+        this.mc.getTextureManager().bindTexture(anvilResource);
+        int var4 = (this.width - this.xSize) / 2;
+        int var5 = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect(var4 + 59, var5 + 20, 0, this.ySize + (this.anvil.getSlot(0).getHasStack() ? 0 : 16), 110, 16);
 
-        if ((this.field_147092_v.getSlot(0).getHasStack() || this.field_147092_v.getSlot(1).getHasStack()) && !this.field_147092_v.getSlot(2).getHasStack())
+        if ((this.anvil.getSlot(0).getHasStack() || this.anvil.getSlot(1).getHasStack()) && !this.anvil.getSlot(2).getHasStack())
         {
-            this.drawTexturedModalRect(var4 + 99, var5 + 45, this.field_146999_f, 0, 28, 21);
+            this.drawTexturedModalRect(var4 + 99, var5 + 45, this.xSize, 0, 28, 21);
         }
     }
 
@@ -188,12 +188,12 @@ public class GuiRepair extends GuiContainer implements ICrafting
     {
         if (p_71111_2_ == 0)
         {
-            this.field_147091_w.setText(p_71111_3_ == null ? "" : p_71111_3_.getDisplayName());
-            this.field_147091_w.func_146184_c(p_71111_3_ != null);
+            this.nameField.setText(p_71111_3_ == null ? "" : p_71111_3_.getDisplayName());
+            this.nameField.setEnabled(p_71111_3_ != null);
 
             if (p_71111_3_ != null)
             {
-                this.func_147090_g();
+                this.renameItem();
             }
         }
     }

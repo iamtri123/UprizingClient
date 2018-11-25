@@ -46,7 +46,7 @@ public class IntegratedServer extends MinecraftServer
         this.setDemo(par1Minecraft.isDemo());
         this.canCreateBonusChest(par4WorldSettings.isBonusChestEnabled());
         this.setBuildLimit(256);
-        this.func_152361_a(new IntegratedPlayerList(this));
+        this.setConfigManager(new IntegratedPlayerList(this));
         this.mc = par1Minecraft;
         this.theWorldSettings = par4WorldSettings;
         Reflector.callVoid(Reflector.ModLoader_registerServer, this);
@@ -123,7 +123,7 @@ public class IntegratedServer extends MinecraftServer
             }
         }
 
-        this.func_147139_a(this.func_147135_j());
+        this.setDifficultyForAllWorlds(this.getDifficulty());
         this.initialWorldChunkLoad();
     }
 
@@ -176,7 +176,7 @@ public class IntegratedServer extends MinecraftServer
     public void tick()
     {
         boolean var1 = this.isGamePaused;
-        this.isGamePaused = Minecraft.getMinecraft().getNetHandler() != null && Minecraft.getMinecraft().func_147113_T();
+        this.isGamePaused = Minecraft.getMinecraft().getNetHandler() != null && Minecraft.getMinecraft().isGamePaused();
 
         if (!var1 && this.isGamePaused)
         {
@@ -192,7 +192,7 @@ public class IntegratedServer extends MinecraftServer
             if (this.mc.gameSettings.renderDistanceChunks != this.getConfigurationManager().getViewDistance())
             {
                 logger.info("Changing view distance to {}, from {}", Integer.valueOf(this.mc.gameSettings.renderDistanceChunks), Integer.valueOf(this.getConfigurationManager().getViewDistance()));
-                this.getConfigurationManager().func_152611_a(this.mc.gameSettings.renderDistanceChunks);
+                this.getConfigurationManager().setViewDistance(this.mc.gameSettings.renderDistanceChunks);
             }
         }
     }
@@ -207,7 +207,7 @@ public class IntegratedServer extends MinecraftServer
         return this.theWorldSettings.getGameType();
     }
 
-    public EnumDifficulty func_147135_j()
+    public EnumDifficulty getDifficulty()
     {
         return this.mc.gameSettings.difficulty;
     }
@@ -289,7 +289,7 @@ public class IntegratedServer extends MinecraftServer
     public void addServerStatsToSnooper(PlayerUsageSnooper par1PlayerUsageSnooper)
     {
         super.addServerStatsToSnooper(par1PlayerUsageSnooper);
-        par1PlayerUsageSnooper.func_152768_a("snooper_partner", this.mc.getPlayerUsageSnooper().getUniqueID());
+        par1PlayerUsageSnooper.addClientStat("snooper_partner", this.mc.getPlayerUsageSnooper().getUniqueID());
     }
 
     /**
@@ -311,7 +311,7 @@ public class IntegratedServer extends MinecraftServer
 
             try
             {
-                var6 = HttpUtil.func_76181_a();
+                var6 = HttpUtil.getSuitableLanPort();
             }
             catch (IOException var5)
             {
@@ -322,7 +322,7 @@ public class IntegratedServer extends MinecraftServer
                 var6 = 25564;
             }
 
-            this.func_147137_ag().addLanEndpoint((InetAddress)null, var6);
+            this.getNetworkSystem().addLanEndpoint((InetAddress)null, var6);
             logger.info("Started on " + var6);
             this.isPublic = true;
             this.lanServerPing = new ThreadLanServerPing(this.getMOTD(), var6 + "");
@@ -389,7 +389,7 @@ public class IntegratedServer extends MinecraftServer
         return true;
     }
 
-    public int func_110455_j()
+    public int getOpPermissionLevel()
     {
         return 4;
     }

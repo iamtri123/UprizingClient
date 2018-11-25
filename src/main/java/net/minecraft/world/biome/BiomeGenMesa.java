@@ -29,7 +29,7 @@ public class BiomeGenMesa extends BiomeGenBase
         this.setTemperatureRainfall(2.0F, 0.0F);
         this.spawnableCreatureList.clear();
         this.topBlock = Blocks.sand;
-        this.field_150604_aj = 1;
+        this.topBlockMetadata = 1;
         this.fillerBlock = Blocks.stained_hardened_clay;
         this.theBiomeDecorator.treesPerChunk = -999;
         this.theBiomeDecorator.deadBushPerChunk = 20;
@@ -70,7 +70,7 @@ public class BiomeGenMesa extends BiomeGenBase
         super.decorate(p_76728_1_, p_76728_2_, p_76728_3_, p_76728_4_);
     }
 
-    public void func_150573_a(World p_150573_1_, Random p_150573_2_, Block[] p_150573_3_, byte[] p_150573_4_, int p_150573_5_, int p_150573_6_, double p_150573_7_)
+    public void genTerrainBlocks(World p_150573_1_, Random p_150573_2_, Block[] p_150573_3_, byte[] p_150573_4_, int p_150573_5_, int p_150573_6_, double p_150573_7_)
     {
         if (this.field_150621_aC == null || this.field_150622_aD != p_150573_1_.getSeed())
         {
@@ -210,7 +210,7 @@ public class BiomeGenMesa extends BiomeGenBase
                                 else
                                 {
                                     p_150573_3_[var22] = this.topBlock;
-                                    p_150573_4_[var22] = (byte)this.field_150604_aj;
+                                    p_150573_4_[var22] = (byte)this.topBlockMetadata;
                                     var29 = true;
                                 }
                             }
@@ -351,14 +351,14 @@ public class BiomeGenMesa extends BiomeGenBase
         return this.field_150621_aC[(p_150618_2_ + var4 + 64) % 64];
     }
 
-    protected BiomeGenBase func_150566_k()
+    protected BiomeGenBase createMutation()
     {
-        boolean var1 = this.biomeID == BiomeGenBase.field_150589_Z.biomeID;
+        boolean var1 = this.biomeID == BiomeGenBase.mesa.biomeID;
         BiomeGenMesa var2 = new BiomeGenMesa(this.biomeID + 128, var1, this.field_150620_aI);
 
         if (!var1)
         {
-            var2.func_150570_a(field_150591_g);
+            var2.setHeight(height_LowHills);
             var2.setBiomeName(this.biomeName + " M");
         }
         else

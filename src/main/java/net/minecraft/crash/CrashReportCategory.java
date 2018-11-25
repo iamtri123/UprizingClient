@@ -227,17 +227,17 @@ public class CrashReportCategory
         return this.stackTrace;
     }
 
-    public static void func_147153_a(CrashReportCategory p_147153_0_, final int p_147153_1_, final int p_147153_2_, final int p_147153_3_, final Block p_147153_4_, final int p_147153_5_)
+    public static void addBlockInfo(CrashReportCategory category, final int x, final int y, final int z, final Block blockIn, final int meta)
     {
-        final int var6 = Block.getIdFromBlock(p_147153_4_);
-        p_147153_0_.addCrashSectionCallable("Block type", new Callable()
+        final int var6 = Block.getIdFromBlock(blockIn);
+        category.addCrashSectionCallable("Block type", new Callable()
         {
             private static final String __OBFID = "CL_00001426";
             public String call()
             {
                 try
                 {
-                    return String.format("ID #%d (%s // %s)", Integer.valueOf(var6), p_147153_4_.getUnlocalizedName(), p_147153_4_.getClass().getCanonicalName());
+                    return String.format("ID #%d (%s // %s)", Integer.valueOf(var6), blockIn.getUnlocalizedName(), blockIn.getClass().getCanonicalName());
                 }
                 catch (Throwable var2)
                 {
@@ -245,28 +245,28 @@ public class CrashReportCategory
                 }
             }
         });
-        p_147153_0_.addCrashSectionCallable("Block data value", new Callable()
+        category.addCrashSectionCallable("Block data value", new Callable()
         {
             private static final String __OBFID = "CL_00001441";
             public String call()
             {
-                if (p_147153_5_ < 0)
+                if (meta < 0)
                 {
-                    return "Unknown? (Got " + p_147153_5_ + ")";
+                    return "Unknown? (Got " + meta + ")";
                 }
                 else
                 {
-                    String var1 = String.format("%4s", new Object[] {Integer.toBinaryString(p_147153_5_)}).replace(" ", "0");
-                    return String.format("%1$d / 0x%1$X / 0b%2$s", Integer.valueOf(p_147153_5_), var1);
+                    String var1 = String.format("%4s", new Object[] {Integer.toBinaryString(meta)}).replace(" ", "0");
+                    return String.format("%1$d / 0x%1$X / 0b%2$s", Integer.valueOf(meta), var1);
                 }
             }
         });
-        p_147153_0_.addCrashSectionCallable("Block location", new Callable()
+        category.addCrashSectionCallable("Block location", new Callable()
         {
             private static final String __OBFID = "CL_00001465";
             public String call()
             {
-                return CrashReportCategory.getLocationInfo(p_147153_1_, p_147153_2_, p_147153_3_);
+                return CrashReportCategory.getLocationInfo(x, y, z);
             }
         });
     }

@@ -5,16 +5,16 @@ import net.minecraft.util.Vec3;
 
 public class ChunkPosition
 {
-    public final int field_151329_a;
-    public final int field_151327_b;
-    public final int field_151328_c;
+    public final int chunkPosX;
+    public final int chunkPosY;
+    public final int chunkPosZ;
     private static final String __OBFID = "CL_00000132";
 
     public ChunkPosition(int p_i45363_1_, int p_i45363_2_, int p_i45363_3_)
     {
-        this.field_151329_a = p_i45363_1_;
-        this.field_151327_b = p_i45363_2_;
-        this.field_151328_c = p_i45363_3_;
+        this.chunkPosX = p_i45363_1_;
+        this.chunkPosY = p_i45363_2_;
+        this.chunkPosZ = p_i45363_3_;
     }
 
     public ChunkPosition(Vec3 p_i45364_1_)
@@ -31,12 +31,12 @@ public class ChunkPosition
         else
         {
             ChunkPosition var2 = (ChunkPosition)p_equals_1_;
-            return var2.field_151329_a == this.field_151329_a && var2.field_151327_b == this.field_151327_b && var2.field_151328_c == this.field_151328_c;
+            return var2.chunkPosX == this.chunkPosX && var2.chunkPosY == this.chunkPosY && var2.chunkPosZ == this.chunkPosZ;
         }
     }
 
     public int hashCode()
     {
-        return this.field_151329_a * 8976890 + this.field_151327_b * 981131 + this.field_151328_c;
+        return this.chunkPosX * 8976890 + this.chunkPosY * 981131 + this.chunkPosZ;
     }
 }

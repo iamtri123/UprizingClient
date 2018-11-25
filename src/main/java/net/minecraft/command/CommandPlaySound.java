@@ -20,23 +20,23 @@ public class CommandPlaySound extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.playsound.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length < 2)
+        if (args.length < 2)
         {
-            throw new WrongUsageException(this.getCommandUsage(p_71515_1_));
+            throw new WrongUsageException(this.getCommandUsage(sender));
         }
         else
         {
             byte var3 = 0;
             int var36 = var3 + 1;
-            String var4 = p_71515_2_[var3];
-            EntityPlayerMP var5 = getPlayer(p_71515_1_, p_71515_2_[var36++]);
+            String var4 = args[var3];
+            EntityPlayerMP var5 = getPlayer(sender, args[var36++]);
             double var6 = (double)var5.getPlayerCoordinates().posX;
             double var8 = (double)var5.getPlayerCoordinates().posY;
             double var10 = (double)var5.getPlayerCoordinates().posZ;
@@ -44,34 +44,34 @@ public class CommandPlaySound extends CommandBase
             double var14 = 1.0D;
             double var16 = 0.0D;
 
-            if (p_71515_2_.length > var36)
+            if (args.length > var36)
             {
-                var6 = func_110666_a(p_71515_1_, var6, p_71515_2_[var36++]);
+                var6 = clamp_coord(sender, var6, args[var36++]);
             }
 
-            if (p_71515_2_.length > var36)
+            if (args.length > var36)
             {
-                var8 = func_110665_a(p_71515_1_, var8, p_71515_2_[var36++], 0, 0);
+                var8 = clamp_double(sender, var8, args[var36++], 0, 0);
             }
 
-            if (p_71515_2_.length > var36)
+            if (args.length > var36)
             {
-                var10 = func_110666_a(p_71515_1_, var10, p_71515_2_[var36++]);
+                var10 = clamp_coord(sender, var10, args[var36++]);
             }
 
-            if (p_71515_2_.length > var36)
+            if (args.length > var36)
             {
-                var12 = parseDoubleBounded(p_71515_1_, p_71515_2_[var36++], 0.0D, 3.4028234663852886E38D);
+                var12 = parseDoubleBounded(sender, args[var36++], 0.0D, 3.4028234663852886E38D);
             }
 
-            if (p_71515_2_.length > var36)
+            if (args.length > var36)
             {
-                var14 = parseDoubleBounded(p_71515_1_, p_71515_2_[var36++], 0.0D, 2.0D);
+                var14 = parseDoubleBounded(sender, args[var36++], 0.0D, 2.0D);
             }
 
-            if (p_71515_2_.length > var36)
+            if (args.length > var36)
             {
-                var16 = parseDoubleBounded(p_71515_1_, p_71515_2_[var36++], 0.0D, 1.0D);
+                var16 = parseDoubleBounded(sender, args[var36++], 0.0D, 1.0D);
             }
 
             double var18 = var12 > 1.0D ? var12 * 16.0D : 16.0D;
@@ -106,15 +106,15 @@ public class CommandPlaySound extends CommandBase
                 var5.playerNetServerHandler.sendPacket(new S29PacketSoundEffect(var4, var6, var8, var10, (float)var12, (float)var14));
             }
 
-            func_152373_a(p_71515_1_, this, "commands.playsound.success", var4, var5.getCommandSenderName());
+            notifyOperators(sender, this, "commands.playsound.success", var4, var5.getCommandSenderName());
         }
     }
 
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_)
+    public boolean isUsernameIndex(String[] args, int index)
     {
-        return p_82358_2_ == 1;
+        return index == 1;
     }
 }

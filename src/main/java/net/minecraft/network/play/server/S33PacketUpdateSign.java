@@ -27,37 +27,37 @@ public class S33PacketUpdateSign extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149352_a = p_148837_1_.readInt();
-        this.field_149350_b = p_148837_1_.readShort();
-        this.field_149351_c = p_148837_1_.readInt();
+        this.field_149352_a = data.readInt();
+        this.field_149350_b = data.readShort();
+        this.field_149351_c = data.readInt();
         this.field_149349_d = new String[4];
 
         for (int var2 = 0; var2 < 4; ++var2)
         {
-            this.field_149349_d[var2] = p_148837_1_.readStringFromBuffer(15);
+            this.field_149349_d[var2] = data.readStringFromBuffer(15);
         }
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149352_a);
-        p_148840_1_.writeShort(this.field_149350_b);
-        p_148840_1_.writeInt(this.field_149351_c);
+        data.writeInt(this.field_149352_a);
+        data.writeShort(this.field_149350_b);
+        data.writeInt(this.field_149351_c);
 
         for (int var2 = 0; var2 < 4; ++var2)
         {
-            p_148840_1_.writeStringToBuffer(this.field_149349_d[var2]);
+            data.writeStringToBuffer(this.field_149349_d[var2]);
         }
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleUpdateSign(this);
+        handler.handleUpdateSign(this);
     }
 
     public int func_149346_c()
@@ -80,8 +80,8 @@ public class S33PacketUpdateSign extends Packet
         return this.field_149349_d;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

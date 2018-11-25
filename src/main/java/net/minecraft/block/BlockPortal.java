@@ -26,21 +26,21 @@ public class BlockPortal extends BlockBreakable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        super.updateTick(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+        super.updateTick(worldIn, x, y, z, random);
 
-        if (p_149674_1_.provider.isSurfaceWorld() && p_149674_1_.getGameRules().getGameRuleBooleanValue("doMobSpawning") && p_149674_5_.nextInt(2000) < p_149674_1_.difficultySetting.getDifficultyId())
+        if (worldIn.provider.isSurfaceWorld() && worldIn.getGameRules().getGameRuleBooleanValue("doMobSpawning") && random.nextInt(2000) < worldIn.difficultySetting.getDifficultyId())
         {
             int var6;
 
-            for (var6 = p_149674_3_; !World.doesBlockHaveSolidTopSurface(p_149674_1_, p_149674_2_, var6, p_149674_4_) && var6 > 0; --var6)
+            for (var6 = y; !World.doesBlockHaveSolidTopSurface(worldIn, x, var6, z) && var6 > 0; --var6)
             {
             }
 
-            if (var6 > 0 && !p_149674_1_.getBlock(p_149674_2_, var6 + 1, p_149674_4_).isNormalCube())
+            if (var6 > 0 && !worldIn.getBlock(x, var6 + 1, z).isNormalCube())
             {
-                Entity var7 = ItemMonsterPlacer.spawnCreature(p_149674_1_, 57, (double)p_149674_2_ + 0.5D, (double)var6 + 1.1D, (double)p_149674_4_ + 0.5D);
+                Entity var7 = ItemMonsterPlacer.spawnCreature(worldIn, 57, (double)x + 0.5D, (double)var6 + 1.1D, (double)z + 0.5D);
 
                 if (var7 != null)
                 {
@@ -54,18 +54,18 @@ public class BlockPortal extends BlockBreakable
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
         return null;
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        int var5 = func_149999_b(p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_));
+        int var5 = func_149999_b(worldIn.getBlockMetadata(x, y, z));
 
         if (var5 == 0)
         {
-            if (p_149719_1_.getBlock(p_149719_2_ - 1, p_149719_3_, p_149719_4_) != this && p_149719_1_.getBlock(p_149719_2_ + 1, p_149719_3_, p_149719_4_) != this)
+            if (worldIn.getBlock(x - 1, y, z) != this && worldIn.getBlock(x + 1, y, z) != this)
             {
                 var5 = 2;
             }
@@ -74,9 +74,9 @@ public class BlockPortal extends BlockBreakable
                 var5 = 1;
             }
 
-            if (p_149719_1_ instanceof World && !((World)p_149719_1_).isClient)
+            if (worldIn instanceof World && !((World)worldIn).isClient)
             {
-                ((World)p_149719_1_).setBlockMetadataWithNotify(p_149719_2_, p_149719_3_, p_149719_4_, var5, 2);
+                ((World)worldIn).setBlockMetadataWithNotify(x, y, z, var5, 2);
             }
         }
 
@@ -101,7 +101,7 @@ public class BlockPortal extends BlockBreakable
         return false;
     }
 
-    public boolean func_150000_e(World p_150000_1_, int p_150000_2_, int p_150000_3_, int p_150000_4_)
+    public boolean tryToCreatePortal(World p_150000_1_, int p_150000_2_, int p_150000_3_, int p_150000_4_)
     {
         BlockPortal.Size var5 = new BlockPortal.Size(p_150000_1_, p_150000_2_, p_150000_3_, p_150000_4_, 1);
         BlockPortal.Size var6 = new BlockPortal.Size(p_150000_1_, p_150000_2_, p_150000_3_, p_150000_4_, 2);
@@ -122,63 +122,63 @@ public class BlockPortal extends BlockBreakable
         }
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        int var6 = func_149999_b(p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_));
-        BlockPortal.Size var7 = new BlockPortal.Size(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, 1);
-        BlockPortal.Size var8 = new BlockPortal.Size(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, 2);
+        int var6 = func_149999_b(worldIn.getBlockMetadata(x, y, z));
+        BlockPortal.Size var7 = new BlockPortal.Size(worldIn, x, y, z, 1);
+        BlockPortal.Size var8 = new BlockPortal.Size(worldIn, x, y, z, 2);
 
         if (var6 == 1 && (!var7.func_150860_b() || var7.field_150864_e < var7.field_150868_h * var7.field_150862_g))
         {
-            p_149695_1_.setBlock(p_149695_2_, p_149695_3_, p_149695_4_, Blocks.air);
+            worldIn.setBlock(x, y, z, Blocks.air);
         }
         else if (var6 == 2 && (!var8.func_150860_b() || var8.field_150864_e < var8.field_150868_h * var8.field_150862_g))
         {
-            p_149695_1_.setBlock(p_149695_2_, p_149695_3_, p_149695_4_, Blocks.air);
+            worldIn.setBlock(x, y, z, Blocks.air);
         }
         else if (var6 == 0 && !var7.func_150860_b() && !var8.func_150860_b())
         {
-            p_149695_1_.setBlock(p_149695_2_, p_149695_3_, p_149695_4_, Blocks.air);
+            worldIn.setBlock(x, y, z, Blocks.air);
         }
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
         int var6 = 0;
 
-        if (p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_) == this)
+        if (worldIn.getBlock(x, y, z) == this)
         {
-            var6 = func_149999_b(p_149646_1_.getBlockMetadata(p_149646_2_, p_149646_3_, p_149646_4_));
+            var6 = func_149999_b(worldIn.getBlockMetadata(x, y, z));
 
             if (var6 == 0)
             {
                 return false;
             }
 
-            if (var6 == 2 && p_149646_5_ != 5 && p_149646_5_ != 4)
+            if (var6 == 2 && side != 5 && side != 4)
             {
                 return false;
             }
 
-            if (var6 == 1 && p_149646_5_ != 3 && p_149646_5_ != 2)
+            if (var6 == 1 && side != 3 && side != 2)
             {
                 return false;
             }
         }
 
-        boolean var7 = p_149646_1_.getBlock(p_149646_2_ - 1, p_149646_3_, p_149646_4_) == this && p_149646_1_.getBlock(p_149646_2_ - 2, p_149646_3_, p_149646_4_) != this;
-        boolean var8 = p_149646_1_.getBlock(p_149646_2_ + 1, p_149646_3_, p_149646_4_) == this && p_149646_1_.getBlock(p_149646_2_ + 2, p_149646_3_, p_149646_4_) != this;
-        boolean var9 = p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_ - 1) == this && p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_ - 2) != this;
-        boolean var10 = p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_ + 1) == this && p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_ + 2) != this;
+        boolean var7 = worldIn.getBlock(x - 1, y, z) == this && worldIn.getBlock(x - 2, y, z) != this;
+        boolean var8 = worldIn.getBlock(x + 1, y, z) == this && worldIn.getBlock(x + 2, y, z) != this;
+        boolean var9 = worldIn.getBlock(x, y, z - 1) == this && worldIn.getBlock(x, y, z - 2) != this;
+        boolean var10 = worldIn.getBlock(x, y, z + 1) == this && worldIn.getBlock(x, y, z + 2) != this;
         boolean var11 = var7 || var8 || var6 == 1;
         boolean var12 = var9 || var10 || var6 == 2;
-        return var11 && p_149646_5_ == 4 || (var11 && p_149646_5_ == 5 || (var12 && p_149646_5_ == 2 || var12 && p_149646_5_ == 3));
+        return var11 && side == 4 || (var11 && side == 5 || (var12 && side == 2 || var12 && side == 3));
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 0;
     }
@@ -191,56 +191,56 @@ public class BlockPortal extends BlockBreakable
         return 1;
     }
 
-    public void onEntityCollidedWithBlock(World p_149670_1_, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity p_149670_5_)
+    public void onEntityCollidedWithBlock(World worldIn, int x, int y, int z, Entity entityIn)
     {
-        if (p_149670_5_.ridingEntity == null && p_149670_5_.riddenByEntity == null)
+        if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null)
         {
-            p_149670_5_.setInPortal();
+            entityIn.setInPortal();
         }
     }
 
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (p_149734_5_.nextInt(100) == 0)
+        if (random.nextInt(100) == 0)
         {
-            p_149734_1_.playSound((double)p_149734_2_ + 0.5D, (double)p_149734_3_ + 0.5D, (double)p_149734_4_ + 0.5D, "portal.portal", 0.5F, p_149734_5_.nextFloat() * 0.4F + 0.8F, false);
+            worldIn.playSound((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "portal.portal", 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
         }
 
         for (int var6 = 0; var6 < 4; ++var6)
         {
-            double var7 = (double)((float)p_149734_2_ + p_149734_5_.nextFloat());
-            double var9 = (double)((float)p_149734_3_ + p_149734_5_.nextFloat());
-            double var11 = (double)((float)p_149734_4_ + p_149734_5_.nextFloat());
+            double var7 = (double)((float)x + random.nextFloat());
+            double var9 = (double)((float)y + random.nextFloat());
+            double var11 = (double)((float)z + random.nextFloat());
             double var13 = 0.0D;
             double var15 = 0.0D;
             double var17 = 0.0D;
-            int var19 = p_149734_5_.nextInt(2) * 2 - 1;
-            var13 = ((double)p_149734_5_.nextFloat() - 0.5D) * 0.5D;
-            var15 = ((double)p_149734_5_.nextFloat() - 0.5D) * 0.5D;
-            var17 = ((double)p_149734_5_.nextFloat() - 0.5D) * 0.5D;
+            int var19 = random.nextInt(2) * 2 - 1;
+            var13 = ((double)random.nextFloat() - 0.5D) * 0.5D;
+            var15 = ((double)random.nextFloat() - 0.5D) * 0.5D;
+            var17 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 
-            if (p_149734_1_.getBlock(p_149734_2_ - 1, p_149734_3_, p_149734_4_) != this && p_149734_1_.getBlock(p_149734_2_ + 1, p_149734_3_, p_149734_4_) != this)
+            if (worldIn.getBlock(x - 1, y, z) != this && worldIn.getBlock(x + 1, y, z) != this)
             {
-                var7 = (double)p_149734_2_ + 0.5D + 0.25D * (double)var19;
-                var13 = (double)(p_149734_5_.nextFloat() * 2.0F * (float)var19);
+                var7 = (double)x + 0.5D + 0.25D * (double)var19;
+                var13 = (double)(random.nextFloat() * 2.0F * (float)var19);
             }
             else
             {
-                var11 = (double)p_149734_4_ + 0.5D + 0.25D * (double)var19;
-                var17 = (double)(p_149734_5_.nextFloat() * 2.0F * (float)var19);
+                var11 = (double)z + 0.5D + 0.25D * (double)var19;
+                var17 = (double)(random.nextFloat() * 2.0F * (float)var19);
             }
 
-            p_149734_1_.spawnParticle("portal", var7, var9, var11, var13, var15, var17);
+            worldIn.spawnParticle("portal", var7, var9, var11, var13, var15, var17);
         }
     }
 
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemById(0);
     }

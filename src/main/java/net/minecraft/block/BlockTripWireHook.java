@@ -24,7 +24,7 @@ public class BlockTripWireHook extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
         return null;
     }
@@ -47,7 +47,7 @@ public class BlockTripWireHook extends Block
         return 29;
     }
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
         return 10;
     }
@@ -55,36 +55,36 @@ public class BlockTripWireHook extends Block
     /**
      * checks to see if you can place this block can be placed on that side of a block: BlockLever overrides
      */
-    public boolean canPlaceBlockOnSide(World p_149707_1_, int p_149707_2_, int p_149707_3_, int p_149707_4_, int p_149707_5_)
+    public boolean canPlaceBlockOnSide(World worldIn, int x, int y, int z, int side)
     {
-        return p_149707_5_ == 2 && p_149707_1_.getBlock(p_149707_2_, p_149707_3_, p_149707_4_ + 1).isNormalCube() || (p_149707_5_ == 3 && p_149707_1_.getBlock(p_149707_2_, p_149707_3_, p_149707_4_ - 1).isNormalCube() || (p_149707_5_ == 4 && p_149707_1_.getBlock(p_149707_2_ + 1, p_149707_3_, p_149707_4_).isNormalCube() || p_149707_5_ == 5 && p_149707_1_.getBlock(p_149707_2_ - 1, p_149707_3_, p_149707_4_).isNormalCube()));
+        return side == 2 && worldIn.getBlock(x, y, z + 1).isNormalCube() || (side == 3 && worldIn.getBlock(x, y, z - 1).isNormalCube() || (side == 4 && worldIn.getBlock(x + 1, y, z).isNormalCube() || side == 5 && worldIn.getBlock(x - 1, y, z).isNormalCube()));
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        return p_149742_1_.getBlock(p_149742_2_ - 1, p_149742_3_, p_149742_4_).isNormalCube() || (p_149742_1_.getBlock(p_149742_2_ + 1, p_149742_3_, p_149742_4_).isNormalCube() || (p_149742_1_.getBlock(p_149742_2_, p_149742_3_, p_149742_4_ - 1).isNormalCube() || p_149742_1_.getBlock(p_149742_2_, p_149742_3_, p_149742_4_ + 1).isNormalCube()));
+        return worldIn.getBlock(x - 1, y, z).isNormalCube() || (worldIn.getBlock(x + 1, y, z).isNormalCube() || (worldIn.getBlock(x, y, z - 1).isNormalCube() || worldIn.getBlock(x, y, z + 1).isNormalCube()));
     }
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta)
     {
         byte var10 = 0;
 
-        if (p_149660_5_ == 2 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_, p_149660_3_, p_149660_4_ + 1, true))
+        if (side == 2 && worldIn.isBlockNormalCubeDefault(x, y, z + 1, true))
         {
             var10 = 2;
         }
 
-        if (p_149660_5_ == 3 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_, p_149660_3_, p_149660_4_ - 1, true))
+        if (side == 3 && worldIn.isBlockNormalCubeDefault(x, y, z - 1, true))
         {
             var10 = 0;
         }
 
-        if (p_149660_5_ == 4 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_ + 1, p_149660_3_, p_149660_4_, true))
+        if (side == 4 && worldIn.isBlockNormalCubeDefault(x + 1, y, z, true))
         {
             var10 = 1;
         }
 
-        if (p_149660_5_ == 5 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_ - 1, p_149660_3_, p_149660_4_, true))
+        if (side == 5 && worldIn.isBlockNormalCubeDefault(x - 1, y, z, true))
         {
             var10 = 3;
         }
@@ -95,45 +95,45 @@ public class BlockTripWireHook extends Block
     /**
      * Called after a block is placed
      */
-    public void onPostBlockPlaced(World p_149714_1_, int p_149714_2_, int p_149714_3_, int p_149714_4_, int p_149714_5_)
+    public void onPostBlockPlaced(World worldIn, int x, int y, int z, int meta)
     {
-        this.func_150136_a(p_149714_1_, p_149714_2_, p_149714_3_, p_149714_4_, false, p_149714_5_, false, -1, 0);
+        this.func_150136_a(worldIn, x, y, z, false, meta, false, -1, 0);
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        if (p_149695_5_ != this)
+        if (neighbor != this)
         {
-            if (this.func_150137_e(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_))
+            if (this.func_150137_e(worldIn, x, y, z))
             {
-                int var6 = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
+                int var6 = worldIn.getBlockMetadata(x, y, z);
                 int var7 = var6 & 3;
                 boolean var8 = false;
 
-                if (!p_149695_1_.getBlock(p_149695_2_ - 1, p_149695_3_, p_149695_4_).isNormalCube() && var7 == 3)
+                if (!worldIn.getBlock(x - 1, y, z).isNormalCube() && var7 == 3)
                 {
                     var8 = true;
                 }
 
-                if (!p_149695_1_.getBlock(p_149695_2_ + 1, p_149695_3_, p_149695_4_).isNormalCube() && var7 == 1)
+                if (!worldIn.getBlock(x + 1, y, z).isNormalCube() && var7 == 1)
                 {
                     var8 = true;
                 }
 
-                if (!p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ - 1).isNormalCube() && var7 == 0)
+                if (!worldIn.getBlock(x, y, z - 1).isNormalCube() && var7 == 0)
                 {
                     var8 = true;
                 }
 
-                if (!p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_ + 1).isNormalCube() && var7 == 2)
+                if (!worldIn.getBlock(x, y, z + 1).isNormalCube() && var7 == 2)
                 {
                     var8 = true;
                 }
 
                 if (var8)
                 {
-                    this.dropBlockAsItem(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, var6, 0);
-                    p_149695_1_.setBlockToAir(p_149695_2_, p_149695_3_, p_149695_4_);
+                    this.dropBlockAsItem(worldIn, x, y, z, var6, 0);
+                    worldIn.setBlockToAir(x, y, z);
                 }
             }
         }
@@ -191,7 +191,7 @@ public class BlockTripWireHook extends Block
 
                 if (var20 == p_150136_8_)
                 {
-                    p_150136_1_.scheduleBlockUpdate(p_150136_2_, p_150136_3_, p_150136_4_, this, this.func_149738_a(p_150136_1_));
+                    p_150136_1_.scheduleBlockUpdate(p_150136_2_, p_150136_3_, p_150136_4_, this, this.tickRate(p_150136_1_));
                     var13 &= var25;
                 }
             }
@@ -253,9 +253,9 @@ public class BlockTripWireHook extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        this.func_150136_a(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, false, p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_), true, -1, 0);
+        this.func_150136_a(worldIn, x, y, z, false, worldIn.getBlockMetadata(x, y, z), true, -1, 0);
     }
 
     private void func_150135_a(World p_150135_1_, int p_150135_2_, int p_150135_3_, int p_150135_4_, boolean p_150135_5_, boolean p_150135_6_, boolean p_150135_7_, boolean p_150135_8_)
@@ -314,9 +314,9 @@ public class BlockTripWireHook extends Block
         }
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        int var5 = p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_) & 3;
+        int var5 = worldIn.getBlockMetadata(x, y, z) & 3;
         float var6 = 0.1875F;
 
         if (var5 == 3)
@@ -337,50 +337,50 @@ public class BlockTripWireHook extends Block
         }
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
-        boolean var7 = (p_149749_6_ & 4) == 4;
-        boolean var8 = (p_149749_6_ & 8) == 8;
+        boolean var7 = (meta & 4) == 4;
+        boolean var8 = (meta & 8) == 8;
 
         if (var7 || var8)
         {
-            this.func_150136_a(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, true, p_149749_6_, false, -1, 0);
+            this.func_150136_a(worldIn, x, y, z, true, meta, false, -1, 0);
         }
 
         if (var8)
         {
-            p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_, p_149749_3_, p_149749_4_, this);
-            int var9 = p_149749_6_ & 3;
+            worldIn.notifyBlocksOfNeighborChange(x, y, z, this);
+            int var9 = meta & 3;
 
             if (var9 == 3)
             {
-                p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_ - 1, p_149749_3_, p_149749_4_, this);
+                worldIn.notifyBlocksOfNeighborChange(x - 1, y, z, this);
             }
             else if (var9 == 1)
             {
-                p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_ + 1, p_149749_3_, p_149749_4_, this);
+                worldIn.notifyBlocksOfNeighborChange(x + 1, y, z, this);
             }
             else if (var9 == 0)
             {
-                p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_, p_149749_3_, p_149749_4_ - 1, this);
+                worldIn.notifyBlocksOfNeighborChange(x, y, z - 1, this);
             }
             else if (var9 == 2)
             {
-                p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_, p_149749_3_, p_149749_4_ + 1, this);
+                worldIn.notifyBlocksOfNeighborChange(x, y, z + 1, this);
             }
         }
 
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
     }
 
-    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
+    public int isProvidingWeakPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return (p_149709_1_.getBlockMetadata(p_149709_2_, p_149709_3_, p_149709_4_) & 8) == 8 ? 15 : 0;
+        return (worldIn.getBlockMetadata(x, y, z) & 8) == 8 ? 15 : 0;
     }
 
-    public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_)
+    public int isProvidingStrongPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        int var6 = p_149748_1_.getBlockMetadata(p_149748_2_, p_149748_3_, p_149748_4_);
+        int var6 = worldIn.getBlockMetadata(x, y, z);
 
         if ((var6 & 8) != 8)
         {
@@ -389,7 +389,7 @@ public class BlockTripWireHook extends Block
         else
         {
             int var7 = var6 & 3;
-            return var7 == 2 && p_149748_5_ == 2 ? 15 : (var7 == 0 && p_149748_5_ == 3 ? 15 : (var7 == 1 && p_149748_5_ == 4 ? 15 : (var7 == 3 && p_149748_5_ == 5 ? 15 : 0)));
+            return var7 == 2 && side == 2 ? 15 : (var7 == 0 && side == 3 ? 15 : (var7 == 1 && side == 4 ? 15 : (var7 == 3 && side == 5 ? 15 : 0)));
         }
     }
 

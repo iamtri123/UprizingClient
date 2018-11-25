@@ -31,30 +31,30 @@ public class S11PacketSpawnExperienceOrb extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148992_a = p_148837_1_.readVarIntFromBuffer();
-        this.field_148990_b = p_148837_1_.readInt();
-        this.field_148991_c = p_148837_1_.readInt();
-        this.field_148988_d = p_148837_1_.readInt();
-        this.field_148989_e = p_148837_1_.readShort();
+        this.field_148992_a = data.readVarIntFromBuffer();
+        this.field_148990_b = data.readInt();
+        this.field_148991_c = data.readInt();
+        this.field_148988_d = data.readInt();
+        this.field_148989_e = data.readShort();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeVarIntToBuffer(this.field_148992_a);
-        p_148840_1_.writeInt(this.field_148990_b);
-        p_148840_1_.writeInt(this.field_148991_c);
-        p_148840_1_.writeInt(this.field_148988_d);
-        p_148840_1_.writeShort(this.field_148989_e);
+        data.writeVarIntToBuffer(this.field_148992_a);
+        data.writeInt(this.field_148990_b);
+        data.writeInt(this.field_148991_c);
+        data.writeInt(this.field_148988_d);
+        data.writeShort(this.field_148989_e);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleSpawnExperienceOrb(this);
+        handler.handleSpawnExperienceOrb(this);
     }
 
     /**
@@ -90,8 +90,8 @@ public class S11PacketSpawnExperienceOrb extends Packet
         return this.field_148989_e;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

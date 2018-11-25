@@ -45,7 +45,7 @@ import net.minecraft.world.World;
 public class Item
 {
     public static final RegistryNamespaced itemRegistry = new RegistryNamespaced();
-    protected static final UUID field_111210_e = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
+    protected static final UUID itemModifierUUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
     private CreativeTabs tabToDisplayOn;
 
     /** The RNG used by the Item subclasses. */
@@ -456,7 +456,7 @@ public class Item
         return false;
     }
 
-    public float func_150893_a(ItemStack p_150893_1_, Block p_150893_2_)
+    public float getStrVsBlock(ItemStack p_150893_1_, Block p_150893_2_)
     {
         return 1.0F;
     }
@@ -464,9 +464,9 @@ public class Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        return p_77659_1_;
+        return itemStackIn;
     }
 
     public ItemStack onEaten(ItemStack p_77654_1_, World p_77654_2_, EntityPlayer p_77654_3_)
@@ -527,17 +527,17 @@ public class Item
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack p_77644_1_, EntityLivingBase p_77644_2_, EntityLivingBase p_77644_3_)
+    public boolean hitEntity(ItemStack stack, EntityLivingBase p_77644_2_, EntityLivingBase p_77644_3_)
     {
         return false;
     }
 
-    public boolean onBlockDestroyed(ItemStack p_150894_1_, World p_150894_2_, Block p_150894_3_, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_)
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_)
     {
         return false;
     }
 
-    public boolean func_150897_b(Block p_150897_1_)
+    public boolean canItemHarvestBlock(Block p_150897_1_)
     {
         return false;
     }
@@ -545,7 +545,7 @@ public class Item
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
-    public boolean itemInteractionForEntity(ItemStack p_111207_1_, EntityPlayer p_111207_2_, EntityLivingBase p_111207_3_)
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target)
     {
         return false;
     }
@@ -607,7 +607,7 @@ public class Item
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
         return "item." + this.unlocalizedName;
     }
@@ -657,7 +657,7 @@ public class Item
      * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
      * update it's contents.
      */
-    public void onUpdate(ItemStack p_77663_1_, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {}
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int p_77663_4_, boolean p_77663_5_) {}
 
     /**
      * Called when item is crafted/smelted. Used only by maps so far.
@@ -675,7 +675,7 @@ public class Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack p_77661_1_)
+    public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.none;
     }
@@ -743,14 +743,14 @@ public class Item
         return this.getItemStackLimit() == 1 && this.isDamageable();
     }
 
-    protected MovingObjectPosition getMovingObjectPositionFromPlayer(World p_77621_1_, EntityPlayer p_77621_2_, boolean p_77621_3_)
+    protected MovingObjectPosition getMovingObjectPositionFromPlayer(World worldIn, EntityPlayer player, boolean useLiquids)
     {
         float var4 = 1.0F;
-        float var5 = p_77621_2_.prevRotationPitch + (p_77621_2_.rotationPitch - p_77621_2_.prevRotationPitch) * var4;
-        float var6 = p_77621_2_.prevRotationYaw + (p_77621_2_.rotationYaw - p_77621_2_.prevRotationYaw) * var4;
-        double var7 = p_77621_2_.prevPosX + (p_77621_2_.posX - p_77621_2_.prevPosX) * (double)var4;
-        double var9 = p_77621_2_.prevPosY + (p_77621_2_.posY - p_77621_2_.prevPosY) * (double)var4 + 1.62D - (double)p_77621_2_.yOffset;
-        double var11 = p_77621_2_.prevPosZ + (p_77621_2_.posZ - p_77621_2_.prevPosZ) * (double)var4;
+        float var5 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * var4;
+        float var6 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * var4;
+        double var7 = player.prevPosX + (player.posX - player.prevPosX) * (double)var4;
+        double var9 = player.prevPosY + (player.posY - player.prevPosY) * (double)var4 + 1.62D - (double)player.yOffset;
+        double var11 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)var4;
         Vec3 var13 = Vec3.createVectorHelper(var7, var9, var11);
         float var14 = MathHelper.cos(-var6 * 0.017453292F - (float)Math.PI);
         float var15 = MathHelper.sin(-var6 * 0.017453292F - (float)Math.PI);
@@ -760,7 +760,7 @@ public class Item
         float var20 = var14 * var16;
         double var21 = 5.0D;
         Vec3 var23 = var13.addVector((double)var18 * var21, (double)var17 * var21, (double)var20 * var21);
-        return p_77621_1_.func_147447_a(var13, var23, p_77621_3_, !p_77621_3_, false);
+        return worldIn.rayTraceBlocks(var13, var23, useLiquids, !useLiquids, false);
     }
 
     /**
@@ -826,9 +826,9 @@ public class Item
         return false;
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        this.itemIcon = p_94581_1_.registerIcon(this.getIconString());
+        this.itemIcon = register.registerIcon(this.getIconString());
     }
 
     /**
@@ -903,7 +903,7 @@ public class Item
             return this.enchantability;
         }
 
-        public Item func_150995_f()
+        public Item getBaseItemForRepair()
         {
             return this == WOOD ? Item.getItemFromBlock(Blocks.planks) : (this == STONE ? Item.getItemFromBlock(Blocks.cobblestone) : (this == GOLD ? Items.gold_ingot : (this == IRON ? Items.iron_ingot : (this == EMERALD ? Items.diamond : null))));
         }

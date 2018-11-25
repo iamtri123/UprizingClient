@@ -200,27 +200,27 @@ public class GuiTwitchUserMode extends GuiScreen
         this.field_152334_t = this.width / 2 - var3 / 2;
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.enabled)
+        if (button.enabled)
         {
-            if (p_146284_1_.id == 0)
+            if (button.id == 0)
             {
                 this.field_152333_s.func_152917_b("/ban " + this.field_152337_h.displayName);
             }
-            else if (p_146284_1_.id == 3)
+            else if (button.id == 3)
             {
                 this.field_152333_s.func_152917_b("/unban " + this.field_152337_h.displayName);
             }
-            else if (p_146284_1_.id == 2)
+            else if (button.id == 2)
             {
                 this.field_152333_s.func_152917_b("/mod " + this.field_152337_h.displayName);
             }
-            else if (p_146284_1_.id == 4)
+            else if (button.id == 4)
             {
                 this.field_152333_s.func_152917_b("/unmod " + this.field_152337_h.displayName);
             }
-            else if (p_146284_1_.id == 1)
+            else if (button.id == 1)
             {
                 this.field_152333_s.func_152917_b("/timeout " + this.field_152337_h.displayName);
             }

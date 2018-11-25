@@ -145,7 +145,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_) {}
+    protected void keyTyped(char typedChar, int keyCode) {}
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
@@ -232,39 +232,39 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.id == 0)
+        if (button.id == 0)
         {
             this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
         }
 
-        if (p_146284_1_.id == 5)
+        if (button.id == 5)
         {
             this.mc.displayGuiScreen(new GuiLanguage(this, this.mc.gameSettings, this.mc.getLanguageManager()));
         }
 
-        if (p_146284_1_.id == 1)
+        if (button.id == 1)
         {
             this.mc.displayGuiScreen(new GuiSelectWorld(this));
         }
 
-        if (p_146284_1_.id == 2)
+        if (button.id == 2)
         {
             this.mc.displayGuiScreen(new GuiMultiplayer(this));
         }
 
-        if (p_146284_1_.id == 4)
+        if (button.id == 4)
         {
             this.mc.shutdown();
         }
 
-        if (p_146284_1_.id == 11)
+        if (button.id == 11)
         {
             this.mc.launchIntegratedServer("Demo_World", "Demo_World", DemoWorldServer.demoWorldSettings);
         }
 
-        if (p_146284_1_.id == 12)
+        if (button.id == 12)
         {
             ISaveFormat var2 = this.mc.getSaveLoader();
             WorldInfo var3 = var2.getWorldInfo("Demo_World");
@@ -277,18 +277,18 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    public void confirmClicked(boolean p_73878_1_, int p_73878_2_)
+    public void confirmClicked(boolean result, int id)
     {
-        if (p_73878_1_ && p_73878_2_ == 12)
+        if (result && id == 12)
         {
             ISaveFormat var6 = this.mc.getSaveLoader();
             var6.flushCache();
             var6.deleteWorldDirectory("Demo_World");
             this.mc.displayGuiScreen(this);
         }
-        else if (p_73878_2_ == 13)
+        else if (id == 13)
         {
-            if (p_73878_1_)
+            if (result)
             {
                 try
                 {
@@ -535,7 +535,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             if (this.field_92025_p.length() > 0 && mouseX >= this.field_92022_t && mouseX <= this.field_92020_v && mouseY >= this.field_92021_u && mouseY <= this.field_92019_w)
             {
                 GuiConfirmOpenLink var5 = new GuiConfirmOpenLink(this, this.field_104024_v, 13, true);
-                var5.func_146358_g();
+                var5.disableSecurityWarning();
                 this.mc.displayGuiScreen(var5);
             }
         }

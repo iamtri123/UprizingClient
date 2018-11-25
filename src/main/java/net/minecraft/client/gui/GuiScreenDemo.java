@@ -25,12 +25,12 @@ public class GuiScreenDemo extends GuiScreen
         this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height / 2 + 62 + var1, 114, 20, I18n.format("demo.help.later")));
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        switch (p_146284_1_.id)
+        switch (button.id)
         {
             case 1:
-                p_146284_1_.enabled = false;
+                button.enabled = false;
 
                 try
                 {

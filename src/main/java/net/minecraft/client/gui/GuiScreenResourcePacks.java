@@ -65,21 +65,21 @@ public class GuiScreenResourcePacks extends GuiScreen
 
         this.field_146969_h.add(new ResourcePackListEntryDefault(this));
         this.field_146970_i = new GuiResourcePackAvailable(this.mc, 200, this.height, this.field_146966_g);
-        this.field_146970_i.func_148140_g(this.width / 2 - 4 - 200);
-        this.field_146970_i.func_148134_d(7, 8);
+        this.field_146970_i.setSlotXBoundsFromLeft(this.width / 2 - 4 - 200);
+        this.field_146970_i.registerScrollButtons(7, 8);
         this.field_146967_r = new GuiResourcePackSelected(this.mc, 200, this.height, this.field_146969_h);
-        this.field_146967_r.func_148140_g(this.width / 2 + 4);
-        this.field_146967_r.func_148134_d(7, 8);
+        this.field_146967_r.setSlotXBoundsFromLeft(this.width / 2 + 4);
+        this.field_146967_r.registerScrollButtons(7, 8);
     }
 
-    public boolean func_146961_a(ResourcePackListEntry p_146961_1_)
+    public boolean hasResourcePackEntry(ResourcePackListEntry p_146961_1_)
     {
         return this.field_146969_h.contains(p_146961_1_);
     }
 
     public List func_146962_b(ResourcePackListEntry p_146962_1_)
     {
-        return this.func_146961_a(p_146962_1_) ? this.field_146969_h : this.field_146966_g;
+        return this.hasResourcePackEntry(p_146962_1_) ? this.field_146969_h : this.field_146966_g;
     }
 
     public List func_146964_g()
@@ -92,11 +92,11 @@ public class GuiScreenResourcePacks extends GuiScreen
         return this.field_146969_h;
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.enabled)
+        if (button.enabled)
         {
-            if (p_146284_1_.id == 2)
+            if (button.id == 2)
             {
                 File var2 = this.mc.getResourcePackRepository().getDirResourcepacks();
                 String var3 = var2.getAbsolutePath();
@@ -149,7 +149,7 @@ public class GuiScreenResourcePacks extends GuiScreen
                     Sys.openURL("file://" + var3);
                 }
             }
-            else if (p_146284_1_.id == 1)
+            else if (button.id == 1)
             {
                 ArrayList var10 = Lists.newArrayList();
                 Iterator var11 = this.field_146969_h.iterator();
@@ -192,9 +192,9 @@ public class GuiScreenResourcePacks extends GuiScreen
         this.field_146967_r.func_148179_a(mouseX, mouseY, mouseButton);
     }
 
-    protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_)
+    protected void mouseMovedOrUp(int mouseX, int mouseY, int state)
     {
-        super.mouseMovedOrUp(p_146286_1_, p_146286_2_, p_146286_3_);
+        super.mouseMovedOrUp(mouseX, mouseY, state);
     }
 
     /**
@@ -202,9 +202,9 @@ public class GuiScreenResourcePacks extends GuiScreen
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.func_146278_c(0);
-        this.field_146970_i.func_148128_a(mouseX, mouseY, partialTicks);
-        this.field_146967_r.func_148128_a(mouseX, mouseY, partialTicks);
+        this.drawBackground(0);
+        this.field_146970_i.drawScreen(mouseX, mouseY, partialTicks);
+        this.field_146967_r.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.title"), this.width / 2, 16, 16777215);
         this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.folderInfo"), this.width / 2 - 77, this.height - 26, 8421504);
         super.drawScreen(mouseX, mouseY, partialTicks);

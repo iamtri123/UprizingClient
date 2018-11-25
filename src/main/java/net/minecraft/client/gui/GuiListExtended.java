@@ -23,25 +23,25 @@ public abstract class GuiListExtended extends GuiSlot
 
     protected void drawSlot(int p_148126_1_, int p_148126_2_, int p_148126_3_, int p_148126_4_, Tessellator p_148126_5_, int p_148126_6_, int p_148126_7_)
     {
-        this.func_148180_b(p_148126_1_).func_148279_a(p_148126_1_, p_148126_2_, p_148126_3_, this.func_148139_c(), p_148126_4_, p_148126_5_, p_148126_6_, p_148126_7_, this.func_148124_c(p_148126_6_, p_148126_7_) == p_148126_1_);
+        this.getListEntry(p_148126_1_).drawEntry(p_148126_1_, p_148126_2_, p_148126_3_, this.getListWidth(), p_148126_4_, p_148126_5_, p_148126_6_, p_148126_7_, this.getSlotIndexFromScreenCoords(p_148126_6_, p_148126_7_) == p_148126_1_);
     }
 
     public boolean func_148179_a(int p_148179_1_, int p_148179_2_, int p_148179_3_)
     {
-        if (this.func_148141_e(p_148179_2_))
+        if (this.isMouseYWithinSlotBounds(p_148179_2_))
         {
-            int var4 = this.func_148124_c(p_148179_1_, p_148179_2_);
+            int var4 = this.getSlotIndexFromScreenCoords(p_148179_1_, p_148179_2_);
 
             if (var4 >= 0)
             {
-                int var5 = this.field_148152_e + this.field_148155_a / 2 - this.func_148139_c() / 2 + 2;
-                int var6 = this.field_148153_b + 4 - this.func_148148_g() + var4 * this.field_148149_f + this.field_148160_j;
+                int var5 = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
+                int var6 = this.top + 4 - this.getAmountScrolled() + var4 * this.slotHeight + this.headerPadding;
                 int var7 = p_148179_1_ - var5;
                 int var8 = p_148179_2_ - var6;
 
-                if (this.func_148180_b(var4).func_148278_a(var4, p_148179_1_, p_148179_2_, p_148179_3_, var7, var8))
+                if (this.getListEntry(var4).mousePressed(var4, p_148179_1_, p_148179_2_, p_148179_3_, var7, var8))
                 {
-                    this.func_148143_b(false);
+                    this.setEnabled(false);
                     return true;
                 }
             }
@@ -54,25 +54,25 @@ public abstract class GuiListExtended extends GuiSlot
     {
         for (int var4 = 0; var4 < this.getSize(); ++var4)
         {
-            int var5 = this.field_148152_e + this.field_148155_a / 2 - this.func_148139_c() / 2 + 2;
-            int var6 = this.field_148153_b + 4 - this.func_148148_g() + var4 * this.field_148149_f + this.field_148160_j;
+            int var5 = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
+            int var6 = this.top + 4 - this.getAmountScrolled() + var4 * this.slotHeight + this.headerPadding;
             int var7 = p_148181_1_ - var5;
             int var8 = p_148181_2_ - var6;
-            this.func_148180_b(var4).func_148277_b(var4, p_148181_1_, p_148181_2_, p_148181_3_, var7, var8);
+            this.getListEntry(var4).mouseReleased(var4, p_148181_1_, p_148181_2_, p_148181_3_, var7, var8);
         }
 
-        this.func_148143_b(true);
+        this.setEnabled(true);
         return false;
     }
 
-    public abstract GuiListExtended.IGuiListEntry func_148180_b(int p_148180_1_);
+    public abstract GuiListExtended.IGuiListEntry getListEntry(int p_148180_1_);
 
     public interface IGuiListEntry
     {
-        void func_148279_a(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_);
+        void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_);
 
-        boolean func_148278_a(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_);
+        boolean mousePressed(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_);
 
-        void func_148277_b(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_);
+        void mouseReleased(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_);
     }
 }

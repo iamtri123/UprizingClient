@@ -37,14 +37,14 @@ public class CommandSpreadPlayers extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.spreadplayers.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length < 6)
+        if (args.length < 6)
         {
             throw new WrongUsageException("commands.spreadplayers.usage");
         }
@@ -52,22 +52,22 @@ public class CommandSpreadPlayers extends CommandBase
         {
             byte var3 = 0;
             int var16 = var3 + 1;
-            double var4 = func_110666_a(p_71515_1_, Double.NaN, p_71515_2_[var3]);
-            double var6 = func_110666_a(p_71515_1_, Double.NaN, p_71515_2_[var16++]);
-            double var8 = parseDoubleWithMin(p_71515_1_, p_71515_2_[var16++], 0.0D);
-            double var10 = parseDoubleWithMin(p_71515_1_, p_71515_2_[var16++], var8 + 1.0D);
-            boolean var12 = parseBoolean(p_71515_1_, p_71515_2_[var16++]);
+            double var4 = clamp_coord(sender, Double.NaN, args[var3]);
+            double var6 = clamp_coord(sender, Double.NaN, args[var16++]);
+            double var8 = parseDoubleWithMin(sender, args[var16++], 0.0D);
+            double var10 = parseDoubleWithMin(sender, args[var16++], var8 + 1.0D);
+            boolean var12 = parseBoolean(sender, args[var16++]);
             ArrayList var13 = Lists.newArrayList();
 
             while (true)
             {
-                while (var16 < p_71515_2_.length)
+                while (var16 < args.length)
                 {
-                    String var14 = p_71515_2_[var16++];
+                    String var14 = args[var16++];
 
                     if (PlayerSelector.hasArguments(var14))
                     {
-                        EntityPlayerMP[] var17 = PlayerSelector.matchPlayers(p_71515_1_, var14);
+                        EntityPlayerMP[] var17 = PlayerSelector.matchPlayers(sender, var14);
 
                         if (var17 == null || var17.length == 0)
                         {
@@ -78,7 +78,7 @@ public class CommandSpreadPlayers extends CommandBase
                     }
                     else
                     {
-                        EntityPlayerMP var15 = MinecraftServer.getServer().getConfigurationManager().func_152612_a(var14);
+                        EntityPlayerMP var15 = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(var14);
 
                         if (var15 == null)
                         {
@@ -94,8 +94,8 @@ public class CommandSpreadPlayers extends CommandBase
                     throw new PlayerNotFoundException();
                 }
 
-                p_71515_1_.addChatMessage(new ChatComponentTranslation("commands.spreadplayers.spreading." + (var12 ? "teams" : "players"), Integer.valueOf(var13.size()), Double.valueOf(var10), Double.valueOf(var4), Double.valueOf(var6), Double.valueOf(var8)));
-                this.func_110669_a(p_71515_1_, var13, new CommandSpreadPlayers.Position(var4, var6), var8, var10, ((EntityLivingBase)var13.get(0)).worldObj, var12);
+                sender.addChatMessage(new ChatComponentTranslation("commands.spreadplayers.spreading." + (var12 ? "teams" : "players"), Integer.valueOf(var13.size()), Double.valueOf(var10), Double.valueOf(var4), Double.valueOf(var6), Double.valueOf(var8)));
+                this.func_110669_a(sender, var13, new CommandSpreadPlayers.Position(var4, var6), var8, var10, ((EntityLivingBase)var13.get(0)).worldObj, var12);
                 return;
             }
         }
@@ -111,7 +111,7 @@ public class CommandSpreadPlayers extends CommandBase
         CommandSpreadPlayers.Position[] var19 = this.func_110670_a(var10, p_110669_9_ ? this.func_110667_a(p_110669_2_) : p_110669_2_.size(), var11, var13, var15, var17);
         int var20 = this.func_110668_a(p_110669_3_, p_110669_4_, p_110669_8_, var10, var11, var13, var15, var17, var19, p_110669_9_);
         double var21 = this.func_110671_a(p_110669_2_, p_110669_8_, var19, p_110669_9_);
-        func_152373_a(p_110669_1_, this, "commands.spreadplayers.success." + (p_110669_9_ ? "teams" : "players"), Integer.valueOf(var19.length), Double.valueOf(p_110669_3_.field_111101_a), Double.valueOf(p_110669_3_.field_111100_b));
+        notifyOperators(p_110669_1_, this, "commands.spreadplayers.success." + (p_110669_9_ ? "teams" : "players"), Integer.valueOf(var19.length), Double.valueOf(p_110669_3_.field_111101_a), Double.valueOf(p_110669_3_.field_111100_b));
 
         if (var19.length > 1)
         {

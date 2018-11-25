@@ -61,7 +61,7 @@ public class ContainerRepair extends Container
         this.addSlotToContainer(new Slot(this.outputSlot, 2, 134, 47)
         {
             private static final String __OBFID = "CL_00001734";
-            public boolean isItemValid(ItemStack p_75214_1_)
+            public boolean isItemValid(ItemStack stack)
             {
                 return false;
             }
@@ -478,25 +478,25 @@ public class ContainerRepair extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.theWorld.getBlock(this.field_82861_i, this.field_82858_j, this.field_82859_k) == Blocks.anvil && p_75145_1_.getDistanceSq((double) this.field_82861_i + 0.5D, (double) this.field_82858_j + 0.5D, (double) this.field_82859_k + 0.5D) <= 64.0D;
+        return this.theWorld.getBlock(this.field_82861_i, this.field_82858_j, this.field_82859_k) == Blocks.anvil && player.getDistanceSq((double) this.field_82861_i + 0.5D, (double) this.field_82858_j + 0.5D, (double) this.field_82859_k + 0.5D) <= 64.0D;
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ == 2)
+            if (index == 2)
             {
                 if (!this.mergeItemStack(var5, 3, 39, true))
                 {
@@ -505,9 +505,9 @@ public class ContainerRepair extends Container
 
                 var4.onSlotChange(var5, var3);
             }
-            else if (p_82846_2_ != 0 && p_82846_2_ != 1)
+            else if (index != 0 && index != 1)
             {
-                if (p_82846_2_ >= 3 && p_82846_2_ < 39 && !this.mergeItemStack(var5, 0, 2, false))
+                if (index >= 3 && index < 39 && !this.mergeItemStack(var5, 0, 2, false))
                 {
                     return null;
                 }
@@ -531,7 +531,7 @@ public class ContainerRepair extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;

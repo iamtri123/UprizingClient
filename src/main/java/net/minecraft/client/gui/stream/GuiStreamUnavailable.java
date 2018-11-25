@@ -103,11 +103,11 @@ public class GuiStreamUnavailable extends GuiScreen
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.enabled)
+        if (button.enabled)
         {
-            if (p_146284_1_.id == 1)
+            if (button.id == 1)
             {
                 switch (GuiStreamUnavailable.SwitchReason.field_152577_a[this.field_152326_h.ordinal()])
                 {
@@ -152,7 +152,7 @@ public class GuiStreamUnavailable extends GuiScreen
     public static void func_152321_a(GuiScreen p_152321_0_)
     {
         Minecraft var1 = Minecraft.getMinecraft();
-        IStream var2 = var1.func_152346_Z();
+        IStream var2 = var1.getTwitchStream();
 
         if (!OpenGlHelper.framebufferSupported)
         {
@@ -190,9 +190,9 @@ public class GuiStreamUnavailable extends GuiScreen
                     var1.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.UNSUPPORTED_OS_OTHER));
             }
         }
-        else if (!var1.func_152341_N().containsKey("twitch_access_token"))
+        else if (!var1.getTwitchDetails().containsKey("twitch_access_token"))
         {
-            if (var1.getSession().func_152428_f() == Session.Type.LEGACY)
+            if (var1.getSession().getSessionType() == Session.Type.LEGACY)
             {
                 var1.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.ACCOUNT_NOT_MIGRATED));
             }

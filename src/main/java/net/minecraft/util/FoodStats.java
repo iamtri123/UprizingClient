@@ -31,9 +31,9 @@ public class FoodStats
         this.foodSaturationLevel = Math.min(this.foodSaturationLevel + (float)p_75122_1_ * p_75122_2_ * 2.0F, (float)this.foodLevel);
     }
 
-    public void func_151686_a(ItemFood p_151686_1_, ItemStack p_151686_2_)
+    public void addStats(ItemFood p_151686_1_, ItemStack p_151686_2_)
     {
-        this.addStats(p_151686_1_.func_150905_g(p_151686_2_), p_151686_1_.func_150906_h(p_151686_2_));
+        this.addStats(p_151686_1_.getHealAmount(p_151686_2_), p_151686_1_.getSaturationModifier(p_151686_2_));
     }
 
     /**
@@ -94,7 +94,7 @@ public class FoodStats
      */
     public void readNBT(NBTTagCompound p_75112_1_)
     {
-        if (p_75112_1_.func_150297_b("foodLevel", 99))
+        if (p_75112_1_.hasKey("foodLevel", 99))
         {
             this.foodLevel = p_75112_1_.getInteger("foodLevel");
             this.foodTimer = p_75112_1_.getInteger("foodTickTimer");

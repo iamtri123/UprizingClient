@@ -12,9 +12,9 @@ public abstract class NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    abstract void write(DataOutput p_74734_1_) throws IOException;
+    abstract void write(DataOutput output) throws IOException;
 
-    abstract void func_152446_a(DataInput p_152446_1_, int p_152446_2_, NBTSizeTracker p_152446_3_) throws IOException;
+    abstract void read(DataInput input, int depth, NBTSizeTracker sizeTracker) throws IOException;
 
     public abstract String toString();
 
@@ -23,9 +23,9 @@ public abstract class NBTBase
      */
     public abstract byte getId();
 
-    protected static NBTBase func_150284_a(byte p_150284_0_)
+    protected static NBTBase createNewByType(byte id)
     {
-        switch (p_150284_0_)
+        switch (id)
         {
             case 0:
                 return new NBTTagEnd();
@@ -91,7 +91,7 @@ public abstract class NBTBase
         return this.getId();
     }
 
-    protected String func_150285_a_()
+    protected String getString()
     {
         return this.toString();
     }
@@ -100,16 +100,16 @@ public abstract class NBTBase
     {
         private static final String __OBFID = "CL_00001230";
 
-        public abstract long func_150291_c();
+        public abstract long getLong();
 
-        public abstract int func_150287_d();
+        public abstract int getInt();
 
-        public abstract short func_150289_e();
+        public abstract short getShort();
 
-        public abstract byte func_150290_f();
+        public abstract byte getByte();
 
-        public abstract double func_150286_g();
+        public abstract double getDouble();
 
-        public abstract float func_150288_h();
+        public abstract float getFloat();
     }
 }

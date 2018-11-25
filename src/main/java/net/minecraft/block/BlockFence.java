@@ -24,12 +24,12 @@ public class BlockFence extends Block
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
-    public void addCollisionBoxesToList(World p_149743_1_, int p_149743_2_, int p_149743_3_, int p_149743_4_, AxisAlignedBB p_149743_5_, List p_149743_6_, Entity p_149743_7_)
+    public void addCollisionBoxesToList(World worldIn, int x, int y, int z, AxisAlignedBB mask, List list, Entity collider)
     {
-        boolean var8 = this.func_149826_e(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_ - 1);
-        boolean var9 = this.func_149826_e(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_ + 1);
-        boolean var10 = this.func_149826_e(p_149743_1_, p_149743_2_ - 1, p_149743_3_, p_149743_4_);
-        boolean var11 = this.func_149826_e(p_149743_1_, p_149743_2_ + 1, p_149743_3_, p_149743_4_);
+        boolean var8 = this.canConnectFenceTo(worldIn, x, y, z - 1);
+        boolean var9 = this.canConnectFenceTo(worldIn, x, y, z + 1);
+        boolean var10 = this.canConnectFenceTo(worldIn, x - 1, y, z);
+        boolean var11 = this.canConnectFenceTo(worldIn, x + 1, y, z);
         float var12 = 0.375F;
         float var13 = 0.625F;
         float var14 = 0.375F;
@@ -48,7 +48,7 @@ public class BlockFence extends Block
         if (var8 || var9)
         {
             this.setBlockBounds(var12, 0.0F, var14, var13, 1.5F, var15);
-            super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+            super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         }
 
         var14 = 0.375F;
@@ -67,7 +67,7 @@ public class BlockFence extends Block
         if (var10 || var11 || !var8 && !var9)
         {
             this.setBlockBounds(var12, 0.0F, var14, var13, 1.5F, var15);
-            super.addCollisionBoxesToList(p_149743_1_, p_149743_2_, p_149743_3_, p_149743_4_, p_149743_5_, p_149743_6_, p_149743_7_);
+            super.addCollisionBoxesToList(worldIn, x, y, z, mask, list, collider);
         }
 
         if (var8)
@@ -83,12 +83,12 @@ public class BlockFence extends Block
         this.setBlockBounds(var12, 0.0F, var14, var13, 1.0F, var15);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
-        boolean var5 = this.func_149826_e(p_149719_1_, p_149719_2_, p_149719_3_, p_149719_4_ - 1);
-        boolean var6 = this.func_149826_e(p_149719_1_, p_149719_2_, p_149719_3_, p_149719_4_ + 1);
-        boolean var7 = this.func_149826_e(p_149719_1_, p_149719_2_ - 1, p_149719_3_, p_149719_4_);
-        boolean var8 = this.func_149826_e(p_149719_1_, p_149719_2_ + 1, p_149719_3_, p_149719_4_);
+        boolean var5 = this.canConnectFenceTo(worldIn, x, y, z - 1);
+        boolean var6 = this.canConnectFenceTo(worldIn, x, y, z + 1);
+        boolean var7 = this.canConnectFenceTo(worldIn, x - 1, y, z);
+        boolean var8 = this.canConnectFenceTo(worldIn, x + 1, y, z);
         float var9 = 0.375F;
         float var10 = 0.625F;
         float var11 = 0.375F;
@@ -127,7 +127,7 @@ public class BlockFence extends Block
         return false;
     }
 
-    public boolean getBlocksMovement(IBlockAccess p_149655_1_, int p_149655_2_, int p_149655_3_, int p_149655_4_)
+    public boolean getBlocksMovement(IBlockAccess worldIn, int x, int y, int z)
     {
         return false;
     }
@@ -140,32 +140,32 @@ public class BlockFence extends Block
         return 11;
     }
 
-    public boolean func_149826_e(IBlockAccess p_149826_1_, int p_149826_2_, int p_149826_3_, int p_149826_4_)
+    public boolean canConnectFenceTo(IBlockAccess p_149826_1_, int p_149826_2_, int p_149826_3_, int p_149826_4_)
     {
         Block var5 = p_149826_1_.getBlock(p_149826_2_, p_149826_3_, p_149826_4_);
-        return var5 == this || var5 == Blocks.fence_gate || ((var5.blockMaterial.isOpaque() && var5.renderAsNormalBlock()) && var5.blockMaterial != Material.field_151572_C);
+        return var5 == this || var5 == Blocks.fence_gate || ((var5.blockMaterial.isOpaque() && var5.renderAsNormalBlock()) && var5.blockMaterial != Material.gourd);
     }
 
-    public static boolean func_149825_a(Block p_149825_0_)
+    public static boolean isFence(Block p_149825_0_)
     {
         return p_149825_0_ == Blocks.fence || p_149825_0_ == Blocks.nether_brick_fence;
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
         return true;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon(this.field_149827_a);
+        this.blockIcon = reg.registerIcon(this.field_149827_a);
     }
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        return p_149727_1_.isClient || ItemLead.func_150909_a(p_149727_5_, p_149727_1_, p_149727_2_, p_149727_3_, p_149727_4_);
+        return worldIn.isClient || ItemLead.func_150909_a(player, worldIn, x, y, z);
     }
 }

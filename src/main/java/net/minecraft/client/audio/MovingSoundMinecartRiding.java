@@ -16,9 +16,9 @@ public class MovingSoundMinecartRiding extends MovingSound
         super(new ResourceLocation("minecraft:minecart.inside"));
         this.field_147672_k = p_i45106_1_;
         this.field_147671_l = p_i45106_2_;
-        this.field_147666_i = ISound.AttenuationType.NONE;
-        this.field_147659_g = true;
-        this.field_147665_h = 0;
+        this.attenuationType = ISound.AttenuationType.NONE;
+        this.repeat = true;
+        this.repeatDelay = 0;
     }
 
     /**
@@ -32,16 +32,16 @@ public class MovingSoundMinecartRiding extends MovingSound
 
             if ((double)var1 >= 0.01D)
             {
-                this.field_147662_b = 0.0F + MathHelper.clamp_float(var1, 0.0F, 1.0F) * 0.75F;
+                this.volume = 0.0F + MathHelper.clamp_float(var1, 0.0F, 1.0F) * 0.75F;
             }
             else
             {
-                this.field_147662_b = 0.0F;
+                this.volume = 0.0F;
             }
         }
         else
         {
-            this.field_147668_j = true;
+            this.donePlaying = true;
         }
     }
 }

@@ -65,28 +65,28 @@ public class S12PacketEntityVelocity extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149417_a = p_148837_1_.readInt();
-        this.field_149415_b = p_148837_1_.readShort();
-        this.field_149416_c = p_148837_1_.readShort();
-        this.field_149414_d = p_148837_1_.readShort();
+        this.field_149417_a = data.readInt();
+        this.field_149415_b = data.readShort();
+        this.field_149416_c = data.readShort();
+        this.field_149414_d = data.readShort();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149417_a);
-        p_148840_1_.writeShort(this.field_149415_b);
-        p_148840_1_.writeShort(this.field_149416_c);
-        p_148840_1_.writeShort(this.field_149414_d);
+        data.writeInt(this.field_149417_a);
+        data.writeShort(this.field_149415_b);
+        data.writeShort(this.field_149416_c);
+        data.writeShort(this.field_149414_d);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleEntityVelocity(this);
+        handler.handleEntityVelocity(this);
     }
 
     /**
@@ -117,8 +117,8 @@ public class S12PacketEntityVelocity extends Packet
         return this.field_149414_d;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

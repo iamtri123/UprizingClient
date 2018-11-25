@@ -174,7 +174,7 @@ public class ChunkProviderGenerate implements IChunkProvider
         }
     }
 
-    public void func_147422_a(int p_147422_1_, int p_147422_2_, Block[] p_147422_3_, byte[] p_147422_4_, BiomeGenBase[] p_147422_5_)
+    public void replaceBlocksForBiome(int p_147422_1_, int p_147422_2_, Block[] p_147422_3_, byte[] p_147422_4_, BiomeGenBase[] p_147422_5_)
     {
         double var6 = 0.03125D;
         this.stoneNoise = this.field_147430_m.func_151599_a(this.stoneNoise, (double)(p_147422_1_ * 16), (double)(p_147422_2_ * 16), 16, 16, var6 * 2.0D, var6 * 2.0D, 1.0D);
@@ -184,7 +184,7 @@ public class ChunkProviderGenerate implements IChunkProvider
             for (int var9 = 0; var9 < 16; ++var9)
             {
                 BiomeGenBase var10 = p_147422_5_[var9 + var8 * 16];
-                var10.func_150573_a(this.worldObj, this.rand, p_147422_3_, p_147422_4_, p_147422_1_ * 16 + var8, p_147422_2_ * 16 + var9, this.stoneNoise[var9 + var8 * 16]);
+                var10.genTerrainBlocks(this.worldObj, this.rand, p_147422_3_, p_147422_4_, p_147422_1_ * 16 + var8, p_147422_2_ * 16 + var9, this.stoneNoise[var9 + var8 * 16]);
             }
         }
     }
@@ -208,16 +208,16 @@ public class ChunkProviderGenerate implements IChunkProvider
         byte[] var4 = new byte[65536];
         this.func_147424_a(p_73154_1_, p_73154_2_, var3);
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, p_73154_1_ * 16, p_73154_2_ * 16, 16, 16);
-        this.func_147422_a(p_73154_1_, p_73154_2_, var3, var4, this.biomesForGeneration);
-        this.caveGenerator.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
-        this.ravineGenerator.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+        this.replaceBlocksForBiome(p_73154_1_, p_73154_2_, var3, var4, this.biomesForGeneration);
+        this.caveGenerator.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+        this.ravineGenerator.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
 
         if (this.mapFeaturesEnabled)
         {
-            this.mineshaftGenerator.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
-            this.villageGenerator.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
-            this.strongholdGenerator.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
-            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+            this.mineshaftGenerator.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+            this.villageGenerator.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+            this.strongholdGenerator.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
+            this.scatteredFeatureGenerator.generate(this, this.worldObj, p_73154_1_, p_73154_2_, var3);
         }
 
         Chunk var5 = new Chunk(this.worldObj, var3, var4, p_73154_1_, p_73154_2_);
@@ -266,7 +266,7 @@ public class ChunkProviderGenerate implements IChunkProvider
                         float var26 = var25.minHeight;
                         float var27 = var25.maxHeight;
 
-                        if (this.field_147435_p == WorldType.field_151360_e && var26 > 0.0F)
+                        if (this.field_147435_p == WorldType.AMPLIFIED && var26 > 0.0F)
                         {
                             var26 = 1.0F + var26 * 2.0F;
                             var27 = 1.0F + var27 * 4.0F;
@@ -367,7 +367,7 @@ public class ChunkProviderGenerate implements IChunkProvider
      */
     public void populate(IChunkProvider p_73153_1_, int p_73153_2_, int p_73153_3_)
     {
-        BlockFalling.field_149832_M = true;
+        BlockFalling.fallInstantly = true;
         int var4 = p_73153_2_ * 16;
         int var5 = p_73153_3_ * 16;
         BiomeGenBase var6 = this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
@@ -433,14 +433,14 @@ public class ChunkProviderGenerate implements IChunkProvider
                     this.worldObj.setBlock(var12 + var4, var14 - 1, var13 + var5, Blocks.ice, 0, 2);
                 }
 
-                if (this.worldObj.func_147478_e(var12 + var4, var14, var13 + var5, true))
+                if (this.worldObj.canSnowAt(var12 + var4, var14, var13 + var5, true))
                 {
                     this.worldObj.setBlock(var12 + var4, var14, var13 + var5, Blocks.snow_layer, 0, 2);
                 }
             }
         }
 
-        BlockFalling.field_149832_M = false;
+        BlockFalling.fallInstantly = false;
     }
 
     /**
@@ -491,9 +491,9 @@ public class ChunkProviderGenerate implements IChunkProvider
         return p_73155_1_ == EnumCreatureType.monster && this.scatteredFeatureGenerator.func_143030_a(p_73155_2_, p_73155_3_, p_73155_4_) ? this.scatteredFeatureGenerator.getScatteredFeatureSpawnList() : var5.getSpawnableList(p_73155_1_);
     }
 
-    public ChunkPosition func_147416_a(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
+    public ChunkPosition findClosestStructure(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
     {
-        return "Stronghold".equals(p_147416_2_) && this.strongholdGenerator != null ? this.strongholdGenerator.func_151545_a(p_147416_1_, p_147416_3_, p_147416_4_, p_147416_5_) : null;
+        return "Stronghold".equals(p_147416_2_) && this.strongholdGenerator != null ? this.strongholdGenerator.getNearestInstance(p_147416_1_, p_147416_3_, p_147416_4_, p_147416_5_) : null;
     }
 
     public int getLoadedChunkCount()
@@ -505,10 +505,10 @@ public class ChunkProviderGenerate implements IChunkProvider
     {
         if (this.mapFeaturesEnabled)
         {
-            this.mineshaftGenerator.func_151539_a(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
-            this.villageGenerator.func_151539_a(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
-            this.strongholdGenerator.func_151539_a(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
-            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
+            this.mineshaftGenerator.generate(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
+            this.villageGenerator.generate(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
+            this.strongholdGenerator.generate(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
+            this.scatteredFeatureGenerator.generate(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
         }
     }
 }

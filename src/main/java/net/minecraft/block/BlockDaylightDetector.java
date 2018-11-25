@@ -24,24 +24,24 @@ public class BlockDaylightDetector extends BlockContainer
         this.setCreativeTab(CreativeTabs.tabRedstone);
     }
 
-    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    public void setBlockBoundsBasedOnState(IBlockAccess worldIn, int x, int y, int z)
     {
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.375F, 1.0F);
     }
 
-    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
+    public int isProvidingWeakPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return p_149709_1_.getBlockMetadata(p_149709_2_, p_149709_3_, p_149709_4_);
+        return worldIn.getBlockMetadata(x, y, z);
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_) {}
+    public void updateTick(World worldIn, int x, int y, int z, Random random) {}
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_) {}
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {}
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_) {}
+    public void onBlockAdded(World worldIn, int x, int y, int z) {}
 
     public void func_149957_e(World p_149957_1_, int p_149957_2_, int p_149957_3_, int p_149957_4_)
     {
@@ -100,7 +100,7 @@ public class BlockDaylightDetector extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityDaylightDetector();
     }
@@ -108,14 +108,14 @@ public class BlockDaylightDetector extends BlockContainer
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_1_ == 1 ? this.field_149958_a[0] : this.field_149958_a[1];
+        return side == 1 ? this.field_149958_a[0] : this.field_149958_a[1];
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.field_149958_a[0] = p_149651_1_.registerIcon(this.getTextureName() + "_top");
-        this.field_149958_a[1] = p_149651_1_.registerIcon(this.getTextureName() + "_side");
+        this.field_149958_a[0] = reg.registerIcon(this.getTextureName() + "_top");
+        this.field_149958_a[1] = reg.registerIcon(this.getTextureName() + "_side");
     }
 }

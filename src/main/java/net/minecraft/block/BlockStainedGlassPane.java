@@ -21,9 +21,9 @@ public class BlockStainedGlassPane extends BlockPane
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
-    public IIcon func_149735_b(int p_149735_1_, int p_149735_2_)
+    public IIcon getItemIcon(int side, int meta)
     {
-        return field_150106_a[p_149735_2_ % field_150106_a.length];
+        return field_150106_a[meta % field_150106_a.length];
     }
 
     public IIcon func_150104_b(int p_150104_1_)
@@ -34,17 +34,17 @@ public class BlockStainedGlassPane extends BlockPane
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return this.func_149735_b(p_149691_1_, ~p_149691_2_ & 15);
+        return this.getItemIcon(side, ~meta & 15);
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
     public static int func_150103_c(int p_150103_0_)
@@ -52,11 +52,11 @@ public class BlockStainedGlassPane extends BlockPane
         return p_150103_0_ & 15;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
         for (int var4 = 0; var4 < field_150106_a.length; ++var4)
         {
-            p_149666_3_.add(new ItemStack(p_149666_1_, 1, var4));
+            list.add(new ItemStack(itemIn, 1, var4));
         }
     }
 
@@ -68,14 +68,14 @@ public class BlockStainedGlassPane extends BlockPane
         return 1;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        super.registerBlockIcons(p_149651_1_);
+        super.registerBlockIcons(reg);
 
         for (int var2 = 0; var2 < field_150106_a.length; ++var2)
         {
-            field_150106_a[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + ItemDye.field_150921_b[func_150103_c(var2)]);
-            field_150105_b[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_pane_top_" + ItemDye.field_150921_b[func_150103_c(var2)]);
+            field_150106_a[var2] = reg.registerIcon(this.getTextureName() + "_" + ItemDye.dyeIcons[func_150103_c(var2)]);
+            field_150105_b[var2] = reg.registerIcon(this.getTextureName() + "_pane_top_" + ItemDye.dyeIcons[func_150103_c(var2)]);
         }
     }
 }

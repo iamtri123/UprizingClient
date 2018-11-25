@@ -52,16 +52,16 @@ public class ItemColored extends ItemBlock
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
         if (this.field_150945_c == null)
         {
-            return super.getUnlocalizedName(p_77667_1_);
+            return super.getUnlocalizedName(stack);
         }
         else
         {
-            int var2 = p_77667_1_.getItemDamage();
-            return var2 >= 0 && var2 < this.field_150945_c.length ? super.getUnlocalizedName(p_77667_1_) + "." + this.field_150945_c[var2] : super.getUnlocalizedName(p_77667_1_);
+            int var2 = stack.getItemDamage();
+            return var2 >= 0 && var2 < this.field_150945_c.length ? super.getUnlocalizedName(stack) + "." + this.field_150945_c[var2] : super.getUnlocalizedName(stack);
         }
     }
 }

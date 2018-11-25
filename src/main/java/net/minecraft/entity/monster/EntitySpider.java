@@ -93,7 +93,7 @@ public class EntitySpider extends EntityMob
         return "mob.spider.death";
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.spider.step", 0.15F, 1.0F);
     }
@@ -130,7 +130,7 @@ public class EntitySpider extends EntityMob
         }
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.string;
     }
@@ -144,7 +144,7 @@ public class EntitySpider extends EntityMob
 
         if (p_70628_1_ && (this.rand.nextInt(3) == 0 || this.rand.nextInt(1 + p_70628_2_) > 0))
         {
-            this.func_145779_a(Items.spider_eye, 1);
+            this.dropItem(Items.spider_eye, 1);
         }
     }
 
@@ -220,7 +220,7 @@ public class EntitySpider extends EntityMob
         {
             p_110161_1_1 = new EntitySpider.GroupData();
 
-            if (this.worldObj.difficultySetting == EnumDifficulty.HARD && this.worldObj.rand.nextFloat() < 0.1F * this.worldObj.func_147462_b(this.posX, this.posY, this.posZ))
+            if (this.worldObj.difficultySetting == EnumDifficulty.HARD && this.worldObj.rand.nextFloat() < 0.1F * this.worldObj.getTensionFactorForBlock(this.posX, this.posY, this.posZ))
             {
                 ((EntitySpider.GroupData)p_110161_1_1).func_111104_a(this.worldObj.rand);
             }

@@ -11,7 +11,7 @@ public interface ICommandSender
      */
     String getCommandSenderName();
 
-    IChatComponent func_145748_c_();
+    IChatComponent getFormattedCommandSenderName();
 
     /**
      * Notifies this sender of some sort of information.  This is for messages intended to display to the user.  Used
@@ -19,12 +19,12 @@ public interface ICommandSender
      * (like "I fetched this block for you by ID, but I'd like you to know that every time you do this, I die a little
      * inside"), and errors (like "it's not called iron_pixacke, silly").
      */
-    void addChatMessage(IChatComponent p_145747_1_);
+    void addChatMessage(IChatComponent message);
 
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_);
+    boolean canCommandSenderUseCommand(int permissionLevel, String command);
 
     /**
      * Return the position for this command sender.

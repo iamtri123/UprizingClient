@@ -35,8 +35,8 @@ import net.minecraft.world.World;
 
 public class EntityWolf extends EntityTameable
 {
-    private float field_70926_e;
-    private float field_70924_f;
+    private float headRotationCourse;
+    private float headRotationCourseOld;
 
     /** true is the wolf is wet else false */
     private boolean isShaking;
@@ -127,7 +127,7 @@ public class EntityWolf extends EntityTameable
         this.dataWatcher.addObject(20, new Byte((byte)BlockColored.func_150032_b(1)));
     }
 
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(int x, int y, int z, Block blockIn)
     {
         this.playSound("mob.wolf.step", 0.15F, 1.0F);
     }
@@ -135,24 +135,24 @@ public class EntityWolf extends EntityTameable
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setBoolean("Angry", this.isAngry());
-        p_70014_1_.setByte("CollarColor", (byte)this.getCollarColor());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setBoolean("Angry", this.isAngry());
+        tagCompound.setByte("CollarColor", (byte)this.getCollarColor());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.setAngry(p_70037_1_.getBoolean("Angry"));
+        super.readEntityFromNBT(tagCompund);
+        this.setAngry(tagCompund.getBoolean("Angry"));
 
-        if (p_70037_1_.func_150297_b("CollarColor", 99))
+        if (tagCompund.hasKey("CollarColor", 99))
         {
-            this.setCollarColor(p_70037_1_.getByte("CollarColor"));
+            this.setCollarColor(tagCompund.getByte("CollarColor"));
         }
     }
 
@@ -188,7 +188,7 @@ public class EntityWolf extends EntityTameable
         return 0.4F;
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Item.getItemById(-1);
     }
@@ -216,15 +216,15 @@ public class EntityWolf extends EntityTameable
     public void onUpdate()
     {
         super.onUpdate();
-        this.field_70924_f = this.field_70926_e;
+        this.headRotationCourseOld = this.headRotationCourse;
 
         if (this.func_70922_bv())
         {
-            this.field_70926_e += (1.0F - this.field_70926_e) * 0.4F;
+            this.headRotationCourse += (1.0F - this.headRotationCourse) * 0.4F;
         }
         else
         {
-            this.field_70926_e += (0.0F - this.field_70926_e) * 0.4F;
+            this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
         }
 
         if (this.func_70922_bv())
@@ -303,7 +303,7 @@ public class EntityWolf extends EntityTameable
 
     public float getInterestedAngle(float p_70917_1_)
     {
-        return (this.field_70924_f + (this.field_70926_e - this.field_70924_f) * p_70917_1_) * 0.15F * (float)Math.PI;
+        return (this.headRotationCourseOld + (this.headRotationCourse - this.headRotationCourseOld) * p_70917_1_) * 0.15F * (float)Math.PI;
     }
 
     public float getEyeHeight()
@@ -323,7 +323,7 @@ public class EntityWolf extends EntityTameable
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -331,15 +331,15 @@ public class EntityWolf extends EntityTameable
         }
         else
         {
-            Entity var3 = p_70097_1_.getEntity();
+            Entity var3 = source.getEntity();
             this.aiSit.setSitting(false);
 
             if (var3 != null && !(var3 instanceof EntityPlayer) && !(var3 instanceof EntityArrow))
             {
-                p_70097_2_ = (p_70097_2_ + 1.0F) / 2.0F;
+                amount = (amount + 1.0F) / 2.0F;
             }
 
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 
@@ -385,7 +385,7 @@ public class EntityWolf extends EntityTameable
                             --var2.stackSize;
                         }
 
-                        this.heal((float)var3.func_150905_g(var2));
+                        this.heal((float)var3.getHealAmount(var2));
 
                         if (var2.stackSize <= 0)
                         {

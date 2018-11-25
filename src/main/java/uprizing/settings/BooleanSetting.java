@@ -2,7 +2,7 @@ package uprizing.settings;
 
 import net.minecraft.client.Minecraft;
 
-public class BooleanSetting extends Setting {
+public class  BooleanSetting extends Setting {
 
 	private boolean value = false;
 

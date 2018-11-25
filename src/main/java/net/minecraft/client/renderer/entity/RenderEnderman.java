@@ -38,7 +38,7 @@ public class RenderEnderman extends RenderLiving
      */
     public void doRender(EntityEnderman p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
     {
-        this.endermanModel.isCarrying = p_76986_1_.func_146080_bZ().getMaterial() != Material.air;
+        this.endermanModel.isCarrying = p_76986_1_.getCarriedBlock().getMaterial() != Material.air;
         this.endermanModel.isAttacking = p_76986_1_.isScreaming();
 
         if (p_76986_1_.isScreaming())
@@ -63,7 +63,7 @@ public class RenderEnderman extends RenderLiving
     {
         super.renderEquippedItems(p_77029_1_, p_77029_2_);
 
-        if (p_77029_1_.func_146080_bZ().getMaterial() != Material.air)
+        if (p_77029_1_.getCarriedBlock().getMaterial() != Material.air)
         {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             GL11.glPushMatrix();
@@ -79,7 +79,7 @@ public class RenderEnderman extends RenderLiving
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)var5 / 1.0F, (float)var6 / 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.bindTexture(TextureMap.locationBlocksTexture);
-            this.field_147909_c.renderBlockAsItem(p_77029_1_.func_146080_bZ(), p_77029_1_.getCarryingData(), 1.0F);
+            this.field_147909_c.renderBlockAsItem(p_77029_1_.getCarriedBlock(), p_77029_1_.getCarryingData(), 1.0F);
             GL11.glPopMatrix();
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         }

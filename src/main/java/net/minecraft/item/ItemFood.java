@@ -54,7 +54,7 @@ public class ItemFood extends Item
     public ItemStack onEaten(ItemStack p_77654_1_, World p_77654_2_, EntityPlayer p_77654_3_)
     {
         --p_77654_1_.stackSize;
-        p_77654_3_.getFoodStats().func_151686_a(this, p_77654_1_);
+        p_77654_3_.getFoodStats().addStats(this, p_77654_1_);
         p_77654_2_.playSoundAtEntity(p_77654_3_, "random.burp", 0.5F, p_77654_2_.rand.nextFloat() * 0.1F + 0.9F);
         this.onFoodEaten(p_77654_1_, p_77654_2_, p_77654_3_);
         return p_77654_1_;
@@ -79,7 +79,7 @@ public class ItemFood extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack p_77661_1_)
+    public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.eat;
     }
@@ -87,22 +87,22 @@ public class ItemFood extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        if (p_77659_3_.canEat(this.alwaysEdible))
+        if (player.canEat(this.alwaysEdible))
         {
-            p_77659_3_.setItemInUse(p_77659_1_, this.getMaxItemUseDuration(p_77659_1_));
+            player.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
         }
 
-        return p_77659_1_;
+        return itemStackIn;
     }
 
-    public int func_150905_g(ItemStack p_150905_1_)
+    public int getHealAmount(ItemStack itemStackIn)
     {
         return this.healAmount;
     }
 
-    public float func_150906_h(ItemStack p_150906_1_)
+    public float getSaturationModifier(ItemStack itemStackIn)
     {
         return this.saturationModifier;
     }
@@ -119,12 +119,12 @@ public class ItemFood extends Item
      * sets a potion effect on the item. Args: int potionId, int duration (will be multiplied by 20), int amplifier,
      * float probability of effect happening
      */
-    public ItemFood setPotionEffect(int p_77844_1_, int p_77844_2_, int p_77844_3_, float p_77844_4_)
+    public ItemFood setPotionEffect(int p_77844_1_, int duration, int amplifier, float probability)
     {
         this.potionId = p_77844_1_;
-        this.potionDuration = p_77844_2_;
-        this.potionAmplifier = p_77844_3_;
-        this.potionEffectProbability = p_77844_4_;
+        this.potionDuration = duration;
+        this.potionAmplifier = amplifier;
+        this.potionEffectProbability = probability;
         return this;
     }
 

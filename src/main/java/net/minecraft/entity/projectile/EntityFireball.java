@@ -40,11 +40,11 @@ public abstract class EntityFireball extends Entity
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double p_70112_1_)
+    public boolean isInRangeToRenderDist(double distance)
     {
         double var3 = this.boundingBox.getAverageEdgeLength() * 4.0D;
         var3 *= 64.0D;
-        return p_70112_1_ < var3 * var3;
+        return distance < var3 * var3;
     }
 
     public EntityFireball(World p_i1760_1_, double p_i1760_2_, double p_i1760_4_, double p_i1760_6_, double p_i1760_8_, double p_i1760_10_, double p_i1760_12_)
@@ -232,33 +232,33 @@ public abstract class EntityFireball extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setShort("xTile", (short)this.field_145795_e);
-        p_70014_1_.setShort("yTile", (short)this.field_145793_f);
-        p_70014_1_.setShort("zTile", (short)this.field_145794_g);
-        p_70014_1_.setByte("inTile", (byte)Block.getIdFromBlock(this.field_145796_h));
-        p_70014_1_.setByte("inGround", (byte)(this.inGround ? 1 : 0));
-        p_70014_1_.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
+        tagCompound.setShort("xTile", (short)this.field_145795_e);
+        tagCompound.setShort("yTile", (short)this.field_145793_f);
+        tagCompound.setShort("zTile", (short)this.field_145794_g);
+        tagCompound.setByte("inTile", (byte)Block.getIdFromBlock(this.field_145796_h));
+        tagCompound.setByte("inGround", (byte)(this.inGround ? 1 : 0));
+        tagCompound.setTag("direction", this.newDoubleNBTList(this.motionX, this.motionY, this.motionZ));
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        this.field_145795_e = p_70037_1_.getShort("xTile");
-        this.field_145793_f = p_70037_1_.getShort("yTile");
-        this.field_145794_g = p_70037_1_.getShort("zTile");
-        this.field_145796_h = Block.getBlockById(p_70037_1_.getByte("inTile") & 255);
-        this.inGround = p_70037_1_.getByte("inGround") == 1;
+        this.field_145795_e = tagCompund.getShort("xTile");
+        this.field_145793_f = tagCompund.getShort("yTile");
+        this.field_145794_g = tagCompund.getShort("zTile");
+        this.field_145796_h = Block.getBlockById(tagCompund.getByte("inTile") & 255);
+        this.inGround = tagCompund.getByte("inGround") == 1;
 
-        if (p_70037_1_.func_150297_b("direction", 9))
+        if (tagCompund.hasKey("direction", 9))
         {
-            NBTTagList var2 = p_70037_1_.getTagList("direction", 6);
-            this.motionX = var2.func_150309_d(0);
-            this.motionY = var2.func_150309_d(1);
-            this.motionZ = var2.func_150309_d(2);
+            NBTTagList var2 = tagCompund.getTagList("direction", 6);
+            this.motionX = var2.getDoubleAt(0);
+            this.motionY = var2.getDoubleAt(1);
+            this.motionZ = var2.getDoubleAt(2);
         }
         else
         {
@@ -282,7 +282,7 @@ public abstract class EntityFireball extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -292,9 +292,9 @@ public abstract class EntityFireball extends Entity
         {
             this.setBeenAttacked();
 
-            if (p_70097_1_.getEntity() != null)
+            if (source.getEntity() != null)
             {
-                Vec3 var3 = p_70097_1_.getEntity().getLookVec();
+                Vec3 var3 = source.getEntity().getLookVec();
 
                 if (var3 != null)
                 {
@@ -306,9 +306,9 @@ public abstract class EntityFireball extends Entity
                     this.accelerationZ = this.motionZ * 0.1D;
                 }
 
-                if (p_70097_1_.getEntity() instanceof EntityLivingBase)
+                if (source.getEntity() instanceof EntityLivingBase)
                 {
-                    this.shootingEntity = (EntityLivingBase)p_70097_1_.getEntity();
+                    this.shootingEntity = (EntityLivingBase)source.getEntity();
                 }
 
                 return true;

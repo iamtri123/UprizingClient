@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class BlockFalling extends Block
 {
-    public static boolean field_149832_M;
+    public static boolean fallInstantly;
     private static final String __OBFID = "CL_00000240";
 
     public BlockFalling()
@@ -23,39 +23,39 @@ public class BlockFalling extends Block
         super(p_i45405_1_);
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        p_149726_1_.scheduleBlockUpdate(p_149726_2_, p_149726_3_, p_149726_4_, this, this.func_149738_a(p_149726_1_));
+        worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, this, this.func_149738_a(p_149695_1_));
+        worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!p_149674_1_.isClient)
+        if (!worldIn.isClient)
         {
-            this.func_149830_m(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+            this.func_149830_m(worldIn, x, y, z);
         }
     }
 
     private void func_149830_m(World p_149830_1_, int p_149830_2_, int p_149830_3_, int p_149830_4_)
     {
-        if (func_149831_e(p_149830_1_, p_149830_2_, p_149830_3_ - 1, p_149830_4_) && p_149830_3_ >= 0)
+        if (canFallBelow(p_149830_1_, p_149830_2_, p_149830_3_ - 1, p_149830_4_) && p_149830_3_ >= 0)
         {
             byte var8 = 32;
 
-            if (!field_149832_M && p_149830_1_.checkChunksExist(p_149830_2_ - var8, p_149830_3_ - var8, p_149830_4_ - var8, p_149830_2_ + var8, p_149830_3_ + var8, p_149830_4_ + var8))
+            if (!fallInstantly && p_149830_1_.checkChunksExist(p_149830_2_ - var8, p_149830_3_ - var8, p_149830_4_ - var8, p_149830_2_ + var8, p_149830_3_ + var8, p_149830_4_ + var8))
             {
                 if (!p_149830_1_.isClient)
                 {
                     EntityFallingBlock var9 = new EntityFallingBlock(p_149830_1_, (double)((float)p_149830_2_ + 0.5F), (double)((float)p_149830_3_ + 0.5F), (double)((float)p_149830_4_ + 0.5F), this, p_149830_1_.getBlockMetadata(p_149830_2_, p_149830_3_, p_149830_4_));
-                    this.func_149829_a(var9);
+                    this.onStartFalling(var9);
                     p_149830_1_.spawnEntityInWorld(var9);
                 }
             }
@@ -63,7 +63,7 @@ public class BlockFalling extends Block
             {
                 p_149830_1_.setBlockToAir(p_149830_2_, p_149830_3_, p_149830_4_);
 
-                while (func_149831_e(p_149830_1_, p_149830_2_, p_149830_3_ - 1, p_149830_4_) && p_149830_3_ > 0)
+                while (canFallBelow(p_149830_1_, p_149830_2_, p_149830_3_ - 1, p_149830_4_) && p_149830_3_ > 0)
                 {
                     --p_149830_3_;
                 }
@@ -76,14 +76,14 @@ public class BlockFalling extends Block
         }
     }
 
-    protected void func_149829_a(EntityFallingBlock p_149829_1_) {}
+    protected void onStartFalling(EntityFallingBlock p_149829_1_) {}
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
         return 2;
     }
 
-    public static boolean func_149831_e(World p_149831_0_, int p_149831_1_, int p_149831_2_, int p_149831_3_)
+    public static boolean canFallBelow(World p_149831_0_, int p_149831_1_, int p_149831_2_, int p_149831_3_)
     {
         Block var4 = p_149831_0_.getBlock(p_149831_1_, p_149831_2_, p_149831_3_);
 
@@ -102,5 +102,5 @@ public class BlockFalling extends Block
         }
     }
 
-    public void func_149828_a(World p_149828_1_, int p_149828_2_, int p_149828_3_, int p_149828_4_, int p_149828_5_) {}
+    public void playSoundWhenFallen(World p_149828_1_, int p_149828_2_, int p_149828_3_, int p_149828_4_, int p_149828_5_) {}
 }

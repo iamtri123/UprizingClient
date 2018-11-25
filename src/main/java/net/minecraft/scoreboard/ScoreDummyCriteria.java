@@ -10,10 +10,10 @@ public class ScoreDummyCriteria implements IScoreObjectiveCriteria
     public ScoreDummyCriteria(String p_i2311_1_)
     {
         this.field_96644_g = p_i2311_1_;
-        IScoreObjectiveCriteria.field_96643_a.put(p_i2311_1_, this);
+        IScoreObjectiveCriteria.INSTANCES.put(p_i2311_1_, this);
     }
 
-    public String func_96636_a()
+    public String getName()
     {
         return this.field_96644_g;
     }

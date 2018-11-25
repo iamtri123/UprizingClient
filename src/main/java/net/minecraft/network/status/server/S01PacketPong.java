@@ -8,35 +8,35 @@ import net.minecraft.network.status.INetHandlerStatusClient;
 
 public class S01PacketPong extends Packet
 {
-    private long field_149293_a;
+    private long clientTime;
     private static final String __OBFID = "CL_00001383";
 
     public S01PacketPong() {}
 
-    public S01PacketPong(long p_i45272_1_)
+    public S01PacketPong(long time)
     {
-        this.field_149293_a = p_i45272_1_;
+        this.clientTime = time;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149293_a = p_148837_1_.readLong();
+        this.clientTime = data.readLong();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeLong(this.field_149293_a);
+        data.writeLong(this.clientTime);
     }
 
-    public void processPacket(INetHandlerStatusClient p_148833_1_)
+    public void processPacket(INetHandlerStatusClient handler)
     {
-        p_148833_1_.handlePong(this);
+        handler.handlePong(this);
     }
 
     /**
@@ -50,11 +50,11 @@ public class S01PacketPong extends Packet
 
     public long func_149292_c()
     {
-        return this.field_149293_a;
+        return this.clientTime;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerStatusClient)p_148833_1_);
+        this.processPacket((INetHandlerStatusClient)handler);
     }
 }

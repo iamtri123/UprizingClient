@@ -58,43 +58,43 @@ public class BlockRedstoneTorch extends BlockTorch
         this.setCreativeTab((CreativeTabs)null);
     }
 
-    public int func_149738_a(World p_149738_1_)
+    public int tickRate(World worldIn)
     {
         return 2;
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        if (p_149726_1_.getBlockMetadata(p_149726_2_, p_149726_3_, p_149726_4_) == 0)
+        if (worldIn.getBlockMetadata(x, y, z) == 0)
         {
-            super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+            super.onBlockAdded(worldIn, x, y, z);
         }
 
         if (this.field_150113_a)
         {
-            p_149726_1_.notifyBlocksOfNeighborChange(p_149726_2_, p_149726_3_ - 1, p_149726_4_, this);
-            p_149726_1_.notifyBlocksOfNeighborChange(p_149726_2_, p_149726_3_ + 1, p_149726_4_, this);
-            p_149726_1_.notifyBlocksOfNeighborChange(p_149726_2_ - 1, p_149726_3_, p_149726_4_, this);
-            p_149726_1_.notifyBlocksOfNeighborChange(p_149726_2_ + 1, p_149726_3_, p_149726_4_, this);
-            p_149726_1_.notifyBlocksOfNeighborChange(p_149726_2_, p_149726_3_, p_149726_4_ - 1, this);
-            p_149726_1_.notifyBlocksOfNeighborChange(p_149726_2_, p_149726_3_, p_149726_4_ + 1, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y + 1, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x - 1, y, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x + 1, y, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y, z - 1, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y, z + 1, this);
         }
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
         if (this.field_150113_a)
         {
-            p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_, p_149749_3_ - 1, p_149749_4_, this);
-            p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_, p_149749_3_ + 1, p_149749_4_, this);
-            p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_ - 1, p_149749_3_, p_149749_4_, this);
-            p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_ + 1, p_149749_3_, p_149749_4_, this);
-            p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_, p_149749_3_, p_149749_4_ - 1, this);
-            p_149749_1_.notifyBlocksOfNeighborChange(p_149749_2_, p_149749_3_, p_149749_4_ + 1, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y + 1, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x - 1, y, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x + 1, y, z, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y, z - 1, this);
+            worldIn.notifyBlocksOfNeighborChange(x, y, z + 1, this);
         }
     }
 
-    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
+    public int isProvidingWeakPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
         if (!this.field_150113_a)
         {
@@ -102,8 +102,8 @@ public class BlockRedstoneTorch extends BlockTorch
         }
         else
         {
-            int var6 = p_149709_1_.getBlockMetadata(p_149709_2_, p_149709_3_, p_149709_4_);
-            return var6 == 5 && p_149709_5_ == 1 ? 0 : (var6 == 3 && p_149709_5_ == 3 ? 0 : (var6 == 4 && p_149709_5_ == 2 ? 0 : (var6 == 1 && p_149709_5_ == 5 ? 0 : (var6 == 2 && p_149709_5_ == 4 ? 0 : 15))));
+            int var6 = worldIn.getBlockMetadata(x, y, z);
+            return var6 == 5 && side == 1 ? 0 : (var6 == 3 && side == 3 ? 0 : (var6 == 4 && side == 2 ? 0 : (var6 == 1 && side == 5 ? 0 : (var6 == 2 && side == 4 ? 0 : 15))));
         }
     }
 
@@ -116,12 +116,12 @@ public class BlockRedstoneTorch extends BlockTorch
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        boolean var6 = this.func_150110_m(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
-        List var7 = (List)field_150112_b.get(p_149674_1_);
+        boolean var6 = this.func_150110_m(worldIn, x, y, z);
+        List var7 = (List)field_150112_b.get(worldIn);
 
-        while (var7 != null && !var7.isEmpty() && p_149674_1_.getTotalWorldTime() - ((BlockRedstoneTorch.Toggle)var7.get(0)).field_150844_d > 60L)
+        while (var7 != null && !var7.isEmpty() && worldIn.getTotalWorldTime() - ((BlockRedstoneTorch.Toggle)var7.get(0)).field_150844_d > 60L)
         {
             var7.remove(0);
         }
@@ -130,47 +130,47 @@ public class BlockRedstoneTorch extends BlockTorch
         {
             if (var6)
             {
-                p_149674_1_.setBlock(p_149674_2_, p_149674_3_, p_149674_4_, Blocks.unlit_redstone_torch, p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_), 3);
+                worldIn.setBlock(x, y, z, Blocks.unlit_redstone_torch, worldIn.getBlockMetadata(x, y, z), 3);
 
-                if (this.func_150111_a(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, true))
+                if (this.func_150111_a(worldIn, x, y, z, true))
                 {
-                    p_149674_1_.playSoundEffect((double)((float)p_149674_2_ + 0.5F), (double)((float)p_149674_3_ + 0.5F), (double)((float)p_149674_4_ + 0.5F), "random.fizz", 0.5F, 2.6F + (p_149674_1_.rand.nextFloat() - p_149674_1_.rand.nextFloat()) * 0.8F);
+                    worldIn.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "random.fizz", 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
 
                     for (int var8 = 0; var8 < 5; ++var8)
                     {
-                        double var9 = (double)p_149674_2_ + p_149674_5_.nextDouble() * 0.6D + 0.2D;
-                        double var11 = (double)p_149674_3_ + p_149674_5_.nextDouble() * 0.6D + 0.2D;
-                        double var13 = (double)p_149674_4_ + p_149674_5_.nextDouble() * 0.6D + 0.2D;
-                        p_149674_1_.spawnParticle("smoke", var9, var11, var13, 0.0D, 0.0D, 0.0D);
+                        double var9 = (double)x + random.nextDouble() * 0.6D + 0.2D;
+                        double var11 = (double)y + random.nextDouble() * 0.6D + 0.2D;
+                        double var13 = (double)z + random.nextDouble() * 0.6D + 0.2D;
+                        worldIn.spawnParticle("smoke", var9, var11, var13, 0.0D, 0.0D, 0.0D);
                     }
                 }
             }
         }
-        else if (!var6 && !this.func_150111_a(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, false))
+        else if (!var6 && !this.func_150111_a(worldIn, x, y, z, false))
         {
-            p_149674_1_.setBlock(p_149674_2_, p_149674_3_, p_149674_4_, Blocks.redstone_torch, p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_), 3);
+            worldIn.setBlock(x, y, z, Blocks.redstone_torch, worldIn.getBlockMetadata(x, y, z), 3);
         }
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        if (!this.func_150108_b(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_))
+        if (!this.func_150108_b(worldIn, x, y, z, neighbor))
         {
-            boolean var6 = this.func_150110_m(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_);
+            boolean var6 = this.func_150110_m(worldIn, x, y, z);
 
             if (this.field_150113_a == var6)
             {
-                p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, this, this.func_149738_a(p_149695_1_));
+                worldIn.scheduleBlockUpdate(x, y, z, this, this.tickRate(worldIn));
             }
         }
     }
 
-    public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_)
+    public int isProvidingStrongPower(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return p_149748_5_ == 0 ? this.isProvidingWeakPower(p_149748_1_, p_149748_2_, p_149748_3_, p_149748_4_, p_149748_5_) : 0;
+        return side == 0 ? this.isProvidingWeakPower(worldIn, x, y, z, side) : 0;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemFromBlock(Blocks.redstone_torch);
     }
@@ -186,36 +186,36 @@ public class BlockRedstoneTorch extends BlockTorch
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
         if (this.field_150113_a)
         {
-            int var6 = p_149734_1_.getBlockMetadata(p_149734_2_, p_149734_3_, p_149734_4_);
-            double var7 = (double)((float)p_149734_2_ + 0.5F) + (double)(p_149734_5_.nextFloat() - 0.5F) * 0.2D;
-            double var9 = (double)((float)p_149734_3_ + 0.7F) + (double)(p_149734_5_.nextFloat() - 0.5F) * 0.2D;
-            double var11 = (double)((float)p_149734_4_ + 0.5F) + (double)(p_149734_5_.nextFloat() - 0.5F) * 0.2D;
+            int var6 = worldIn.getBlockMetadata(x, y, z);
+            double var7 = (double)((float)x + 0.5F) + (double)(random.nextFloat() - 0.5F) * 0.2D;
+            double var9 = (double)((float)y + 0.7F) + (double)(random.nextFloat() - 0.5F) * 0.2D;
+            double var11 = (double)((float)z + 0.5F) + (double)(random.nextFloat() - 0.5F) * 0.2D;
             double var13 = 0.2199999988079071D;
             double var15 = 0.27000001072883606D;
 
             if (var6 == 1)
             {
-                p_149734_1_.spawnParticle("reddust", var7 - var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("reddust", var7 - var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
             }
             else if (var6 == 2)
             {
-                p_149734_1_.spawnParticle("reddust", var7 + var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("reddust", var7 + var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
             }
             else if (var6 == 3)
             {
-                p_149734_1_.spawnParticle("reddust", var7, var9 + var13, var11 - var15, 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("reddust", var7, var9 + var13, var11 - var15, 0.0D, 0.0D, 0.0D);
             }
             else if (var6 == 4)
             {
-                p_149734_1_.spawnParticle("reddust", var7, var9 + var13, var11 + var15, 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("reddust", var7, var9 + var13, var11 + var15, 0.0D, 0.0D, 0.0D);
             }
             else
             {
-                p_149734_1_.spawnParticle("reddust", var7, var9, var11, 0.0D, 0.0D, 0.0D);
+                worldIn.spawnParticle("reddust", var7, var9, var11, 0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -223,14 +223,14 @@ public class BlockRedstoneTorch extends BlockTorch
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemFromBlock(Blocks.redstone_torch);
     }
 
-    public boolean func_149667_c(Block p_149667_1_)
+    public boolean isAssociatedBlock(Block other)
     {
-        return p_149667_1_ == Blocks.unlit_redstone_torch || p_149667_1_ == Blocks.redstone_torch;
+        return other == Blocks.unlit_redstone_torch || other == Blocks.redstone_torch;
     }
 
     static class Toggle

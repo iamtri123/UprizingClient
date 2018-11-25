@@ -9,20 +9,20 @@ import net.minecraft.client.network.LanServerDetector;
 
 public class ServerSelectionList extends GuiListExtended
 {
-    private final GuiMultiplayer field_148200_k;
+    private final GuiMultiplayer owner;
     private final List field_148198_l = Lists.newArrayList();
     private final List field_148199_m = Lists.newArrayList();
-    private final GuiListExtended.IGuiListEntry field_148196_n = new ServerListEntryLanScan();
+    private final GuiListExtended.IGuiListEntry lanScanEntry = new ServerListEntryLanScan();
     private int field_148197_o = -1;
     private static final String __OBFID = "CL_00000819";
 
     public ServerSelectionList(GuiMultiplayer p_i45049_1_, Minecraft p_i45049_2_, int p_i45049_3_, int p_i45049_4_, int p_i45049_5_, int p_i45049_6_, int p_i45049_7_)
     {
         super(p_i45049_2_, p_i45049_3_, p_i45049_4_, p_i45049_5_, p_i45049_6_, p_i45049_7_);
-        this.field_148200_k = p_i45049_1_;
+        this.owner = p_i45049_1_;
     }
 
-    public GuiListExtended.IGuiListEntry func_148180_b(int p_148180_1_)
+    public GuiListExtended.IGuiListEntry getListEntry(int p_148180_1_)
     {
         if (p_148180_1_ < this.field_148198_l.size())
         {
@@ -34,7 +34,7 @@ public class ServerSelectionList extends GuiListExtended
 
             if (p_148180_1_ == 0)
             {
-                return this.field_148196_n;
+                return this.lanScanEntry;
             }
             else
             {
@@ -70,7 +70,7 @@ public class ServerSelectionList extends GuiListExtended
 
         for (int var2 = 0; var2 < p_148195_1_.countServers(); ++var2)
         {
-            this.field_148198_l.add(new ServerListEntryNormal(this.field_148200_k, p_148195_1_.getServerData(var2)));
+            this.field_148198_l.add(new ServerListEntryNormal(this.owner, p_148195_1_.getServerData(var2)));
         }
     }
 
@@ -82,17 +82,17 @@ public class ServerSelectionList extends GuiListExtended
         while (var2.hasNext())
         {
             LanServerDetector.LanServer var3 = (LanServerDetector.LanServer)var2.next();
-            this.field_148199_m.add(new ServerListEntryLanDetected(this.field_148200_k, var3));
+            this.field_148199_m.add(new ServerListEntryLanDetected(this.owner, var3));
         }
     }
 
-    protected int func_148137_d()
+    protected int getScrollBarX()
     {
-        return super.func_148137_d() + 30;
+        return super.getScrollBarX() + 30;
     }
 
-    public int func_148139_c()
+    public int getListWidth()
     {
-        return super.func_148139_c() + 85;
+        return super.getListWidth() + 85;
     }
 }

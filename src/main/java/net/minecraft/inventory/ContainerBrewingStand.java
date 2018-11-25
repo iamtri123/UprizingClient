@@ -42,7 +42,7 @@ public class ContainerBrewingStand extends Container
     public void addCraftingToCrafters(ICrafting p_75132_1_)
     {
         super.addCraftingToCrafters(p_75132_1_);
-        p_75132_1_.sendProgressBarUpdate(this, 0, this.tileBrewingStand.func_145935_i());
+        p_75132_1_.sendProgressBarUpdate(this, 0, this.tileBrewingStand.getBrewTime());
     }
 
     /**
@@ -56,42 +56,42 @@ public class ContainerBrewingStand extends Container
         {
             ICrafting var2 = (ICrafting)this.crafters.get(var1);
 
-            if (this.brewTime != this.tileBrewingStand.func_145935_i())
+            if (this.brewTime != this.tileBrewingStand.getBrewTime())
             {
-                var2.sendProgressBarUpdate(this, 0, this.tileBrewingStand.func_145935_i());
+                var2.sendProgressBarUpdate(this, 0, this.tileBrewingStand.getBrewTime());
             }
         }
 
-        this.brewTime = this.tileBrewingStand.func_145935_i();
+        this.brewTime = this.tileBrewingStand.getBrewTime();
     }
 
     public void updateProgressBar(int p_75137_1_, int p_75137_2_)
     {
         if (p_75137_1_ == 0)
         {
-            this.tileBrewingStand.func_145938_d(p_75137_2_);
+            this.tileBrewingStand.setBrewTime(p_75137_2_);
         }
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
-        return this.tileBrewingStand.isUseableByPlayer(p_75145_1_);
+        return this.tileBrewingStand.isUseableByPlayer(player);
     }
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if ((p_82846_2_ < 0 || p_82846_2_ > 2) && p_82846_2_ != 3)
+            if ((index < 0 || index > 2) && index != 3)
             {
                 if (!this.theSlot.getHasStack() && this.theSlot.isItemValid(var5))
                 {
@@ -107,14 +107,14 @@ public class ContainerBrewingStand extends Container
                         return null;
                     }
                 }
-                else if (p_82846_2_ >= 4 && p_82846_2_ < 31)
+                else if (index >= 4 && index < 31)
                 {
                     if (!this.mergeItemStack(var5, 31, 40, false))
                     {
                         return null;
                     }
                 }
-                else if (p_82846_2_ >= 31 && p_82846_2_ < 40)
+                else if (index >= 31 && index < 40)
                 {
                     if (!this.mergeItemStack(var5, 4, 31, false))
                     {
@@ -150,7 +150,7 @@ public class ContainerBrewingStand extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;
@@ -165,9 +165,9 @@ public class ContainerBrewingStand extends Container
             super(p_i1803_2_, p_i1803_3_, p_i1803_4_, p_i1803_5_);
         }
 
-        public boolean isItemValid(ItemStack p_75214_1_)
+        public boolean isItemValid(ItemStack stack)
         {
-            return p_75214_1_ != null && p_75214_1_.getItem().isPotionIngredient(p_75214_1_);
+            return stack != null && stack.getItem().isPotionIngredient(stack);
         }
 
         public int getSlotStackLimit()
@@ -187,9 +187,9 @@ public class ContainerBrewingStand extends Container
             this.player = p_i1804_1_;
         }
 
-        public boolean isItemValid(ItemStack p_75214_1_)
+        public boolean isItemValid(ItemStack stack)
         {
-            return canHoldPotion(p_75214_1_);
+            return canHoldPotion(stack);
         }
 
         public int getSlotStackLimit()

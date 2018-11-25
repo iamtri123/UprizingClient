@@ -35,18 +35,18 @@
            int var30 = 16;
 ***************
 *** 1988,1994 ****
-           var5.func_78374_a((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.func_94214_a((double)var30), (double)var9.func_94207_b((double)var29));
-           var5.func_78374_a((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.func_94214_a((double)var28), (double)var9.func_94207_b((double)var29));
-           var5.func_78374_a((double)var23, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var9.func_94214_a((double)var28), (double)var9.func_94207_b((double)var31));
+           var5.addVertexWithUV((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.getInterpolatedU((double)var30), (double)var9.getInterpolatedV((double)var29));
+           var5.addVertexWithUV((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.getInterpolatedU((double)var28), (double)var9.getInterpolatedV((double)var29));
+           var5.addVertexWithUV((double)var23, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var9.getInterpolatedU((double)var28), (double)var9.getInterpolatedV((double)var31));
 -       } else if(var27) {
-           var5.func_78374_a((double)var24, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var8.func_94212_f(), (double)var8.func_94210_h());
-           var5.func_78374_a((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.func_94212_f(), (double)var8.func_94206_g());
-           var5.func_78374_a((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.func_94209_e(), (double)var8.func_94206_g());
+           var5.addVertexWithUV((double)var24, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var8.getMaxU(), (double)var8.getMaxV());
+           var5.addVertexWithUV((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.getMaxU(), (double)var8.getMinV());
+           var5.addVertexWithUV((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.getMinU(), (double)var8.getMinV());
 --- 1988,1994 ----
-           var5.func_78374_a((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.func_94214_a((double)var30), (double)var9.func_94207_b((double)var29));
-           var5.func_78374_a((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.func_94214_a((double)var28), (double)var9.func_94207_b((double)var29));
-           var5.func_78374_a((double)var23, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var9.func_94214_a((double)var28), (double)var9.func_94207_b((double)var31));
+           var5.addVertexWithUV((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.getInterpolatedU((double)var30), (double)var9.getInterpolatedV((double)var29));
+           var5.addVertexWithUV((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var9.getInterpolatedU((double)var28), (double)var9.getInterpolatedV((double)var29));
+           var5.addVertexWithUV((double)var23, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var9.getInterpolatedU((double)var28), (double)var9.getInterpolatedV((double)var31));
 +       } else if(var27 == 1) {
-           var5.func_78374_a((double)var24, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var8.func_94212_f(), (double)var8.func_94210_h());
-           var5.func_78374_a((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.func_94212_f(), (double)var8.func_94206_g());
-           var5.func_78374_a((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.func_94209_e(), (double)var8.func_94206_g());
+           var5.addVertexWithUV((double)var24, (double)p_147788_3_ + 0.015625D, (double)var26, (double)var8.getMaxU(), (double)var8.getMaxV());
+           var5.addVertexWithUV((double)var24, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.getMaxU(), (double)var8.getMinV());
+           var5.addVertexWithUV((double)var23, (double)p_147788_3_ + 0.015625D, (double)var25, (double)var8.getMinU(), (double)var8.getMinV());

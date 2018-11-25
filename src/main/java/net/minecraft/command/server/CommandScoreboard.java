@@ -41,197 +41,197 @@ public class CommandScoreboard extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.scoreboard.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length >= 1)
+        if (args.length >= 1)
         {
-            if (p_71515_2_[0].equalsIgnoreCase("objectives"))
+            if (args[0].equalsIgnoreCase("objectives"))
             {
-                if (p_71515_2_.length == 1)
+                if (args.length == 1)
                 {
                     throw new WrongUsageException("commands.scoreboard.objectives.usage");
                 }
 
-                if (p_71515_2_[1].equalsIgnoreCase("list"))
+                if (args[1].equalsIgnoreCase("list"))
                 {
-                    this.func_147196_d(p_71515_1_);
+                    this.listObjectives(sender);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("add"))
+                else if (args[1].equalsIgnoreCase("add"))
                 {
-                    if (p_71515_2_.length < 4)
+                    if (args.length < 4)
                     {
                         throw new WrongUsageException("commands.scoreboard.objectives.add.usage");
                     }
 
-                    this.func_147193_c(p_71515_1_, p_71515_2_, 2);
+                    this.addObjective(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("remove"))
+                else if (args[1].equalsIgnoreCase("remove"))
                 {
-                    if (p_71515_2_.length != 3)
+                    if (args.length != 3)
                     {
                         throw new WrongUsageException("commands.scoreboard.objectives.remove.usage");
                     }
 
-                    this.func_147191_h(p_71515_1_, p_71515_2_[2]);
+                    this.removeObjective(sender, args[2]);
                 }
                 else
                 {
-                    if (!p_71515_2_[1].equalsIgnoreCase("setdisplay"))
+                    if (!args[1].equalsIgnoreCase("setdisplay"))
                     {
                         throw new WrongUsageException("commands.scoreboard.objectives.usage");
                     }
 
-                    if (p_71515_2_.length != 3 && p_71515_2_.length != 4)
+                    if (args.length != 3 && args.length != 4)
                     {
                         throw new WrongUsageException("commands.scoreboard.objectives.setdisplay.usage");
                     }
 
-                    this.func_147198_k(p_71515_1_, p_71515_2_, 2);
+                    this.setObjectiveDisplay(sender, args, 2);
                 }
 
                 return;
             }
 
-            if (p_71515_2_[0].equalsIgnoreCase("players"))
+            if (args[0].equalsIgnoreCase("players"))
             {
-                if (p_71515_2_.length == 1)
+                if (args.length == 1)
                 {
                     throw new WrongUsageException("commands.scoreboard.players.usage");
                 }
 
-                if (p_71515_2_[1].equalsIgnoreCase("list"))
+                if (args[1].equalsIgnoreCase("list"))
                 {
-                    if (p_71515_2_.length > 3)
+                    if (args.length > 3)
                     {
                         throw new WrongUsageException("commands.scoreboard.players.list.usage");
                     }
 
-                    this.func_147195_l(p_71515_1_, p_71515_2_, 2);
+                    this.listPlayers(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("add"))
+                else if (args[1].equalsIgnoreCase("add"))
                 {
-                    if (p_71515_2_.length != 5)
+                    if (args.length != 5)
                     {
                         throw new WrongUsageException("commands.scoreboard.players.add.usage");
                     }
 
-                    this.func_147197_m(p_71515_1_, p_71515_2_, 2);
+                    this.setPlayer(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("remove"))
+                else if (args[1].equalsIgnoreCase("remove"))
                 {
-                    if (p_71515_2_.length != 5)
+                    if (args.length != 5)
                     {
                         throw new WrongUsageException("commands.scoreboard.players.remove.usage");
                     }
 
-                    this.func_147197_m(p_71515_1_, p_71515_2_, 2);
+                    this.setPlayer(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("set"))
+                else if (args[1].equalsIgnoreCase("set"))
                 {
-                    if (p_71515_2_.length != 5)
+                    if (args.length != 5)
                     {
                         throw new WrongUsageException("commands.scoreboard.players.set.usage");
                     }
 
-                    this.func_147197_m(p_71515_1_, p_71515_2_, 2);
+                    this.setPlayer(sender, args, 2);
                 }
                 else
                 {
-                    if (!p_71515_2_[1].equalsIgnoreCase("reset"))
+                    if (!args[1].equalsIgnoreCase("reset"))
                     {
                         throw new WrongUsageException("commands.scoreboard.players.usage");
                     }
 
-                    if (p_71515_2_.length != 3)
+                    if (args.length != 3)
                     {
                         throw new WrongUsageException("commands.scoreboard.players.reset.usage");
                     }
 
-                    this.func_147187_n(p_71515_1_, p_71515_2_, 2);
+                    this.resetPlayers(sender, args, 2);
                 }
 
                 return;
             }
 
-            if (p_71515_2_[0].equalsIgnoreCase("teams"))
+            if (args[0].equalsIgnoreCase("teams"))
             {
-                if (p_71515_2_.length == 1)
+                if (args.length == 1)
                 {
                     throw new WrongUsageException("commands.scoreboard.teams.usage");
                 }
 
-                if (p_71515_2_[1].equalsIgnoreCase("list"))
+                if (args[1].equalsIgnoreCase("list"))
                 {
-                    if (p_71515_2_.length > 3)
+                    if (args.length > 3)
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.list.usage");
                     }
 
-                    this.func_147186_g(p_71515_1_, p_71515_2_, 2);
+                    this.listTeams(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("add"))
+                else if (args[1].equalsIgnoreCase("add"))
                 {
-                    if (p_71515_2_.length < 3)
+                    if (args.length < 3)
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.add.usage");
                     }
 
-                    this.func_147185_d(p_71515_1_, p_71515_2_, 2);
+                    this.addTeam(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("remove"))
+                else if (args[1].equalsIgnoreCase("remove"))
                 {
-                    if (p_71515_2_.length != 3)
+                    if (args.length != 3)
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.remove.usage");
                     }
 
-                    this.func_147194_f(p_71515_1_, p_71515_2_, 2);
+                    this.removeTeam(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("empty"))
+                else if (args[1].equalsIgnoreCase("empty"))
                 {
-                    if (p_71515_2_.length != 3)
+                    if (args.length != 3)
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.empty.usage");
                     }
 
-                    this.func_147188_j(p_71515_1_, p_71515_2_, 2);
+                    this.emptyTeam(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("join"))
+                else if (args[1].equalsIgnoreCase("join"))
                 {
-                    if (p_71515_2_.length < 4 && (p_71515_2_.length != 3 || !(p_71515_1_ instanceof EntityPlayer)))
+                    if (args.length < 4 && (args.length != 3 || !(sender instanceof EntityPlayer)))
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.join.usage");
                     }
 
-                    this.func_147190_h(p_71515_1_, p_71515_2_, 2);
+                    this.joinTeam(sender, args, 2);
                 }
-                else if (p_71515_2_[1].equalsIgnoreCase("leave"))
+                else if (args[1].equalsIgnoreCase("leave"))
                 {
-                    if (p_71515_2_.length < 3 && !(p_71515_1_ instanceof EntityPlayer))
+                    if (args.length < 3 && !(sender instanceof EntityPlayer))
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.leave.usage");
                     }
 
-                    this.func_147199_i(p_71515_1_, p_71515_2_, 2);
+                    this.leaveTeam(sender, args, 2);
                 }
                 else
                 {
-                    if (!p_71515_2_[1].equalsIgnoreCase("option"))
+                    if (!args[1].equalsIgnoreCase("option"))
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.usage");
                     }
 
-                    if (p_71515_2_.length != 4 && p_71515_2_.length != 5)
+                    if (args.length != 4 && args.length != 5)
                     {
                         throw new WrongUsageException("commands.scoreboard.teams.option.usage");
                     }
 
-                    this.func_147200_e(p_71515_1_, p_71515_2_, 2);
+                    this.setTeamOption(sender, args, 2);
                 }
 
                 return;
@@ -241,23 +241,23 @@ public class CommandScoreboard extends CommandBase
         throw new WrongUsageException("commands.scoreboard.usage");
     }
 
-    protected Scoreboard func_147192_d()
+    protected Scoreboard getScoreboard()
     {
         return MinecraftServer.getServer().worldServerForDimension(0).getScoreboard();
     }
 
-    protected ScoreObjective func_147189_a(String p_147189_1_, boolean p_147189_2_)
+    protected ScoreObjective func_147189_a(String name, boolean edit)
     {
-        Scoreboard var3 = this.func_147192_d();
-        ScoreObjective var4 = var3.getObjective(p_147189_1_);
+        Scoreboard var3 = this.getScoreboard();
+        ScoreObjective var4 = var3.getObjective(name);
 
         if (var4 == null)
         {
-            throw new CommandException("commands.scoreboard.objectiveNotFound", p_147189_1_);
+            throw new CommandException("commands.scoreboard.objectiveNotFound", name);
         }
-        else if (p_147189_2_ && var4.getCriteria().isReadOnly())
+        else if (edit && var4.getCriteria().isReadOnly())
         {
-            throw new CommandException("commands.scoreboard.objectiveReadOnly", p_147189_1_);
+            throw new CommandException("commands.scoreboard.objectiveReadOnly", name);
         }
         else
         {
@@ -265,14 +265,14 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected ScorePlayerTeam func_147183_a(String p_147183_1_)
+    protected ScorePlayerTeam func_147183_a(String name)
     {
-        Scoreboard var2 = this.func_147192_d();
-        ScorePlayerTeam var3 = var2.getTeam(p_147183_1_);
+        Scoreboard var2 = this.getScoreboard();
+        ScorePlayerTeam var3 = var2.getTeam(name);
 
         if (var3 == null)
         {
-            throw new CommandException("commands.scoreboard.teamNotFound", p_147183_1_);
+            throw new CommandException("commands.scoreboard.teamNotFound", name);
         }
         else
         {
@@ -280,12 +280,12 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_147193_c(ICommandSender p_147193_1_, String[] p_147193_2_, int p_147193_3_)
+    protected void addObjective(ICommandSender sender, String[] args, int index)
     {
-        String var4 = p_147193_2_[p_147193_3_++];
-        String var5 = p_147193_2_[p_147193_3_++];
-        Scoreboard var6 = this.func_147192_d();
-        IScoreObjectiveCriteria var7 = (IScoreObjectiveCriteria)IScoreObjectiveCriteria.field_96643_a.get(var5);
+        String var4 = args[index++];
+        String var5 = args[index++];
+        Scoreboard var6 = this.getScoreboard();
+        IScoreObjectiveCriteria var7 = (IScoreObjectiveCriteria)IScoreObjectiveCriteria.INSTANCES.get(var5);
 
         if (var7 == null)
         {
@@ -305,9 +305,9 @@ public class CommandScoreboard extends CommandBase
         }
         else
         {
-            if (p_147193_2_.length > p_147193_3_)
+            if (args.length > index)
             {
-                String var8 = func_147178_a(p_147193_1_, p_147193_2_, p_147193_3_).getUnformattedText();
+                String var8 = getChatComponentFromNthArg(sender, args, index).getUnformattedText();
 
                 if (var8.length() > 32)
                 {
@@ -328,14 +328,14 @@ public class CommandScoreboard extends CommandBase
                 var6.addScoreObjective(var4, var7);
             }
 
-            func_152373_a(p_147193_1_, this, "commands.scoreboard.objectives.add.success", var4);
+            notifyOperators(sender, this, "commands.scoreboard.objectives.add.success", var4);
         }
     }
 
-    protected void func_147185_d(ICommandSender p_147185_1_, String[] p_147185_2_, int p_147185_3_)
+    protected void addTeam(ICommandSender p_147185_1_, String[] p_147185_2_, int p_147185_3_)
     {
         String var4 = p_147185_2_[p_147185_3_++];
-        Scoreboard var5 = this.func_147192_d();
+        Scoreboard var5 = this.getScoreboard();
 
         if (var5.getTeam(var4) != null)
         {
@@ -353,7 +353,7 @@ public class CommandScoreboard extends CommandBase
         {
             if (p_147185_2_.length > p_147185_3_)
             {
-                String var6 = func_147178_a(p_147185_1_, p_147185_2_, p_147185_3_).getUnformattedText();
+                String var6 = getChatComponentFromNthArg(p_147185_1_, p_147185_2_, p_147185_3_).getUnformattedText();
 
                 if (var6.length() > 32)
                 {
@@ -374,11 +374,11 @@ public class CommandScoreboard extends CommandBase
                 var5.createTeam(var4);
             }
 
-            func_152373_a(p_147185_1_, this, "commands.scoreboard.teams.add.success", var4);
+            notifyOperators(p_147185_1_, this, "commands.scoreboard.teams.add.success", var4);
         }
     }
 
-    protected void func_147200_e(ICommandSender p_147200_1_, String[] p_147200_2_, int p_147200_3_)
+    protected void setTeamOption(ICommandSender p_147200_1_, String[] p_147200_2_, int p_147200_3_)
     {
         ScorePlayerTeam var4 = this.func_147183_a(p_147200_2_[p_147200_3_++]);
 
@@ -440,26 +440,26 @@ public class CommandScoreboard extends CommandBase
                     var4.setSeeFriendlyInvisiblesEnabled(var6.equalsIgnoreCase("true"));
                 }
 
-                func_152373_a(p_147200_1_, this, "commands.scoreboard.teams.option.success", var5, var4.getRegisteredName(), var6);
+                notifyOperators(p_147200_1_, this, "commands.scoreboard.teams.option.success", var5, var4.getRegisteredName(), var6);
             }
         }
     }
 
-    protected void func_147194_f(ICommandSender p_147194_1_, String[] p_147194_2_, int p_147194_3_)
+    protected void removeTeam(ICommandSender p_147194_1_, String[] p_147194_2_, int p_147194_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
+        Scoreboard var4 = this.getScoreboard();
         ScorePlayerTeam var5 = this.func_147183_a(p_147194_2_[p_147194_3_++]);
 
         if (var5 != null)
         {
             var4.removeTeam(var5);
-            func_152373_a(p_147194_1_, this, "commands.scoreboard.teams.remove.success", var5.getRegisteredName());
+            notifyOperators(p_147194_1_, this, "commands.scoreboard.teams.remove.success", var5.getRegisteredName());
         }
     }
 
-    protected void func_147186_g(ICommandSender p_147186_1_, String[] p_147186_2_, int p_147186_3_)
+    protected void listTeams(ICommandSender p_147186_1_, String[] p_147186_2_, int p_147186_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
+        Scoreboard var4 = this.getScoreboard();
 
         if (p_147186_2_.length > p_147186_3_)
         {
@@ -504,9 +504,9 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_147190_h(ICommandSender p_147190_1_, String[] p_147190_2_, int p_147190_3_)
+    protected void joinTeam(ICommandSender p_147190_1_, String[] p_147190_2_, int p_147190_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
+        Scoreboard var4 = this.getScoreboard();
         String var5 = p_147190_2_[p_147190_3_++];
         HashSet var6 = new HashSet();
         HashSet var7 = new HashSet();
@@ -529,7 +529,7 @@ public class CommandScoreboard extends CommandBase
         {
             while (p_147190_3_ < p_147190_2_.length)
             {
-                var8 = func_96332_d(p_147190_1_, p_147190_2_[p_147190_3_++]);
+                var8 = getPlayerName(p_147190_1_, p_147190_2_[p_147190_3_++]);
 
                 if (var4.func_151392_a(var8, var5))
                 {
@@ -544,7 +544,7 @@ public class CommandScoreboard extends CommandBase
 
         if (!var6.isEmpty())
         {
-            func_152373_a(p_147190_1_, this, "commands.scoreboard.teams.join.success", Integer.valueOf(var6.size()), var5, joinNiceString(var6.toArray(new String[0])));
+            notifyOperators(p_147190_1_, this, "commands.scoreboard.teams.join.success", Integer.valueOf(var6.size()), var5, joinNiceString(var6.toArray(new String[0])));
         }
 
         if (!var7.isEmpty())
@@ -553,9 +553,9 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_147199_i(ICommandSender p_147199_1_, String[] p_147199_2_, int p_147199_3_)
+    protected void leaveTeam(ICommandSender p_147199_1_, String[] p_147199_2_, int p_147199_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
+        Scoreboard var4 = this.getScoreboard();
         HashSet var5 = new HashSet();
         HashSet var6 = new HashSet();
         String var7;
@@ -564,7 +564,7 @@ public class CommandScoreboard extends CommandBase
         {
             var7 = getCommandSenderAsPlayer(p_147199_1_).getCommandSenderName();
 
-            if (var4.func_96524_g(var7))
+            if (var4.removePlayerFromTeams(var7))
             {
                 var5.add(var7);
             }
@@ -577,9 +577,9 @@ public class CommandScoreboard extends CommandBase
         {
             while (p_147199_3_ < p_147199_2_.length)
             {
-                var7 = func_96332_d(p_147199_1_, p_147199_2_[p_147199_3_++]);
+                var7 = getPlayerName(p_147199_1_, p_147199_2_[p_147199_3_++]);
 
-                if (var4.func_96524_g(var7))
+                if (var4.removePlayerFromTeams(var7))
                 {
                     var5.add(var7);
                 }
@@ -592,7 +592,7 @@ public class CommandScoreboard extends CommandBase
 
         if (!var5.isEmpty())
         {
-            func_152373_a(p_147199_1_, this, "commands.scoreboard.teams.leave.success", Integer.valueOf(var5.size()), joinNiceString(var5.toArray(new String[0])));
+            notifyOperators(p_147199_1_, this, "commands.scoreboard.teams.leave.success", Integer.valueOf(var5.size()), joinNiceString(var5.toArray(new String[0])));
         }
 
         if (!var6.isEmpty())
@@ -601,9 +601,9 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_147188_j(ICommandSender p_147188_1_, String[] p_147188_2_, int p_147188_3_)
+    protected void emptyTeam(ICommandSender p_147188_1_, String[] p_147188_2_, int p_147188_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
+        Scoreboard var4 = this.getScoreboard();
         ScorePlayerTeam var5 = this.func_147183_a(p_147188_2_[p_147188_3_++]);
 
         if (var5 != null)
@@ -624,22 +624,22 @@ public class CommandScoreboard extends CommandBase
                     var4.removePlayerFromTeam(var8, var5);
                 }
 
-                func_152373_a(p_147188_1_, this, "commands.scoreboard.teams.empty.success", Integer.valueOf(var6.size()), var5.getRegisteredName());
+                notifyOperators(p_147188_1_, this, "commands.scoreboard.teams.empty.success", Integer.valueOf(var6.size()), var5.getRegisteredName());
             }
         }
     }
 
-    protected void func_147191_h(ICommandSender p_147191_1_, String p_147191_2_)
+    protected void removeObjective(ICommandSender p_147191_1_, String p_147191_2_)
     {
-        Scoreboard var3 = this.func_147192_d();
+        Scoreboard var3 = this.getScoreboard();
         ScoreObjective var4 = this.func_147189_a(p_147191_2_, false);
         var3.func_96519_k(var4);
-        func_152373_a(p_147191_1_, this, "commands.scoreboard.objectives.remove.success", p_147191_2_);
+        notifyOperators(p_147191_1_, this, "commands.scoreboard.objectives.remove.success", p_147191_2_);
     }
 
-    protected void func_147196_d(ICommandSender p_147196_1_)
+    protected void listObjectives(ICommandSender p_147196_1_)
     {
-        Scoreboard var2 = this.func_147192_d();
+        Scoreboard var2 = this.getScoreboard();
         Collection var3 = var2.getScoreObjectives();
 
         if (var3.size() <= 0)
@@ -656,14 +656,14 @@ public class CommandScoreboard extends CommandBase
             while (var5.hasNext())
             {
                 ScoreObjective var6 = (ScoreObjective)var5.next();
-                p_147196_1_.addChatMessage(new ChatComponentTranslation("commands.scoreboard.objectives.list.entry", var6.getName(), var6.getDisplayName(), var6.getCriteria().func_96636_a()));
+                p_147196_1_.addChatMessage(new ChatComponentTranslation("commands.scoreboard.objectives.list.entry", var6.getName(), var6.getDisplayName(), var6.getCriteria().getName()));
             }
         }
     }
 
-    protected void func_147198_k(ICommandSender p_147198_1_, String[] p_147198_2_, int p_147198_3_)
+    protected void setObjectiveDisplay(ICommandSender p_147198_1_, String[] p_147198_2_, int p_147198_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
+        Scoreboard var4 = this.getScoreboard();
         String var5 = p_147198_2_[p_147198_3_++];
         int var6 = Scoreboard.getObjectiveDisplaySlotNumber(var5);
         ScoreObjective var7 = null;
@@ -679,26 +679,26 @@ public class CommandScoreboard extends CommandBase
         }
         else
         {
-            var4.func_96530_a(var6, var7);
+            var4.setObjectiveInDisplaySlot(var6, var7);
 
             if (var7 != null)
             {
-                func_152373_a(p_147198_1_, this, "commands.scoreboard.objectives.setdisplay.successSet", Scoreboard.getObjectiveDisplaySlot(var6), var7.getName());
+                notifyOperators(p_147198_1_, this, "commands.scoreboard.objectives.setdisplay.successSet", Scoreboard.getObjectiveDisplaySlot(var6), var7.getName());
             }
             else
             {
-                func_152373_a(p_147198_1_, this, "commands.scoreboard.objectives.setdisplay.successCleared", Scoreboard.getObjectiveDisplaySlot(var6));
+                notifyOperators(p_147198_1_, this, "commands.scoreboard.objectives.setdisplay.successCleared", Scoreboard.getObjectiveDisplaySlot(var6));
             }
         }
     }
 
-    protected void func_147195_l(ICommandSender p_147195_1_, String[] p_147195_2_, int p_147195_3_)
+    protected void listPlayers(ICommandSender p_147195_1_, String[] p_147195_2_, int p_147195_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
+        Scoreboard var4 = this.getScoreboard();
 
         if (p_147195_2_.length > p_147195_3_)
         {
-            String var5 = func_96332_d(p_147195_1_, p_147195_2_[p_147195_3_++]);
+            String var5 = getPlayerName(p_147195_1_, p_147195_2_[p_147195_3_++]);
             Map var6 = var4.func_96510_d(var5);
 
             if (var6.size() <= 0)
@@ -733,169 +733,169 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_147197_m(ICommandSender p_147197_1_, String[] p_147197_2_, int p_147197_3_)
+    protected void setPlayer(ICommandSender p_147197_1_, String[] p_147197_2_, int p_147197_3_)
     {
         String var4 = p_147197_2_[p_147197_3_ - 1];
-        String var5 = func_96332_d(p_147197_1_, p_147197_2_[p_147197_3_++]);
+        String var5 = getPlayerName(p_147197_1_, p_147197_2_[p_147197_3_++]);
         ScoreObjective var6 = this.func_147189_a(p_147197_2_[p_147197_3_++], true);
         int var7 = var4.equalsIgnoreCase("set") ? parseInt(p_147197_1_, p_147197_2_[p_147197_3_++]) : parseIntWithMin(p_147197_1_, p_147197_2_[p_147197_3_++], 1);
-        Scoreboard var8 = this.func_147192_d();
-        Score var9 = var8.func_96529_a(var5, var6);
+        Scoreboard var8 = this.getScoreboard();
+        Score var9 = var8.getValueFromObjective(var5, var6);
 
         if (var4.equalsIgnoreCase("set"))
         {
-            var9.func_96647_c(var7);
+            var9.setScorePoints(var7);
         }
         else if (var4.equalsIgnoreCase("add"))
         {
-            var9.func_96649_a(var7);
+            var9.increseScore(var7);
         }
         else
         {
-            var9.func_96646_b(var7);
+            var9.decreaseScore(var7);
         }
 
-        func_152373_a(p_147197_1_, this, "commands.scoreboard.players.set.success", var6.getName(), var5, Integer.valueOf(var9.getScorePoints()));
+        notifyOperators(p_147197_1_, this, "commands.scoreboard.players.set.success", var6.getName(), var5, Integer.valueOf(var9.getScorePoints()));
     }
 
-    protected void func_147187_n(ICommandSender p_147187_1_, String[] p_147187_2_, int p_147187_3_)
+    protected void resetPlayers(ICommandSender p_147187_1_, String[] p_147187_2_, int p_147187_3_)
     {
-        Scoreboard var4 = this.func_147192_d();
-        String var5 = func_96332_d(p_147187_1_, p_147187_2_[p_147187_3_++]);
+        Scoreboard var4 = this.getScoreboard();
+        String var5 = getPlayerName(p_147187_1_, p_147187_2_[p_147187_3_++]);
         var4.func_96515_c(var5);
-        func_152373_a(p_147187_1_, this, "commands.scoreboard.players.reset.success", var5);
+        notifyOperators(p_147187_1_, this, "commands.scoreboard.players.reset.success", var5);
     }
 
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        if (p_71516_2_.length == 1)
+        if (args.length == 1)
         {
-            return getListOfStringsMatchingLastWord(p_71516_2_, "objectives", "players", "teams");
+            return getListOfStringsMatchingLastWord(args, "objectives", "players", "teams");
         }
         else
         {
-            if (p_71516_2_[0].equalsIgnoreCase("objectives"))
+            if (args[0].equalsIgnoreCase("objectives"))
             {
-                if (p_71516_2_.length == 2)
+                if (args.length == 2)
                 {
-                    return getListOfStringsMatchingLastWord(p_71516_2_, "list", "add", "remove", "setdisplay");
+                    return getListOfStringsMatchingLastWord(args, "list", "add", "remove", "setdisplay");
                 }
 
-                if (p_71516_2_[1].equalsIgnoreCase("add"))
+                if (args[1].equalsIgnoreCase("add"))
                 {
-                    if (p_71516_2_.length == 4)
+                    if (args.length == 4)
                     {
-                        Set var3 = IScoreObjectiveCriteria.field_96643_a.keySet();
-                        return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, var3);
+                        Set var3 = IScoreObjectiveCriteria.INSTANCES.keySet();
+                        return getListOfStringsFromIterableMatchingLastWord(args, var3);
                     }
                 }
-                else if (p_71516_2_[1].equalsIgnoreCase("remove"))
+                else if (args[1].equalsIgnoreCase("remove"))
                 {
-                    if (p_71516_2_.length == 3)
+                    if (args.length == 3)
                     {
-                        return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, this.func_147184_a(false));
+                        return getListOfStringsFromIterableMatchingLastWord(args, this.func_147184_a(false));
                     }
                 }
-                else if (p_71516_2_[1].equalsIgnoreCase("setdisplay"))
+                else if (args[1].equalsIgnoreCase("setdisplay"))
                 {
-                    if (p_71516_2_.length == 3)
+                    if (args.length == 3)
                     {
-                        return getListOfStringsMatchingLastWord(p_71516_2_, "list", "sidebar", "belowName");
+                        return getListOfStringsMatchingLastWord(args, "list", "sidebar", "belowName");
                     }
 
-                    if (p_71516_2_.length == 4)
+                    if (args.length == 4)
                     {
-                        return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, this.func_147184_a(false));
+                        return getListOfStringsFromIterableMatchingLastWord(args, this.func_147184_a(false));
                     }
                 }
             }
-            else if (p_71516_2_[0].equalsIgnoreCase("players"))
+            else if (args[0].equalsIgnoreCase("players"))
             {
-                if (p_71516_2_.length == 2)
+                if (args.length == 2)
                 {
-                    return getListOfStringsMatchingLastWord(p_71516_2_, "set", "add", "remove", "reset", "list");
+                    return getListOfStringsMatchingLastWord(args, "set", "add", "remove", "reset", "list");
                 }
 
-                if (!p_71516_2_[1].equalsIgnoreCase("set") && !p_71516_2_[1].equalsIgnoreCase("add") && !p_71516_2_[1].equalsIgnoreCase("remove"))
+                if (!args[1].equalsIgnoreCase("set") && !args[1].equalsIgnoreCase("add") && !args[1].equalsIgnoreCase("remove"))
                 {
-                    if ((p_71516_2_[1].equalsIgnoreCase("reset") || p_71516_2_[1].equalsIgnoreCase("list")) && p_71516_2_.length == 3)
+                    if ((args[1].equalsIgnoreCase("reset") || args[1].equalsIgnoreCase("list")) && args.length == 3)
                     {
-                        return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, this.func_147192_d().getObjectiveNames());
+                        return getListOfStringsFromIterableMatchingLastWord(args, this.getScoreboard().getObjectiveNames());
                     }
                 }
                 else
                 {
-                    if (p_71516_2_.length == 3)
+                    if (args.length == 3)
                     {
-                        return getListOfStringsMatchingLastWord(p_71516_2_, MinecraftServer.getServer().getAllUsernames());
+                        return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
                     }
 
-                    if (p_71516_2_.length == 4)
+                    if (args.length == 4)
                     {
-                        return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, this.func_147184_a(true));
+                        return getListOfStringsFromIterableMatchingLastWord(args, this.func_147184_a(true));
                     }
                 }
             }
-            else if (p_71516_2_[0].equalsIgnoreCase("teams"))
+            else if (args[0].equalsIgnoreCase("teams"))
             {
-                if (p_71516_2_.length == 2)
+                if (args.length == 2)
                 {
-                    return getListOfStringsMatchingLastWord(p_71516_2_, "add", "remove", "join", "leave", "empty", "list", "option");
+                    return getListOfStringsMatchingLastWord(args, "add", "remove", "join", "leave", "empty", "list", "option");
                 }
 
-                if (p_71516_2_[1].equalsIgnoreCase("join"))
+                if (args[1].equalsIgnoreCase("join"))
                 {
-                    if (p_71516_2_.length == 3)
+                    if (args.length == 3)
                     {
-                        return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, this.func_147192_d().getTeamNames());
+                        return getListOfStringsFromIterableMatchingLastWord(args, this.getScoreboard().getTeamNames());
                     }
 
-                    if (p_71516_2_.length >= 4)
+                    if (args.length >= 4)
                     {
-                        return getListOfStringsMatchingLastWord(p_71516_2_, MinecraftServer.getServer().getAllUsernames());
+                        return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
                     }
                 }
                 else
                 {
-                    if (p_71516_2_[1].equalsIgnoreCase("leave"))
+                    if (args[1].equalsIgnoreCase("leave"))
                     {
-                        return getListOfStringsMatchingLastWord(p_71516_2_, MinecraftServer.getServer().getAllUsernames());
+                        return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
                     }
 
-                    if (!p_71516_2_[1].equalsIgnoreCase("empty") && !p_71516_2_[1].equalsIgnoreCase("list") && !p_71516_2_[1].equalsIgnoreCase("remove"))
+                    if (!args[1].equalsIgnoreCase("empty") && !args[1].equalsIgnoreCase("list") && !args[1].equalsIgnoreCase("remove"))
                     {
-                        if (p_71516_2_[1].equalsIgnoreCase("option"))
+                        if (args[1].equalsIgnoreCase("option"))
                         {
-                            if (p_71516_2_.length == 3)
+                            if (args.length == 3)
                             {
-                                return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, this.func_147192_d().getTeamNames());
+                                return getListOfStringsFromIterableMatchingLastWord(args, this.getScoreboard().getTeamNames());
                             }
 
-                            if (p_71516_2_.length == 4)
+                            if (args.length == 4)
                             {
-                                return getListOfStringsMatchingLastWord(p_71516_2_, "color", "friendlyfire", "seeFriendlyInvisibles");
+                                return getListOfStringsMatchingLastWord(args, "color", "friendlyfire", "seeFriendlyInvisibles");
                             }
 
-                            if (p_71516_2_.length == 5)
+                            if (args.length == 5)
                             {
-                                if (p_71516_2_[3].equalsIgnoreCase("color"))
+                                if (args[3].equalsIgnoreCase("color"))
                                 {
-                                    return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, EnumChatFormatting.getValidValues(true, false));
+                                    return getListOfStringsFromIterableMatchingLastWord(args, EnumChatFormatting.getValidValues(true, false));
                                 }
 
-                                if (p_71516_2_[3].equalsIgnoreCase("friendlyfire") || p_71516_2_[3].equalsIgnoreCase("seeFriendlyInvisibles"))
+                                if (args[3].equalsIgnoreCase("friendlyfire") || args[3].equalsIgnoreCase("seeFriendlyInvisibles"))
                                 {
-                                    return getListOfStringsMatchingLastWord(p_71516_2_, "true", "false");
+                                    return getListOfStringsMatchingLastWord(args, "true", "false");
                                 }
                             }
                         }
                     }
-                    else if (p_71516_2_.length == 3)
+                    else if (args.length == 3)
                     {
-                        return getListOfStringsFromIterableMatchingLastWord(p_71516_2_, this.func_147192_d().getTeamNames());
+                        return getListOfStringsFromIterableMatchingLastWord(args, this.getScoreboard().getTeamNames());
                     }
                 }
             }
@@ -906,7 +906,7 @@ public class CommandScoreboard extends CommandBase
 
     protected List func_147184_a(boolean p_147184_1_)
     {
-        Collection var2 = this.func_147192_d().getScoreObjectives();
+        Collection var2 = this.getScoreboard().getScoreObjectives();
         ArrayList var3 = new ArrayList();
         Iterator var4 = var2.iterator();
 
@@ -926,8 +926,8 @@ public class CommandScoreboard extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_)
+    public boolean isUsernameIndex(String[] args, int index)
     {
-        return p_82358_1_[0].equalsIgnoreCase("players") ? p_82358_2_ == 2 : (p_82358_1_[0].equalsIgnoreCase("teams") && (p_82358_2_ == 2 || p_82358_2_ == 3));
+        return args[0].equalsIgnoreCase("players") ? index == 2 : (args[0].equalsIgnoreCase("teams") && (index == 2 || index == 3));
     }
 }

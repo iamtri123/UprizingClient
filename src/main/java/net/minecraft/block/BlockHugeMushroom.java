@@ -26,17 +26,17 @@ public class BlockHugeMushroom extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_2_ == 10 && p_149691_1_ > 1 ? this.field_149795_N : (p_149691_2_ >= 1 && p_149691_2_ <= 9 && p_149691_1_ == 1 ? this.field_149794_M[this.field_149792_b] : (p_149691_2_ >= 1 && p_149691_2_ <= 3 && p_149691_1_ == 2 ? this.field_149794_M[this.field_149792_b] : (p_149691_2_ >= 7 && p_149691_2_ <= 9 && p_149691_1_ == 3 ? this.field_149794_M[this.field_149792_b] : ((p_149691_2_ == 1 || p_149691_2_ == 4 || p_149691_2_ == 7) && p_149691_1_ == 4 ? this.field_149794_M[this.field_149792_b] : ((p_149691_2_ == 3 || p_149691_2_ == 6 || p_149691_2_ == 9) && p_149691_1_ == 5 ? this.field_149794_M[this.field_149792_b] : (p_149691_2_ == 14 ? this.field_149794_M[this.field_149792_b] : (p_149691_2_ == 15 ? this.field_149795_N : this.field_149796_O)))))));
+        return meta == 10 && side > 1 ? this.field_149795_N : (meta >= 1 && meta <= 9 && side == 1 ? this.field_149794_M[this.field_149792_b] : (meta >= 1 && meta <= 3 && side == 2 ? this.field_149794_M[this.field_149792_b] : (meta >= 7 && meta <= 9 && side == 3 ? this.field_149794_M[this.field_149792_b] : ((meta == 1 || meta == 4 || meta == 7) && side == 4 ? this.field_149794_M[this.field_149792_b] : ((meta == 3 || meta == 6 || meta == 9) && side == 5 ? this.field_149794_M[this.field_149792_b] : (meta == 14 ? this.field_149794_M[this.field_149792_b] : (meta == 15 ? this.field_149795_N : this.field_149796_O)))))));
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
-        int var2 = p_149745_1_.nextInt(10) - 7;
+        int var2 = random.nextInt(10) - 7;
 
         if (var2 < 0)
         {
@@ -46,7 +46,7 @@ public class BlockHugeMushroom extends Block
         return var2;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemById(Block.getIdFromBlock(Blocks.brown_mushroom) + this.field_149792_b);
     }
@@ -54,21 +54,21 @@ public class BlockHugeMushroom extends Block
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemById(Block.getIdFromBlock(Blocks.brown_mushroom) + this.field_149792_b);
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_149794_M = new IIcon[field_149793_a.length];
 
         for (int var2 = 0; var2 < this.field_149794_M.length; ++var2)
         {
-            this.field_149794_M[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + field_149793_a[var2]);
+            this.field_149794_M[var2] = reg.registerIcon(this.getTextureName() + "_" + field_149793_a[var2]);
         }
 
-        this.field_149796_O = p_149651_1_.registerIcon(this.getTextureName() + "_" + "inside");
-        this.field_149795_N = p_149651_1_.registerIcon(this.getTextureName() + "_" + "skin_stem");
+        this.field_149796_O = reg.registerIcon(this.getTextureName() + "_" + "inside");
+        this.field_149795_N = reg.registerIcon(this.getTextureName() + "_" + "skin_stem");
     }
 }

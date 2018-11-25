@@ -10,40 +10,40 @@ import net.minecraft.network.login.INetHandlerLoginClient;
 
 public class S02PacketLoginSuccess extends Packet
 {
-    private GameProfile field_149602_a;
+    private GameProfile profile;
     private static final String __OBFID = "CL_00001375";
 
     public S02PacketLoginSuccess() {}
 
-    public S02PacketLoginSuccess(GameProfile p_i45267_1_)
+    public S02PacketLoginSuccess(GameProfile profileIn)
     {
-        this.field_149602_a = p_i45267_1_;
+        this.profile = profileIn;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        String var2 = p_148837_1_.readStringFromBuffer(36);
-        String var3 = p_148837_1_.readStringFromBuffer(16);
+        String var2 = data.readStringFromBuffer(36);
+        String var3 = data.readStringFromBuffer(16);
         UUID var4 = UUID.fromString(var2);
-        this.field_149602_a = new GameProfile(var4, var3);
+        this.profile = new GameProfile(var4, var3);
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        UUID var2 = this.field_149602_a.getId();
-        p_148840_1_.writeStringToBuffer(var2 == null ? "" : var2.toString());
-        p_148840_1_.writeStringToBuffer(this.field_149602_a.getName());
+        UUID var2 = this.profile.getId();
+        data.writeStringToBuffer(var2 == null ? "" : var2.toString());
+        data.writeStringToBuffer(this.profile.getName());
     }
 
-    public void processPacket(INetHandlerLoginClient p_148833_1_)
+    public void processPacket(INetHandlerLoginClient handler)
     {
-        p_148833_1_.handleLoginSuccess(this);
+        handler.handleLoginSuccess(this);
     }
 
     /**
@@ -55,8 +55,8 @@ public class S02PacketLoginSuccess extends Packet
         return true;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerLoginClient)p_148833_1_);
+        this.processPacket((INetHandlerLoginClient)handler);
     }
 }

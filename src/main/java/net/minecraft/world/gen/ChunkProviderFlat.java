@@ -138,7 +138,7 @@ public class ChunkProviderFlat implements IChunkProvider
                 {
                     for (int var9 = 0; var9 < 16; ++var9)
                     {
-                        var7.func_150818_a(var8, var4 & 15, var9, var5);
+                        var7.setExtBlockID(var8, var4 & 15, var9, var5);
                         var7.setExtBlockMetadata(var8, var4 & 15, var9, this.cachedBlockMetadata[var4]);
                     }
                 }
@@ -159,7 +159,7 @@ public class ChunkProviderFlat implements IChunkProvider
         while (var12.hasNext())
         {
             MapGenBase var13 = (MapGenBase)var12.next();
-            var13.func_151539_a(this, this.worldObj, p_73154_1_, p_73154_2_, (Block[])null);
+            var13.generate(this, this.worldObj, p_73154_1_, p_73154_2_, (Block[])null);
         }
 
         var3.generateSkylightMap();
@@ -289,7 +289,7 @@ public class ChunkProviderFlat implements IChunkProvider
         return var5.getSpawnableList(p_73155_1_);
     }
 
-    public ChunkPosition func_147416_a(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
+    public ChunkPosition findClosestStructure(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
     {
         if ("Stronghold".equals(p_147416_2_))
         {
@@ -301,7 +301,7 @@ public class ChunkProviderFlat implements IChunkProvider
 
                 if (var7 instanceof MapGenStronghold)
                 {
-                    return var7.func_151545_a(p_147416_1_, p_147416_3_, p_147416_4_, p_147416_5_);
+                    return var7.getNearestInstance(p_147416_1_, p_147416_3_, p_147416_4_, p_147416_5_);
                 }
             }
         }
@@ -321,7 +321,7 @@ public class ChunkProviderFlat implements IChunkProvider
         while (var3.hasNext())
         {
             MapGenStructure var4 = (MapGenStructure)var3.next();
-            var4.func_151539_a(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
+            var4.generate(this, this.worldObj, p_82695_1_, p_82695_2_, (Block[])null);
         }
     }
 }

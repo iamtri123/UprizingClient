@@ -66,7 +66,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
         this.field_146635_w[WorldSettings.GameType.CREATIVE.getID()] = I18n.format("gameMode.creative");
         this.field_146635_w[WorldSettings.GameType.ADVENTURE.getID()] = I18n.format("gameMode.adventure");
         this.field_146638_t = new GuiSelectWorld.List();
-        this.field_146638_t.func_148134_d(4, 5);
+        this.field_146638_t.registerScrollButtons(4, 5);
         this.func_146618_g();
     }
 
@@ -109,11 +109,11 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
         this.field_146631_B.enabled = false;
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.enabled)
+        if (button.enabled)
         {
-            if (p_146284_1_.id == 2)
+            if (button.id == 2)
             {
                 String var2 = this.func_146614_d(this.field_146640_r);
 
@@ -124,23 +124,23 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
                     this.mc.displayGuiScreen(var3);
                 }
             }
-            else if (p_146284_1_.id == 1)
+            else if (button.id == 1)
             {
                 this.func_146615_e(this.field_146640_r);
             }
-            else if (p_146284_1_.id == 3)
+            else if (button.id == 3)
             {
                 this.mc.displayGuiScreen(new GuiCreateWorld(this));
             }
-            else if (p_146284_1_.id == 6)
+            else if (button.id == 6)
             {
                 this.mc.displayGuiScreen(new GuiRenameWorld(this, this.func_146621_a(this.field_146640_r)));
             }
-            else if (p_146284_1_.id == 0)
+            else if (button.id == 0)
             {
                 this.mc.displayGuiScreen(this.field_146632_a);
             }
-            else if (p_146284_1_.id == 7)
+            else if (button.id == 7)
             {
                 GuiCreateWorld var5 = new GuiCreateWorld(this);
                 ISaveHandler var6 = this.mc.getSaveLoader().getSaveLoader(this.func_146621_a(this.field_146640_r), false);
@@ -151,7 +151,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
             }
             else
             {
-                this.field_146638_t.func_148147_a(p_146284_1_);
+                this.field_146638_t.actionPerformed(button);
             }
         }
     }
@@ -184,17 +184,17 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    public void confirmClicked(boolean p_73878_1_, int p_73878_2_)
+    public void confirmClicked(boolean result, int id)
     {
         if (this.field_146643_x)
         {
             this.field_146643_x = false;
 
-            if (p_73878_1_)
+            if (result)
             {
                 ISaveFormat var3 = this.mc.getSaveLoader();
                 var3.flushCache();
-                var3.deleteWorldDirectory(this.func_146621_a(p_73878_2_));
+                var3.deleteWorldDirectory(this.func_146621_a(id));
 
                 try
                 {
@@ -215,7 +215,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.field_146638_t.func_148128_a(mouseX, mouseY, partialTicks);
+        this.field_146638_t.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, this.field_146628_f, this.width / 2, 20, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -264,7 +264,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
             return p_148131_1_ == GuiSelectWorld.this.field_146640_r;
         }
 
-        protected int func_148138_e()
+        protected int getContentHeight()
         {
             return GuiSelectWorld.this.field_146639_s.size() * 36;
         }

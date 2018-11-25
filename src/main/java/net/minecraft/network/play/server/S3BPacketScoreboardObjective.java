@@ -26,26 +26,26 @@ public class S3BPacketScoreboardObjective extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149343_a = p_148837_1_.readStringFromBuffer(16);
-        this.field_149341_b = p_148837_1_.readStringFromBuffer(32);
-        this.field_149342_c = p_148837_1_.readByte();
+        this.field_149343_a = data.readStringFromBuffer(16);
+        this.field_149341_b = data.readStringFromBuffer(32);
+        this.field_149342_c = data.readByte();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(this.field_149343_a);
-        p_148840_1_.writeStringToBuffer(this.field_149341_b);
-        p_148840_1_.writeByte(this.field_149342_c);
+        data.writeStringToBuffer(this.field_149343_a);
+        data.writeStringToBuffer(this.field_149341_b);
+        data.writeByte(this.field_149342_c);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleScoreboardObjective(this);
+        handler.handleScoreboardObjective(this);
     }
 
     public String func_149339_c()
@@ -63,8 +63,8 @@ public class S3BPacketScoreboardObjective extends Packet
         return this.field_149342_c;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

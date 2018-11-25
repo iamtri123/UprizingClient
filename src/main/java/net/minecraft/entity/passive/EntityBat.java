@@ -199,13 +199,13 @@ public class EntityBat extends EntityAmbientCreature
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_) {}
+    protected void fall(float distance) {}
 
     /**
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double p_70064_1_, boolean p_70064_3_) {}
+    protected void updateFallState(double distanceFallenThisTick, boolean isOnGround) {}
 
     public boolean doesEntityNotTriggerPressurePlate()
     {
@@ -215,7 +215,7 @@ public class EntityBat extends EntityAmbientCreature
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -228,26 +228,26 @@ public class EntityBat extends EntityAmbientCreature
                 this.setIsBatHanging(false);
             }
 
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.dataWatcher.updateObject(16, Byte.valueOf(p_70037_1_.getByte("BatFlags")));
+        super.readEntityFromNBT(tagCompund);
+        this.dataWatcher.updateObject(16, Byte.valueOf(tagCompund.getByte("BatFlags")));
     }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setByte("BatFlags", this.dataWatcher.getWatchableObjectByte(16));
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setByte("BatFlags", this.dataWatcher.getWatchableObjectByte(16));
     }
 
     /**

@@ -23,43 +23,43 @@ public class CommandWeather extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.weather.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length >= 1 && p_71515_2_.length <= 2)
+        if (args.length >= 1 && args.length <= 2)
         {
             int var3 = (300 + (new Random()).nextInt(600)) * 20;
 
-            if (p_71515_2_.length >= 2)
+            if (args.length >= 2)
             {
-                var3 = parseIntBounded(p_71515_1_, p_71515_2_[1], 1, 1000000) * 20;
+                var3 = parseIntBounded(sender, args[1], 1, 1000000) * 20;
             }
 
             WorldServer var4 = MinecraftServer.getServer().worldServers[0];
             WorldInfo var5 = var4.getWorldInfo();
 
-            if ("clear".equalsIgnoreCase(p_71515_2_[0]))
+            if ("clear".equalsIgnoreCase(args[0]))
             {
                 var5.setRainTime(0);
                 var5.setThunderTime(0);
                 var5.setRaining(false);
                 var5.setThundering(false);
-                func_152373_a(p_71515_1_, this, "commands.weather.clear");
+                notifyOperators(sender, this, "commands.weather.clear");
             }
-            else if ("rain".equalsIgnoreCase(p_71515_2_[0]))
+            else if ("rain".equalsIgnoreCase(args[0]))
             {
                 var5.setRainTime(var3);
                 var5.setRaining(true);
                 var5.setThundering(false);
-                func_152373_a(p_71515_1_, this, "commands.weather.rain");
+                notifyOperators(sender, this, "commands.weather.rain");
             }
             else
             {
-                if (!"thunder".equalsIgnoreCase(p_71515_2_[0]))
+                if (!"thunder".equalsIgnoreCase(args[0]))
                 {
                     throw new WrongUsageException("commands.weather.usage");
                 }
@@ -68,7 +68,7 @@ public class CommandWeather extends CommandBase
                 var5.setThunderTime(var3);
                 var5.setRaining(true);
                 var5.setThundering(true);
-                func_152373_a(p_71515_1_, this, "commands.weather.thunder");
+                notifyOperators(sender, this, "commands.weather.thunder");
             }
         }
         else
@@ -80,8 +80,8 @@ public class CommandWeather extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, "clear", "rain", "thunder"): null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, "clear", "rain", "thunder"): null;
     }
 }

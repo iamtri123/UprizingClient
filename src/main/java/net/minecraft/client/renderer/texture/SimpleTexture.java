@@ -24,7 +24,7 @@ public class SimpleTexture extends AbstractTexture
 
     public void loadTexture(IResourceManager p_110551_1_) throws IOException
     {
-        this.func_147631_c();
+        this.deleteGlTexture();
         InputStream var2 = null;
 
         try

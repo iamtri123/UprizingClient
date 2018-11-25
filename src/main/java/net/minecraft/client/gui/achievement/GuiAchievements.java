@@ -30,7 +30,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     private static final int field_146559_A = AchievementList.maxDisplayColumn * 24 - 77;
     private static final int field_146560_B = AchievementList.maxDisplayRow * 24 - 77;
     private static final ResourceLocation field_146561_C = new ResourceLocation("textures/gui/achievement/achievement_background.png");
-    protected GuiScreen field_146562_a;
+    protected GuiScreen parentScreen;
     protected int field_146555_f = 256;
     protected int field_146557_g = 202;
     protected int field_146563_h;
@@ -43,14 +43,14 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     protected double field_146565_w;
     protected double field_146573_x;
     private int field_146554_D;
-    private final StatFileWriter field_146556_E;
-    private boolean field_146558_F = true;
+    private final StatFileWriter statFileWriter;
+    private boolean loadingAchievements = true;
     private static final String __OBFID = "CL_00000722";
 
     public GuiAchievements(GuiScreen p_i45026_1_, StatFileWriter p_i45026_2_)
     {
-        this.field_146562_a = p_i45026_1_;
-        this.field_146556_E = p_i45026_2_;
+        this.parentScreen = p_i45026_1_;
+        this.statFileWriter = p_i45026_2_;
         short var3 = 141;
         short var4 = 141;
         this.field_146569_s = this.field_146567_u = this.field_146565_w = (double)(AchievementList.openInventory.displayColumn * 24 - var3 / 2 - 12);
@@ -67,13 +67,13 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 24, this.height / 2 + 74, 80, 20, I18n.format("gui.done")));
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (!this.field_146558_F)
+        if (!this.loadingAchievements)
         {
-            if (p_146284_1_.id == 1)
+            if (button.id == 1)
             {
-                this.mc.displayGuiScreen(this.field_146562_a);
+                this.mc.displayGuiScreen(this.parentScreen);
             }
         }
     }
@@ -81,16 +81,16 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        if (p_73869_2_ == this.mc.gameSettings.keyBindInventory.getKeyCode())
+        if (keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
         {
             this.mc.displayGuiScreen((GuiScreen)null);
             this.mc.setIngameFocus();
         }
         else
         {
-            super.keyTyped(p_73869_1_, p_73869_2_);
+            super.keyTyped(typedChar, keyCode);
         }
     }
 
@@ -99,11 +99,11 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        if (this.field_146558_F)
+        if (this.loadingAchievements)
         {
             this.drawDefaultBackground();
             this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.downloadingStats"), this.width / 2, this.height / 2, 16777215);
-            this.drawCenteredString(this.fontRendererObj, field_146510_b_[(int)(Minecraft.getSystemTime() / 150L % (long)field_146510_b_.length)], this.width / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * 2, 16777215);
+            this.drawCenteredString(this.fontRendererObj, lanSearchStates[(int)(Minecraft.getSystemTime() / 150L % (long)lanSearchStates.length)], this.width / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * 2, 16777215);
         }
         else
         {
@@ -187,20 +187,20 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             }
 
             this.drawDefaultBackground();
-            this.func_146552_b(mouseX, mouseY, partialTicks);
+            this.drawAchievementScreen(mouseX, mouseY, partialTicks);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
-            this.func_146553_h();
+            this.drawTitle();
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_DEPTH_TEST);
         }
     }
 
-    public void func_146509_g()
+    public void doneLoading()
     {
-        if (this.field_146558_F)
+        if (this.loadingAchievements)
         {
-            this.field_146558_F = false;
+            this.loadingAchievements = false;
         }
     }
 
@@ -209,7 +209,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
      */
     public void updateScreen()
     {
-        if (!this.field_146558_F)
+        if (!this.loadingAchievements)
         {
             this.field_146569_s = this.field_146567_u;
             this.field_146568_t = this.field_146566_v;
@@ -229,14 +229,14 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         }
     }
 
-    protected void func_146553_h()
+    protected void drawTitle()
     {
         int var1 = (this.width - this.field_146555_f) / 2;
         int var2 = (this.height - this.field_146557_g) / 2;
         this.fontRendererObj.drawString(I18n.format("gui.achievements"), var1 + 15, var2 + 5, 4210752);
     }
 
-    protected void func_146552_b(int p_146552_1_, int p_146552_2_, float p_146552_3_)
+    protected void drawAchievementScreen(int p_146552_1_, int p_146552_2_, float p_146552_3_)
     {
         int var4 = MathHelper.floor_double(this.field_146569_s + (this.field_146567_u - this.field_146569_s) * (double)p_146552_3_);
         int var5 = MathHelper.floor_double(this.field_146568_t + (this.field_146566_v - this.field_146568_t) * (double)p_146552_3_);
@@ -358,9 +358,9 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 var25 = var35.displayRow * 24 - var5 + 11;
                 var39 = var35.parentAchievement.displayColumn * 24 - var4 + 11;
                 int var27 = var35.parentAchievement.displayRow * 24 - var5 + 11;
-                boolean var28 = this.field_146556_E.hasAchievementUnlocked(var35);
-                boolean var29 = this.field_146556_E.canUnlockAchievement(var35);
-                var30 = this.field_146556_E.func_150874_c(var35);
+                boolean var28 = this.statFileWriter.hasAchievementUnlocked(var35);
+                boolean var29 = this.statFileWriter.canUnlockAchievement(var35);
+                var30 = this.statFileWriter.func_150874_c(var35);
 
                 if (var30 <= 4)
                 {
@@ -417,15 +417,15 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
             if (var43 >= -24 && var44 >= -24 && (float)var43 <= 224.0F * this.field_146570_r && (float)var44 <= 155.0F * this.field_146570_r)
             {
-                var30 = this.field_146556_E.func_150874_c(var41);
+                var30 = this.statFileWriter.func_150874_c(var41);
                 float var45;
 
-                if (this.field_146556_E.hasAchievementUnlocked(var41))
+                if (this.statFileWriter.hasAchievementUnlocked(var41))
                 {
                     var45 = 0.75F;
                     GL11.glColor4f(var45, var45, var45, 1.0F);
                 }
-                else if (this.field_146556_E.canUnlockAchievement(var41))
+                else if (this.statFileWriter.canUnlockAchievement(var41))
                 {
                     var45 = 1.0F;
                     GL11.glColor4f(var45, var45, var45, 1.0F);
@@ -462,7 +462,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                     this.drawTexturedModalRect(var43 - 2, var44 - 2, 0, 202, 26, 26);
                 }
 
-                if (!this.field_146556_E.canUnlockAchievement(var41))
+                if (!this.statFileWriter.canUnlockAchievement(var41))
                 {
                     var45 = 0.1F;
                     GL11.glColor4f(var45, var45, var45, 1.0F);
@@ -475,7 +475,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GL11.glDisable(GL11.GL_LIGHTING);
 
-                if (!this.field_146556_E.canUnlockAchievement(var41))
+                if (!this.statFileWriter.canUnlockAchievement(var41))
                 {
                     var36.renderWithColor = true;
                 }
@@ -503,13 +503,13 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
         if (var34 != null)
         {
-            String var40 = var34.func_150951_e().getUnformattedText();
+            String var40 = var34.getStatName().getUnformattedText();
             String var42 = var34.getDescription();
             var43 = p_146552_1_ + 12;
             var44 = p_146552_2_ - 4;
-            var30 = this.field_146556_E.func_150874_c(var34);
+            var30 = this.statFileWriter.func_150874_c(var34);
 
-            if (!this.field_146556_E.canUnlockAchievement(var34))
+            if (!this.statFileWriter.canUnlockAchievement(var34))
             {
                 String var32;
                 int var33;
@@ -518,7 +518,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 {
                     var40 = I18n.format("achievement.unknown");
                     var31 = Math.max(this.fontRendererObj.getStringWidth(var40), 120);
-                    var32 = (new ChatComponentTranslation("achievement.requires", var34.parentAchievement.func_150951_e())).getUnformattedText();
+                    var32 = (new ChatComponentTranslation("achievement.requires", var34.parentAchievement.getStatName())).getUnformattedText();
                     var33 = this.fontRendererObj.splitStringWidth(var32, var31);
                     this.drawGradientRect(var43 - 3, var44 - 3, var43 + var31 + 3, var44 + var33 + 12 + 3, -1073741824, -1073741824);
                     this.fontRendererObj.drawSplitString(var32, var43, var44 + 12, var31, -9416624);
@@ -526,7 +526,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 else if (var30 < 3)
                 {
                     var31 = Math.max(this.fontRendererObj.getStringWidth(var40), 120);
-                    var32 = (new ChatComponentTranslation("achievement.requires", var34.parentAchievement.func_150951_e())).getUnformattedText();
+                    var32 = (new ChatComponentTranslation("achievement.requires", var34.parentAchievement.getStatName())).getUnformattedText();
                     var33 = this.fontRendererObj.splitStringWidth(var32, var31);
                     this.drawGradientRect(var43 - 3, var44 - 3, var43 + var31 + 3, var44 + var33 + 12 + 3, -1073741824, -1073741824);
                     this.fontRendererObj.drawSplitString(var32, var43, var44 + 12, var31, -9416624);
@@ -541,7 +541,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 var31 = Math.max(this.fontRendererObj.getStringWidth(var40), 120);
                 int var46 = this.fontRendererObj.splitStringWidth(var42, var31);
 
-                if (this.field_146556_E.hasAchievementUnlocked(var34))
+                if (this.statFileWriter.hasAchievementUnlocked(var34))
                 {
                     var46 += 12;
                 }
@@ -549,7 +549,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 this.drawGradientRect(var43 - 3, var44 - 3, var43 + var31 + 3, var44 + var46 + 3 + 12, -1073741824, -1073741824);
                 this.fontRendererObj.drawSplitString(var42, var43, var44 + 12, var31, -6250336);
 
-                if (this.field_146556_E.hasAchievementUnlocked(var34))
+                if (this.statFileWriter.hasAchievementUnlocked(var34))
                 {
                     this.fontRendererObj.drawStringWithShadow(I18n.format("achievement.taken"), var43, var44 + var46 + 4, -7302913);
                 }
@@ -557,7 +557,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
             if (var40 != null)
             {
-                this.fontRendererObj.drawStringWithShadow(var40, var43, var44, this.field_146556_E.canUnlockAchievement(var34) ? (var34.getSpecial() ? -128 : -1) : (var34.getSpecial() ? -8355776 : -8355712));
+                this.fontRendererObj.drawStringWithShadow(var40, var43, var44, this.statFileWriter.canUnlockAchievement(var34) ? (var34.getSpecial() ? -128 : -1) : (var34.getSpecial() ? -8355776 : -8355712));
             }
         }
 
@@ -571,6 +571,6 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
      */
     public boolean doesGuiPauseGame()
     {
-        return !this.field_146558_F;
+        return !this.loadingAchievements;
     }
 }

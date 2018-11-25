@@ -39,7 +39,7 @@ public class WorldGenMegaJungle extends WorldGenHugeTrees
                 {
                     var9 = p_76484_3_ + (int)(1.5F + MathHelper.cos(var8) * (float)var11);
                     var10 = p_76484_5_ + (int)(1.5F + MathHelper.sin(var8) * (float)var11);
-                    this.func_150516_a(p_76484_1_, var9, var7 - 3 + var11 / 2, var10, Blocks.log, this.woodMetadata);
+                    this.setBlockAndNotifyAdequately(p_76484_1_, var9, var7 - 3 + var11 / 2, var10, Blocks.log, this.woodMetadata);
                 }
 
                 var11 = 1 + p_76484_2_.nextInt(2);
@@ -58,18 +58,18 @@ public class WorldGenMegaJungle extends WorldGenHugeTrees
 
                 if (var16.getMaterial() == Material.air || var16.getMaterial() == Material.leaves)
                 {
-                    this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_, Blocks.log, this.woodMetadata);
+                    this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_, Blocks.log, this.woodMetadata);
 
                     if (var15 > 0)
                     {
                         if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_ - 1, p_76484_4_ + var15, p_76484_5_))
                         {
-                            this.func_150516_a(p_76484_1_, p_76484_3_ - 1, p_76484_4_ + var15, p_76484_5_, Blocks.vine, 8);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ - 1, p_76484_4_ + var15, p_76484_5_, Blocks.vine, 8);
                         }
 
                         if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_, p_76484_4_ + var15, p_76484_5_ - 1))
                         {
-                            this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_ - 1, Blocks.vine, 1);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_ - 1, Blocks.vine, 1);
                         }
                     }
                 }
@@ -80,18 +80,18 @@ public class WorldGenMegaJungle extends WorldGenHugeTrees
 
                     if (var16.getMaterial() == Material.air || var16.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_, Blocks.log, this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_, Blocks.log, this.woodMetadata);
 
                         if (var15 > 0)
                         {
                             if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_ + 2, p_76484_4_ + var15, p_76484_5_))
                             {
-                                this.func_150516_a(p_76484_1_, p_76484_3_ + 2, p_76484_4_ + var15, p_76484_5_, Blocks.vine, 2);
+                                this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 2, p_76484_4_ + var15, p_76484_5_, Blocks.vine, 2);
                             }
 
                             if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ - 1))
                             {
-                                this.func_150516_a(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ - 1, Blocks.vine, 1);
+                                this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ - 1, Blocks.vine, 1);
                             }
                         }
                     }
@@ -100,18 +100,18 @@ public class WorldGenMegaJungle extends WorldGenHugeTrees
 
                     if (var16.getMaterial() == Material.air || var16.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
 
                         if (var15 > 0)
                         {
                             if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_ + 2, p_76484_4_ + var15, p_76484_5_ + 1))
                             {
-                                this.func_150516_a(p_76484_1_, p_76484_3_ + 2, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.vine, 2);
+                                this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 2, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.vine, 2);
                             }
 
                             if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ + 2))
                             {
-                                this.func_150516_a(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ + 2, Blocks.vine, 4);
+                                this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ + 1, p_76484_4_ + var15, p_76484_5_ + 2, Blocks.vine, 4);
                             }
                         }
                     }
@@ -120,18 +120,18 @@ public class WorldGenMegaJungle extends WorldGenHugeTrees
 
                     if (var16.getMaterial() == Material.air || var16.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
+                        this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.log, this.woodMetadata);
 
                         if (var15 > 0)
                         {
                             if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_ - 1, p_76484_4_ + var15, p_76484_5_ + 1))
                             {
-                                this.func_150516_a(p_76484_1_, p_76484_3_ - 1, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.vine, 8);
+                                this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_ - 1, p_76484_4_ + var15, p_76484_5_ + 1, Blocks.vine, 8);
                             }
 
                             if (p_76484_2_.nextInt(3) > 0 && p_76484_1_.isAirBlock(p_76484_3_, p_76484_4_ + var15, p_76484_5_ + 2))
                             {
-                                this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_ + 2, Blocks.vine, 4);
+                                this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var15, p_76484_5_ + 2, Blocks.vine, 4);
                             }
                         }
                     }

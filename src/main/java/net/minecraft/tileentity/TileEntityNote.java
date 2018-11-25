@@ -7,39 +7,39 @@ import net.minecraft.world.World;
 
 public class TileEntityNote extends TileEntity
 {
-    public byte field_145879_a;
-    public boolean field_145880_i;
+    public byte note;
+    public boolean previousRedstoneState;
     private static final String __OBFID = "CL_00000362";
 
-    public void writeToNBT(NBTTagCompound p_145841_1_)
+    public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(p_145841_1_);
-        p_145841_1_.setByte("note", this.field_145879_a);
+        super.writeToNBT(compound);
+        compound.setByte("note", this.note);
     }
 
-    public void readFromNBT(NBTTagCompound p_145839_1_)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(p_145839_1_);
-        this.field_145879_a = p_145839_1_.getByte("note");
+        super.readFromNBT(compound);
+        this.note = compound.getByte("note");
 
-        if (this.field_145879_a < 0)
+        if (this.note < 0)
         {
-            this.field_145879_a = 0;
+            this.note = 0;
         }
 
-        if (this.field_145879_a > 24)
+        if (this.note > 24)
         {
-            this.field_145879_a = 24;
+            this.note = 24;
         }
     }
 
-    public void func_145877_a()
+    public void changePitch()
     {
-        this.field_145879_a = (byte)((this.field_145879_a + 1) % 25);
+        this.note = (byte)((this.note + 1) % 25);
         this.onInventoryChanged();
     }
 
-    public void func_145878_a(World p_145878_1_, int p_145878_2_, int p_145878_3_, int p_145878_4_)
+    public void triggerNote(World p_145878_1_, int p_145878_2_, int p_145878_3_, int p_145878_4_)
     {
         if (p_145878_1_.getBlock(p_145878_2_, p_145878_3_ + 1, p_145878_4_).getMaterial() == Material.air)
         {
@@ -66,7 +66,7 @@ public class TileEntityNote extends TileEntity
                 var6 = 4;
             }
 
-            p_145878_1_.func_147452_c(p_145878_2_, p_145878_3_, p_145878_4_, Blocks.noteblock, var6, this.field_145879_a);
+            p_145878_1_.addBlockEvent(p_145878_2_, p_145878_3_, p_145878_4_, Blocks.noteblock, var6, this.note);
         }
     }
 }

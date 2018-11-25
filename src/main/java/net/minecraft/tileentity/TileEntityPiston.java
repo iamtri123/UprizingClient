@@ -12,50 +12,50 @@ import net.minecraft.util.Facing;
 
 public class TileEntityPiston extends TileEntity
 {
-    private Block field_145869_a;
-    private int field_145876_i;
-    private int field_145874_j;
-    private boolean field_145875_k;
-    private boolean field_145872_l;
-    private float field_145873_m;
-    private float field_145870_n;
-    private final List field_145871_o = new ArrayList();
+    private Block storedBlock;
+    private int storedMetadata;
+    private int storedOrientation;
+    private boolean extending;
+    private boolean shouldHeadBeRendered;
+    private float progress;
+    private float lastProgress;
+    private final List pushedObjects = new ArrayList();
     private static final String __OBFID = "CL_00000369";
 
     public TileEntityPiston() {}
 
     public TileEntityPiston(Block p_i45444_1_, int p_i45444_2_, int p_i45444_3_, boolean p_i45444_4_, boolean p_i45444_5_)
     {
-        this.field_145869_a = p_i45444_1_;
-        this.field_145876_i = p_i45444_2_;
-        this.field_145874_j = p_i45444_3_;
-        this.field_145875_k = p_i45444_4_;
-        this.field_145872_l = p_i45444_5_;
+        this.storedBlock = p_i45444_1_;
+        this.storedMetadata = p_i45444_2_;
+        this.storedOrientation = p_i45444_3_;
+        this.extending = p_i45444_4_;
+        this.shouldHeadBeRendered = p_i45444_5_;
     }
 
-    public Block func_145861_a()
+    public Block getStoredBlockID()
     {
-        return this.field_145869_a;
+        return this.storedBlock;
     }
 
     public int getBlockMetadata()
     {
-        return this.field_145876_i;
+        return this.storedMetadata;
     }
 
-    public boolean func_145868_b()
+    public boolean isExtending()
     {
-        return this.field_145875_k;
+        return this.extending;
     }
 
-    public int func_145864_c()
+    public int getPistonOrientation()
     {
-        return this.field_145874_j;
+        return this.storedOrientation;
     }
 
-    public boolean func_145867_d()
+    public boolean shouldPistonHeadBeRendered()
     {
-        return this.field_145872_l;
+        return this.shouldHeadBeRendered;
     }
 
     public float func_145860_a(float p_145860_1_)
@@ -65,27 +65,27 @@ public class TileEntityPiston extends TileEntity
             p_145860_1_ = 1.0F;
         }
 
-        return this.field_145870_n + (this.field_145873_m - this.field_145870_n) * p_145860_1_;
+        return this.lastProgress + (this.progress - this.lastProgress) * p_145860_1_;
     }
 
     public float func_145865_b(float p_145865_1_)
     {
-        return this.field_145875_k ? (this.func_145860_a(p_145865_1_) - 1.0F) * (float)Facing.offsetsXForSide[this.field_145874_j] : (1.0F - this.func_145860_a(p_145865_1_)) * (float)Facing.offsetsXForSide[this.field_145874_j];
+        return this.extending ? (this.func_145860_a(p_145865_1_) - 1.0F) * (float)Facing.offsetsXForSide[this.storedOrientation] : (1.0F - this.func_145860_a(p_145865_1_)) * (float)Facing.offsetsXForSide[this.storedOrientation];
     }
 
     public float func_145862_c(float p_145862_1_)
     {
-        return this.field_145875_k ? (this.func_145860_a(p_145862_1_) - 1.0F) * (float)Facing.offsetsYForSide[this.field_145874_j] : (1.0F - this.func_145860_a(p_145862_1_)) * (float)Facing.offsetsYForSide[this.field_145874_j];
+        return this.extending ? (this.func_145860_a(p_145862_1_) - 1.0F) * (float)Facing.offsetsYForSide[this.storedOrientation] : (1.0F - this.func_145860_a(p_145862_1_)) * (float)Facing.offsetsYForSide[this.storedOrientation];
     }
 
     public float func_145859_d(float p_145859_1_)
     {
-        return this.field_145875_k ? (this.func_145860_a(p_145859_1_) - 1.0F) * (float)Facing.offsetsZForSide[this.field_145874_j] : (1.0F - this.func_145860_a(p_145859_1_)) * (float)Facing.offsetsZForSide[this.field_145874_j];
+        return this.extending ? (this.func_145860_a(p_145859_1_) - 1.0F) * (float)Facing.offsetsZForSide[this.storedOrientation] : (1.0F - this.func_145860_a(p_145859_1_)) * (float)Facing.offsetsZForSide[this.storedOrientation];
     }
 
     private void func_145863_a(float p_145863_1_, float p_145863_2_)
     {
-        if (this.field_145875_k)
+        if (this.extending)
         {
             p_145863_1_ = 1.0F - p_145863_1_;
         }
@@ -94,7 +94,7 @@ public class TileEntityPiston extends TileEntity
             --p_145863_1_;
         }
 
-        AxisAlignedBB var3 = Blocks.piston_extension.func_149964_a(this.worldObj, this.field_145851_c, this.field_145848_d, this.field_145849_e, this.field_145869_a, p_145863_1_, this.field_145874_j);
+        AxisAlignedBB var3 = Blocks.piston_extension.func_149964_a(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.storedBlock, p_145863_1_, this.storedOrientation);
 
         if (var3 != null)
         {
@@ -102,85 +102,85 @@ public class TileEntityPiston extends TileEntity
 
             if (!var4.isEmpty())
             {
-                this.field_145871_o.addAll(var4);
-                Iterator var5 = this.field_145871_o.iterator();
+                this.pushedObjects.addAll(var4);
+                Iterator var5 = this.pushedObjects.iterator();
 
                 while (var5.hasNext())
                 {
                     Entity var6 = (Entity)var5.next();
-                    var6.moveEntity((double)(p_145863_2_ * (float)Facing.offsetsXForSide[this.field_145874_j]), (double)(p_145863_2_ * (float)Facing.offsetsYForSide[this.field_145874_j]), (double)(p_145863_2_ * (float)Facing.offsetsZForSide[this.field_145874_j]));
+                    var6.moveEntity((double)(p_145863_2_ * (float)Facing.offsetsXForSide[this.storedOrientation]), (double)(p_145863_2_ * (float)Facing.offsetsYForSide[this.storedOrientation]), (double)(p_145863_2_ * (float)Facing.offsetsZForSide[this.storedOrientation]));
                 }
 
-                this.field_145871_o.clear();
+                this.pushedObjects.clear();
             }
         }
     }
 
-    public void func_145866_f()
+    public void clearPistonTileEntity()
     {
-        if (this.field_145870_n < 1.0F && this.worldObj != null)
+        if (this.lastProgress < 1.0F && this.worldObj != null)
         {
-            this.field_145870_n = this.field_145873_m = 1.0F;
-            this.worldObj.removeTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e);
+            this.lastProgress = this.progress = 1.0F;
+            this.worldObj.removeTileEntity(this.xCoord, this.yCoord, this.zCoord);
             this.invalidate();
 
-            if (this.worldObj.getBlock(this.field_145851_c, this.field_145848_d, this.field_145849_e) == Blocks.piston_extension)
+            if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) == Blocks.piston_extension)
             {
-                this.worldObj.setBlock(this.field_145851_c, this.field_145848_d, this.field_145849_e, this.field_145869_a, this.field_145876_i, 3);
-                this.worldObj.func_147460_e(this.field_145851_c, this.field_145848_d, this.field_145849_e, this.field_145869_a);
+                this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedMetadata, 3);
+                this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
             }
         }
     }
 
     public void updateEntity()
     {
-        this.field_145870_n = this.field_145873_m;
+        this.lastProgress = this.progress;
 
-        if (this.field_145870_n >= 1.0F)
+        if (this.lastProgress >= 1.0F)
         {
             this.func_145863_a(1.0F, 0.25F);
-            this.worldObj.removeTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e);
+            this.worldObj.removeTileEntity(this.xCoord, this.yCoord, this.zCoord);
             this.invalidate();
 
-            if (this.worldObj.getBlock(this.field_145851_c, this.field_145848_d, this.field_145849_e) == Blocks.piston_extension)
+            if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) == Blocks.piston_extension)
             {
-                this.worldObj.setBlock(this.field_145851_c, this.field_145848_d, this.field_145849_e, this.field_145869_a, this.field_145876_i, 3);
-                this.worldObj.func_147460_e(this.field_145851_c, this.field_145848_d, this.field_145849_e, this.field_145869_a);
+                this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedMetadata, 3);
+                this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
             }
         }
         else
         {
-            this.field_145873_m += 0.5F;
+            this.progress += 0.5F;
 
-            if (this.field_145873_m >= 1.0F)
+            if (this.progress >= 1.0F)
             {
-                this.field_145873_m = 1.0F;
+                this.progress = 1.0F;
             }
 
-            if (this.field_145875_k)
+            if (this.extending)
             {
-                this.func_145863_a(this.field_145873_m, this.field_145873_m - this.field_145870_n + 0.0625F);
+                this.func_145863_a(this.progress, this.progress - this.lastProgress + 0.0625F);
             }
         }
     }
 
-    public void readFromNBT(NBTTagCompound p_145839_1_)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(p_145839_1_);
-        this.field_145869_a = Block.getBlockById(p_145839_1_.getInteger("blockId"));
-        this.field_145876_i = p_145839_1_.getInteger("blockData");
-        this.field_145874_j = p_145839_1_.getInteger("facing");
-        this.field_145870_n = this.field_145873_m = p_145839_1_.getFloat("progress");
-        this.field_145875_k = p_145839_1_.getBoolean("extending");
+        super.readFromNBT(compound);
+        this.storedBlock = Block.getBlockById(compound.getInteger("blockId"));
+        this.storedMetadata = compound.getInteger("blockData");
+        this.storedOrientation = compound.getInteger("facing");
+        this.lastProgress = this.progress = compound.getFloat("progress");
+        this.extending = compound.getBoolean("extending");
     }
 
-    public void writeToNBT(NBTTagCompound p_145841_1_)
+    public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(p_145841_1_);
-        p_145841_1_.setInteger("blockId", Block.getIdFromBlock(this.field_145869_a));
-        p_145841_1_.setInteger("blockData", this.field_145876_i);
-        p_145841_1_.setInteger("facing", this.field_145874_j);
-        p_145841_1_.setFloat("progress", this.field_145870_n);
-        p_145841_1_.setBoolean("extending", this.field_145875_k);
+        super.writeToNBT(compound);
+        compound.setInteger("blockId", Block.getIdFromBlock(this.storedBlock));
+        compound.setInteger("blockData", this.storedMetadata);
+        compound.setInteger("facing", this.storedOrientation);
+        compound.setFloat("progress", this.lastProgress);
+        compound.setBoolean("extending", this.extending);
     }
 }

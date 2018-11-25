@@ -8,35 +8,35 @@ import net.minecraft.network.status.INetHandlerStatusServer;
 
 public class C01PacketPing extends Packet
 {
-    private long field_149290_a;
+    private long clientTime;
     private static final String __OBFID = "CL_00001392";
 
     public C01PacketPing() {}
 
     public C01PacketPing(long p_i45276_1_)
     {
-        this.field_149290_a = p_i45276_1_;
+        this.clientTime = p_i45276_1_;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149290_a = p_148837_1_.readLong();
+        this.clientTime = data.readLong();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeLong(this.field_149290_a);
+        data.writeLong(this.clientTime);
     }
 
-    public void processPacket(INetHandlerStatusServer p_148833_1_)
+    public void processPacket(INetHandlerStatusServer handler)
     {
-        p_148833_1_.processPing(this);
+        handler.processPing(this);
     }
 
     /**
@@ -48,13 +48,13 @@ public class C01PacketPing extends Packet
         return true;
     }
 
-    public long func_149289_c()
+    public long getClientTime()
     {
-        return this.field_149290_a;
+        return this.clientTime;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerStatusServer)p_148833_1_);
+        this.processPacket((INetHandlerStatusServer)handler);
     }
 }

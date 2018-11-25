@@ -107,7 +107,7 @@ public class ItemBow extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack p_77661_1_)
+    public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.bow;
     }
@@ -115,14 +115,14 @@ public class ItemBow extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        if (p_77659_3_.capabilities.isCreativeMode || p_77659_3_.inventory.hasItem(Items.arrow))
+        if (player.capabilities.isCreativeMode || player.inventory.hasItem(Items.arrow))
         {
-            p_77659_3_.setItemInUse(p_77659_1_, this.getMaxItemUseDuration(p_77659_1_));
+            player.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
         }
 
-        return p_77659_1_;
+        return itemStackIn;
     }
 
     /**
@@ -133,14 +133,14 @@ public class ItemBow extends Item
         return 1;
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        this.itemIcon = p_94581_1_.registerIcon(this.getIconString() + "_standby");
+        this.itemIcon = register.registerIcon(this.getIconString() + "_standby");
         this.iconArray = new IIcon[bowPullIconNameArray.length];
 
         for (int var2 = 0; var2 < this.iconArray.length; ++var2)
         {
-            this.iconArray[var2] = p_94581_1_.registerIcon(this.getIconString() + "_" + bowPullIconNameArray[var2]);
+            this.iconArray[var2] = register.registerIcon(this.getIconString() + "_" + bowPullIconNameArray[var2]);
         }
     }
 

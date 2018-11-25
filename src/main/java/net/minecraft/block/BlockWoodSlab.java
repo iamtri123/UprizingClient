@@ -24,12 +24,12 @@ public class BlockWoodSlab extends BlockSlab
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return Blocks.planks.getIcon(p_149691_1_, p_149691_2_ & 7);
+        return Blocks.planks.getIcon(side, meta & 7);
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemFromBlock(Blocks.wooden_slab);
     }
@@ -38,12 +38,12 @@ public class BlockWoodSlab extends BlockSlab
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int p_149644_1_)
+    protected ItemStack createStackedBlock(int meta)
     {
-        return new ItemStack(Item.getItemFromBlock(Blocks.wooden_slab), 2, p_149644_1_ & 7);
+        return new ItemStack(Item.getItemFromBlock(Blocks.wooden_slab), 2, meta & 7);
     }
 
-    public String func_150002_b(int p_150002_1_)
+    public String getFullSlabName(int p_150002_1_)
     {
         if (p_150002_1_ < 0 || p_150002_1_ >= field_150005_b.length)
         {
@@ -53,16 +53,16 @@ public class BlockWoodSlab extends BlockSlab
         return super.getUnlocalizedName() + "." + field_150005_b[p_150002_1_];
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
-        if (p_149666_1_ != Item.getItemFromBlock(Blocks.double_wooden_slab))
+        if (itemIn != Item.getItemFromBlock(Blocks.double_wooden_slab))
         {
             for (int var4 = 0; var4 < field_150005_b.length; ++var4)
             {
-                p_149666_3_.add(new ItemStack(p_149666_1_, 1, var4));
+                list.add(new ItemStack(itemIn, 1, var4));
             }
         }
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_) {}
+    public void registerBlockIcons(IIconRegister reg) {}
 }

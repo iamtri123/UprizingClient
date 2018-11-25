@@ -57,7 +57,7 @@ public class ExtendedBlockStorage
         }
     }
 
-    public Block func_150819_a(int p_150819_1_, int p_150819_2_, int p_150819_3_)
+    public Block getBlockByExtId(int p_150819_1_, int p_150819_2_, int p_150819_3_)
     {
         int var4 = this.blockLSBArray[p_150819_2_ << 8 | p_150819_3_ << 4 | p_150819_1_] & 255;
 
@@ -69,7 +69,7 @@ public class ExtendedBlockStorage
         return Block.getBlockById(var4);
     }
 
-    public void func_150818_a(int p_150818_1_, int p_150818_2_, int p_150818_3_, Block p_150818_4_)
+    public void setExtBlockID(int p_150818_1_, int p_150818_2_, int p_150818_3_, Block p_150818_4_)
     {
         int var5 = this.blockLSBArray[p_150818_2_ << 8 | p_150818_3_ << 4 | p_150818_1_] & 255;
 
@@ -202,7 +202,7 @@ public class ExtendedBlockStorage
             {
                 for (int var3 = 0; var3 < 16; ++var3)
                 {
-                    Block var4 = this.func_150819_a(var1, var2, var3);
+                    Block var4 = this.getBlockByExtId(var1, var2, var3);
 
                     if (var4 != Blocks.air)
                     {

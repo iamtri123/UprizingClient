@@ -18,26 +18,26 @@ public class IntegratedPlayerList extends ServerConfigurationManager
     public IntegratedPlayerList(IntegratedServer p_i1314_1_)
     {
         super(p_i1314_1_);
-        this.func_152611_a(10);
+        this.setViewDistance(10);
     }
 
     /**
      * also stores the NBTTags if this is an intergratedPlayerList
      */
-    protected void writePlayerData(EntityPlayerMP p_72391_1_)
+    protected void writePlayerData(EntityPlayerMP player)
     {
-        if (p_72391_1_.getCommandSenderName().equals(this.getServerInstance().getServerOwner()))
+        if (player.getCommandSenderName().equals(this.getServerInstance().getServerOwner()))
         {
             this.hostPlayerData = new NBTTagCompound();
-            p_72391_1_.writeToNBT(this.hostPlayerData);
+            player.writeToNBT(this.hostPlayerData);
         }
 
-        super.writePlayerData(p_72391_1_);
+        super.writePlayerData(player);
     }
 
-    public String func_148542_a(SocketAddress p_148542_1_, GameProfile p_148542_2_)
+    public String allowUserToConnect(SocketAddress address, GameProfile profile)
     {
-        return p_148542_2_.getName().equalsIgnoreCase(this.getServerInstance().getServerOwner()) && this.func_152612_a(p_148542_2_.getName()) != null ? "That name is already taken." : super.func_148542_a(p_148542_1_, p_148542_2_);
+        return profile.getName().equalsIgnoreCase(this.getServerInstance().getServerOwner()) && this.getPlayerByUsername(profile.getName()) != null ? "That name is already taken." : super.allowUserToConnect(address, profile);
     }
 
     public IntegratedServer getServerInstance()

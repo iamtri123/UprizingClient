@@ -50,12 +50,12 @@ public class ScoreboardSaveData extends WorldSavedData
             this.func_96501_b(p_76184_1_.getTagList("Objectives", 10));
             this.func_96500_c(p_76184_1_.getTagList("PlayerScores", 10));
 
-            if (p_76184_1_.func_150297_b("DisplaySlots", 10))
+            if (p_76184_1_.hasKey("DisplaySlots", 10))
             {
                 this.func_96504_c(p_76184_1_.getCompoundTag("DisplaySlots"));
             }
 
-            if (p_76184_1_.func_150297_b("Teams", 9))
+            if (p_76184_1_.hasKey("Teams", 9))
             {
                 this.func_96498_a(p_76184_1_.getTagList("Teams", 10));
             }
@@ -72,12 +72,12 @@ public class ScoreboardSaveData extends WorldSavedData
             var4.setNamePrefix(var3.getString("Prefix"));
             var4.setNameSuffix(var3.getString("Suffix"));
 
-            if (var3.func_150297_b("AllowFriendlyFire", 99))
+            if (var3.hasKey("AllowFriendlyFire", 99))
             {
                 var4.setAllowFriendlyFire(var3.getBoolean("AllowFriendlyFire"));
             }
 
-            if (var3.func_150297_b("SeeFriendlyInvisibles", 99))
+            if (var3.hasKey("SeeFriendlyInvisibles", 99))
             {
                 var4.setSeeFriendlyInvisiblesEnabled(var3.getBoolean("SeeFriendlyInvisibles"));
             }
@@ -98,11 +98,11 @@ public class ScoreboardSaveData extends WorldSavedData
     {
         for (int var2 = 0; var2 < 3; ++var2)
         {
-            if (p_96504_1_.func_150297_b("slot_" + var2, 8))
+            if (p_96504_1_.hasKey("slot_" + var2, 8))
             {
                 String var3 = p_96504_1_.getString("slot_" + var2);
                 ScoreObjective var4 = this.theScoreboard.getObjective(var3);
-                this.theScoreboard.func_96530_a(var2, var4);
+                this.theScoreboard.setObjectiveInDisplaySlot(var2, var4);
             }
         }
     }
@@ -112,7 +112,7 @@ public class ScoreboardSaveData extends WorldSavedData
         for (int var2 = 0; var2 < p_96501_1_.tagCount(); ++var2)
         {
             NBTTagCompound var3 = p_96501_1_.getCompoundTagAt(var2);
-            IScoreObjectiveCriteria var4 = (IScoreObjectiveCriteria)IScoreObjectiveCriteria.field_96643_a.get(var3.getString("CriteriaName"));
+            IScoreObjectiveCriteria var4 = (IScoreObjectiveCriteria)IScoreObjectiveCriteria.INSTANCES.get(var3.getString("CriteriaName"));
             ScoreObjective var5 = this.theScoreboard.addScoreObjective(var3.getString("Name"), var4);
             var5.setDisplayName(var3.getString("DisplayName"));
         }
@@ -124,8 +124,8 @@ public class ScoreboardSaveData extends WorldSavedData
         {
             NBTTagCompound var3 = p_96500_1_.getCompoundTagAt(var2);
             ScoreObjective var4 = this.theScoreboard.getObjective(var3.getString("Objective"));
-            Score var5 = this.theScoreboard.func_96529_a(var3.getString("Name"), var4);
-            var5.func_96647_c(var3.getInteger("Score"));
+            Score var5 = this.theScoreboard.getValueFromObjective(var3.getString("Name"), var4);
+            var5.setScorePoints(var3.getInteger("Score"));
         }
     }
 
@@ -186,7 +186,7 @@ public class ScoreboardSaveData extends WorldSavedData
 
         for (int var4 = 0; var4 < 3; ++var4)
         {
-            ScoreObjective var5 = this.theScoreboard.func_96539_a(var4);
+            ScoreObjective var5 = this.theScoreboard.getObjectiveInDisplaySlot(var4);
 
             if (var5 != null)
             {
@@ -212,7 +212,7 @@ public class ScoreboardSaveData extends WorldSavedData
             ScoreObjective var4 = (ScoreObjective)var3.next();
             NBTTagCompound var5 = new NBTTagCompound();
             var5.setString("Name", var4.getName());
-            var5.setString("CriteriaName", var4.getCriteria().func_96636_a());
+            var5.setString("CriteriaName", var4.getCriteria().getName());
             var5.setString("DisplayName", var4.getDisplayName());
             var1.appendTag(var5);
         }

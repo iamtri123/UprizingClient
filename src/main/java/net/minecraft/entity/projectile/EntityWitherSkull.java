@@ -49,11 +49,11 @@ public class EntityWitherSkull extends EntityFireball
         return false;
     }
 
-    public float func_145772_a(Explosion p_145772_1_, World p_145772_2_, int p_145772_3_, int p_145772_4_, int p_145772_5_, Block p_145772_6_)
+    public float getExplosionResistance(Explosion explosionIn, World worldIn, int x, int y, int z, Block blockIn)
     {
-        float var7 = super.func_145772_a(p_145772_1_, p_145772_2_, p_145772_3_, p_145772_4_, p_145772_5_, p_145772_6_);
+        float var7 = super.getExplosionResistance(explosionIn, worldIn, x, y, z, blockIn);
 
-        if (this.isInvulnerable() && p_145772_6_ != Blocks.bedrock && p_145772_6_ != Blocks.end_portal && p_145772_6_ != Blocks.end_portal_frame && p_145772_6_ != Blocks.command_block)
+        if (this.isInvulnerable() && blockIn != Blocks.bedrock && blockIn != Blocks.end_portal && blockIn != Blocks.end_portal_frame && blockIn != Blocks.command_block)
         {
             var7 = Math.min(0.8F, var7);
         }
@@ -118,7 +118,7 @@ public class EntityWitherSkull extends EntityFireball
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         return false;
     }

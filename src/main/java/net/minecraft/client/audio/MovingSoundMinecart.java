@@ -14,8 +14,8 @@ public class MovingSoundMinecart extends MovingSound
     {
         super(new ResourceLocation("minecraft:minecart.base"));
         this.field_147670_k = p_i45105_1_;
-        this.field_147659_g = true;
-        this.field_147665_h = 0;
+        this.repeat = true;
+        this.repeatDelay = 0;
     }
 
     /**
@@ -25,24 +25,24 @@ public class MovingSoundMinecart extends MovingSound
     {
         if (this.field_147670_k.isDead)
         {
-            this.field_147668_j = true;
+            this.donePlaying = true;
         }
         else
         {
-            this.field_147660_d = (float)this.field_147670_k.posX;
-            this.field_147661_e = (float)this.field_147670_k.posY;
-            this.field_147658_f = (float)this.field_147670_k.posZ;
+            this.xPosF = (float)this.field_147670_k.posX;
+            this.yPosF = (float)this.field_147670_k.posY;
+            this.zPosF = (float)this.field_147670_k.posZ;
             float var1 = MathHelper.sqrt_double(this.field_147670_k.motionX * this.field_147670_k.motionX + this.field_147670_k.motionZ * this.field_147670_k.motionZ);
 
             if ((double)var1 >= 0.01D)
             {
                 this.field_147669_l = MathHelper.clamp_float(this.field_147669_l + 0.0025F, 0.0F, 1.0F);
-                this.field_147662_b = 0.0F + MathHelper.clamp_float(var1, 0.0F, 0.5F) * 0.7F;
+                this.volume = 0.0F + MathHelper.clamp_float(var1, 0.0F, 0.5F) * 0.7F;
             }
             else
             {
                 this.field_147669_l = 0.0F;
-                this.field_147662_b = 0.0F;
+                this.volume = 0.0F;
             }
         }
     }

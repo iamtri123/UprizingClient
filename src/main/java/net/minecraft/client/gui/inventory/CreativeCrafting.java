@@ -8,12 +8,12 @@ import net.minecraft.item.ItemStack;
 
 public class CreativeCrafting implements ICrafting
 {
-    private final Minecraft field_146109_a;
+    private final Minecraft mc;
     private static final String __OBFID = "CL_00000751";
 
-    public CreativeCrafting(Minecraft p_i46314_1_)
+    public CreativeCrafting(Minecraft mc)
     {
-        this.field_146109_a = p_i46314_1_;
+        this.mc = mc;
     }
 
     public void sendContainerAndContentsToPlayer(Container p_71110_1_, List p_71110_2_) {}
@@ -24,7 +24,7 @@ public class CreativeCrafting implements ICrafting
      */
     public void sendSlotContents(Container p_71111_1_, int p_71111_2_, ItemStack p_71111_3_)
     {
-        this.field_146109_a.playerController.sendSlotPacket(p_71111_3_, p_71111_2_);
+        this.mc.playerController.sendSlotPacket(p_71111_3_, p_71111_2_);
     }
 
     /**

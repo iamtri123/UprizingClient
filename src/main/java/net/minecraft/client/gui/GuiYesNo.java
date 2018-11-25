@@ -5,33 +5,33 @@ import net.minecraft.client.resources.I18n;
 
 public class GuiYesNo extends GuiScreen
 {
-    protected GuiYesNoCallback field_146355_a;
-    protected String field_146351_f;
-    private final String field_146354_r;
-    protected String field_146352_g;
-    protected String field_146356_h;
-    protected int field_146357_i;
-    private int field_146353_s;
+    protected GuiYesNoCallback parentScreen;
+    protected String messageLine1;
+    private final String messageLine2;
+    protected String confirmButtonText;
+    protected String cancelButtonText;
+    protected int parentButtonClickedId;
+    private int ticksUntilEnable;
     private static final String __OBFID = "CL_00000684";
 
     public GuiYesNo(GuiYesNoCallback p_i1082_1_, String p_i1082_2_, String p_i1082_3_, int p_i1082_4_)
     {
-        this.field_146355_a = p_i1082_1_;
-        this.field_146351_f = p_i1082_2_;
-        this.field_146354_r = p_i1082_3_;
-        this.field_146357_i = p_i1082_4_;
-        this.field_146352_g = I18n.format("gui.yes");
-        this.field_146356_h = I18n.format("gui.no");
+        this.parentScreen = p_i1082_1_;
+        this.messageLine1 = p_i1082_2_;
+        this.messageLine2 = p_i1082_3_;
+        this.parentButtonClickedId = p_i1082_4_;
+        this.confirmButtonText = I18n.format("gui.yes");
+        this.cancelButtonText = I18n.format("gui.no");
     }
 
     public GuiYesNo(GuiYesNoCallback p_i1083_1_, String p_i1083_2_, String p_i1083_3_, String p_i1083_4_, String p_i1083_5_, int p_i1083_6_)
     {
-        this.field_146355_a = p_i1083_1_;
-        this.field_146351_f = p_i1083_2_;
-        this.field_146354_r = p_i1083_3_;
-        this.field_146352_g = p_i1083_4_;
-        this.field_146356_h = p_i1083_5_;
-        this.field_146357_i = p_i1083_6_;
+        this.parentScreen = p_i1083_1_;
+        this.messageLine1 = p_i1083_2_;
+        this.messageLine2 = p_i1083_3_;
+        this.confirmButtonText = p_i1083_4_;
+        this.cancelButtonText = p_i1083_5_;
+        this.parentButtonClickedId = p_i1083_6_;
     }
 
     /**
@@ -39,13 +39,13 @@ public class GuiYesNo extends GuiScreen
      */
     public void initGui()
     {
-        this.buttonList.add(new GuiOptionButton(0, this.width / 2 - 155, this.height / 6 + 96, this.field_146352_g));
-        this.buttonList.add(new GuiOptionButton(1, this.width / 2 - 155 + 160, this.height / 6 + 96, this.field_146356_h));
+        this.buttonList.add(new GuiOptionButton(0, this.width / 2 - 155, this.height / 6 + 96, this.confirmButtonText));
+        this.buttonList.add(new GuiOptionButton(1, this.width / 2 - 155 + 160, this.height / 6 + 96, this.cancelButtonText));
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        this.field_146355_a.confirmClicked(p_146284_1_.id == 0, this.field_146357_i);
+        this.parentScreen.confirmClicked(button.id == 0, this.parentButtonClickedId);
     }
 
     /**
@@ -54,14 +54,14 @@ public class GuiYesNo extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, this.field_146351_f, this.width / 2, 70, 16777215);
-        this.drawCenteredString(this.fontRendererObj, this.field_146354_r, this.width / 2, 90, 16777215);
+        this.drawCenteredString(this.fontRendererObj, this.messageLine1, this.width / 2, 70, 16777215);
+        this.drawCenteredString(this.fontRendererObj, this.messageLine2, this.width / 2, 90, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    public void func_146350_a(int p_146350_1_)
+    public void setButtonDelay(int p_146350_1_)
     {
-        this.field_146353_s = p_146350_1_;
+        this.ticksUntilEnable = p_146350_1_;
         GuiButton var3;
 
         for (Iterator var2 = this.buttonList.iterator(); var2.hasNext(); var3.enabled = false)
@@ -78,7 +78,7 @@ public class GuiYesNo extends GuiScreen
         super.updateScreen();
         GuiButton var2;
 
-        if (--this.field_146353_s == 0)
+        if (--this.ticksUntilEnable == 0)
         {
             for (Iterator var1 = this.buttonList.iterator(); var1.hasNext(); var2.enabled = true)
             {

@@ -18,10 +18,10 @@ import net.minecraft.world.World;
 
 public class ItemDye extends Item
 {
-    public static final String[] field_150923_a = {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
-    public static final String[] field_150921_b = {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "light_blue", "magenta", "orange", "white"};
-    public static final int[] field_150922_c = {1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
-    private IIcon[] field_150920_d;
+    public static final String[] dyeColorNames = {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
+    public static final String[] dyeIcons = {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "light_blue", "magenta", "orange", "white"};
+    public static final int[] dyeColors = {1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
+    private IIcon[] dyeIconArray;
     private static final String __OBFID = "CL_00000022";
 
     public ItemDye()
@@ -37,17 +37,17 @@ public class ItemDye extends Item
     public IIcon getIconFromDamage(int p_77617_1_)
     {
         int var2 = MathHelper.clamp_int(p_77617_1_, 0, 15);
-        return this.field_150920_d[var2];
+        return this.dyeIconArray[var2];
     }
 
     /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
-        int var2 = MathHelper.clamp_int(p_77667_1_.getItemDamage(), 0, 15);
-        return super.getUnlocalizedName() + "." + field_150923_a[var2];
+        int var2 = MathHelper.clamp_int(stack.getItemDamage(), 0, 15);
+        return super.getUnlocalizedName() + "." + dyeColorNames[var2];
     }
 
     /**
@@ -130,24 +130,24 @@ public class ItemDye extends Item
         }
     }
 
-    public static boolean func_150919_a(ItemStack p_150919_0_, World p_150919_1_, int p_150919_2_, int p_150919_3_, int p_150919_4_)
+    public static boolean func_150919_a(ItemStack stack, World worldIn, int x, int y, int z)
     {
-        Block var5 = p_150919_1_.getBlock(p_150919_2_, p_150919_3_, p_150919_4_);
+        Block var5 = worldIn.getBlock(x, y, z);
 
         if (var5 instanceof IGrowable)
         {
             IGrowable var6 = (IGrowable)var5;
 
-            if (var6.func_149851_a(p_150919_1_, p_150919_2_, p_150919_3_, p_150919_4_, p_150919_1_.isClient))
+            if (var6.canFertilize(worldIn, x, y, z, worldIn.isClient))
             {
-                if (!p_150919_1_.isClient)
+                if (!worldIn.isClient)
                 {
-                    if (var6.func_149852_a(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_))
+                    if (var6.shouldFertilize(worldIn, worldIn.rand, x, y, z))
                     {
-                        var6.func_149853_b(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_);
+                        var6.fertilize(worldIn, worldIn.rand, x, y, z);
                     }
 
-                    --p_150919_0_.stackSize;
+                    --stack.stackSize;
                 }
 
                 return true;
@@ -183,17 +183,17 @@ public class ItemDye extends Item
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
-    public boolean itemInteractionForEntity(ItemStack p_111207_1_, EntityPlayer p_111207_2_, EntityLivingBase p_111207_3_)
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target)
     {
-        if (p_111207_3_ instanceof EntitySheep)
+        if (target instanceof EntitySheep)
         {
-            EntitySheep var4 = (EntitySheep)p_111207_3_;
-            int var5 = BlockColored.func_150032_b(p_111207_1_.getItemDamage());
+            EntitySheep var4 = (EntitySheep)target;
+            int var5 = BlockColored.func_150032_b(stack.getItemDamage());
 
             if (!var4.getSheared() && var4.getFleeceColor() != var5)
             {
                 var4.setFleeceColor(var5);
-                --p_111207_1_.stackSize;
+                --stack.stackSize;
             }
 
             return true;
@@ -215,13 +215,13 @@ public class ItemDye extends Item
         }
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        this.field_150920_d = new IIcon[field_150921_b.length];
+        this.dyeIconArray = new IIcon[dyeIcons.length];
 
-        for (int var2 = 0; var2 < field_150921_b.length; ++var2)
+        for (int var2 = 0; var2 < dyeIcons.length; ++var2)
         {
-            this.field_150920_d[var2] = p_94581_1_.registerIcon(this.getIconString() + "_" + field_150921_b[var2]);
+            this.dyeIconArray[var2] = register.registerIcon(this.getIconString() + "_" + dyeIcons[var2]);
         }
     }
 }

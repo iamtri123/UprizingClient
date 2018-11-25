@@ -231,7 +231,7 @@ public class WorldClient extends World
             }
         }
 
-        if (RenderManager.instance.getEntityRenderObject(p_72847_1_).func_147905_a() && !var2)
+        if (RenderManager.instance.getEntityRenderObject(p_72847_1_).isStaticEntity() && !var2)
         {
             this.mc.renderGlobal.onStaticEntitiesChanged();
         }
@@ -259,7 +259,7 @@ public class WorldClient extends World
 
         this.entityHashSet.addKey(p_73027_1_, p_73027_2_);
 
-        if (RenderManager.instance.getEntityRenderObject(p_73027_2_).func_147905_a())
+        if (RenderManager.instance.getEntityRenderObject(p_73027_2_).isStaticEntity())
         {
             this.mc.renderGlobal.onStaticEntitiesChanged();
         }
@@ -310,7 +310,7 @@ public class WorldClient extends World
         }
     }
 
-    protected int func_152379_p()
+    protected int getRenderDistanceChunks()
     {
         return this.mc.gameSettings.renderDistanceChunks;
     }
@@ -405,9 +405,9 @@ public class WorldClient extends World
     /**
      * Adds some basic stats of the world to the given crash report.
      */
-    public CrashReportCategory addWorldInfoToCrashReport(CrashReport p_72914_1_)
+    public CrashReportCategory addWorldInfoToCrashReport(CrashReport report)
     {
-        CrashReportCategory var2 = super.addWorldInfoToCrashReport(p_72914_1_);
+        CrashReportCategory var2 = super.addWorldInfoToCrashReport(report);
         var2.addCrashSectionCallable("Forced entities", new Callable()
         {
             private static final String __OBFID = "CL_00000883";
@@ -429,7 +429,7 @@ public class WorldClient extends World
             private static final String __OBFID = "CL_00000885";
             public String call()
             {
-                return WorldClient.this.mc.thePlayer.func_142021_k();
+                return WorldClient.this.mc.thePlayer.getClientBrand();
             }
         });
         var2.addCrashSectionCallable("Server type", new Callable()
@@ -446,12 +446,12 @@ public class WorldClient extends World
     /**
      * par8 is loudness, all pars passed to minecraftInstance.sndManager.playSound
      */
-    public void playSound(double p_72980_1_, double p_72980_3_, double p_72980_5_, String p_72980_7_, float p_72980_8_, float p_72980_9_, boolean p_72980_10_)
+    public void playSound(double x, double y, double z, String soundName, float volume, float pitch, boolean distanceDelay)
     {
-        double var11 = this.mc.renderViewEntity.getDistanceSq(p_72980_1_, p_72980_3_, p_72980_5_);
-        PositionedSoundRecord var13 = new PositionedSoundRecord(new ResourceLocation(p_72980_7_), p_72980_8_, p_72980_9_, (float)p_72980_1_, (float)p_72980_3_, (float)p_72980_5_);
+        double var11 = this.mc.renderViewEntity.getDistanceSq(x, y, z);
+        PositionedSoundRecord var13 = new PositionedSoundRecord(new ResourceLocation(soundName), volume, pitch, (float)x, (float)y, (float)z);
 
-        if (p_72980_10_ && var11 > 100.0D)
+        if (distanceDelay && var11 > 100.0D)
         {
             double var14 = Math.sqrt(var11) / 40.0D;
             this.mc.getSoundHandler().playDelayedSound(var13, (int)(var14 * 20.0D));
@@ -462,9 +462,9 @@ public class WorldClient extends World
         }
     }
 
-    public void makeFireworks(double p_92088_1_, double p_92088_3_, double p_92088_5_, double p_92088_7_, double p_92088_9_, double p_92088_11_, NBTTagCompound p_92088_13_)
+    public void makeFireworks(double x, double y, double z, double motionX, double motionY, double motionZ, NBTTagCompound compund)
     {
-        this.mc.effectRenderer.addEffect(new EntityFireworkStarterFX(this, p_92088_1_, p_92088_3_, p_92088_5_, p_92088_7_, p_92088_9_, p_92088_11_, this.mc.effectRenderer, p_92088_13_));
+        this.mc.effectRenderer.addEffect(new EntityFireworkStarterFX(this, x, y, z, motionX, motionY, motionZ, this.mc.effectRenderer, compund));
     }
 
     public void setWorldScoreboard(Scoreboard p_96443_1_)

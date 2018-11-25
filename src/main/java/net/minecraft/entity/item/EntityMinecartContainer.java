@@ -68,34 +68,34 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
-        return this.minecartContainerItems[p_70301_1_];
+        return this.minecartContainerItems[slotIn];
     }
 
     /**
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (this.minecartContainerItems[p_70298_1_] != null)
+        if (this.minecartContainerItems[index] != null)
         {
             ItemStack var3;
 
-            if (this.minecartContainerItems[p_70298_1_].stackSize <= p_70298_2_)
+            if (this.minecartContainerItems[index].stackSize <= count)
             {
-                var3 = this.minecartContainerItems[p_70298_1_];
-                this.minecartContainerItems[p_70298_1_] = null;
+                var3 = this.minecartContainerItems[index];
+                this.minecartContainerItems[index] = null;
                 return var3;
             }
             else
             {
-                var3 = this.minecartContainerItems[p_70298_1_].splitStack(p_70298_2_);
+                var3 = this.minecartContainerItems[index].splitStack(count);
 
-                if (this.minecartContainerItems[p_70298_1_].stackSize == 0)
+                if (this.minecartContainerItems[index].stackSize == 0)
                 {
-                    this.minecartContainerItems[p_70298_1_] = null;
+                    this.minecartContainerItems[index] = null;
                 }
 
                 return var3;
@@ -111,12 +111,12 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (this.minecartContainerItems[p_70304_1_] != null)
+        if (this.minecartContainerItems[index] != null)
         {
-            ItemStack var2 = this.minecartContainerItems[p_70304_1_];
-            this.minecartContainerItems[p_70304_1_] = null;
+            ItemStack var2 = this.minecartContainerItems[index];
+            this.minecartContainerItems[index] = null;
             return var2;
         }
         else
@@ -128,13 +128,13 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        this.minecartContainerItems[p_70299_1_] = p_70299_2_;
+        this.minecartContainerItems[index] = stack;
 
-        if (p_70299_2_ != null && p_70299_2_.stackSize > this.getInventoryStackLimit())
+        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
         {
-            p_70299_2_.stackSize = this.getInventoryStackLimit();
+            stack.stackSize = this.getInventoryStackLimit();
         }
     }
 
@@ -146,9 +146,9 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return !this.isDead && p_70300_1_.getDistanceSqToEntity(this) <= 64.0D;
+        return !this.isDead && player.getDistanceSqToEntity(this) <= 64.0D;
     }
 
     public void openInventory() {}
@@ -158,7 +158,7 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return true;
     }
@@ -185,10 +185,10 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     /**
      * Teleports the entity to another dimension. Params: Dimension number to teleport to
      */
-    public void travelToDimension(int p_71027_1_)
+    public void travelToDimension(int dimensionId)
     {
         this.dropContentsWhenDead = false;
-        super.travelToDimension(p_71027_1_);
+        super.travelToDimension(dimensionId);
     }
 
     /**
@@ -241,9 +241,9 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
+        super.writeEntityToNBT(tagCompound);
         NBTTagList var2 = new NBTTagList();
 
         for (int var3 = 0; var3 < this.minecartContainerItems.length; ++var3)
@@ -257,16 +257,16 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
             }
         }
 
-        p_70014_1_.setTag("Items", var2);
+        tagCompound.setTag("Items", var2);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        NBTTagList var2 = p_70037_1_.getTagList("Items", 10);
+        super.readEntityFromNBT(tagCompund);
+        NBTTagList var2 = tagCompund.getTagList("Items", 10);
         this.minecartContainerItems = new ItemStack[this.getSizeInventory()];
 
         for (int var3 = 0; var3 < var2.tagCount(); ++var3)
@@ -284,11 +284,11 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer p_130002_1_)
+    public boolean interactFirst(EntityPlayer player)
     {
         if (!this.worldObj.isClient)
         {
-            p_130002_1_.displayGUIChest(this);
+            player.displayGUIChest(this);
         }
 
         return true;

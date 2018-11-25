@@ -179,9 +179,9 @@ public class EntityBlaze extends EntityMob
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_) {}
+    protected void fall(float distance) {}
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.blaze_rod;
     }
@@ -205,7 +205,7 @@ public class EntityBlaze extends EntityMob
 
             for (int var4 = 0; var4 < var3; ++var4)
             {
-                this.func_145779_a(Items.blaze_rod, 1);
+                this.dropItem(Items.blaze_rod, 1);
             }
         }
     }

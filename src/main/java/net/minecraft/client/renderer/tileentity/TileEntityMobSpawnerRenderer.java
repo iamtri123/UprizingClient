@@ -21,7 +21,7 @@ public class TileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer
 
     public static void func_147517_a(MobSpawnerBaseLogic p_147517_0_, double p_147517_1_, double p_147517_3_, double p_147517_5_, float p_147517_7_)
     {
-        Entity var8 = p_147517_0_.func_98281_h();
+        Entity var8 = p_147517_0_.getEntityToRender();
 
         if (var8 != null)
         {
@@ -33,7 +33,7 @@ public class TileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer
             GL11.glTranslatef(0.0F, -0.4F, 0.0F);
             GL11.glScalef(var9, var9, var9);
             var8.setLocationAndAngles(p_147517_1_, p_147517_3_, p_147517_5_, 0.0F, 0.0F);
-            RenderManager.instance.func_147940_a(var8, 0.0D, 0.0D, 0.0D, 0.0F, p_147517_7_);
+            RenderManager.instance.renderEntityWithPosYaw(var8, 0.0D, 0.0D, 0.0D, 0.0F, p_147517_7_);
         }
     }
 

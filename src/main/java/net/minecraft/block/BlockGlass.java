@@ -21,7 +21,7 @@ public class BlockGlass extends BlockBreakable
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 0;
     }

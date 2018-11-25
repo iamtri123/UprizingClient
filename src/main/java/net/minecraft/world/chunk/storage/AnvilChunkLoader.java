@@ -87,12 +87,12 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
      */
     protected Chunk checkedReadChunkFromNBT(World p_75822_1_, int p_75822_2_, int p_75822_3_, NBTTagCompound p_75822_4_)
     {
-        if (!p_75822_4_.func_150297_b("Level", 10))
+        if (!p_75822_4_.hasKey("Level", 10))
         {
             logger.error("Chunk file at " + p_75822_2_ + "," + p_75822_3_ + " is missing level data, skipping");
             return null;
         }
-        else if (!p_75822_4_.getCompoundTag("Level").func_150297_b("Sections", 9))
+        else if (!p_75822_4_.getCompoundTag("Level").hasKey("Sections", 9))
         {
             logger.error("Chunk file at " + p_75822_2_ + "," + p_75822_3_ + " is missing block data, skipping");
             return null;
@@ -356,7 +356,7 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
             ExtendedBlockStorage var13 = new ExtendedBlockStorage(var12 << 4, var9);
             var13.setBlockLSBArray(var11.getByteArray("Blocks"));
 
-            if (var11.func_150297_b("Add", 7))
+            if (var11.hasKey("Add", 7))
             {
                 var13.setBlockMSBArray(new NibbleArray(var11.getByteArray("Add"), 4));
             }
@@ -375,7 +375,7 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
 
         var5.setStorageArrays(var8);
 
-        if (p_75823_2_.func_150297_b("Biomes", 7))
+        if (p_75823_2_.hasKey("Biomes", 7))
         {
             var5.setBiomeArray(p_75823_2_.getByteArray("Biomes"));
         }
@@ -395,7 +395,7 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
                     var5.addEntity(var23);
                     Entity var14 = var23;
 
-                    for (NBTTagCompound var15 = var20; var15.func_150297_b("Riding", 10); var15 = var15.getCompoundTag("Riding"))
+                    for (NBTTagCompound var15 = var20; var15.hasKey("Riding", 10); var15 = var15.getCompoundTag("Riding"))
                     {
                         Entity var16 = EntityList.createEntityFromNBT(var15.getCompoundTag("Riding"), p_75823_1_);
 
@@ -427,7 +427,7 @@ public class AnvilChunkLoader implements IChunkLoader, IThreadedFileIO
             }
         }
 
-        if (p_75823_2_.func_150297_b("TileTicks", 9))
+        if (p_75823_2_.hasKey("TileTicks", 9))
         {
             NBTTagList var22 = p_75823_2_.getTagList("TileTicks", 10);
 

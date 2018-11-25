@@ -86,7 +86,7 @@ public class WorldChunkManager
         {
             try
             {
-                float var8 = (float)BiomeGenBase.func_150568_d(var6[var7]).getIntRainfall() / 65536.0F;
+                float var8 = (float)BiomeGenBase.getBiome(var6[var7]).getIntRainfall() / 65536.0F;
 
                 if (var8 > 1.0F)
                 {
@@ -138,7 +138,7 @@ public class WorldChunkManager
         {
             for (int var7 = 0; var7 < p_76937_4_ * p_76937_5_; ++var7)
             {
-                p_76937_1_[var7] = BiomeGenBase.func_150568_d(var6[var7]);
+                p_76937_1_[var7] = BiomeGenBase.getBiome(var6[var7]);
             }
 
             return p_76937_1_;
@@ -190,7 +190,7 @@ public class WorldChunkManager
 
             for (int var8 = 0; var8 < p_76931_4_ * p_76931_5_; ++var8)
             {
-                p_76931_1_[var8] = BiomeGenBase.func_150568_d(var7[var8]);
+                p_76931_1_[var8] = BiomeGenBase.getBiome(var7[var8]);
             }
 
             return p_76931_1_;
@@ -215,7 +215,7 @@ public class WorldChunkManager
         {
             for (int var12 = 0; var12 < var9 * var10; ++var12)
             {
-                BiomeGenBase var16 = BiomeGenBase.func_150568_d(var11[var12]);
+                BiomeGenBase var16 = BiomeGenBase.getBiome(var11[var12]);
 
                 if (!p_76940_4_.contains(var16))
                 {
@@ -238,7 +238,7 @@ public class WorldChunkManager
         }
     }
 
-    public ChunkPosition func_150795_a(int p_150795_1_, int p_150795_2_, int p_150795_3_, List p_150795_4_, Random p_150795_5_)
+    public ChunkPosition findBiomePosition(int p_150795_1_, int p_150795_2_, int p_150795_3_, List p_150795_4_, Random p_150795_5_)
     {
         IntCache.resetIntCache();
         int var6 = p_150795_1_ - p_150795_3_ >> 2;
@@ -255,7 +255,7 @@ public class WorldChunkManager
         {
             int var16 = var6 + var15 % var10 << 2;
             int var17 = var7 + var15 / var10 << 2;
-            BiomeGenBase var18 = BiomeGenBase.func_150568_d(var12[var15]);
+            BiomeGenBase var18 = BiomeGenBase.getBiome(var12[var15]);
 
             if (p_150795_4_.contains(var18) && (var13 == null || p_150795_5_.nextInt(var14 + 1) == 0))
             {

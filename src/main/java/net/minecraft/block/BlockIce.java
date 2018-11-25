@@ -32,40 +32,40 @@ public class BlockIce extends BlockBreakable
         return 1;
     }
 
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
     {
-        return super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, 1 - p_149646_5_);
+        return super.shouldSideBeRendered(worldIn, x, y, z, 1 - side);
     }
 
-    public void harvestBlock(World p_149636_1_, EntityPlayer p_149636_2_, int p_149636_3_, int p_149636_4_, int p_149636_5_, int p_149636_6_)
+    public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta)
     {
-        p_149636_2_.addStat(StatList.mineBlockStatArray[Block.getIdFromBlock(this)], 1);
-        p_149636_2_.addExhaustion(0.025F);
+        player.addStat(StatList.mineBlockStatArray[Block.getIdFromBlock(this)], 1);
+        player.addExhaustion(0.025F);
 
-        if (this.canSilkHarvest() && EnchantmentHelper.getSilkTouchModifier(p_149636_2_))
+        if (this.canSilkHarvest() && EnchantmentHelper.getSilkTouchModifier(player))
         {
-            ItemStack var9 = this.createStackedBlock(p_149636_6_);
+            ItemStack var9 = this.createStackedBlock(meta);
 
             if (var9 != null)
             {
-                this.dropBlockAsItem_do(p_149636_1_, p_149636_3_, p_149636_4_, p_149636_5_, var9);
+                this.dropBlockAsItem_do(worldIn, x, y, z, var9);
             }
         }
         else
         {
-            if (p_149636_1_.provider.isHellWorld)
+            if (worldIn.provider.isHellWorld)
             {
-                p_149636_1_.setBlockToAir(p_149636_3_, p_149636_4_, p_149636_5_);
+                worldIn.setBlockToAir(x, y, z);
                 return;
             }
 
-            int var7 = EnchantmentHelper.getFortuneModifier(p_149636_2_);
-            this.dropBlockAsItem(p_149636_1_, p_149636_3_, p_149636_4_, p_149636_5_, p_149636_6_, var7);
-            Material var8 = p_149636_1_.getBlock(p_149636_3_, p_149636_4_ - 1, p_149636_5_).getMaterial();
+            int var7 = EnchantmentHelper.getFortuneModifier(player);
+            this.dropBlockAsItem(worldIn, x, y, z, meta, var7);
+            Material var8 = worldIn.getBlock(x, y - 1, z).getMaterial();
 
             if (var8.blocksMovement() || var8.isLiquid())
             {
-                p_149636_1_.setBlock(p_149636_3_, p_149636_4_, p_149636_5_, Blocks.flowing_water);
+                worldIn.setBlock(x, y, z, Blocks.flowing_water);
             }
         }
     }
@@ -73,7 +73,7 @@ public class BlockIce extends BlockBreakable
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 0;
     }
@@ -81,18 +81,18 @@ public class BlockIce extends BlockBreakable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (p_149674_1_.getSavedLightValue(EnumSkyBlock.Block, p_149674_2_, p_149674_3_, p_149674_4_) > 11 - this.getLightOpacity())
+        if (worldIn.getSavedLightValue(EnumSkyBlock.Block, x, y, z) > 11 - this.getLightOpacity())
         {
-            if (p_149674_1_.provider.isHellWorld)
+            if (worldIn.provider.isHellWorld)
             {
-                p_149674_1_.setBlockToAir(p_149674_2_, p_149674_3_, p_149674_4_);
+                worldIn.setBlockToAir(x, y, z);
                 return;
             }
 
-            this.dropBlockAsItem(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_), 0);
-            p_149674_1_.setBlock(p_149674_2_, p_149674_3_, p_149674_4_, Blocks.water);
+            this.dropBlockAsItem(worldIn, x, y, z, worldIn.getBlockMetadata(x, y, z), 0);
+            worldIn.setBlock(x, y, z, Blocks.water);
         }
     }
 

@@ -32,45 +32,45 @@ public class CommandSummon extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.summon.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
-        if (p_71515_2_.length < 1)
+        if (args.length < 1)
         {
             throw new WrongUsageException("commands.summon.usage");
         }
         else
         {
-            String var3 = p_71515_2_[0];
-            double var4 = (double)p_71515_1_.getPlayerCoordinates().posX + 0.5D;
-            double var6 = (double)p_71515_1_.getPlayerCoordinates().posY;
-            double var8 = (double)p_71515_1_.getPlayerCoordinates().posZ + 0.5D;
+            String var3 = args[0];
+            double var4 = (double)sender.getPlayerCoordinates().posX + 0.5D;
+            double var6 = (double)sender.getPlayerCoordinates().posY;
+            double var8 = (double)sender.getPlayerCoordinates().posZ + 0.5D;
 
-            if (p_71515_2_.length >= 4)
+            if (args.length >= 4)
             {
-                var4 = func_110666_a(p_71515_1_, var4, p_71515_2_[1]);
-                var6 = func_110666_a(p_71515_1_, var6, p_71515_2_[2]);
-                var8 = func_110666_a(p_71515_1_, var8, p_71515_2_[3]);
+                var4 = clamp_coord(sender, var4, args[1]);
+                var6 = clamp_coord(sender, var6, args[2]);
+                var8 = clamp_coord(sender, var8, args[3]);
             }
 
-            World var10 = p_71515_1_.getEntityWorld();
+            World var10 = sender.getEntityWorld();
 
             if (!var10.blockExists((int)var4, (int)var6, (int)var8))
             {
-                func_152373_a(p_71515_1_, this, "commands.summon.outOfWorld");
+                notifyOperators(sender, this, "commands.summon.outOfWorld");
             }
             else
             {
                 NBTTagCompound var11 = new NBTTagCompound();
                 boolean var12 = false;
 
-                if (p_71515_2_.length >= 5)
+                if (args.length >= 5)
                 {
-                    IChatComponent var13 = func_147178_a(p_71515_1_, p_71515_2_, 4);
+                    IChatComponent var13 = getChatComponentFromNthArg(sender, args, 4);
 
                     try
                     {
@@ -78,7 +78,7 @@ public class CommandSummon extends CommandBase
 
                         if (!(var14 instanceof NBTTagCompound))
                         {
-                            func_152373_a(p_71515_1_, this, "commands.summon.tagError", "Not a valid tag");
+                            notifyOperators(sender, this, "commands.summon.tagError", "Not a valid tag");
                             return;
                         }
 
@@ -87,7 +87,7 @@ public class CommandSummon extends CommandBase
                     }
                     catch (NBTException var17)
                     {
-                        func_152373_a(p_71515_1_, this, "commands.summon.tagError", var17.getMessage());
+                        notifyOperators(sender, this, "commands.summon.tagError", var17.getMessage());
                         return;
                     }
                 }
@@ -97,7 +97,7 @@ public class CommandSummon extends CommandBase
 
                 if (var18 == null)
                 {
-                    func_152373_a(p_71515_1_, this, "commands.summon.failed");
+                    notifyOperators(sender, this, "commands.summon.failed");
                 }
                 else
                 {
@@ -111,7 +111,7 @@ public class CommandSummon extends CommandBase
                     var10.spawnEntityInWorld(var18);
                     Entity var19 = var18;
 
-                    for (NBTTagCompound var15 = var11; var19 != null && var15.func_150297_b("Riding", 10); var15 = var15.getCompoundTag("Riding"))
+                    for (NBTTagCompound var15 = var11; var19 != null && var15.hasKey("Riding", 10); var15 = var15.getCompoundTag("Riding"))
                     {
                         Entity var16 = EntityList.createEntityFromNBT(var15.getCompoundTag("Riding"), var10);
 
@@ -125,7 +125,7 @@ public class CommandSummon extends CommandBase
                         var19 = var16;
                     }
 
-                    func_152373_a(p_71515_1_, this, "commands.summon.success");
+                    notifyOperators(sender, this, "commands.summon.success");
                 }
             }
         }
@@ -134,9 +134,9 @@ public class CommandSummon extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_)
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return p_71516_2_.length == 1 ? getListOfStringsMatchingLastWord(p_71516_2_, this.func_147182_d()) : null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, this.func_147182_d()) : null;
     }
 
     protected String[] func_147182_d()

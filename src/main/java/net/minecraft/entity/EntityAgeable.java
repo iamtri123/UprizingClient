@@ -114,19 +114,19 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("Age", this.getGrowingAge());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("Age", this.getGrowingAge());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.setGrowingAge(p_70037_1_.getInteger("Age"));
+        super.readEntityFromNBT(tagCompund);
+        this.setGrowingAge(tagCompund.getInteger("Age"));
     }
 
     /**
@@ -177,11 +177,11 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * Sets the width and height of the entity. Args: width, height
      */
-    protected final void setSize(float p_70105_1_, float p_70105_2_)
+    protected final void setSize(float width, float height)
     {
         boolean var3 = this.field_98056_d > 0.0F;
-        this.field_98056_d = p_70105_1_;
-        this.field_98057_e = p_70105_2_;
+        this.field_98056_d = width;
+        this.field_98057_e = height;
 
         if (!var3)
         {

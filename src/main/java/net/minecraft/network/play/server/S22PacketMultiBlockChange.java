@@ -40,7 +40,7 @@ public class S22PacketMultiBlockChange extends Packet
                 int var9 = p_i45181_2_[var7] >> 8 & 15;
                 int var10 = p_i45181_2_[var7] & 255;
                 var6.writeShort(p_i45181_2_[var7]);
-                var6.writeShort((short)((Block.getIdFromBlock(p_i45181_3_.func_150810_a(var8, var10, var9)) & 4095) << 4 | p_i45181_3_.getBlockMetadata(var8, var10, var9) & 15));
+                var6.writeShort((short)((Block.getIdFromBlock(p_i45181_3_.getBlock(var8, var10, var9)) & 4095) << 4 | p_i45181_3_.getBlockMetadata(var8, var10, var9) & 15));
             }
 
             this.field_148926_c = var5.toByteArray();
@@ -60,42 +60,42 @@ public class S22PacketMultiBlockChange extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_148925_b = new ChunkCoordIntPair(p_148837_1_.readInt(), p_148837_1_.readInt());
-        this.field_148924_d = p_148837_1_.readShort() & 65535;
-        int var2 = p_148837_1_.readInt();
+        this.field_148925_b = new ChunkCoordIntPair(data.readInt(), data.readInt());
+        this.field_148924_d = data.readShort() & 65535;
+        int var2 = data.readInt();
 
         if (var2 > 0)
         {
             this.field_148926_c = new byte[var2];
-            p_148837_1_.readBytes(this.field_148926_c);
+            data.readBytes(this.field_148926_c);
         }
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_148925_b.chunkXPos);
-        p_148840_1_.writeInt(this.field_148925_b.chunkZPos);
-        p_148840_1_.writeShort((short)this.field_148924_d);
+        data.writeInt(this.field_148925_b.chunkXPos);
+        data.writeInt(this.field_148925_b.chunkZPos);
+        data.writeShort((short)this.field_148924_d);
 
         if (this.field_148926_c != null)
         {
-            p_148840_1_.writeInt(this.field_148926_c.length);
-            p_148840_1_.writeBytes(this.field_148926_c);
+            data.writeInt(this.field_148926_c.length);
+            data.writeBytes(this.field_148926_c);
         }
         else
         {
-            p_148840_1_.writeInt(0);
+            data.writeInt(0);
         }
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleMultiBlockChange(this);
+        handler.handleMultiBlockChange(this);
     }
 
     /**
@@ -121,8 +121,8 @@ public class S22PacketMultiBlockChange extends Packet
         return this.field_148924_d;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

@@ -119,24 +119,24 @@ public class EntityOcelot extends EntityTameable
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_) {}
+    protected void fall(float distance) {}
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("CatType", this.getTameSkin());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("CatType", this.getTameSkin());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.setTameSkin(p_70037_1_.getInteger("CatType"));
+        super.readEntityFromNBT(tagCompund);
+        this.setTameSkin(tagCompund.getInteger("CatType"));
     }
 
     /**
@@ -171,7 +171,7 @@ public class EntityOcelot extends EntityTameable
         return 0.4F;
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.leather;
     }
@@ -184,7 +184,7 @@ public class EntityOcelot extends EntityTameable
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -193,7 +193,7 @@ public class EntityOcelot extends EntityTameable
         else
         {
             this.aiSit.setSitting(false);
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 

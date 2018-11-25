@@ -7,20 +7,20 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class GuiControls extends GuiScreen
 {
-    private static final GameSettings.Options[] field_146492_g = {GameSettings.Options.INVERT_MOUSE, GameSettings.Options.SENSITIVITY, GameSettings.Options.TOUCHSCREEN};
-    private final GuiScreen field_146496_h;
-    protected String field_146495_a = "Controls";
-    private final GameSettings field_146497_i;
-    public KeyBinding field_146491_f = null;
-    public long field_152177_g;
-    private GuiKeyBindingList field_146494_r;
-    private GuiButton field_146493_s;
+    private static final GameSettings.Options[] optionsArr = {GameSettings.Options.INVERT_MOUSE, GameSettings.Options.SENSITIVITY, GameSettings.Options.TOUCHSCREEN};
+    private final GuiScreen parentScreen;
+    protected String screenTitle = "Controls";
+    private final GameSettings options;
+    public KeyBinding buttonId = null;
+    public long time;
+    private GuiKeyBindingList keyBindingList;
+    private GuiButton buttonReset;
     private static final String __OBFID = "CL_00000736";
 
     public GuiControls(GuiScreen p_i1027_1_, GameSettings p_i1027_2_)
     {
-        this.field_146496_h = p_i1027_1_;
-        this.field_146497_i = p_i1027_2_;
+        this.parentScreen = p_i1027_1_;
+        this.options = p_i1027_2_;
     }
 
     /**
@@ -28,12 +28,12 @@ public class GuiControls extends GuiScreen
      */
     public void initGui()
     {
-        this.field_146494_r = new GuiKeyBindingList(this, this.mc);
+        this.keyBindingList = new GuiKeyBindingList(this, this.mc);
         this.buttonList.add(new GuiButton(200, this.width / 2 - 155, this.height - 29, 150, 20, I18n.format("gui.done")));
-        this.buttonList.add(this.field_146493_s = new GuiButton(201, this.width / 2 - 155 + 160, this.height - 29, 150, 20, I18n.format("controls.resetAll")));
-        this.field_146495_a = I18n.format("controls.title");
+        this.buttonList.add(this.buttonReset = new GuiButton(201, this.width / 2 - 155 + 160, this.height - 29, 150, 20, I18n.format("controls.resetAll")));
+        this.screenTitle = I18n.format("controls.title");
         int var1 = 0;
-        GameSettings.Options[] var2 = field_146492_g;
+        GameSettings.Options[] var2 = optionsArr;
         int var3 = var2.length;
 
         for (int var4 = 0; var4 < var3; ++var4)
@@ -46,20 +46,20 @@ public class GuiControls extends GuiScreen
             }
             else
             {
-                this.buttonList.add(new GuiOptionButton(var5.returnEnumOrdinal(), this.width / 2 - 155 + var1 % 2 * 160, 18 + 24 * (var1 >> 1), var5, this.field_146497_i.getKeyBinding(var5)));
+                this.buttonList.add(new GuiOptionButton(var5.returnEnumOrdinal(), this.width / 2 - 155 + var1 % 2 * 160, 18 + 24 * (var1 >> 1), var5, this.options.getKeyBinding(var5)));
             }
 
             ++var1;
         }
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
-        if (p_146284_1_.id == 200)
+        if (button.id == 200)
         {
-            this.mc.displayGuiScreen(this.field_146496_h);
+            this.mc.displayGuiScreen(this.parentScreen);
         }
-        else if (p_146284_1_.id == 201)
+        else if (button.id == 201)
         {
             KeyBinding[] var2 = this.mc.gameSettings.keyBindings;
             int var3 = var2.length;
@@ -72,10 +72,10 @@ public class GuiControls extends GuiScreen
 
             KeyBinding.resetKeyBindingArrayAndHash();
         }
-        else if (p_146284_1_.id < 100 && p_146284_1_ instanceof GuiOptionButton)
+        else if (button.id < 100 && button instanceof GuiOptionButton)
         {
-            this.field_146497_i.setOptionValue(((GuiOptionButton)p_146284_1_).func_146136_c(), 1);
-            p_146284_1_.displayString = this.field_146497_i.getKeyBinding(GameSettings.Options.getEnumOptions(p_146284_1_.id));
+            this.options.setOptionValue(((GuiOptionButton)button).returnEnumOptions(), 1);
+            button.displayString = this.options.getKeyBinding(GameSettings.Options.getEnumOptions(button.id));
         }
     }
 
@@ -84,49 +84,49 @@ public class GuiControls extends GuiScreen
      */
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
-        if (this.field_146491_f != null)
+        if (this.buttonId != null)
         {
-            this.field_146497_i.setKeyCodeSave(this.field_146491_f, -100 + mouseButton);
-            this.field_146491_f = null;
+            this.options.setKeyCodeSave(this.buttonId, -100 + mouseButton);
+            this.buttonId = null;
             KeyBinding.resetKeyBindingArrayAndHash();
         }
-        else if (mouseButton != 0 || !this.field_146494_r.func_148179_a(mouseX, mouseY, mouseButton))
+        else if (mouseButton != 0 || !this.keyBindingList.func_148179_a(mouseX, mouseY, mouseButton))
         {
             super.mouseClicked(mouseX, mouseY, mouseButton);
         }
     }
 
-    protected void mouseMovedOrUp(int p_146286_1_, int p_146286_2_, int p_146286_3_)
+    protected void mouseMovedOrUp(int mouseX, int mouseY, int state)
     {
-        if (p_146286_3_ != 0 || !this.field_146494_r.func_148181_b(p_146286_1_, p_146286_2_, p_146286_3_))
+        if (state != 0 || !this.keyBindingList.func_148181_b(mouseX, mouseY, state))
         {
-            super.mouseMovedOrUp(p_146286_1_, p_146286_2_, p_146286_3_);
+            super.mouseMovedOrUp(mouseX, mouseY, state);
         }
     }
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char p_73869_1_, int p_73869_2_)
+    protected void keyTyped(char typedChar, int keyCode)
     {
-        if (this.field_146491_f != null)
+        if (this.buttonId != null)
         {
-            if (p_73869_2_ == 1)
+            if (keyCode == 1)
             {
-                this.field_146497_i.setKeyCodeSave(this.field_146491_f, 0);
+                this.options.setKeyCodeSave(this.buttonId, 0);
             }
             else
             {
-                this.field_146497_i.setKeyCodeSave(this.field_146491_f, p_73869_2_);
+                this.options.setKeyCodeSave(this.buttonId, keyCode);
             }
 
-            this.field_146491_f = null;
-            this.field_152177_g = Minecraft.getSystemTime();
+            this.buttonId = null;
+            this.time = Minecraft.getSystemTime();
             KeyBinding.resetKeyBindingArrayAndHash();
         }
         else
         {
-            super.keyTyped(p_73869_1_, p_73869_2_);
+            super.keyTyped(typedChar, keyCode);
         }
     }
 
@@ -136,10 +136,10 @@ public class GuiControls extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.field_146494_r.func_148128_a(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(this.fontRendererObj, this.field_146495_a, this.width / 2, 8, 16777215);
+        this.keyBindingList.drawScreen(mouseX, mouseY, partialTicks);
+        this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 8, 16777215);
         boolean var4 = true;
-        KeyBinding[] var5 = this.field_146497_i.keyBindings;
+        KeyBinding[] var5 = this.options.keyBindings;
         int var6 = var5.length;
 
         for (int var7 = 0; var7 < var6; ++var7)
@@ -153,7 +153,7 @@ public class GuiControls extends GuiScreen
             }
         }
 
-        this.field_146493_s.enabled = !var4;
+        this.buttonReset.enabled = !var4;
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

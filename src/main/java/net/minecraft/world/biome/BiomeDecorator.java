@@ -59,7 +59,7 @@ public class BiomeDecorator
 
     /** Field that holds Lapis WorldGenMinable */
     protected WorldGenerator lapisGen;
-    protected WorldGenFlowers field_150514_p;
+    protected WorldGenFlowers yellowFlowerGen;
 
     /** Field that holds mushroomBrown WorldGenFlowers */
     protected WorldGenerator mushroomBrownGen;
@@ -152,7 +152,7 @@ public class BiomeDecorator
         this.redstoneGen = new WorldGenMinable(Blocks.redstone_ore, 7);
         this.diamondGen = new WorldGenMinable(Blocks.diamond_ore, 7);
         this.lapisGen = new WorldGenMinable(Blocks.lapis_ore, 6);
-        this.field_150514_p = new WorldGenFlowers(Blocks.yellow_flower);
+        this.yellowFlowerGen = new WorldGenFlowers(Blocks.yellow_flower);
         this.mushroomBrownGen = new WorldGenFlowers(Blocks.brown_mushroom);
         this.mushroomRedGen = new WorldGenFlowers(Blocks.red_mushroom);
         this.bigMushroomGen = new WorldGenBigMushroom();
@@ -167,7 +167,7 @@ public class BiomeDecorator
         this.generateLakes = true;
     }
 
-    public void func_150512_a(World p_150512_1_, Random p_150512_2_, BiomeGenBase p_150512_3_, int p_150512_4_, int p_150512_5_)
+    public void decorateChunk(World p_150512_1_, Random p_150512_2_, BiomeGenBase p_150512_3_, int p_150512_4_, int p_150512_5_)
     {
         if (this.currentWorld != null)
         {
@@ -179,13 +179,13 @@ public class BiomeDecorator
             this.randomGenerator = p_150512_2_;
             this.chunk_X = p_150512_4_;
             this.chunk_Z = p_150512_5_;
-            this.func_150513_a(p_150512_3_);
+            this.genDecorations(p_150512_3_);
             this.currentWorld = null;
             this.randomGenerator = null;
         }
     }
 
-    protected void func_150513_a(BiomeGenBase p_150513_1_)
+    protected void genDecorations(BiomeGenBase p_150513_1_)
     {
         this.generateOres();
         int var2;
@@ -254,8 +254,8 @@ public class BiomeDecorator
 
             if (var8.getMaterial() != Material.air)
             {
-                this.field_150514_p.func_150550_a(var8, BlockFlower.func_149856_f(var9));
-                this.field_150514_p.generate(this.currentWorld, this.randomGenerator, var4, var6, var5);
+                this.yellowFlowerGen.func_150550_a(var8, BlockFlower.func_149856_f(var9));
+                this.yellowFlowerGen.generate(this.currentWorld, this.randomGenerator, var4, var6, var5);
             }
         }
 

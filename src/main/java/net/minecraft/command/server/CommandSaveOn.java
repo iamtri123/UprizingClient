@@ -15,12 +15,12 @@ public class CommandSaveOn extends CommandBase
         return "save-on";
     }
 
-    public String getCommandUsage(ICommandSender p_71518_1_)
+    public String getCommandUsage(ICommandSender sender)
     {
         return "commands.save-on.usage";
     }
 
-    public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_)
+    public void processCommand(ICommandSender sender, String[] args)
     {
         MinecraftServer var3 = MinecraftServer.getServer();
         boolean var4 = false;
@@ -41,7 +41,7 @@ public class CommandSaveOn extends CommandBase
 
         if (var4)
         {
-            func_152373_a(p_71515_1_, this, "commands.save.enabled");
+            notifyOperators(sender, this, "commands.save.enabled");
         }
         else
         {

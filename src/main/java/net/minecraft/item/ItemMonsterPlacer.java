@@ -107,19 +107,19 @@ public class ItemMonsterPlacer extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        if (p_77659_2_.isClient)
+        if (worldIn.isClient)
         {
-            return p_77659_1_;
+            return itemStackIn;
         }
         else
         {
-            MovingObjectPosition var4 = this.getMovingObjectPositionFromPlayer(p_77659_2_, p_77659_3_, true);
+            MovingObjectPosition var4 = this.getMovingObjectPositionFromPlayer(worldIn, player, true);
 
             if (var4 == null)
             {
-                return p_77659_1_;
+                return itemStackIn;
             }
             else
             {
@@ -129,36 +129,36 @@ public class ItemMonsterPlacer extends Item
                     int var6 = var4.blockY;
                     int var7 = var4.blockZ;
 
-                    if (!p_77659_2_.canMineBlock(p_77659_3_, var5, var6, var7))
+                    if (!worldIn.canMineBlock(player, var5, var6, var7))
                     {
-                        return p_77659_1_;
+                        return itemStackIn;
                     }
 
-                    if (!p_77659_3_.canPlayerEdit(var5, var6, var7, var4.sideHit, p_77659_1_))
+                    if (!player.canPlayerEdit(var5, var6, var7, var4.sideHit, itemStackIn))
                     {
-                        return p_77659_1_;
+                        return itemStackIn;
                     }
 
-                    if (p_77659_2_.getBlock(var5, var6, var7) instanceof BlockLiquid)
+                    if (worldIn.getBlock(var5, var6, var7) instanceof BlockLiquid)
                     {
-                        Entity var8 = spawnCreature(p_77659_2_, p_77659_1_.getItemDamage(), (double)var5, (double)var6, (double)var7);
+                        Entity var8 = spawnCreature(worldIn, itemStackIn.getItemDamage(), (double)var5, (double)var6, (double)var7);
 
                         if (var8 != null)
                         {
-                            if (var8 instanceof EntityLivingBase && p_77659_1_.hasDisplayName())
+                            if (var8 instanceof EntityLivingBase && itemStackIn.hasDisplayName())
                             {
-                                ((EntityLiving)var8).setCustomNameTag(p_77659_1_.getDisplayName());
+                                ((EntityLiving)var8).setCustomNameTag(itemStackIn.getDisplayName());
                             }
 
-                            if (!p_77659_3_.capabilities.isCreativeMode)
+                            if (!player.capabilities.isCreativeMode)
                             {
-                                --p_77659_1_.stackSize;
+                                --itemStackIn.stackSize;
                             }
                         }
                     }
                 }
 
-                return p_77659_1_;
+                return itemStackIn;
             }
         }
     }
@@ -211,9 +211,9 @@ public class ItemMonsterPlacer extends Item
         }
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        super.registerIcons(p_94581_1_);
-        this.theIcon = p_94581_1_.registerIcon(this.getIconString() + "_overlay");
+        super.registerIcons(register);
+        this.theIcon = register.registerIcon(this.getIconString() + "_overlay");
     }
 }

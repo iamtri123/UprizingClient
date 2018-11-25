@@ -4,23 +4,23 @@ import net.minecraft.util.ResourceLocation;
 
 public interface ISound
 {
-    ResourceLocation func_147650_b();
+    ResourceLocation getSoundLocation();
 
-    boolean func_147657_c();
+    boolean canRepeat();
 
-    int func_147652_d();
+    int getRepeatDelay();
 
-    float func_147653_e();
+    float getVolume();
 
-    float func_147655_f();
+    float getPitch();
 
-    float func_147649_g();
+    float getXPosF();
 
-    float func_147654_h();
+    float getYPosF();
 
-    float func_147651_i();
+    float getZPosF();
 
-    ISound.AttenuationType func_147656_j();
+    ISound.AttenuationType getAttenuationType();
 
     enum AttenuationType
     {
@@ -36,7 +36,7 @@ public interface ISound
             this.field_148589_c = p_i45110_3_;
         }
 
-        public int func_148586_a()
+        public int getTypeInt()
         {
             return this.field_148589_c;
         }

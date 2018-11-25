@@ -8,7 +8,7 @@ public interface IBlockAccess
 {
     Block getBlock(int p_147439_1_, int p_147439_2_, int p_147439_3_);
 
-    TileEntity getTileEntity(int p_147438_1_, int p_147438_2_, int p_147438_3_);
+    TileEntity getTileEntity(int x, int y, int z);
 
     /**
      * Any Light rendered on a 1.8 Block goes through here
@@ -23,12 +23,12 @@ public interface IBlockAccess
     /**
      * Returns true if the block at the specified coordinates is empty
      */
-    boolean isAirBlock(int p_147437_1_, int p_147437_2_, int p_147437_3_);
+    boolean isAirBlock(int x, int y, int z);
 
     /**
      * Gets the biome for a given set of x/z coordinates
      */
-    BiomeGenBase getBiomeGenForCoords(int p_72807_1_, int p_72807_2_);
+    BiomeGenBase getBiomeGenForCoords(int x, int z);
 
     /**
      * Returns current world height.
@@ -43,5 +43,5 @@ public interface IBlockAccess
     /**
      * Is this block powering in the specified direction Args: x, y, z, direction
      */
-    int isBlockProvidingPowerTo(int p_72879_1_, int p_72879_2_, int p_72879_3_, int p_72879_4_);
+    int isBlockProvidingPowerTo(int x, int y, int z, int directionIn);
 }

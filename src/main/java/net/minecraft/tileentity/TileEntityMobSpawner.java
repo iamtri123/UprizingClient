@@ -13,7 +13,7 @@ public class TileEntityMobSpawner extends TileEntity
         private static final String __OBFID = "CL_00000361";
         public void func_98267_a(int p_98267_1_)
         {
-            TileEntityMobSpawner.this.worldObj.func_147452_c(TileEntityMobSpawner.this.field_145851_c, TileEntityMobSpawner.this.field_145848_d, TileEntityMobSpawner.this.field_145849_e, Blocks.mob_spawner, p_98267_1_, 0);
+            TileEntityMobSpawner.this.worldObj.addBlockEvent(TileEntityMobSpawner.this.xCoord, TileEntityMobSpawner.this.yCoord, TileEntityMobSpawner.this.zCoord, Blocks.mob_spawner, p_98267_1_, 0);
         }
         public World getSpawnerWorld()
         {
@@ -21,15 +21,15 @@ public class TileEntityMobSpawner extends TileEntity
         }
         public int getSpawnerX()
         {
-            return TileEntityMobSpawner.this.field_145851_c;
+            return TileEntityMobSpawner.this.xCoord;
         }
         public int getSpawnerY()
         {
-            return TileEntityMobSpawner.this.field_145848_d;
+            return TileEntityMobSpawner.this.yCoord;
         }
         public int getSpawnerZ()
         {
-            return TileEntityMobSpawner.this.field_145849_e;
+            return TileEntityMobSpawner.this.zCoord;
         }
         public void setRandomMinecart(MobSpawnerBaseLogic.WeightedRandomMinecart p_98277_1_)
         {
@@ -37,22 +37,22 @@ public class TileEntityMobSpawner extends TileEntity
 
             if (this.getSpawnerWorld() != null)
             {
-                this.getSpawnerWorld().func_147471_g(TileEntityMobSpawner.this.field_145851_c, TileEntityMobSpawner.this.field_145848_d, TileEntityMobSpawner.this.field_145849_e);
+                this.getSpawnerWorld().markBlockForUpdate(TileEntityMobSpawner.this.xCoord, TileEntityMobSpawner.this.yCoord, TileEntityMobSpawner.this.zCoord);
             }
         }
     };
     private static final String __OBFID = "CL_00000360";
 
-    public void readFromNBT(NBTTagCompound p_145839_1_)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(p_145839_1_);
-        this.field_145882_a.readFromNBT(p_145839_1_);
+        super.readFromNBT(compound);
+        this.field_145882_a.readFromNBT(compound);
     }
 
-    public void writeToNBT(NBTTagCompound p_145841_1_)
+    public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(p_145841_1_);
-        this.field_145882_a.writeToNBT(p_145841_1_);
+        super.writeToNBT(compound);
+        this.field_145882_a.writeToNBT(compound);
     }
 
     public void updateEntity()
@@ -69,12 +69,12 @@ public class TileEntityMobSpawner extends TileEntity
         NBTTagCompound var1 = new NBTTagCompound();
         this.writeToNBT(var1);
         var1.removeTag("SpawnPotentials");
-        return new S35PacketUpdateTileEntity(this.field_145851_c, this.field_145848_d, this.field_145849_e, 1, var1);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, var1);
     }
 
-    public boolean receiveClientEvent(int p_145842_1_, int p_145842_2_)
+    public boolean receiveClientEvent(int id, int type)
     {
-        return this.field_145882_a.setDelayToMin(p_145842_1_) || super.receiveClientEvent(p_145842_1_, p_145842_2_);
+        return this.field_145882_a.setDelayToMin(id) || super.receiveClientEvent(id, type);
     }
 
     public MobSpawnerBaseLogic func_145881_a()

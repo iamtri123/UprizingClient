@@ -78,7 +78,7 @@ public abstract class EntityLiving extends EntityLivingBase
     protected int numTicksToChaseTarget;
     private boolean isLeashed;
     private Entity leashedToEntity;
-    private NBTTagCompound field_110170_bx;
+    private NBTTagCompound leashNBTTag;
     public int randomMobsId = 0;
     public BiomeGenBase spawnBiome = null;
     public BlockPos spawnPosition = null;
@@ -274,7 +274,7 @@ public abstract class EntityLiving extends EntityLivingBase
     {
         if (this.isAIEnabled())
         {
-            this.bodyHelper.func_75664_a();
+            this.bodyHelper.updateRenderAngles();
             return par2;
         }
         else
@@ -291,7 +291,7 @@ public abstract class EntityLiving extends EntityLivingBase
         return null;
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Item.getItemById(0);
     }
@@ -301,7 +301,7 @@ public abstract class EntityLiving extends EntityLivingBase
      */
     protected void dropFewItems(boolean par1, int par2)
     {
-        Item var3 = this.func_146068_u();
+        Item var3 = this.getDropItem();
 
         if (var3 != null)
         {
@@ -314,7 +314,7 @@ public abstract class EntityLiving extends EntityLivingBase
 
             for (int var5 = 0; var5 < var4; ++var5)
             {
-                this.func_145779_a(var3, 1);
+                this.dropItem(var3, 1);
             }
         }
     }
@@ -385,7 +385,7 @@ public abstract class EntityLiving extends EntityLivingBase
         this.setCanPickUpLoot(par1NBTTagCompound.getBoolean("CanPickUpLoot"));
         this.persistenceRequired = par1NBTTagCompound.getBoolean("PersistenceRequired");
 
-        if (par1NBTTagCompound.func_150297_b("CustomName", 8) && par1NBTTagCompound.getString("CustomName").length() > 0)
+        if (par1NBTTagCompound.hasKey("CustomName", 8) && par1NBTTagCompound.getString("CustomName").length() > 0)
         {
             this.setCustomNameTag(par1NBTTagCompound.getString("CustomName"));
         }
@@ -394,7 +394,7 @@ public abstract class EntityLiving extends EntityLivingBase
         NBTTagList var2;
         int var3;
 
-        if (par1NBTTagCompound.func_150297_b("Equipment", 9))
+        if (par1NBTTagCompound.hasKey("Equipment", 9))
         {
             var2 = par1NBTTagCompound.getTagList("Equipment", 10);
 
@@ -404,21 +404,21 @@ public abstract class EntityLiving extends EntityLivingBase
             }
         }
 
-        if (par1NBTTagCompound.func_150297_b("DropChances", 9))
+        if (par1NBTTagCompound.hasKey("DropChances", 9))
         {
             var2 = par1NBTTagCompound.getTagList("DropChances", 5);
 
             for (var3 = 0; var3 < var2.tagCount(); ++var3)
             {
-                this.equipmentDropChances[var3] = var2.func_150308_e(var3);
+                this.equipmentDropChances[var3] = var2.getFloatAt(var3);
             }
         }
 
         this.isLeashed = par1NBTTagCompound.getBoolean("Leashed");
 
-        if (this.isLeashed && par1NBTTagCompound.func_150297_b("Leash", 10))
+        if (this.isLeashed && par1NBTTagCompound.hasKey("Leash", 10))
         {
-            this.field_110170_bx = par1NBTTagCompound.getCompoundTag("Leash");
+            this.leashNBTTag = par1NBTTagCompound.getCompoundTag("Leash");
         }
     }
 
@@ -522,9 +522,9 @@ public abstract class EntityLiving extends EntityLivingBase
                                 this.entityDropItem(var7, 0.0F);
                             }
 
-                            if (var4.getItem() == Items.diamond && var3.func_145800_j() != null)
+                            if (var4.getItem() == Items.diamond && var3.getThrower() != null)
                             {
-                                EntityPlayer var112 = this.worldObj.getPlayerEntityByName(var3.func_145800_j());
+                                EntityPlayer var112 = this.worldObj.getPlayerEntityByName(var3.getThrower());
 
                                 if (var112 != null)
                                 {
@@ -874,7 +874,7 @@ public abstract class EntityLiving extends EntityLivingBase
      */
     protected void addRandomArmor()
     {
-        if (this.rand.nextFloat() < 0.15F * this.worldObj.func_147462_b(this.posX, this.posY, this.posZ))
+        if (this.rand.nextFloat() < 0.15F * this.worldObj.getTensionFactorForBlock(this.posX, this.posY, this.posZ))
         {
             int var1 = this.rand.nextInt(2);
             float var2 = this.worldObj.difficultySetting == EnumDifficulty.HARD ? 0.1F : 0.25F;
@@ -1051,7 +1051,7 @@ public abstract class EntityLiving extends EntityLivingBase
      */
     protected void enchantEquipment()
     {
-        float var1 = this.worldObj.func_147462_b(this.posX, this.posY, this.posZ);
+        float var1 = this.worldObj.getTensionFactorForBlock(this.posX, this.posY, this.posZ);
 
         if (this.getHeldItem() != null && this.rand.nextFloat() < 0.25F * var1)
         {
@@ -1092,7 +1092,7 @@ public abstract class EntityLiving extends EntityLivingBase
         return this.hasCustomNameTag() ? this.getCustomNameTag() : super.getCommandSenderName();
     }
 
-    public void func_110163_bv()
+    public void enablePersistence()
     {
         this.persistenceRequired = true;
     }
@@ -1195,7 +1195,7 @@ public abstract class EntityLiving extends EntityLivingBase
      */
     protected void updateLeashedState()
     {
-        if (this.field_110170_bx != null)
+        if (this.leashNBTTag != null)
         {
             this.recreateLeash();
         }
@@ -1218,12 +1218,12 @@ public abstract class EntityLiving extends EntityLivingBase
 
             if (!this.worldObj.isClient && par2)
             {
-                this.func_145779_a(Items.lead, 1);
+                this.dropItem(Items.lead, 1);
             }
 
             if (!this.worldObj.isClient && par1 && this.worldObj instanceof WorldServer)
             {
-                ((WorldServer)this.worldObj).getEntityTracker().func_151247_a(this, new S1BPacketEntityAttach(1, this, (Entity)null));
+                ((WorldServer)this.worldObj).getEntityTracker().sendToAllTrackingEntity(this, new S1BPacketEntityAttach(1, this, (Entity)null));
             }
         }
     }
@@ -1254,17 +1254,17 @@ public abstract class EntityLiving extends EntityLivingBase
 
         if (!this.worldObj.isClient && par2 && this.worldObj instanceof WorldServer)
         {
-            ((WorldServer)this.worldObj).getEntityTracker().func_151247_a(this, new S1BPacketEntityAttach(1, this, this.leashedToEntity));
+            ((WorldServer)this.worldObj).getEntityTracker().sendToAllTrackingEntity(this, new S1BPacketEntityAttach(1, this, this.leashedToEntity));
         }
     }
 
     private void recreateLeash()
     {
-        if (this.isLeashed && this.field_110170_bx != null)
+        if (this.isLeashed && this.leashNBTTag != null)
         {
-            if (this.field_110170_bx.func_150297_b("UUIDMost", 4) && this.field_110170_bx.func_150297_b("UUIDLeast", 4))
+            if (this.leashNBTTag.hasKey("UUIDMost", 4) && this.leashNBTTag.hasKey("UUIDLeast", 4))
             {
-                UUID var11 = new UUID(this.field_110170_bx.getLong("UUIDMost"), this.field_110170_bx.getLong("UUIDLeast"));
+                UUID var11 = new UUID(this.leashNBTTag.getLong("UUIDMost"), this.leashNBTTag.getLong("UUIDLeast"));
                 List var21 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.boundingBox.expand(10.0D, 10.0D, 10.0D));
                 Iterator var31 = var21.iterator();
 
@@ -1279,11 +1279,11 @@ public abstract class EntityLiving extends EntityLivingBase
                     }
                 }
             }
-            else if (this.field_110170_bx.func_150297_b("X", 99) && this.field_110170_bx.func_150297_b("Y", 99) && this.field_110170_bx.func_150297_b("Z", 99))
+            else if (this.leashNBTTag.hasKey("X", 99) && this.leashNBTTag.hasKey("Y", 99) && this.leashNBTTag.hasKey("Z", 99))
             {
-                int var1 = this.field_110170_bx.getInteger("X");
-                int var2 = this.field_110170_bx.getInteger("Y");
-                int var3 = this.field_110170_bx.getInteger("Z");
+                int var1 = this.leashNBTTag.getInteger("X");
+                int var2 = this.leashNBTTag.getInteger("Y");
+                int var3 = this.leashNBTTag.getInteger("Z");
                 EntityLeashKnot var4 = EntityLeashKnot.getKnotForBlock(this.worldObj, var1, var2, var3);
 
                 if (var4 == null)
@@ -1299,6 +1299,6 @@ public abstract class EntityLiving extends EntityLivingBase
             }
         }
 
-        this.field_110170_bx = null;
+        this.leashNBTTag = null;
     }
 }

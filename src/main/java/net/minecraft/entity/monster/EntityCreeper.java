@@ -78,10 +78,10 @@ public class EntityCreeper extends EntityMob
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float p_70069_1_)
+    protected void fall(float distance)
     {
-        super.fall(p_70069_1_);
-        this.timeSinceIgnited = (int)((float)this.timeSinceIgnited + p_70069_1_ * 1.5F);
+        super.fall(distance);
+        this.timeSinceIgnited = (int)((float)this.timeSinceIgnited + distance * 1.5F);
 
         if (this.timeSinceIgnited > this.fuseTime - 5)
         {
@@ -100,39 +100,39 @@ public class EntityCreeper extends EntityMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
+        super.writeEntityToNBT(tagCompound);
 
         if (this.dataWatcher.getWatchableObjectByte(17) == 1)
         {
-            p_70014_1_.setBoolean("powered", true);
+            tagCompound.setBoolean("powered", true);
         }
 
-        p_70014_1_.setShort("Fuse", (short)this.fuseTime);
-        p_70014_1_.setByte("ExplosionRadius", (byte)this.explosionRadius);
-        p_70014_1_.setBoolean("ignited", this.func_146078_ca());
+        tagCompound.setShort("Fuse", (short)this.fuseTime);
+        tagCompound.setByte("ExplosionRadius", (byte)this.explosionRadius);
+        tagCompound.setBoolean("ignited", this.func_146078_ca());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.dataWatcher.updateObject(17, Byte.valueOf((byte)(p_70037_1_.getBoolean("powered") ? 1 : 0)));
+        super.readEntityFromNBT(tagCompund);
+        this.dataWatcher.updateObject(17, Byte.valueOf((byte)(tagCompund.getBoolean("powered") ? 1 : 0)));
 
-        if (p_70037_1_.func_150297_b("Fuse", 99))
+        if (tagCompund.hasKey("Fuse", 99))
         {
-            this.fuseTime = p_70037_1_.getShort("Fuse");
+            this.fuseTime = tagCompund.getShort("Fuse");
         }
 
-        if (p_70037_1_.func_150297_b("ExplosionRadius", 99))
+        if (tagCompund.hasKey("ExplosionRadius", 99))
         {
-            this.explosionRadius = p_70037_1_.getByte("ExplosionRadius");
+            this.explosionRadius = tagCompund.getByte("ExplosionRadius");
         }
 
-        if (p_70037_1_.getBoolean("ignited"))
+        if (tagCompund.getBoolean("ignited"))
         {
             this.func_146079_cb();
         }
@@ -204,7 +204,7 @@ public class EntityCreeper extends EntityMob
             int var2 = Item.getIdFromItem(Items.record_13);
             int var3 = Item.getIdFromItem(Items.record_wait);
             int var4 = var2 + this.rand.nextInt(var3 - var2 + 1);
-            this.func_145779_a(Item.getItemById(var4), 1);
+            this.dropItem(Item.getItemById(var4), 1);
         }
     }
 
@@ -229,7 +229,7 @@ public class EntityCreeper extends EntityMob
         return ((float)this.lastActiveTime + (float)(this.timeSinceIgnited - this.lastActiveTime) * p_70831_1_) / (float)(this.fuseTime - 2);
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.gunpowder;
     }
@@ -253,9 +253,9 @@ public class EntityCreeper extends EntityMob
     /**
      * Called when a lightning bolt hits the entity.
      */
-    public void onStruckByLightning(EntityLightningBolt p_70077_1_)
+    public void onStruckByLightning(EntityLightningBolt lightningBolt)
     {
-        super.onStruckByLightning(p_70077_1_);
+        super.onStruckByLightning(lightningBolt);
         this.dataWatcher.updateObject(17, Byte.valueOf((byte)1));
     }
 

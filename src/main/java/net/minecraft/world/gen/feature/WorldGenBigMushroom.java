@@ -186,7 +186,7 @@ public class WorldGenBigMushroom extends WorldGenerator
 
                                 if ((var15 != 0 || p_76484_4_ >= p_76484_4_ + var7 - 1) && !p_76484_1_.getBlock(var19, var11, var14).func_149730_j())
                                 {
-                                    this.func_150516_a(p_76484_1_, var19, var11, var14, Block.getBlockById(Block.getIdFromBlock(Blocks.brown_mushroom_block) + var6), var15);
+                                    this.setBlockAndNotifyAdequately(p_76484_1_, var19, var11, var14, Block.getBlockById(Block.getIdFromBlock(Blocks.brown_mushroom_block) + var6), var15);
                                 }
                             }
                         }
@@ -198,7 +198,7 @@ public class WorldGenBigMushroom extends WorldGenerator
 
                         if (!var18.func_149730_j())
                         {
-                            this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var11, p_76484_5_, Block.getBlockById(Block.getIdFromBlock(Blocks.brown_mushroom_block) + var6), 10);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var11, p_76484_5_, Block.getBlockById(Block.getIdFromBlock(Blocks.brown_mushroom_block) + var6), 10);
                         }
                     }
 

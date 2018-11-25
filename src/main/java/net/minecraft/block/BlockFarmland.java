@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 
 public class BlockFarmland extends Block
 {
-    private IIcon field_149824_a;
-    private IIcon field_149823_b;
+    private IIcon iconDry;
+    private IIcon iconWet;
     private static final String __OBFID = "CL_00000241";
 
     protected BlockFarmland()
@@ -29,9 +29,9 @@ public class BlockFarmland extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
-        return AxisAlignedBB.getBoundingBox((double)(p_149668_2_ + 0), (double)(p_149668_3_ + 0), (double)(p_149668_4_ + 0), (double)(p_149668_2_ + 1), (double)(p_149668_3_ + 1), (double)(p_149668_4_ + 1));
+        return AxisAlignedBB.getBoundingBox((double)(x + 0), (double)(y + 0), (double)(z + 0), (double)(x + 1), (double)(y + 1), (double)(z + 1));
     }
 
     public boolean isOpaqueCube()
@@ -47,48 +47,48 @@ public class BlockFarmland extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_1_ == 1 ? (p_149691_2_ > 0 ? this.field_149824_a : this.field_149823_b) : Blocks.dirt.getBlockTextureFromSide(p_149691_1_);
+        return side == 1 ? (meta > 0 ? this.iconDry : this.iconWet) : Blocks.dirt.getBlockTextureFromSide(side);
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        if (!this.func_149821_m(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_) && !p_149674_1_.canLightningStrikeAt(p_149674_2_, p_149674_3_ + 1, p_149674_4_))
+        if (!this.func_149821_m(worldIn, x, y, z) && !worldIn.canLightningStrikeAt(x, y + 1, z))
         {
-            int var6 = p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_);
+            int var6 = worldIn.getBlockMetadata(x, y, z);
 
             if (var6 > 0)
             {
-                p_149674_1_.setBlockMetadataWithNotify(p_149674_2_, p_149674_3_, p_149674_4_, var6 - 1, 2);
+                worldIn.setBlockMetadataWithNotify(x, y, z, var6 - 1, 2);
             }
-            else if (!this.func_149822_e(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_))
+            else if (!this.func_149822_e(worldIn, x, y, z))
             {
-                p_149674_1_.setBlock(p_149674_2_, p_149674_3_, p_149674_4_, Blocks.dirt);
+                worldIn.setBlock(x, y, z, Blocks.dirt);
             }
         }
         else
         {
-            p_149674_1_.setBlockMetadataWithNotify(p_149674_2_, p_149674_3_, p_149674_4_, 7, 2);
+            worldIn.setBlockMetadataWithNotify(x, y, z, 7, 2);
         }
     }
 
     /**
      * Block's chance to react to an entity falling on it.
      */
-    public void onFallenUpon(World p_149746_1_, int p_149746_2_, int p_149746_3_, int p_149746_4_, Entity p_149746_5_, float p_149746_6_)
+    public void onFallenUpon(World worldIn, int x, int y, int z, Entity entityIn, float fallDistance)
     {
-        if (!p_149746_1_.isClient && p_149746_1_.rand.nextFloat() < p_149746_6_ - 0.5F)
+        if (!worldIn.isClient && worldIn.rand.nextFloat() < fallDistance - 0.5F)
         {
-            if (!(p_149746_5_ instanceof EntityPlayer) && !p_149746_1_.getGameRules().getGameRuleBooleanValue("mobGriefing"))
+            if (!(entityIn instanceof EntityPlayer) && !worldIn.getGameRules().getGameRuleBooleanValue("mobGriefing"))
             {
                 return;
             }
 
-            p_149746_1_.setBlock(p_149746_2_, p_149746_3_, p_149746_4_, Blocks.dirt);
+            worldIn.setBlock(x, y, z, Blocks.dirt);
         }
     }
 
@@ -131,33 +131,33 @@ public class BlockFarmland extends Block
         return false;
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        super.onNeighborBlockChange(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
-        Material var6 = p_149695_1_.getBlock(p_149695_2_, p_149695_3_ + 1, p_149695_4_).getMaterial();
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
+        Material var6 = worldIn.getBlock(x, y + 1, z).getMaterial();
 
         if (var6.isSolid())
         {
-            p_149695_1_.setBlock(p_149695_2_, p_149695_3_, p_149695_4_, Blocks.dirt);
+            worldIn.setBlock(x, y, z, Blocks.dirt);
         }
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
-        return Blocks.dirt.getItemDropped(0, p_149650_2_, p_149650_3_);
+        return Blocks.dirt.getItemDropped(0, random, fortune);
     }
 
     /**
      * Gets an item for the block being called on. Args: world, x, y, z
      */
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
+    public Item getItem(World worldIn, int x, int y, int z)
     {
         return Item.getItemFromBlock(Blocks.dirt);
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.field_149824_a = p_149651_1_.registerIcon(this.getTextureName() + "_wet");
-        this.field_149823_b = p_149651_1_.registerIcon(this.getTextureName() + "_dry");
+        this.iconDry = reg.registerIcon(this.getTextureName() + "_wet");
+        this.iconWet = reg.registerIcon(this.getTextureName() + "_dry");
     }
 }

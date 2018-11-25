@@ -20,7 +20,7 @@ public class ItemCloth extends ItemBlock
      */
     public IIcon getIconFromDamage(int p_77617_1_)
     {
-        return this.field_150939_a.func_149735_b(2, BlockColored.func_150032_b(p_77617_1_));
+        return this.blockInstance.getItemIcon(2, BlockColored.func_150032_b(p_77617_1_));
     }
 
     /**
@@ -35,8 +35,8 @@ public class ItemCloth extends ItemBlock
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName() + "." + ItemDye.field_150923_a[BlockColored.func_150032_b(p_77667_1_.getItemDamage())];
+        return super.getUnlocalizedName() + "." + ItemDye.dyeColorNames[BlockColored.func_150032_b(stack.getItemDamage())];
     }
 }

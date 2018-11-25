@@ -17,5 +17,5 @@ public interface IMerchant
 
     void useRecipe(MerchantRecipe p_70933_1_);
 
-    void func_110297_a_(ItemStack p_110297_1_);
+    void verifySellingItem(ItemStack p_110297_1_);
 }

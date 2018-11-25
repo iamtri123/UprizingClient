@@ -654,7 +654,7 @@ public class ItemRenderer
         for (int var4 = 0; var4 < 2; ++var4)
         {
             GL11.glPushMatrix();
-            IIcon var5 = Blocks.fire.func_149840_c(1);
+            IIcon var5 = Blocks.fire.getFireIcon(1);
             this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
             float var6 = var5.getMinU();
             float var7 = var5.getMaxU();

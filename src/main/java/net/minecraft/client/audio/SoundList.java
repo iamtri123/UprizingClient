@@ -6,31 +6,31 @@ import java.util.List;
 public class SoundList
 {
     private final List field_148577_a = Lists.newArrayList();
-    private boolean field_148575_b;
+    private boolean replaceExisting;
     private SoundCategory field_148576_c;
     private static final String __OBFID = "CL_00001121";
 
-    public List func_148570_a()
+    public List getSoundList()
     {
         return this.field_148577_a;
     }
 
-    public boolean func_148574_b()
+    public boolean canReplaceExisting()
     {
-        return this.field_148575_b;
+        return this.replaceExisting;
     }
 
-    public void func_148572_a(boolean p_148572_1_)
+    public void setReplaceExisting(boolean p_148572_1_)
     {
-        this.field_148575_b = p_148572_1_;
+        this.replaceExisting = p_148572_1_;
     }
 
-    public SoundCategory func_148573_c()
+    public SoundCategory getSoundCategory()
     {
         return this.field_148576_c;
     }
 
-    public void func_148571_a(SoundCategory p_148571_1_)
+    public void setSoundCategory(SoundCategory p_148571_1_)
     {
         this.field_148576_c = p_148571_1_;
     }
@@ -51,62 +51,62 @@ public class SoundList
             this.field_148564_f = false;
         }
 
-        public String func_148556_a()
+        public String getSoundEntryName()
         {
             return this.field_148569_a;
         }
 
-        public void func_148561_a(String p_148561_1_)
+        public void setSoundEntryName(String p_148561_1_)
         {
             this.field_148569_a = p_148561_1_;
         }
 
-        public float func_148558_b()
+        public float getSoundEntryVolume()
         {
             return this.field_148567_b;
         }
 
-        public void func_148553_a(float p_148553_1_)
+        public void setSoundEntryVolume(float p_148553_1_)
         {
             this.field_148567_b = p_148553_1_;
         }
 
-        public float func_148560_c()
+        public float getSoundEntryPitch()
         {
             return this.field_148568_c;
         }
 
-        public void func_148559_b(float p_148559_1_)
+        public void setSoundEntryPitch(float p_148559_1_)
         {
             this.field_148568_c = p_148559_1_;
         }
 
-        public int func_148555_d()
+        public int getSoundEntryWeight()
         {
             return this.field_148565_d;
         }
 
-        public void func_148554_a(int p_148554_1_)
+        public void setSoundEntryWeight(int p_148554_1_)
         {
             this.field_148565_d = p_148554_1_;
         }
 
-        public SoundList.SoundEntry.Type func_148563_e()
+        public SoundList.SoundEntry.Type getSoundEntryType()
         {
             return this.field_148566_e;
         }
 
-        public void func_148562_a(SoundList.SoundEntry.Type p_148562_1_)
+        public void setSoundEntryType(SoundList.SoundEntry.Type p_148562_1_)
         {
             this.field_148566_e = p_148562_1_;
         }
 
-        public boolean func_148552_f()
+        public boolean isStreaming()
         {
             return this.field_148564_f;
         }
 
-        public void func_148557_a(boolean p_148557_1_)
+        public void setStreaming(boolean p_148557_1_)
         {
             this.field_148564_f = p_148557_1_;
         }
@@ -125,7 +125,7 @@ public class SoundList
                 this.field_148583_c = p_i45109_3_;
             }
 
-            public static SoundList.SoundEntry.Type func_148580_a(String p_148580_0_)
+            public static SoundList.SoundEntry.Type getType(String p_148580_0_)
             {
                 SoundList.SoundEntry.Type[] var1 = values();
                 int var2 = var1.length;

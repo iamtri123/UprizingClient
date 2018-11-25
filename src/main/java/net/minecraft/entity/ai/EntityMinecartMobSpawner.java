@@ -52,7 +52,7 @@ public class EntityMinecartMobSpawner extends EntityMinecart
         return 4;
     }
 
-    public Block func_145817_o()
+    public Block getDefaultDisplayTile()
     {
         return Blocks.mob_spawner;
     }
@@ -60,19 +60,19 @@ public class EntityMinecartMobSpawner extends EntityMinecart
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.mobSpawnerLogic.readFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
+        this.mobSpawnerLogic.readFromNBT(tagCompund);
     }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        this.mobSpawnerLogic.writeToNBT(p_70014_1_);
+        super.writeEntityToNBT(tagCompound);
+        this.mobSpawnerLogic.writeToNBT(tagCompound);
     }
 
     public void handleHealthUpdate(byte p_70103_1_)

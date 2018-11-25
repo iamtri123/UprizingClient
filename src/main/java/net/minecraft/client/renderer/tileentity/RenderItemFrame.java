@@ -245,7 +245,7 @@ public class RenderItemFrame extends Render
                 }
 
                 RenderItem.renderInFrame = true;
-                RenderManager.instance.func_147940_a(var3, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+                RenderManager.instance.renderEntityWithPosYaw(var3, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
                 RenderItem.renderInFrame = false;
 
                 if (var4 == Items.compass)
@@ -310,7 +310,7 @@ public class RenderItemFrame extends Render
                 }
                 else
                 {
-                    this.func_147906_a(p_147914_1_, var13, p_147914_2_, p_147914_4_, p_147914_6_, 64);
+                    this.renderLivingLabel(p_147914_1_, var13, p_147914_2_, p_147914_4_, p_147914_6_, 64);
                 }
             }
         }

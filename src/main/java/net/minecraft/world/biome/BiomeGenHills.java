@@ -70,10 +70,10 @@ public class BiomeGenHills extends BiomeGenBase
         }
     }
 
-    public void func_150573_a(World p_150573_1_, Random p_150573_2_, Block[] p_150573_3_, byte[] p_150573_4_, int p_150573_5_, int p_150573_6_, double p_150573_7_)
+    public void genTerrainBlocks(World p_150573_1_, Random p_150573_2_, Block[] p_150573_3_, byte[] p_150573_4_, int p_150573_5_, int p_150573_6_, double p_150573_7_)
     {
         this.topBlock = Blocks.grass;
-        this.field_150604_aj = 0;
+        this.topBlockMetadata = 0;
         this.fillerBlock = Blocks.dirt;
 
         if ((p_150573_7_ < -1.0D || p_150573_7_ > 2.0D) && this.field_150638_aH == this.field_150637_aG)
@@ -87,21 +87,21 @@ public class BiomeGenHills extends BiomeGenBase
             this.fillerBlock = Blocks.stone;
         }
 
-        this.func_150560_b(p_150573_1_, p_150573_2_, p_150573_3_, p_150573_4_, p_150573_5_, p_150573_6_, p_150573_7_);
+        this.genBiomeTerrain(p_150573_1_, p_150573_2_, p_150573_3_, p_150573_4_, p_150573_5_, p_150573_6_, p_150573_7_);
     }
 
-    private BiomeGenHills func_150633_b(BiomeGenBase p_150633_1_)
+    private BiomeGenHills mutateHills(BiomeGenBase p_150633_1_)
     {
         this.field_150638_aH = this.field_150637_aG;
         this.func_150557_a(p_150633_1_.color, true);
         this.setBiomeName(p_150633_1_.biomeName + " M");
-        this.func_150570_a(new BiomeGenBase.Height(p_150633_1_.minHeight, p_150633_1_.maxHeight));
+        this.setHeight(new BiomeGenBase.Height(p_150633_1_.minHeight, p_150633_1_.maxHeight));
         this.setTemperatureRainfall(p_150633_1_.temperature, p_150633_1_.rainfall);
         return this;
     }
 
-    protected BiomeGenBase func_150566_k()
+    protected BiomeGenBase createMutation()
     {
-        return (new BiomeGenHills(this.biomeID + 128, false)).func_150633_b(this);
+        return (new BiomeGenHills(this.biomeID + 128, false)).mutateHills(this);
     }
 }

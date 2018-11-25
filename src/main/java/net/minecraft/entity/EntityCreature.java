@@ -33,7 +33,7 @@ public abstract class EntityCreature extends EntityLiving
 
     /** If -1 there is no maximum distance */
     private float maximumHomeDistance = -1.0F;
-    private final EntityAIBase field_110178_bs = new EntityAIMoveTowardsRestriction(this, 1.0D);
+    private final EntityAIBase aiBase = new EntityAIMoveTowardsRestriction(this, 1.0D);
     private boolean field_110180_bt;
     private static final String __OBFID = "CL_00001558";
 
@@ -319,7 +319,7 @@ public abstract class EntityCreature extends EntityLiving
         return this.homePosition;
     }
 
-    public float func_110174_bM()
+    public float getMaximumHomeDistance()
     {
         return this.maximumHomeDistance;
     }
@@ -362,7 +362,7 @@ public abstract class EntityCreature extends EntityLiving
 
             if (!this.field_110180_bt)
             {
-                this.tasks.addTask(2, this.field_110178_bs);
+                this.tasks.addTask(2, this.aiBase);
                 this.getNavigator().setAvoidsWater(false);
                 this.field_110180_bt = true;
             }
@@ -392,7 +392,7 @@ public abstract class EntityCreature extends EntityLiving
         else if (!this.getLeashed() && this.field_110180_bt)
         {
             this.field_110180_bt = false;
-            this.tasks.removeTask(this.field_110178_bs);
+            this.tasks.removeTask(this.aiBase);
             this.getNavigator().setAvoidsWater(true);
             this.detachHome();
         }

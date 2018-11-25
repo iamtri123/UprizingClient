@@ -24,7 +24,7 @@ public class BlockBeacon extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityBeacon();
     }
@@ -32,19 +32,19 @@ public class BlockBeacon extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ)
     {
-        if (p_149727_1_.isClient)
+        if (worldIn.isClient)
         {
             return true;
         }
         else
         {
-            TileEntityBeacon var10 = (TileEntityBeacon)p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_);
+            TileEntityBeacon var10 = (TileEntityBeacon)worldIn.getTileEntity(x, y, z);
 
             if (var10 != null)
             {
-                p_149727_5_.func_146104_a(var10);
+                player.func_146104_a(var10);
             }
 
             return true;
@@ -69,21 +69,21 @@ public class BlockBeacon extends BlockContainer
         return 34;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        super.registerBlockIcons(p_149651_1_);
+        super.registerBlockIcons(reg);
     }
 
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn)
     {
-        super.onBlockPlacedBy(p_149689_1_, p_149689_2_, p_149689_3_, p_149689_4_, p_149689_5_, p_149689_6_);
+        super.onBlockPlacedBy(worldIn, x, y, z, placer, itemIn);
 
-        if (p_149689_6_.hasDisplayName())
+        if (itemIn.hasDisplayName())
         {
-            ((TileEntityBeacon)p_149689_1_.getTileEntity(p_149689_2_, p_149689_3_, p_149689_4_)).func_145999_a(p_149689_6_.getDisplayName());
+            ((TileEntityBeacon)worldIn.getTileEntity(x, y, z)).func_145999_a(itemIn.getDisplayName());
         }
     }
 }

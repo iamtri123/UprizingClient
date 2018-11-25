@@ -25,24 +25,24 @@ public class S19PacketEntityStatus extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149164_a = p_148837_1_.readInt();
-        this.field_149163_b = p_148837_1_.readByte();
+        this.field_149164_a = data.readInt();
+        this.field_149163_b = data.readByte();
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149164_a);
-        p_148840_1_.writeByte(this.field_149163_b);
+        data.writeInt(this.field_149164_a);
+        data.writeByte(this.field_149163_b);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleEntityStatus(this);
+        handler.handleEntityStatus(this);
     }
 
     public Entity func_149161_a(World p_149161_1_)
@@ -55,8 +55,8 @@ public class S19PacketEntityStatus extends Packet
         return this.field_149163_b;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

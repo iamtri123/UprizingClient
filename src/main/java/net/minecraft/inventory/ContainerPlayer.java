@@ -47,13 +47,13 @@ public class ContainerPlayer extends Container
                 {
                     return 1;
                 }
-                public boolean isItemValid(ItemStack p_75214_1_)
+                public boolean isItemValid(ItemStack stack)
                 {
-                    return p_75214_1_ != null && (p_75214_1_.getItem() instanceof ItemArmor ? ((ItemArmor) p_75214_1_.getItem()).armorType == var44 : (p_75214_1_.getItem() == Item.getItemFromBlock(Blocks.pumpkin) || p_75214_1_.getItem() == Items.skull && var44 == 0));
+                    return stack != null && (stack.getItem() instanceof ItemArmor ? ((ItemArmor) stack.getItem()).armorType == var44 : (stack.getItem() == Item.getItemFromBlock(Blocks.pumpkin) || stack.getItem() == Items.skull && var44 == 0));
                 }
                 public IIcon getBackgroundIconIndex()
                 {
-                    return ItemArmor.func_94602_b(var44);
+                    return ItemArmor.getBackgroundIcon(var44);
                 }
             });
         }
@@ -102,7 +102,7 @@ public class ContainerPlayer extends Container
         this.craftResult.setInventorySlotContents(0, (ItemStack)null);
     }
 
-    public boolean canInteractWith(EntityPlayer p_75145_1_)
+    public boolean canInteractWith(EntityPlayer player)
     {
         return true;
     }
@@ -110,17 +110,17 @@ public class ContainerPlayer extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack var3 = null;
-        Slot var4 = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot var4 = (Slot)this.inventorySlots.get(index);
 
         if (var4 != null && var4.getHasStack())
         {
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (p_82846_2_ == 0)
+            if (index == 0)
             {
                 if (!this.mergeItemStack(var5, 9, 45, true))
                 {
@@ -129,14 +129,14 @@ public class ContainerPlayer extends Container
 
                 var4.onSlotChange(var5, var3);
             }
-            else if (p_82846_2_ >= 1 && p_82846_2_ < 5)
+            else if (index >= 1 && index < 5)
             {
                 if (!this.mergeItemStack(var5, 9, 45, false))
                 {
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 5 && p_82846_2_ < 9)
+            else if (index >= 5 && index < 9)
             {
                 if (!this.mergeItemStack(var5, 9, 45, false))
                 {
@@ -152,14 +152,14 @@ public class ContainerPlayer extends Container
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 9 && p_82846_2_ < 36)
+            else if (index >= 9 && index < 36)
             {
                 if (!this.mergeItemStack(var5, 36, 45, false))
                 {
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 36 && p_82846_2_ < 45)
+            else if (index >= 36 && index < 45)
             {
                 if (!this.mergeItemStack(var5, 9, 36, false))
                 {
@@ -185,7 +185,7 @@ public class ContainerPlayer extends Container
                 return null;
             }
 
-            var4.onPickupFromSlot(p_82846_1_, var5);
+            var4.onPickupFromSlot(player, var5);
         }
 
         return var3;

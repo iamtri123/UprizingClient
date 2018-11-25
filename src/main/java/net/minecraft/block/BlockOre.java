@@ -19,7 +19,7 @@ public class BlockOre extends Block
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return this == Blocks.coal_ore ? Items.coal : (this == Blocks.diamond_ore ? Items.diamond : (this == Blocks.lapis_ore ? Items.dye : (this == Blocks.emerald_ore ? Items.emerald : (this == Blocks.quartz_ore ? Items.quartz : Item.getItemFromBlock(this)))));
     }
@@ -27,73 +27,73 @@ public class BlockOre extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
-        return this == Blocks.lapis_ore ? 4 + p_149745_1_.nextInt(5) : 1;
+        return this == Blocks.lapis_ore ? 4 + random.nextInt(5) : 1;
     }
 
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
-    public int quantityDroppedWithBonus(int p_149679_1_, Random p_149679_2_)
+    public int quantityDroppedWithBonus(int maxBonus, Random random)
     {
-        if (p_149679_1_ > 0 && Item.getItemFromBlock(this) != this.getItemDropped(0, p_149679_2_, p_149679_1_))
+        if (maxBonus > 0 && Item.getItemFromBlock(this) != this.getItemDropped(0, random, maxBonus))
         {
-            int var3 = p_149679_2_.nextInt(p_149679_1_ + 2) - 1;
+            int var3 = random.nextInt(maxBonus + 2) - 1;
 
             if (var3 < 0)
             {
                 var3 = 0;
             }
 
-            return this.quantityDropped(p_149679_2_) * (var3 + 1);
+            return this.quantityDropped(random) * (var3 + 1);
         }
         else
         {
-            return this.quantityDropped(p_149679_2_);
+            return this.quantityDropped(random);
         }
     }
 
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World p_149690_1_, int p_149690_2_, int p_149690_3_, int p_149690_4_, int p_149690_5_, float p_149690_6_, int p_149690_7_)
+    public void dropBlockAsItemWithChance(World worldIn, int x, int y, int z, int meta, float chance, int fortune)
     {
-        super.dropBlockAsItemWithChance(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, p_149690_5_, p_149690_6_, p_149690_7_);
+        super.dropBlockAsItemWithChance(worldIn, x, y, z, meta, chance, fortune);
 
-        if (this.getItemDropped(p_149690_5_, p_149690_1_.rand, p_149690_7_) != Item.getItemFromBlock(this))
+        if (this.getItemDropped(meta, worldIn.rand, fortune) != Item.getItemFromBlock(this))
         {
             int var8 = 0;
 
             if (this == Blocks.coal_ore)
             {
-                var8 = MathHelper.getRandomIntegerInRange(p_149690_1_.rand, 0, 2);
+                var8 = MathHelper.getRandomIntegerInRange(worldIn.rand, 0, 2);
             }
             else if (this == Blocks.diamond_ore)
             {
-                var8 = MathHelper.getRandomIntegerInRange(p_149690_1_.rand, 3, 7);
+                var8 = MathHelper.getRandomIntegerInRange(worldIn.rand, 3, 7);
             }
             else if (this == Blocks.emerald_ore)
             {
-                var8 = MathHelper.getRandomIntegerInRange(p_149690_1_.rand, 3, 7);
+                var8 = MathHelper.getRandomIntegerInRange(worldIn.rand, 3, 7);
             }
             else if (this == Blocks.lapis_ore)
             {
-                var8 = MathHelper.getRandomIntegerInRange(p_149690_1_.rand, 2, 5);
+                var8 = MathHelper.getRandomIntegerInRange(worldIn.rand, 2, 5);
             }
             else if (this == Blocks.quartz_ore)
             {
-                var8 = MathHelper.getRandomIntegerInRange(p_149690_1_.rand, 2, 5);
+                var8 = MathHelper.getRandomIntegerInRange(worldIn.rand, 2, 5);
             }
 
-            this.dropXpOnBlockBreak(p_149690_1_, p_149690_2_, p_149690_3_, p_149690_4_, var8);
+            this.dropXpOnBlockBreak(worldIn, x, y, z, var8);
         }
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
         return this == Blocks.lapis_ore ? 4 : 0;
     }

@@ -115,7 +115,7 @@ public class EntityXPOrb extends Entity
             this.playSound("random.fizz", 0.4F, 2.0F + this.rand.nextFloat() * 0.4F);
         }
 
-        this.func_145771_j(this.posX, (this.boundingBox.minY + this.boundingBox.maxY) / 2.0D, this.posZ);
+        this.pushOutOfBlocks(this.posX, (this.boundingBox.minY + this.boundingBox.maxY) / 2.0D, this.posZ);
         double var1 = 8.0D;
 
         if (this.xpTargetColor < this.xpColor - 20 + this.getEntityId() % 100)
@@ -183,15 +183,15 @@ public class EntityXPOrb extends Entity
      * Will deal the specified amount of damage to the entity if the entity isn't immune to fire damage. Args:
      * amountDamage
      */
-    protected void dealFireDamage(int p_70081_1_)
+    protected void dealFireDamage(int amount)
     {
-        this.attackEntityFrom(DamageSource.inFire, (float)p_70081_1_);
+        this.attackEntityFrom(DamageSource.inFire, (float)amount);
     }
 
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -200,7 +200,7 @@ public class EntityXPOrb extends Entity
         else
         {
             this.setBeenAttacked();
-            this.xpOrbHealth = (int)((float)this.xpOrbHealth - p_70097_2_);
+            this.xpOrbHealth = (int)((float)this.xpOrbHealth - amount);
 
             if (this.xpOrbHealth <= 0)
             {
@@ -214,36 +214,36 @@ public class EntityXPOrb extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        p_70014_1_.setShort("Health", (short)((byte)this.xpOrbHealth));
-        p_70014_1_.setShort("Age", (short)this.xpOrbAge);
-        p_70014_1_.setShort("Value", (short)this.xpValue);
+        tagCompound.setShort("Health", (short)((byte)this.xpOrbHealth));
+        tagCompound.setShort("Age", (short)this.xpOrbAge);
+        tagCompound.setShort("Value", (short)this.xpValue);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        this.xpOrbHealth = p_70037_1_.getShort("Health") & 255;
-        this.xpOrbAge = p_70037_1_.getShort("Age");
-        this.xpValue = p_70037_1_.getShort("Value");
+        this.xpOrbHealth = tagCompund.getShort("Health") & 255;
+        this.xpOrbAge = tagCompund.getShort("Age");
+        this.xpValue = tagCompund.getShort("Value");
     }
 
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer p_70100_1_)
+    public void onCollideWithPlayer(EntityPlayer entityIn)
     {
         if (!this.worldObj.isClient)
         {
-            if (this.field_70532_c == 0 && p_70100_1_.xpCooldown == 0)
+            if (this.field_70532_c == 0 && entityIn.xpCooldown == 0)
             {
-                p_70100_1_.xpCooldown = 2;
-                this.worldObj.playSoundAtEntity(p_70100_1_, "random.orb", 0.1F, 0.5F * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.8F));
-                p_70100_1_.onItemPickup(this, 1);
-                p_70100_1_.addExperience(this.xpValue);
+                entityIn.xpCooldown = 2;
+                this.worldObj.playSoundAtEntity(entityIn, "random.orb", 0.1F, 0.5F * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.8F));
+                entityIn.onItemPickup(this, 1);
+                entityIn.addExperience(this.xpValue);
                 this.setDead();
             }
         }

@@ -36,9 +36,9 @@ public class InventoryCrafting implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int p_70301_1_)
+    public ItemStack getStackInSlot(int slotIn)
     {
-        return p_70301_1_ >= this.getSizeInventory() ? null : this.stackList[p_70301_1_];
+        return slotIn >= this.getSizeInventory() ? null : this.stackList[slotIn];
     }
 
     /**
@@ -80,12 +80,12 @@ public class InventoryCrafting implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
-        if (this.stackList[p_70304_1_] != null)
+        if (this.stackList[index] != null)
         {
-            ItemStack var2 = this.stackList[p_70304_1_];
-            this.stackList[p_70304_1_] = null;
+            ItemStack var2 = this.stackList[index];
+            this.stackList[index] = null;
             return var2;
         }
         else
@@ -98,26 +98,26 @@ public class InventoryCrafting implements IInventory
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (this.stackList[p_70298_1_] != null)
+        if (this.stackList[index] != null)
         {
             ItemStack var3;
 
-            if (this.stackList[p_70298_1_].stackSize <= p_70298_2_)
+            if (this.stackList[index].stackSize <= count)
             {
-                var3 = this.stackList[p_70298_1_];
-                this.stackList[p_70298_1_] = null;
+                var3 = this.stackList[index];
+                this.stackList[index] = null;
                 this.eventHandler.onCraftMatrixChanged(this);
                 return var3;
             }
             else
             {
-                var3 = this.stackList[p_70298_1_].splitStack(p_70298_2_);
+                var3 = this.stackList[index].splitStack(count);
 
-                if (this.stackList[p_70298_1_].stackSize == 0)
+                if (this.stackList[index].stackSize == 0)
                 {
-                    this.stackList[p_70298_1_] = null;
+                    this.stackList[index] = null;
                 }
 
                 this.eventHandler.onCraftMatrixChanged(this);
@@ -133,9 +133,9 @@ public class InventoryCrafting implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        this.stackList[p_70299_1_] = p_70299_2_;
+        this.stackList[index] = stack;
         this.eventHandler.onCraftMatrixChanged(this);
     }
 
@@ -155,7 +155,7 @@ public class InventoryCrafting implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    public boolean isUseableByPlayer(EntityPlayer player)
     {
         return true;
     }
@@ -167,7 +167,7 @@ public class InventoryCrafting implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return true;
     }

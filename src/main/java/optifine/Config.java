@@ -740,9 +740,9 @@ public class Config
             list.add(entry.getResourcePack());
         }
 
-        if (rep.func_148530_e() != null)
+        if (rep.getResourcePackInstance() != null)
         {
-            list.add(rep.func_148530_e());
+            list.add(rep.getResourcePackInstance());
         }
 
         IResourcePack[] rps1 = (IResourcePack[])((IResourcePack[])list.toArray(new IResourcePack[list.size()]));

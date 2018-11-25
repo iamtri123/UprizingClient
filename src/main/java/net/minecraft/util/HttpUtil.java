@@ -32,10 +32,10 @@ public class HttpUtil
     /**
      * Builds an encoded HTTP POST content string from a string map
      */
-    public static String buildPostString(Map p_76179_0_)
+    public static String buildPostString(Map data)
     {
         StringBuilder var1 = new StringBuilder();
-        Iterator var2 = p_76179_0_.entrySet().iterator();
+        Iterator var2 = data.entrySet().iterator();
 
         while (var2.hasNext())
         {
@@ -73,12 +73,12 @@ public class HttpUtil
         return var1.toString();
     }
 
-    public static String func_151226_a(URL p_151226_0_, Map p_151226_1_, boolean p_151226_2_)
+    public static String postMap(URL url, Map data, boolean skipLoggingErrors)
     {
-        return func_151225_a(p_151226_0_, buildPostString(p_151226_1_), p_151226_2_);
+        return post(url, buildPostString(data), skipLoggingErrors);
     }
 
-    private static String func_151225_a(URL p_151225_0_, String p_151225_1_, boolean p_151225_2_)
+    private static String post(URL url, String content, boolean skipLoggingErrors)
     {
         try
         {
@@ -89,16 +89,16 @@ public class HttpUtil
                 var3 = Proxy.NO_PROXY;
             }
 
-            HttpURLConnection var4 = (HttpURLConnection)p_151225_0_.openConnection(var3);
+            HttpURLConnection var4 = (HttpURLConnection)url.openConnection(var3);
             var4.setRequestMethod("POST");
             var4.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            var4.setRequestProperty("Content-Length", "" + p_151225_1_.getBytes().length);
+            var4.setRequestProperty("Content-Length", "" + content.getBytes().length);
             var4.setRequestProperty("Content-Language", "en-US");
             var4.setUseCaches(false);
             var4.setDoInput(true);
             var4.setDoOutput(true);
             DataOutputStream var5 = new DataOutputStream(var4.getOutputStream());
-            var5.writeBytes(p_151225_1_);
+            var5.writeBytes(content);
             var5.flush();
             var5.close();
             BufferedReader var6 = new BufferedReader(new InputStreamReader(var4.getInputStream()));
@@ -116,16 +116,16 @@ public class HttpUtil
         }
         catch (Exception var9)
         {
-            if (!p_151225_2_)
+            if (!skipLoggingErrors)
             {
-                logger.error("Could not post to " + p_151225_0_, var9);
+                logger.error("Could not post to " + url, var9);
             }
 
             return "";
         }
     }
 
-    public static void func_151223_a(final File p_151223_0_, final String p_151223_1_, final HttpUtil.DownloadListener p_151223_2_, final Map p_151223_3_, final int p_151223_4_, final IProgressUpdate p_151223_5_, final Proxy p_151223_6_)
+    public static void downloadResourcePack(final File packFile, final String packName, final HttpUtil.DownloadListener completionListener, final Map requestData, final int maxSize, final IProgressUpdate loadingScreen, final Proxy proxy)
     {
         Thread var7 = new Thread(new Runnable()
         {
@@ -136,29 +136,29 @@ public class HttpUtil
                 InputStream var2 = null;
                 DataOutputStream var3 = null;
 
-                if (p_151223_5_ != null)
+                if (loadingScreen != null)
                 {
-                    p_151223_5_.resetProgressAndMessage("Downloading Texture Pack");
-                    p_151223_5_.resetProgresAndWorkingMessage("Making Request...");
+                    loadingScreen.resetProgressAndMessage("Downloading Texture Pack");
+                    loadingScreen.resetProgresAndWorkingMessage("Making Request...");
                 }
 
                 try
                 {
                     byte[] var4 = new byte[4096];
-                    URL var5 = new URL(p_151223_1_);
-                    var1 = var5.openConnection(p_151223_6_);
+                    URL var5 = new URL(packName);
+                    var1 = var5.openConnection(proxy);
                     float var6 = 0.0F;
-                    float var7 = (float)p_151223_3_.entrySet().size();
-                    Iterator var8 = p_151223_3_.entrySet().iterator();
+                    float var7 = (float)requestData.entrySet().size();
+                    Iterator var8 = requestData.entrySet().iterator();
 
                     while (var8.hasNext())
                     {
                         Entry var9 = (Entry)var8.next();
                         var1.setRequestProperty((String)var9.getKey(), (String)var9.getValue());
 
-                        if (p_151223_5_ != null)
+                        if (loadingScreen != null)
                         {
-                            p_151223_5_.setLoadingProgress((int)(++var6 / var7 * 100.0F));
+                            loadingScreen.setLoadingProgress((int)(++var6 / var7 * 100.0F));
                         }
                     }
 
@@ -166,45 +166,45 @@ public class HttpUtil
                     var7 = (float)var1.getContentLength();
                     int var28 = var1.getContentLength();
 
-                    if (p_151223_5_ != null)
+                    if (loadingScreen != null)
                     {
-                        p_151223_5_.resetProgresAndWorkingMessage(String.format("Downloading file (%.2f MB)...", Float.valueOf(var7 / 1000.0F / 1000.0F)));
+                        loadingScreen.resetProgresAndWorkingMessage(String.format("Downloading file (%.2f MB)...", Float.valueOf(var7 / 1000.0F / 1000.0F)));
                     }
 
-                    if (p_151223_0_.exists())
+                    if (packFile.exists())
                     {
-                        long var29 = p_151223_0_.length();
+                        long var29 = packFile.length();
 
                         if (var29 == (long)var28)
                         {
-                            p_151223_2_.func_148522_a(p_151223_0_);
+                            completionListener.onDownloadComplete(packFile);
 
-                            if (p_151223_5_ != null)
+                            if (loadingScreen != null)
                             {
-                                p_151223_5_.func_146586_a();
+                                loadingScreen.setDoneWorking();
                             }
 
                             return;
                         }
 
-                        HttpUtil.logger.warn("Deleting " + p_151223_0_ + " as it does not match what we currently have (" + var28 + " vs our " + var29 + ").");
-                        p_151223_0_.delete();
+                        HttpUtil.logger.warn("Deleting " + packFile + " as it does not match what we currently have (" + var28 + " vs our " + var29 + ").");
+                        packFile.delete();
                     }
-                    else if (p_151223_0_.getParentFile() != null)
+                    else if (packFile.getParentFile() != null)
                     {
-                        p_151223_0_.getParentFile().mkdirs();
+                        packFile.getParentFile().mkdirs();
                     }
 
-                    var3 = new DataOutputStream(new FileOutputStream(p_151223_0_));
+                    var3 = new DataOutputStream(new FileOutputStream(packFile));
 
-                    if (p_151223_4_ > 0 && var7 > (float)p_151223_4_)
+                    if (maxSize > 0 && var7 > (float)maxSize)
                     {
-                        if (p_151223_5_ != null)
+                        if (loadingScreen != null)
                         {
-                            p_151223_5_.func_146586_a();
+                            loadingScreen.setDoneWorking();
                         }
 
-                        throw new IOException("Filesize is bigger than maximum allowed (file is " + var6 + ", limit is " + p_151223_4_ + ")");
+                        throw new IOException("Filesize is bigger than maximum allowed (file is " + var6 + ", limit is " + maxSize + ")");
                     }
 
                     boolean var30 = false;
@@ -214,29 +214,29 @@ public class HttpUtil
                     {
                         var6 += (float)var31;
 
-                        if (p_151223_5_ != null)
+                        if (loadingScreen != null)
                         {
-                            p_151223_5_.setLoadingProgress((int)(var6 / var7 * 100.0F));
+                            loadingScreen.setLoadingProgress((int)(var6 / var7 * 100.0F));
                         }
 
-                        if (p_151223_4_ > 0 && var6 > (float)p_151223_4_)
+                        if (maxSize > 0 && var6 > (float)maxSize)
                         {
-                            if (p_151223_5_ != null)
+                            if (loadingScreen != null)
                             {
-                                p_151223_5_.func_146586_a();
+                                loadingScreen.setDoneWorking();
                             }
 
-                            throw new IOException("Filesize was bigger than maximum allowed (got >= " + var6 + ", limit was " + p_151223_4_ + ")");
+                            throw new IOException("Filesize was bigger than maximum allowed (got >= " + var6 + ", limit was " + maxSize + ")");
                         }
 
                         var3.write(var4, 0, var31);
                     }
 
-                    p_151223_2_.func_148522_a(p_151223_0_);
+                    completionListener.onDownloadComplete(packFile);
 
-                    if (p_151223_5_ != null)
+                    if (loadingScreen != null)
                     {
-                        p_151223_5_.func_146586_a();
+                        loadingScreen.setDoneWorking();
                     }
                 }
                 catch (Throwable var26)
@@ -273,7 +273,7 @@ public class HttpUtil
         var7.start();
     }
 
-    public static int func_76181_a() throws IOException
+    public static int getSuitableLanPort() throws IOException
     {
         ServerSocket var0 = null;
         boolean var1 = true;
@@ -301,9 +301,9 @@ public class HttpUtil
         return var10;
     }
 
-    public static String func_152755_a(URL p_152755_0_) throws IOException
+    public static String get(URL url) throws IOException
     {
-        HttpURLConnection var1 = (HttpURLConnection)p_152755_0_.openConnection();
+        HttpURLConnection var1 = (HttpURLConnection)url.openConnection();
         var1.setRequestMethod("GET");
         BufferedReader var2 = new BufferedReader(new InputStreamReader(var1.getInputStream()));
         StringBuilder var4 = new StringBuilder();
@@ -321,6 +321,6 @@ public class HttpUtil
 
     public interface DownloadListener
     {
-        void func_148522_a(File p_148522_1_);
+        void onDownloadComplete(File p_148522_1_);
     }
 }

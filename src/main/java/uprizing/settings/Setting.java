@@ -2,6 +2,8 @@ package uprizing.settings;
 
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.util.ResourceLocation;
 
 @Getter
 public abstract class Setting {
@@ -34,7 +36,7 @@ public abstract class Setting {
 	public abstract String bar();
 
 	public void pressButton(Minecraft minecraft, int mouseButton) {
-		//minecraft.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+		minecraft.getSoundHandler().playSound(PositionedSoundRecord.createPositionedSoundRecord(new ResourceLocation("gui.button.press"), 1.0F));
 	}
 
 	public boolean getAsBoolean() {

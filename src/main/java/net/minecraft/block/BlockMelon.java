@@ -10,24 +10,24 @@ import net.minecraft.util.IIcon;
 
 public class BlockMelon extends Block
 {
-    private IIcon field_150201_a;
+    private IIcon melonTopIcon;
     private static final String __OBFID = "CL_00000267";
 
     protected BlockMelon()
     {
-        super(Material.field_151572_C);
+        super(Material.gourd);
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        return p_149691_1_ != 1 && p_149691_1_ != 0 ? this.blockIcon : this.field_150201_a;
+        return side != 1 && side != 0 ? this.blockIcon : this.melonTopIcon;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Items.melon;
     }
@@ -35,17 +35,17 @@ public class BlockMelon extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
-        return 3 + p_149745_1_.nextInt(5);
+        return 3 + random.nextInt(5);
     }
 
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
-    public int quantityDroppedWithBonus(int p_149679_1_, Random p_149679_2_)
+    public int quantityDroppedWithBonus(int maxBonus, Random random)
     {
-        int var3 = this.quantityDropped(p_149679_2_) + p_149679_2_.nextInt(1 + p_149679_1_);
+        int var3 = this.quantityDropped(random) + random.nextInt(1 + maxBonus);
 
         if (var3 > 9)
         {
@@ -55,9 +55,9 @@ public class BlockMelon extends Block
         return var3;
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
-        this.blockIcon = p_149651_1_.registerIcon(this.getTextureName() + "_side");
-        this.field_150201_a = p_149651_1_.registerIcon(this.getTextureName() + "_top");
+        this.blockIcon = reg.registerIcon(this.getTextureName() + "_side");
+        this.melonTopIcon = reg.registerIcon(this.getTextureName() + "_top");
     }
 }

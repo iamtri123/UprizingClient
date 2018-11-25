@@ -29,22 +29,22 @@ public abstract class BlockLog extends BlockRotatedPillar
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random p_149745_1_)
+    public int quantityDropped(Random random)
     {
         return 1;
     }
 
-    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int meta, Random random, int fortune)
     {
         return Item.getItemFromBlock(this);
     }
 
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta)
     {
         byte var7 = 4;
         int var8 = var7 + 1;
 
-        if (p_149749_1_.checkChunksExist(p_149749_2_ - var8, p_149749_3_ - var8, p_149749_4_ - var8, p_149749_2_ + var8, p_149749_3_ + var8, p_149749_4_ + var8))
+        if (worldIn.checkChunksExist(x - var8, y - var8, z - var8, x + var8, y + var8, z + var8))
         {
             for (int var9 = -var7; var9 <= var7; ++var9)
             {
@@ -52,13 +52,13 @@ public abstract class BlockLog extends BlockRotatedPillar
                 {
                     for (int var11 = -var7; var11 <= var7; ++var11)
                     {
-                        if (p_149749_1_.getBlock(p_149749_2_ + var9, p_149749_3_ + var10, p_149749_4_ + var11).getMaterial() == Material.leaves)
+                        if (worldIn.getBlock(x + var9, y + var10, z + var11).getMaterial() == Material.leaves)
                         {
-                            int var12 = p_149749_1_.getBlockMetadata(p_149749_2_ + var9, p_149749_3_ + var10, p_149749_4_ + var11);
+                            int var12 = worldIn.getBlockMetadata(x + var9, y + var10, z + var11);
 
                             if ((var12 & 8) == 0)
                             {
-                                p_149749_1_.setBlockMetadataWithNotify(p_149749_2_ + var9, p_149749_3_ + var10, p_149749_4_ + var11, var12 | 8, 4);
+                                worldIn.setBlockMetadataWithNotify(x + var9, y + var10, z + var11, var12 | 8, 4);
                             }
                         }
                     }
@@ -67,12 +67,12 @@ public abstract class BlockLog extends BlockRotatedPillar
         }
     }
 
-    protected IIcon func_150163_b(int p_150163_1_)
+    protected IIcon getSideIcon(int p_150163_1_)
     {
         return this.field_150167_a[p_150163_1_ % this.field_150167_a.length];
     }
 
-    protected IIcon func_150161_d(int p_150161_1_)
+    protected IIcon getTopIcon(int p_150161_1_)
     {
         return this.field_150166_b[p_150161_1_ % this.field_150166_b.length];
     }

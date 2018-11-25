@@ -365,9 +365,9 @@ public class ChunkProviderServer implements IChunkProvider
         return this.currentChunkProvider.getPossibleCreatures(p_73155_1_, p_73155_2_, p_73155_3_, p_73155_4_);
     }
 
-    public ChunkPosition func_147416_a(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
+    public ChunkPosition findClosestStructure(World p_147416_1_, String p_147416_2_, int p_147416_3_, int p_147416_4_, int p_147416_5_)
     {
-        return this.currentChunkProvider.func_147416_a(p_147416_1_, p_147416_2_, p_147416_3_, p_147416_4_, p_147416_5_);
+        return this.currentChunkProvider.findClosestStructure(p_147416_1_, p_147416_2_, p_147416_3_, p_147416_4_, p_147416_5_);
     }
 
     public int getLoadedChunkCount()

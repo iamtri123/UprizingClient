@@ -38,14 +38,14 @@ public class GuiEnchantment extends GuiContainer
     public GuiEnchantment(InventoryPlayer p_i46398_1_, World p_i46398_2_, int p_i46398_3_, int p_i46398_4_, int p_i46398_5_, String p_i46398_6_)
     {
         super(new ContainerEnchantment(p_i46398_1_, p_i46398_2_, p_i46398_3_, p_i46398_4_, p_i46398_5_));
-        this.field_147075_G = (ContainerEnchantment)this.field_147002_h;
+        this.field_147075_G = (ContainerEnchantment)this.inventorySlots;
         this.field_147079_H = p_i46398_6_;
     }
 
-    protected void func_146979_b(int p_146979_1_, int p_146979_2_)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         this.fontRendererObj.drawString(this.field_147079_H == null ? I18n.format("container.enchant") : this.field_147079_H, 12, 5, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.field_147000_g - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
     /**
@@ -63,8 +63,8 @@ public class GuiEnchantment extends GuiContainer
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        int var4 = (this.width - this.field_146999_f) / 2;
-        int var5 = (this.height - this.field_147000_g) / 2;
+        int var4 = (this.width - this.xSize) / 2;
+        int var5 = (this.height - this.ySize) / 2;
 
         for (int var6 = 0; var6 < 3; ++var6)
         {
@@ -78,13 +78,13 @@ public class GuiEnchantment extends GuiContainer
         }
     }
 
-    protected void func_146976_a(float p_146976_1_, int p_146976_2_, int p_146976_3_)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(field_147078_C);
-        int var4 = (this.width - this.field_146999_f) / 2;
-        int var5 = (this.height - this.field_147000_g) / 2;
-        this.drawTexturedModalRect(var4, var5, 0, 0, this.field_146999_f, this.field_147000_g);
+        int var4 = (this.width - this.xSize) / 2;
+        int var5 = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
         GL11.glPushMatrix();
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPushMatrix();
@@ -104,12 +104,12 @@ public class GuiEnchantment extends GuiContainer
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(field_147070_D);
         GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
-        float var9 = this.field_147076_A + (this.field_147080_z - this.field_147076_A) * p_146976_1_;
+        float var9 = this.field_147076_A + (this.field_147080_z - this.field_147076_A) * partialTicks;
         GL11.glTranslatef((1.0F - var9) * 0.2F, (1.0F - var9) * 0.1F, (1.0F - var9) * 0.25F);
         GL11.glRotatef(-(1.0F - var9) * 90.0F - 90.0F, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
-        float var10 = this.field_147069_w + (this.field_147071_v - this.field_147069_w) * p_146976_1_ + 0.25F;
-        float var11 = this.field_147069_w + (this.field_147071_v - this.field_147069_w) * p_146976_1_ + 0.75F;
+        float var10 = this.field_147069_w + (this.field_147071_v - this.field_147069_w) * partialTicks + 0.25F;
+        float var11 = this.field_147069_w + (this.field_147071_v - this.field_147069_w) * partialTicks + 0.75F;
         var10 = (var10 - (float)MathHelper.truncateDoubleToInt((double)var10)) * 1.6F - 0.3F;
         var11 = (var11 - (float)MathHelper.truncateDoubleToInt((double)var11)) * 1.6F - 0.3F;
 
@@ -174,8 +174,8 @@ public class GuiEnchantment extends GuiContainer
                 }
                 else
                 {
-                    int var18 = p_146976_2_ - (var4 + 60);
-                    int var19 = p_146976_3_ - (var5 + 14 + 19 * var12);
+                    int var18 = mouseX - (var4 + 60);
+                    int var19 = mouseY - (var5 + 14 + 19 * var12);
 
                     if (var18 >= 0 && var19 >= 0 && var18 < 108 && var19 < 19)
                     {
@@ -198,7 +198,7 @@ public class GuiEnchantment extends GuiContainer
 
     public void func_147068_g()
     {
-        ItemStack var1 = this.field_147002_h.getSlot(0).getStack();
+        ItemStack var1 = this.inventorySlots.getSlot(0).getStack();
 
         if (!ItemStack.areItemStacksEqual(var1, this.field_147077_B))
         {

@@ -37,7 +37,7 @@ public class EntityItemFrame extends EntityHanging
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -47,7 +47,7 @@ public class EntityItemFrame extends EntityHanging
         {
             if (!this.worldObj.isClient)
             {
-                this.func_146065_b(p_70097_1_.getEntity(), false);
+                this.func_146065_b(source.getEntity(), false);
                 this.setDisplayedItem((ItemStack)null);
             }
 
@@ -55,7 +55,7 @@ public class EntityItemFrame extends EntityHanging
         }
         else
         {
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(source, amount);
         }
     }
 
@@ -73,11 +73,11 @@ public class EntityItemFrame extends EntityHanging
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double p_70112_1_)
+    public boolean isInRangeToRenderDist(double distance)
     {
         double var3 = 16.0D;
         var3 *= 64.0D * this.renderDistanceWeight;
-        return p_70112_1_ < var3 * var3;
+        return distance < var3 * var3;
     }
 
     /**
@@ -167,55 +167,55 @@ public class EntityItemFrame extends EntityHanging
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         if (this.getDisplayedItem() != null)
         {
-            p_70014_1_.setTag("Item", this.getDisplayedItem().writeToNBT(new NBTTagCompound()));
-            p_70014_1_.setByte("ItemRotation", (byte)this.getRotation());
-            p_70014_1_.setFloat("ItemDropChance", this.itemDropChance);
+            tagCompound.setTag("Item", this.getDisplayedItem().writeToNBT(new NBTTagCompound()));
+            tagCompound.setByte("ItemRotation", (byte)this.getRotation());
+            tagCompound.setFloat("ItemDropChance", this.itemDropChance);
         }
 
-        super.writeEntityToNBT(p_70014_1_);
+        super.writeEntityToNBT(tagCompound);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        NBTTagCompound var2 = p_70037_1_.getCompoundTag("Item");
+        NBTTagCompound var2 = tagCompund.getCompoundTag("Item");
 
         if (var2 != null && !var2.hasNoTags())
         {
             this.setDisplayedItem(ItemStack.loadItemStackFromNBT(var2));
-            this.setItemRotation(p_70037_1_.getByte("ItemRotation"));
+            this.setItemRotation(tagCompund.getByte("ItemRotation"));
 
-            if (p_70037_1_.func_150297_b("ItemDropChance", 99))
+            if (tagCompund.hasKey("ItemDropChance", 99))
             {
-                this.itemDropChance = p_70037_1_.getFloat("ItemDropChance");
+                this.itemDropChance = tagCompund.getFloat("ItemDropChance");
             }
         }
 
-        super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(tagCompund);
     }
 
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer p_130002_1_)
+    public boolean interactFirst(EntityPlayer player)
     {
         if (this.getDisplayedItem() == null)
         {
-            ItemStack var2 = p_130002_1_.getHeldItem();
+            ItemStack var2 = player.getHeldItem();
 
             if (var2 != null && !this.worldObj.isClient)
             {
                 this.setDisplayedItem(var2);
 
-                if (!p_130002_1_.capabilities.isCreativeMode && --var2.stackSize <= 0)
+                if (!player.capabilities.isCreativeMode && --var2.stackSize <= 0)
                 {
-                    p_130002_1_.inventory.setInventorySlotContents(p_130002_1_.inventory.currentItem, (ItemStack)null);
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
                 }
             }
         }

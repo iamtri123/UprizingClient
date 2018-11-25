@@ -21,32 +21,32 @@ public class S13PacketDestroyEntities extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149100_a = new int[p_148837_1_.readByte()];
+        this.field_149100_a = new int[data.readByte()];
 
         for (int var2 = 0; var2 < this.field_149100_a.length; ++var2)
         {
-            this.field_149100_a[var2] = p_148837_1_.readInt();
+            this.field_149100_a[var2] = data.readInt();
         }
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeByte(this.field_149100_a.length);
+        data.writeByte(this.field_149100_a.length);
 
         for (int var2 = 0; var2 < this.field_149100_a.length; ++var2)
         {
-            p_148840_1_.writeInt(this.field_149100_a[var2]);
+            data.writeInt(this.field_149100_a[var2]);
         }
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleDestroyEntities(this);
+        handler.handleDestroyEntities(this);
     }
 
     /**
@@ -74,8 +74,8 @@ public class S13PacketDestroyEntities extends Packet
         return this.field_149100_a;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

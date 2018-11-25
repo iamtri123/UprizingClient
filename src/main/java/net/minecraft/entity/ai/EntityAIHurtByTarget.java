@@ -8,7 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 public class EntityAIHurtByTarget extends EntityAITarget
 {
     boolean entityCallsForHelp;
-    private int field_142052_b;
+    private int revengeTimerOld;
     private static final String __OBFID = "CL_00001619";
 
     public EntityAIHurtByTarget(EntityCreature p_i1660_1_, boolean p_i1660_2_)
@@ -23,8 +23,8 @@ public class EntityAIHurtByTarget extends EntityAITarget
      */
     public boolean shouldExecute()
     {
-        int var1 = this.taskOwner.func_142015_aE();
-        return var1 != this.field_142052_b && this.isSuitableTarget(this.taskOwner.getAITarget(), false);
+        int var1 = this.taskOwner.getRevengeTimer();
+        return var1 != this.revengeTimerOld && this.isSuitableTarget(this.taskOwner.getAITarget(), false);
     }
 
     /**
@@ -33,7 +33,7 @@ public class EntityAIHurtByTarget extends EntityAITarget
     public void startExecuting()
     {
         this.taskOwner.setAttackTarget(this.taskOwner.getAITarget());
-        this.field_142052_b = this.taskOwner.func_142015_aE();
+        this.revengeTimerOld = this.taskOwner.getRevengeTimer();
 
         if (this.entityCallsForHelp)
         {

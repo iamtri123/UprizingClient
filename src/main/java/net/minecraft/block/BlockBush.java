@@ -11,9 +11,9 @@ public class BlockBush extends Block
 {
     private static final String __OBFID = "CL_00000208";
 
-    protected BlockBush(Material p_i45395_1_)
+    protected BlockBush(Material materialIn)
     {
-        super(p_i45395_1_);
+        super(materialIn);
         this.setTickRandomly(true);
         float var2 = 0.2F;
         this.setBlockBounds(0.5F - var2, 0.0F, 0.5F - var2, 0.5F + var2, var2 * 3.0F, 0.5F + var2);
@@ -25,52 +25,52 @@ public class BlockBush extends Block
         this(Material.plants);
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        return super.canPlaceBlockAt(p_149742_1_, p_149742_2_, p_149742_3_, p_149742_4_) && this.func_149854_a(p_149742_1_.getBlock(p_149742_2_, p_149742_3_ - 1, p_149742_4_));
+        return super.canPlaceBlockAt(worldIn, x, y, z) && this.canPlaceBlockOn(worldIn.getBlock(x, y - 1, z));
     }
 
-    protected boolean func_149854_a(Block p_149854_1_)
+    protected boolean canPlaceBlockOn(Block ground)
     {
-        return p_149854_1_ == Blocks.grass || p_149854_1_ == Blocks.dirt || p_149854_1_ == Blocks.farmland;
+        return ground == Blocks.grass || ground == Blocks.dirt || ground == Blocks.farmland;
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        super.onNeighborBlockChange(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
-        this.func_149855_e(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_);
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
+        this.checkAndDropBlock(worldIn, x, y, z);
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        this.func_149855_e(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+        this.checkAndDropBlock(worldIn, x, y, z);
     }
 
-    protected void func_149855_e(World p_149855_1_, int p_149855_2_, int p_149855_3_, int p_149855_4_)
+    protected void checkAndDropBlock(World worldIn, int x, int y, int z)
     {
-        if (!this.canBlockStay(p_149855_1_, p_149855_2_, p_149855_3_, p_149855_4_))
+        if (!this.canBlockStay(worldIn, x, y, z))
         {
-            this.dropBlockAsItem(p_149855_1_, p_149855_2_, p_149855_3_, p_149855_4_, p_149855_1_.getBlockMetadata(p_149855_2_, p_149855_3_, p_149855_4_), 0);
-            p_149855_1_.setBlock(p_149855_2_, p_149855_3_, p_149855_4_, getBlockById(0), 0, 2);
+            this.dropBlockAsItem(worldIn, x, y, z, worldIn.getBlockMetadata(x, y, z), 0);
+            worldIn.setBlock(x, y, z, getBlockById(0), 0, 2);
         }
     }
 
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World p_149718_1_, int p_149718_2_, int p_149718_3_, int p_149718_4_)
+    public boolean canBlockStay(World worldIn, int x, int y, int z)
     {
-        return this.func_149854_a(p_149718_1_.getBlock(p_149718_2_, p_149718_3_ - 1, p_149718_4_));
+        return this.canPlaceBlockOn(worldIn.getBlock(x, y - 1, z));
     }
 
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
         return null;
     }

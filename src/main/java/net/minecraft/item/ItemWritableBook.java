@@ -17,10 +17,10 @@ public class ItemWritableBook extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        p_77659_3_.displayGUIBook(p_77659_1_);
-        return p_77659_1_;
+        player.displayGUIBook(itemStackIn);
+        return itemStackIn;
     }
 
     /**
@@ -31,13 +31,13 @@ public class ItemWritableBook extends Item
         return true;
     }
 
-    public static boolean func_150930_a(NBTTagCompound p_150930_0_)
+    public static boolean validBookPageTagContents(NBTTagCompound p_150930_0_)
     {
         if (p_150930_0_ == null)
         {
             return false;
         }
-        else if (!p_150930_0_.func_150297_b("pages", 9))
+        else if (!p_150930_0_.hasKey("pages", 9))
         {
             return false;
         }

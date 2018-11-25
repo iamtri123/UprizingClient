@@ -16,13 +16,13 @@ public class MapGenStructureIO
     private static final Map field_143037_d = new HashMap();
     private static final String __OBFID = "CL_00000509";
 
-    private static void func_143034_b(Class p_143034_0_, String p_143034_1_)
+    private static void registerStructure(Class p_143034_0_, String p_143034_1_)
     {
         field_143040_a.put(p_143034_1_, p_143034_0_);
         field_143038_b.put(p_143034_0_, p_143034_1_);
     }
 
-    static void func_143031_a(Class p_143031_0_, String p_143031_1_)
+    static void registerStructureComponent(Class p_143031_0_, String p_143031_1_)
     {
         field_143039_c.put(p_143031_1_, p_143031_0_);
         field_143037_d.put(p_143031_0_, p_143031_1_);
@@ -102,15 +102,15 @@ public class MapGenStructureIO
 
     static
     {
-        func_143034_b(StructureMineshaftStart.class, "Mineshaft");
-        func_143034_b(MapGenVillage.Start.class, "Village");
-        func_143034_b(MapGenNetherBridge.Start.class, "Fortress");
-        func_143034_b(MapGenStronghold.Start.class, "Stronghold");
-        func_143034_b(MapGenScatteredFeature.Start.class, "Temple");
-        StructureMineshaftPieces.func_143048_a();
-        StructureVillagePieces.func_143016_a();
-        StructureNetherBridgePieces.func_143049_a();
-        StructureStrongholdPieces.func_143046_a();
-        ComponentScatteredFeaturePieces.func_143045_a();
+        registerStructure(StructureMineshaftStart.class, "Mineshaft");
+        registerStructure(MapGenVillage.Start.class, "Village");
+        registerStructure(MapGenNetherBridge.Start.class, "Fortress");
+        registerStructure(MapGenStronghold.Start.class, "Stronghold");
+        registerStructure(MapGenScatteredFeature.Start.class, "Temple");
+        StructureMineshaftPieces.registerStructurePieces();
+        StructureVillagePieces.registerVillagePieces();
+        StructureNetherBridgePieces.registerNetherFortressPieces();
+        StructureStrongholdPieces.registerStrongholdPieces();
+        ComponentScatteredFeaturePieces.registerScatteredFeaturePieces();
     }
 }

@@ -39,7 +39,7 @@ import tv.twitch.broadcast.VideoParams;
 
 public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 {
-    private static final Logger field_152861_B = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     protected final int field_152865_a = 30;
     protected final int field_152866_b = 3;
     private static final ThreadSafeBoundList field_152862_C = new ThreadSafeBoundList(String.class, 50);
@@ -56,14 +56,14 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
     protected boolean field_152876_l = false;
     protected boolean field_152877_m = false;
     protected boolean field_152878_n = false;
-    protected BroadcastController.BroadcastState field_152879_o;
+    protected BroadcastController.BroadcastState broadcastState;
     protected String field_152880_p;
     protected VideoParams field_152881_q;
     protected AudioParams field_152882_r;
     protected IngestList field_152883_s;
     protected IngestServer field_152884_t;
     protected AuthToken field_152885_u;
-    protected ChannelInfo field_152886_v;
+    protected ChannelInfo channelInfo;
     protected UserInfo field_152887_w;
     protected StreamInfo field_152888_x;
     protected ArchivingState field_152889_y;
@@ -104,7 +104,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
     {
         if (ErrorCode.succeeded(p_loginCallback_1_))
         {
-            this.field_152886_v = p_loginCallback_2_;
+            this.channelInfo = p_loginCallback_2_;
             this.func_152827_a(BroadcastController.BroadcastState.LoggedIn);
             this.field_152877_m = true;
         }
@@ -361,27 +361,27 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public ChannelInfo func_152843_l()
     {
-        return this.field_152886_v;
+        return this.channelInfo;
     }
 
-    public boolean func_152850_m()
+    public boolean isBroadcasting()
     {
-        return this.field_152879_o == BroadcastController.BroadcastState.Broadcasting || this.field_152879_o == BroadcastController.BroadcastState.Paused;
+        return this.broadcastState == BroadcastController.BroadcastState.Broadcasting || this.broadcastState == BroadcastController.BroadcastState.Paused;
     }
 
     public boolean func_152857_n()
     {
-        return this.field_152879_o == BroadcastController.BroadcastState.ReadyToBroadcast;
+        return this.broadcastState == BroadcastController.BroadcastState.ReadyToBroadcast;
     }
 
-    public boolean func_152825_o()
+    public boolean isIngestTesting()
     {
-        return this.field_152879_o == BroadcastController.BroadcastState.IngestTesting;
+        return this.broadcastState == BroadcastController.BroadcastState.IngestTesting;
     }
 
-    public boolean func_152839_p()
+    public boolean isBroadcastPaused()
     {
-        return this.field_152879_o == BroadcastController.BroadcastState.Paused;
+        return this.broadcastState == BroadcastController.BroadcastState.Paused;
     }
 
     public boolean func_152849_q()
@@ -414,7 +414,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         this.field_152873_i.setVolume(AudioDeviceType.TTV_PLAYBACK_DEVICE, p_152837_1_);
     }
 
-    public IngestServerTester func_152856_w()
+    public IngestServerTester isReady()
     {
         return this.field_152860_A;
     }
@@ -431,14 +431,14 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public BroadcastController()
     {
-        this.field_152879_o = BroadcastController.BroadcastState.Uninitialized;
+        this.broadcastState = BroadcastController.BroadcastState.Uninitialized;
         this.field_152880_p = null;
         this.field_152881_q = null;
         this.field_152882_r = null;
         this.field_152883_s = new IngestList(new IngestServer[0]);
         this.field_152884_t = null;
         this.field_152885_u = new AuthToken();
-        this.field_152886_v = new ChannelInfo();
+        this.channelInfo = new ChannelInfo();
         this.field_152887_w = new UserInfo();
         this.field_152888_x = new StreamInfo();
         this.field_152889_y = new ArchivingState();
@@ -510,7 +510,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
         {
             return true;
         }
-        else if (this.func_152825_o())
+        else if (this.isIngestTesting())
         {
             return false;
         }
@@ -531,7 +531,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public boolean func_152818_a(String p_152818_1_, AuthToken p_152818_2_)
     {
-        if (this.func_152825_o())
+        if (this.isIngestTesting())
         {
             return false;
         }
@@ -569,13 +569,13 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public boolean func_152845_C()
     {
-        if (this.func_152825_o())
+        if (this.isIngestTesting())
         {
             return false;
         }
         else
         {
-            if (this.func_152850_m())
+            if (this.isBroadcasting())
             {
                 this.field_152873_i.stop(false);
             }
@@ -646,7 +646,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public boolean func_152830_D()
     {
-        if (!this.func_152850_m())
+        if (!this.isBroadcasting())
         {
             return false;
         }
@@ -715,7 +715,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public boolean func_152819_E()
     {
-        if (!this.func_152850_m())
+        if (!this.isBroadcasting())
         {
             return false;
         }
@@ -739,7 +739,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public boolean func_152847_F()
     {
-        if (!this.func_152850_m())
+        if (!this.isBroadcasting())
         {
             return false;
         }
@@ -764,7 +764,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public boolean func_152854_G()
     {
-        if (!this.func_152839_p())
+        if (!this.isBroadcastPaused())
         {
             return false;
         }
@@ -793,9 +793,9 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     protected void func_152827_a(BroadcastController.BroadcastState p_152827_1_)
     {
-        if (p_152827_1_ != this.field_152879_o)
+        if (p_152827_1_ != this.broadcastState)
         {
-            this.field_152879_o = p_152827_1_;
+            this.broadcastState = p_152827_1_;
 
             try
             {
@@ -818,7 +818,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
             ErrorCode var1 = this.field_152873_i.pollTasks();
             this.func_152853_a(var1);
 
-            if (this.func_152825_o())
+            if (this.isIngestTesting())
             {
                 this.field_152860_A.func_153041_j();
 
@@ -831,7 +831,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
             String var2;
 
-            switch (BroadcastController.SwitchBroadcastState.field_152815_a[this.field_152879_o.ordinal()])
+            switch (BroadcastController.SwitchBroadcastState.field_152815_a[this.broadcastState.ordinal()])
             {
                 case 1:
                     this.func_152827_a(BroadcastController.BroadcastState.LoggingIn);
@@ -916,7 +916,7 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
     {
         if (this.func_152857_n() && this.field_152883_s != null)
         {
-            if (this.func_152825_o())
+            if (this.isIngestTesting())
             {
                 return null;
             }
@@ -1000,11 +1000,11 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
 
     public ErrorCode func_152859_b(FrameBuffer p_152859_1_)
     {
-        if (this.func_152839_p())
+        if (this.isBroadcastPaused())
         {
             this.func_152854_G();
         }
-        else if (!this.func_152850_m())
+        else if (!this.isBroadcasting())
         {
             return ErrorCode.TTV_EC_STREAM_NOT_STARTED;
         }
@@ -1051,13 +1051,13 @@ public class BroadcastController implements IStatCallbacks, IStreamCallbacks
     {
         this.field_152863_D = p_152820_1_;
         field_152862_C.func_152757_a("<Error> " + p_152820_1_);
-        field_152861_B.error(TwitchStream.field_152949_a, "[Broadcast controller] {}", p_152820_1_);
+        logger.error(TwitchStream.field_152949_a, "[Broadcast controller] {}", p_152820_1_);
     }
 
     protected void func_152832_e(String p_152832_1_)
     {
         field_152862_C.func_152757_a("<Warning> " + p_152832_1_);
-        field_152861_B.warn(TwitchStream.field_152949_a, "[Broadcast controller] {}", p_152832_1_);
+        logger.warn(TwitchStream.field_152949_a, "[Broadcast controller] {}", p_152832_1_);
     }
 
     public ErrorCode func_152852_P()

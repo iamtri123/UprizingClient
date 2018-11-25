@@ -19,13 +19,13 @@ public class ItemLilyPad extends ItemColored
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)
     {
-        MovingObjectPosition var4 = this.getMovingObjectPositionFromPlayer(p_77659_2_, p_77659_3_, true);
+        MovingObjectPosition var4 = this.getMovingObjectPositionFromPlayer(worldIn, player, true);
 
         if (var4 == null)
         {
-            return p_77659_1_;
+            return itemStackIn;
         }
         else
         {
@@ -35,28 +35,28 @@ public class ItemLilyPad extends ItemColored
                 int var6 = var4.blockY;
                 int var7 = var4.blockZ;
 
-                if (!p_77659_2_.canMineBlock(p_77659_3_, var5, var6, var7))
+                if (!worldIn.canMineBlock(player, var5, var6, var7))
                 {
-                    return p_77659_1_;
+                    return itemStackIn;
                 }
 
-                if (!p_77659_3_.canPlayerEdit(var5, var6, var7, var4.sideHit, p_77659_1_))
+                if (!player.canPlayerEdit(var5, var6, var7, var4.sideHit, itemStackIn))
                 {
-                    return p_77659_1_;
+                    return itemStackIn;
                 }
 
-                if (p_77659_2_.getBlock(var5, var6, var7).getMaterial() == Material.water && p_77659_2_.getBlockMetadata(var5, var6, var7) == 0 && p_77659_2_.isAirBlock(var5, var6 + 1, var7))
+                if (worldIn.getBlock(var5, var6, var7).getMaterial() == Material.water && worldIn.getBlockMetadata(var5, var6, var7) == 0 && worldIn.isAirBlock(var5, var6 + 1, var7))
                 {
-                    p_77659_2_.setBlock(var5, var6 + 1, var7, Blocks.waterlily);
+                    worldIn.setBlock(var5, var6 + 1, var7, Blocks.waterlily);
 
-                    if (!p_77659_3_.capabilities.isCreativeMode)
+                    if (!player.capabilities.isCreativeMode)
                     {
-                        --p_77659_1_.stackSize;
+                        --itemStackIn.stackSize;
                     }
                 }
             }
 
-            return p_77659_1_;
+            return itemStackIn;
         }
     }
 

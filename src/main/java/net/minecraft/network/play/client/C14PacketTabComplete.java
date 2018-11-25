@@ -9,40 +9,40 @@ import org.apache.commons.lang3.StringUtils;
 
 public class C14PacketTabComplete extends Packet
 {
-    private String field_149420_a;
+    private String message;
     private static final String __OBFID = "CL_00001346";
 
     public C14PacketTabComplete() {}
 
-    public C14PacketTabComplete(String p_i45239_1_)
+    public C14PacketTabComplete(String msg)
     {
-        this.field_149420_a = p_i45239_1_;
+        this.message = msg;
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149420_a = p_148837_1_.readStringFromBuffer(32767);
+        this.message = data.readStringFromBuffer(32767);
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(StringUtils.substring(this.field_149420_a, 0, 32767));
+        data.writeStringToBuffer(StringUtils.substring(this.message, 0, 32767));
     }
 
-    public void processPacket(INetHandlerPlayServer p_148833_1_)
+    public void processPacket(INetHandlerPlayServer handler)
     {
-        p_148833_1_.processTabComplete(this);
+        handler.processTabComplete(this);
     }
 
-    public String func_149419_c()
+    public String getMessage()
     {
-        return this.field_149420_a;
+        return this.message;
     }
 
     /**
@@ -50,11 +50,11 @@ public class C14PacketTabComplete extends Packet
      */
     public String serialize()
     {
-        return String.format("message=\'%s\'", this.field_149420_a);
+        return String.format("message=\'%s\'", this.message);
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayServer)p_148833_1_);
+        this.processPacket((INetHandlerPlayServer)handler);
     }
 }

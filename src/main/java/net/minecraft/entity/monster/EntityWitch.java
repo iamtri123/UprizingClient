@@ -249,7 +249,7 @@ public class EntityWitch extends EntityMob implements IRangedAttackMob
 
             for (int var7 = 0; var7 < var5; ++var7)
             {
-                this.func_145779_a(var6, 1);
+                this.dropItem(var6, 1);
             }
         }
     }

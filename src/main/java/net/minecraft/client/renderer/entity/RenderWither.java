@@ -48,7 +48,7 @@ public class RenderWither extends RenderLiving
      */
     protected ResourceLocation getEntityTexture(EntityWither p_110775_1_)
     {
-        int var2 = p_110775_1_.func_82212_n();
+        int var2 = p_110775_1_.getInvulTime();
         return var2 > 0 && (var2 > 80 || var2 / 5 % 2 != 1) ? invulnerableWitherTextures : witherTextures;
     }
 
@@ -58,7 +58,7 @@ public class RenderWither extends RenderLiving
      */
     protected void preRenderCallback(EntityWither p_77041_1_, float p_77041_2_)
     {
-        int var3 = p_77041_1_.func_82212_n();
+        int var3 = p_77041_1_.getInvulTime();
 
         if (var3 > 0)
         {

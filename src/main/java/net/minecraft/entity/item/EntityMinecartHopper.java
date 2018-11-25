@@ -34,7 +34,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
         return 5;
     }
 
-    public Block func_145817_o()
+    public Block getDefaultDisplayTile()
     {
         return Blocks.hopper;
     }
@@ -55,11 +55,11 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer p_130002_1_)
+    public boolean interactFirst(EntityPlayer player)
     {
         if (!this.worldObj.isClient)
         {
-            p_130002_1_.displayGUIHopperMinecart(this);
+            player.displayGUIHopperMinecart(this);
         }
 
         return true;
@@ -172,25 +172,25 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
     public void killMinecart(DamageSource p_94095_1_)
     {
         super.killMinecart(p_94095_1_);
-        this.func_145778_a(Item.getItemFromBlock(Blocks.hopper), 1, 0.0F);
+        this.dropItemWithOffset(Item.getItemFromBlock(Blocks.hopper), 1, 0.0F);
     }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setInteger("TransferCooldown", this.transferTicker);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setInteger("TransferCooldown", this.transferTicker);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.transferTicker = p_70037_1_.getInteger("TransferCooldown");
+        super.readEntityFromNBT(tagCompund);
+        this.transferTicker = tagCompund.getInteger("TransferCooldown");
     }
 
     /**

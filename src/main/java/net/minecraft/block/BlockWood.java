@@ -23,41 +23,41 @@ public class BlockWood extends Block
     /**
      * Gets the block's texture. Args: side, meta
      */
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    public IIcon getIcon(int side, int meta)
     {
-        if (p_149691_2_ < 0 || p_149691_2_ >= this.field_150095_b.length)
+        if (meta < 0 || meta >= this.field_150095_b.length)
         {
-            p_149691_2_ = 0;
+            meta = 0;
         }
 
-        return this.field_150095_b[p_149691_2_];
+        return this.field_150095_b[meta];
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int p_149692_1_)
+    public int damageDropped(int meta)
     {
-        return p_149692_1_;
+        return meta;
     }
 
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 1));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 2));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 3));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 4));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 5));
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 1));
+        list.add(new ItemStack(itemIn, 1, 2));
+        list.add(new ItemStack(itemIn, 1, 3));
+        list.add(new ItemStack(itemIn, 1, 4));
+        list.add(new ItemStack(itemIn, 1, 5));
     }
 
-    public void registerBlockIcons(IIconRegister p_149651_1_)
+    public void registerBlockIcons(IIconRegister reg)
     {
         this.field_150095_b = new IIcon[field_150096_a.length];
 
         for (int var2 = 0; var2 < this.field_150095_b.length; ++var2)
         {
-            this.field_150095_b[var2] = p_149651_1_.registerIcon(this.getTextureName() + "_" + field_150096_a[var2]);
+            this.field_150095_b[var2] = reg.registerIcon(this.getTextureName() + "_" + field_150096_a[var2]);
         }
     }
 }

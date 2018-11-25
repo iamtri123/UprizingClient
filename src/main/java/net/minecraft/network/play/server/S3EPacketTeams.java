@@ -63,26 +63,26 @@ public class S3EPacketTeams extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149320_a = p_148837_1_.readStringFromBuffer(16);
-        this.field_149314_f = p_148837_1_.readByte();
+        this.field_149320_a = data.readStringFromBuffer(16);
+        this.field_149314_f = data.readByte();
 
         if (this.field_149314_f == 0 || this.field_149314_f == 2)
         {
-            this.field_149318_b = p_148837_1_.readStringFromBuffer(32);
-            this.field_149319_c = p_148837_1_.readStringFromBuffer(16);
-            this.field_149316_d = p_148837_1_.readStringFromBuffer(16);
-            this.field_149315_g = p_148837_1_.readByte();
+            this.field_149318_b = data.readStringFromBuffer(32);
+            this.field_149319_c = data.readStringFromBuffer(16);
+            this.field_149316_d = data.readStringFromBuffer(16);
+            this.field_149315_g = data.readByte();
         }
 
         if (this.field_149314_f == 0 || this.field_149314_f == 3 || this.field_149314_f == 4)
         {
-            short var2 = p_148837_1_.readShort();
+            short var2 = data.readShort();
 
             for (int var3 = 0; var3 < var2; ++var3)
             {
-                this.field_149317_e.add(p_148837_1_.readStringFromBuffer(40));
+                this.field_149317_e.add(data.readStringFromBuffer(40));
             }
         }
     }
@@ -90,35 +90,35 @@ public class S3EPacketTeams extends Packet
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeStringToBuffer(this.field_149320_a);
-        p_148840_1_.writeByte(this.field_149314_f);
+        data.writeStringToBuffer(this.field_149320_a);
+        data.writeByte(this.field_149314_f);
 
         if (this.field_149314_f == 0 || this.field_149314_f == 2)
         {
-            p_148840_1_.writeStringToBuffer(this.field_149318_b);
-            p_148840_1_.writeStringToBuffer(this.field_149319_c);
-            p_148840_1_.writeStringToBuffer(this.field_149316_d);
-            p_148840_1_.writeByte(this.field_149315_g);
+            data.writeStringToBuffer(this.field_149318_b);
+            data.writeStringToBuffer(this.field_149319_c);
+            data.writeStringToBuffer(this.field_149316_d);
+            data.writeByte(this.field_149315_g);
         }
 
         if (this.field_149314_f == 0 || this.field_149314_f == 3 || this.field_149314_f == 4)
         {
-            p_148840_1_.writeShort(this.field_149317_e.size());
+            data.writeShort(this.field_149317_e.size());
             Iterator var2 = this.field_149317_e.iterator();
 
             while (var2.hasNext())
             {
                 String var3 = (String)var2.next();
-                p_148840_1_.writeStringToBuffer(var3);
+                data.writeStringToBuffer(var3);
             }
         }
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleTeams(this);
+        handler.handleTeams(this);
     }
 
     public String func_149312_c()
@@ -156,8 +156,8 @@ public class S3EPacketTeams extends Packet
         return this.field_149315_g;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 }

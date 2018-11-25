@@ -132,7 +132,7 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
 
                     if (var14.getMaterial() == Material.air || var14.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_150535_1_, var8, p_150535_3_, var10, Blocks.leaves, this.leavesMetadata);
+                        this.setBlockAndNotifyAdequately(p_150535_1_, var8, p_150535_3_, var10, Blocks.leaves, this.leavesMetadata);
                     }
                 }
             }
@@ -157,7 +157,7 @@ public abstract class WorldGenHugeTrees extends WorldGenAbstractTree
 
                     if (var12.getMaterial() == Material.air || var12.getMaterial() == Material.leaves)
                     {
-                        this.func_150516_a(p_150534_1_, var8, p_150534_3_, var10, Blocks.leaves, this.leavesMetadata);
+                        this.setBlockAndNotifyAdequately(p_150534_1_, var8, p_150534_3_, var10, Blocks.leaves, this.leavesMetadata);
                     }
                 }
             }

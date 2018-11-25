@@ -24,7 +24,7 @@ public class BlockTorch extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z)
     {
         return null;
     }
@@ -47,7 +47,7 @@ public class BlockTorch extends Block
         return 2;
     }
 
-    private boolean func_150107_m(World p_150107_1_, int p_150107_2_, int p_150107_3_, int p_150107_4_)
+    private boolean canPlaceTorchOn(World p_150107_1_, int p_150107_2_, int p_150107_3_, int p_150107_4_)
     {
         if (World.doesBlockHaveSolidTopSurface(p_150107_1_, p_150107_2_, p_150107_3_, p_150107_4_))
         {
@@ -60,36 +60,36 @@ public class BlockTorch extends Block
         }
     }
 
-    public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+    public boolean canPlaceBlockAt(World worldIn, int x, int y, int z)
     {
-        return p_149742_1_.isBlockNormalCubeDefault(p_149742_2_ - 1, p_149742_3_, p_149742_4_, true) || (p_149742_1_.isBlockNormalCubeDefault(p_149742_2_ + 1, p_149742_3_, p_149742_4_, true) || (p_149742_1_.isBlockNormalCubeDefault(p_149742_2_, p_149742_3_, p_149742_4_ - 1, true) || (p_149742_1_.isBlockNormalCubeDefault(p_149742_2_, p_149742_3_, p_149742_4_ + 1, true) || this.func_150107_m(p_149742_1_, p_149742_2_, p_149742_3_ - 1, p_149742_4_))));
+        return worldIn.isBlockNormalCubeDefault(x - 1, y, z, true) || (worldIn.isBlockNormalCubeDefault(x + 1, y, z, true) || (worldIn.isBlockNormalCubeDefault(x, y, z - 1, true) || (worldIn.isBlockNormalCubeDefault(x, y, z + 1, true) || this.canPlaceTorchOn(worldIn, x, y - 1, z))));
     }
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ, int meta)
     {
-        int var10 = p_149660_9_;
+        int var10 = meta;
 
-        if (p_149660_5_ == 1 && this.func_150107_m(p_149660_1_, p_149660_2_, p_149660_3_ - 1, p_149660_4_))
+        if (side == 1 && this.canPlaceTorchOn(worldIn, x, y - 1, z))
         {
             var10 = 5;
         }
 
-        if (p_149660_5_ == 2 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_, p_149660_3_, p_149660_4_ + 1, true))
+        if (side == 2 && worldIn.isBlockNormalCubeDefault(x, y, z + 1, true))
         {
             var10 = 4;
         }
 
-        if (p_149660_5_ == 3 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_, p_149660_3_, p_149660_4_ - 1, true))
+        if (side == 3 && worldIn.isBlockNormalCubeDefault(x, y, z - 1, true))
         {
             var10 = 3;
         }
 
-        if (p_149660_5_ == 4 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_ + 1, p_149660_3_, p_149660_4_, true))
+        if (side == 4 && worldIn.isBlockNormalCubeDefault(x + 1, y, z, true))
         {
             var10 = 2;
         }
 
-        if (p_149660_5_ == 5 && p_149660_1_.isBlockNormalCubeDefault(p_149660_2_ - 1, p_149660_3_, p_149660_4_, true))
+        if (side == 5 && worldIn.isBlockNormalCubeDefault(x - 1, y, z, true))
         {
             var10 = 1;
         }
@@ -100,53 +100,53 @@ public class BlockTorch extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
-        super.updateTick(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+        super.updateTick(worldIn, x, y, z, random);
 
-        if (p_149674_1_.getBlockMetadata(p_149674_2_, p_149674_3_, p_149674_4_) == 0)
+        if (worldIn.getBlockMetadata(x, y, z) == 0)
         {
-            this.onBlockAdded(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_);
+            this.onBlockAdded(worldIn, x, y, z);
         }
     }
 
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    public void onBlockAdded(World worldIn, int x, int y, int z)
     {
-        if (p_149726_1_.getBlockMetadata(p_149726_2_, p_149726_3_, p_149726_4_) == 0)
+        if (worldIn.getBlockMetadata(x, y, z) == 0)
         {
-            if (p_149726_1_.isBlockNormalCubeDefault(p_149726_2_ - 1, p_149726_3_, p_149726_4_, true))
+            if (worldIn.isBlockNormalCubeDefault(x - 1, y, z, true))
             {
-                p_149726_1_.setBlockMetadataWithNotify(p_149726_2_, p_149726_3_, p_149726_4_, 1, 2);
+                worldIn.setBlockMetadataWithNotify(x, y, z, 1, 2);
             }
-            else if (p_149726_1_.isBlockNormalCubeDefault(p_149726_2_ + 1, p_149726_3_, p_149726_4_, true))
+            else if (worldIn.isBlockNormalCubeDefault(x + 1, y, z, true))
             {
-                p_149726_1_.setBlockMetadataWithNotify(p_149726_2_, p_149726_3_, p_149726_4_, 2, 2);
+                worldIn.setBlockMetadataWithNotify(x, y, z, 2, 2);
             }
-            else if (p_149726_1_.isBlockNormalCubeDefault(p_149726_2_, p_149726_3_, p_149726_4_ - 1, true))
+            else if (worldIn.isBlockNormalCubeDefault(x, y, z - 1, true))
             {
-                p_149726_1_.setBlockMetadataWithNotify(p_149726_2_, p_149726_3_, p_149726_4_, 3, 2);
+                worldIn.setBlockMetadataWithNotify(x, y, z, 3, 2);
             }
-            else if (p_149726_1_.isBlockNormalCubeDefault(p_149726_2_, p_149726_3_, p_149726_4_ + 1, true))
+            else if (worldIn.isBlockNormalCubeDefault(x, y, z + 1, true))
             {
-                p_149726_1_.setBlockMetadataWithNotify(p_149726_2_, p_149726_3_, p_149726_4_, 4, 2);
+                worldIn.setBlockMetadataWithNotify(x, y, z, 4, 2);
             }
-            else if (this.func_150107_m(p_149726_1_, p_149726_2_, p_149726_3_ - 1, p_149726_4_))
+            else if (this.canPlaceTorchOn(worldIn, x, y - 1, z))
             {
-                p_149726_1_.setBlockMetadataWithNotify(p_149726_2_, p_149726_3_, p_149726_4_, 5, 2);
+                worldIn.setBlockMetadataWithNotify(x, y, z, 5, 2);
             }
         }
 
-        this.func_150109_e(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+        this.dropTorchIfCantStay(worldIn, x, y, z);
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        this.func_150108_b(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
+        this.func_150108_b(worldIn, x, y, z, neighbor);
     }
 
     protected boolean func_150108_b(World p_150108_1_, int p_150108_2_, int p_150108_3_, int p_150108_4_, Block p_150108_5_)
     {
-        if (this.func_150109_e(p_150108_1_, p_150108_2_, p_150108_3_, p_150108_4_))
+        if (this.dropTorchIfCantStay(p_150108_1_, p_150108_2_, p_150108_3_, p_150108_4_))
         {
             int var6 = p_150108_1_.getBlockMetadata(p_150108_2_, p_150108_3_, p_150108_4_);
             boolean var7 = false;
@@ -171,7 +171,7 @@ public class BlockTorch extends Block
                 var7 = true;
             }
 
-            if (!this.func_150107_m(p_150108_1_, p_150108_2_, p_150108_3_ - 1, p_150108_4_) && var6 == 5)
+            if (!this.canPlaceTorchOn(p_150108_1_, p_150108_2_, p_150108_3_ - 1, p_150108_4_) && var6 == 5)
             {
                 var7 = true;
             }
@@ -193,7 +193,7 @@ public class BlockTorch extends Block
         }
     }
 
-    protected boolean func_150109_e(World p_150109_1_, int p_150109_2_, int p_150109_3_, int p_150109_4_)
+    protected boolean dropTorchIfCantStay(World p_150109_1_, int p_150109_2_, int p_150109_3_, int p_150109_4_)
     {
         if (!this.canPlaceBlockAt(p_150109_1_, p_150109_2_, p_150109_3_, p_150109_4_))
         {
@@ -211,9 +211,9 @@ public class BlockTorch extends Block
         }
     }
 
-    public MovingObjectPosition collisionRayTrace(World p_149731_1_, int p_149731_2_, int p_149731_3_, int p_149731_4_, Vec3 p_149731_5_, Vec3 p_149731_6_)
+    public MovingObjectPosition collisionRayTrace(World worldIn, int x, int y, int z, Vec3 startVec, Vec3 endVec)
     {
-        int var7 = p_149731_1_.getBlockMetadata(p_149731_2_, p_149731_3_, p_149731_4_) & 7;
+        int var7 = worldIn.getBlockMetadata(x, y, z) & 7;
         float var8 = 0.15F;
 
         if (var7 == 1)
@@ -238,45 +238,45 @@ public class BlockTorch extends Block
             this.setBlockBounds(0.5F - var8, 0.0F, 0.5F - var8, 0.5F + var8, 0.6F, 0.5F + var8);
         }
 
-        return super.collisionRayTrace(p_149731_1_, p_149731_2_, p_149731_3_, p_149731_4_, p_149731_5_, p_149731_6_);
+        return super.collisionRayTrace(worldIn, x, y, z, startVec, endVec);
     }
 
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random)
     {
-        int var6 = p_149734_1_.getBlockMetadata(p_149734_2_, p_149734_3_, p_149734_4_);
-        double var7 = (double)((float)p_149734_2_ + 0.5F);
-        double var9 = (double)((float)p_149734_3_ + 0.7F);
-        double var11 = (double)((float)p_149734_4_ + 0.5F);
+        int var6 = worldIn.getBlockMetadata(x, y, z);
+        double var7 = (double)((float)x + 0.5F);
+        double var9 = (double)((float)y + 0.7F);
+        double var11 = (double)((float)z + 0.5F);
         double var13 = 0.2199999988079071D;
         double var15 = 0.27000001072883606D;
 
         if (var6 == 1)
         {
-            p_149734_1_.spawnParticle("smoke", var7 - var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
-            p_149734_1_.spawnParticle("flame", var7 - var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("smoke", var7 - var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("flame", var7 - var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
         }
         else if (var6 == 2)
         {
-            p_149734_1_.spawnParticle("smoke", var7 + var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
-            p_149734_1_.spawnParticle("flame", var7 + var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("smoke", var7 + var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("flame", var7 + var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
         }
         else if (var6 == 3)
         {
-            p_149734_1_.spawnParticle("smoke", var7, var9 + var13, var11 - var15, 0.0D, 0.0D, 0.0D);
-            p_149734_1_.spawnParticle("flame", var7, var9 + var13, var11 - var15, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("smoke", var7, var9 + var13, var11 - var15, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("flame", var7, var9 + var13, var11 - var15, 0.0D, 0.0D, 0.0D);
         }
         else if (var6 == 4)
         {
-            p_149734_1_.spawnParticle("smoke", var7, var9 + var13, var11 + var15, 0.0D, 0.0D, 0.0D);
-            p_149734_1_.spawnParticle("flame", var7, var9 + var13, var11 + var15, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("smoke", var7, var9 + var13, var11 + var15, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("flame", var7, var9 + var13, var11 + var15, 0.0D, 0.0D, 0.0D);
         }
         else
         {
-            p_149734_1_.spawnParticle("smoke", var7, var9, var11, 0.0D, 0.0D, 0.0D);
-            p_149734_1_.spawnParticle("flame", var7, var9, var11, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("smoke", var7, var9, var11, 0.0D, 0.0D, 0.0D);
+            worldIn.spawnParticle("flame", var7, var9, var11, 0.0D, 0.0D, 0.0D);
         }
     }
 }

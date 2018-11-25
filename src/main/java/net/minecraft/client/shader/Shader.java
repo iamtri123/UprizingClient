@@ -31,7 +31,7 @@ public class Shader
 
     public void deleteShader()
     {
-        this.manager.func_147988_a();
+        this.manager.deleteShader();
     }
 
     public void addAuxFramebuffer(String p_148041_1_, Object p_148041_2_, int p_148041_3_, int p_148041_4_)
@@ -67,21 +67,21 @@ public class Shader
         float var2 = (float)this.framebufferOut.framebufferTextureWidth;
         float var3 = (float)this.framebufferOut.framebufferTextureHeight;
         GL11.glViewport(0, 0, (int)var2, (int)var3);
-        this.manager.func_147992_a("DiffuseSampler", this.framebufferIn);
+        this.manager.addSamplerTexture("DiffuseSampler", this.framebufferIn);
 
         for (int var4 = 0; var4 < this.listAuxFramebuffers.size(); ++var4)
         {
-            this.manager.func_147992_a((String)this.listAuxNames.get(var4), this.listAuxFramebuffers.get(var4));
-            this.manager.func_147984_b("AuxSize" + var4).func_148087_a((float)((Integer)this.listAuxWidths.get(var4)).intValue(), (float)((Integer)this.listAuxHeights.get(var4)).intValue());
+            this.manager.addSamplerTexture((String)this.listAuxNames.get(var4), this.listAuxFramebuffers.get(var4));
+            this.manager.getShaderUniformOrDefault("AuxSize" + var4).set((float)((Integer)this.listAuxWidths.get(var4)).intValue(), (float)((Integer)this.listAuxHeights.get(var4)).intValue());
         }
 
-        this.manager.func_147984_b("ProjMat").func_148088_a(this.projectionMatrix);
-        this.manager.func_147984_b("InSize").func_148087_a((float)this.framebufferIn.framebufferTextureWidth, (float)this.framebufferIn.framebufferTextureHeight);
-        this.manager.func_147984_b("OutSize").func_148087_a(var2, var3);
-        this.manager.func_147984_b("Time").func_148090_a(p_148042_1_);
+        this.manager.getShaderUniformOrDefault("ProjMat").set(this.projectionMatrix);
+        this.manager.getShaderUniformOrDefault("InSize").set((float)this.framebufferIn.framebufferTextureWidth, (float)this.framebufferIn.framebufferTextureHeight);
+        this.manager.getShaderUniformOrDefault("OutSize").set(var2, var3);
+        this.manager.getShaderUniformOrDefault("Time").set(p_148042_1_);
         Minecraft var8 = Minecraft.getMinecraft();
-        this.manager.func_147984_b("ScreenSize").func_148087_a((float)var8.displayWidth, (float)var8.displayHeight);
-        this.manager.func_147995_c();
+        this.manager.getShaderUniformOrDefault("ScreenSize").set((float)var8.displayWidth, (float)var8.displayHeight);
+        this.manager.useShader();
         this.framebufferOut.framebufferClear();
         this.framebufferOut.bindFramebuffer(false);
         GL11.glDepthMask(false);
@@ -96,7 +96,7 @@ public class Shader
         var5.draw();
         GL11.glDepthMask(true);
         GL11.glColorMask(true, true, true, true);
-        this.manager.func_147993_b();
+        this.manager.endShader();
         this.framebufferOut.unbindFramebuffer();
         this.framebufferIn.unbindFramebufferTexture();
         Iterator var6 = this.listAuxFramebuffers.iterator();

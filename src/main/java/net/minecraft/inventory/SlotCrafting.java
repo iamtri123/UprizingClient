@@ -34,7 +34,7 @@ public class SlotCrafting extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack p_75214_1_)
+    public boolean isItemValid(ItemStack stack)
     {
         return false;
     }
@@ -101,7 +101,7 @@ public class SlotCrafting extends Slot
             this.thePlayer.addStat(AchievementList.bakeCake, 1);
         }
 
-        if (p_75208_1_.getItem() instanceof ItemPickaxe && ((ItemPickaxe)p_75208_1_.getItem()).func_150913_i() != Item.ToolMaterial.WOOD)
+        if (p_75208_1_.getItem() instanceof ItemPickaxe && ((ItemPickaxe)p_75208_1_.getItem()).getToolMaterial() != Item.ToolMaterial.WOOD)
         {
             this.thePlayer.addStat(AchievementList.buildBetterPickaxe, 1);
         }

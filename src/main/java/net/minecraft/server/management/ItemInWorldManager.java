@@ -272,7 +272,7 @@ public class ItemInWorldManager
 
                 if (var7 != null)
                 {
-                    var7.func_150999_a(this.theWorld, var4, p_73084_1_, p_73084_2_, p_73084_3_, this.thisPlayerMP);
+                    var7.onBlockDestroyed(this.theWorld, var4, p_73084_1_, p_73084_2_, p_73084_3_, this.thisPlayerMP);
 
                     if (var7.stackSize == 0)
                     {
@@ -335,28 +335,28 @@ public class ItemInWorldManager
      * Activate the clicked on block, otherwise use the held item. Args: player, world, itemStack, x, y, z, side,
      * xOffset, yOffset, zOffset
      */
-    public boolean activateBlockOrUseItem(EntityPlayer p_73078_1_, World p_73078_2_, ItemStack p_73078_3_, int p_73078_4_, int p_73078_5_, int p_73078_6_, int p_73078_7_, float p_73078_8_, float p_73078_9_, float p_73078_10_)
+    public boolean activateBlockOrUseItem(EntityPlayer player, World worldIn, ItemStack stack, int p_73078_4_, int p_73078_5_, int p_73078_6_, int p_73078_7_, float p_73078_8_, float p_73078_9_, float p_73078_10_)
     {
-        if ((!p_73078_1_.isSneaking() || p_73078_1_.getHeldItem() == null) && p_73078_2_.getBlock(p_73078_4_, p_73078_5_, p_73078_6_).onBlockActivated(p_73078_2_, p_73078_4_, p_73078_5_, p_73078_6_, p_73078_1_, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_))
+        if ((!player.isSneaking() || player.getHeldItem() == null) && worldIn.getBlock(p_73078_4_, p_73078_5_, p_73078_6_).onBlockActivated(worldIn, p_73078_4_, p_73078_5_, p_73078_6_, player, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_))
         {
             return true;
         }
-        else if (p_73078_3_ == null)
+        else if (stack == null)
         {
             return false;
         }
         else if (this.isCreative())
         {
-            int var11 = p_73078_3_.getItemDamage();
-            int var12 = p_73078_3_.stackSize;
-            boolean var13 = p_73078_3_.tryPlaceItemIntoWorld(p_73078_1_, p_73078_2_, p_73078_4_, p_73078_5_, p_73078_6_, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_);
-            p_73078_3_.setItemDamage(var11);
-            p_73078_3_.stackSize = var12;
+            int var11 = stack.getItemDamage();
+            int var12 = stack.stackSize;
+            boolean var13 = stack.tryPlaceItemIntoWorld(player, worldIn, p_73078_4_, p_73078_5_, p_73078_6_, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_);
+            stack.setItemDamage(var11);
+            stack.stackSize = var12;
             return var13;
         }
         else
         {
-            return p_73078_3_.tryPlaceItemIntoWorld(p_73078_1_, p_73078_2_, p_73078_4_, p_73078_5_, p_73078_6_, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_);
+            return stack.tryPlaceItemIntoWorld(player, worldIn, p_73078_4_, p_73078_5_, p_73078_6_, p_73078_7_, p_73078_8_, p_73078_9_, p_73078_10_);
         }
     }
 

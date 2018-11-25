@@ -126,45 +126,45 @@ public class EntityMinecartFurnace extends EntityMinecart
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer p_130002_1_)
+    public boolean interactFirst(EntityPlayer player)
     {
-        ItemStack var2 = p_130002_1_.inventory.getCurrentItem();
+        ItemStack var2 = player.inventory.getCurrentItem();
 
         if (var2 != null && var2.getItem() == Items.coal)
         {
-            if (!p_130002_1_.capabilities.isCreativeMode && --var2.stackSize == 0)
+            if (!player.capabilities.isCreativeMode && --var2.stackSize == 0)
             {
-                p_130002_1_.inventory.setInventorySlotContents(p_130002_1_.inventory.currentItem, (ItemStack)null);
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
             }
 
             this.fuel += 3600;
         }
 
-        this.pushX = this.posX - p_130002_1_.posX;
-        this.pushZ = this.posZ - p_130002_1_.posZ;
+        this.pushX = this.posX - player.posX;
+        this.pushZ = this.posZ - player.posZ;
         return true;
     }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setDouble("PushX", this.pushX);
-        p_70014_1_.setDouble("PushZ", this.pushZ);
-        p_70014_1_.setShort("Fuel", (short)this.fuel);
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setDouble("PushX", this.pushX);
+        tagCompound.setDouble("PushZ", this.pushZ);
+        tagCompound.setShort("Fuel", (short)this.fuel);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.pushX = p_70037_1_.getDouble("PushX");
-        this.pushZ = p_70037_1_.getDouble("PushZ");
-        this.fuel = p_70037_1_.getShort("Fuel");
+        super.readEntityFromNBT(tagCompund);
+        this.pushX = tagCompund.getDouble("PushX");
+        this.pushZ = tagCompund.getDouble("PushZ");
+        this.fuel = tagCompund.getShort("Fuel");
     }
 
     protected boolean isMinecartPowered()
@@ -184,7 +184,7 @@ public class EntityMinecartFurnace extends EntityMinecart
         }
     }
 
-    public Block func_145817_o()
+    public Block getDefaultDisplayTile()
     {
         return Blocks.lit_furnace;
     }

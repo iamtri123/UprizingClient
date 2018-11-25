@@ -43,7 +43,7 @@ public class WaypointsContainer extends WaypointsArray {
 
         System.out.println("[WaypointsMod] Loaded " + renderer.size + " waypoint" + (renderer.size <= 1 ? "" : "s") + " for the "
             + EnumDimension.getByValue(minecraft.thePlayer.dimension).getName() + " dimension on the "
-            + (minecraft.isIntegratedServerRunning() ? minecraft.getIntegratedServer().getWorldName() + " world." : minecraft.func_147104_D().serverIP + " server."));
+            + (minecraft.isIntegratedServerRunning() ? minecraft.getIntegratedServer().getWorldName() + " world." : minecraft.getCurrentServerData().serverIP + " server."));
 
         updating = false;
     }

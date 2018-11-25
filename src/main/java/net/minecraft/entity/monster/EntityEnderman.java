@@ -65,21 +65,21 @@ public class EntityEnderman extends EntityMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_)
+    public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
-        super.writeEntityToNBT(p_70014_1_);
-        p_70014_1_.setShort("carried", (short)Block.getIdFromBlock(this.func_146080_bZ()));
-        p_70014_1_.setShort("carriedData", (short)this.getCarryingData());
+        super.writeEntityToNBT(tagCompound);
+        tagCompound.setShort("carried", (short)Block.getIdFromBlock(this.getCarriedBlock()));
+        tagCompound.setShort("carriedData", (short)this.getCarryingData());
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_)
+    public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
-        super.readEntityFromNBT(p_70037_1_);
-        this.func_146081_a(Block.getBlockById(p_70037_1_.getShort("carried")));
-        this.setCarryingData(p_70037_1_.getShort("carriedData"));
+        super.readEntityFromNBT(tagCompund);
+        this.setCarriedBlock(Block.getBlockById(tagCompund.getShort("carried")));
+        this.setCarryingData(tagCompund.getShort("carriedData"));
     }
 
     /**
@@ -170,7 +170,7 @@ public class EntityEnderman extends EntityMob
             int var3;
             Block var4;
 
-            if (this.func_146080_bZ().getMaterial() == Material.air)
+            if (this.getCarriedBlock().getMaterial() == Material.air)
             {
                 if (this.rand.nextInt(20) == 0)
                 {
@@ -181,7 +181,7 @@ public class EntityEnderman extends EntityMob
 
                     if (carriableBlocks[Block.getIdFromBlock(var4)])
                     {
-                        this.func_146081_a(var4);
+                        this.setCarriedBlock(var4);
                         this.setCarryingData(this.worldObj.getBlockMetadata(var6, var2, var3));
                         this.worldObj.setBlock(var6, var2, var3, Blocks.air);
                     }
@@ -197,8 +197,8 @@ public class EntityEnderman extends EntityMob
 
                 if (var4.getMaterial() == Material.air && var5.getMaterial() != Material.air && var5.renderAsNormalBlock())
                 {
-                    this.worldObj.setBlock(var6, var2, var3, this.func_146080_bZ(), this.getCarryingData(), 3);
-                    this.func_146081_a(Blocks.air);
+                    this.worldObj.setBlock(var6, var2, var3, this.getCarriedBlock(), this.getCarryingData(), 3);
+                    this.setCarriedBlock(Blocks.air);
                 }
             }
         }
@@ -391,7 +391,7 @@ public class EntityEnderman extends EntityMob
         return "mob.endermen.death";
     }
 
-    protected Item func_146068_u()
+    protected Item getDropItem()
     {
         return Items.ender_pearl;
     }
@@ -401,7 +401,7 @@ public class EntityEnderman extends EntityMob
      */
     protected void dropFewItems(boolean p_70628_1_, int p_70628_2_)
     {
-        Item var3 = this.func_146068_u();
+        Item var3 = this.getDropItem();
 
         if (var3 != null)
         {
@@ -409,17 +409,17 @@ public class EntityEnderman extends EntityMob
 
             for (int var5 = 0; var5 < var4; ++var5)
             {
-                this.func_145779_a(var3, 1);
+                this.dropItem(var3, 1);
             }
         }
     }
 
-    public void func_146081_a(Block p_146081_1_)
+    public void setCarriedBlock(Block p_146081_1_)
     {
         this.dataWatcher.updateObject(16, Byte.valueOf((byte)(Block.getIdFromBlock(p_146081_1_) & 255)));
     }
 
-    public Block func_146080_bZ()
+    public Block getCarriedBlock()
     {
         return Block.getBlockById(this.dataWatcher.getWatchableObjectByte(16));
     }
@@ -443,7 +443,7 @@ public class EntityEnderman extends EntityMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -453,12 +453,12 @@ public class EntityEnderman extends EntityMob
         {
             this.setScreaming(true);
 
-            if (p_70097_1_ instanceof EntityDamageSource && p_70097_1_.getEntity() instanceof EntityPlayer)
+            if (source instanceof EntityDamageSource && source.getEntity() instanceof EntityPlayer)
             {
                 this.isAggressive = true;
             }
 
-            if (p_70097_1_ instanceof EntityDamageSourceIndirect)
+            if (source instanceof EntityDamageSourceIndirect)
             {
                 this.isAggressive = false;
 
@@ -474,7 +474,7 @@ public class EntityEnderman extends EntityMob
             }
             else
             {
-                return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+                return super.attackEntityFrom(source, amount);
             }
         }
     }

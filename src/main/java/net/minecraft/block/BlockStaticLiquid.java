@@ -20,13 +20,13 @@ public class BlockStaticLiquid extends BlockLiquid
         }
     }
 
-    public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor)
     {
-        super.onNeighborBlockChange(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
 
-        if (p_149695_1_.getBlock(p_149695_2_, p_149695_3_, p_149695_4_) == this)
+        if (worldIn.getBlock(x, y, z) == this)
         {
-            this.setNotStationary(p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_);
+            this.setNotStationary(worldIn, x, y, z);
         }
     }
 
@@ -34,31 +34,31 @@ public class BlockStaticLiquid extends BlockLiquid
     {
         int var5 = p_149818_1_.getBlockMetadata(p_149818_2_, p_149818_3_, p_149818_4_);
         p_149818_1_.setBlock(p_149818_2_, p_149818_3_, p_149818_4_, Block.getBlockById(Block.getIdFromBlock(this) - 1), var5, 2);
-        p_149818_1_.scheduleBlockUpdate(p_149818_2_, p_149818_3_, p_149818_4_, Block.getBlockById(Block.getIdFromBlock(this) - 1), this.func_149738_a(p_149818_1_));
+        p_149818_1_.scheduleBlockUpdate(p_149818_2_, p_149818_3_, p_149818_4_, Block.getBlockById(Block.getIdFromBlock(this) - 1), this.tickRate(p_149818_1_));
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_)
+    public void updateTick(World worldIn, int x, int y, int z, Random random)
     {
         if (this.blockMaterial == Material.lava)
         {
-            int var6 = p_149674_5_.nextInt(3);
+            int var6 = random.nextInt(3);
             int var7;
 
             for (var7 = 0; var7 < var6; ++var7)
             {
-                p_149674_2_ += p_149674_5_.nextInt(3) - 1;
-                ++p_149674_3_;
-                p_149674_4_ += p_149674_5_.nextInt(3) - 1;
-                Block var8 = p_149674_1_.getBlock(p_149674_2_, p_149674_3_, p_149674_4_);
+                x += random.nextInt(3) - 1;
+                ++y;
+                z += random.nextInt(3) - 1;
+                Block var8 = worldIn.getBlock(x, y, z);
 
                 if (var8.blockMaterial == Material.air)
                 {
-                    if (this.isFlammable(p_149674_1_, p_149674_2_ - 1, p_149674_3_, p_149674_4_) || this.isFlammable(p_149674_1_, p_149674_2_ + 1, p_149674_3_, p_149674_4_) || this.isFlammable(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_ - 1) || this.isFlammable(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_ + 1) || this.isFlammable(p_149674_1_, p_149674_2_, p_149674_3_ - 1, p_149674_4_) || this.isFlammable(p_149674_1_, p_149674_2_, p_149674_3_ + 1, p_149674_4_))
+                    if (this.isFlammable(worldIn, x - 1, y, z) || this.isFlammable(worldIn, x + 1, y, z) || this.isFlammable(worldIn, x, y, z - 1) || this.isFlammable(worldIn, x, y, z + 1) || this.isFlammable(worldIn, x, y - 1, z) || this.isFlammable(worldIn, x, y + 1, z))
                     {
-                        p_149674_1_.setBlock(p_149674_2_, p_149674_3_, p_149674_4_, Blocks.fire);
+                        worldIn.setBlock(x, y, z, Blocks.fire);
                         return;
                     }
                 }
@@ -70,17 +70,17 @@ public class BlockStaticLiquid extends BlockLiquid
 
             if (var6 == 0)
             {
-                var7 = p_149674_2_;
-                int var10 = p_149674_4_;
+                var7 = x;
+                int var10 = z;
 
                 for (int var9 = 0; var9 < 3; ++var9)
                 {
-                    p_149674_2_ = var7 + p_149674_5_.nextInt(3) - 1;
-                    p_149674_4_ = var10 + p_149674_5_.nextInt(3) - 1;
+                    x = var7 + random.nextInt(3) - 1;
+                    z = var10 + random.nextInt(3) - 1;
 
-                    if (p_149674_1_.isAirBlock(p_149674_2_, p_149674_3_ + 1, p_149674_4_) && this.isFlammable(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_))
+                    if (worldIn.isAirBlock(x, y + 1, z) && this.isFlammable(worldIn, x, y, z))
                     {
-                        p_149674_1_.setBlock(p_149674_2_, p_149674_3_ + 1, p_149674_4_, Blocks.fire);
+                        worldIn.setBlock(x, y + 1, z, Blocks.fire);
                     }
                 }
             }

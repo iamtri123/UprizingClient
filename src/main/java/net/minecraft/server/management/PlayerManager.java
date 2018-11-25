@@ -200,7 +200,7 @@ public class PlayerManager
         return var6;
     }
 
-    public void func_151250_a(int p_151250_1_, int p_151250_2_, int p_151250_3_)
+    public void markBlockForUpdate(int p_151250_1_, int p_151250_2_, int p_151250_3_)
     {
         int var4 = p_151250_1_ >> 4;
         int var5 = p_151250_3_ >> 4;
@@ -208,7 +208,7 @@ public class PlayerManager
 
         if (var6 != null)
         {
-            var6.func_151253_a(p_151250_1_ & 15, p_151250_2_, p_151250_3_ & 15);
+            var6.flagChunkForUpdate(p_151250_1_ & 15, p_151250_2_, p_151250_3_ & 15);
         }
     }
 
@@ -464,7 +464,7 @@ public class PlayerManager
     {
         private final List playersWatchingChunk;
         private final ChunkCoordIntPair chunkLocation;
-        private final short[] field_151254_d;
+        private final short[] locationOfBlockChange;
         private int numberOfTilesToUpdate;
         private int flagsYAreasToUpdate;
         private long previousWorldTime;
@@ -479,7 +479,7 @@ public class PlayerManager
         public PlayerInstance(int par2, int par3, boolean lazy)
         {
             this.playersWatchingChunk = new ArrayList();
-            this.field_151254_d = new short[64];
+            this.locationOfBlockChange = new short[64];
             this.chunkLoaded = false;
             this.chunkLocation = new ChunkCoordIntPair(par2, par3);
             boolean useLazy = lazy && Config.isLazyChunkLoading();
@@ -569,7 +569,7 @@ public class PlayerManager
             this.previousWorldTime = PlayerManager.this.theWorldServer.getTotalWorldTime();
         }
 
-        public void func_151253_a(int p_151253_1_, int p_151253_2_, int p_151253_3_)
+        public void flagChunkForUpdate(int p_151253_1_, int p_151253_2_, int p_151253_3_)
         {
             if (this.numberOfTilesToUpdate == 0)
             {
@@ -584,17 +584,17 @@ public class PlayerManager
 
                 for (int var5 = 0; var5 < this.numberOfTilesToUpdate; ++var5)
                 {
-                    if (this.field_151254_d[var5] == var4)
+                    if (this.locationOfBlockChange[var5] == var4)
                     {
                         return;
                     }
                 }
 
-                this.field_151254_d[this.numberOfTilesToUpdate++] = var4;
+                this.locationOfBlockChange[this.numberOfTilesToUpdate++] = var4;
             }
         }
 
-        public void func_151251_a(Packet p_151251_1_)
+        public void sendToAllPlayersWatchingChunk(Packet p_151251_1_)
         {
             for (int var2 = 0; var2 < this.playersWatchingChunk.size(); ++var2)
             {
@@ -617,14 +617,14 @@ public class PlayerManager
 
                 if (this.numberOfTilesToUpdate == 1)
                 {
-                    var1 = this.chunkLocation.chunkXPos * 16 + (this.field_151254_d[0] >> 12 & 15);
-                    var2 = this.field_151254_d[0] & 255;
-                    var3 = this.chunkLocation.chunkZPos * 16 + (this.field_151254_d[0] >> 8 & 15);
-                    this.func_151251_a(new S23PacketBlockChange(var1, var2, var3, PlayerManager.this.theWorldServer));
+                    var1 = this.chunkLocation.chunkXPos * 16 + (this.locationOfBlockChange[0] >> 12 & 15);
+                    var2 = this.locationOfBlockChange[0] & 255;
+                    var3 = this.chunkLocation.chunkZPos * 16 + (this.locationOfBlockChange[0] >> 8 & 15);
+                    this.sendToAllPlayersWatchingChunk(new S23PacketBlockChange(var1, var2, var3, PlayerManager.this.theWorldServer));
 
                     if (ReflectorForge.blockHasTileEntity(PlayerManager.this.theWorldServer, var1, var2, var3))
                     {
-                        this.func_151252_a(PlayerManager.this.theWorldServer.getTileEntity(var1, var2, var3));
+                        this.sendTileToAllPlayersWatchingChunk(PlayerManager.this.theWorldServer.getTileEntity(var1, var2, var3));
                     }
                 }
                 else
@@ -635,7 +635,7 @@ public class PlayerManager
                     {
                         var1 = this.chunkLocation.chunkXPos * 16;
                         var2 = this.chunkLocation.chunkZPos * 16;
-                        this.func_151251_a(new S21PacketChunkData(PlayerManager.this.theWorldServer.getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos), false, this.flagsYAreasToUpdate));
+                        this.sendToAllPlayersWatchingChunk(new S21PacketChunkData(PlayerManager.this.theWorldServer.getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos), false, this.flagsYAreasToUpdate));
 
                         for (var3 = 0; var3 < 16; ++var3)
                         {
@@ -646,24 +646,24 @@ public class PlayerManager
 
                                 for (int var6 = 0; var6 < var5.size(); ++var6)
                                 {
-                                    this.func_151252_a((TileEntity)var5.get(var6));
+                                    this.sendTileToAllPlayersWatchingChunk((TileEntity)var5.get(var6));
                                 }
                             }
                         }
                     }
                     else
                     {
-                        this.func_151251_a(new S22PacketMultiBlockChange(this.numberOfTilesToUpdate, this.field_151254_d, PlayerManager.this.theWorldServer.getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos)));
+                        this.sendToAllPlayersWatchingChunk(new S22PacketMultiBlockChange(this.numberOfTilesToUpdate, this.locationOfBlockChange, PlayerManager.this.theWorldServer.getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos)));
 
                         for (var1 = 0; var1 < this.numberOfTilesToUpdate; ++var1)
                         {
-                            var2 = this.chunkLocation.chunkXPos * 16 + (this.field_151254_d[var1] >> 12 & 15);
-                            var3 = this.field_151254_d[var1] & 255;
-                            var4 = this.chunkLocation.chunkZPos * 16 + (this.field_151254_d[var1] >> 8 & 15);
+                            var2 = this.chunkLocation.chunkXPos * 16 + (this.locationOfBlockChange[var1] >> 12 & 15);
+                            var3 = this.locationOfBlockChange[var1] & 255;
+                            var4 = this.chunkLocation.chunkZPos * 16 + (this.locationOfBlockChange[var1] >> 8 & 15);
 
                             if (ReflectorForge.blockHasTileEntity(PlayerManager.this.theWorldServer, var2, var3, var4))
                             {
-                                this.func_151252_a(PlayerManager.this.theWorldServer.getTileEntity(var2, var3, var4));
+                                this.sendTileToAllPlayersWatchingChunk(PlayerManager.this.theWorldServer.getTileEntity(var2, var3, var4));
                             }
                         }
                     }
@@ -674,7 +674,7 @@ public class PlayerManager
             }
         }
 
-        private void func_151252_a(TileEntity p_151252_1_)
+        private void sendTileToAllPlayersWatchingChunk(TileEntity p_151252_1_)
         {
             if (p_151252_1_ != null)
             {
@@ -682,7 +682,7 @@ public class PlayerManager
 
                 if (var2 != null)
                 {
-                    this.func_151251_a(var2);
+                    this.sendToAllPlayersWatchingChunk(var2);
                 }
             }
         }

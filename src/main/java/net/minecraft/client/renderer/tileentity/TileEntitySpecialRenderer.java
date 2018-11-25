@@ -15,7 +15,7 @@ public abstract class TileEntitySpecialRenderer
 
     protected void bindTexture(ResourceLocation p_147499_1_)
     {
-        TextureManager var2 = this.field_147501_a.field_147553_e;
+        TextureManager var2 = this.field_147501_a.renderEngine;
 
         if (var2 != null)
         {
@@ -28,10 +28,10 @@ public abstract class TileEntitySpecialRenderer
         this.field_147501_a = p_147497_1_;
     }
 
-    public void func_147496_a(World p_147496_1_) {}
+    public void onWorldChange(World p_147496_1_) {}
 
     public FontRenderer func_147498_b()
     {
-        return this.field_147501_a.func_147548_a();
+        return this.field_147501_a.getFontRenderer();
     }
 }

@@ -24,7 +24,7 @@ public class SlotFurnace extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack p_75214_1_)
+    public boolean isItemValid(ItemStack stack)
     {
         return false;
     }
@@ -69,7 +69,7 @@ public class SlotFurnace extends Slot
         if (!this.thePlayer.worldObj.isClient)
         {
             int var2 = this.field_75228_b;
-            float var3 = FurnaceRecipes.smelting().func_151398_b(p_75208_1_);
+            float var3 = FurnaceRecipes.smelting().getSmeltingExperience(p_75208_1_);
             int var4;
 
             if (var3 == 0.0F)

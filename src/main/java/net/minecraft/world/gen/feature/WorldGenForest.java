@@ -100,7 +100,7 @@ public class WorldGenForest extends WorldGenAbstractTree
 
                                     if (var16.getMaterial() == Material.air || var16.getMaterial() == Material.leaves)
                                     {
-                                        this.func_150516_a(p_76484_1_, var20, var18, var14, Blocks.leaves, 2);
+                                        this.setBlockAndNotifyAdequately(p_76484_1_, var20, var18, var14, Blocks.leaves, 2);
                                     }
                                 }
                             }
@@ -113,7 +113,7 @@ public class WorldGenForest extends WorldGenAbstractTree
 
                         if (var19.getMaterial() == Material.air || var19.getMaterial() == Material.leaves)
                         {
-                            this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_ + var18, p_76484_5_, Blocks.log, 2);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_ + var18, p_76484_5_, Blocks.log, 2);
                         }
                     }
 

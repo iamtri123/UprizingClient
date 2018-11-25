@@ -21,9 +21,9 @@ public class ItemCoal extends Item
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack p_77667_1_)
+    public String getUnlocalizedName(ItemStack stack)
     {
-        return p_77667_1_.getItemDamage() == 1 ? "item.charcoal" : "item.coal";
+        return stack.getItemDamage() == 1 ? "item.charcoal" : "item.coal";
     }
 
     /**
@@ -43,9 +43,9 @@ public class ItemCoal extends Item
         return p_77617_1_ == 1 ? this.field_111220_a : super.getIconFromDamage(p_77617_1_);
     }
 
-    public void registerIcons(IIconRegister p_94581_1_)
+    public void registerIcons(IIconRegister register)
     {
-        super.registerIcons(p_94581_1_);
-        this.field_111220_a = p_94581_1_.registerIcon("charcoal");
+        super.registerIcons(register);
+        this.field_111220_a = register.registerIcon("charcoal");
     }
 }

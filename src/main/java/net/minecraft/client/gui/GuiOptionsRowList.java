@@ -39,7 +39,7 @@ public class GuiOptionsRowList extends GuiListExtended
         }
     }
 
-    public GuiOptionsRowList.Row func_148180_b(int p_148180_1_)
+    public GuiOptionsRowList.Row getListEntry(int p_148180_1_)
     {
         return (GuiOptionsRowList.Row)this.field_148184_k.get(p_148180_1_);
     }
@@ -49,14 +49,14 @@ public class GuiOptionsRowList extends GuiListExtended
         return this.field_148184_k.size();
     }
 
-    public int func_148139_c()
+    public int getListWidth()
     {
         return 400;
     }
 
-    protected int func_148137_d()
+    protected int getScrollBarX()
     {
-        return super.func_148137_d() + 32;
+        return super.getScrollBarX() + 32;
     }
 
     public static class Row implements GuiListExtended.IGuiListEntry
@@ -72,7 +72,7 @@ public class GuiOptionsRowList extends GuiListExtended
             this.field_148324_c = p_i45014_2_;
         }
 
-        public void func_148279_a(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
+        public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
         {
             if (this.field_148323_b != null)
             {
@@ -87,13 +87,13 @@ public class GuiOptionsRowList extends GuiListExtended
             }
         }
 
-        public boolean func_148278_a(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_)
+        public boolean mousePressed(int p_148278_1_, int p_148278_2_, int p_148278_3_, int p_148278_4_, int p_148278_5_, int p_148278_6_)
         {
             if (this.field_148323_b.mousePressed(this.field_148325_a, p_148278_2_, p_148278_3_))
             {
                 if (this.field_148323_b instanceof GuiOptionButton)
                 {
-                    this.field_148325_a.gameSettings.setOptionValue(((GuiOptionButton)this.field_148323_b).func_146136_c(), 1);
+                    this.field_148325_a.gameSettings.setOptionValue(((GuiOptionButton)this.field_148323_b).returnEnumOptions(), 1);
                     this.field_148323_b.displayString = this.field_148325_a.gameSettings.getKeyBinding(GameSettings.Options.getEnumOptions(this.field_148323_b.id));
                 }
 
@@ -103,7 +103,7 @@ public class GuiOptionsRowList extends GuiListExtended
             {
                 if (this.field_148324_c instanceof GuiOptionButton)
                 {
-                    this.field_148325_a.gameSettings.setOptionValue(((GuiOptionButton)this.field_148324_c).func_146136_c(), 1);
+                    this.field_148325_a.gameSettings.setOptionValue(((GuiOptionButton)this.field_148324_c).returnEnumOptions(), 1);
                     this.field_148324_c.displayString = this.field_148325_a.gameSettings.getKeyBinding(GameSettings.Options.getEnumOptions(this.field_148324_c.id));
                 }
 
@@ -115,7 +115,7 @@ public class GuiOptionsRowList extends GuiListExtended
             }
         }
 
-        public void func_148277_b(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_)
+        public void mouseReleased(int p_148277_1_, int p_148277_2_, int p_148277_3_, int p_148277_4_, int p_148277_5_, int p_148277_6_)
         {
             if (this.field_148323_b != null)
             {

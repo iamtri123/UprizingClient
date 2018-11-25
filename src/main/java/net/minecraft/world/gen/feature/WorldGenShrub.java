@@ -33,7 +33,7 @@ public class WorldGenShrub extends WorldGenTrees
         if (var7 == Blocks.dirt || var7 == Blocks.grass)
         {
             ++p_76484_4_;
-            this.func_150516_a(p_76484_1_, p_76484_3_, p_76484_4_, p_76484_5_, Blocks.log, this.field_150527_b);
+            this.setBlockAndNotifyAdequately(p_76484_1_, p_76484_3_, p_76484_4_, p_76484_5_, Blocks.log, this.field_150527_b);
 
             for (int var8 = p_76484_4_; var8 <= p_76484_4_ + 2; ++var8)
             {
@@ -50,7 +50,7 @@ public class WorldGenShrub extends WorldGenTrees
 
                         if ((Math.abs(var12) != var10 || Math.abs(var14) != var10 || p_76484_2_.nextInt(2) != 0) && !p_76484_1_.getBlock(var11, var8, var13).func_149730_j())
                         {
-                            this.func_150516_a(p_76484_1_, var11, var8, var13, Blocks.leaves, this.field_150528_a);
+                            this.setBlockAndNotifyAdequately(p_76484_1_, var11, var8, var13, Blocks.leaves, this.field_150528_a);
                         }
                     }
                 }

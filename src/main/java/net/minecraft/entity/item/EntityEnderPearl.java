@@ -48,7 +48,7 @@ public class EntityEnderPearl extends EntityThrowable
             {
                 EntityPlayerMP var3 = (EntityPlayerMP)this.getThrower();
 
-                if (var3.playerNetServerHandler.func_147362_b().isChannelOpen() && var3.worldObj == this.worldObj)
+                if (var3.playerNetServerHandler.getNetworkManager().isChannelOpen() && var3.worldObj == this.worldObj)
                 {
                     if (this.getThrower().isRiding())
                     {

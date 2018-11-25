@@ -206,7 +206,7 @@ public class MapGenRavine extends MapGenBase
         }
     }
 
-    protected void func_151538_a(World p_151538_1_, int p_151538_2_, int p_151538_3_, int p_151538_4_, int p_151538_5_, Block[] p_151538_6_)
+    protected void func_151538_a(World worldIn, int p_151538_2_, int p_151538_3_, int p_151538_4_, int p_151538_5_, Block[] p_151538_6_)
     {
         if (this.rand.nextInt(50) == 0)
         {

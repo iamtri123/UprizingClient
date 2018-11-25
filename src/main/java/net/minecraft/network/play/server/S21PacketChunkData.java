@@ -59,21 +59,21 @@ public class S21PacketChunkData extends Packet
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer p_148837_1_) throws IOException
+    public void readPacketData(PacketBuffer data) throws IOException
     {
-        this.field_149284_a = p_148837_1_.readInt();
-        this.field_149282_b = p_148837_1_.readInt();
-        this.field_149279_g = p_148837_1_.readBoolean();
-        this.field_149283_c = p_148837_1_.readShort();
-        this.field_149280_d = p_148837_1_.readShort();
-        this.field_149285_h = p_148837_1_.readInt();
+        this.field_149284_a = data.readInt();
+        this.field_149282_b = data.readInt();
+        this.field_149279_g = data.readBoolean();
+        this.field_149283_c = data.readShort();
+        this.field_149280_d = data.readShort();
+        this.field_149285_h = data.readInt();
 
         if (field_149286_i.length < this.field_149285_h)
         {
             field_149286_i = new byte[this.field_149285_h];
         }
 
-        p_148837_1_.readBytes(field_149286_i, 0, this.field_149285_h);
+        data.readBytes(field_149286_i, 0, this.field_149285_h);
         int var2 = 0;
         int var3;
 
@@ -110,20 +110,20 @@ public class S21PacketChunkData extends Packet
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer p_148840_1_) throws IOException
+    public void writePacketData(PacketBuffer data) throws IOException
     {
-        p_148840_1_.writeInt(this.field_149284_a);
-        p_148840_1_.writeInt(this.field_149282_b);
-        p_148840_1_.writeBoolean(this.field_149279_g);
-        p_148840_1_.writeShort((short)(this.field_149283_c & 65535));
-        p_148840_1_.writeShort((short)(this.field_149280_d & 65535));
-        p_148840_1_.writeInt(this.field_149285_h);
-        p_148840_1_.writeBytes(this.field_149281_e, 0, this.field_149285_h);
+        data.writeInt(this.field_149284_a);
+        data.writeInt(this.field_149282_b);
+        data.writeBoolean(this.field_149279_g);
+        data.writeShort((short)(this.field_149283_c & 65535));
+        data.writeShort((short)(this.field_149280_d & 65535));
+        data.writeInt(this.field_149285_h);
+        data.writeBytes(this.field_149281_e, 0, this.field_149285_h);
     }
 
-    public void processPacket(INetHandlerPlayClient p_148833_1_)
+    public void processPacket(INetHandlerPlayClient handler)
     {
-        p_148833_1_.handleChunkData(this);
+        handler.handleChunkData(this);
     }
 
     /**
@@ -263,9 +263,9 @@ public class S21PacketChunkData extends Packet
         return this.field_149279_g;
     }
 
-    public void processPacket(INetHandler p_148833_1_)
+    public void processPacket(INetHandler handler)
     {
-        this.processPacket((INetHandlerPlayClient)p_148833_1_);
+        this.processPacket((INetHandlerPlayClient)handler);
     }
 
     public static class Extracted

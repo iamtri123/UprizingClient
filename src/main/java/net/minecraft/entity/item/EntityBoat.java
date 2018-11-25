@@ -61,9 +61,9 @@ public class EntityBoat extends Entity
      * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
      * pushable on contact, like boats or minecarts.
      */
-    public AxisAlignedBB getCollisionBox(Entity p_70114_1_)
+    public AxisAlignedBB getCollisionBox(Entity entityIn)
     {
-        return p_70114_1_.boundingBox;
+        return entityIn.boundingBox;
     }
 
     /**
@@ -105,7 +105,7 @@ public class EntityBoat extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable())
         {
@@ -115,9 +115,9 @@ public class EntityBoat extends Entity
         {
             this.setForwardDirection(-this.getForwardDirection());
             this.setTimeSinceHit(10);
-            this.setDamageTaken(this.getDamageTaken() + p_70097_2_ * 10.0F);
+            this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
             this.setBeenAttacked();
-            boolean var3 = p_70097_1_.getEntity() instanceof EntityPlayer && ((EntityPlayer)p_70097_1_.getEntity()).capabilities.isCreativeMode;
+            boolean var3 = source.getEntity() instanceof EntityPlayer && ((EntityPlayer)source.getEntity()).capabilities.isCreativeMode;
 
             if (var3 || this.getDamageTaken() > 40.0F)
             {
@@ -128,7 +128,7 @@ public class EntityBoat extends Entity
 
                 if (!var3)
                 {
-                    this.func_145778_a(Items.boat, 1, 0.0F);
+                    this.dropItemWithOffset(Items.boat, 1, 0.0F);
                 }
 
                 this.setDead();
@@ -164,17 +164,17 @@ public class EntityBoat extends Entity
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double p_70056_1_, double p_70056_3_, double p_70056_5_, float p_70056_7_, float p_70056_8_, int p_70056_9_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int rotationIncrements)
     {
         if (this.isBoatEmpty)
         {
-            this.boatPosRotationIncrements = p_70056_9_ + 5;
+            this.boatPosRotationIncrements = rotationIncrements + 5;
         }
         else
         {
-            double var10 = p_70056_1_ - this.posX;
-            double var12 = p_70056_3_ - this.posY;
-            double var14 = p_70056_5_ - this.posZ;
+            double var10 = x - this.posX;
+            double var12 = y - this.posY;
+            double var14 = z - this.posZ;
             double var16 = var10 * var10 + var12 * var12 + var14 * var14;
 
             if (var16 <= 1.0D)
@@ -185,11 +185,11 @@ public class EntityBoat extends Entity
             this.boatPosRotationIncrements = 3;
         }
 
-        this.boatX = p_70056_1_;
-        this.boatY = p_70056_3_;
-        this.boatZ = p_70056_5_;
-        this.boatYaw = (double)p_70056_7_;
-        this.boatPitch = (double)p_70056_8_;
+        this.boatX = x;
+        this.boatY = y;
+        this.boatZ = z;
+        this.boatYaw = (double)yaw;
+        this.boatPitch = (double)pitch;
         this.motionX = this.velocityX;
         this.motionY = this.velocityY;
         this.motionZ = this.velocityZ;
@@ -198,11 +198,11 @@ public class EntityBoat extends Entity
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double p_70016_1_, double p_70016_3_, double p_70016_5_)
+    public void setVelocity(double x, double y, double z)
     {
-        this.velocityX = this.motionX = p_70016_1_;
-        this.velocityY = this.motionY = p_70016_3_;
-        this.velocityZ = this.motionZ = p_70016_5_;
+        this.velocityX = this.motionX = x;
+        this.velocityY = this.motionY = y;
+        this.velocityZ = this.motionZ = z;
     }
 
     /**
@@ -381,7 +381,7 @@ public class EntityBoat extends Entity
                     }
                     else if (var27 == Blocks.waterlily)
                     {
-                        this.worldObj.func_147480_a(var23, var12, var10, true);
+                        this.worldObj.breakBlock(var23, var12, var10, true);
                         this.isCollidedHorizontally = false;
                     }
                 }
@@ -404,12 +404,12 @@ public class EntityBoat extends Entity
 
                     for (var22 = 0; var22 < 3; ++var22)
                     {
-                        this.func_145778_a(Item.getItemFromBlock(Blocks.planks), 1, 0.0F);
+                        this.dropItemWithOffset(Item.getItemFromBlock(Blocks.planks), 1, 0.0F);
                     }
 
                     for (var22 = 0; var22 < 2; ++var22)
                     {
-                        this.func_145778_a(Items.stick, 1, 0.0F);
+                        this.dropItemWithOffset(Items.stick, 1, 0.0F);
                     }
                 }
             }
@@ -483,12 +483,12 @@ public class EntityBoat extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound p_70014_1_) {}
+    protected void writeEntityToNBT(NBTTagCompound tagCompound) {}
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound p_70037_1_) {}
+    protected void readEntityFromNBT(NBTTagCompound tagCompund) {}
 
     public float getShadowSize()
     {
@@ -498,9 +498,9 @@ public class EntityBoat extends Entity
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer p_130002_1_)
+    public boolean interactFirst(EntityPlayer player)
     {
-        if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != p_130002_1_)
+        if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != player)
         {
             return true;
         }
@@ -508,7 +508,7 @@ public class EntityBoat extends Entity
         {
             if (!this.worldObj.isClient)
             {
-                p_130002_1_.mountEntity(this);
+                player.mountEntity(this);
             }
 
             return true;
@@ -519,13 +519,13 @@ public class EntityBoat extends Entity
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double p_70064_1_, boolean p_70064_3_)
+    protected void updateFallState(double distanceFallenThisTick, boolean isOnGround)
     {
         int var4 = MathHelper.floor_double(this.posX);
         int var5 = MathHelper.floor_double(this.posY);
         int var6 = MathHelper.floor_double(this.posZ);
 
-        if (p_70064_3_)
+        if (isOnGround)
         {
             if (this.fallDistance > 3.0F)
             {
@@ -538,21 +538,21 @@ public class EntityBoat extends Entity
 
                     for (var7 = 0; var7 < 3; ++var7)
                     {
-                        this.func_145778_a(Item.getItemFromBlock(Blocks.planks), 1, 0.0F);
+                        this.dropItemWithOffset(Item.getItemFromBlock(Blocks.planks), 1, 0.0F);
                     }
 
                     for (var7 = 0; var7 < 2; ++var7)
                     {
-                        this.func_145778_a(Items.stick, 1, 0.0F);
+                        this.dropItemWithOffset(Items.stick, 1, 0.0F);
                     }
                 }
 
                 this.fallDistance = 0.0F;
             }
         }
-        else if (this.worldObj.getBlock(var4, var5 - 1, var6).getMaterial() != Material.water && p_70064_1_ < 0.0D)
+        else if (this.worldObj.getBlock(var4, var5 - 1, var6).getMaterial() != Material.water && distanceFallenThisTick < 0.0D)
         {
-            this.fallDistance = (float)((double)this.fallDistance - p_70064_1_);
+            this.fallDistance = (float)((double)this.fallDistance - distanceFallenThisTick);
         }
     }
 

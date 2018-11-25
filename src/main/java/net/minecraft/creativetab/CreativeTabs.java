@@ -28,7 +28,7 @@ public abstract class CreativeTabs
         {
             return Item.getItemFromBlock(Blocks.double_plant);
         }
-        public int func_151243_f()
+        public int getIconItemDamage()
         {
             return 5;
         }
@@ -56,7 +56,7 @@ public abstract class CreativeTabs
         {
             return Items.lava_bucket;
         }
-    }).func_111229_a(EnumEnchantmentType.all);
+    }).setRelevantEnchantmentTypes(EnumEnchantmentType.all);
     public static final CreativeTabs tabAllSearch = (new CreativeTabs(5, "search")
     {
         private static final String __OBFID = "CL_00000015";
@@ -80,7 +80,7 @@ public abstract class CreativeTabs
         {
             return Items.iron_axe;
         }
-    }).func_111229_a(EnumEnchantmentType.digger, EnumEnchantmentType.fishing_rod, EnumEnchantmentType.breakable);
+    }).setRelevantEnchantmentTypes(EnumEnchantmentType.digger, EnumEnchantmentType.fishing_rod, EnumEnchantmentType.breakable);
     public static final CreativeTabs tabCombat = (new CreativeTabs(8, "combat")
     {
         private static final String __OBFID = "CL_00000018";
@@ -88,7 +88,7 @@ public abstract class CreativeTabs
         {
             return Items.golden_sword;
         }
-    }).func_111229_a(EnumEnchantmentType.armor, EnumEnchantmentType.armor_feet, EnumEnchantmentType.armor_head, EnumEnchantmentType.armor_legs, EnumEnchantmentType.armor_torso, EnumEnchantmentType.bow, EnumEnchantmentType.weapon);
+    }).setRelevantEnchantmentTypes(EnumEnchantmentType.armor, EnumEnchantmentType.armor_feet, EnumEnchantmentType.armor_head, EnumEnchantmentType.armor_legs, EnumEnchantmentType.armor_torso, EnumEnchantmentType.bow, EnumEnchantmentType.weapon);
     public static final CreativeTabs tabBrewing = new CreativeTabs(9, "brewing")
     {
         private static final String __OBFID = "CL_00000007";
@@ -122,15 +122,15 @@ public abstract class CreativeTabs
 
     /** Whether to draw the title in the foreground of the creative GUI */
     private boolean drawTitle = true;
-    private EnumEnchantmentType[] field_111230_s;
-    private ItemStack field_151245_t;
+    private EnumEnchantmentType[] enchantmentTypes;
+    private ItemStack iconItemStack;
     private static final String __OBFID = "CL_00000005";
 
-    public CreativeTabs(int p_i1853_1_, String p_i1853_2_)
+    public CreativeTabs(int index, String label)
     {
-        this.tabIndex = p_i1853_1_;
-        this.tabLabel = p_i1853_2_;
-        creativeTabArray[p_i1853_1_] = this;
+        this.tabIndex = index;
+        this.tabLabel = label;
+        creativeTabArray[index] = this;
     }
 
     public int getTabIndex()
@@ -153,17 +153,17 @@ public abstract class CreativeTabs
 
     public ItemStack getIconItemStack()
     {
-        if (this.field_151245_t == null)
+        if (this.iconItemStack == null)
         {
-            this.field_151245_t = new ItemStack(this.getTabIconItem(), 1, this.func_151243_f());
+            this.iconItemStack = new ItemStack(this.getTabIconItem(), 1, this.getIconItemDamage());
         }
 
-        return this.field_151245_t;
+        return this.iconItemStack;
     }
 
     public abstract Item getTabIconItem();
 
-    public int func_151243_f()
+    public int getIconItemDamage()
     {
         return 0;
     }
@@ -173,9 +173,9 @@ public abstract class CreativeTabs
         return this.backgroundImageName;
     }
 
-    public CreativeTabs setBackgroundImageName(String p_78025_1_)
+    public CreativeTabs setBackgroundImageName(String texture)
     {
-        this.backgroundImageName = p_78025_1_;
+        this.backgroundImageName = texture;
         return this;
     }
 
@@ -217,26 +217,26 @@ public abstract class CreativeTabs
         return this.tabIndex < 6;
     }
 
-    public EnumEnchantmentType[] func_111225_m()
+    public EnumEnchantmentType[] getRelevantEnchantmentTypes()
     {
-        return this.field_111230_s;
+        return this.enchantmentTypes;
     }
 
-    public CreativeTabs func_111229_a(EnumEnchantmentType ... p_111229_1_)
+    public CreativeTabs setRelevantEnchantmentTypes(EnumEnchantmentType ... types)
     {
-        this.field_111230_s = p_111229_1_;
+        this.enchantmentTypes = types;
         return this;
     }
 
     public boolean func_111226_a(EnumEnchantmentType p_111226_1_)
     {
-        if (this.field_111230_s == null)
+        if (this.enchantmentTypes == null)
         {
             return false;
         }
         else
         {
-            EnumEnchantmentType[] var2 = this.field_111230_s;
+            EnumEnchantmentType[] var2 = this.enchantmentTypes;
             int var3 = var2.length;
 
             for (int var4 = 0; var4 < var3; ++var4)
@@ -270,9 +270,9 @@ public abstract class CreativeTabs
             }
         }
 
-        if (this.func_111225_m() != null)
+        if (this.getRelevantEnchantmentTypes() != null)
         {
-            this.addEnchantmentBooksToList(p_78018_1_, this.func_111225_m());
+            this.addEnchantmentBooksToList(p_78018_1_, this.getRelevantEnchantmentTypes());
         }
     }
 

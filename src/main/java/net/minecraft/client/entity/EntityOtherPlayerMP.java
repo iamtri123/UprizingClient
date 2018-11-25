@@ -41,7 +41,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
         return true;
     }
@@ -50,14 +50,14 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double p_70056_1_, double p_70056_3_, double p_70056_5_, float p_70056_7_, float p_70056_8_, int p_70056_9_)
+    public void setPositionAndRotation2(double x, double y, double z, float yaw, float pitch, int rotationIncrements)
     {
-        this.otherPlayerMPX = p_70056_1_;
-        this.otherPlayerMPY = p_70056_3_;
-        this.otherPlayerMPZ = p_70056_5_;
-        this.otherPlayerMPYaw = (double)p_70056_7_;
-        this.otherPlayerMPPitch = (double)p_70056_8_;
-        this.otherPlayerMPPosRotationIncrements = p_70056_9_;
+        this.otherPlayerMPX = x;
+        this.otherPlayerMPY = y;
+        this.otherPlayerMPZ = z;
+        this.otherPlayerMPYaw = (double)yaw;
+        this.otherPlayerMPPitch = (double)pitch;
+        this.otherPlayerMPPosRotationIncrements = rotationIncrements;
     }
 
     /**
@@ -155,15 +155,15 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
     /**
      * Sets the held item, or an armor slot. Slot 0 is held item. Slot 1-4 is armor. Params: Item, slot
      */
-    public void setCurrentItemOrArmor(int p_70062_1_, ItemStack p_70062_2_)
+    public void setCurrentItemOrArmor(int slotIn, ItemStack itemStackIn)
     {
-        if (p_70062_1_ == 0)
+        if (slotIn == 0)
         {
-            this.inventory.mainInventory[this.inventory.currentItem] = p_70062_2_;
+            this.inventory.mainInventory[this.inventory.currentItem] = itemStackIn;
         }
         else
         {
-            this.inventory.armorInventory[p_70062_1_ - 1] = p_70062_2_;
+            this.inventory.armorInventory[slotIn - 1] = itemStackIn;
         }
     }
 
@@ -178,15 +178,15 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
      * (like "I fetched this block for you by ID, but I'd like you to know that every time you do this, I die a little
      * inside"), and errors (like "it's not called iron_pixacke, silly").
      */
-    public void addChatMessage(IChatComponent p_145747_1_)
+    public void addChatMessage(IChatComponent message)
     {
-        Minecraft.getMinecraft().ingameGUI.getChatGUI().func_146227_a(p_145747_1_);
+        Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(message);
     }
 
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_)
+    public boolean canCommandSenderUseCommand(int permissionLevel, String command)
     {
         return false;
     }

@@ -48,7 +48,7 @@ public class EntityPickupFX extends EntityFX
         var21 -= interpPosX;
         var23 -= interpPosY;
         var25 -= interpPosZ;
-        RenderManager.instance.func_147940_a(this.entityToPickUp, (double)((float)var21), (double)((float)var23), (double)((float)var25), this.entityToPickUp.rotationYaw, p_70539_2_);
+        RenderManager.instance.renderEntityWithPosYaw(this.entityToPickUp, (double)((float)var21), (double)((float)var23), (double)((float)var25), this.entityToPickUp.rotationYaw, p_70539_2_);
     }
 
     /**

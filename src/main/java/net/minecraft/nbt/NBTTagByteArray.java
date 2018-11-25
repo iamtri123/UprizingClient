@@ -21,18 +21,18 @@ public class NBTTagByteArray extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput p_74734_1_) throws IOException
+    void write(DataOutput output) throws IOException
     {
-        p_74734_1_.writeInt(this.byteArray.length);
-        p_74734_1_.write(this.byteArray);
+        output.writeInt(this.byteArray.length);
+        output.write(this.byteArray);
     }
 
-    void func_152446_a(DataInput p_152446_1_, int p_152446_2_, NBTSizeTracker p_152446_3_) throws IOException
+    void read(DataInput input, int depth, NBTSizeTracker sizeTracker) throws IOException
     {
-        int var4 = p_152446_1_.readInt();
-        p_152446_3_.func_152450_a((long)(8 * var4));
+        int var4 = input.readInt();
+        sizeTracker.addSpaceRead((long)(8 * var4));
         this.byteArray = new byte[var4];
-        p_152446_1_.readFully(this.byteArray);
+        input.readFully(this.byteArray);
     }
 
     /**
@@ -68,7 +68,7 @@ public class NBTTagByteArray extends NBTBase
         return super.hashCode() ^ Arrays.hashCode(this.byteArray);
     }
 
-    public byte[] func_150292_c()
+    public byte[] getByteArray()
     {
         return this.byteArray;
     }

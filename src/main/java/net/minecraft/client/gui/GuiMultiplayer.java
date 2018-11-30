@@ -11,7 +11,9 @@ import net.minecraft.client.network.OldServerPinger;
 import net.minecraft.client.resources.I18n;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
+import uprizing.gui.BeerusServerListEntry;
 
 public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 {
@@ -257,12 +259,16 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         {
             if (var3 >= 0)
             {
-                if (keyCode == 200)
+                if (keyCode == 200) // haut
                 {
                     if (isShiftKeyDown())
                     {
                         if (var3 > 0 && var4 instanceof ServerListEntryNormal)
                         {
+                            if (this.serverListSelector.getListEntry(var3 - 1) instanceof BeerusServerListEntry){
+                                return;
+                            }
+
                             this.savedServerList.swapServers(var3, var3 - 1);
                             this.selectServer(this.serverListSelector.func_148193_k() - 1);
                             this.serverListSelector.scrollBy(-this.serverListSelector.getSlotHeight());
@@ -292,11 +298,11 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                         this.selectServer(-1);
                     }
                 }
-                else if (keyCode == 208)
+                else if (keyCode == 208) // bas
                 {
                     if (isShiftKeyDown())
                     {
-                        if (var3 < this.savedServerList.countServers() - 1)
+                        if (var3 < this.savedServerList.countServers() - 1 && !(var4 instanceof BeerusServerListEntry))
                         {
                             this.savedServerList.swapServers(var3, var3 + 1);
                             this.selectServer(var3 + 1);
@@ -360,17 +366,15 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    public void connectToSelected()
-    {
+    public void connectToSelected() {
         GuiListExtended.IGuiListEntry var1 = this.serverListSelector.func_148193_k() < 0 ? null : this.serverListSelector.getListEntry(this.serverListSelector.func_148193_k());
 
-        if (var1 instanceof ServerListEntryNormal)
-        {
-            this.connectToServer(((ServerListEntryNormal)var1).getServerData());
-        }
-        else if (var1 instanceof ServerListEntryLanDetected)
-        {
-            LanServerDetector.LanServer var2 = ((ServerListEntryLanDetected)var1).getLanServer();
+        if (var1 instanceof ServerListEntryNormal) {
+            this.connectToServer(((ServerListEntryNormal) var1).getServerData());
+        } else if (var1 instanceof BeerusServerListEntry) {
+            this.connectToServer(((BeerusServerListEntry) var1).getServerData());
+        } else if (var1 instanceof ServerListEntryLanDetected) {
+            LanServerDetector.LanServer var2 = ((ServerListEntryLanDetected) var1).getLanServer();
             this.connectToServer(new ServerData(var2.getServerMotd(), var2.getServerIpPort(), true));
         }
     }
@@ -392,7 +396,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         {
             this.btnSelectServer.enabled = true;
 
-            if (var2 instanceof ServerListEntryNormal && !((ServerListEntryNormal) var2).isProtected())
+            if (var2 instanceof ServerListEntryNormal)
             {
                 this.btnEditServer.enabled = true;
                 this.btnDeleteServer.enabled = true;

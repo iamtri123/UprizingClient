@@ -19,6 +19,7 @@ public class MotionBlur {
 	private static final String KEY = "uprizing";
 	private static final int MAXIMUM = 11;
 	private static final Minecraft minecraft = Minecraft.getMinecraft();
+
 	public int index;
 
 	public final boolean isEnabled() {
@@ -87,17 +88,17 @@ public class MotionBlur {
 	private class ResourceManager implements IResourceManager {
 
 		@Override
-		public Set getResourceDomains() {
+		public final Set getResourceDomains() {
 			return null;
 		}
 
 		@Override
-		public IResource getResource(ResourceLocation p_110536_1_) {
+		public final IResource getResource(ResourceLocation p_110536_1_) {
 			return new Resource();
 		}
 
 		@Override
-		public List getAllResources(ResourceLocation p_135056_1_) {
+		public final List getAllResources(ResourceLocation p_135056_1_) {
 			return null;
 		}
 	}
@@ -105,7 +106,7 @@ public class MotionBlur {
 	private class Resource implements IResource {
 
 		@Override
-		public InputStream getInputStream() {
+		public final InputStream getInputStream() {
 			final float value = (float) ((double) index) / 10;
 			return IOUtils.toInputStream("{\"targets\":[\"swap\",\"previous\"],\"passes\":[{\"name\":" +
 				"\"phosphor\",\"intarget\":\"minecraft:main\",\"outtarget\":\"swap\",\"auxtargets\":[{\"name\":\"PrevSampler\",\"id\":" +
@@ -115,12 +116,12 @@ public class MotionBlur {
 		}
 
 		@Override
-		public boolean hasMetadata() {
+		public final boolean hasMetadata() {
 			return false;
 		}
 
 		@Override
-		public IMetadataSection getMetadata(String p_110526_1_) {
+		public final IMetadataSection getMetadata(String p_110526_1_) {
 			return null;
 		}
 	}

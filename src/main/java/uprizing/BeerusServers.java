@@ -13,4 +13,12 @@ public class BeerusServers {
 	public final BeerusServer[] toArray() {
 		return elements;
 	}
+
+	public final boolean isBeerusServer(String serverIp) {
+		for (int index = 0; index < size; index++)
+			if (serverIp.startsWith(elements[index].hostAddress)) {
+				return true;
+			}
+		return false;
+	}
 }

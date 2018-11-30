@@ -15,7 +15,7 @@ public class SidebarDrawer extends Gui {
 
 	private final transient Uprizing uprizing;
 
-	public SidebarDrawer(final Uprizing uprizing) {
+	SidebarDrawer(final Uprizing uprizing) {
 		this.uprizing = uprizing;
 	}
 

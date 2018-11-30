@@ -8,7 +8,6 @@ public class FPSDraggable extends SimpleDraggable {
 
 	private static final String SUFFIX = " FPS";
 
-
 	@Getter private final String sexyText = "9999 FPS";
 	private final FPSCounter counter;
 

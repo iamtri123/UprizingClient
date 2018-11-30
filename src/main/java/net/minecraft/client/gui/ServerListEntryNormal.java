@@ -22,7 +22,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
-import uprizing.Constants;
+import uprizing.Uprizing;
 
 public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
 {
@@ -45,10 +45,6 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         this.field_148305_h = (DynamicTexture)this.field_148300_d.getTextureManager().getTexture(this.field_148306_i);
     }
 
-    public final boolean isProtected() {
-        return field_148301_e.serverIP.equals(Constants.ADDRESS_WITH_PORT);
-    }
-
     public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
     {
         if (!this.field_148301_e.field_78841_f)
@@ -59,7 +55,6 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
             this.field_148301_e.populationInfo = "";
             field_148302_b.submit(new Runnable()
             {
-                private static final String __OBFID = "CL_00000818";
                 public void run()
                 {
                     try
@@ -82,7 +77,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
 
         boolean var10 = this.field_148301_e.version > 5;
         boolean var11 = this.field_148301_e.version < 5;
-        boolean var12 = this.field_148301_e.version != -213 && (var10 || var11);
+        boolean var12 = this.field_148301_e.version != Uprizing.ALGERIAN_PROTOCOL && (var10 || var11);
         this.field_148300_d.fontRenderer.drawString(this.field_148301_e.serverName, p_148279_2_ + 32 + 3, p_148279_3_ + 1, 16777215);
         List var13 = this.field_148300_d.fontRenderer.listFormattedStringToWidth(this.field_148301_e.serverMOTD, p_148279_4_ - 32 - 2);
 

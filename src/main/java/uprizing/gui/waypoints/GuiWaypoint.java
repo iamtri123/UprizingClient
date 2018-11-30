@@ -240,7 +240,7 @@ public class GuiWaypoint extends GuiScreen { // TODO: Optimize
 
         @Override
         protected boolean isSelected(int par1) {
-            return selectedDimension != null && selectedDimension.getId() == par1 - 1; // TODO: test (par1 -> index dans la liste)
+            return selectedDimension != null && selectedDimension.getIndex() == par1 - 1; // TODO: test (par1 -> index dans la liste)
         }
 
         @Override

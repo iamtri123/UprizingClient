@@ -4,8 +4,11 @@ import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.network.LanServerDetector;
+import uprizing.BeerusServers;
+import uprizing.gui.BeerusServerListEntry;
 
 public class ServerSelectionList extends GuiListExtended
 {
@@ -14,7 +17,6 @@ public class ServerSelectionList extends GuiListExtended
     private final List field_148199_m = Lists.newArrayList();
     private final GuiListExtended.IGuiListEntry lanScanEntry = new ServerListEntryLanScan();
     private int field_148197_o = -1;
-    private static final String __OBFID = "CL_00000819";
 
     public ServerSelectionList(GuiMultiplayer p_i45049_1_, Minecraft p_i45049_2_, int p_i45049_3_, int p_i45049_4_, int p_i45049_5_, int p_i45049_6_, int p_i45049_7_)
     {
@@ -64,13 +66,19 @@ public class ServerSelectionList extends GuiListExtended
         return this.field_148197_o;
     }
 
-    public void func_148195_a(ServerList p_148195_1_)
-    {
+    public void func_148195_a(ServerList p_148195_1_) {
         this.field_148198_l.clear();
 
-        for (int var2 = 0; var2 < p_148195_1_.countServers(); ++var2)
-        {
-            this.field_148198_l.add(new ServerListEntryNormal(this.owner, p_148195_1_.getServerData(var2)));
+        final BeerusServers servers = Minecraft.getMinecraft().uprizing.getServers();
+
+        for (int var2 = 0; var2 < p_148195_1_.countServers(); ++var2) {
+            final ServerData serverData = p_148195_1_.getServerData(var2);
+
+            if (servers.isBeerusServer(serverData.serverIP)) {
+                this.field_148198_l.add(new BeerusServerListEntry(this.owner, serverData));
+            } else {
+                this.field_148198_l.add(new ServerListEntryNormal(this.owner, serverData));
+            }
         }
     }
 

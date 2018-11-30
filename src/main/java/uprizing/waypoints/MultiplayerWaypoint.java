@@ -15,14 +15,14 @@ public class MultiplayerWaypoint extends Waypoint {
     }
 
     @Override
-    public boolean onWorldLoading(Minecraft minecraft) {
+    public final boolean onWorldLoading(Minecraft minecraft) {
         return !minecraft.isIntegratedServerRunning()
             && dimensions.contains(minecraft.thePlayer.dimension + 1)
             && serverHostAddress.equals(minecraft.uprizing.getServerHostAddress());
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return 1 + ":" + serverHostAddress + ":" + super.toString();
     }
 }

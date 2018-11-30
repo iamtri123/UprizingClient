@@ -17,11 +17,11 @@ public enum EnumDimension {
         this.name = name;
     }
 
-    public final int getId() {
+    public final int getIndex() {
         return ordinal();
     }
 
-    public static EnumDimension getByValue(int value) {
+    public static EnumDimension getByValue(final int value) {
         return value == 0 ? OVERWORLD : value == -1 ? NETHER : THE_END;
     }
 }

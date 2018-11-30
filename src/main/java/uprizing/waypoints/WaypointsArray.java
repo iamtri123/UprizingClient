@@ -31,6 +31,7 @@ public class WaypointsArray {
         for (int index = 0; index < size; index++)
             if (waypoint == elements[index]) {
                 fastRemove(index);
+                return;
             }
     }
 

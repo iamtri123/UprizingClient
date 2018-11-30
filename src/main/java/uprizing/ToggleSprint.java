@@ -59,7 +59,7 @@ public class ToggleSprint implements Draggable {
 		 */
 	}
 
-	public final TextAndColor[] getTextAndColors() {
+	final TextAndColor[] getTextAndColors() {
 		return textAndColors;
 	}
 

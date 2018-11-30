@@ -20,7 +20,7 @@ public class Uprizing {
 
 	@Getter private static Uprizing instance;
 	private static final int DEFAULT_PROTOCOL = 5;
-	private static final int ALGERIAN_PROTOCOL = -213;
+	public static final int ALGERIAN_PROTOCOL = -213;
 
 	private final Minecraft minecraft;
 	private final File settingsFile;

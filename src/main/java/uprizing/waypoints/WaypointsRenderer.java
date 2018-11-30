@@ -37,9 +37,9 @@ public class WaypointsRenderer extends WaypointsArray {
         double maxDistance = gameSettings.getOptionFloatValue(GameSettings.Options.RENDER_DISTANCE) * 16.0F * 0.75D;
         double adjustedDistance = distance;
 
-        double offX = 0 - renderManager.renderPosX + waypoint.getX();
-        double offY = 0 - renderManager.renderPosY + waypoint.getY();
-        double offZ = 0 - renderManager.renderPosZ + waypoint.getZ();
+        double offX = 0 - RenderManager.renderPosX + waypoint.getX();
+        double offY = 0 - RenderManager.renderPosY + waypoint.getY();
+        double offZ = 0 - RenderManager.renderPosZ + waypoint.getZ();
 
         if (distance > maxDistance) {
             offX = offX / distance * maxDistance;

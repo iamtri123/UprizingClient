@@ -3,6 +3,7 @@ package uprizing.draggables;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL11;
 import uprizing.ClicksPerSecond;
 import uprizing.ToggleSprint;
@@ -11,6 +12,8 @@ import uprizing.draggables.defaults.FPSDraggable;
 
 @Getter
 public class Draggables { // TODO: draggable pour chaque keyStrokes
+
+	private static final int CAP = 3042;
 
 	private final Draggable[] elements = new Draggable[3];
 	private int size;
@@ -23,8 +26,8 @@ public class Draggables { // TODO: draggable pour chaque keyStrokes
 	}
 
 	public final void draw(FontRenderer fontRenderer) {
-		final boolean enabled = GL11.glIsEnabled(3042);
-		GL11.glDisable(3042);
+		final boolean enabled = GL11.glIsEnabled(CAP);
+		GL11.glDisable(CAP);
 
 		while (cursor != size) {
 			elements[cursor++].draw(fontRenderer);
@@ -33,15 +36,13 @@ public class Draggables { // TODO: draggable pour chaque keyStrokes
 		cursor = 0;
 
 		if (enabled) {
-			GL11.glEnable(3042);
+			GL11.glEnable(CAP);
 		}
 	}
 
 	public final void drawSlut(FontRenderer fontRenderer) {
-		while (cursor != size) {
+		while (cursor != size)
 			elements[cursor++].drawSlut(fontRenderer);
-		}
-
 		cursor = 0;
 	}
 
@@ -50,11 +51,10 @@ public class Draggables { // TODO: draggable pour chaque keyStrokes
 	}
 
 	public final Draggable getByMouse(int mouseX, int mouseY) {
-		for (Draggable draggable : elements) {
+		for (Draggable draggable : elements)
 			if (draggable.isHovered(mouseX, mouseY)) {
 				return draggable;
 			}
-		}
 		return null;
 	}
 }

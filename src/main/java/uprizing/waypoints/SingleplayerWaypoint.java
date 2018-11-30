@@ -15,14 +15,14 @@ public class SingleplayerWaypoint extends Waypoint {
     }
 
     @Override
-    public boolean onWorldLoading(Minecraft minecraft) {
+    public final boolean onWorldLoading(Minecraft minecraft) {
         return minecraft.isIntegratedServerRunning()
             && dimensions.contains(minecraft.thePlayer.dimension + 1)
             && worldName.equals(minecraft.getIntegratedServer().getWorldName());
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return 0 + ":" + worldName + ":" + super.toString();
     }
 }

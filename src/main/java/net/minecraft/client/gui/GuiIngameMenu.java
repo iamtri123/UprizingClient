@@ -4,6 +4,7 @@ import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
+import uprizing.gui.GuiMenu;
 
 public class GuiIngameMenu extends GuiScreen
 {
@@ -24,7 +25,7 @@ public class GuiIngameMenu extends GuiScreen
 
         if (!this.mc.isIntegratedServerRunning())
         {
-            ((GuiButton)this.buttonList.get(0)).displayString = I18n.format("menu.disconnect");
+            this.buttonList.get(0).displayString = I18n.format("menu.disconnect");
         }
 
         this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + var1, I18n.format("menu.returnToGame")));
@@ -34,6 +35,7 @@ public class GuiIngameMenu extends GuiScreen
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + var1, 98, 20, I18n.format("gui.achievements")));
         this.buttonList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + var1, 98, 20, I18n.format("gui.stats")));
         var3.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
+        this.buttonList.add(new GuiButton(8, this.width / 2 - 100, this.height / 4 + 72 + var1, "§4Uprizing Menu"));
     }
 
     protected void actionPerformed(GuiButton button)
@@ -70,6 +72,10 @@ public class GuiIngameMenu extends GuiScreen
 
             case 7:
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
+                break;
+
+            case 8:
+                this.mc.displayGuiScreen(new GuiMenu(mc.uprizing));
         }
     }
 

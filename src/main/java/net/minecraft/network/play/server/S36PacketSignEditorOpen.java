@@ -6,64 +6,74 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 
-public class S36PacketSignEditorOpen extends Packet
-{
-    private int field_149133_a;
-    private int field_149131_b;
-    private int field_149132_c;
-    private static final String __OBFID = "CL_00001316";
+public class S36PacketSignEditorOpen extends Packet {
+
+    private int x;
+    private int y;
+    private int z;
+    private String[] lines;
 
     public S36PacketSignEditorOpen() {}
 
-    public S36PacketSignEditorOpen(int p_i45207_1_, int p_i45207_2_, int p_i45207_3_)
-    {
-        this.field_149133_a = p_i45207_1_;
-        this.field_149131_b = p_i45207_2_;
-        this.field_149132_c = p_i45207_3_;
+    public S36PacketSignEditorOpen(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    public void processPacket(INetHandlerPlayClient handler)
-    {
+    public void processPacket(INetHandlerPlayClient handler) {
         handler.handleSignEditorOpen(this);
     }
 
     /**
      * Reads the raw packet data from the data stream.
      */
-    public void readPacketData(PacketBuffer data) throws IOException
-    {
-        this.field_149133_a = data.readInt();
-        this.field_149131_b = data.readInt();
-        this.field_149132_c = data.readInt();
+    public void readPacketData(PacketBuffer data) throws IOException {
+        x = data.readInt();
+        y = data.readInt();
+        z = data.readInt();
+
+        if (data.isReadable()) {
+            lines = new String[4];
+
+            for (int index = 0; index < 4; ++index) {
+                lines[index] = data.readStringFromBuffer(15);
+            }
+        }
     }
 
     /**
      * Writes the raw packet data to the data stream.
      */
-    public void writePacketData(PacketBuffer data) throws IOException
-    {
-        data.writeInt(this.field_149133_a);
-        data.writeInt(this.field_149131_b);
-        data.writeInt(this.field_149132_c);
+    public void writePacketData(PacketBuffer data) throws IOException {
+        data.writeInt(x);
+        data.writeInt(y);
+        data.writeInt(z);
+
+        if (lines != null) {
+            for (int index = 0; index < 4; ++index) {
+                data.writeStringToBuffer(lines[index]);
+            }
+        }
     }
 
-    public int func_149129_c()
-    {
-        return this.field_149133_a;
+    public int x() {
+        return x;
     }
 
-    public int func_149128_d()
-    {
-        return this.field_149131_b;
+    public int y() {
+        return y;
     }
 
-    public int func_149127_e()
-    {
-        return this.field_149132_c;
+    public int z() {
+        return z;
     }
 
-    public void processPacket(INetHandler handler)
-    {
-        this.processPacket((INetHandlerPlayClient)handler);
+    public String[] lines() {
+        return lines;
+    }
+
+    public void processPacket(INetHandler handler) {
+        this.processPacket((INetHandlerPlayClient) handler);
     }
 }

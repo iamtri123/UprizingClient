@@ -1204,20 +1204,24 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     /**
      * Creates a sign in the specified location if it didn't exist and opens the GUI to edit its text
      */
-    public void handleSignEditorOpen(S36PacketSignEditorOpen packetIn)
-    {
-        Object var2 = this.clientWorldController.getTileEntity(packetIn.func_149129_c(), packetIn.func_149128_d(), packetIn.func_149127_e());
+    public void handleSignEditorOpen(S36PacketSignEditorOpen packetIn) {
+        TileEntity var2 = this.clientWorldController.getTileEntity(packetIn.x(), packetIn.y(), packetIn.z());
 
-        if (var2 == null)
-        {
+        if (var2 == null) {
             var2 = new TileEntitySign();
-            ((TileEntity)var2).setWorldObj(this.clientWorldController);
-            ((TileEntity)var2).xCoord = packetIn.func_149129_c();
-            ((TileEntity)var2).yCoord = packetIn.func_149128_d();
-            ((TileEntity)var2).zCoord = packetIn.func_149127_e();
+            var2.setWorldObj(this.clientWorldController);
+            var2.xCoord = packetIn.x();
+            var2.yCoord = packetIn.y();
+            var2.zCoord = packetIn.z();
+
+            final String[] lines = packetIn.lines();
+
+            if (lines != null && lines.length == 4) {
+                ((TileEntitySign) var2).signText = lines;
+            }
         }
 
-        this.gameController.thePlayer.displayGUIEditSign((TileEntity)var2);
+        this.gameController.thePlayer.displayGUIEditSign(var2);
     }
 
     /**

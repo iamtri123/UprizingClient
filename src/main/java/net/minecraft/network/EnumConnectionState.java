@@ -102,7 +102,7 @@ import net.minecraft.network.status.client.C01PacketPing;
 import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
 import org.apache.logging.log4j.LogManager;
-import uprizing.protocol.C18PacketCheating;
+import uprizing.protocol.C18PacketUprizing;
 
 public enum EnumConnectionState
 {
@@ -206,7 +206,7 @@ public enum EnumConnectionState
             this.func_150751_a(21, C15PacketClientSettings.class);
             this.func_150751_a(22, C16PacketClientStatus.class);
             this.func_150751_a(23, C17PacketCustomPayload.class);
-            this.func_150751_a(24, C18PacketCheating.class);
+            this.func_150751_a(24, C18PacketUprizing.class);
         }
     },
     STATUS("STATUS", 2, 1, null)

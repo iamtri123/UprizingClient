@@ -22,7 +22,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.World;
-import uprizing.protocol.C18PacketCheating;
+import uprizing.protocol.C18PacketUprizing;
 
 public class EntityClientPlayerMP extends EntityPlayerSP
 {
@@ -227,7 +227,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     }
 
     public void dance(int type) {
-		this.sendQueue.addToSendQueue(new C18PacketCheating(type));
+		this.sendQueue.addToSendQueue(new C18PacketUprizing(type));
     }
 
     public void respawnPlayer()

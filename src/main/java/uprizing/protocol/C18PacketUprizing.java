@@ -7,13 +7,13 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 import java.io.IOException;
 
-public class C18PacketCheating extends Packet {
+public class C18PacketUprizing extends Packet {
 
 	private int type;
 
-	public C18PacketCheating() {}
+	public C18PacketUprizing() {}
 
-	public C18PacketCheating(int type) {
+	public C18PacketUprizing(int type) {
 		this.type = type;
 	}
 
@@ -32,7 +32,7 @@ public class C18PacketCheating extends Packet {
 	}
 
 	public void processPacket(INetHandlerPlayServer handler) {
-		handler.processClicking(this);
+		handler.processUprizing(this);
 	}
 
 	/**

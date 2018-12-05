@@ -85,7 +85,7 @@ import net.minecraft.world.WorldServer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uprizing.protocol.C18PacketCheating;
+import uprizing.protocol.C18PacketUprizing;
 
 public class NetHandlerPlayServer implements INetHandlerPlayServer
 {
@@ -739,7 +739,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     }
 
     @Override
-    public void processClicking(C18PacketCheating packet) {}
+    public void processUprizing(C18PacketUprizing packet) {}
 
     /**
      * Processes the player swinging its held item

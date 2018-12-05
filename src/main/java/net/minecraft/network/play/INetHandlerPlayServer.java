@@ -22,11 +22,11 @@ import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C15PacketClientSettings;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
-import uprizing.protocol.C18PacketCheating;
+import uprizing.protocol.C18PacketUprizing;
 
 public interface INetHandlerPlayServer extends INetHandler {
 
-	void processClicking(C18PacketCheating packet);
+	void processUprizing(C18PacketUprizing packet);
 
     /**
      * Processes the player swinging its held item

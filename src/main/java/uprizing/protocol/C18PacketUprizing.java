@@ -39,7 +39,7 @@ public class C18PacketUprizing extends Packet {
 	 * Returns a string formatted as comma separated [field]=[value] values. Used by Minecraft for logging purposes.
 	 */
 	public String serialize() {
-		return String.format("type=%d", type);
+		return "type=" + type;
 	}
 
 	public void processPacket(INetHandler handler) {

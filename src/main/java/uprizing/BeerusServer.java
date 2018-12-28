@@ -5,6 +5,7 @@ import net.minecraft.util.Session;
 public class BeerusServer {
 
 	final String hostAddress;
+	public final Options options = new Options();
 
 	BeerusServer(final String hostAddress) {
 		this.hostAddress = hostAddress;
@@ -26,5 +27,10 @@ public class BeerusServer {
 		public final boolean isAllowed(String serverHostAddress, Session session) {
 			return serverHostAddress.equals(hostAddress) && session.getPlayerID().equals(stawlker);
 		}
+	}
+
+	public class Options {
+
+		public boolean disableItemAnimation = true;
 	}
 }

@@ -912,8 +912,9 @@ public class GuiIngame extends Gui
         if (var5 != null)
         {
             float var6 = (float)var5.animationsToGo - p_73832_4_;
+            final boolean animation = mc.uprizing.currentServer != null && !mc.uprizing.currentServer.options.disableItemAnimation; // temporary
 
-            if (var6 > 0.0F)
+            if (animation && var6 > 0.0F)
             {
                 GL11.glPushMatrix();
                 float var7 = 1.0F + var6 / 5.0F;
@@ -924,7 +925,7 @@ public class GuiIngame extends Gui
 
             itemRenderer.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.getTextureManager(), var5, p_73832_2_, p_73832_3_);
 
-            if (var6 > 0.0F)
+            if (animation && var6 > 0.0F)
             {
                 GL11.glPopMatrix();
             }

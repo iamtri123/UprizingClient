@@ -27,7 +27,7 @@ public class Uprizing {
 	private final BeerusServers servers = new BeerusServers();
 
 	private String serverHostAddress;
-	public boolean isOnBeerusServer;
+	public BeerusServer currentServer;
 
 	@Getter private final ClicksPerSecond clicksPerSecond = new ClicksPerSecond();
 	private final WaypointsMod waypointsMod;
@@ -67,7 +67,7 @@ public class Uprizing {
 
 		for (BeerusServer server : servers.toArray()) {
 			if (server.isAllowed(serverHostAddress, minecraft.session)) {
-				isOnBeerusServer = true;
+				currentServer = server;
 				return ALGERIAN_PROTOCOL;
 			}
 		}
@@ -77,7 +77,7 @@ public class Uprizing {
 
 	public final void reset() {
 		serverHostAddress = null;
-		isOnBeerusServer = false;
+		currentServer = null;
 	}
 
 	public final void saveSettings() {

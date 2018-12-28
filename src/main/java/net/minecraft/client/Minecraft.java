@@ -1451,7 +1451,7 @@ public class Minecraft implements IPlayerUsage
     private void clickMouse() {
         uprizing.getClicksPerSecond().add();
 
-        if (uprizing.isOnBeerusServer) {
+        if (uprizing.currentServer != null) {
             thePlayer.dance(1);
         }
 

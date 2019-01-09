@@ -88,7 +88,7 @@ public class MotionBlur {
 	private class ResourceManager implements IResourceManager {
 
 		@Override
-		public final Set getResourceDomains() {
+		public final Set<String> getResourceDomains() {
 			return null;
 		}
 
@@ -98,7 +98,7 @@ public class MotionBlur {
 		}
 
 		@Override
-		public final List getAllResources(ResourceLocation p_135056_1_) {
+		public final List<IResource> getAllResources(ResourceLocation p_135056_1_) {
 			return null;
 		}
 	}

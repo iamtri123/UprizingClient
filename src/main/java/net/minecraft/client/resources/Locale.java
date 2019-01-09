@@ -21,7 +21,6 @@ public class Locale
     private static final Pattern field_135031_c = Pattern.compile("%(\\d+\\$)?[\\d\\.]*[df]");
     Map field_135032_a = Maps.newHashMap();
     private boolean field_135029_d;
-    private static final String __OBFID = "CL_00001097";
 
     /**
      * par2 is a list of languages. For each language $L and domain $D, attempts to load the resource $D:lang/$L.lang
@@ -35,11 +34,11 @@ public class Locale
         {
             String var4 = (String)var3.next();
             String var5 = String.format("lang/%s.lang", var4);
-            Iterator var6 = p_135022_1_.getResourceDomains().iterator();
+            Iterator<String> var6 = p_135022_1_.getResourceDomains().iterator();
 
             while (var6.hasNext())
             {
-                String var7 = (String)var6.next();
+                String var7 = var6.next();
 
                 try
                 {
@@ -88,14 +87,13 @@ public class Locale
     /**
      * par1 is a list of Resources
      */
-    private void loadLocaleData(List p_135028_1_) throws IOException
+    private void loadLocaleData(List<IResource> p_135028_1_) throws IOException
     {
-        Iterator var2 = p_135028_1_.iterator();
+        Iterator<IResource> var2 = p_135028_1_.iterator();
 
         while (var2.hasNext())
         {
-            IResource var3 = (IResource)var2.next();
-            this.loadLocaleData(var3.getInputStream());
+            this.loadLocaleData(var2.next().getInputStream());
         }
     }
 

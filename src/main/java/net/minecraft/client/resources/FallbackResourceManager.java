@@ -13,9 +13,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class FallbackResourceManager implements IResourceManager
 {
-    protected final List resourcePacks = new ArrayList();
+    protected final List<IResourcePack> resourcePacks = new ArrayList<>();
     private final IMetadataSerializer frmMetadataSerializer;
-    private static final String __OBFID = "CL_00001074";
 
     public FallbackResourceManager(IMetadataSerializer p_i1289_1_)
     {
@@ -27,7 +26,7 @@ public class FallbackResourceManager implements IResourceManager
         this.resourcePacks.add(p_110538_1_);
     }
 
-    public Set getResourceDomains()
+    public Set<String> getResourceDomains()
     {
         return null;
     }
@@ -39,7 +38,7 @@ public class FallbackResourceManager implements IResourceManager
 
         for (int var4 = this.resourcePacks.size() - 1; var4 >= 0; --var4)
         {
-            IResourcePack var5 = (IResourcePack)this.resourcePacks.get(var4);
+            IResourcePack var5 = this.resourcePacks.get(var4);
 
             if (var2 == null && var5.resourceExists(var3))
             {
@@ -62,15 +61,15 @@ public class FallbackResourceManager implements IResourceManager
         throw new FileNotFoundException(p_110536_1_.toString());
     }
 
-    public List getAllResources(ResourceLocation p_135056_1_) throws IOException
+    public List<IResource> getAllResources(ResourceLocation p_135056_1_) throws IOException
     {
-        ArrayList var2 = Lists.newArrayList();
+        ArrayList<IResource> var2 = Lists.newArrayList();
         ResourceLocation var3 = getLocationMcmeta(p_135056_1_);
-        Iterator var4 = this.resourcePacks.iterator();
+        Iterator<IResourcePack> var4 = this.resourcePacks.iterator();
 
         while (var4.hasNext())
         {
-            IResourcePack var5 = (IResourcePack)var4.next();
+            IResourcePack var5 = var4.next();
 
             if (var5.resourceExists(p_135056_1_))
             {

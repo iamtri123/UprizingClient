@@ -1,68 +1,26 @@
 package net.minecraft.client.audio;
 
+import lombok.Getter;
 import net.minecraft.util.ResourceLocation;
 
-public abstract class PositionedSound implements ISound
-{
-    protected final ResourceLocation positionedSoundLocation;
-    protected float volume = 1.0F;
-    protected float pitch = 1.0F;
-    protected float xPosF;
-    protected float yPosF;
-    protected float zPosF;
+public abstract class PositionedSound implements ISound {
+
+    @Getter protected final ResourceLocation soundLocation;
+    @Getter protected float volume = 1.0F;
+    @Getter protected float pitch = 1.0F;
+    @Getter protected float xPosF;
+    @Getter protected float yPosF;
+    @Getter protected float zPosF;
     protected boolean repeat = false;
-    protected int repeatDelay = 0;
-    protected ISound.AttenuationType attenuationType;
-    private static final String __OBFID = "CL_00001116";
+    @Getter protected int repeatDelay = 0;
+    @Getter protected ISound.AttenuationType attenuationType;
 
-    protected PositionedSound(ResourceLocation soundResource)
-    {
+    protected PositionedSound(ResourceLocation soundResource) {
         this.attenuationType = ISound.AttenuationType.LINEAR;
-        this.positionedSoundLocation = soundResource;
+        this.soundLocation = soundResource;
     }
 
-    public ResourceLocation getSoundLocation()
-    {
-        return this.positionedSoundLocation;
-    }
-
-    public boolean canRepeat()
-    {
+    public boolean canRepeat() {
         return this.repeat;
-    }
-
-    public int getRepeatDelay()
-    {
-        return this.repeatDelay;
-    }
-
-    public float getVolume()
-    {
-        return this.volume;
-    }
-
-    public float getPitch()
-    {
-        return this.pitch;
-    }
-
-    public float getXPosF()
-    {
-        return this.xPosF;
-    }
-
-    public float getYPosF()
-    {
-        return this.yPosF;
-    }
-
-    public float getZPosF()
-    {
-        return this.zPosF;
-    }
-
-    public ISound.AttenuationType getAttenuationType()
-    {
-        return this.attenuationType;
     }
 }

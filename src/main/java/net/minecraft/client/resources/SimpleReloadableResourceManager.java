@@ -21,11 +21,11 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
 {
     private static final Logger logger = LogManager.getLogger();
     private static final Joiner joinerResourcePacks = Joiner.on(", ");
+
     public final Map<String, IResourceManager> domainResourceManagers = Maps.newHashMap();
     private final List reloadListeners = Lists.newArrayList();
-    private final Set setResourceDomains = Sets.newLinkedHashSet();
+    private final Set<String> setResourceDomains = Sets.newLinkedHashSet();
     private final IMetadataSerializer rmMetadataSerializer;
-    private static final String __OBFID = "CL_00001091";
 
     public SimpleReloadableResourceManager(IMetadataSerializer p_i1299_1_)
     {
@@ -50,7 +50,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
         }
     }
 
-    public Set getResourceDomains()
+    public Set<String> getResourceDomains()
     {
         return this.setResourceDomains;
     }
@@ -69,7 +69,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
         }
     }
 
-    public List getAllResources(ResourceLocation p_135056_1_) throws IOException
+    public List<IResource> getAllResources(ResourceLocation p_135056_1_) throws IOException
     {
         IResourceManager var2 = this.domainResourceManagers.get(p_135056_1_.getResourceDomain());
 

@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiEnchantment;
 import net.minecraft.client.gui.GuiHopper;
 import net.minecraft.client.gui.GuiMerchant;
 import net.minecraft.client.gui.GuiRepair;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.gui.inventory.GuiBeacon;
 import net.minecraft.client.gui.inventory.GuiBrewingStand;
@@ -43,15 +42,14 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MouseFilter;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Session;
 import net.minecraft.world.World;
 import uprizing.ToggleSprint;
 
-public class EntityPlayerSP extends AbstractClientPlayer
-{
+public class EntityPlayerSP extends AbstractClientPlayer {
+
     public MovementInput movementInput;
     protected Minecraft mc;
 
@@ -62,7 +60,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     protected int sprintToggleTimer;
 
-    /** Ticks left before sprinting is disabled. */
+    /**
+     * Ticks left before sprinting is disabled.
+     */
     public int sprintingTicksLeft;
     public float renderArmYaw;
     public float renderArmPitch;
@@ -70,88 +70,86 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public float prevRenderArmPitch;
     private int horseJumpPowerCounter;
     private float horseJumpPower;
-    private final MouseFilter field_71162_ch = new MouseFilter();
-    private final MouseFilter field_71160_ci = new MouseFilter();
-    private final MouseFilter field_71161_cj = new MouseFilter();
 
-    /** The amount of time an entity has been in a Portal */
+    /**
+     * The amount of time an entity has been in a Portal
+     */
     public float timeInPortal;
 
-    /** The amount of time an entity has been in a Portal the previous tick */
+    /**
+     * The amount of time an entity has been in a Portal the previous tick
+     */
     public float prevTimeInPortal;
-    private static final String __OBFID = "CL_00000938";
 
-    public EntityPlayerSP(Minecraft p_i1238_1_, World p_i1238_2_, Session p_i1238_3_, int p_i1238_4_)
-    {
+    public EntityPlayerSP(Minecraft p_i1238_1_, World p_i1238_2_, Session p_i1238_3_, int p_i1238_4_) {
         super(p_i1238_2_, p_i1238_3_.getProfile());
         this.mc = p_i1238_1_;
         this.dimension = p_i1238_4_;
     }
 
-    public void updateEntityActionState()
-    {
+    public void updateEntityActionState() {
         super.updateEntityActionState();
         this.moveStrafing = this.movementInput.moveStrafe;
         this.moveForward = this.movementInput.moveForward;
         this.isJumping = this.movementInput.jump;
         this.prevRenderArmYaw = this.renderArmYaw;
         this.prevRenderArmPitch = this.renderArmPitch;
-        this.renderArmPitch = (float)((double)this.renderArmPitch + (double)(this.rotationPitch - this.renderArmPitch) * 0.5D);
-        this.renderArmYaw = (float)((double)this.renderArmYaw + (double)(this.rotationYaw - this.renderArmYaw) * 0.5D);
+        this.renderArmPitch = (float) ((double) this.renderArmPitch + (double) (this.rotationPitch - this.renderArmPitch) * 0.5D);
+        this.renderArmYaw = (float) ((double) this.renderArmYaw + (double) (this.rotationYaw - this.renderArmYaw) * 0.5D);
     }
 
     @Override
     public final boolean isSexy() {
-    	return mc.uprizing.getToggleSprint().alwaysSprinting;
-	}
+        return mc.uprizing.getToggleSprint().alwaysSprinting;
+    }
 
-	@Override
-	public final void jump() {
-		this.motionY = 0.41999998688697815D;
+    @Override
+    public final void jump() {
+        this.motionY = 0.41999998688697815D;
 
-		final boolean magic;
+        final boolean magic;
 
-		if (magic = this.isPotionActive(Potion.jump)) {
-			this.motionY += (double) ((float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
-		}
+        if (magic = this.isPotionActive(Potion.jump)) {
+            this.motionY += (double) ((float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
+        }
 
-		final boolean sprinting;
+        final boolean sprinting;
 
-		if (sprinting = this.isSprinting()) {
-			float var1 = this.rotationYaw * 0.017453292F;
-			this.motionX -= (double) (MathHelper.sin(var1) * 0.2F);
-			this.motionZ += (double) (MathHelper.cos(var1) * 0.2F);
-		}
+        if (sprinting = this.isSprinting()) {
+            float var1 = this.rotationYaw * 0.017453292F;
+            this.motionX -= (double) (MathHelper.sin(var1) * 0.2F);
+            this.motionZ += (double) (MathHelper.cos(var1) * 0.2F);
+        }
 
-		final ToggleSprint toggleSprint = mc.uprizing.getToggleSprint();
+        final ToggleSprint toggleSprint = mc.uprizing.getToggleSprint();
 
-		if (magic) {
-			toggleSprint.mode = ToggleSprint.JUMPING_MAGIC;
-		} else if (sprinting) {
-			toggleSprint.mode = ToggleSprint.JUMPING_SPRINTING;
-		} else if (toggleSprint.jumpEnabled) {
-			toggleSprint.mode = ToggleSprint.JUMPING_TOGGLED;
-		} else {
-			toggleSprint.mode = ToggleSprint.JUMPING_VANILLA;
-		}
+        if (magic) {
+            toggleSprint.mode = ToggleSprint.JUMPING_MAGIC;
+        } else if (sprinting) {
+            toggleSprint.mode = ToggleSprint.JUMPING_SPRINTING;
+        } else if (toggleSprint.jumpEnabled) {
+            toggleSprint.mode = ToggleSprint.JUMPING_TOGGLED;
+        } else {
+            toggleSprint.mode = ToggleSprint.JUMPING_VANILLA;
+        }
 
-		this.isAirBorne = true;
-		this.test = true;
-	}
+        this.isAirBorne = true;
+        this.test = true;
+    }
 
-	boolean test; // TODO: temporary
+    boolean test; // TODO: temporary
 
-	/**
+    /**
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
     public void onLivingUpdate() {
-		final ToggleSprint toggleSprint = mc.uprizing.getToggleSprint();
+        final ToggleSprint toggleSprint = mc.uprizing.getToggleSprint();
 
-		if (test && onGround) {
-			toggleSprint.mode = this.isSprinting() ? toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA : ToggleSprint.OFF;
-			test = false;
-		}
+        if (test && onGround) {
+            toggleSprint.mode = this.isSprinting() ? toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA : ToggleSprint.OFF;
+            test = false;
+        }
 
         if (!toggleSprint.alwaysSprinting && this.sprintingTicksLeft > 0) {
             --this.sprintingTicksLeft;
@@ -232,61 +230,61 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double) this.width * 0.35D);
             boolean var4 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
-			final boolean var5 = this.movementInput.moveForward >= var2;
-			final boolean sprinting = this.isSprinting();
+            final boolean var5 = this.movementInput.moveForward >= var2;
+            final boolean sprinting = this.isSprinting();
 
-			if (this.onGround && !var3 && var5 && !sprinting && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
-				if (toggleSprint.sprintEnabled) {
-					//System.out.println("5 (commence directement en courant grâce à ToggleSprint");
-					this.setSprinting(true);
-					toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
-				} else {
-					if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
-						//System.out.println("1 (commence en marchant)");
-						this.sprintToggleTimer = 7;
-						toggleSprint.mode = ToggleSprint.WALKING_VANILLA;
-					} else {
-						//System.out.println("2 (commence en courant OU en double appuyant sur avancer avant que le premier timer soit à 0)");
-						this.setSprinting(true);
-						toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
-					}
-				}
-			}
+            if (this.onGround && !var3 && var5 && !sprinting && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
+                if (toggleSprint.sprintEnabled) {
+                    //System.out.println("5 (commence directement en courant grâce à ToggleSprint");
+                    this.setSprinting(true);
+                    toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
+                } else {
+                    if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
+                        //System.out.println("1 (commence en marchant)");
+                        this.sprintToggleTimer = 7;
+                        toggleSprint.mode = ToggleSprint.WALKING_VANILLA;
+                    } else {
+                        //System.out.println("2 (commence en courant OU en double appuyant sur avancer avant que le premier timer soit à 0)");
+                        this.setSprinting(true);
+                        toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
+                    }
+                }
+            }
 
-			if (!toggleSprint.sprintEnabled) {
-				if (!sprinting && var5 && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
-					//System.out.println("3 (active le sprint quand je marche)");
-					this.setSprinting(true);
-					toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
-				}
-			}
+            if (!toggleSprint.sprintEnabled) {
+                if (!sprinting && var5 && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
+                    //System.out.println("3 (active le sprint quand je marche)");
+                    this.setSprinting(true);
+                    toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
+                }
+            }
 
-			if (sprinting) {
-				if (this.isCollidedHorizontally || !var4) {
-					//System.out.println("4-1 (s'arrête [bouffe ou mur])");
-					this.setSprinting(false);
-					toggleSprint.mode = ToggleSprint.OFF;
-				} else if (this.movementInput.moveForward < var2) {
-					if (!toggleSprint.alwaysSprinting || this.movementInput.moveForward == 0) { // remove disabling when player get pushing back (hit, explosion, etc..)
-						//System.out.println("4-2 (s'arrête)"); // var2 = 0.8
-						this.setSprinting(false);
-						toggleSprint.mode = ToggleSprint.OFF;
-					}
-				}
-			}
+            if (sprinting) {
+                if (this.isCollidedHorizontally || !var4) {
+                    //System.out.println("4-1 (s'arrête [bouffe ou mur])");
+                    this.setSprinting(false);
+                    toggleSprint.mode = ToggleSprint.OFF;
+                } else if (this.movementInput.moveForward < var2) {
+                    if (!toggleSprint.alwaysSprinting || this.movementInput.moveForward == 0) { // remove disabling when player get pushing back (hit, explosion, etc..)
+                        //System.out.println("4-2 (s'arrête)"); // var2 = 0.8
+                        this.setSprinting(false);
+                        toggleSprint.mode = ToggleSprint.OFF;
+                    }
+                }
+            }
 
             /* TODO: Added to the client soon (respect other server) */
-			//if (this.capabilities.isCreativeMode && this.capabilities.isFlying && toggleSprint.flyingBoost != 0 && this.mc.gameSettings.keyBindSprint.isPressed()) {
-				//this.capabilities.setFlySpeed(0.05f * (float) toggleSprint.flyingBoost);
+            //if (this.capabilities.isCreativeMode && this.capabilities.isFlying && toggleSprint.flyingBoost != 0 && this.mc.gameSettings.keyBindSprint.isPressed()) {
+            //this.capabilities.setFlySpeed(0.05f * (float) toggleSprint.flyingBoost);
 
-				//if (this.movementInput.sneak) {
-					//this.motionY -= 0.15 * toggleSprint.flyingBoost;
-				//} else if (this.movementInput.jump) {
-					//this.motionY += 0.15 * toggleSprint.flyingBoost;
-				//}
-			//} else if (this.capabilities.getFlySpeed() == 0.05f) {
-				//this.capabilities.setFlySpeed(0.05f);
-			//}
+            //if (this.movementInput.sneak) {
+            //this.motionY -= 0.15 * toggleSprint.flyingBoost;
+            //} else if (this.movementInput.jump) {
+            //this.motionY += 0.15 * toggleSprint.flyingBoost;
+            //}
+            //} else if (this.capabilities.getFlySpeed() == 0.05f) {
+            //this.capabilities.setFlySpeed(0.05f);
+            //}
             /* TODO: Added to the client soon (respect other server) */
 
             if (this.capabilities.allowFlying && !var1 && this.movementInput.jump) { // TODO: 155
@@ -349,34 +347,27 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Gets the player's field of view multiplier. (ex. when flying)
      */
-    public float getFOVMultiplier()
-    {
+    public float getFOVMultiplier() {
         float var1 = 1.0F;
 
-        if (this.capabilities.isFlying)
-        {
+        if (this.capabilities.isFlying) {
             var1 *= 1.1F;
         }
 
         IAttributeInstance var2 = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
-        var1 = (float)((double)var1 * ((var2.getAttributeValue() / (double)this.capabilities.getWalkSpeed() + 1.0D) / 2.0D));
+        var1 = (float) ((double) var1 * ((var2.getAttributeValue() / (double) this.capabilities.getWalkSpeed() + 1.0D) / 2.0D));
 
-        if (this.capabilities.getWalkSpeed() == 0.0F || Float.isNaN(var1) || Float.isInfinite(var1))
-        {
+        if (this.capabilities.getWalkSpeed() == 0.0F || Float.isNaN(var1) || Float.isInfinite(var1)) {
             var1 = 1.0F;
         }
 
-        if (this.isUsingItem() && this.getItemInUse().getItem() == Items.bow)
-        {
+        if (this.isUsingItem() && this.getItemInUse().getItem() == Items.bow) {
             int var3 = this.getItemInUseDuration();
-            float var4 = (float)var3 / 20.0F;
+            float var4 = (float) var3 / 20.0F;
 
-            if (var4 > 1.0F)
-            {
+            if (var4 > 1.0F) {
                 var4 = 1.0F;
-            }
-            else
-            {
+            } else {
                 var4 *= var4;
             }
 
@@ -389,42 +380,32 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * set current crafting inventory back to the 2x2 square
      */
-    public void closeScreen()
-    {
+    public void closeScreen() {
         super.closeScreen();
-        this.mc.displayGuiScreen((GuiScreen)null);
+        this.mc.displayGuiScreen(null);
     }
 
-    public void displayGUIEditSign(TileEntity p_146100_1_)
-    {
-        if (p_146100_1_ instanceof TileEntitySign)
-        {
-            this.mc.displayGuiScreen(new GuiEditSign((TileEntitySign)p_146100_1_));
-        }
-        else if (p_146100_1_ instanceof TileEntityCommandBlock)
-        {
-            this.mc.displayGuiScreen(new GuiCommandBlock(((TileEntityCommandBlock)p_146100_1_).func_145993_a()));
+    public void displayGUIEditSign(TileEntity p_146100_1_) {
+        if (p_146100_1_ instanceof TileEntitySign) {
+            this.mc.displayGuiScreen(new GuiEditSign((TileEntitySign) p_146100_1_));
+        } else if (p_146100_1_ instanceof TileEntityCommandBlock) {
+            this.mc.displayGuiScreen(new GuiCommandBlock(((TileEntityCommandBlock) p_146100_1_).func_145993_a()));
         }
     }
 
-    public void func_146095_a(CommandBlockLogic p_146095_1_)
-    {
+    public void func_146095_a(CommandBlockLogic p_146095_1_) {
         this.mc.displayGuiScreen(new GuiCommandBlock(p_146095_1_));
     }
 
     /**
      * Displays the GUI for interacting with a book.
      */
-    public void displayGUIBook(ItemStack p_71048_1_)
-    {
+    public void displayGUIBook(ItemStack p_71048_1_) {
         Item var2 = p_71048_1_.getItem();
 
-        if (var2 == Items.written_book)
-        {
+        if (var2 == Items.written_book) {
             this.mc.displayGuiScreen(new GuiScreenBook(this, p_71048_1_, false));
-        }
-        else if (var2 == Items.writable_book)
-        {
+        } else if (var2 == Items.writable_book) {
             this.mc.displayGuiScreen(new GuiScreenBook(this, p_71048_1_, true));
         }
     }
@@ -432,82 +413,68 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the GUI for interacting with a chest inventory. Args: chestInventory
      */
-    public void displayGUIChest(IInventory p_71007_1_)
-    {
+    public void displayGUIChest(IInventory p_71007_1_) {
         this.mc.displayGuiScreen(new GuiChest(this.inventory, p_71007_1_));
     }
 
-    public void func_146093_a(TileEntityHopper p_146093_1_)
-    {
+    public void func_146093_a(TileEntityHopper p_146093_1_) {
         this.mc.displayGuiScreen(new GuiHopper(this.inventory, p_146093_1_));
     }
 
-    public void displayGUIHopperMinecart(EntityMinecartHopper p_96125_1_)
-    {
+    public void displayGUIHopperMinecart(EntityMinecartHopper p_96125_1_) {
         this.mc.displayGuiScreen(new GuiHopper(this.inventory, p_96125_1_));
     }
 
-    public void displayGUIHorse(EntityHorse p_110298_1_, IInventory p_110298_2_)
-    {
+    public void displayGUIHorse(EntityHorse p_110298_1_, IInventory p_110298_2_) {
         this.mc.displayGuiScreen(new GuiScreenHorseInventory(this.inventory, p_110298_2_, p_110298_1_));
     }
 
     /**
      * Displays the crafting GUI for a workbench.
      */
-    public void displayGUIWorkbench(int p_71058_1_, int p_71058_2_, int p_71058_3_)
-    {
+    public void displayGUIWorkbench(int p_71058_1_, int p_71058_2_, int p_71058_3_) {
         this.mc.displayGuiScreen(new GuiCrafting(this.inventory, this.worldObj, p_71058_1_, p_71058_2_, p_71058_3_));
     }
 
-    public void displayGUIEnchantment(int p_71002_1_, int p_71002_2_, int p_71002_3_, String p_71002_4_)
-    {
+    public void displayGUIEnchantment(int p_71002_1_, int p_71002_2_, int p_71002_3_, String p_71002_4_) {
         this.mc.displayGuiScreen(new GuiEnchantment(this.inventory, this.worldObj, p_71002_1_, p_71002_2_, p_71002_3_, p_71002_4_));
     }
 
     /**
      * Displays the GUI for interacting with an anvil.
      */
-    public void displayGUIAnvil(int p_82244_1_, int p_82244_2_, int p_82244_3_)
-    {
+    public void displayGUIAnvil(int p_82244_1_, int p_82244_2_, int p_82244_3_) {
         this.mc.displayGuiScreen(new GuiRepair(this.inventory, this.worldObj, p_82244_1_, p_82244_2_, p_82244_3_));
     }
 
-    public void func_146101_a(TileEntityFurnace p_146101_1_)
-    {
+    public void func_146101_a(TileEntityFurnace p_146101_1_) {
         this.mc.displayGuiScreen(new GuiFurnace(this.inventory, p_146101_1_));
     }
 
-    public void func_146098_a(TileEntityBrewingStand p_146098_1_)
-    {
+    public void func_146098_a(TileEntityBrewingStand p_146098_1_) {
         this.mc.displayGuiScreen(new GuiBrewingStand(this.inventory, p_146098_1_));
     }
 
-    public void func_146104_a(TileEntityBeacon p_146104_1_)
-    {
+    public void func_146104_a(TileEntityBeacon p_146104_1_) {
         this.mc.displayGuiScreen(new GuiBeacon(this.inventory, p_146104_1_));
     }
 
-    public void func_146102_a(TileEntityDispenser p_146102_1_)
-    {
+    public void func_146102_a(TileEntityDispenser p_146102_1_) {
         this.mc.displayGuiScreen(new GuiDispenser(this.inventory, p_146102_1_));
     }
 
-    public void displayGUIMerchant(IMerchant p_71030_1_, String p_71030_2_)
-    {
+    public void displayGUIMerchant(IMerchant p_71030_1_, String p_71030_2_) {
         this.mc.displayGuiScreen(new GuiMerchant(this.inventory, p_71030_1_, this.worldObj, p_71030_2_));
     }
 
     /**
      * Called when the player performs a critical hit on the Entity. Args: entity that was hit critically
      */
-    public void onCriticalHit(Entity p_71009_1_)
-    {
+    public void onCriticalHit(Entity p_71009_1_) {
         this.mc.effectRenderer.addEffect(new EntityCrit2FX(this.mc.theWorld, p_71009_1_));
     }
 
-    public void onEnchantmentCritical(Entity p_71047_1_)
-    {
+    public void onEnchantmentCritical(Entity p_71047_1_) {
         EntityCrit2FX var2 = new EntityCrit2FX(this.mc.theWorld, p_71047_1_, "magicCrit");
         this.mc.effectRenderer.addEffect(var2);
     }
@@ -515,37 +482,30 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Called whenever an item is picked up from walking over it. Args: pickedUpEntity, stackSize
      */
-    public void onItemPickup(Entity p_71001_1_, int p_71001_2_)
-    {
+    public void onItemPickup(Entity p_71001_1_, int p_71001_2_) {
         this.mc.effectRenderer.addEffect(new EntityPickupFX(this.mc.theWorld, p_71001_1_, this, -0.5F));
     }
 
     /**
      * Returns if this entity is sneaking.
      */
-    public boolean isSneaking()
-    {
+    public boolean isSneaking() {
         return this.movementInput.sneak && !this.sleeping;
     }
 
     /**
      * Updates health locally.
      */
-    public void setPlayerSPHealth(float p_71150_1_)
-    {
+    public void setPlayerSPHealth(float p_71150_1_) {
         float var2 = this.getHealth() - p_71150_1_;
 
-        if (var2 <= 0.0F)
-        {
+        if (var2 <= 0.0F) {
             this.setHealth(p_71150_1_);
 
-            if (var2 < 0.0F)
-            {
+            if (var2 < 0.0F) {
                 this.hurtResistantTime = this.maxHurtResistantTime / 2;
             }
-        }
-        else
-        {
+        } else {
             this.lastDamage = var2;
             this.setHealth(this.getHealth());
             this.hurtResistantTime = this.maxHurtResistantTime;
@@ -554,26 +514,22 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
     }
 
-    public void addChatComponentMessage(IChatComponent p_146105_1_)
-    {
+    public void addChatComponentMessage(IChatComponent p_146105_1_) {
         this.mc.ingameGUI.getChatGUI().printChatMessage(p_146105_1_);
     }
 
-    private boolean isBlockTranslucent(int p_71153_1_, int p_71153_2_, int p_71153_3_)
-    {
+    private boolean isBlockTranslucent(int p_71153_1_, int p_71153_2_, int p_71153_3_) {
         return this.worldObj.getBlock(p_71153_1_, p_71153_2_, p_71153_3_).isNormalCube();
     }
 
-    protected boolean pushOutOfBlocks(double x, double y, double z)
-    {
+    protected boolean pushOutOfBlocks(double x, double y, double z) {
         int var7 = MathHelper.floor_double(x);
         int var8 = MathHelper.floor_double(y);
         int var9 = MathHelper.floor_double(z);
-        double var10 = x - (double)var7;
-        double var12 = z - (double)var9;
+        double var10 = x - (double) var7;
+        double var12 = z - (double) var9;
 
-        if (this.isBlockTranslucent(var7, var8, var9) || this.isBlockTranslucent(var7, var8 + 1, var9))
-        {
+        if (this.isBlockTranslucent(var7, var8, var9) || this.isBlockTranslucent(var7, var8 + 1, var9)) {
             boolean var14 = !this.isBlockTranslucent(var7 - 1, var8, var9) && !this.isBlockTranslucent(var7 - 1, var8 + 1, var9);
             boolean var15 = !this.isBlockTranslucent(var7 + 1, var8, var9) && !this.isBlockTranslucent(var7 + 1, var8 + 1, var9);
             boolean var16 = !this.isBlockTranslucent(var7, var8, var9 - 1) && !this.isBlockTranslucent(var7, var8 + 1, var9 - 1);
@@ -581,50 +537,36 @@ public class EntityPlayerSP extends AbstractClientPlayer
             byte var18 = -1;
             double var19 = 9999.0D;
 
-            if (var14 && var10 < var19)
-            {
+            if (var14 && var10 < var19) {
                 var19 = var10;
                 var18 = 0;
             }
 
-            if (var15 && 1.0D - var10 < var19)
-            {
+            if (var15 && 1.0D - var10 < var19) {
                 var19 = 1.0D - var10;
                 var18 = 1;
             }
 
-            if (var16 && var12 < var19)
-            {
+            if (var16 && var12 < var19) {
                 var19 = var12;
                 var18 = 4;
             }
 
-            if (var17 && 1.0D - var12 < var19)
-            {
+            if (var17 && 1.0D - var12 < var19) {
                 var19 = 1.0D - var12;
                 var18 = 5;
             }
 
             float var21 = 0.1F;
 
-            if (var18 == 0)
-            {
-                this.motionX = (double)(-var21);
-            }
-
-            if (var18 == 1)
-            {
-                this.motionX = (double)var21;
-            }
-
-            if (var18 == 4)
-            {
-                this.motionZ = (double)(-var21);
-            }
-
-            if (var18 == 5)
-            {
-                this.motionZ = (double)var21;
+            if (var18 == 0) {
+                this.motionX = (double) (-var21);
+            } else if (var18 == 1) {
+                this.motionX = (double) var21;
+            } else if (var18 == 4) {
+                this.motionZ = (double) (-var21);
+            } else if (var18 == 5) {
+                this.motionZ = (double) var21;
             }
         }
 
@@ -634,8 +576,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Set sprinting switch for Entity.
      */
-    public void setSprinting(boolean sprinting)
-    {
+    public void setSprinting(boolean sprinting) {
         super.setSprinting(sprinting);
         this.sprintingTicksLeft = sprinting ? 600 : 0;
     }
@@ -643,8 +584,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Sets the current XP, total XP, and level number.
      */
-    public void setXPStats(float p_71152_1_, int p_71152_2_, int p_71152_3_)
-    {
+    public void setXPStats(float p_71152_1_, int p_71152_2_, int p_71152_3_) {
         this.experience = p_71152_1_;
         this.experienceTotal = p_71152_2_;
         this.experienceLevel = p_71152_3_;
@@ -656,47 +596,40 @@ public class EntityPlayerSP extends AbstractClientPlayer
      * (like "I fetched this block for you by ID, but I'd like you to know that every time you do this, I die a little
      * inside"), and errors (like "it's not called iron_pixacke, silly").
      */
-    public void addChatMessage(IChatComponent message)
-    {
+    public void addChatMessage(IChatComponent message) {
         this.mc.ingameGUI.getChatGUI().printChatMessage(message);
     }
 
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int permissionLevel, String command)
-    {
+    public boolean canCommandSenderUseCommand(int permissionLevel, String command) {
         return permissionLevel <= 0;
     }
 
     /**
      * Return the position for this command sender.
      */
-    public ChunkCoordinates getPlayerCoordinates()
-    {
+    public ChunkCoordinates getPlayerCoordinates() {
         return new ChunkCoordinates(MathHelper.floor_double(this.posX + 0.5D), MathHelper.floor_double(this.posY + 0.5D), MathHelper.floor_double(this.posZ + 0.5D));
     }
 
-    public void playSound(String name, float volume, float pitch)
-    {
-        this.worldObj.playSound(this.posX, this.posY - (double)this.yOffset, this.posZ, name, volume, pitch, false);
+    public void playSound(String name, float volume, float pitch) {
+        this.worldObj.playSound(this.posX, this.posY - (double) this.yOffset, this.posZ, name, volume, pitch, false);
     }
 
     /**
      * Returns whether the entity is in a local (client) world
      */
-    public boolean isClientWorld()
-    {
+    public boolean isClientWorld() {
         return true;
     }
 
-    public boolean isRidingHorse()
-    {
+    public boolean isRidingHorse() {
         return this.ridingEntity != null && this.ridingEntity instanceof EntityHorse;
     }
 
-    public float getHorseJumpPower()
-    {
+    public float getHorseJumpPower() {
         return this.horseJumpPower;
     }
 

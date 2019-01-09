@@ -64,11 +64,6 @@ public class GuiScreen extends Gui
         {
             ((GuiButton)this.buttonList.get(var4)).drawButton(this.mc, mouseX, mouseY);
         }
-
-        for (var4 = 0; var4 < this.labelList.size(); ++var4)
-        {
-            ((GuiLabel)this.labelList.get(var4)).drawLabel(this.mc, mouseX, mouseY);
-        }
     }
 
     /**

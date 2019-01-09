@@ -1,6 +1,5 @@
 package net.minecraft.client;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Queues;
@@ -9,6 +8,27 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Proxy;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Queue;
+import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
+import javax.imageio.ImageIO;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,12 +46,9 @@ import net.minecraft.client.gui.GuiMemoryErrorScreen;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSleepMP;
 import net.minecraft.client.gui.GuiWinGame;
-import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.gui.stream.GuiStreamUnavailable;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.ServerData;
@@ -74,9 +91,6 @@ import net.minecraft.client.resources.data.TextureMetadataSectionSerializer;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.client.stream.IStream;
-import net.minecraft.client.stream.NullStream;
-import net.minecraft.client.stream.TwitchStream;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
@@ -107,7 +121,6 @@ import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.IStatStringFormat;
 import net.minecraft.stats.StatFileWriter;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MinecraftError;
 import net.minecraft.util.MouseHelper;
@@ -143,31 +156,8 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
-import uprizing.counters.Counter;
 import uprizing.Uprizing;
 import uprizing.counters.FPSCounter;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.Proxy;
-import java.net.SocketAddress;
-import java.nio.ByteBuffer;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
-import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 
 public class Minecraft implements IPlayerUsage
 {
@@ -179,7 +169,6 @@ public class Minecraft implements IPlayerUsage
     public static byte[] memoryReserve = new byte[10485760];
     private static final List macDisplayModes = Lists.newArrayList(new DisplayMode(2560, 1600), new DisplayMode(2880, 1800));
     private final File fileResourcepacks;
-    private final Multimap twitchDetails;
     private ServerData currentServerData;
 
     /** The RenderEngine instance used by Minecraft */
@@ -296,7 +285,6 @@ public class Minecraft implements IPlayerUsage
     private final DefaultResourcePack mcDefaultResourcePack;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
-    private IStream stream;
     private Framebuffer mcFramebuffer;
     private TextureMap textureMapBlocks;
     private SoundHandler mcSoundHandler;
@@ -326,14 +314,13 @@ public class Minecraft implements IPlayerUsage
     private String debugProfilerName = "root";
     private static final String __OBFID = "CL_00000631";
 
-    public Minecraft(Session sessionIn, int displayWidth, int displayHeight, boolean fullscreen, boolean isDemo, File dataDir, File assetsDir, File resourcePackDir, Proxy proxy, String version, Multimap twitchDetails, String assetsJsonVersion)
+    public Minecraft(Session sessionIn, int displayWidth, int displayHeight, boolean fullscreen, boolean isDemo, File dataDir, File assetsDir, File resourcePackDir, Proxy proxy, String version, String assetsJsonVersion)
     {
         theMinecraft = this;
         this.mcDataDir = dataDir;
         this.fileAssets = assetsDir;
         this.fileResourcepacks = resourcePackDir;
         this.launchedVersion = version;
-        this.twitchDetails = twitchDetails;
         this.mcDefaultResourcePack = new DefaultResourcePack((new ResourceIndex(assetsDir, assetsJsonVersion)).func_152782_a());
         this.addDefaultResourcePack();
         this.proxy = proxy == null ? Proxy.NO_PROXY : proxy;
@@ -522,16 +509,6 @@ public class Minecraft implements IPlayerUsage
         }
 
         OpenGlHelper.initializeTextures();
-
-        try
-        {
-            this.stream = new TwitchStream(this, (String)Iterables.getFirst(this.twitchDetails.get("twitch_access_token"), (Object)null));
-        }
-        catch (Throwable var5)
-        {
-            this.stream = new NullStream(var5);
-            logger.error("Couldn\'t initialize twitch stream");
-        }
 
         this.mcFramebuffer = new Framebuffer(this.displayWidth, this.displayHeight, true);
         this.mcFramebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
@@ -900,7 +877,6 @@ public class Minecraft implements IPlayerUsage
     {
         try
         {
-            this.stream.shutdownStream();
             logger.info("Stopping!");
 
             try
@@ -1107,9 +1083,7 @@ public class Minecraft implements IPlayerUsage
         Thread.yield();
         this.mcProfiler.startSection("stream");
         this.mcProfiler.startSection("update");
-        this.stream.func_152935_j();
         this.mcProfiler.endStartSection("submit");
-        this.stream.func_152922_k();
         this.mcProfiler.endSection();
         this.mcProfiler.endSection();
         this.checkGLError("Post render");
@@ -2882,11 +2856,6 @@ public class Minecraft implements IPlayerUsage
         return this.session;
     }
 
-    public Multimap getTwitchDetails()
-    {
-        return this.twitchDetails;
-    }
-
     public Proxy getProxy()
     {
         return this.proxy;
@@ -2937,11 +2906,6 @@ public class Minecraft implements IPlayerUsage
         return this.currentScreen instanceof GuiWinGame ? MusicTicker.MusicType.CREDITS : (this.thePlayer != null ? (this.thePlayer.worldObj.provider instanceof WorldProviderHell ? MusicTicker.MusicType.NETHER : (this.thePlayer.worldObj.provider instanceof WorldProviderEnd ? (BossStatus.bossName != null && BossStatus.statusBarTime > 0 ? MusicTicker.MusicType.END_BOSS : MusicTicker.MusicType.END) : (this.thePlayer.capabilities.isCreativeMode && this.thePlayer.capabilities.allowFlying ? MusicTicker.MusicType.CREATIVE : MusicTicker.MusicType.GAME))) : MusicTicker.MusicType.MENU);
     }
 
-    public IStream getTwitchStream()
-    {
-        return this.stream;
-    }
-
     public void dispatchKeypresses()
     {
         int var1 = Keyboard.getEventKey();
@@ -2952,66 +2916,7 @@ public class Minecraft implements IPlayerUsage
             {
                 if (Keyboard.getEventKeyState())
                 {
-                    if (var1 == this.gameSettings.keyBindStreamStartStop.getKeyCode())
-                    {
-                        if (this.getTwitchStream().func_152934_n())
-                        {
-                            this.getTwitchStream().func_152914_u();
-                        }
-                        else if (this.getTwitchStream().func_152924_m())
-                        {
-                            this.displayGuiScreen(new GuiYesNo(new GuiYesNoCallback()
-                            {
-                                private static final String __OBFID = "CL_00001852";
-                                public void confirmClicked(boolean result, int id)
-                                {
-                                    if (result)
-                                    {
-                                        Minecraft.this.getTwitchStream().func_152930_t();
-                                    }
-
-                                    Minecraft.this.displayGuiScreen((GuiScreen)null);
-                                }
-                            }, I18n.format("stream.confirm_start"), "", 0));
-                        }
-                        else if (this.getTwitchStream().func_152928_D() && this.getTwitchStream().func_152936_l())
-                        {
-                            if (this.theWorld != null)
-                            {
-                                this.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("Not ready to start streaming yet!"));
-                            }
-                        }
-                        else
-                        {
-                            GuiStreamUnavailable.func_152321_a(this.currentScreen);
-                        }
-                    }
-                    else if (var1 == this.gameSettings.keyBindStreamPauseUnpause.getKeyCode())
-                    {
-                        if (this.getTwitchStream().func_152934_n())
-                        {
-                            if (this.getTwitchStream().isPaused())
-                            {
-                                this.getTwitchStream().func_152933_r();
-                            }
-                            else
-                            {
-                                this.getTwitchStream().func_152916_q();
-                            }
-                        }
-                    }
-                    else if (var1 == this.gameSettings.keyBindStreamCommercials.getKeyCode())
-                    {
-                        if (this.getTwitchStream().func_152934_n())
-                        {
-                            this.getTwitchStream().func_152931_p();
-                        }
-                    }
-                    else if (var1 == this.gameSettings.keyBindStreamToggleMic.getKeyCode())
-                    {
-                        this.stream.func_152910_a(true);
-                    }
-                    else if (var1 == this.gameSettings.keyBindFullscreen.getKeyCode())
+                    if (var1 == this.gameSettings.keyBindFullscreen.getKeyCode())
                     {
                         this.toggleFullscreen();
                     }
@@ -3019,10 +2924,6 @@ public class Minecraft implements IPlayerUsage
                     {
                         this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.mcFramebuffer));
                     }
-                }
-                else if (var1 == this.gameSettings.keyBindStreamToggleMic.getKeyCode())
-                {
-                    this.stream.func_152910_a(false);
                 }
             }
         }

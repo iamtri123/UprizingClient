@@ -181,13 +181,6 @@
         </dependency>
 
         <dependency>
-            <groupId>tv.twitch</groupId>
-            <artifactId>twitch</artifactId>
-            <version>5.16</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>

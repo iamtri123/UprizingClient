@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.client.gui.stream.GuiTwitchUserMode;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.ItemStack;
@@ -32,7 +31,6 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import tv.twitch.chat.ChatUserInfo;
 
 public class GuiChat extends GuiScreen implements GuiYesNoCallback
 {
@@ -240,19 +238,6 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
                         else if (var5.getAction() == ClickEvent.Action.RUN_COMMAND)
                         {
                             this.submitChatMessage(var5.getValue());
-                        }
-                        else if (var5.getAction() == ClickEvent.Action.TWITCH_USER_INFO)
-                        {
-                            ChatUserInfo var8 = this.mc.getTwitchStream().func_152926_a(var5.getValue());
-
-                            if (var8 != null)
-                            {
-                                this.mc.displayGuiScreen(new GuiTwitchUserMode(this.mc.getTwitchStream(), var8));
-                            }
-                            else
-                            {
-                                logger.error("Tried to handle twitch user but couldn\'t find them!");
-                            }
                         }
                         else
                         {

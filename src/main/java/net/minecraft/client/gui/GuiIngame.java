@@ -1,5 +1,8 @@
 package net.minecraft.client.gui;
 
+import java.awt.Color;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -34,10 +37,6 @@ import net.minecraft.world.chunk.Chunk;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.awt.Color;
-import java.util.List;
-import java.util.Random;
-
 public class GuiIngame extends Gui
 {
     private static final ResourceLocation vignetteTexPath = new ResourceLocation("textures/misc/vignette.png");
@@ -49,7 +48,6 @@ public class GuiIngame extends Gui
 
     /** ChatGUI instance that retains all previous chat data */
     private final GuiNewChat persistantChatGUI;
-    private final GuiStreamIndicator streamIndicator;
     private int updateCounter;
 
     /** The string specifying which record music is playing */
@@ -73,7 +71,6 @@ public class GuiIngame extends Gui
     {
         this.mc = p_i46379_1_;
         this.persistantChatGUI = new GuiNewChat(p_i46379_1_);
-        this.streamIndicator = new GuiStreamIndicator(this.mc);
     }
 
     /**
@@ -498,11 +495,6 @@ public class GuiIngame extends Gui
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
-    }
-
-    public void renderStreamIndicator(float p_152126_1_, float p_152126_2_)
-    {
-        this.streamIndicator.render((int)(p_152126_1_ - 10.0F), 10);
     }
 
     private void renderIcons(int p_110327_1_, int p_110327_2_)
@@ -945,7 +937,6 @@ public class GuiIngame extends Gui
         }
 
         ++this.updateCounter;
-        this.streamIndicator.func_152439_a();
 
         if (this.mc.thePlayer != null)
         {

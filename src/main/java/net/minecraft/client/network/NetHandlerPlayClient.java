@@ -31,7 +31,6 @@ import net.minecraft.client.particle.EntityCrit2FX;
 import net.minecraft.client.particle.EntityPickupFX;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.stream.MetadataAchievement;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLeashKnot;
@@ -1475,7 +1474,6 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
                 {
                     Achievement var7 = (Achievement)var5;
                     this.gameController.guiAchievement.displayAchievement(var7);
-                    this.gameController.getTwitchStream().func_152911_a(new MetadataAchievement(var7), 0L);
 
                     if (var5 == AchievementList.openInventory)
                     {

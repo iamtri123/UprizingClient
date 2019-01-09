@@ -1448,10 +1448,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public void func_152430_c(float p_152430_1_)
     {
         this.setupOverlayRendering();
-        ScaledResolution var2 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
-        int var3 = var2.getScaledWidth();
-        int var4 = var2.getScaledHeight();
-        this.mc.ingameGUI.renderStreamIndicator((float)var3, (float)var4);
     }
 
     public void renderWorld(float par1, long par2)

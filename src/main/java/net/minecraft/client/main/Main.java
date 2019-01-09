@@ -141,7 +141,7 @@ public class Main {
         Session session = new Session(profile.getName(), profile.getId().toString(), userAuthentication.getAuthenticatedToken());
         // TODO: Temporary
 
-        Minecraft var39 = new Minecraft(session, var27, var28, var29, var30, var42, var43, var35, var24, var31, var32, var37);
+        Minecraft var39 = new Minecraft(session, var27, var28, var29, var30, var42, var43, var35, var24, var31, var37);
         String var40 = (String) var21.valueOf(var2);
 
         if (var40 != null) {

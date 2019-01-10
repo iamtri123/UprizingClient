@@ -409,7 +409,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                 }
             }
 
-            Minecraft.getMinecraft().renderGlobal.registerDestroyBlockIcons(this);
+            Minecraft.getInstance().renderGlobal.registerDestroyBlockIcons(this);
             RenderManager.instance.updateIcons(this);
             ConnectedTextures.updateIcons(this);
         }

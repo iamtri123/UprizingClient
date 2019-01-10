@@ -18,7 +18,7 @@ public class MotionBlur {
 
 	private static final String KEY = "uprizing";
 	private static final int MAXIMUM = 11;
-	private static final Minecraft minecraft = Minecraft.getMinecraft();
+	private static final Minecraft minecraft = Minecraft.getInstance();
 
 	public int index;
 

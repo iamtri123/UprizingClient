@@ -28,7 +28,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer implements SkinM
         String var3 = this.getCommandSenderName();
 
         if (!var3.isEmpty()) {
-            final SkinManager skinManager = Minecraft.getMinecraft().getSkinManager();
+            final SkinManager skinManager = Minecraft.getInstance().getSkinManager();
             skinManager.func_152790_a(gameProfile, this, true);
         }
 

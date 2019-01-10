@@ -204,7 +204,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>Start</Main-Class>
+                            <Main-Class>net.minecraft.client.main.Main</Main-Class>
                         </manifestEntries>
                     </archive>
                 </configuration>

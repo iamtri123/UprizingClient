@@ -62,9 +62,9 @@ public class RenderFish extends Render
             double var23 = p_76986_1_.angler.prevPosX + (p_76986_1_.angler.posX - p_76986_1_.angler.prevPosX) * (double)p_76986_9_ + var22.xCoord;
             double var25 = p_76986_1_.angler.prevPosY + (p_76986_1_.angler.posY - p_76986_1_.angler.prevPosY) * (double)p_76986_9_ + var22.yCoord;
             double var27 = p_76986_1_.angler.prevPosZ + (p_76986_1_.angler.posZ - p_76986_1_.angler.prevPosZ) * (double)p_76986_9_ + var22.zCoord;
-            double var29 = p_76986_1_.angler == Minecraft.getMinecraft().thePlayer ? 0.0D : (double)p_76986_1_.angler.getEyeHeight();
+            double var29 = p_76986_1_.angler == Minecraft.getInstance().thePlayer ? 0.0D : (double)p_76986_1_.angler.getEyeHeight();
 
-            if (this.renderManager.options.thirdPersonView > 0 || p_76986_1_.angler != Minecraft.getMinecraft().thePlayer)
+            if (this.renderManager.options.thirdPersonView > 0 || p_76986_1_.angler != Minecraft.getInstance().thePlayer)
             {
                 float var31 = (p_76986_1_.angler.prevRenderYawOffset + (p_76986_1_.angler.renderYawOffset - p_76986_1_.angler.prevRenderYawOffset) * p_76986_9_) * (float)Math.PI / 180.0F;
                 double var32 = (double)MathHelper.sin(var31);

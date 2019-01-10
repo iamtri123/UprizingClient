@@ -33,7 +33,7 @@ public class WorldRendererThreaded extends WorldRenderer
     public WorldRendererThreaded(World par1World, List par2List, int par3, int par4, int par5, int par6)
     {
         super(par1World, par2List, par3, par4, par5, par6);
-        RenderGlobal renderGlobal = Minecraft.getMinecraft().renderGlobal;
+        RenderGlobal renderGlobal = Minecraft.getInstance().renderGlobal;
         this.glRenderListWork = renderGlobal.displayListAllocator.allocateDisplayLists(2);
         this.glRenderListBoundingBox = this.glRenderList + 2;
     }
@@ -81,7 +81,7 @@ public class WorldRendererThreaded extends WorldRenderer
             HashSet var30 = new HashSet();
             var30.addAll(this.tileEntityRenderers);
             this.tileEntityRenderers.clear();
-            Minecraft var9 = Minecraft.getMinecraft();
+            Minecraft var9 = Minecraft.getInstance();
             EntityLivingBase var10 = var9.renderViewEntity;
             int viewEntityPosX = MathHelper.floor_double(var10.posX);
             int viewEntityPosY = MathHelper.floor_double(var10.posY);

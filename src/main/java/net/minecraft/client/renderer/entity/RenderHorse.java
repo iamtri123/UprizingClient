@@ -104,7 +104,7 @@ public class RenderHorse extends RenderLiving
         if (var3 == null)
         {
             var3 = new ResourceLocation(var2);
-            Minecraft.getMinecraft().getTextureManager().loadTexture(var3, new LayeredTexture(p_110848_1_.getVariantTexturePaths()));
+            Minecraft.getInstance().getTextureManager().loadTexture(var3, new LayeredTexture(p_110848_1_.getVariantTexturePaths()));
             field_110852_a.put(var2, var3);
         }
 

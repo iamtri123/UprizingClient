@@ -1,6 +1,15 @@
 package net.minecraft.client.renderer;
 
 import com.google.common.collect.Maps;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.Callable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.material.Material;
@@ -56,7 +65,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemRecord;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntitySign;
@@ -85,16 +93,6 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
-
-import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.Callable;
 
 public class RenderGlobal implements IWorldAccess
 {
@@ -572,7 +570,6 @@ public class RenderGlobal implements IWorldAccess
             double var4 = p_147589_1_.prevPosX + (p_147589_1_.posX - p_147589_1_.prevPosX) * (double)p_147589_3_;
             double var6 = p_147589_1_.prevPosY + (p_147589_1_.posY - p_147589_1_.prevPosY) * (double)p_147589_3_;
             double var8 = p_147589_1_.prevPosZ + (p_147589_1_.posZ - p_147589_1_.prevPosZ) * (double)p_147589_3_;
-            this.theWorld.theProfiler.startSection("prepare");
             TileEntityRendererDispatcher.instance.cacheActiveRenderInfo(this.theWorld, this.mc.getTextureManager(), this.mc.fontRenderer, this.mc.renderViewEntity, p_147589_3_);
             RenderManager.instance.cacheActiveRenderInfo(this.theWorld, this.mc.getTextureManager(), this.mc.fontRenderer, this.mc.renderViewEntity, this.mc.pointedEntity, this.mc.gameSettings, p_147589_3_);
 
@@ -589,7 +586,6 @@ public class RenderGlobal implements IWorldAccess
                 TileEntityRendererDispatcher.staticPlayerX = var18;
                 TileEntityRendererDispatcher.staticPlayerY = oldFancyGraphics;
                 TileEntityRendererDispatcher.staticPlayerZ = aabb;
-                this.theWorld.theProfiler.endStartSection("staticentities");
 
                 if (this.displayListEntitiesDirty)
                 {
@@ -610,7 +606,6 @@ public class RenderGlobal implements IWorldAccess
             }
 
             this.mc.entityRenderer.enableLightmap((double)p_147589_3_);
-            this.theWorld.theProfiler.endStartSection("global");
             List var24 = this.theWorld.getLoadedEntityList();
 
             if (pass == 0)
@@ -641,7 +636,6 @@ public class RenderGlobal implements IWorldAccess
                 }
             }
 
-            this.theWorld.theProfiler.endStartSection("entities");
             boolean var26 = this.mc.gameSettings.fancyGraphics;
             this.mc.gameSettings.fancyGraphics = Config.isDroppedItemsFancy();
 
@@ -685,7 +679,6 @@ public class RenderGlobal implements IWorldAccess
             }
 
             this.mc.gameSettings.fancyGraphics = var26;
-            this.theWorld.theProfiler.endStartSection("blockentities");
             RenderHelper.enableStandardItemLighting();
 
             for (var25 = 0; var25 < this.tileEntities.size(); ++var25)
@@ -733,7 +726,6 @@ public class RenderGlobal implements IWorldAccess
             }
 
             this.mc.entityRenderer.disableLightmap((double)p_147589_3_);
-            this.theWorld.theProfiler.endSection();
         }
     }
 
@@ -760,7 +752,6 @@ public class RenderGlobal implements IWorldAccess
 
     public void rebuildDisplayListEntities()
     {
-        this.theWorld.theProfiler.startSection("staticentityrebuild");
         GL11.glPushMatrix();
         GL11.glNewList(this.displayListEntities, GL11.GL_COMPILE);
         List var1 = this.theWorld.getLoadedEntityList();
@@ -778,7 +769,6 @@ public class RenderGlobal implements IWorldAccess
 
         GL11.glEndList();
         GL11.glPopMatrix();
-        this.theWorld.theProfiler.endSection();
     }
 
     /**
@@ -878,8 +868,6 @@ public class RenderGlobal implements IWorldAccess
     public int sortAndRender(EntityLivingBase player, int renderPass, double partialTicks)
     {
         this.renderViewEntity = player;
-        Profiler profiler = this.theWorld.theProfiler;
-        profiler.startSection("sortchunks");
         int num;
 
         if (this.worldRenderersToUpdate.size() < 10)
@@ -1043,7 +1031,6 @@ public class RenderGlobal implements IWorldAccess
                 this.sortedWorldRenderers[endIndex].isVisible = true;
             }
 
-            profiler.endStartSection("render");
             num = var35 + this.renderSortedRenderers(var40, var41, renderPass, partialTicks);
             endIndex = var41;
             stepNum = 0;
@@ -1052,7 +1039,6 @@ public class RenderGlobal implements IWorldAccess
 
             for (int switchStep = this.renderChunksWide; endIndex < this.countSortedWorldRenderers; num += this.renderSortedRenderers(startIndex, endIndex, renderPass, partialTicks))
             {
-                profiler.endStartSection("occ");
                 startIndex = endIndex;
 
                 if (stepNum < switchStep)
@@ -1082,9 +1068,7 @@ public class RenderGlobal implements IWorldAccess
                 GL11.glDisable(GL11.GL_FOG);
                 GL11.glColorMask(false, false, false, false);
                 GL11.glDepthMask(false);
-                profiler.startSection("check");
                 this.checkOcclusionQueryResult(startIndex, endIndex, player.posX, player.posY, player.posZ);
-                profiler.endSection();
                 GL11.glPushMatrix();
                 float sumTX = 0.0F;
                 float sumTY = 0.0F;
@@ -1144,11 +1128,9 @@ public class RenderGlobal implements IWorldAccess
                                     sumTZ += tZ;
                                 }
 
-                                profiler.startSection("bb");
                                 ARBOcclusionQuery.glBeginQueryARB(ARBOcclusionQuery.GL_SAMPLES_PASSED_ARB, wr.glOcclusionQuery);
                                 wr.callOcclusionQueryList();
                                 ARBOcclusionQuery.glEndQueryARB(ARBOcclusionQuery.GL_SAMPLES_PASSED_ARB);
-                                profiler.endSection();
                                 wr.isWaitingOnOcclusionQuery = true;
                                 ++var37;
                             }
@@ -1182,16 +1164,13 @@ public class RenderGlobal implements IWorldAccess
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
                 GL11.glEnable(GL11.GL_ALPHA_TEST);
                 GL11.glEnable(GL11.GL_FOG);
-                profiler.endStartSection("render");
             }
         }
         else
         {
-            profiler.endStartSection("render");
             num = var35 + this.renderSortedRenderers(0, this.countSortedWorldRenderers, renderPass, partialTicks);
         }
 
-        profiler.endSection();
         WrUpdates.postRender();
         return num;
     }

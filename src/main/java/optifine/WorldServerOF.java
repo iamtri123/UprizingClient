@@ -6,7 +6,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S2BPacketChangeGameState;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -37,9 +36,9 @@ public class WorldServerOF extends WorldServer
     private final Set limitedChunkSet = new HashSet();
     private static final Logger logger = LogManager.getLogger();
 
-    public WorldServerOF(MinecraftServer par1MinecraftServer, ISaveHandler par2iSaveHandler, String par3Str, int par4, WorldSettings par5WorldSettings, Profiler par6Profiler)
+    public WorldServerOF(MinecraftServer par1MinecraftServer, ISaveHandler par2iSaveHandler, String par3Str, int par4, WorldSettings par5WorldSettings)
     {
-        super(par1MinecraftServer, par2iSaveHandler, par3Str, par4, par5WorldSettings, par6Profiler);
+        super(par1MinecraftServer, par2iSaveHandler, par3Str, par4, par5WorldSettings);
         this.fixSetNextTicks();
     }
 

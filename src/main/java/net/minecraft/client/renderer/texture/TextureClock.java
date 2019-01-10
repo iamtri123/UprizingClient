@@ -17,7 +17,7 @@ public class TextureClock extends TextureAtlasSprite
     {
         if (!this.framesTextureData.isEmpty())
         {
-            Minecraft var1 = Minecraft.getMinecraft();
+            Minecraft var1 = Minecraft.getInstance();
             double var2 = 0.0D;
 
             if (var1.theWorld != null && var1.thePlayer != null)

@@ -104,8 +104,6 @@ public class GameSettings {
     public int ofDroppedItems = 0;
     public int ofBetterGrass = 3;
     public int ofAutoSaveTicks = 4000;
-    public boolean ofLagometer = false;
-    public boolean ofProfiler = false;
     public boolean ofShowFps = false;
     public boolean ofWeather = true;
     public boolean ofSky = true;
@@ -235,7 +233,6 @@ public class GameSettings {
      * true if debug info should be displayed instead of version
      */
     public boolean showDebugInfo;
-    public boolean showDebugProfilerChart;
 
     /**
      * The lastServer string.
@@ -707,10 +704,6 @@ public class GameSettings {
             this.ofRainSplash = !this.ofRainSplash;
         }
 
-        if (par1EnumOptions == GameSettings.Options.LAGOMETER) {
-            this.ofLagometer = !this.ofLagometer;
-        }
-
         if (par1EnumOptions == GameSettings.Options.SHOW_FPS) {
             this.ofShowFps = !this.ofShowFps;
         }
@@ -808,10 +801,6 @@ public class GameSettings {
 
         if (par1EnumOptions == GameSettings.Options.AA_LEVEL) {
             this.ofAaLevel = 0;
-        }
-
-        if (par1EnumOptions == GameSettings.Options.PROFILER) {
-            this.ofProfiler = !this.ofProfiler;
         }
 
         if (par1EnumOptions == GameSettings.Options.BETTER_SNOW) {
@@ -1351,8 +1340,6 @@ public class GameSettings {
             return this.ofAnimatedItems ? var2 + "ON" : var2 + "OFF";
         } else if (options == GameSettings.Options.RAIN_SPLASH) {
             return this.ofRainSplash ? var2 + "ON" : var2 + "OFF";
-        } else if (options == GameSettings.Options.LAGOMETER) {
-            return this.ofLagometer ? var2 + "ON" : var2 + "OFF";
         } else if (options == GameSettings.Options.SHOW_FPS) {
             return this.ofShowFps ? var2 + "ON" : var2 + "OFF";
         } else if (options == GameSettings.Options.AUTOSAVE_TICKS) {
@@ -1412,8 +1399,6 @@ public class GameSettings {
             return this.ofDepthFog ? var2 + "ON" : var2 + "OFF";
         } else if (options == GameSettings.Options.AA_LEVEL) {
             return this.ofAaLevel == 0 ? var2 + "OFF" : var2 + this.ofAaLevel;
-        } else if (options == GameSettings.Options.PROFILER) {
-            return this.ofProfiler ? var2 + "ON" : var2 + "OFF";
         } else if (options == GameSettings.Options.BETTER_SNOW) {
             return this.ofBetterSnow ? var2 + "ON" : var2 + "OFF";
         } else if (options == GameSettings.Options.SWAMP_COLORS) {
@@ -2056,10 +2041,6 @@ public class GameSettings {
                         this.ofRainSplash = Boolean.valueOf(exception1[1]).booleanValue();
                     }
 
-                    if (exception1[0].equals("ofLagometer") && exception1.length >= 2) {
-                        this.ofLagometer = Boolean.valueOf(exception1[1]).booleanValue();
-                    }
-
                     if (exception1[0].equals("ofShowFps") && exception1.length >= 2) {
                         this.ofShowFps = Boolean.valueOf(exception1[1]).booleanValue();
                     }
@@ -2132,10 +2113,6 @@ public class GameSettings {
                     if (exception1[0].equals("ofAaLevel") && exception1.length >= 2) {
                         this.ofAaLevel = Integer.valueOf(exception1[1]).intValue();
                         this.ofAaLevel = Config.limit(this.ofAaLevel, 0, 16);
-                    }
-
-                    if (exception1[0].equals("ofProfiler") && exception1.length >= 2) {
-                        this.ofProfiler = Boolean.valueOf(exception1[1]).booleanValue();
                     }
 
                     if (exception1[0].equals("ofBetterSnow") && exception1.length >= 2) {
@@ -2246,7 +2223,6 @@ public class GameSettings {
             exception.println("ofAnimatedTextures:" + this.ofAnimatedTextures);
             exception.println("ofAnimatedItems:" + this.ofAnimatedItems);
             exception.println("ofRainSplash:" + this.ofRainSplash);
-            exception.println("ofLagometer:" + this.ofLagometer);
             exception.println("ofShowFps:" + this.ofShowFps);
             exception.println("ofAutoSaveTicks:" + this.ofAutoSaveTicks);
             exception.println("ofBetterGrass:" + this.ofBetterGrass);
@@ -2263,7 +2239,6 @@ public class GameSettings {
             exception.println("ofClearWater:" + this.ofClearWater);
             exception.println("ofDepthFog:" + this.ofDepthFog);
             exception.println("ofAaLevel:" + this.ofAaLevel);
-            exception.println("ofProfiler:" + this.ofProfiler);
             exception.println("ofBetterSnow:" + this.ofBetterSnow);
             exception.println("ofSwampColors:" + this.ofSwampColors);
             exception.println("ofRandomMobs:" + this.ofRandomMobs);
@@ -2326,9 +2301,7 @@ public class GameSettings {
         this.ofWater = 0;
         this.ofBetterGrass = 3;
         this.ofAutoSaveTicks = 4000;
-        this.ofLagometer = false;
         this.ofShowFps = false;
-        this.ofProfiler = false;
         this.ofWeather = true;
         this.ofSky = true;
         this.ofStars = true;
@@ -2486,7 +2459,6 @@ public class GameSettings {
         ANIMATED_FIRE("ANIMATED_FIRE", 58, "", 999, "Fire Animated", false, false),
         ANIMATED_PORTAL("ANIMATED_PORTAL", 59, "", 999, "Portal Animated", false, false),
         AO_LEVEL("AO_LEVEL", 60, "", 999, "Smooth Lighting Level", true, false),
-        LAGOMETER("LAGOMETER", 61, "", 999, "Lagometer", false, false),
         SHOW_FPS("SHOW_FPS", 62, "", 999, "Show FPS", false, false),
         AUTOSAVE_TICKS("AUTOSAVE_TICKS", 63, "", 999, "Autosave", false, false),
         BETTER_GRASS("BETTER_GRASS", 64, "", 999, "Better Grass", false, false),
@@ -2510,7 +2482,6 @@ public class GameSettings {
         RAIN_SPLASH("RAIN_SPLASH", 82, "", 999, "Rain Splash", false, false),
         PORTAL_PARTICLES("PORTAL_PARTICLES", 83, "", 999, "Portal Particles", false, false),
         POTION_PARTICLES("POTION_PARTICLES", 84, "", 999, "Potion Particles", false, false),
-        PROFILER("PROFILER", 85, "", 999, "Debug Profiler", false, false),
         DRIPPING_WATER_LAVA("DRIPPING_WATER_LAVA", 86, "", 999, "Dripping Water/Lava", false, false),
         BETTER_SNOW("BETTER_SNOW", 87, "", 999, "Better Snow", false, false),
         FULLSCREEN_MODE("FULLSCREEN_MODE", 88, "", 999, "Fullscreen Mode", false, false),

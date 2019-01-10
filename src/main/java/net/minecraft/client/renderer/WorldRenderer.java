@@ -120,7 +120,7 @@ public class WorldRenderer
         this.needsBoxUpdate = false;
         this.isUpdating = false;
         this.skipAllRenderPasses = true;
-        this.renderGlobal = Minecraft.getMinecraft().renderGlobal;
+        this.renderGlobal = Minecraft.getInstance().renderGlobal;
         this.glRenderList = -1;
         this.isInFrustum = false;
         this.isVisible = true;
@@ -212,7 +212,7 @@ public class WorldRenderer
                 HashSet var30 = new HashSet();
                 var30.addAll(this.tileEntityRenderers);
                 this.tileEntityRenderers.clear();
-                Minecraft var9 = Minecraft.getMinecraft();
+                Minecraft var9 = Minecraft.getInstance();
                 EntityLivingBase var10 = var9.renderViewEntity;
                 int viewEntityPosX = MathHelper.floor_double(var10.posX);
                 int viewEntityPosY = MathHelper.floor_double(var10.posY);
@@ -482,7 +482,7 @@ public class WorldRenderer
     {
         if (!this.skipAllRenderPasses && !this.inSortedWorldRenderers)
         {
-            Minecraft.getMinecraft().renderGlobal.addToSortedWorldRenderers(this);
+            Minecraft.getInstance().renderGlobal.addToSortedWorldRenderers(this);
         }
     }
 

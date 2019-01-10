@@ -59,7 +59,7 @@ public class IntegratedServer extends MinecraftServer
 
         if (Reflector.DimensionManager.exists())
         {
-            Object var8 = this.isDemo() ? new DemoWorldServer(this, var7, par2Str, 0, this.theProfiler) : new WorldServerOF(this, var7, par2Str, 0, this.theWorldSettings, this.theProfiler);
+            Object var8 = this.isDemo() ? new DemoWorldServer(this, var7, par2Str, 0) : new WorldServerOF(this, var7, par2Str, 0, this.theWorldSettings);
             Integer[] var9 = (Integer[])((Integer[])Reflector.call(Reflector.DimensionManager_getStaticDimensionIDs, new Object[0]));
             Integer[] arr$ = var9;
             int len$ = var9.length;
@@ -67,7 +67,7 @@ public class IntegratedServer extends MinecraftServer
             for (int i$ = 0; i$ < len$; ++i$)
             {
                 int dim = arr$[i$].intValue();
-                Object world = dim == 0 ? var8 : new WorldServerMultiOF(this, var7, par2Str, dim, this.theWorldSettings, (WorldServer)var8, this.theProfiler);
+                Object world = dim == 0 ? var8 : new WorldServerMultiOF(this, var7, par2Str, dim, this.theWorldSettings, (WorldServer)var8);
                 ((WorldServer)world).addWorldAccess(new WorldManager(this, (WorldServer)world));
 
                 if (!this.isSinglePlayer())
@@ -106,16 +106,16 @@ public class IntegratedServer extends MinecraftServer
                 {
                     if (this.isDemo())
                     {
-                        this.worldServers[var15] = new DemoWorldServer(this, var7, par2Str, var16, this.theProfiler);
+                        this.worldServers[var15] = new DemoWorldServer(this, var7, par2Str, var16);
                     }
                     else
                     {
-                        this.worldServers[var15] = new WorldServerOF(this, var7, par2Str, var16, this.theWorldSettings, this.theProfiler);
+                        this.worldServers[var15] = new WorldServerOF(this, var7, par2Str, var16, this.theWorldSettings);
                     }
                 }
                 else
                 {
-                    this.worldServers[var15] = new WorldServerMultiOF(this, var7, par2Str, var16, this.theWorldSettings, this.worldServers[0], this.theProfiler);
+                    this.worldServers[var15] = new WorldServerMultiOF(this, var7, par2Str, var16, this.theWorldSettings, this.worldServers[0]);
                 }
 
                 this.worldServers[var15].addWorldAccess(new WorldManager(this, this.worldServers[var15]));
@@ -176,7 +176,7 @@ public class IntegratedServer extends MinecraftServer
     public void tick()
     {
         boolean var1 = this.isGamePaused;
-        this.isGamePaused = Minecraft.getMinecraft().getNetHandler() != null && Minecraft.getMinecraft().isGamePaused();
+        this.isGamePaused = Minecraft.getInstance().getNetHandler() != null && Minecraft.getInstance().isGamePaused();
 
         if (!var1 && this.isGamePaused)
         {
@@ -297,7 +297,7 @@ public class IntegratedServer extends MinecraftServer
      */
     public boolean isSnooperEnabled()
     {
-        return Minecraft.getMinecraft().isSnooperEnabled();
+        return Minecraft.getInstance().isSnooperEnabled();
     }
 
     /**

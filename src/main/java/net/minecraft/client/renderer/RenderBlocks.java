@@ -168,13 +168,13 @@ public class RenderBlocks
         this.blockAccess = par1IBlockAccess;
         this.field_152631_f = false;
         this.flipTexture = false;
-        this.minecraftRB = Minecraft.getMinecraft();
+        this.minecraftRB = Minecraft.getInstance();
         this.aoLightValueOpaque = 1.0F - Config.getAmbientOcclusionLevel() * 0.8F;
     }
 
     public RenderBlocks()
     {
-        this.minecraftRB = Minecraft.getMinecraft();
+        this.minecraftRB = Minecraft.getInstance();
     }
 
     /**
@@ -9431,7 +9431,7 @@ public class RenderBlocks
     {
         if (p_147758_1_ == null)
         {
-            p_147758_1_ = ((TextureMap)Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.locationBlocksTexture)).getAtlasSprite("missingno");
+            p_147758_1_ = ((TextureMap)Minecraft.getInstance().getTextureManager().getTexture(TextureMap.locationBlocksTexture)).getAtlasSprite("missingno");
         }
 
         return (IIcon)p_147758_1_;

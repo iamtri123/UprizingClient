@@ -69,7 +69,7 @@ public class ServerSelectionList extends GuiListExtended
     public void func_148195_a(ServerList p_148195_1_) {
         this.field_148198_l.clear();
 
-        final BeerusServers servers = Minecraft.getMinecraft().uprizing.getServers();
+        final BeerusServers servers = Minecraft.getInstance().uprizing.getServers();
 
         for (int var2 = 0; var2 < p_148195_1_.countServers(); ++var2) {
             final ServerData serverData = p_148195_1_.getServerData(var2);

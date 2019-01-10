@@ -243,7 +243,7 @@ public class RenderItem extends Render
 
         if (p_77020_2_ == null)
         {
-            TextureManager var9 = Minecraft.getMinecraft().getTextureManager();
+            TextureManager var9 = Minecraft.getInstance().getTextureManager();
             ResourceLocation var10 = var9.getResourceLocation(p_77020_1_.getEntityItem().getItemSpriteNumber());
             p_77020_2_ = ((TextureMap)var9.getTexture(var10)).getAtlasSprite("missingno");
         }
@@ -488,7 +488,7 @@ public class RenderItem extends Render
 
             if (var7 == null)
             {
-                var7 = ((TextureMap)Minecraft.getMinecraft().getTextureManager().getTexture(var15)).getAtlasSprite("missingno");
+                var7 = ((TextureMap)Minecraft.getInstance().getTextureManager().getTexture(var15)).getAtlasSprite("missingno");
             }
 
             var9 = p_77015_3_.getItem().getColorFromItemStack(p_77015_3_, 0);

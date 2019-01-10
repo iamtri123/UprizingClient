@@ -106,7 +106,7 @@ public class Config
         if (gameSettings == null)
         {
             gameSettings = settings;
-            minecraft = Minecraft.getMinecraft();
+            minecraft = Minecraft.getInstance();
             desktopDisplayMode = Display.getDesktopDisplayMode();
             updateAvailableProcessors();
             ReflectorForge.putLaunchBlackboard("optifine.ForgeSplashCompatible", Boolean.TRUE);

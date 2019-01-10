@@ -42,7 +42,7 @@ public class BeerusServerListEntry implements GuiListExtended.IGuiListEntry {
     public BeerusServerListEntry(GuiMultiplayer gui, ServerData serverData) {
         this.gui = gui;
         this.serverData = serverData;
-        this.minecraft = Minecraft.getMinecraft();
+        this.minecraft = Minecraft.getInstance();
         this.field_148306_i = new ResourceLocation("servers/" + serverData.serverIP + "/icon");
         this.field_148305_h = (DynamicTexture) this.minecraft.getTextureManager().getTexture(this.field_148306_i);
     }

@@ -27,7 +27,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
 
     public GuiRepair(InventoryPlayer p_i46381_1_, World p_i46381_2_, int p_i46381_3_, int p_i46381_4_, int p_i46381_5_)
     {
-        super(new ContainerRepair(p_i46381_1_, p_i46381_2_, p_i46381_3_, p_i46381_4_, p_i46381_5_, Minecraft.getMinecraft().thePlayer));
+        super(new ContainerRepair(p_i46381_1_, p_i46381_2_, p_i46381_3_, p_i46381_4_, p_i46381_5_, Minecraft.getInstance().thePlayer));
         this.playerInventory = p_i46381_1_;
         this.anvil = (ContainerRepair)this.inventorySlots;
     }

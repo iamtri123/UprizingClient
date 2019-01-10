@@ -52,8 +52,6 @@ public abstract class EntityCreature extends EntityLiving
 
     protected void updateEntityActionState()
     {
-        this.worldObj.theProfiler.startSection("ai");
-
         if (this.fleeingTick > 0 && --this.fleeingTick == 0)
         {
             IAttributeInstance var1 = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
@@ -91,8 +89,6 @@ public abstract class EntityCreature extends EntityLiving
             this.entityToAttack = null;
         }
 
-        this.worldObj.theProfiler.endSection();
-
         if (!this.hasAttacked && this.entityToAttack != null && (this.pathToEntity == null || this.rand.nextInt(20) == 0))
         {
             this.pathToEntity = this.worldObj.getPathEntityToEntity(this, this.entityToAttack, var21, true, false, false, true);
@@ -109,7 +105,6 @@ public abstract class EntityCreature extends EntityLiving
 
         if (this.pathToEntity != null && this.rand.nextInt(100) != 0)
         {
-            this.worldObj.theProfiler.startSection("followpath");
             Vec3 var5 = this.pathToEntity.getPosition(this);
             double var6 = (double)(this.width * 2.0F);
 
@@ -182,8 +177,6 @@ public abstract class EntityCreature extends EntityLiving
             {
                 this.isJumping = true;
             }
-
-            this.worldObj.theProfiler.endSection();
         }
         else
         {
@@ -197,7 +190,6 @@ public abstract class EntityCreature extends EntityLiving
      */
     protected void updateWanderPath()
     {
-        this.worldObj.theProfiler.startSection("stroll");
         boolean var1 = false;
         int var2 = -1;
         int var3 = -1;
@@ -225,8 +217,6 @@ public abstract class EntityCreature extends EntityLiving
         {
             this.pathToEntity = this.worldObj.getEntityPathToXYZ(this, var2, var3, var4, 10.0F, true, false, false, true);
         }
-
-        this.worldObj.theProfiler.endSection();
     }
 
     /**

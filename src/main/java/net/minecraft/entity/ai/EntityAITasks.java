@@ -3,7 +3,6 @@ package net.minecraft.entity.ai;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.profiler.Profiler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,15 +17,8 @@ public class EntityAITasks
     private final List executingTaskEntries = new ArrayList();
 
     /** Instance of Profiler. */
-    private final Profiler theProfiler;
     private int tickCount;
     private final int tickRate = 3;
-    private static final String __OBFID = "CL_00001588";
-
-    public EntityAITasks(Profiler p_i1628_1_)
-    {
-        this.theProfiler = p_i1628_1_;
-    }
 
     public void addTask(int p_75776_1_, EntityAIBase p_75776_2_)
     {
@@ -107,19 +99,14 @@ public class EntityAITasks
             }
         }
 
-        this.theProfiler.startSection("goalStart");
         var2 = var1.iterator();
 
         while (var2.hasNext())
         {
             var3 = (EntityAITasks.EntityAITaskEntry)var2.next();
-            this.theProfiler.startSection(var3.action.getClass().getSimpleName());
             var3.action.startExecuting();
-            this.theProfiler.endSection();
         }
 
-        this.theProfiler.endSection();
-        this.theProfiler.startSection("goalTick");
         var2 = this.executingTaskEntries.iterator();
 
         while (var2.hasNext())
@@ -127,8 +114,6 @@ public class EntityAITasks
             var3 = (EntityAITasks.EntityAITaskEntry)var2.next();
             var3.action.updateTask();
         }
-
-        this.theProfiler.endSection();
     }
 
     /**
@@ -136,9 +121,7 @@ public class EntityAITasks
      */
     private boolean canContinue(EntityAITasks.EntityAITaskEntry p_75773_1_)
     {
-        this.theProfiler.startSection("canContinue");
         boolean var2 = p_75773_1_.action.continueExecuting();
-        this.theProfiler.endSection();
         return var2;
     }
 
@@ -148,7 +131,6 @@ public class EntityAITasks
      */
     private boolean canUse(EntityAITasks.EntityAITaskEntry p_75775_1_)
     {
-        this.theProfiler.startSection("canUse");
         Iterator var2 = this.taskEntries.iterator();
 
         while (var2.hasNext())
@@ -161,19 +143,16 @@ public class EntityAITasks
                 {
                     if (this.executingTaskEntries.contains(var3) && !this.areTasksCompatible(p_75775_1_, var3))
                     {
-                        this.theProfiler.endSection();
                         return false;
                     }
                 }
                 else if (this.executingTaskEntries.contains(var3) && !var3.action.isInterruptible())
                 {
-                    this.theProfiler.endSection();
                     return false;
                 }
             }
         }
 
-        this.theProfiler.endSection();
         return true;
     }
 

@@ -17,7 +17,7 @@ public class ServerListEntryLanDetected implements GuiListExtended.IGuiListEntry
     {
         this.field_148292_c = p_i45046_1_;
         this.field_148291_b = p_i45046_2_;
-        this.field_148293_a = Minecraft.getMinecraft();
+        this.field_148293_a = Minecraft.getInstance();
     }
 
     public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)

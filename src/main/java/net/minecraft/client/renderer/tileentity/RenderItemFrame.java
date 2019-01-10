@@ -31,7 +31,7 @@ public class RenderItemFrame extends Render
 {
     private static final ResourceLocation mapBackgroundTextures = new ResourceLocation("textures/map/map_background.png");
     private final RenderBlocks field_147916_f = new RenderBlocks();
-    private final Minecraft field_147917_g = Minecraft.getMinecraft();
+    private final Minecraft field_147917_g = Minecraft.getInstance();
     private IIcon field_94147_f;
     private static final String __OBFID = "CL_00001002";
 
@@ -227,7 +227,7 @@ public class RenderItemFrame extends Render
             {
                 if (var4 == Items.compass)
                 {
-                    TextureManager var12 = Minecraft.getMinecraft().getTextureManager();
+                    TextureManager var12 = Minecraft.getInstance().getTextureManager();
                     var12.bindTexture(TextureMap.locationItemsTexture);
                     TextureAtlasSprite var14 = ((TextureMap)var12.getTexture(TextureMap.locationItemsTexture)).getAtlasSprite(Items.compass.getIconIndex(var3.getEntityItem()).getIconName());
 
@@ -250,7 +250,7 @@ public class RenderItemFrame extends Render
 
                 if (var4 == Items.compass)
                 {
-                    TextureAtlasSprite var13 = ((TextureMap)Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.locationItemsTexture)).getAtlasSprite(Items.compass.getIconIndex(var3.getEntityItem()).getIconName());
+                    TextureAtlasSprite var13 = ((TextureMap)Minecraft.getInstance().getTextureManager().getTexture(TextureMap.locationItemsTexture)).getAtlasSprite(Items.compass.getIconIndex(var3.getEntityItem()).getIconName());
 
                     if (var13.getFrameCount() > 0)
                     {

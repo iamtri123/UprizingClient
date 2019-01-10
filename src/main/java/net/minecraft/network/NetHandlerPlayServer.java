@@ -136,7 +136,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     {
         this.field_147366_g = false;
         ++this.networkTickCount;
-        this.serverController.theProfiler.startSection("keepAlive");
 
         if ((long)this.networkTickCount - this.lastSentPingPacket > 40L)
         {

@@ -137,7 +137,7 @@ public class ServerList
 
     public static void func_147414_b(ServerData p_147414_0_)
     {
-        ServerList var1 = new ServerList(Minecraft.getMinecraft());
+        ServerList var1 = new ServerList(Minecraft.getInstance());
         var1.loadServerList();
 
         for (int var2 = 0; var2 < var1.countServers(); ++var2)

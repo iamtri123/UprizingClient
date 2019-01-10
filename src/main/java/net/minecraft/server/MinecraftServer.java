@@ -38,7 +38,6 @@ import net.minecraft.network.ServerStatusResponse;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
 import net.minecraft.profiler.IPlayerUsage;
 import net.minecraft.profiler.PlayerUsageSnooper;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.server.management.ServerConfigurationManager;
@@ -83,7 +82,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
      */
     private final List tickables = new ArrayList();
     private final ICommandManager commandManager;
-    public final Profiler theProfiler = new Profiler();
     private final NetworkSystem networkSystem;
     private final ServerStatusResponse statusResponse = new ServerStatusResponse();
     private final Random random = new Random();
@@ -271,16 +269,16 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             {
                 if (this.isDemo())
                 {
-                    this.worldServers[var10] = new DemoWorldServer(this, var7, p_71247_2_, var11, this.theProfiler);
+                    this.worldServers[var10] = new DemoWorldServer(this, var7, p_71247_2_, var11);
                 }
                 else
                 {
-                    this.worldServers[var10] = new WorldServer(this, var7, p_71247_2_, var11, var8, this.theProfiler);
+                    this.worldServers[var10] = new WorldServer(this, var7, p_71247_2_, var11, var8);
                 }
             }
             else
             {
-                this.worldServers[var10] = new WorldServerMulti(this, var7, p_71247_2_, var11, var8, this.worldServers[0], this.theProfiler);
+                this.worldServers[var10] = new WorldServerMulti(this, var7, p_71247_2_, var11, var8, this.worldServers[0]);
             }
 
             this.worldServers[var10].addWorldAccess(new WorldManager(this, this.worldServers[var10]));
@@ -607,11 +605,8 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         if (this.startProfiling)
         {
             this.startProfiling = false;
-            this.theProfiler.profilingEnabled = true;
-            this.theProfiler.clearProfiling();
         }
 
-        this.theProfiler.startSection("root");
         this.updateTimeLightAndEntities();
 
         if (var1 - this.nanoTimeSinceStatusRefresh >= 5000000000L)
@@ -632,16 +627,11 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
 
         if (this.tickCounter % 900 == 0)
         {
-            this.theProfiler.startSection("save");
             this.serverConfigManager.saveAllPlayerData();
             this.saveAllWorlds(true);
-            this.theProfiler.endSection();
         }
 
-        this.theProfiler.startSection("tallying");
         this.tickTimeArray[this.tickCounter % 100] = System.nanoTime() - var1;
-        this.theProfiler.endSection();
-        this.theProfiler.startSection("snooper");
 
         if (!this.usageSnooper.isSnooperRunning() && this.tickCounter > 100)
         {
@@ -652,14 +642,10 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         {
             this.usageSnooper.addMemoryStatsToSnooper();
         }
-
-        this.theProfiler.endSection();
-        this.theProfiler.endSection();
     }
 
     public void updateTimeLightAndEntities()
     {
-        this.theProfiler.startSection("levels");
         int var1;
 
         for (var1 = 0; var1 < this.worldServers.length; ++var1)
@@ -669,18 +655,12 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             if (var1 == 0 || this.getAllowNether())
             {
                 WorldServer var4 = this.worldServers[var1];
-                this.theProfiler.startSection(var4.getWorldInfo().getWorldName());
-                this.theProfiler.startSection("pools");
-                this.theProfiler.endSection();
 
                 if (this.tickCounter % 20 == 0)
                 {
-                    this.theProfiler.startSection("timeSync");
                     this.serverConfigManager.sendPacketToAllPlayersInDimension(new S03PacketTimeUpdate(var4.getTotalWorldTime(), var4.getWorldTime(), var4.getGameRules().getGameRuleBooleanValue("doDaylightCycle")), var4.provider.dimensionId);
-                    this.theProfiler.endSection();
                 }
 
-                this.theProfiler.startSection("tick");
                 CrashReport var6;
 
                 try
@@ -705,28 +685,19 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
                     throw new ReportedException(var6);
                 }
 
-                this.theProfiler.endSection();
-                this.theProfiler.startSection("tracker");
                 var4.getEntityTracker().updateTrackedEntities();
-                this.theProfiler.endSection();
-                this.theProfiler.endSection();
             }
 
             this.timeOfLastDimensionTick[var1][this.tickCounter % 100] = System.nanoTime() - var2;
         }
 
-        this.theProfiler.endStartSection("connection");
         this.getNetworkSystem().networkTick();
-        this.theProfiler.endStartSection("players");
         this.serverConfigManager.sendPlayerInfoToAllPlayers();
-        this.theProfiler.endStartSection("tickables");
 
         for (var1 = 0; var1 < this.tickables.size(); ++var1)
         {
             ((IUpdatePlayerListBox)this.tickables.get(var1)).update();
         }
-
-        this.theProfiler.endSection();
     }
 
     public boolean getAllowNether()
@@ -822,7 +793,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             private static final String __OBFID = "CL_00001419";
             public String call()
             {
-                return MinecraftServer.this.theProfiler.profilingEnabled ? MinecraftServer.this.theProfiler.getNameOfLastSection() : "N/A (disabled)";
+                return "N/A (disabled)";
             }
         });
 

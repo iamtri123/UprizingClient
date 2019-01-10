@@ -144,7 +144,7 @@ public class EntityFireworkStarterFX extends EntityFX
 
     private boolean func_92037_i()
     {
-        Minecraft var1 = Minecraft.getMinecraft();
+        Minecraft var1 = Minecraft.getInstance();
         return var1 == null || var1.renderViewEntity == null || var1.renderViewEntity.getDistanceSq(this.posX, this.posY, this.posZ) >= 256.0D;
     }
 

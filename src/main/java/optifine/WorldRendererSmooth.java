@@ -131,7 +131,7 @@ public class WorldRendererSmooth extends WorldRenderer
                 }
 
                 this.tempVertexState = null;
-                Minecraft var28 = Minecraft.getMinecraft();
+                Minecraft var28 = Minecraft.getInstance();
                 EntityLivingBase renderPass = var28.renderViewEntity;
                 viewEntityPosX = MathHelper.floor_double(renderPass.posX);
                 viewEntityPosY = MathHelper.floor_double(renderPass.posY);

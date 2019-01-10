@@ -19,7 +19,7 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
     public ResourcePackListEntry(GuiScreenResourcePacks p_i45051_1_)
     {
         this.field_148315_b = p_i45051_1_;
-        this.field_148317_a = Minecraft.getMinecraft();
+        this.field_148317_a = Minecraft.getInstance();
     }
 
     public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)

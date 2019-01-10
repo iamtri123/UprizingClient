@@ -1031,7 +1031,7 @@ public class FontRenderer implements IResourceManagerReloadListener
 
     protected InputStream getResourceInputStream(ResourceLocation location) throws IOException
     {
-        return Minecraft.getMinecraft().getResourceManager().getResource(location).getInputStream();
+        return Minecraft.getInstance().getResourceManager().getResource(location).getInputStream();
     }
 
     private void readCustomCharWidths()

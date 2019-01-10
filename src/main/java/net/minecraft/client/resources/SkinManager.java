@@ -45,7 +45,7 @@ public class SkinManager
             private static final String __OBFID = "CL_00001829";
             public Map func_152786_a(GameProfile p_152786_1_)
             {
-                return Minecraft.getMinecraft().getSessionService().getTextures(p_152786_1_, false);
+                return Minecraft.getInstance().getSessionService().getTextures(p_152786_1_, false);
             }
             public Object load(Object p_load_1_)
             {
@@ -124,12 +124,12 @@ public class SkinManager
                 {
                 }
 
-                if (var1.isEmpty() && p_152790_1_.getId().equals(Minecraft.getMinecraft().getSession().getProfile().getId()))
+                if (var1.isEmpty() && p_152790_1_.getId().equals(Minecraft.getInstance().getSession().getProfile().getId()))
                 {
                     var1.putAll(SkinManager.this.sessionService.getTextures(SkinManager.this.sessionService.fillProfileProperties(p_152790_1_, false), false));
                 }
 
-                Minecraft.getMinecraft().addScheduledTask(new Runnable()
+                Minecraft.getInstance().addScheduledTask(new Runnable()
                 {
                     private static final String __OBFID = "CL_00001826";
                     public void run()

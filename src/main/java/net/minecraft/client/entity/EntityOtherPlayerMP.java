@@ -155,7 +155,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer {
      * inside"), and errors (like "it's not called iron_pixacke, silly").
      */
     public void addChatMessage(IChatComponent message) {
-        Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(message);
+        Minecraft.getInstance().ingameGUI.getChatGUI().printChatMessage(message);
     }
 
     /**

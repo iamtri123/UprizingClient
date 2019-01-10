@@ -288,7 +288,7 @@ public class TextureUtil
     {
         int[] var3 = par0ArrayOfInteger;
 
-        if (Minecraft.getMinecraft().gameSettings.anaglyph)
+        if (Minecraft.getInstance().gameSettings.anaglyph)
         {
             var3 = updateAnaglyph(par0ArrayOfInteger);
         }

@@ -61,7 +61,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
 
                 if (p_152674_7_ != null)
                 {
-                    Minecraft var10 = Minecraft.getMinecraft();
+                    Minecraft var10 = Minecraft.getInstance();
                     Map var11 = var10.getSkinManager().loadSkinFromCache(p_152674_7_);
 
                     if (var11.containsKey(Type.SKIN))

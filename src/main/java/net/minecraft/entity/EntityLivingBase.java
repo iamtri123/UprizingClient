@@ -269,7 +269,6 @@ public abstract class EntityLivingBase extends Entity
     {
         this.prevSwingProgress = this.swingProgress;
         super.onEntityUpdate();
-        this.worldObj.theProfiler.startSection("livingEntityBaseTick");
 
         if (this.isEntityAlive() && this.isEntityInsideOpaqueBlock())
         {
@@ -374,7 +373,6 @@ public abstract class EntityLivingBase extends Entity
         this.prevRotationYawHead = this.rotationYawHead;
         this.prevRotationYaw = this.rotationYaw;
         this.prevRotationPitch = this.rotationPitch;
-        this.worldObj.theProfiler.endSection();
     }
 
     /**
@@ -1834,10 +1832,7 @@ public abstract class EntityLivingBase extends Entity
         }
 
         this.field_110154_aX += (var8 - this.field_110154_aX) * 0.3F;
-        this.worldObj.theProfiler.startSection("headTurn");
         var7 = this.func_110146_f(var6, var7);
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("rangeChecks");
 
         while (this.rotationYaw - this.prevRotationYaw < -180.0F)
         {
@@ -1879,7 +1874,6 @@ public abstract class EntityLivingBase extends Entity
             this.prevRotationYawHead += 360.0F;
         }
 
-        this.worldObj.theProfiler.endSection();
         this.field_70764_aw += var7;
     }
 
@@ -1959,8 +1953,6 @@ public abstract class EntityLivingBase extends Entity
             this.motionZ = 0.0D;
         }
 
-        this.worldObj.theProfiler.startSection("ai");
-
         if (this.isMovementBlocked())
         {
             this.isJumping = false;
@@ -1972,21 +1964,14 @@ public abstract class EntityLivingBase extends Entity
         {
             if (this.isAIEnabled())
             {
-                this.worldObj.theProfiler.startSection("newAi");
                 this.updateAITasks();
-                this.worldObj.theProfiler.endSection();
             }
             else
             {
-                this.worldObj.theProfiler.startSection("oldAi");
                 this.updateEntityActionState();
-                this.worldObj.theProfiler.endSection();
                 this.rotationYawHead = this.rotationYaw;
             }
         }
-
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("jump");
 
         if (this.isJumping) {
             if (!this.isInWater() && !this.handleLavaMovement()) {
@@ -2001,21 +1986,15 @@ public abstract class EntityLivingBase extends Entity
             this.jumpTicks = 0;
         }
 
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("travel");
         this.moveStrafing *= 0.98F;
         this.moveForward *= 0.98F;
         this.randomYawVelocity *= 0.9F;
         this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("push");
 
         if (!this.worldObj.isClient)
         {
             this.collideWithNearbyEntities();
         }
-
-        this.worldObj.theProfiler.endSection();
     }
 
     protected void updateAITasks() {}

@@ -255,7 +255,6 @@ public abstract class EntityMinecart extends Entity
 
         if (!this.worldObj.isClient && this.worldObj instanceof WorldServer)
         {
-            this.worldObj.theProfiler.startSection("portal");
             MinecraftServer var1 = ((WorldServer)this.worldObj).func_73046_m();
             var2 = this.getMaxInPortalTime();
 
@@ -301,8 +300,6 @@ public abstract class EntityMinecart extends Entity
             {
                 --this.timeUntilPortal;
             }
-
-            this.worldObj.theProfiler.endSection();
         }
 
         if (this.worldObj.isClient)

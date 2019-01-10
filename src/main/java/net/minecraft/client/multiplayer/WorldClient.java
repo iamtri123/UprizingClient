@@ -13,7 +13,6 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IntHashMap;
@@ -58,13 +57,12 @@ public class WorldClient extends World
      * spawn up to 10 pending entities with each subsequent tick until the spawn queue is empty.
      */
     private final Set entitySpawnQueue = new HashSet();
-    private final Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getInstance();
     private final Set previousActiveChunkSet = new HashSet();
-    private static final String __OBFID = "CL_00000882";
 
-    public WorldClient(Dimension dimension, NetHandlerPlayClient p_i45063_1_, WorldSettings p_i45063_2_, int p_i45063_3_, EnumDifficulty p_i45063_4_, Profiler p_i45063_5_)
+    public WorldClient(Dimension dimension, NetHandlerPlayClient p_i45063_1_, WorldSettings p_i45063_2_, int p_i45063_3_, EnumDifficulty p_i45063_4_)
     {
-        super(dimension, new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(p_i45063_3_), p_i45063_2_, p_i45063_5_);
+        super(dimension, new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(p_i45063_3_), p_i45063_2_);
         this.sendQueue = p_i45063_1_;
         this.difficultySetting = p_i45063_4_;
         this.setSpawnLocation(8, 64, 8);
@@ -84,8 +82,6 @@ public class WorldClient extends World
             this.setWorldTime(this.getWorldTime() + 1L);
         }
 
-        this.theProfiler.startSection("reEntryProcessing");
-
         for (int var1 = 0; var1 < 10 && !this.entitySpawnQueue.isEmpty(); ++var1)
         {
             Entity var2 = (Entity)this.entitySpawnQueue.iterator().next();
@@ -97,13 +93,9 @@ public class WorldClient extends World
             }
         }
 
-        this.theProfiler.endStartSection("connection");
         this.sendQueue.onNetworkTick();
-        this.theProfiler.endStartSection("chunkCache");
         this.clientChunkProvider.unloadQueuedChunks();
-        this.theProfiler.endStartSection("blocks");
         this.func_147456_g();
-        this.theProfiler.endSection();
     }
 
     /**
@@ -142,10 +134,8 @@ public class WorldClient extends World
             {
                 int var4 = var3.chunkXPos * 16;
                 int var5 = var3.chunkZPos * 16;
-                this.theProfiler.startSection("getChunk");
                 Chunk var6 = this.getChunkFromChunkCoords(var3.chunkXPos, var3.chunkZPos);
                 this.func_147467_a(var4, var5, var6);
-                this.theProfiler.endSection();
                 this.previousActiveChunkSet.add(var3);
                 ++var1;
 

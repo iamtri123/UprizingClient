@@ -45,9 +45,7 @@ public class EntitySenses
         }
         else
         {
-            this.entityObj.worldObj.theProfiler.startSection("canSee");
             boolean var2 = this.entityObj.canEntityBeSeen(p_75522_1_);
-            this.entityObj.worldObj.theProfiler.endSection();
 
             if (var2)
             {

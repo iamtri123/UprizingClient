@@ -13,7 +13,7 @@ import uprizing.UprizingUtils;
 public class WaypointsRenderer extends WaypointsArray {
 
     private final RenderManager renderManager = RenderManager.instance;
-    private final GameSettings gameSettings = Minecraft.getMinecraft().gameSettings;
+    private final GameSettings gameSettings = Minecraft.getInstance().gameSettings;
     private final Tessellator tessellator = Tessellator.instance;
 
     public void render(ICamera frustrum) {

@@ -40,7 +40,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
     {
         this.field_148303_c = p_i45048_1_;
         this.field_148301_e = p_i45048_2_;
-        this.field_148300_d = Minecraft.getMinecraft();
+        this.field_148300_d = Minecraft.getInstance();
         this.field_148306_i = new ResourceLocation("servers/" + p_i45048_2_.serverIP + "/icon");
         this.field_148305_h = (DynamicTexture)this.field_148300_d.getTextureManager().getTexture(this.field_148306_i);
     }

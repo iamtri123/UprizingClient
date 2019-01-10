@@ -1158,7 +1158,7 @@ public class CustomColorizer
                 break;
 
             case 0:
-                Minecraft mc = Minecraft.getMinecraft();
+                Minecraft mc = Minecraft.getInstance();
                 fogVec = getFogColor(fogVec, mc.theWorld, mc.renderViewEntity.posX, mc.renderViewEntity.posY + 1.0D, mc.renderViewEntity.posZ);
                 break;
 
@@ -1176,7 +1176,7 @@ public class CustomColorizer
         switch (worldType)
         {
             case 0:
-                Minecraft mc = Minecraft.getMinecraft();
+                Minecraft mc = Minecraft.getInstance();
                 skyVec = getSkyColor(skyVec, mc.theWorld, mc.renderViewEntity.posX, mc.renderViewEntity.posY + 1.0D, mc.renderViewEntity.posZ);
                 break;
 

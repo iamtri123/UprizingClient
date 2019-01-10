@@ -297,7 +297,7 @@ public abstract class RendererLivingEntity extends Render
         {
             this.mainModel.render(p_77036_1_, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
         }
-        else if (!p_77036_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer))
+        else if (!p_77036_1_.isInvisibleToPlayer(Minecraft.getInstance().thePlayer))
         {
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.15F);
@@ -509,7 +509,7 @@ public abstract class RendererLivingEntity extends Render
 
     protected boolean canRenderName(EntityLivingBase targetEntity)
     {
-        return Minecraft.isGuiEnabled() && targetEntity != this.renderManager.livingPlayer && !targetEntity.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) && targetEntity.riddenByEntity == null;
+        return Minecraft.isGuiEnabled() && targetEntity != this.renderManager.livingPlayer && !targetEntity.isInvisibleToPlayer(Minecraft.getInstance().thePlayer) && targetEntity.riddenByEntity == null;
     }
 
     protected void renderOffsetLivingLabel(EntityLivingBase p_96449_1_, double p_96449_2_, double p_96449_4_, double p_96449_6_, String p_96449_8_, float p_96449_9_, double p_96449_10_)

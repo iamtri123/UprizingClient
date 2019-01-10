@@ -177,11 +177,11 @@ public class ResourcePackRepository
     {
         HashMap var3 = Maps.newHashMap();
         GuiScreenWorking var4 = new GuiScreenWorking();
-        var3.put("X-Minecraft-Username", Minecraft.getMinecraft().getSession().getUsername());
-        var3.put("X-Minecraft-UUID", Minecraft.getMinecraft().getSession().getPlayerID());
+        var3.put("X-Minecraft-Username", Minecraft.getInstance().getSession().getUsername());
+        var3.put("X-Minecraft-UUID", Minecraft.getInstance().getSession().getPlayerID());
         var3.put("X-Minecraft-Version", "1.7.10");
         this.field_148533_g = true;
-        Minecraft.getMinecraft().displayGuiScreen(var4);
+        Minecraft.getInstance().displayGuiScreen(var4);
         HttpUtil.downloadResourcePack(p_148528_2_, p_148528_1_, new HttpUtil.DownloadListener()
         {
             private static final String __OBFID = "CL_00001089";
@@ -191,10 +191,10 @@ public class ResourcePackRepository
                 {
                     ResourcePackRepository.this.field_148533_g = false;
                     ResourcePackRepository.this.field_148532_f = new FileResourcePack(p_148522_1_);
-                    Minecraft.getMinecraft().scheduleResourcesRefresh();
+                    Minecraft.getInstance().scheduleResourcesRefresh();
                 }
             }
-        }, var3, 52428800, var4, Minecraft.getMinecraft().getProxy());
+        }, var3, 52428800, var4, Minecraft.getInstance().getProxy());
     }
 
     public IResourcePack getResourcePackInstance()

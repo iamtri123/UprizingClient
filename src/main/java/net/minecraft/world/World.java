@@ -29,7 +29,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathFinder;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -122,7 +121,6 @@ public abstract class World implements IBlockAccess
     public MapStorage mapStorage;
     public final VillageCollection villageCollectionObj;
     protected final VillageSiege villageSiegeObj = new VillageSiege(this);
-    public final Profiler theProfiler;
     private final Calendar theCalendar = Calendar.getInstance();
     protected Scoreboard worldScoreboard = new Scoreboard();
 
@@ -150,7 +148,6 @@ public abstract class World implements IBlockAccess
      * the original block, plus 32 (i.e. value of 31 would mean a -1 offset
      */
     int[] lightUpdateBlockList;
-    private static final String __OBFID = "CL_00000140";
 
     /**
      * Gets the biome for a given set of x/z coordinates
@@ -193,7 +190,7 @@ public abstract class World implements IBlockAccess
 
     public final Dimension dimension;
 
-    public World(Dimension dimension, ISaveHandler p_i45368_1_, String p_i45368_2_, WorldProvider p_i45368_3_, WorldSettings p_i45368_4_, Profiler p_i45368_5_)
+    public World(Dimension dimension, ISaveHandler p_i45368_1_, String p_i45368_2_, WorldProvider p_i45368_3_, WorldSettings p_i45368_4_)
     {
     	this.dimension = dimension;
         this.ambientTickCountdown = this.rand.nextInt(12000);
@@ -202,7 +199,6 @@ public abstract class World implements IBlockAccess
         this.collidingBoundingBoxes = new ArrayList();
         this.lightUpdateBlockList = new int[32768];
         this.saveHandler = p_i45368_1_;
-        this.theProfiler = p_i45368_5_;
         this.worldInfo = new WorldInfo(p_i45368_4_, p_i45368_2_);
         this.provider = p_i45368_3_;
         this.mapStorage = new MapStorage(p_i45368_1_);
@@ -225,16 +221,15 @@ public abstract class World implements IBlockAccess
         this.calculateInitialWeather();
     }
 
-    public World(ISaveHandler p_i45369_1_, String p_i45369_2_, WorldSettings p_i45369_3_, WorldProvider p_i45369_4_, Profiler p_i45369_5_)
+    public World(ISaveHandler p_i45369_1_, String p_i45369_2_, WorldSettings p_i45369_3_, WorldProvider p_i45369_4_)
     {
-    	this.dimension = Minecraft.getMinecraft().uprizing.getDimension(); // TODO: temporary
+    	this.dimension = Minecraft.getInstance().uprizing.getDimension(); // TODO: temporary
         this.ambientTickCountdown = this.rand.nextInt(12000);
         this.spawnHostileMobs = true;
         this.spawnPeacefulMobs = true;
         this.collidingBoundingBoxes = new ArrayList();
         this.lightUpdateBlockList = new int[32768];
         this.saveHandler = p_i45369_1_;
-        this.theProfiler = p_i45369_5_;
         this.mapStorage = new MapStorage(p_i45369_1_);
         this.worldInfo = p_i45369_1_.loadWorldInfo();
 
@@ -466,9 +461,7 @@ public abstract class World implements IBlockAccess
                 }
 
                 boolean var9 = var7.setBlockIDWithMetadata(x & 15, y, z & 15, blockIn, metadataIn);
-                this.theProfiler.startSection("checkLight");
                 this.updateAllLightTypes(x, y, z);
-                this.theProfiler.endSection();
 
                 if (var9)
                 {
@@ -1872,8 +1865,6 @@ public abstract class World implements IBlockAccess
      */
     public void updateEntities()
     {
-        this.theProfiler.startSection("entities");
-        this.theProfiler.startSection("global");
         int var1;
         Entity var2;
         CrashReport var4;
@@ -1911,7 +1902,6 @@ public abstract class World implements IBlockAccess
             }
         }
 
-        this.theProfiler.endStartSection("remove");
         this.loadedEntityList.removeAll(this.unloadedEntityList);
         int var3;
         int var14;
@@ -1934,7 +1924,6 @@ public abstract class World implements IBlockAccess
         }
 
         this.unloadedEntityList.clear();
-        this.theProfiler.endStartSection("regular");
 
         for (var1 = 0; var1 < this.loadedEntityList.size(); ++var1)
         {
@@ -1951,8 +1940,6 @@ public abstract class World implements IBlockAccess
                 var2.ridingEntity = null;
             }
 
-            this.theProfiler.startSection("tick");
-
             if (!var2.isDead)
             {
                 try
@@ -1968,9 +1955,6 @@ public abstract class World implements IBlockAccess
                 }
             }
 
-            this.theProfiler.endSection();
-            this.theProfiler.startSection("remove");
-
             if (var2.isDead)
             {
                 var3 = var2.chunkCoordX;
@@ -1984,11 +1968,8 @@ public abstract class World implements IBlockAccess
                 this.loadedEntityList.remove(var1--);
                 this.onEntityRemoved(var2);
             }
-
-            this.theProfiler.endSection();
         }
 
-        this.theProfiler.endStartSection("blockEntities");
         this.processingLoadedTiles = true;
         Iterator var9 = this.loadedTileEntityList.iterator();
 
@@ -2035,8 +2016,6 @@ public abstract class World implements IBlockAccess
             this.tileEntitiesToBeRemoved.clear();
         }
 
-        this.theProfiler.endStartSection("pendingBlockEntities");
-
         if (!this.addedTileEntityList.isEmpty())
         {
             for (int var11 = 0; var11 < this.addedTileEntityList.size(); ++var11)
@@ -2066,9 +2045,6 @@ public abstract class World implements IBlockAccess
 
             this.addedTileEntityList.clear();
         }
-
-        this.theProfiler.endSection();
-        this.theProfiler.endSection();
     }
 
     public void func_147448_a(Collection p_147448_1_)
@@ -2123,8 +2099,6 @@ public abstract class World implements IBlockAccess
                 }
             }
 
-            this.theProfiler.startSection("chunkCheck");
-
             if (Double.isNaN(p_72866_1_.posX) || Double.isInfinite(p_72866_1_.posX))
             {
                 p_72866_1_.posX = p_72866_1_.lastTickPosX;
@@ -2171,8 +2145,6 @@ public abstract class World implements IBlockAccess
                     p_72866_1_.addedToChunk = false;
                 }
             }
-
-            this.theProfiler.endSection();
 
             if (p_72866_2_ && p_72866_1_.addedToChunk && p_72866_1_.riddenByEntity != null)
             {
@@ -2892,7 +2864,6 @@ public abstract class World implements IBlockAccess
     protected void setActivePlayerChunksAndCheckLight()
     {
         this.activeChunkSet.clear();
-        this.theProfiler.startSection("buildList");
         int var1;
         EntityPlayer var2;
         int var3;
@@ -2915,14 +2886,10 @@ public abstract class World implements IBlockAccess
             }
         }
 
-        this.theProfiler.endSection();
-
         if (this.ambientTickCountdown > 0)
         {
             --this.ambientTickCountdown;
         }
-
-        this.theProfiler.startSection("playerCheckLight");
 
         if (!this.playerEntities.isEmpty())
         {
@@ -2933,16 +2900,12 @@ public abstract class World implements IBlockAccess
             var5 = MathHelper.floor_double(var2.posZ) + this.rand.nextInt(11) - 5;
             this.updateAllLightTypes(var3, var4, var5);
         }
-
-        this.theProfiler.endSection();
     }
 
     protected abstract int getRenderDistanceChunks();
 
     protected void func_147467_a(int p_147467_1_, int p_147467_2_, Chunk p_147467_3_)
     {
-        this.theProfiler.endStartSection("moodSound");
-
         if (this.ambientTickCountdown == 0 && !this.isClient)
         {
             this.updateLCG = this.updateLCG * 3 + 1013904223;
@@ -2966,7 +2929,6 @@ public abstract class World implements IBlockAccess
             }
         }
 
-        this.theProfiler.endStartSection("checkLight");
         p_147467_3_.enqueueRelightChecks();
     }
 
@@ -3157,7 +3119,6 @@ public abstract class World implements IBlockAccess
         {
             int var5 = 0;
             int var6 = 0;
-            this.theProfiler.startSection("getBrightness");
             int var7 = this.getSavedLightValue(p_147463_1_, p_147463_2_, p_147463_3_, p_147463_4_);
             int var8 = this.computeLightValue(p_147463_2_, p_147463_3_, p_147463_4_, p_147463_1_);
             int var9;
@@ -3220,9 +3181,6 @@ public abstract class World implements IBlockAccess
                 var5 = 0;
             }
 
-            this.theProfiler.endSection();
-            this.theProfiler.startSection("checkedPosition < toCheckCount");
-
             while (var5 < var6)
             {
                 var9 = this.lightUpdateBlockList[var5++];
@@ -3279,7 +3237,6 @@ public abstract class World implements IBlockAccess
                 }
             }
 
-            this.theProfiler.endSection();
             return true;
         }
     }
@@ -3453,7 +3410,6 @@ public abstract class World implements IBlockAccess
 
     public PathEntity getPathEntityToEntity(Entity p_72865_1_, Entity p_72865_2_, float p_72865_3_, boolean p_72865_4_, boolean p_72865_5_, boolean p_72865_6_, boolean p_72865_7_)
     {
-        this.theProfiler.startSection("pathfind");
         int var8 = MathHelper.floor_double(p_72865_1_.posX);
         int var9 = MathHelper.floor_double(p_72865_1_.posY + 1.0D);
         int var10 = MathHelper.floor_double(p_72865_1_.posZ);
@@ -3466,13 +3422,11 @@ public abstract class World implements IBlockAccess
         int var17 = var10 + var11;
         ChunkCache var18 = new ChunkCache(this, var12, var13, var14, var15, var16, var17, 0);
         PathEntity var19 = (new PathFinder(var18, p_72865_4_, p_72865_5_, p_72865_6_, p_72865_7_)).createEntityPathTo(p_72865_1_, p_72865_2_, p_72865_3_);
-        this.theProfiler.endSection();
         return var19;
     }
 
     public PathEntity getEntityPathToXYZ(Entity p_72844_1_, int p_72844_2_, int p_72844_3_, int p_72844_4_, float p_72844_5_, boolean p_72844_6_, boolean p_72844_7_, boolean p_72844_8_, boolean p_72844_9_)
     {
-        this.theProfiler.startSection("pathfind");
         int var10 = MathHelper.floor_double(p_72844_1_.posX);
         int var11 = MathHelper.floor_double(p_72844_1_.posY);
         int var12 = MathHelper.floor_double(p_72844_1_.posZ);
@@ -3485,7 +3439,6 @@ public abstract class World implements IBlockAccess
         int var19 = var12 + var13;
         ChunkCache var20 = new ChunkCache(this, var14, var15, var16, var17, var18, var19, 0);
         PathEntity var21 = (new PathFinder(var20, p_72844_6_, p_72844_7_, p_72844_8_, p_72844_9_)).createEntityPathTo(p_72844_1_, p_72844_2_, p_72844_3_, p_72844_4_, p_72844_5_);
-        this.theProfiler.endSection();
         return var21;
     }
 

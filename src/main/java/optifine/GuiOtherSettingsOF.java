@@ -16,7 +16,7 @@ public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
     private final GuiScreen prevScreen;
     protected String title = "Other Settings";
     private final GameSettings settings;
-    private static final GameSettings.Options[] enumOptions = {GameSettings.Options.LAGOMETER, GameSettings.Options.PROFILER, GameSettings.Options.WEATHER, GameSettings.Options.TIME, GameSettings.Options.USE_FULLSCREEN, GameSettings.Options.FULLSCREEN_MODE, GameSettings.Options.SHOW_FPS, GameSettings.Options.AUTOSAVE_TICKS};
+    private static final GameSettings.Options[] enumOptions = {GameSettings.Options.WEATHER, GameSettings.Options.TIME, GameSettings.Options.USE_FULLSCREEN, GameSettings.Options.FULLSCREEN_MODE, GameSettings.Options.SHOW_FPS, GameSettings.Options.AUTOSAVE_TICKS};
     private int lastMouseX = 0;
     private int lastMouseY = 0;
     private long mouseStillTime = 0L;

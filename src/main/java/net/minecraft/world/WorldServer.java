@@ -31,7 +31,6 @@ import net.minecraft.network.play.server.S27PacketExplosion;
 import net.minecraft.network.play.server.S2APacketParticles;
 import net.minecraft.network.play.server.S2BPacketChangeGameState;
 import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity;
-import net.minecraft.profiler.Profiler;
 import net.minecraft.scoreboard.ScoreboardSaveData;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
@@ -87,11 +86,10 @@ public class WorldServer extends World
 
     /** An IntHashMap of entity IDs (integers) to their Entity objects. */
     private IntHashMap entityIdMap;
-    private static final String __OBFID = "CL_00001437";
 
-    public WorldServer(MinecraftServer p_i45284_1_, ISaveHandler p_i45284_2_, String p_i45284_3_, int p_i45284_4_, WorldSettings p_i45284_5_, Profiler p_i45284_6_)
+    public WorldServer(MinecraftServer p_i45284_1_, ISaveHandler p_i45284_2_, String p_i45284_3_, int p_i45284_4_, WorldSettings p_i45284_5_)
     {
-        super(p_i45284_2_, p_i45284_3_, p_i45284_5_, WorldProvider.getProviderForDimension(p_i45284_4_), p_i45284_6_);
+        super(p_i45284_2_, p_i45284_3_, p_i45284_5_, WorldProvider.getProviderForDimension(p_i45284_4_));
         this.mcServer = p_i45284_1_;
         this.theEntityTracker = new EntityTracker(this);
         this.thePlayerManager = new PlayerManager(this);
@@ -150,14 +148,11 @@ public class WorldServer extends World
             this.wakeAllPlayers();
         }
 
-        this.theProfiler.startSection("mobSpawner");
-
         if (this.getGameRules().getGameRuleBooleanValue("doMobSpawning"))
         {
             this.animalSpawner.findChunksForSpawning(this, this.spawnHostileMobs, this.spawnPeacefulMobs, this.worldInfo.getWorldTotalTime() % 400L == 0L);
         }
 
-        this.theProfiler.endStartSection("chunkSource");
         this.chunkProvider.unloadQueuedChunks();
         int var3 = this.calculateSkylightSubtracted(1.0F);
 
@@ -173,18 +168,12 @@ public class WorldServer extends World
             this.worldInfo.setWorldTime(this.worldInfo.getWorldTime() + 1L);
         }
 
-        this.theProfiler.endStartSection("tickPending");
         this.tickUpdates(false);
-        this.theProfiler.endStartSection("tickBlocks");
         this.func_147456_g();
-        this.theProfiler.endStartSection("chunkMap");
         this.thePlayerManager.updatePlayerInstances();
-        this.theProfiler.endStartSection("village");
         this.villageCollectionObj.tick();
         this.villageSiegeObj.tick();
-        this.theProfiler.endStartSection("portalForcer");
         this.worldTeleporter.removeStalePortalLocations(this.getTotalWorldTime());
-        this.theProfiler.endSection();
         this.func_147488_Z();
     }
 
@@ -302,8 +291,6 @@ public class WorldServer extends World
     protected void func_147456_g()
     {
         super.func_147456_g();
-        int var1 = 0;
-        int var2 = 0;
         Iterator var3 = this.activeChunkSet.iterator();
 
         while (var3.hasNext())
@@ -311,12 +298,9 @@ public class WorldServer extends World
             ChunkCoordIntPair var4 = (ChunkCoordIntPair)var3.next();
             int var5 = var4.chunkXPos * 16;
             int var6 = var4.chunkZPos * 16;
-            this.theProfiler.startSection("getChunk");
             Chunk var7 = this.getChunkFromChunkCoords(var4.chunkXPos, var4.chunkZPos);
             this.func_147467_a(var5, var6, var7);
-            this.theProfiler.endStartSection("tickChunk");
             var7.func_150804_b(false);
-            this.theProfiler.endStartSection("thunder");
             int var8;
             int var9;
             int var10;
@@ -335,8 +319,6 @@ public class WorldServer extends World
                     this.addWeatherEffect(new EntityLightningBolt(this, (double)var9, (double)var11, (double)var10));
                 }
             }
-
-            this.theProfiler.endStartSection("iceandsnow");
 
             if (this.rand.nextInt(16) == 0)
             {
@@ -367,7 +349,6 @@ public class WorldServer extends World
                 }
             }
 
-            this.theProfiler.endStartSection("tickBlocks");
             ExtendedBlockStorage[] var18 = var7.getBlockStorageArray();
             var9 = var18.length;
 
@@ -384,19 +365,15 @@ public class WorldServer extends World
                         int var14 = var13 & 15;
                         int var15 = var13 >> 8 & 15;
                         int var16 = var13 >> 16 & 15;
-                        ++var2;
                         Block var17 = var19.getBlockByExtId(var14, var16, var15);
 
                         if (var17.getTickRandomly())
                         {
-                            ++var1;
                             var17.updateTick(this, var14 + var5, var16 + var19.getYLocation(), var15 + var6, this.rand);
                         }
                     }
                 }
             }
-
-            this.theProfiler.endSection();
         }
     }
 
@@ -520,7 +497,6 @@ public class WorldServer extends World
                 var2 = 1000;
             }
 
-            this.theProfiler.startSection("cleaning");
             NextTickListEntry var4;
 
             for (int var3 = 0; var3 < var2; ++var3)
@@ -537,8 +513,6 @@ public class WorldServer extends World
                 this.pendingTickListEntriesThisTick.add(var4);
             }
 
-            this.theProfiler.endSection();
-            this.theProfiler.startSection("ticking");
             Iterator var14 = this.pendingTickListEntriesThisTick.iterator();
 
             while (var14.hasNext())
@@ -583,7 +557,6 @@ public class WorldServer extends World
                 }
             }
 
-            this.theProfiler.endSection();
             this.pendingTickListEntriesThisTick.clear();
             return !this.pendingTickListEntriesTreeSet.isEmpty();
         }

@@ -277,7 +277,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public void handleJoinGame(S01PacketJoinGame packetIn)
     {
         this.gameController.playerController = new PlayerControllerMP(this.gameController, this);
-        this.clientWorldController = new WorldClient(this.gameController.uprizing.getDimension(), this, new WorldSettings(0L, packetIn.func_149198_e(), false, packetIn.func_149195_d(), packetIn.func_149196_i()), packetIn.func_149194_f(), packetIn.func_149192_g(), this.gameController.mcProfiler);
+        this.clientWorldController = new WorldClient(this.gameController.uprizing.getDimension(), this, new WorldSettings(0L, packetIn.func_149198_e(), false, packetIn.func_149195_d(), packetIn.func_149196_i()), packetIn.func_149194_f(), packetIn.func_149192_g());
         this.clientWorldController.isClient = true;
         this.gameController.loadWorld(this.clientWorldController);
         this.gameController.thePlayer.dimension = packetIn.func_149194_f();
@@ -977,7 +977,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         {
             this.doneLoadingTerrain = false;
             Scoreboard var2 = this.clientWorldController.getScoreboard();
-            this.clientWorldController = new WorldClient(this.gameController.uprizing.getDimension(), this, new WorldSettings(0L, packetIn.func_149083_e(), false, this.gameController.theWorld.getWorldInfo().isHardcoreModeEnabled(), packetIn.func_149080_f()), packetIn.func_149082_c(), packetIn.func_149081_d(), this.gameController.mcProfiler);
+            this.clientWorldController = new WorldClient(this.gameController.uprizing.getDimension(), this, new WorldSettings(0L, packetIn.func_149083_e(), false, this.gameController.theWorld.getWorldInfo().isHardcoreModeEnabled(), packetIn.func_149080_f()), packetIn.func_149082_c(), packetIn.func_149081_d());
             this.clientWorldController.setWorldScoreboard(var2);
             this.clientWorldController.isClient = true;
             this.gameController.loadWorld(this.clientWorldController);
@@ -1640,7 +1640,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
                     private static final String __OBFID = "CL_00000879";
                     public void confirmClicked(boolean result, int id)
                     {
-                        NetHandlerPlayClient.this.gameController = Minecraft.getMinecraft();
+                        NetHandlerPlayClient.this.gameController = Minecraft.getInstance();
 
                         if (NetHandlerPlayClient.this.gameController.getCurrentServerData() != null)
                         {

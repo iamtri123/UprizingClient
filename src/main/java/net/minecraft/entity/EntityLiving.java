@@ -1,5 +1,8 @@
 package net.minecraft.entity;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityJumpHelper;
@@ -32,10 +35,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
 import optifine.BlockPos;
 import optifine.Reflector;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 
 public abstract class EntityLiving extends EntityLivingBase
 {
@@ -82,13 +81,12 @@ public abstract class EntityLiving extends EntityLivingBase
     public int randomMobsId = 0;
     public BiomeGenBase spawnBiome = null;
     public BlockPos spawnPosition = null;
-    private static final String __OBFID = "CL_00001550";
 
     public EntityLiving(World par1World)
     {
         super(par1World);
-        this.tasks = new EntityAITasks(par1World != null && par1World.theProfiler != null ? par1World.theProfiler : null);
-        this.targetTasks = new EntityAITasks(par1World != null && par1World.theProfiler != null ? par1World.theProfiler : null);
+        this.tasks = new EntityAITasks();
+        this.targetTasks = new EntityAITasks();
         this.lookHelper = new EntityLookHelper(this);
         this.moveHelper = new EntityMoveHelper(this);
         this.jumpHelper = new EntityJumpHelper(this);
@@ -205,15 +203,12 @@ public abstract class EntityLiving extends EntityLivingBase
     public void onEntityUpdate()
     {
         super.onEntityUpdate();
-        this.worldObj.theProfiler.startSection("mobBaseTick");
 
         if (this.isEntityAlive() && this.rand.nextInt(1000) < this.livingSoundTime++)
         {
             this.livingSoundTime = -this.getTalkInterval();
             this.playLivingSound();
         }
-
-        this.worldObj.theProfiler.endSection();
     }
 
     /**
@@ -443,7 +438,6 @@ public abstract class EntityLiving extends EntityLivingBase
     public void onLivingUpdate()
     {
         super.onLivingUpdate();
-        this.worldObj.theProfiler.startSection("looting");
 
         if (!this.worldObj.isClient && this.canPickUpLoot() && !this.dead && this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"))
         {
@@ -542,8 +536,6 @@ public abstract class EntityLiving extends EntityLivingBase
                 }
             }
         }
-
-        this.worldObj.theProfiler.endSection();
     }
 
     /**
@@ -617,33 +609,15 @@ public abstract class EntityLiving extends EntityLivingBase
     protected void updateAITasks()
     {
         ++this.entityAge;
-        this.worldObj.theProfiler.startSection("checkDespawn");
         this.despawnEntity();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("sensing");
         this.senses.clearSensingCache();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("targetSelector");
         this.targetTasks.onUpdateTasks();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("goalSelector");
         this.tasks.onUpdateTasks();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("navigation");
         this.navigator.onUpdateNavigation();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("mob tick");
         this.updateAITick();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("controls");
-        this.worldObj.theProfiler.startSection("move");
         this.moveHelper.onUpdateMoveHelper();
-        this.worldObj.theProfiler.endStartSection("look");
         this.lookHelper.onUpdateLook();
-        this.worldObj.theProfiler.endStartSection("jump");
         this.jumpHelper.doJump();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.endSection();
     }
 
     protected void updateEntityActionState()

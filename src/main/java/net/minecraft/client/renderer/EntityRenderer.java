@@ -1,6 +1,14 @@
 package net.minecraft.client.renderer;
 
 import com.google.gson.JsonSyntaxException;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.FloatBuffer;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Callable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -63,15 +71,6 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Project;
 import uprizing.dimensions.Dimension;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.nio.FloatBuffer;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.Callable;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -241,7 +240,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public int numRecordedFrameTimes = 0;
     public long prevFrameTimeNano = -1L;
     private boolean lastShowDebugInfo = false;
-    private boolean showExtendedDebugInfo = false;
     private long lastErrorCheckTimeMs = 0L;
     private static final String __OBFID = "CL_00000947";
 
@@ -1176,8 +1174,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
      */
     public void updateCameraAndRender(float par1)
     {
-        this.mc.mcProfiler.startSection("lightTex");
-
         if (!this.initialized)
         {
             TextureUtils.registerResourceListener();
@@ -1238,7 +1234,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.updateLightmap(par1);
         }
 
-        this.mc.mcProfiler.endSection();
         boolean var22 = Display.isActive();
 
         if (!var22 && this.mc.gameSettings.pauseOnLostFocus && (!this.mc.gameSettings.touchscreen || !Mouse.isButtonDown(1)))
@@ -1252,8 +1247,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
         {
             this.prevFrameTime = Minecraft.getSystemTime();
         }
-
-        this.mc.mcProfiler.startSection("mouse");
 
         if (this.mc.inGameHasFocus && var22)
         {
@@ -1285,8 +1278,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
         }
 
-        this.mc.mcProfiler.endSection();
-
         if (!this.mc.skipRenderWorld)
         {
             anaglyphEnable = this.mc.gameSettings.anaglyph;
@@ -1300,8 +1291,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             if (this.mc.theWorld != null)
             {
-                this.mc.mcProfiler.startSection("level");
-
                 if (this.mc.isFramerateLimitBelowMax())
                 {
                     this.renderWorld(par1, this.renderEndNanoTime + (long)(1000000000 / var181));
@@ -1326,7 +1315,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 }
 
                 this.renderEndNanoTime = System.nanoTime();
-                this.mc.mcProfiler.endStartSection("gui");
 
                 if (!this.mc.gameSettings.hideGUI || this.mc.currentScreen != null)
                 {
@@ -1346,8 +1334,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                         Config.drawFps();
                     }
                 }
-
-                this.mc.mcProfiler.endSection();
             }
             else
             {
@@ -1430,18 +1416,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (this.mc.gameSettings.showDebugInfo != this.lastShowDebugInfo)
         {
-            this.showExtendedDebugInfo = this.mc.gameSettings.showDebugProfilerChart;
             this.lastShowDebugInfo = this.mc.gameSettings.showDebugInfo;
-        }
-
-        if (this.mc.gameSettings.showDebugInfo)
-        {
-            this.showLagometer(this.mc.mcProfiler.timeTickNano, this.mc.mcProfiler.timeUpdateChunksNano);
-        }
-
-        if (this.mc.gameSettings.ofProfiler)
-        {
-            this.mc.gameSettings.showDebugProfilerChart = true;
         }
     }
 
@@ -1452,7 +1427,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
     public void renderWorld(float par1, long par2)
     {
-        this.mc.mcProfiler.startSection("lightTex");
 
         if (this.lightmapUpdateNeeded)
         {
@@ -1469,7 +1443,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.mc.renderViewEntity = this.mc.thePlayer;
         }
 
-        this.mc.mcProfiler.endStartSection("pick");
         this.getMouseOver(par1);
         EntityLivingBase var4 = this.mc.renderViewEntity;
         RenderGlobal var5 = this.mc.renderGlobal;
@@ -1477,7 +1450,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
         double var7 = var4.lastTickPosX + (var4.posX - var4.lastTickPosX) * (double)par1;
         double var9 = var4.lastTickPosY + (var4.posY - var4.lastTickPosY) * (double)par1;
         double var11 = var4.lastTickPosZ + (var4.posZ - var4.lastTickPosZ) * (double)par1;
-        this.mc.mcProfiler.endStartSection("center");
 
         for (int var13 = 0; var13 < 2; ++var13)
         {
@@ -1495,15 +1467,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 }
             }
 
-            this.mc.mcProfiler.endStartSection("clear");
             GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
             this.updateFogColor(par1);
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
             GL11.glEnable(GL11.GL_CULL_FACE);
-            this.mc.mcProfiler.endStartSection("camera");
             this.setupCameraTransform(par1, var13);
             ActiveRenderInfo.updateRenderInfo(this.mc.thePlayer, this.mc.gameSettings.thirdPersonView == 2);
-            this.mc.mcProfiler.endStartSection("frustrum");
             ClippingHelperImpl.getInstance();
 
             if (!Config.isSkyEnabled() && !Config.isSunMoonEnabled() && !Config.isStarsEnabled())
@@ -1513,7 +1482,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             else
             {
                 this.setupFog(-1, par1);
-                this.mc.mcProfiler.endStartSection("sky");
                 var5.renderSky(par1);
             }
 
@@ -1525,15 +1493,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 GL11.glShadeModel(GL11.GL_SMOOTH);
             }
 
-            this.mc.mcProfiler.endStartSection("culling");
             Frustrum var14 = new Frustrum();
             var14.setPosition(var7, var9, var11);
             this.mc.renderGlobal.clipRenderersByFrustum(var14, par1);
 
             if (var13 == 0)
             {
-                this.mc.mcProfiler.endStartSection("updatechunks");
-
                 while (!this.mc.renderGlobal.updateRenderers(var4, false) && par2 != 0L)
                 {
                     long var17 = par2 - System.nanoTime();
@@ -1550,12 +1515,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 this.renderCloudsCheck(var5, par1);
             }
 
-            this.mc.mcProfiler.endStartSection("prepareterrain");
             this.setupFog(0, par1);
             GL11.glEnable(GL11.GL_FOG);
             this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
             RenderHelper.disableStandardItemLighting();
-            this.mc.mcProfiler.endStartSection("terrain");
             GL11.glMatrixMode(GL11.GL_MODELVIEW);
             GL11.glPushMatrix();
             var5.sortAndRender(var4, 0, (double)par1);
@@ -1570,7 +1533,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 GL11.glPopMatrix();
                 GL11.glPushMatrix();
                 RenderHelper.enableStandardItemLighting();
-                this.mc.mcProfiler.endStartSection("entities");
 
                 if (hasForge)
                 {
@@ -1594,7 +1556,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 {
                     var18 = (EntityPlayer)var4;
                     GL11.glDisable(GL11.GL_ALPHA_TEST);
-                    this.mc.mcProfiler.endStartSection("outline");
 
                     if ((!hasForge || !Reflector.callBoolean(Reflector.ForgeHooksClient_onDrawBlockHighlight, var5, var18, this.mc.objectMouseOver, Integer.valueOf(0), var18.inventory.getCurrentItem(), Float.valueOf(par1))) && !this.mc.gameSettings.hideGUI)
                     {
@@ -1611,7 +1572,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             {
                 var18 = (EntityPlayer)var4;
                 GL11.glDisable(GL11.GL_ALPHA_TEST);
-                this.mc.mcProfiler.endStartSection("outline");
 
                 if ((!hasForge || !Reflector.callBoolean(Reflector.ForgeHooksClient_onDrawBlockHighlight, var5, var18, this.mc.objectMouseOver, Integer.valueOf(0), var18.inventory.getCurrentItem(), Float.valueOf(par1))) && !this.mc.gameSettings.hideGUI)
                 {
@@ -1620,7 +1580,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 GL11.glEnable(GL11.GL_ALPHA_TEST);
             }
 
-            this.mc.mcProfiler.endStartSection("destroyProgress");
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 1, 1, 0);
             var5.drawBlockDamageTexture(Tessellator.instance, var4, par1);
@@ -1629,18 +1588,15 @@ public class EntityRenderer implements IResourceManagerReloadListener
             if (this.debugViewDirection == 0)
             {
                 this.enableLightmap((double)par1);
-                this.mc.mcProfiler.endStartSection("litParticles");
                 var6.renderLitParticles(var4, par1);
                 RenderHelper.disableStandardItemLighting();
                 this.setupFog(0, par1);
-                this.mc.mcProfiler.endStartSection("particles");
                 var6.renderParticles(var4, par1);
                 this.disableLightmap((double)par1);
             }
 
             GL11.glDepthMask(false);
             GL11.glEnable(GL11.GL_CULL_FACE);
-            this.mc.mcProfiler.endStartSection("weather");
             this.renderRainSnow(par1);
             GL11.glDepthMask(true);
             GL11.glDisable(GL11.GL_BLEND);
@@ -1655,8 +1611,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             if (Config.isWaterFancy())
             {
-                this.mc.mcProfiler.endStartSection("water");
-
                 if (this.mc.gameSettings.ambientOcclusion != 0)
                 {
                     GL11.glShadeModel(GL11.GL_SMOOTH);
@@ -1688,7 +1642,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
             else
             {
-                this.mc.mcProfiler.endStartSection("water");
                 var5.renderAllSortedRenderers(1, (double)par1);
             }
 
@@ -1697,7 +1650,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             if (hasForge && this.debugViewDirection == 0)
             {
                 RenderHelper.enableStandardItemLighting();
-                this.mc.mcProfiler.endStartSection("entities");
                 Reflector.callVoid(Reflector.ForgeHooksClient_setRenderPass, Integer.valueOf(1));
                 this.mc.renderGlobal.renderEntities(var4, var14, par1);
                 Reflector.callVoid(Reflector.ForgeHooksClient_setRenderPass, Integer.valueOf(-1));
@@ -1711,17 +1663,14 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             if (var4.posY >= 128.0D + (double)(this.mc.gameSettings.ofCloudsHeight * 128.0F))
             {
-                this.mc.mcProfiler.endStartSection("aboveClouds");
                 this.renderCloudsCheck(var5, par1);
             }
 
             if (hasForge)
             {
-                this.mc.mcProfiler.endStartSection("FRenderLast");
                 Reflector.callVoid(Reflector.ForgeHooksClient_dispatchRenderLast, var5, Float.valueOf(par1));
             }
 
-            this.mc.mcProfiler.endStartSection("hand");
             boolean renderFirstPersonHand = Reflector.callBoolean(Reflector.ForgeHooksClient_renderFirstPersonHand, this.mc.renderGlobal, Float.valueOf(par1), Integer.valueOf(var13));
 
             if (!renderFirstPersonHand && this.cameraZoom == 1.0D)
@@ -1732,13 +1681,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             if (!this.mc.gameSettings.anaglyph)
             {
-                this.mc.mcProfiler.endSection();
                 return;
             }
         }
 
         GL11.glColorMask(true, true, true, false);
-        this.mc.mcProfiler.endSection();
     }
 
     /**
@@ -1748,7 +1695,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
     {
         if (this.mc.gameSettings.shouldRenderClouds())
         {
-            this.mc.mcProfiler.endStartSection("clouds");
             GL11.glPushMatrix();
             this.setupFog(0, par2);
             GL11.glEnable(GL11.GL_FOG);
@@ -2519,77 +2465,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 this.lastServerTime = 0L;
                 this.lastServerTicks = 0;
             }
-        }
-    }
-
-    private void showLagometer(long tickTimeNano, long chunkTimeNano)
-    {
-        if (this.mc.gameSettings.ofLagometer || this.showExtendedDebugInfo)
-        {
-            if (this.prevFrameTimeNano == -1L)
-            {
-                this.prevFrameTimeNano = System.nanoTime();
-            }
-
-            long timeNowNano = System.nanoTime();
-            int currFrameIndex = this.numRecordedFrameTimes & this.frameTimes.length - 1;
-            this.tickTimes[currFrameIndex] = tickTimeNano;
-            this.chunkTimes[currFrameIndex] = chunkTimeNano;
-            this.serverTimes[currFrameIndex] = (long)this.serverWaitTimeCurrent;
-            this.frameTimes[currFrameIndex] = timeNowNano - this.prevFrameTimeNano;
-            ++this.numRecordedFrameTimes;
-            this.prevFrameTimeNano = timeNowNano;
-            GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-            GL11.glMatrixMode(GL11.GL_PROJECTION);
-            GL11.glPushMatrix();
-            GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-            GL11.glLoadIdentity();
-            GL11.glOrtho(0.0D, (double)this.mc.displayWidth, (double)this.mc.displayHeight, 0.0D, 1000.0D, 3000.0D);
-            GL11.glMatrixMode(GL11.GL_MODELVIEW);
-            GL11.glPushMatrix();
-            GL11.glLoadIdentity();
-            GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
-            GL11.glLineWidth(1.0F);
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            Tessellator tessellator = Tessellator.instance;
-            tessellator.startDrawing(1);
-
-            for (int frameNum = 0; frameNum < this.frameTimes.length; ++frameNum)
-            {
-                int lum = (frameNum - this.numRecordedFrameTimes & this.frameTimes.length - 1) * 255 / this.frameTimes.length;
-                long heightFrame = this.frameTimes[frameNum] / 200000L;
-                float baseHeight = (float)this.mc.displayHeight;
-                tessellator.setColorOpaque_I(-16777216 + lum * 256);
-                tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight - (float)heightFrame + 0.5F), 0.0D);
-                tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight + 0.5F), 0.0D);
-                baseHeight -= (float)heightFrame;
-                long heightTick = this.tickTimes[frameNum] / 200000L;
-                tessellator.setColorOpaque_I(-16777216 + lum * 65536 + lum * 256 + lum * 1);
-                tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight + 0.5F), 0.0D);
-                tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight + (float)heightTick + 0.5F), 0.0D);
-                baseHeight += (float)heightTick;
-                long heightChunk = this.chunkTimes[frameNum] / 200000L;
-                tessellator.setColorOpaque_I(-16777216 + lum * 65536);
-                tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight + 0.5F), 0.0D);
-                tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight + (float)heightChunk + 0.5F), 0.0D);
-                baseHeight += (float)heightChunk;
-                long srvTime = this.serverTimes[frameNum];
-
-                if (srvTime > 0L)
-                {
-                    long heightSrv = srvTime * 1000000L / 200000L;
-                    tessellator.setColorOpaque_I(-16777216 + lum * 1);
-                    tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight + 0.5F), 0.0D);
-                    tessellator.addVertex((double)((float)frameNum + 0.5F), (double)(baseHeight + (float)heightSrv + 0.5F), 0.0D);
-                }
-            }
-
-            tessellator.draw();
-            GL11.glMatrixMode(GL11.GL_PROJECTION);
-            GL11.glPopMatrix();
-            GL11.glMatrixMode(GL11.GL_MODELVIEW);
-            GL11.glPopMatrix();
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
         }
     }
 

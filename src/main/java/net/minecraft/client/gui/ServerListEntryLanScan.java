@@ -6,7 +6,7 @@ import net.minecraft.client.resources.I18n;
 
 public class ServerListEntryLanScan implements GuiListExtended.IGuiListEntry
 {
-    private final Minecraft field_148288_a = Minecraft.getMinecraft();
+    private final Minecraft field_148288_a = Minecraft.getInstance();
     private static final String __OBFID = "CL_00000815";
 
     public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)

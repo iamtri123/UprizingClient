@@ -620,7 +620,7 @@ public class RenderItem extends Render
     {
         if (p_94148_3_ != null)
         {
-            if (p_94148_3_.stackSize > 1 || p_94148_6_ != null)
+            if (p_94148_3_.stackSize != 1 || p_94148_6_ != null)
             {
                 String var7 = p_94148_6_ == null ? String.valueOf(p_94148_3_.stackSize) : p_94148_6_;
                 GL11.glDisable(GL11.GL_LIGHTING);

@@ -8,6 +8,7 @@ import optifine.GuiDetailSettingsOF;
 import optifine.GuiOtherSettingsOF;
 import optifine.GuiPerformanceSettingsOF;
 import optifine.GuiQualitySettingsOF;
+import uprizing.Versions;
 
 public class GuiVideoSettings extends GuiScreen
 {
@@ -191,7 +192,7 @@ public class GuiVideoSettings extends GuiScreen
         }
 
         this.drawString(this.fontRendererObj, ver, 2, this.height - 10, 8421504);
-        String verMc = "UprizingClient v1.0.0";
+        String verMc = "UprizingClient " + Versions.CURRENT;
         int lenMc = this.fontRendererObj.getStringWidth(verMc);
         this.drawString(this.fontRendererObj, verMc, this.width - lenMc - 2, this.height - 10, 8421504);
 

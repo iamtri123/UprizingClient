@@ -153,6 +153,7 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import uprizing.Uprizing;
+import uprizing.Versions;
 import uprizing.keybinding.KeyBindings;
 import uprizing.network.C18PacketUprizing;
 
@@ -469,7 +470,7 @@ public class Minecraft implements IPlayerUsage {
         }
 
         Display.setResizable(true);
-        Display.setTitle("UprizingClient v1.0.0");
+        Display.setTitle("UprizingClient " + Versions.CURRENT);
         logger.info("LWJGL Version: " + Sys.getVersion());
         Util.EnumOS var1 = Util.getOSType();
 

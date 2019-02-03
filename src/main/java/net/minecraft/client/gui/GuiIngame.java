@@ -36,6 +36,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.chunk.Chunk;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+import uprizing.Versions;
 
 public class GuiIngame extends Gui {
     private static final ResourceLocation vignetteTexPath = new ResourceLocation("textures/misc/vignette.png");
@@ -267,7 +268,7 @@ public class GuiIngame extends Gui {
 
         if (mc.gameSettings.showDebugInfo) {
             GL11.glPushMatrix();
-            var8.drawStringWithShadow("UprizingClient v1.0.0 (" + this.mc.debug + ")", 2, 2, 16777215);
+            var8.drawStringWithShadow("UprizingClient " + Versions.CURRENT + " (" + this.mc.debug + ")", 2, 2, 16777215);
             var8.drawStringWithShadow(mc.debugInfoRenders(), 2, 12, 16777215);
             var8.drawStringWithShadow(mc.getEntityDebug(), 2, 22, 16777215);
             var8.drawStringWithShadow(mc.debugInfoEntities(), 2, 32, 16777215);

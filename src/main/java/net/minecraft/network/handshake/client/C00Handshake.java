@@ -6,6 +6,8 @@ import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.handshake.INetHandlerHandshakeServer;
+import uprizing.Versions;
+import uprizing.util.Constants;
 
 public class C00Handshake extends Packet
 {
@@ -45,6 +47,10 @@ public class C00Handshake extends Packet
         data.writeStringToBuffer(this.ip);
         data.writeShort(this.port);
         data.writeVarIntToBuffer(this.requestedState.getId());
+
+        if (requestedState == EnumConnectionState.LOGIN && protocolVersion == Constants.ALGERIAN_PROTOCOL) {
+            data.writeByte(Versions.CURRENT.getId());
+        }
     }
 
     public void processPacket(INetHandlerHandshakeServer handler)

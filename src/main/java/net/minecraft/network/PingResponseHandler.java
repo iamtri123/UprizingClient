@@ -15,7 +15,6 @@ public class PingResponseHandler extends ChannelInboundHandlerAdapter
 {
     private static final Logger logger = LogManager.getLogger();
     private final NetworkSystem networkSystem;
-    private static final String __OBFID = "CL_00001444";
 
     public PingResponseHandler(NetworkSystem networkSystemIn)
     {

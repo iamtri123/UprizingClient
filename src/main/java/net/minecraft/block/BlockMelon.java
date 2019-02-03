@@ -11,7 +11,6 @@ import net.minecraft.util.IIcon;
 public class BlockMelon extends Block
 {
     private IIcon melonTopIcon;
-    private static final String __OBFID = "CL_00000267";
 
     protected BlockMelon()
     {

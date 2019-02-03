@@ -6,7 +6,6 @@ public class GuiErrorScreen extends GuiScreen
 {
     private final String field_146313_a;
     private final String field_146312_f;
-    private static final String __OBFID = "CL_00000696";
 
     public GuiErrorScreen(String p_i46319_1_, String p_i46319_2_)
     {

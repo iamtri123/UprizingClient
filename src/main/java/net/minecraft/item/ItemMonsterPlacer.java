@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 public class ItemMonsterPlacer extends Item
 {
     private IIcon theIcon;
-    private static final String __OBFID = "CL_00000070";
 
     public ItemMonsterPlacer()
     {

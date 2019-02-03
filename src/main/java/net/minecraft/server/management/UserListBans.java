@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 public class UserListBans extends UserList
 {
-    private static final String __OBFID = "CL_00001873";
 
     public UserListBans(File bansFile)
     {

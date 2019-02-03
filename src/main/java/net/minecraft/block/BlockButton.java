@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 public abstract class BlockButton extends Block
 {
     private final boolean wooden;
-    private static final String __OBFID = "CL_00000209";
 
     protected BlockButton(boolean wooden)
     {

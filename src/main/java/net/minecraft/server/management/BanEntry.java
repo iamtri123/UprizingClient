@@ -12,7 +12,6 @@ public abstract class BanEntry extends UserListEntry
     protected final String bannedBy;
     protected final Date banEndDate;
     protected final String reason;
-    private static final String __OBFID = "CL_00001395";
 
     public BanEntry(Object p_i46334_1_, Date p_i46334_2_, String p_i46334_3_, Date p_i46334_4_, String p_i46334_5_)
     {

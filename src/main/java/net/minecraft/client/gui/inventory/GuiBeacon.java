@@ -27,7 +27,6 @@ public class GuiBeacon extends GuiContainer
     private final TileEntityBeacon tileBeacon;
     private GuiBeacon.ConfirmButton beaconConfirmButton;
     private boolean buttonsNotDrawn;
-    private static final String __OBFID = "CL_00000739";
 
     public GuiBeacon(InventoryPlayer p_i1078_1_, TileEntityBeacon p_i1078_2_)
     {
@@ -222,7 +221,6 @@ public class GuiBeacon extends GuiContainer
         private final int field_146144_p;
         private final int field_146143_q;
         private boolean field_146142_r;
-        private static final String __OBFID = "CL_00000743";
 
         protected Button(int p_i1077_1_, int p_i1077_2_, int p_i1077_3_, ResourceLocation p_i1077_4_, int p_i1077_5_, int p_i1077_6_)
         {
@@ -279,7 +277,6 @@ public class GuiBeacon extends GuiContainer
 
     class CancelButton extends GuiBeacon.Button
     {
-        private static final String __OBFID = "CL_00000740";
 
         public CancelButton(int p_i1074_2_, int p_i1074_3_, int p_i1074_4_)
         {
@@ -294,7 +291,6 @@ public class GuiBeacon extends GuiContainer
 
     class ConfirmButton extends GuiBeacon.Button
     {
-        private static final String __OBFID = "CL_00000741";
 
         public ConfirmButton(int p_i1075_2_, int p_i1075_3_, int p_i1075_4_)
         {
@@ -311,7 +307,6 @@ public class GuiBeacon extends GuiContainer
     {
         private final int field_146149_p;
         private final int field_146148_q;
-        private static final String __OBFID = "CL_00000742";
 
         public PowerButton(int p_i1076_2_, int p_i1076_3_, int p_i1076_4_, int p_i1076_5_, int p_i1076_6_)
         {

@@ -31,7 +31,6 @@ public class EntitySheep extends EntityAnimal
 {
     private final InventoryCrafting inventoryCrafting = new InventoryCrafting(new Container()
     {
-        private static final String __OBFID = "CL_00001649";
         public boolean canInteractWith(EntityPlayer player)
         {
             return false;
@@ -49,7 +48,6 @@ public class EntitySheep extends EntityAnimal
      */
     private int sheepTimer;
     private final EntityAIEatGrass entityAIEatGrass = new EntityAIEatGrass(this);
-    private static final String __OBFID = "CL_00001648";
 
     public EntitySheep(World p_i1691_1_)
     {

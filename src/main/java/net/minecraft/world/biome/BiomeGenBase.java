@@ -182,7 +182,6 @@ public abstract class BiomeGenBase
 
     /** The swamp tree generator. */
     protected WorldGenSwamp worldGeneratorSwamp;
-    private static final String __OBFID = "CL_00000158";
 
     protected BiomeGenBase(int p_i1971_1_)
     {
@@ -639,7 +638,6 @@ public abstract class BiomeGenBase
     {
         public float rootHeight;
         public float variation;
-        private static final String __OBFID = "CL_00000159";
 
         public Height(float p_i45371_1_, float p_i45371_2_)
         {
@@ -658,7 +656,6 @@ public abstract class BiomeGenBase
         public Class entityClass;
         public int minGroupCount;
         public int maxGroupCount;
-        private static final String __OBFID = "CL_00000161";
 
         public SpawnListEntry(Class p_i1970_1_, int p_i1970_2_, int p_i1970_3_, int p_i1970_4_)
         {
@@ -682,7 +679,6 @@ public abstract class BiomeGenBase
         WARM("WARM", 3);
 
         private static final BiomeGenBase.TempCategory[] $VALUES = {OCEAN, COLD, MEDIUM, WARM};
-        private static final String __OBFID = "CL_00000160";
 
         TempCategory(String p_i45372_1_, int p_i45372_2_) {}
     }

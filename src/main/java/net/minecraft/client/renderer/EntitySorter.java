@@ -13,7 +13,6 @@ public class EntitySorter implements Comparator
 
     /** Entity position Z */
     private final double entityPosZ;
-    private static final String __OBFID = "CL_00000944";
 
     public EntitySorter(Entity p_i1242_1_)
     {

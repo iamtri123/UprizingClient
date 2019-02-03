@@ -12,7 +12,6 @@ public class C12PacketUpdateSign extends Packet
     private int y;
     private int z;
     private String[] lines;
-    private static final String __OBFID = "CL_00001370";
 
     public C12PacketUpdateSign() {}
 

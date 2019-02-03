@@ -11,7 +11,6 @@ import net.minecraft.util.JsonUtils;
 
 public class PackMetadataSectionSerializer extends BaseMetadataSectionSerializer implements JsonSerializer
 {
-    private static final String __OBFID = "CL_00001113";
 
     public PackMetadataSection deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_)
     {

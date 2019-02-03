@@ -61,7 +61,6 @@ public class ModelHorse extends ModelBase
     private final ModelRenderer horseRightFaceMetal;
     private final ModelRenderer horseLeftRein;
     private final ModelRenderer horseRightRein;
-    private static final String __OBFID = "CL_00000846";
 
     public ModelHorse()
     {

@@ -31,7 +31,6 @@ public class BlockDispenser extends BlockContainer
     protected IIcon field_149944_M;
     protected IIcon field_149945_N;
     protected IIcon field_149946_O;
-    private static final String __OBFID = "CL_00000229";
 
     protected BlockDispenser()
     {

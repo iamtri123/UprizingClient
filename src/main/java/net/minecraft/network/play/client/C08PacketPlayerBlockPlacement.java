@@ -17,7 +17,6 @@ public class C08PacketPlayerBlockPlacement extends Packet
     private float facingX;
     private float facingY;
     private float facingZ;
-    private static final String __OBFID = "CL_00001371";
 
     public C08PacketPlayerBlockPlacement() {}
 

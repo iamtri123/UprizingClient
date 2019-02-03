@@ -8,7 +8,6 @@ import net.minecraft.util.StringUtils;
 
 public final class NBTUtil
 {
-    private static final String __OBFID = "CL_00001901";
 
     public static GameProfile readGameProfileFromNBT(NBTTagCompound compound)
     {

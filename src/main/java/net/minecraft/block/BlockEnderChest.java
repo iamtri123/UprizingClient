@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 
 public class BlockEnderChest extends BlockContainer
 {
-    private static final String __OBFID = "CL_00000238";
 
     protected BlockEnderChest()
     {

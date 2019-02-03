@@ -166,7 +166,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     private long nanoTimeSinceStatusRefresh = 0L;
     private final GameProfileRepository profileRepo;
     private final PlayerProfileCache profileCache;
-    private static final String __OBFID = "CL_00001462";
 
     public MinecraftServer(File workDir, Proxy proxy)
     {
@@ -196,7 +195,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             this.getActiveAnvilConverter().convertMapFormat(p_71237_1_, new IProgressUpdate()
             {
                 private long field_96245_b = System.currentTimeMillis();
-                private static final String __OBFID = "CL_00001417";
                 public void displayProgressMessage(String p_73720_1_) {}
                 public void resetProgressAndMessage(String p_73721_1_) {}
                 public void setLoadingProgress(int p_73718_1_)
@@ -709,7 +707,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     {
         (new Thread("Server thread")
         {
-            private static final String __OBFID = "CL_00001418";
             public void run()
             {
                 MinecraftServer.this.run();
@@ -790,7 +787,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     {
         report.getCategory().addCrashSectionCallable("Profiler Position", new Callable()
         {
-            private static final String __OBFID = "CL_00001419";
             public String call()
             {
                 return "N/A (disabled)";
@@ -801,7 +797,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         {
             report.getCategory().addCrashSectionCallable("Vec3 Pool Size", new Callable()
             {
-                private static final String __OBFID = "CL_00001420";
                 public String call()
                 {
                     byte var1 = 0;
@@ -819,7 +814,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         {
             report.getCategory().addCrashSectionCallable("Player Count", new Callable()
             {
-                private static final String __OBFID = "CL_00001780";
                 public String call()
                 {
                     return MinecraftServer.this.serverConfigManager.getCurrentPlayerCount() + " / " + MinecraftServer.this.serverConfigManager.getMaxPlayers() + "; " + MinecraftServer.this.serverConfigManager.playerEntityList;

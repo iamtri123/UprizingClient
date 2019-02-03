@@ -4,12 +4,10 @@ public class NBTSizeTracker
 {
     public static final NBTSizeTracker INFINITE = new NBTSizeTracker(0L)
     {
-        private static final String __OBFID = "CL_00001902";
         public void addSpaceRead(long size) {}
     };
     private final long spaceAllocated;
     private long spaceRead;
-    private static final String __OBFID = "CL_00001903";
 
     public NBTSizeTracker(long size)
     {

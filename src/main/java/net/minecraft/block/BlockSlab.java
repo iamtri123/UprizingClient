@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 public abstract class BlockSlab extends Block
 {
     protected final boolean isFullBlock;
-    private static final String __OBFID = "CL_00000253";
 
     public BlockSlab(boolean p_i45410_1_, Material p_i45410_2_)
     {

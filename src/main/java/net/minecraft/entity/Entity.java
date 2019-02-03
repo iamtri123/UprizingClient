@@ -217,7 +217,6 @@ public abstract class Entity
     private boolean invulnerable;
     protected UUID entityUniqueID;
     public Entity.EnumEntitySize myEntitySize;
-    private static final String __OBFID = "CL_00001533";
 
     public int getEntityId()
     {
@@ -2379,7 +2378,6 @@ public abstract class Entity
     {
         category.addCrashSectionCallable("Entity Type", new Callable()
         {
-            private static final String __OBFID = "CL_00001534";
             public String call()
             {
                 return EntityList.getEntityString(Entity.this) + " (" + Entity.this.getClass().getCanonicalName() + ")";
@@ -2388,7 +2386,6 @@ public abstract class Entity
         category.addCrashSection("Entity ID", Integer.valueOf(this.entityId));
         category.addCrashSectionCallable("Entity Name", new Callable()
         {
-            private static final String __OBFID = "CL_00001535";
             public String call()
             {
                 return Entity.this.getCommandSenderName();
@@ -2434,7 +2431,6 @@ public abstract class Entity
         SIZE_6("SIZE_6", 5);
 
         private static final Entity.EnumEntitySize[] $VALUES = {SIZE_1, SIZE_2, SIZE_3, SIZE_4, SIZE_5, SIZE_6};
-        private static final String __OBFID = "CL_00001537";
 
         EnumEntitySize(String p_i1581_1_, int p_i1581_2_) {}
 
@@ -2529,7 +2525,6 @@ public abstract class Entity
     static final class SwitchEnumEntitySize
     {
         static final int[] field_96565_a = new int[Entity.EnumEntitySize.values().length];
-        private static final String __OBFID = "CL_00001536";
 
         static
         {

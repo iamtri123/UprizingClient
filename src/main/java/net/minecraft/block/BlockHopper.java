@@ -27,7 +27,6 @@ public class BlockHopper extends BlockContainer
     private IIcon hopperOutsideIcon;
     private IIcon hopperTopIcon;
     private IIcon hopperInsideIcon;
-    private static final String __OBFID = "CL_00000257";
 
     public BlockHopper()
     {

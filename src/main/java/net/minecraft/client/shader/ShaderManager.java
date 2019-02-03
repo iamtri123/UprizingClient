@@ -46,7 +46,6 @@ public class ShaderManager
     private final List field_148014_r;
     private final ShaderLoader vertexShaderLoader;
     private final ShaderLoader fragmentShaderLoader;
-    private static final String __OBFID = "CL_00001040";
 
     public ShaderManager(IResourceManager resourceManager, String programName) throws JsonException
     {

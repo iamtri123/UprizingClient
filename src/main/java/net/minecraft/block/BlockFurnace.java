@@ -25,7 +25,6 @@ public class BlockFurnace extends BlockContainer
     private static boolean field_149934_M;
     private IIcon iconTop;
     private IIcon iconFront;
-    private static final String __OBFID = "CL_00000248";
 
     protected BlockFurnace(boolean p_i45407_1_)
     {

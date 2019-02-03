@@ -45,7 +45,6 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     private Slot field_147064_C;
     private boolean field_147057_D;
     private CreativeCrafting field_147059_E;
-    private static final String __OBFID = "CL_00000752";
 
     public GuiContainerCreative(EntityPlayer p_i1088_1_)
     {
@@ -859,7 +858,6 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     static class ContainerCreative extends Container
     {
         public List itemList = new ArrayList();
-        private static final String __OBFID = "CL_00000753";
 
         public ContainerCreative(EntityPlayer p_i1086_1_)
         {
@@ -951,7 +949,6 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     class CreativeSlot extends Slot
     {
         private final Slot field_148332_b;
-        private static final String __OBFID = "CL_00000754";
 
         public CreativeSlot(Slot p_i46313_2_, int p_i46313_3_)
         {

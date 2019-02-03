@@ -10,7 +10,6 @@ public class NettyEncryptionTranslator
     private final Cipher cipher;
     private byte[] field_150505_b = new byte[0];
     private byte[] field_150506_c = new byte[0];
-    private static final String __OBFID = "CL_00001237";
 
     protected NettyEncryptionTranslator(Cipher cipherIn)
     {

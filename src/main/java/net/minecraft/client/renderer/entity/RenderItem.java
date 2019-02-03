@@ -38,7 +38,6 @@ public class RenderItem extends Render
     /** Defines the zLevel of rendering of item on GUI. */
     public float zLevel;
     public static boolean renderInFrame;
-    private static final String __OBFID = "CL_00001003";
 
     public RenderItem()
     {
@@ -528,7 +527,6 @@ public class RenderItem extends Render
                 CrashReportCategory var8 = var7.makeCategory("Item being rendered");
                 var8.addCrashSectionCallable("Item Type", new Callable()
                 {
-                    private static final String __OBFID = "CL_00001004";
                     public String call()
                     {
                         return String.valueOf(p_82406_3_.getItem());
@@ -536,7 +534,6 @@ public class RenderItem extends Render
                 });
                 var8.addCrashSectionCallable("Item Aux", new Callable()
                 {
-                    private static final String __OBFID = "CL_00001005";
                     public String call()
                     {
                         return String.valueOf(p_82406_3_.getItemDamage());
@@ -544,7 +541,6 @@ public class RenderItem extends Render
                 });
                 var8.addCrashSectionCallable("Item NBT", new Callable()
                 {
-                    private static final String __OBFID = "CL_00001006";
                     public String call()
                     {
                         return String.valueOf(p_82406_3_.getTagCompound());
@@ -552,7 +548,6 @@ public class RenderItem extends Render
                 });
                 var8.addCrashSectionCallable("Item Foil", new Callable()
                 {
-                    private static final String __OBFID = "CL_00001007";
                     public String call()
                     {
                         return String.valueOf(p_82406_3_.hasEffect());

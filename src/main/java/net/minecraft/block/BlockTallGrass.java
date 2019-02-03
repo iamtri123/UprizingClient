@@ -20,7 +20,6 @@ public class BlockTallGrass extends BlockBush implements IGrowable
 {
     private static final String[] field_149871_a = {"deadbush", "tallgrass", "fern"};
     private IIcon[] field_149870_b;
-    private static final String __OBFID = "CL_00000321";
 
     protected BlockTallGrass()
     {

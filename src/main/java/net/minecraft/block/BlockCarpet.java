@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 
 public class BlockCarpet extends Block
 {
-    private static final String __OBFID = "CL_00000338";
 
     protected BlockCarpet()
     {

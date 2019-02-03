@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 
 public class BlockGravel extends BlockFalling
 {
-    private static final String __OBFID = "CL_00000252";
 
     public Item getItemDropped(int meta, Random random, int fortune)
     {

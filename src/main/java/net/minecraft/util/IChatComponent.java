@@ -62,7 +62,6 @@ public interface IChatComponent extends Iterable
     class Serializer implements JsonDeserializer, JsonSerializer
     {
         private static final Gson GSON;
-        private static final String __OBFID = "CL_00001263";
 
         public IChatComponent deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_)
         {

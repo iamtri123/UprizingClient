@@ -12,7 +12,6 @@ public class BlockRedstoneRepeater extends BlockRedstoneDiode
 {
     public static final double[] repeaterTorchOffset = { -0.0625D, 0.0625D, 0.1875D, 0.3125D};
     private static final int[] repeaterState = {1, 2, 3, 4};
-    private static final String __OBFID = "CL_00000301";
 
     protected BlockRedstoneRepeater(boolean p_i45424_1_)
     {

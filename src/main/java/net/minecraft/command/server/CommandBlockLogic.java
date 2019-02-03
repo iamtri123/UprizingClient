@@ -19,7 +19,6 @@ public abstract class CommandBlockLogic implements ICommandSender
     private IChatComponent lastOutput = null;
     private String commandStored = "";
     private String customName = "@";
-    private static final String __OBFID = "CL_00000128";
 
     public int getSuccessCount()
     {

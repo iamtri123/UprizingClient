@@ -15,7 +15,6 @@ public class ItemRecord extends Item
 {
     private static final Map field_150928_b = new HashMap();
     public final String recordName;
-    private static final String __OBFID = "CL_00000057";
 
     protected ItemRecord(String p_i45350_1_)
     {

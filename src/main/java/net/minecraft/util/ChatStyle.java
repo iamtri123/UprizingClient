@@ -31,7 +31,6 @@ public class ChatStyle
      */
     private static final ChatStyle rootStyle = new ChatStyle()
     {
-        private static final String __OBFID = "CL_00001267";
         public EnumChatFormatting getColor()
         {
             return null;
@@ -117,7 +116,6 @@ public class ChatStyle
             return "";
         }
     };
-    private static final String __OBFID = "CL_00001266";
 
     /**
      * Gets the effective color of this ChatStyle.
@@ -445,7 +443,6 @@ public class ChatStyle
 
     public static class Serializer implements JsonDeserializer, JsonSerializer
     {
-        private static final String __OBFID = "CL_00001268";
 
         public ChatStyle deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_)
         {

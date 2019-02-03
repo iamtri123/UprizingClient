@@ -19,7 +19,6 @@ public class ItemTool extends Item
 
     /** The material this tool is made from. */
     protected Item.ToolMaterial toolMaterial;
-    private static final String __OBFID = "CL_00000019";
 
     protected ItemTool(float p_i45333_1_, Item.ToolMaterial p_i45333_2_, Set p_i45333_3_)
     {

@@ -8,7 +8,6 @@ public class GuiConfirmOpenLink extends GuiYesNo
     private final String copyLinkButtonText;
     private final String linkText;
     private boolean showSecurityWarning = true;
-    private static final String __OBFID = "CL_00000683";
 
     public GuiConfirmOpenLink(GuiYesNoCallback p_i1084_1_, String p_i1084_2_, int p_i1084_3_, boolean p_i1084_4_)
     {

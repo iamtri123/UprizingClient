@@ -10,7 +10,6 @@ import net.minecraft.util.MathHelper;
 
 public class BlockGlowstone extends Block
 {
-    private static final String __OBFID = "CL_00000250";
 
     public BlockGlowstone(Material p_i45409_1_)
     {

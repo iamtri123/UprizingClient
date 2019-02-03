@@ -20,7 +20,6 @@ public class BlockAnvil extends BlockFalling
     private static final String[] anvilIconNames = {"anvil_top_damaged_0", "anvil_top_damaged_1", "anvil_top_damaged_2"};
     public int anvilRenderSide;
     private IIcon[] anvilIcons;
-    private static final String __OBFID = "CL_00000192";
 
     protected BlockAnvil()
     {

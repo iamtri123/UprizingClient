@@ -17,7 +17,6 @@ public class BlockEnchantmentTable extends BlockContainer
 {
     private IIcon field_149950_a;
     private IIcon field_149949_b;
-    private static final String __OBFID = "CL_00000235";
 
     protected BlockEnchantmentTable()
     {

@@ -39,7 +39,6 @@ public class EntityFX extends Entity
     public static double interpPosX;
     public static double interpPosY;
     public static double interpPosZ;
-    private static final String __OBFID = "CL_00000914";
 
     protected EntityFX(World p_i46352_1_, double p_i46352_2_, double p_i46352_4_, double p_i46352_6_)
     {

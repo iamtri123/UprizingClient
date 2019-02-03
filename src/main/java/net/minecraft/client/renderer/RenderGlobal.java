@@ -261,7 +261,6 @@ public class RenderGlobal implements IWorldAccess
     private long lastMovedTime = System.currentTimeMillis();
     private long lastActionTime = System.currentTimeMillis();
     private static final AxisAlignedBB AABB_INFINITE = AxisAlignedBB.getBoundingBox(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-    private static final String __OBFID = "CL_00000954";
 
     public RenderGlobal(Minecraft par1Minecraft)
     {
@@ -2486,7 +2485,6 @@ public class RenderGlobal implements IWorldAccess
             var16.addCrashSection("Name", par1Str);
             var16.addCrashSectionCallable("Position", new Callable()
             {
-                private static final String __OBFID = "CL_00000955";
                 public String call1()
                 {
                     return CrashReportCategory.func_85074_a(par2, par4, par6);

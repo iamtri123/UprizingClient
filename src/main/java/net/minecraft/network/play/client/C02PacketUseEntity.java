@@ -12,7 +12,6 @@ public class C02PacketUseEntity extends Packet
 {
     private int entityId;
     private C02PacketUseEntity.Action action;
-    private static final String __OBFID = "CL_00001357";
 
     public C02PacketUseEntity() {}
 
@@ -68,7 +67,6 @@ public class C02PacketUseEntity extends Packet
         private final int id;
 
         private static final C02PacketUseEntity.Action[] $VALUES = {INTERACT, ATTACK};
-        private static final String __OBFID = "CL_00001358";
 
         Action(String p_i45250_1_, int p_i45250_2_, int actionId)
         {

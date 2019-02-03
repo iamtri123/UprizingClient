@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 public class BlockRailDetector extends BlockRailBase
 {
     private IIcon[] field_150055_b;
-    private static final String __OBFID = "CL_00000225";
 
     public BlockRailDetector()
     {

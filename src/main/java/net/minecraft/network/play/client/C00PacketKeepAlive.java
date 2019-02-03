@@ -9,7 +9,6 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 public class C00PacketKeepAlive extends Packet
 {
     private int key;
-    private static final String __OBFID = "CL_00001359";
 
     public C00PacketKeepAlive() {}
 

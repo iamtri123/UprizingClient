@@ -11,7 +11,6 @@ public class S02PacketChat extends Packet
 {
     private IChatComponent chatComponent;
     private boolean isChat;
-    private static final String __OBFID = "CL_00001289";
 
     public S02PacketChat()
     {

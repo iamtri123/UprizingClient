@@ -20,7 +20,6 @@ public class TileEntityPiston extends TileEntity
     private float progress;
     private float lastProgress;
     private final List pushedObjects = new ArrayList();
-    private static final String __OBFID = "CL_00000369";
 
     public TileEntityPiston() {}
 

@@ -19,7 +19,6 @@ public class ShaderUniform
     private final String shaderName;
     private boolean field_148105_h;
     private final ShaderManager shaderManager;
-    private static final String __OBFID = "CL_00001046";
 
     public ShaderUniform(String name, int type, int count, ShaderManager manager)
     {

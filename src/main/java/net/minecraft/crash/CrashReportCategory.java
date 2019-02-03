@@ -13,7 +13,6 @@ public class CrashReportCategory
     private final String field_85076_b;
     private final List field_85077_c = new ArrayList();
     private StackTraceElement[] stackTrace = new StackTraceElement[0];
-    private static final String __OBFID = "CL_00001409";
 
     public CrashReportCategory(CrashReport p_i1353_1_, String p_i1353_2_)
     {
@@ -232,7 +231,6 @@ public class CrashReportCategory
         final int var6 = Block.getIdFromBlock(blockIn);
         category.addCrashSectionCallable("Block type", new Callable()
         {
-            private static final String __OBFID = "CL_00001426";
             public String call()
             {
                 try
@@ -247,7 +245,6 @@ public class CrashReportCategory
         });
         category.addCrashSectionCallable("Block data value", new Callable()
         {
-            private static final String __OBFID = "CL_00001441";
             public String call()
             {
                 if (meta < 0)
@@ -263,7 +260,6 @@ public class CrashReportCategory
         });
         category.addCrashSectionCallable("Block location", new Callable()
         {
-            private static final String __OBFID = "CL_00001465";
             public String call()
             {
                 return CrashReportCategory.getLocationInfo(x, y, z);
@@ -275,7 +271,6 @@ public class CrashReportCategory
     {
         private final String field_85092_a;
         private final String field_85091_b;
-        private static final String __OBFID = "CL_00001489";
 
         public Entry(String p_i1352_1_, Object p_i1352_2_)
         {

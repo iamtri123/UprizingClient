@@ -16,14 +16,12 @@ public class StructureStrongholdPieces
 {
     private static final StructureStrongholdPieces.PieceWeight[] pieceWeightArray = {new PieceWeight(Straight.class, 40, 0), new PieceWeight(Prison.class, 5, 5), new PieceWeight(LeftTurn.class, 20, 0), new PieceWeight(RightTurn.class, 20, 0), new PieceWeight(RoomCrossing.class, 10, 6), new PieceWeight(StairsStraight.class, 5, 5), new PieceWeight(Stairs.class, 5, 5), new PieceWeight(Crossing.class, 5, 4), new PieceWeight(ChestCorridor.class, 5, 4), new PieceWeight(Library.class, 10, 2)
         {
-            private static final String __OBFID = "CL_00000484";
             public boolean canSpawnMoreStructuresOfType(int p_75189_1_)
             {
                 return super.canSpawnMoreStructuresOfType(p_75189_1_) && p_75189_1_ > 4;
             }
         }, new PieceWeight(PortalRoom.class, 20, 1)
         {
-            private static final String __OBFID = "CL_00000485";
             public boolean canSpawnMoreStructuresOfType(int p_75189_1_)
             {
                 return super.canSpawnMoreStructuresOfType(p_75189_1_) && p_75189_1_ > 5;
@@ -34,7 +32,6 @@ public class StructureStrongholdPieces
     private static Class strongComponentType;
     static int totalWeight;
     private static final StructureStrongholdPieces.Stones strongholdStones = new StructureStrongholdPieces.Stones(null);
-    private static final String __OBFID = "CL_00000483";
 
     public static void registerStrongholdPieces()
     {
@@ -244,7 +241,6 @@ public class StructureStrongholdPieces
     {
         private static final WeightedRandomChestContent[] strongholdChestContents = {new WeightedRandomChestContent(Items.ender_pearl, 0, 1, 1, 10), new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 1, 3, 5), new WeightedRandomChestContent(Items.redstone, 0, 4, 9, 5), new WeightedRandomChestContent(Items.bread, 0, 1, 3, 15), new WeightedRandomChestContent(Items.apple, 0, 1, 3, 15), new WeightedRandomChestContent(Items.iron_pickaxe, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_sword, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_chestplate, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_helmet, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_leggings, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_boots, 0, 1, 1, 5), new WeightedRandomChestContent(Items.golden_apple, 0, 1, 1, 1), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 1), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
         private boolean hasMadeChest;
-        private static final String __OBFID = "CL_00000487";
 
         public ChestCorridor() {}
 
@@ -323,7 +319,6 @@ public class StructureStrongholdPieces
     public static class Corridor extends StructureStrongholdPieces.Stronghold
     {
         private int field_74993_a;
-        private static final String __OBFID = "CL_00000488";
 
         public Corridor() {}
 
@@ -419,7 +414,6 @@ public class StructureStrongholdPieces
         private boolean field_74997_c;
         private boolean field_74995_d;
         private boolean field_74999_h;
-        private static final String __OBFID = "CL_00000489";
 
         public Crossing() {}
 
@@ -546,7 +540,6 @@ public class StructureStrongholdPieces
 
     public static class LeftTurn extends StructureStrongholdPieces.Stronghold
     {
-        private static final String __OBFID = "CL_00000490";
 
         public LeftTurn() {}
 
@@ -605,7 +598,6 @@ public class StructureStrongholdPieces
     {
         private static final WeightedRandomChestContent[] strongholdLibraryChestContents = {new WeightedRandomChestContent(Items.book, 0, 1, 3, 20), new WeightedRandomChestContent(Items.paper, 0, 2, 7, 20), new WeightedRandomChestContent(Items.map, 0, 1, 1, 1), new WeightedRandomChestContent(Items.compass, 0, 1, 1, 1)};
         private boolean isLargeRoom;
-        private static final String __OBFID = "CL_00000491";
 
         public Library() {}
 
@@ -769,7 +761,6 @@ public class StructureStrongholdPieces
         public final int pieceWeight;
         public int instancesSpawned;
         public int instancesLimit;
-        private static final String __OBFID = "CL_00000492";
 
         public PieceWeight(Class p_i2076_1_, int p_i2076_2_, int p_i2076_3_)
         {
@@ -792,7 +783,6 @@ public class StructureStrongholdPieces
     public static class PortalRoom extends StructureStrongholdPieces.Stronghold
     {
         private boolean hasSpawner;
-        private static final String __OBFID = "CL_00000493";
 
         public PortalRoom() {}
 
@@ -936,7 +926,6 @@ public class StructureStrongholdPieces
 
     public static class Prison extends StructureStrongholdPieces.Stronghold
     {
-        private static final String __OBFID = "CL_00000494";
 
         public Prison() {}
 
@@ -989,7 +978,6 @@ public class StructureStrongholdPieces
 
     public static class RightTurn extends StructureStrongholdPieces.LeftTurn
     {
-        private static final String __OBFID = "CL_00000495";
 
         public void buildComponent(StructureComponent p_74861_1_, List p_74861_2_, Random p_74861_3_)
         {
@@ -1032,7 +1020,6 @@ public class StructureStrongholdPieces
     {
         private static final WeightedRandomChestContent[] strongholdRoomCrossingChestContents = {new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 1, 3, 5), new WeightedRandomChestContent(Items.redstone, 0, 4, 9, 5), new WeightedRandomChestContent(Items.coal, 0, 3, 8, 10), new WeightedRandomChestContent(Items.bread, 0, 1, 3, 15), new WeightedRandomChestContent(Items.apple, 0, 1, 3, 15), new WeightedRandomChestContent(Items.iron_pickaxe, 0, 1, 1, 1)};
         protected int roomType;
-        private static final String __OBFID = "CL_00000496";
 
         public RoomCrossing() {}
 
@@ -1182,7 +1169,6 @@ public class StructureStrongholdPieces
     public static class Stairs extends StructureStrongholdPieces.Stronghold
     {
         private boolean field_75024_a;
-        private static final String __OBFID = "CL_00000498";
 
         public Stairs() {}
 
@@ -1280,7 +1266,6 @@ public class StructureStrongholdPieces
         public StructureStrongholdPieces.PieceWeight strongholdPieceWeight;
         public StructureStrongholdPieces.PortalRoom strongholdPortalRoom;
         public List field_75026_c = new ArrayList();
-        private static final String __OBFID = "CL_00000499";
 
         public Stairs2() {}
 
@@ -1297,7 +1282,6 @@ public class StructureStrongholdPieces
 
     public static class StairsStraight extends StructureStrongholdPieces.Stronghold
     {
-        private static final String __OBFID = "CL_00000501";
 
         public StairsStraight() {}
 
@@ -1354,7 +1338,6 @@ public class StructureStrongholdPieces
 
     static class Stones extends StructureComponent.BlockSelector
     {
-        private static final String __OBFID = "CL_00000497";
 
         private Stones() {}
 
@@ -1400,7 +1383,6 @@ public class StructureStrongholdPieces
     {
         private boolean expandsX;
         private boolean expandsZ;
-        private static final String __OBFID = "CL_00000500";
 
         public Straight() {}
 
@@ -1483,7 +1465,6 @@ public class StructureStrongholdPieces
     abstract static class Stronghold extends StructureComponent
     {
         protected StructureStrongholdPieces.Stronghold.Door field_143013_d;
-        private static final String __OBFID = "CL_00000503";
 
         public Stronghold()
         {
@@ -1652,7 +1633,6 @@ public class StructureStrongholdPieces
             IRON_DOOR("IRON_DOOR", 3);
 
             private static final StructureStrongholdPieces.Stronghold.Door[] $VALUES = {OPENING, WOOD_DOOR, GRATES, IRON_DOOR};
-            private static final String __OBFID = "CL_00000504";
 
             Door(String p_i2086_1_, int p_i2086_2_) {}
         }
@@ -1661,7 +1641,6 @@ public class StructureStrongholdPieces
     static final class SwitchDoor
     {
         static final int[] doorEnum = new int[StructureStrongholdPieces.Stronghold.Door.values().length];
-        private static final String __OBFID = "CL_00000486";
 
         static
         {

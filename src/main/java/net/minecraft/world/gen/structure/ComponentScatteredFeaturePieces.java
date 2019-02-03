@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 
 public class ComponentScatteredFeaturePieces
 {
-    private static final String __OBFID = "CL_00000473";
 
     public static void registerScatteredFeaturePieces()
     {
@@ -26,7 +25,6 @@ public class ComponentScatteredFeaturePieces
     {
         private final boolean[] field_74940_h = new boolean[4];
         private static final WeightedRandomChestContent[] itemsToGenerateInTemple = {new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
-        private static final String __OBFID = "CL_00000476";
 
         public DesertPyramid() {}
 
@@ -266,7 +264,6 @@ public class ComponentScatteredFeaturePieces
         protected int scatteredFeatureSizeY;
         protected int scatteredFeatureSizeZ;
         protected int field_74936_d = -1;
-        private static final String __OBFID = "CL_00000479";
 
         public Feature() {}
 
@@ -352,7 +349,6 @@ public class ComponentScatteredFeaturePieces
         private static final WeightedRandomChestContent[] junglePyramidsChestContents = {new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 2, 7, 15), new WeightedRandomChestContent(Items.emerald, 0, 1, 3, 2), new WeightedRandomChestContent(Items.bone, 0, 4, 6, 20), new WeightedRandomChestContent(Items.rotten_flesh, 0, 3, 7, 16), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)};
         private static final WeightedRandomChestContent[] junglePyramidsDispenserContents = {new WeightedRandomChestContent(Items.arrow, 0, 2, 7, 30)};
         private static final ComponentScatteredFeaturePieces.JunglePyramid.Stones junglePyramidsRandomScatteredStones = new ComponentScatteredFeaturePieces.JunglePyramid.Stones(null);
-        private static final String __OBFID = "CL_00000477";
 
         public JunglePyramid() {}
 
@@ -578,7 +574,6 @@ public class ComponentScatteredFeaturePieces
 
         static class Stones extends StructureComponent.BlockSelector
         {
-            private static final String __OBFID = "CL_00000478";
 
             private Stones() {}
 
@@ -604,7 +599,6 @@ public class ComponentScatteredFeaturePieces
     public static class SwampHut extends ComponentScatteredFeaturePieces.Feature
     {
         private boolean hasWitch;
-        private static final String __OBFID = "CL_00000480";
 
         public SwampHut() {}
 

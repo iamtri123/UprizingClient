@@ -13,7 +13,6 @@ import net.minecraft.util.IIcon;
 public class BlockColored extends Block
 {
     private IIcon[] field_150033_a;
-    private static final String __OBFID = "CL_00000217";
 
     public BlockColored(Material p_i45398_1_)
     {

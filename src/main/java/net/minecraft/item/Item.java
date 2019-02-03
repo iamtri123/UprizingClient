@@ -75,7 +75,6 @@ public class Item
 
     /** The string associated with this Item's Icon. */
     protected String iconString;
-    private static final String __OBFID = "CL_00000041";
 
     public static int getIdFromItem(Item p_150891_0_)
     {
@@ -867,7 +866,6 @@ public class Item
         private final int enchantability;
 
         private static final Item.ToolMaterial[] $VALUES = {WOOD, STONE, IRON, EMERALD, GOLD};
-        private static final String __OBFID = "CL_00000042";
 
         ToolMaterial(String p_i1874_1_, int p_i1874_2_, int p_i1874_3_, int p_i1874_4_, float p_i1874_5_, float p_i1874_6_, int p_i1874_7_)
         {

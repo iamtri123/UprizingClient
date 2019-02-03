@@ -8,7 +8,6 @@ public class ChunkPosition
     public final int chunkPosX;
     public final int chunkPosY;
     public final int chunkPosZ;
-    private static final String __OBFID = "CL_00000132";
 
     public ChunkPosition(int p_i45363_1_, int p_i45363_2_, int p_i45363_3_)
     {

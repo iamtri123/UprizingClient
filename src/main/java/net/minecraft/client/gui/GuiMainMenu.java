@@ -66,7 +66,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private int field_92020_v;
     private int field_92019_w;
     private ResourceLocation field_110351_G;
-    private static final String __OBFID = "CL_00001154";
 
     public GuiMainMenu()
     {

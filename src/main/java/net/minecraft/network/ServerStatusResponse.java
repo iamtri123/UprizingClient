@@ -19,7 +19,6 @@ public class ServerStatusResponse
     private ServerStatusResponse.PlayerCountData playerCount;
     private ServerStatusResponse.MinecraftProtocolVersionIdentifier protocolVersion;
     private String favicon;
-    private static final String __OBFID = "CL_00001385";
 
     public IChatComponent getServerDescription()
     {
@@ -65,7 +64,6 @@ public class ServerStatusResponse
     {
         private final String name;
         private final int protocol;
-        private static final String __OBFID = "CL_00001389";
 
         public MinecraftProtocolVersionIdentifier(String nameIn, int protocolIn)
         {
@@ -85,7 +83,6 @@ public class ServerStatusResponse
 
         public static class Serializer implements JsonDeserializer, JsonSerializer
         {
-            private static final String __OBFID = "CL_00001390";
 
             public ServerStatusResponse.MinecraftProtocolVersionIdentifier deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_)
             {
@@ -113,7 +110,6 @@ public class ServerStatusResponse
         private final int maxPlayers;
         private final int onlinePlayerCount;
         private GameProfile[] players;
-        private static final String __OBFID = "CL_00001386";
 
         public PlayerCountData(int p_i45274_1_, int p_i45274_2_)
         {
@@ -143,7 +139,6 @@ public class ServerStatusResponse
 
         public static class Serializer implements JsonDeserializer, JsonSerializer
         {
-            private static final String __OBFID = "CL_00001387";
 
             public ServerStatusResponse.PlayerCountData deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_)
             {
@@ -206,7 +201,6 @@ public class ServerStatusResponse
 
     public static class Serializer implements JsonDeserializer, JsonSerializer
     {
-        private static final String __OBFID = "CL_00001388";
 
         public ServerStatusResponse deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_)
         {

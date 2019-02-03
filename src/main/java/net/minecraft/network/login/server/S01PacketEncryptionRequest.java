@@ -13,7 +13,6 @@ public class S01PacketEncryptionRequest extends Packet
     private String hashedServerId;
     private PublicKey publicKey;
     private byte[] field_149611_c;
-    private static final String __OBFID = "CL_00001376";
 
     public S01PacketEncryptionRequest() {}
 

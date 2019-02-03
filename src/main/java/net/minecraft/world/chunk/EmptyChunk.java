@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 
 public class EmptyChunk extends Chunk
 {
-    private static final String __OBFID = "CL_00000372";
 
     public EmptyChunk(World p_i1994_1_, int p_i1994_2_, int p_i1994_3_)
     {

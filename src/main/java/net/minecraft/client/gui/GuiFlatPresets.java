@@ -31,7 +31,6 @@ public class GuiFlatPresets extends GuiScreen
     private GuiFlatPresets.ListSlot field_146435_s;
     private GuiButton field_146434_t;
     private GuiTextField field_146433_u;
-    private static final String __OBFID = "CL_00000704";
 
     public GuiFlatPresets(GuiCreateFlatWorld p_i46378_1_)
     {
@@ -180,7 +179,6 @@ public class GuiFlatPresets extends GuiScreen
         public Item field_148234_a;
         public String field_148232_b;
         public String field_148233_c;
-        private static final String __OBFID = "CL_00000705";
 
         public LayerItem(Item p_i45022_1_, String p_i45022_2_, String p_i45022_3_)
         {
@@ -193,7 +191,6 @@ public class GuiFlatPresets extends GuiScreen
     class ListSlot extends GuiSlot
     {
         public int field_148175_k = -1;
-        private static final String __OBFID = "CL_00000706";
 
         public ListSlot()
         {

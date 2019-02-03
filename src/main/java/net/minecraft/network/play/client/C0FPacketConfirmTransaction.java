@@ -11,7 +11,6 @@ public class C0FPacketConfirmTransaction extends Packet
     private int id;
     private short uid;
     private boolean accepted;
-    private static final String __OBFID = "CL_00001351";
 
     public C0FPacketConfirmTransaction() {}
 

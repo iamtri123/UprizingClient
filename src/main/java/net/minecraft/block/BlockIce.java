@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 
 public class BlockIce extends BlockBreakable
 {
-    private static final String __OBFID = "CL_00000259";
 
     public BlockIce()
     {

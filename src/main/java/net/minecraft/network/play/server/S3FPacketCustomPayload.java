@@ -11,7 +11,6 @@ public class S3FPacketCustomPayload extends Packet
 {
     private String channel;
     private byte[] data;
-    private static final String __OBFID = "CL_00001297";
 
     public S3FPacketCustomPayload() {}
 

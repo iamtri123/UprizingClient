@@ -343,28 +343,24 @@ public class WorldClient extends World {
     public CrashReportCategory addWorldInfoToCrashReport(CrashReport report) {
         CrashReportCategory var2 = super.addWorldInfoToCrashReport(report);
         var2.addCrashSectionCallable("Forced entities", new Callable() {
-            private static final String __OBFID = "CL_00000883";
 
             public String call() {
                 return WorldClient.this.entityList.size() + " total; " + WorldClient.this.entityList;
             }
         });
         var2.addCrashSectionCallable("Retry entities", new Callable() {
-            private static final String __OBFID = "CL_00000884";
 
             public String call() {
                 return WorldClient.this.entitySpawnQueue.size() + " total; " + WorldClient.this.entitySpawnQueue;
             }
         });
         var2.addCrashSectionCallable("Server brand", new Callable() {
-            private static final String __OBFID = "CL_00000885";
 
             public String call() {
                 return WorldClient.this.mc.thePlayer.getClientBrand();
             }
         });
         var2.addCrashSectionCallable("Server type", new Callable() {
-            private static final String __OBFID = "CL_00000886";
 
             public String call() {
                 return WorldClient.this.mc.getIntegratedServer() == null ? "Non-integrated multiplayer server" : "Integrated singleplayer server";

@@ -6,7 +6,6 @@ import java.net.SocketAddress;
 
 public class BanList extends UserList
 {
-    private static final String __OBFID = "CL_00001396";
 
     public BanList(File bansFile)
     {

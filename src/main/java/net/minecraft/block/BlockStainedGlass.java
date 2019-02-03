@@ -13,7 +13,6 @@ import net.minecraft.util.IIcon;
 public class BlockStainedGlass extends BlockBreakable
 {
     private static final IIcon[] field_149998_a = new IIcon[16];
-    private static final String __OBFID = "CL_00000312";
 
     public BlockStainedGlass(Material p_i45427_1_)
     {

@@ -45,7 +45,6 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     private int field_146554_D;
     private final StatFileWriter statFileWriter;
     private boolean loadingAchievements = true;
-    private static final String __OBFID = "CL_00000722";
 
     public GuiAchievements(GuiScreen p_i45026_1_, StatFileWriter p_i45026_2_)
     {

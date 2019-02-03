@@ -13,7 +13,6 @@ import net.minecraft.util.IIcon;
 public class BlockWoodSlab extends BlockSlab
 {
     public static final String[] field_150005_b = {"oak", "spruce", "birch", "jungle", "acacia", "big_oak"};
-    private static final String __OBFID = "CL_00000337";
 
     public BlockWoodSlab(boolean p_i45437_1_)
     {

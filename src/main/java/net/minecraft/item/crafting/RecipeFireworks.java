@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 public class RecipeFireworks implements IRecipe
 {
     private ItemStack field_92102_a;
-    private static final String __OBFID = "CL_00000083";
 
     /**
      * Used to check if a recipe matches current crafting inventory

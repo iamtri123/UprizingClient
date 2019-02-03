@@ -168,7 +168,6 @@ public abstract class World implements IBlockAccess
                 CrashReportCategory var6 = var5.makeCategory("Coordinates of biome request");
                 var6.addCrashSectionCallable("Location", new Callable()
                 {
-                    private static final String __OBFID = "CL_00000141";
                     public String call()
                     {
                         return CrashReportCategory.getLocationInfo(x, 0, z);
@@ -725,7 +724,6 @@ public abstract class World implements IBlockAccess
 
                 var8.addCrashSectionCallable("Source block type", new Callable()
                 {
-                    private static final String __OBFID = "CL_00000142";
                     public String call()
                     {
                         try
@@ -4010,7 +4008,6 @@ public abstract class World implements IBlockAccess
         var2.addCrashSection("Level name", this.worldInfo == null ? "????" : this.worldInfo.getWorldName());
         var2.addCrashSectionCallable("All players", new Callable()
         {
-            private static final String __OBFID = "CL_00000143";
             public String call()
             {
                 return World.this.playerEntities.size() + " total; " + World.this.playerEntities;
@@ -4018,7 +4015,6 @@ public abstract class World implements IBlockAccess
         });
         var2.addCrashSectionCallable("Chunk stats", new Callable()
         {
-            private static final String __OBFID = "CL_00000144";
             public String call()
             {
                 return World.this.chunkProvider.makeString();

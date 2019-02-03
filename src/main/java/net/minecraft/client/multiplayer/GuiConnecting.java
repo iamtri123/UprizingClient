@@ -26,7 +26,6 @@ public class GuiConnecting extends GuiScreen
     private NetworkManager networkManager;
     private boolean cancel;
     private final GuiScreen previousGuiScreen;
-    private static final String __OBFID = "CL_00000685";
 
     public GuiConnecting(GuiScreen p_i1181_1_, Minecraft p_i1181_2_, ServerData p_i1181_3_)
     {
@@ -51,7 +50,6 @@ public class GuiConnecting extends GuiScreen
         logger.info("Connecting to " + ip + ", " + port);
         (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())
         {
-            private static final String __OBFID = "CL_00000686";
             public void run()
             {
                 InetAddress var1 = null;

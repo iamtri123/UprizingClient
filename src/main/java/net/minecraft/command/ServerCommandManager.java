@@ -37,7 +37,6 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class ServerCommandManager extends CommandHandler implements IAdminCommand
 {
-    private static final String __OBFID = "CL_00000922";
 
     public ServerCommandManager()
     {

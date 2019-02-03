@@ -10,7 +10,6 @@ import net.minecraft.util.IChatComponent;
 public class S40PacketDisconnect extends Packet
 {
     private IChatComponent reason;
-    private static final String __OBFID = "CL_00001298";
 
     public S40PacketDisconnect() {}
 

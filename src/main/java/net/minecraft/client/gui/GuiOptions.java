@@ -13,7 +13,6 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
     private final GuiScreen field_146441_g;
     private final GameSettings game_settings_1;
     protected String field_146442_a = "Options";
-    private static final String __OBFID = "CL_00000700";
 
     public GuiOptions(GuiScreen p_i1046_1_, GameSettings p_i1046_2_)
     {
@@ -57,7 +56,6 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
 
         this.buttonList.add(new GuiButton(8675309, this.width / 2 + 5, this.height / 6 + 48 - 6, 150, 20, "Super Secret Settings...")
         {
-            private static final String __OBFID = "CL_00000701";
             public void playPressSound(SoundHandler soundHandlerIn)
             {
                 SoundEventAccessorComposite var2 = soundHandlerIn.getRandomSoundFromCategories(SoundCategory.ANIMALS, SoundCategory.BLOCKS, SoundCategory.MOBS, SoundCategory.PLAYERS, SoundCategory.WEATHER);

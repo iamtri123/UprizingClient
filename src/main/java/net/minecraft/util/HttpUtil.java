@@ -27,7 +27,6 @@ public class HttpUtil
     /** The number of download threads that we have started so far. */
     private static final AtomicInteger downloadThreadsStarted = new AtomicInteger(0);
     private static final Logger logger = LogManager.getLogger();
-    private static final String __OBFID = "CL_00001485";
 
     /**
      * Builds an encoded HTTP POST content string from a string map
@@ -129,7 +128,6 @@ public class HttpUtil
     {
         Thread var7 = new Thread(new Runnable()
         {
-            private static final String __OBFID = "CL_00001486";
             public void run()
             {
                 URLConnection var1 = null;

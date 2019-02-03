@@ -1059,7 +1059,6 @@ public class WorldServer extends World
 
     static class ServerBlockEventList extends ArrayList
     {
-        private static final String __OBFID = "CL_00001439";
 
         private ServerBlockEventList() {}
 

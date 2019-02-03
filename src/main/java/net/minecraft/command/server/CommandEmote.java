@@ -10,7 +10,6 @@ import net.minecraft.util.IChatComponent;
 
 public class CommandEmote extends CommandBase
 {
-    private static final String __OBFID = "CL_00000351";
 
     public String getCommandName()
     {

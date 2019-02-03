@@ -14,7 +14,6 @@ public class S28PacketEffect extends Packet
     private int yPos;
     private int zPos;
     private boolean serverWide;
-    private static final String __OBFID = "CL_00001307";
 
     public S28PacketEffect() {}
 

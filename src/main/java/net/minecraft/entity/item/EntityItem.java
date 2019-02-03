@@ -34,7 +34,6 @@ public class EntityItem extends Entity
 
     /** The EntityItem's random initial float height. */
     public float hoverStart;
-    private static final String __OBFID = "CL_00001669";
 
     public EntityItem(World worldIn, double x, double y, double z)
     {

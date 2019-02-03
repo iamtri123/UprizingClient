@@ -15,7 +15,6 @@ public class BlockFarmland extends Block
 {
     private IIcon iconDry;
     private IIcon iconWet;
-    private static final String __OBFID = "CL_00000241";
 
     protected BlockFarmland()
     {

@@ -24,7 +24,6 @@ public final class SpawnerAnimals
 {
     /** The 17x17 area around the player where mobs can spawn */
     private final HashMap eligibleChunksForSpawning = new HashMap();
-    private static final String __OBFID = "CL_00000152";
     private final Map mapSampleEntitiesByClass = new HashMap();
     private int lastPlayerChunkX = Integer.MAX_VALUE;
     private int lastPlayerChunkZ = Integer.MAX_VALUE;

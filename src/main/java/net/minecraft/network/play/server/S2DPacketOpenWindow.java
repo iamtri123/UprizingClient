@@ -14,7 +14,6 @@ public class S2DPacketOpenWindow extends Packet
     private int slotCount;
     private boolean useProvidedTitle;
     private int entityId;
-    private static final String __OBFID = "CL_00001293";
 
     public S2DPacketOpenWindow() {}
 

@@ -28,7 +28,6 @@ public class EntityFallingBlock extends Entity
     private int fallHurtMax;
     private float fallHurtAmount;
     public NBTTagCompound tileEntityData;
-    private static final String __OBFID = "CL_00001668";
 
     public EntityFallingBlock(World p_i1706_1_)
     {

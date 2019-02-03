@@ -11,7 +11,6 @@ public class GuiScreenAddServer extends GuiScreen
     private GuiTextField serverIPField;
     private GuiTextField serverNameField;
     private GuiButton serverResourcePacks;
-    private static final String __OBFID = "CL_00000695";
 
     public GuiScreenAddServer(GuiScreen p_i1033_1_, ServerData p_i1033_2_)
     {

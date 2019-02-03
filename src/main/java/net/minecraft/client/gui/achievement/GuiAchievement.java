@@ -23,7 +23,6 @@ public class GuiAchievement extends Gui
     private long notificationTime;
     private final RenderItem renderItem;
     private boolean permanentNotification;
-    private static final String __OBFID = "CL_00000721";
 
     public GuiAchievement(Minecraft mc)
     {

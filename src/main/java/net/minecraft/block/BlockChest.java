@@ -26,7 +26,6 @@ public class BlockChest extends BlockContainer
 {
     private final Random rand = new Random();
     public final int chestType;
-    private static final String __OBFID = "CL_00000214";
 
     protected BlockChest(int type)
     {

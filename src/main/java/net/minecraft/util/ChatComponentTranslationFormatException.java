@@ -2,7 +2,6 @@ package net.minecraft.util;
 
 public class ChatComponentTranslationFormatException extends IllegalArgumentException
 {
-    private static final String __OBFID = "CL_00001271";
 
     public ChatComponentTranslationFormatException(ChatComponentTranslation component, String message)
     {

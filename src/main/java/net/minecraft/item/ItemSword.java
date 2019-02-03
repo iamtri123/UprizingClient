@@ -15,7 +15,6 @@ public class ItemSword extends Item
 {
     private final float field_150934_a;
     private final Item.ToolMaterial repairMaterial;
-    private static final String __OBFID = "CL_00000072";
 
     public ItemSword(Item.ToolMaterial p_i45356_1_)
     {

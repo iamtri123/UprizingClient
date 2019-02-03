@@ -77,7 +77,6 @@ public class GuiIngame extends Gui {
      * The ItemStack that is currently being highlighted
      */
     private ItemStack highlightingItemStack;
-    private static final String __OBFID = "CL_00000661";
 
     public GuiIngame(Minecraft p_i46379_1_) {
         this.mc = p_i46379_1_;

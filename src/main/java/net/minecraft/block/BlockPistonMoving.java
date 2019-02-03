@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 
 public class BlockPistonMoving extends BlockContainer
 {
-    private static final String __OBFID = "CL_00000368";
 
     public BlockPistonMoving()
     {

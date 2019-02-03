@@ -45,7 +45,6 @@ public class GameSettings {
     private static final Logger logger = LogManager.getLogger();
     private static final Gson gson = new Gson();
     private static final ParameterizedType typeListString = new ParameterizedType() {
-        private static final String __OBFID = "CL_00000651";
 
         public Type[] getActualTypeArguments() {
             return new Type[]{String.class};
@@ -2348,7 +2347,6 @@ public class GameSettings {
         CHAT_HEIGHT_UNFOCUSED("CHAT_HEIGHT_UNFOCUSED", 30, "CHAT_HEIGHT_UNFOCUSED", 30, "options.chat.height.unfocused", true, false),
         MIPMAP_LEVELS("MIPMAP_LEVELS", 31, "MIPMAP_LEVELS", 31, "options.mipmapLevels", true, false, 0.0F, 4.0F, 1.0F),
         ANISOTROPIC_FILTERING("ANISOTROPIC_FILTERING", 32, "ANISOTROPIC_FILTERING", 32, "options.anisotropicFiltering", true, false, 1.0F, 16.0F, 0.0F, (Object) null, null) {
-            private static final String __OBFID = "CL_00000654";
 
             protected float snapToStep(float p_148264_1_) {
                 return (float) MathHelper.roundUpToPowerOfTwo((int) p_148264_1_);
@@ -2509,7 +2507,6 @@ public class GameSettings {
 
     static final class SwitchOptions {
         static final int[] optionIds = new int[GameSettings.Options.values().length];
-        private static final String __OBFID = "CL_00000652";
 
         static {
             try {

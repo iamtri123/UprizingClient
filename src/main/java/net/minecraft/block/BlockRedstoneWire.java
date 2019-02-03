@@ -24,7 +24,6 @@ public class BlockRedstoneWire extends Block
     private IIcon redstoneLineIcon;
     private IIcon redstoneCrossOverlayIcon;
     private IIcon redstoneLineOverlayIcon;
-    private static final String __OBFID = "CL_00000295";
 
     public BlockRedstoneWire()
     {

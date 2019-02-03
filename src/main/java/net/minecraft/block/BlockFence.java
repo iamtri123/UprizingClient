@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 public class BlockFence extends Block
 {
     private final String field_149827_a;
-    private static final String __OBFID = "CL_00000242";
 
     public BlockFence(String p_i45406_1_, Material p_i45406_2_)
     {

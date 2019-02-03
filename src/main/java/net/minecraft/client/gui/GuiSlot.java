@@ -30,7 +30,6 @@ public abstract class GuiSlot
     private boolean hasListHeader;
     protected int headerPadding;
     private boolean enabled = true;
-    private static final String __OBFID = "CL_00000679";
 
     public GuiSlot(Minecraft p_i1052_1_, int width, int height, int p_i1052_4_, int p_i1052_5_, int p_i1052_6_)
     {

@@ -11,7 +11,6 @@ public class GuiBrewingStand extends GuiContainer
 {
     private static final ResourceLocation brewingStandGuiTextures = new ResourceLocation("textures/gui/container/brewing_stand.png");
     private final TileEntityBrewingStand tileBrewingStand;
-    private static final String __OBFID = "CL_00000746";
 
     public GuiBrewingStand(InventoryPlayer p_i1081_1_, TileEntityBrewingStand p_i1081_2_)
     {

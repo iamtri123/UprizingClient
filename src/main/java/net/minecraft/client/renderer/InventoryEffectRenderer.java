@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 public abstract class InventoryEffectRenderer extends GuiContainer
 {
     private boolean hasActivePotionEffects;
-    private static final String __OBFID = "CL_00000755";
 
     public InventoryEffectRenderer(Container p_i1089_1_)
     {

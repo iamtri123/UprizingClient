@@ -22,7 +22,6 @@ public class LanguageManager implements IResourceManagerReloadListener
     private String currentLanguage;
     protected static final Locale currentLocale = new Locale();
     private final Map languageMap = Maps.newHashMap();
-    private static final String __OBFID = "CL_00001096";
 
     public LanguageManager(IMetadataSerializer p_i1304_1_, String p_i1304_2_)
     {

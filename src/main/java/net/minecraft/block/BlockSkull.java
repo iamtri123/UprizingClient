@@ -26,7 +26,6 @@ import net.minecraft.world.World;
 
 public class BlockSkull extends BlockContainer
 {
-    private static final String __OBFID = "CL_00000307";
 
     protected BlockSkull()
     {

@@ -11,7 +11,6 @@ public class GuiDisconnected extends GuiScreen
     private final IChatComponent message;
     private List multilineMessage;
     private final GuiScreen parentScreen;
-    private static final String __OBFID = "CL_00000693";
 
     public GuiDisconnected(GuiScreen p_i45020_1_, String p_i45020_2_, IChatComponent p_i45020_3_)
     {

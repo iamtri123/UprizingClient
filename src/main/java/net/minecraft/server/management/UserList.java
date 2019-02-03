@@ -35,7 +35,6 @@ public class UserList
     private boolean lanServer = true;
     private static final ParameterizedType saveFileFormat = new ParameterizedType()
     {
-        private static final String __OBFID = "CL_00001875";
         public Type[] getActualTypeArguments()
         {
             return new Type[] {UserListEntry.class};
@@ -49,7 +48,6 @@ public class UserList
             return null;
         }
     };
-    private static final String __OBFID = "CL_00001876";
 
     public UserList(File saveFile)
     {
@@ -171,7 +169,6 @@ public class UserList
 
     class Serializer implements JsonDeserializer, JsonSerializer
     {
-        private static final String __OBFID = "CL_00001874";
 
         private Serializer() {}
 

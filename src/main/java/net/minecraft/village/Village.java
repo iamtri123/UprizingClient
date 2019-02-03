@@ -44,7 +44,6 @@ public class Village
     private final TreeMap playerReputation = new TreeMap();
     private final List villageAgressors = new ArrayList();
     private int numIronGolems;
-    private static final String __OBFID = "CL_00001631";
 
     public Village() {}
 
@@ -593,7 +592,6 @@ public class Village
     {
         public EntityLivingBase agressor;
         public int agressionTime;
-        private static final String __OBFID = "CL_00001632";
 
         VillageAgressor(EntityLivingBase p_i1674_2_, int p_i1674_3_)
         {

@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 
 public class ItemEditableBook extends Item
 {
-    private static final String __OBFID = "CL_00000077";
 
     public ItemEditableBook()
     {

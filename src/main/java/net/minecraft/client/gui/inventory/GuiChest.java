@@ -12,7 +12,6 @@ public class GuiChest extends GuiContainer
     private final IInventory upperChestInventory;
     private final IInventory lowerChestInventory;
     private final int inventoryRows;
-    private static final String __OBFID = "CL_00000749";
 
     public GuiChest(IInventory p_i46315_1_, IInventory p_i46315_2_)
     {

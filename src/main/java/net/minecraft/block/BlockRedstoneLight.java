@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 public class BlockRedstoneLight extends Block
 {
     private final boolean field_150171_a;
-    private static final String __OBFID = "CL_00000297";
 
     public BlockRedstoneLight(boolean p_i45421_1_)
     {

@@ -9,7 +9,6 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 public class C16PacketClientStatus extends Packet
 {
     private C16PacketClientStatus.EnumState status;
-    private static final String __OBFID = "CL_00001348";
 
     public C16PacketClientStatus() {}
 
@@ -58,7 +57,6 @@ public class C16PacketClientStatus extends Packet
         private static final C16PacketClientStatus.EnumState[] BY_ID = new C16PacketClientStatus.EnumState[values().length];
 
         private static final C16PacketClientStatus.EnumState[] $VALUES = {PERFORM_RESPAWN, REQUEST_STATS, OPEN_INVENTORY_ACHIEVEMENT};
-        private static final String __OBFID = "CL_00001349";
 
         EnumState(String p_i45241_1_, int p_i45241_2_, int statusId)
         {

@@ -122,7 +122,6 @@ public class RenderManager
     public double viewerPosY;
     public double viewerPosZ;
     public static boolean debugBoundingBox;
-    private static final String __OBFID = "CL_00000991";
 
     private RenderManager()
     {

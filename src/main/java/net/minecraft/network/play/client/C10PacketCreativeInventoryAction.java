@@ -11,7 +11,6 @@ public class C10PacketCreativeInventoryAction extends Packet
 {
     private int slotId;
     private ItemStack stack;
-    private static final String __OBFID = "CL_00001369";
 
     public C10PacketCreativeInventoryAction() {}
 

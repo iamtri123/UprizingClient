@@ -15,7 +15,6 @@ public class C13PacketPlayerAbilities extends Packet
     private boolean creativeMode;
     private float flySpeed;
     private float walkSpeed;
-    private static final String __OBFID = "CL_00001364";
 
     public C13PacketPlayerAbilities() {}
 

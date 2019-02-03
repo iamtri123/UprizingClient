@@ -23,7 +23,6 @@ public class BlockBrewingStand extends BlockContainer
 {
     private final Random rand = new Random();
     private IIcon iconBrewingStandBase;
-    private static final String __OBFID = "CL_00000207";
 
     public BlockBrewingStand()
     {

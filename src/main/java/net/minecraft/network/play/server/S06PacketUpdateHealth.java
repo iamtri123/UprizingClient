@@ -11,7 +11,6 @@ public class S06PacketUpdateHealth extends Packet
     private float health;
     private int foodLevel;
     private float saturationLevel;
-    private static final String __OBFID = "CL_00001332";
 
     public S06PacketUpdateHealth() {}
 

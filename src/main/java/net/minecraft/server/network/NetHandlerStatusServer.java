@@ -15,7 +15,6 @@ public class NetHandlerStatusServer implements INetHandlerStatusServer
 {
     private final MinecraftServer server;
     private final NetworkManager networkManager;
-    private static final String __OBFID = "CL_00001464";
 
     public NetHandlerStatusServer(MinecraftServer serverIn, NetworkManager netManager)
     {

@@ -24,7 +24,6 @@ public class BlockPistonBase extends Block
     private IIcon innerTopIcon;
     private IIcon bottomIcon;
     private IIcon topIcon;
-    private static final String __OBFID = "CL_00000366";
 
     public BlockPistonBase(boolean p_i45443_1_)
     {

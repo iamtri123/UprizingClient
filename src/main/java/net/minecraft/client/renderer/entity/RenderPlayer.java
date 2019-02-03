@@ -33,7 +33,6 @@ public class RenderPlayer extends RendererLivingEntity
     private final ModelBiped modelBipedMain;
     private final ModelBiped modelArmorChestplate;
     private final ModelBiped modelArmor;
-    private static final String __OBFID = "CL_00001020";
 
     public RenderPlayer()
     {

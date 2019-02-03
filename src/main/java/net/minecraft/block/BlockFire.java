@@ -16,7 +16,6 @@ public class BlockFire extends Block
     private final int[] field_149849_a = new int[256];
     private final int[] field_149848_b = new int[256];
     private IIcon[] field_149850_M;
-    private static final String __OBFID = "CL_00000245";
 
     protected BlockFire()
     {

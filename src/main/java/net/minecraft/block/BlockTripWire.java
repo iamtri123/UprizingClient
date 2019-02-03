@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 
 public class BlockTripWire extends Block
 {
-    private static final String __OBFID = "CL_00000328";
 
     public BlockTripWire()
     {

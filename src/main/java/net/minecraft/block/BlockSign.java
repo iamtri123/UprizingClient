@@ -16,7 +16,6 @@ public class BlockSign extends BlockContainer
 {
     private final Class field_149968_a;
     private final boolean field_149967_b;
-    private static final String __OBFID = "CL_00000306";
 
     protected BlockSign(Class p_i45426_1_, boolean p_i45426_2_)
     {

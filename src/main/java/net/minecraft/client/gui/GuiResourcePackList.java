@@ -10,7 +10,6 @@ public abstract class GuiResourcePackList extends GuiListExtended
 {
     protected final Minecraft mc;
     protected final List field_148204_l;
-    private static final String __OBFID = "CL_00000825";
 
     public GuiResourcePackList(Minecraft p_i45055_1_, int p_i45055_2_, int p_i45055_3_, List p_i45055_4_)
     {

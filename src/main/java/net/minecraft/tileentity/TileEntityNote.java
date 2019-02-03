@@ -9,7 +9,6 @@ public class TileEntityNote extends TileEntity
 {
     public byte note;
     public boolean previousRedstoneState;
-    private static final String __OBFID = "CL_00000362";
 
     public void writeToNBT(NBTTagCompound compound)
     {

@@ -27,7 +27,6 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     public int currentItemBurnTime;
     public int furnaceCookTime;
     private String furnaceCustomName;
-    private static final String __OBFID = "CL_00000357";
 
     /**
      * Returns the number of slots in the inventory.

@@ -7,7 +7,6 @@ public class ClickEvent
 {
     private final ClickEvent.Action action;
     private final String value;
-    private static final String __OBFID = "CL_00001260";
 
     public ClickEvent(ClickEvent.Action p_i45156_1_, String p_i45156_2_)
     {

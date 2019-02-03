@@ -7,7 +7,6 @@ import net.minecraft.tileentity.TileEntityDispenser;
 public class ContainerDispenser extends Container
 {
     private final TileEntityDispenser tileEntityDispenser;
-    private static final String __OBFID = "CL_00001763";
 
     public ContainerDispenser(IInventory p_i1825_1_, TileEntityDispenser p_i1825_2_)
     {

@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 public class BlockDaylightDetector extends BlockContainer
 {
     private final IIcon[] field_149958_a = new IIcon[2];
-    private static final String __OBFID = "CL_00000223";
 
     public BlockDaylightDetector()
     {

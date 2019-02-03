@@ -9,7 +9,6 @@ public class WeightedRandomFishable extends WeightedRandom.Item
     private final ItemStack returnStack;
     private float maxDamagePercent;
     private boolean enchantable;
-    private static final String __OBFID = "CL_00001664";
 
     public WeightedRandomFishable(ItemStack p_i45317_1_, int p_i45317_2_)
     {

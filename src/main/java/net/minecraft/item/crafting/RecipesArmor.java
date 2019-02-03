@@ -9,7 +9,6 @@ public class RecipesArmor
 {
     private final String[][] recipePatterns = {{"XXX", "X X"}, {"X X", "XXX", "XXX"}, {"XXX", "X X", "X X"}, {"X X", "X X"}};
     private final Object[][] recipeItems;
-    private static final String __OBFID = "CL_00000080";
 
     public RecipesArmor()
     {

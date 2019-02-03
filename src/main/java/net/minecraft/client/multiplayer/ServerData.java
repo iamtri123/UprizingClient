@@ -32,7 +32,6 @@ public class ServerData
     private ServerData.ServerResourceMode resourceMode;
     private String serverIcon;
     private boolean lanServer;
-    private static final String __OBFID = "CL_00000890";
 
     public ServerData(String p_i1193_1_, String p_i1193_2_)
     {
@@ -147,7 +146,6 @@ public class ServerData
         private final IChatComponent motd;
 
         private static final ServerData.ServerResourceMode[] $VALUES = {ENABLED, DISABLED, PROMPT};
-        private static final String __OBFID = "CL_00001833";
 
         ServerResourceMode(String p_i1053_1_, int p_i1053_2_, String p_i1053_3_)
         {

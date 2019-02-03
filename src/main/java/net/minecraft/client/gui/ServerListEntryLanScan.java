@@ -7,7 +7,6 @@ import net.minecraft.client.resources.I18n;
 public class ServerListEntryLanScan implements GuiListExtended.IGuiListEntry
 {
     private final Minecraft field_148288_a = Minecraft.getInstance();
-    private static final String __OBFID = "CL_00000815";
 
     public boolean isMovable() {
         return true;

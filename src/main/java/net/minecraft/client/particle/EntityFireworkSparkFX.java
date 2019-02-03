@@ -14,7 +14,6 @@ public class EntityFireworkSparkFX extends EntityFX
     private float fadeColourGreen;
     private float fadeColourBlue;
     private boolean hasFadeColour;
-    private static final String __OBFID = "CL_00000905";
 
     public EntityFireworkSparkFX(World p_i46356_1_, double p_i46356_2_, double p_i46356_4_, double p_i46356_6_, double p_i46356_8_, double p_i46356_10_, double p_i46356_12_, EffectRenderer p_i46356_14_)
     {

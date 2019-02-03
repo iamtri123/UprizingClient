@@ -15,7 +15,6 @@ public class C00Handshake extends Packet
     private String ip;
     private int port;
     private EnumConnectionState requestedState;
-    private static final String __OBFID = "CL_00001372";
 
     public C00Handshake() {}
 

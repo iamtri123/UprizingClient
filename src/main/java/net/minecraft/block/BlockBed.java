@@ -23,7 +23,6 @@ public class BlockBed extends BlockDirectional
     private IIcon[] iconEnd;
     private IIcon[] iconSide;
     private IIcon[] iconTop;
-    private static final String __OBFID = "CL_00000198";
 
     public BlockBed()
     {

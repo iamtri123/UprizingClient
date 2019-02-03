@@ -49,7 +49,6 @@ public class PlayerProfileCache
     private final File usercacheFile;
     private static final ParameterizedType field_152666_h = new ParameterizedType()
     {
-        private static final String __OBFID = "CL_00001886";
         public Type[] getActualTypeArguments()
         {
             return new Type[] {PlayerProfileCache.ProfileEntry.class};
@@ -63,7 +62,6 @@ public class PlayerProfileCache
             return null;
         }
     };
-    private static final String __OBFID = "CL_00001888";
 
     public PlayerProfileCache(MinecraftServer p_i1171_1_, File p_i1171_2_)
     {
@@ -80,7 +78,6 @@ public class PlayerProfileCache
         final GameProfile[] var2 = new GameProfile[1];
         ProfileLookupCallback var3 = new ProfileLookupCallback()
         {
-            private static final String __OBFID = "CL_00001887";
             public void onProfileLookupSucceeded(GameProfile p_onProfileLookupSucceeded_1_)
             {
                 var2[0] = p_onProfileLookupSucceeded_1_;
@@ -324,7 +321,6 @@ public class PlayerProfileCache
     {
         private final GameProfile field_152672_b;
         private final Date field_152673_c;
-        private static final String __OBFID = "CL_00001885";
 
         private ProfileEntry(GameProfile p_i46333_2_, Date p_i46333_3_)
         {
@@ -350,7 +346,6 @@ public class PlayerProfileCache
 
     class Serializer implements JsonDeserializer, JsonSerializer
     {
-        private static final String __OBFID = "CL_00001884";
 
         private Serializer() {}
 

@@ -26,7 +26,6 @@ public class RegionFile
     /** McRegion sizeDelta */
     private int sizeDelta;
     private long lastModified;
-    private static final String __OBFID = "CL_00000381";
 
     public RegionFile(File p_i2001_1_)
     {
@@ -356,7 +355,6 @@ public class RegionFile
     {
         private final int chunkX;
         private final int chunkZ;
-        private static final String __OBFID = "CL_00000382";
 
         public ChunkBuffer(int p_i2000_2_, int p_i2000_3_)
         {

@@ -33,7 +33,6 @@ public class GuiEnchantment extends GuiContainer
     public float field_147076_A;
     ItemStack field_147077_B;
     private final String field_147079_H;
-    private static final String __OBFID = "CL_00000757";
 
     public GuiEnchantment(InventoryPlayer p_i46398_1_, World p_i46398_2_, int p_i46398_3_, int p_i46398_4_, int p_i46398_5_, String p_i46398_6_)
     {

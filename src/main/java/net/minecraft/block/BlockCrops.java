@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 public class BlockCrops extends BlockBush implements IGrowable
 {
     private IIcon[] icons;
-    private static final String __OBFID = "CL_00000222";
 
     protected BlockCrops()
     {

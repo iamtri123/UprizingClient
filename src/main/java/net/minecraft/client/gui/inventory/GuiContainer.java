@@ -50,7 +50,6 @@ public abstract class GuiContainer extends GuiScreen
     private int lastClickButton;
     private boolean doubleClick;
     private ItemStack shiftClickedSlot;
-    private static final String __OBFID = "CL_00000737";
 
     public GuiContainer(Container p_i1072_1_)
     {

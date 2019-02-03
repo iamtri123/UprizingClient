@@ -23,7 +23,6 @@ public class GuiRepair extends GuiContainer implements ICrafting
     private final ContainerRepair anvil;
     private GuiTextField nameField;
     private final InventoryPlayer playerInventory;
-    private static final String __OBFID = "CL_00000738";
 
     public GuiRepair(InventoryPlayer p_i46381_1_, World p_i46381_2_, int p_i46381_3_, int p_i46381_4_, int p_i46381_5_)
     {

@@ -27,7 +27,6 @@ public class Teleporter
      * location.
      */
     private final List destinationCoordinateKeys = new ArrayList();
-    private static final String __OBFID = "CL_00000153";
 
     public Teleporter(WorldServer worldIn)
     {
@@ -514,7 +513,6 @@ public class Teleporter
     public class PortalPosition extends ChunkCoordinates
     {
         public long lastUpdateTime;
-        private static final String __OBFID = "CL_00000154";
 
         public PortalPosition(int p_i1962_2_, int p_i1962_3_, int p_i1962_4_, long p_i1962_5_)
         {

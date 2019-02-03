@@ -12,7 +12,6 @@ public class C0CPacketInput extends Packet
     private float forwardSpeed;
     private boolean jumping;
     private boolean sneaking;
-    private static final String __OBFID = "CL_00001367";
 
     public C0CPacketInput() {}
 

@@ -14,7 +14,6 @@ public class S0APacketUseBed extends Packet
     private int x;
     private int y;
     private int z;
-    private static final String __OBFID = "CL_00001319";
 
     public S0APacketUseBed() {}
 

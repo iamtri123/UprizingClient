@@ -47,7 +47,6 @@ public class ChunkProviderServer implements IChunkProvider
     private final LongHashMap loadedChunkHashMap = new LongHashMap();
     private final List loadedChunks = new ArrayList();
     private final WorldServer worldObj;
-    private static final String __OBFID = "CL_00001436";
 
     public ChunkProviderServer(WorldServer p_i1520_1_, IChunkLoader p_i1520_2_, IChunkProvider p_i1520_3_)
     {

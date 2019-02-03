@@ -9,7 +9,6 @@ import javax.crypto.ShortBufferException;
 public class NettyEncryptingEncoder extends MessageToByteEncoder
 {
     private final NettyEncryptionTranslator encryptionCodec;
-    private static final String __OBFID = "CL_00001239";
 
     public NettyEncryptingEncoder(Cipher cipher)
     {

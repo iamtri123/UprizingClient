@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 
 public class BlockSnow extends Block
 {
-    private static final String __OBFID = "CL_00000309";
 
     protected BlockSnow()
     {

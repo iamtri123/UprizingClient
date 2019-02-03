@@ -112,7 +112,6 @@ public class Tessellator
     private VertexData[] vertexDatas;
     private final boolean[] drawnIcons;
     private TextureAtlasSprite[] vertexQuadIcons;
-    private static final String __OBFID = "CL_00000960";
 
     public Tessellator()
     {

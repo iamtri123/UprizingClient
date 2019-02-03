@@ -16,7 +16,6 @@ public class TileEntitySkull extends TileEntity
     private int skullType;
     private int skullRotation;
     private GameProfile field_152110_j = null;
-    private static final String __OBFID = "CL_00000364";
 
     public void writeToNBT(NBTTagCompound compound)
     {

@@ -22,7 +22,6 @@ public class PotionEffect
 
     /** True if potion effect duration is at maximum, false otherwise. */
     private boolean isPotionDurationMax;
-    private static final String __OBFID = "CL_00001529";
 
     public PotionEffect(int p_i1574_1_, int p_i1574_2_)
     {

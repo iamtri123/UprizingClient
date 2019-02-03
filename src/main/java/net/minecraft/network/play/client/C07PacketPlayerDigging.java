@@ -13,7 +13,6 @@ public class C07PacketPlayerDigging extends Packet
     private int diggedBlockZ;
     private int diggingBlockFace;
     private int status;
-    private static final String __OBFID = "CL_00001365";
 
     public C07PacketPlayerDigging() {}
 

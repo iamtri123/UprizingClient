@@ -8,7 +8,6 @@ public class EntityBodyHelper
     private final EntityLivingBase theLiving;
     private int rotationTickCounter;
     private float prevRenderYawHead;
-    private static final String __OBFID = "CL_00001570";
 
     public EntityBodyHelper(EntityLivingBase p_i1611_1_)
     {

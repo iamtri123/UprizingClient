@@ -13,7 +13,6 @@ public class BlockSand extends BlockFalling
     public static final String[] field_149838_a = {"default", "red"};
     private static IIcon sandIcon;
     private static IIcon redSandIcon;
-    private static final String __OBFID = "CL_00000303";
 
     /**
      * Gets the block's texture. Args: side, meta

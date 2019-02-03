@@ -117,7 +117,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     private double lastPosY;
     private double lastPosZ;
     private boolean hasMoved = true;
-    private static final String __OBFID = "CL_00001452";
 
     public NetHandlerPlayServer(MinecraftServer server, NetworkManager networkManagerIn, EntityPlayerMP player)
     {
@@ -174,7 +173,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
         final ChatComponentText var2 = new ChatComponentText(reason);
         this.netManager.scheduleOutboundPacket(new S40PacketDisconnect(var2), new GenericFutureListener()
             {
-                private static final String __OBFID = "CL_00001453";
                 public void operationComplete(Future p_operationComplete_1_)
                 {
                     NetHandlerPlayServer.this.netManager.closeChannel(var2);
@@ -658,7 +656,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
             CrashReportCategory var4 = var6.makeCategory("Packet being sent");
             var4.addCrashSectionCallable("Packet class", new Callable()
             {
-                private static final String __OBFID = "CL_00001454";
                 public String call()
                 {
                     return packetIn.getClass().getCanonicalName();
@@ -1353,7 +1350,6 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer
     static final class SwitchEnumState
     {
         static final int[] field_151290_a = new int[C16PacketClientStatus.EnumState.values().length];
-        private static final String __OBFID = "CL_00001455";
 
         static
         {

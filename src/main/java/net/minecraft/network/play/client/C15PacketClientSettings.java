@@ -16,7 +16,6 @@ public class C15PacketClientSettings extends Packet
     private boolean enableColors;
     private EnumDifficulty difficulty;
     private boolean showCape;
-    private static final String __OBFID = "CL_00001350";
 
     public C15PacketClientSettings() {}
 

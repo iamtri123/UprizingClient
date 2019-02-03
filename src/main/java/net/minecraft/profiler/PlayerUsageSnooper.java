@@ -34,7 +34,6 @@ public class PlayerUsageSnooper
 
     /** incremented on every getSelfCounterFor */
     private int selfCounter;
-    private static final String __OBFID = "CL_00001515";
 
     public PlayerUsageSnooper(String p_i1563_1_, IPlayerUsage p_i1563_2_, long p_i1563_3_)
     {
@@ -62,7 +61,6 @@ public class PlayerUsageSnooper
             this.func_152766_h();
             this.threadTrigger.schedule(new TimerTask()
             {
-                private static final String __OBFID = "CL_00001516";
                 public void run()
                 {
                     if (PlayerUsageSnooper.this.playerStatsCollector.isSnooperEnabled())

@@ -17,7 +17,6 @@ public class GuiInventory extends InventoryEffectRenderer
 {
     private float oldMouseX;
     private float oldMouseY;
-    private static final String __OBFID = "CL_00000761";
 
     public GuiInventory(EntityPlayer p_i1094_1_)
     {

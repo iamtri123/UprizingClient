@@ -16,7 +16,6 @@ public class BlockCake extends Block
     private IIcon iconTop;
     private IIcon iconBottom;
     private IIcon iconInner;
-    private static final String __OBFID = "CL_00000211";
 
     protected BlockCake()
     {

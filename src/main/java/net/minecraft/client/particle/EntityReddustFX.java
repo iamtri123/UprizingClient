@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 public class EntityReddustFX extends EntityFX
 {
     float reddustParticleScale;
-    private static final String __OBFID = "CL_00000923";
 
     public EntityReddustFX(World p_i46349_1_, double p_i46349_2_, double p_i46349_4_, double p_i46349_6_, float p_i46349_8_, float p_i46349_9_, float p_i46349_10_)
     {

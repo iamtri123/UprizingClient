@@ -10,7 +10,6 @@ public class BlockBreakable extends Block
 {
     private final boolean ignoreSimilarity;
     private final String name;
-    private static final String __OBFID = "CL_00000254";
 
     protected BlockBreakable(String name, Material materialIn, boolean ignoreSimilarity)
     {

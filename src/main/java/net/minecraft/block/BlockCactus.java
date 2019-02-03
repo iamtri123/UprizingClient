@@ -15,7 +15,6 @@ public class BlockCactus extends Block
 {
     private IIcon iconTop;
     private IIcon iconBottom;
-    private static final String __OBFID = "CL_00000210";
 
     protected BlockCactus()
     {

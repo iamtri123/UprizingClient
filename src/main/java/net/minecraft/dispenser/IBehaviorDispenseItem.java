@@ -6,7 +6,6 @@ public interface IBehaviorDispenseItem
 {
     IBehaviorDispenseItem itemDispenseBehaviorProvider = new IBehaviorDispenseItem()
     {
-        private static final String __OBFID = "CL_00001200";
         public ItemStack dispense(IBlockSource source, ItemStack stack)
         {
             return stack;

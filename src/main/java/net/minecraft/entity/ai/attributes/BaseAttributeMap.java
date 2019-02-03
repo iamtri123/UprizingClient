@@ -12,7 +12,6 @@ public abstract class BaseAttributeMap
 {
     protected final Map attributes = new HashMap();
     protected final Map attributesByName = new LowerStringMap();
-    private static final String __OBFID = "CL_00001566";
 
     public IAttributeInstance getAttributeInstance(IAttribute p_111151_1_)
     {

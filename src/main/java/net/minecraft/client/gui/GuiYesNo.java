@@ -12,7 +12,6 @@ public class GuiYesNo extends GuiScreen
     protected String cancelButtonText;
     protected int parentButtonClickedId;
     private int ticksUntilEnable;
-    private static final String __OBFID = "CL_00000684";
 
     public GuiYesNo(GuiYesNoCallback p_i1082_1_, String p_i1082_2_, String p_i1082_3_, int p_i1082_4_)
     {

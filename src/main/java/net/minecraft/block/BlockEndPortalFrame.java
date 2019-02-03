@@ -18,7 +18,6 @@ public class BlockEndPortalFrame extends Block
 {
     private IIcon iconEndPortalFrameTop;
     private IIcon iconEndPortalFrameEye;
-    private static final String __OBFID = "CL_00000237";
 
     public BlockEndPortalFrame()
     {

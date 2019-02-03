@@ -14,7 +14,6 @@ public class ItemBlock extends Item
 {
     protected final Block blockInstance;
     private IIcon field_150938_b;
-    private static final String __OBFID = "CL_00001772";
 
     public ItemBlock(Block p_i45328_1_)
     {

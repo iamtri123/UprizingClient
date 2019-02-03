@@ -23,7 +23,6 @@ public class GuiWinGame extends GuiScreen
     private List field_146582_i;
     private int field_146579_r;
     private final float field_146578_s = 0.5F;
-    private static final String __OBFID = "CL_00000719";
 
     /**
      * Called from the main game loop to update the screen.

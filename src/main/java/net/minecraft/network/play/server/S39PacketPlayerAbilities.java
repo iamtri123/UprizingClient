@@ -15,7 +15,6 @@ public class S39PacketPlayerAbilities extends Packet
     private boolean creativeMode;
     private float flySpeed;
     private float walkSpeed;
-    private static final String __OBFID = "CL_00001317";
 
     public S39PacketPlayerAbilities() {}
 

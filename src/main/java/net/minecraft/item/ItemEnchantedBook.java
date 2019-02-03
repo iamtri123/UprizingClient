@@ -13,7 +13,6 @@ import net.minecraft.util.WeightedRandomChestContent;
 
 public class ItemEnchantedBook extends Item
 {
-    private static final String __OBFID = "CL_00000025";
 
     public boolean hasEffect(ItemStack p_77636_1_)
     {

@@ -33,7 +33,6 @@ public class SkinManager
     private final File skinCacheDir;
     private final MinecraftSessionService sessionService;
     private final LoadingCache skinCacheLoader;
-    private static final String __OBFID = "CL_00001830";
 
     public SkinManager(TextureManager textureManagerInstance, File skinCacheDirectory, MinecraftSessionService sessionService)
     {
@@ -42,7 +41,6 @@ public class SkinManager
         this.sessionService = sessionService;
         this.skinCacheLoader = CacheBuilder.newBuilder().expireAfterAccess(15L, TimeUnit.SECONDS).build(new CacheLoader()
         {
-            private static final String __OBFID = "CL_00001829";
             public Map func_152786_a(GameProfile p_152786_1_)
             {
                 return Minecraft.getInstance().getSessionService().getTextures(p_152786_1_, false);
@@ -78,7 +76,6 @@ public class SkinManager
             final ImageBufferDownload var8 = p_152789_2_ == Type.SKIN ? new ImageBufferDownload() : null;
             ThreadDownloadImageData var9 = new ThreadDownloadImageData(var7, p_152789_1_.getUrl(), DEFAULT_SKIN, new IImageBuffer()
             {
-                private static final String __OBFID = "CL_00001828";
                 public BufferedImage parseUserSkin(BufferedImage p_78432_1_)
                 {
                     if (var8 != null)
@@ -111,7 +108,6 @@ public class SkinManager
     {
         THREAD_POOL.submit(new Runnable()
         {
-            private static final String __OBFID = "CL_00001827";
             public void run()
             {
                 final HashMap var1 = Maps.newHashMap();
@@ -131,7 +127,6 @@ public class SkinManager
 
                 Minecraft.getInstance().addScheduledTask(new Runnable()
                 {
-                    private static final String __OBFID = "CL_00001826";
                     public void run()
                     {
                         if (var1.containsKey(Type.SKIN))

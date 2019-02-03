@@ -9,7 +9,6 @@ public class EntityPortalFX extends EntityFX
     private final double portalPosX;
     private final double portalPosY;
     private final double portalPosZ;
-    private static final String __OBFID = "CL_00000921";
 
     public EntityPortalFX(World p_i46351_1_, double p_i46351_2_, double p_i46351_4_, double p_i46351_6_, double p_i46351_8_, double p_i46351_10_, double p_i46351_12_)
     {

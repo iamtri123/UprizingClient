@@ -11,7 +11,6 @@ public class S0BPacketAnimation extends Packet
 {
     private int entityId;
     private int type;
-    private static final String __OBFID = "CL_00001282";
 
     public S0BPacketAnimation() {}
 

@@ -35,7 +35,6 @@ public class EnchantmentHelper
     private static final EnchantmentHelper.ModifierLiving enchantmentModifierLiving = new EnchantmentHelper.ModifierLiving(null);
     private static final EnchantmentHelper.HurtIterator field_151388_d = new EnchantmentHelper.HurtIterator(null);
     private static final EnchantmentHelper.DamageIterator field_151389_e = new EnchantmentHelper.DamageIterator(null);
-    private static final String __OBFID = "CL_00000107";
 
     /**
      * Returns the level of enchantment on the ItemStack passed.
@@ -528,7 +527,6 @@ public class EnchantmentHelper
     {
         public EntityLivingBase field_151366_a;
         public Entity field_151365_b;
-        private static final String __OBFID = "CL_00000109";
 
         private DamageIterator() {}
 
@@ -547,7 +545,6 @@ public class EnchantmentHelper
     {
         public EntityLivingBase field_151364_a;
         public Entity field_151363_b;
-        private static final String __OBFID = "CL_00000110";
 
         private HurtIterator() {}
 
@@ -571,7 +568,6 @@ public class EnchantmentHelper
     {
         public int damageModifier;
         public DamageSource source;
-        private static final String __OBFID = "CL_00000114";
 
         private ModifierDamage() {}
 
@@ -590,7 +586,6 @@ public class EnchantmentHelper
     {
         public float livingModifier;
         public EnumCreatureAttribute entityLiving;
-        private static final String __OBFID = "CL_00000112";
 
         private ModifierLiving() {}
 

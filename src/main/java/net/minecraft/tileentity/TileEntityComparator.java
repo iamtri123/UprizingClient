@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 public class TileEntityComparator extends TileEntity
 {
     private int outputSignal;
-    private static final String __OBFID = "CL_00000349";
 
     public void writeToNBT(NBTTagCompound compound)
     {

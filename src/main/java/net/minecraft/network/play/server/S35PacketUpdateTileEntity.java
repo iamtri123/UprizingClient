@@ -14,7 +14,6 @@ public class S35PacketUpdateTileEntity extends Packet
     private int z;
     private int metadata;
     private NBTTagCompound nbt;
-    private static final String __OBFID = "CL_00001285";
 
     public S35PacketUpdateTileEntity() {}
 

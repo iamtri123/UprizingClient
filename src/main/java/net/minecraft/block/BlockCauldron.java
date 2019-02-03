@@ -23,7 +23,6 @@ public class BlockCauldron extends Block
     private IIcon iconInner;
     private IIcon iconTop;
     private IIcon iconBottom;
-    private static final String __OBFID = "CL_00000213";
 
     public BlockCauldron()
     {

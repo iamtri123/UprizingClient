@@ -241,7 +241,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public long prevFrameTimeNano = -1L;
     private boolean lastShowDebugInfo = false;
     private long lastErrorCheckTimeMs = 0L;
-    private static final String __OBFID = "CL_00000947";
 
     public EntityRenderer(Minecraft p_i45076_1_, IResourceManager p_i45076_2_)
     {
@@ -1370,7 +1369,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     CrashReportCategory var11 = var10.makeCategory("Screen render details");
                     var11.addCrashSectionCallable("Screen name", new Callable()
                     {
-                        private static final String __OBFID = "CL_00000948";
                         public String call1()
                         {
                             return EntityRenderer.this.mc.currentScreen.getClass().getCanonicalName();
@@ -1382,7 +1380,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     });
                     var11.addCrashSectionCallable("Mouse location", new Callable()
                     {
-                        private static final String __OBFID = "CL_00000950";
                         public String call1()
                         {
                             return String.format("Scaled: (%d, %d). Absolute: (%d, %d)", Integer.valueOf(var161), Integer.valueOf(var171), Integer.valueOf(Mouse.getX()), Integer.valueOf(Mouse.getY()));
@@ -1394,7 +1391,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     });
                     var11.addCrashSectionCallable("Screen size", new Callable()
                     {
-                        private static final String __OBFID = "CL_00000951";
                         public String call1()
                         {
                             return String.format("Scaled: (%d, %d). Absolute: (%d, %d). Scale factor of %d", Integer.valueOf(var133.getScaledWidth()), Integer.valueOf(var133.getScaledHeight()), Integer.valueOf(EntityRenderer.this.mc.displayWidth), Integer.valueOf(EntityRenderer.this.mc.displayHeight), Integer.valueOf(var133.getScaleFactor()));

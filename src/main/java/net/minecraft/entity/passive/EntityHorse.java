@@ -42,7 +42,6 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
 {
     private static final IEntitySelector horseBreedingSelector = new IEntitySelector()
     {
-        private static final String __OBFID = "CL_00001642";
         public boolean isEntityApplicable(Entity p_82704_1_)
         {
             return p_82704_1_ instanceof EntityHorse && ((EntityHorse)p_82704_1_).func_110205_ce();
@@ -80,7 +79,6 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     private int gallopTime;
     private String field_110286_bQ;
     private final String[] field_110280_bR = new String[3];
-    private static final String __OBFID = "CL_00001641";
 
     public EntityHorse(World p_i1685_1_)
     {
@@ -1751,7 +1749,6 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     {
         public int field_111107_a;
         public int field_111106_b;
-        private static final String __OBFID = "CL_00001643";
 
         public GroupData(int p_i1684_1_, int p_i1684_2_)
         {

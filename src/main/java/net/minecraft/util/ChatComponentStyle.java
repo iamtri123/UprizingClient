@@ -14,7 +14,6 @@ public abstract class ChatComponentStyle implements IChatComponent
      */
     protected List siblings = Lists.newArrayList();
     private ChatStyle style;
-    private static final String __OBFID = "CL_00001257";
 
     /**
      * Appends the given component to the end of this one.
@@ -123,7 +122,6 @@ public abstract class ChatComponentStyle implements IChatComponent
     {
         Iterator var1 = Iterators.concat(Iterators.transform(components.iterator(), new Function()
         {
-            private static final String __OBFID = "CL_00001258";
             public Iterator apply(IChatComponent p_apply_1_)
             {
                 return p_apply_1_.iterator();
@@ -135,7 +133,6 @@ public abstract class ChatComponentStyle implements IChatComponent
         }));
         var1 = Iterators.transform(var1, new Function()
         {
-            private static final String __OBFID = "CL_00001259";
             public IChatComponent apply(IChatComponent p_apply_1_)
             {
                 IChatComponent var2 = p_apply_1_.createCopy();

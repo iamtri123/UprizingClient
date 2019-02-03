@@ -40,7 +40,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
     private final StatFileWriter field_146546_t;
     private GuiSlot displaySlot;
     private boolean doesGuiPauseGame = true;
-    private static final String __OBFID = "CL_00000723";
 
     public GuiStats(GuiScreen p_i1071_1_, StatFileWriter p_i1071_2_)
     {
@@ -199,7 +198,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         protected Comparator statSorter;
         protected int field_148217_o = -1;
         protected int field_148215_p;
-        private static final String __OBFID = "CL_00000730";
 
         protected Stats()
         {
@@ -423,7 +421,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
     class StatsBlock extends GuiStats.Stats
     {
-        private static final String __OBFID = "CL_00000724";
 
         public StatsBlock()
         {
@@ -457,7 +454,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
             this.statSorter = new Comparator()
             {
-                private static final String __OBFID = "CL_00000725";
                 public int compare(StatCrafting p_compare_1_, StatCrafting p_compare_2_)
                 {
                     int var3 = Item.getIdFromItem(p_compare_1_.func_150959_a());
@@ -562,7 +558,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
     class StatsGeneral extends GuiSlot
     {
-        private static final String __OBFID = "CL_00000726";
 
         public StatsGeneral()
         {
@@ -603,7 +598,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
     class StatsItem extends GuiStats.Stats
     {
-        private static final String __OBFID = "CL_00000727";
 
         public StatsItem()
         {
@@ -637,7 +631,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
             this.statSorter = new Comparator()
             {
-                private static final String __OBFID = "CL_00000728";
                 public int compare(StatCrafting p_compare_1_, StatCrafting p_compare_2_)
                 {
                     int var3 = Item.getIdFromItem(p_compare_1_.func_150959_a());
@@ -743,7 +736,6 @@ public class GuiStats extends GuiScreen implements IProgressMeter
     class StatsMobsList extends GuiSlot
     {
         private final List field_148222_l = new ArrayList();
-        private static final String __OBFID = "CL_00000729";
 
         public StatsMobsList()
         {

@@ -27,7 +27,6 @@ public class TileEntityChest extends TileEntity implements IInventory
     private int ticksSinceSync;
     private int cachedChestType;
     private String customName;
-    private static final String __OBFID = "CL_00000346";
 
     public TileEntityChest()
     {

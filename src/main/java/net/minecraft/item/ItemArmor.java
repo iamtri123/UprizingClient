@@ -26,7 +26,6 @@ public class ItemArmor extends Item
     public static final String[] EMPTY_SLOT_NAMES = {"empty_armor_slot_helmet", "empty_armor_slot_chestplate", "empty_armor_slot_leggings", "empty_armor_slot_boots"};
     private static final IBehaviorDispenseItem dispenserBehavior = new BehaviorDefaultDispenseItem()
     {
-        private static final String __OBFID = "CL_00001767";
         protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
         {
             EnumFacing var3 = BlockDispenser.getFacingDirection(source.getBlockMetadata());
@@ -78,7 +77,6 @@ public class ItemArmor extends Item
     private final ItemArmor.ArmorMaterial material;
     private IIcon overlayIcon;
     private IIcon emptySlotIcon;
-    private static final String __OBFID = "CL_00001766";
 
     public ItemArmor(ItemArmor.ArmorMaterial p_i45325_1_, int p_i45325_2_, int p_i45325_3_)
     {
@@ -291,7 +289,6 @@ public class ItemArmor extends Item
         private final int enchantability;
 
         private static final ItemArmor.ArmorMaterial[] $VALUES = {CLOTH, CHAIN, IRON, GOLD, DIAMOND};
-        private static final String __OBFID = "CL_00001768";
 
         ArmorMaterial(String p_i1827_1_, int p_i1827_2_, int p_i1827_3_, int[] p_i1827_4_, int p_i1827_5_)
         {

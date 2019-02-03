@@ -22,7 +22,6 @@ import net.minecraft.nbt.NBTTagCompound;
 public class PacketBuffer extends ByteBuf
 {
     private final ByteBuf buf;
-    private static final String __OBFID = "CL_00001251";
 
     public PacketBuffer(ByteBuf wrapped)
     {

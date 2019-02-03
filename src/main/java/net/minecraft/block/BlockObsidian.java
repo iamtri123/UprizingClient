@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 
 public class BlockObsidian extends BlockStone
 {
-    private static final String __OBFID = "CL_00000279";
 
     /**
      * Returns the quantity of items to drop on block destruction.

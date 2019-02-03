@@ -11,7 +11,6 @@ public class EntityAIEatGrass extends EntityAIBase
     private final EntityLiving grassEaterEntity;
     private final World entityWorld;
     int eatingGrassTimer;
-    private static final String __OBFID = "CL_00001582";
 
     public EntityAIEatGrass(EntityLiving p_i45314_1_)
     {

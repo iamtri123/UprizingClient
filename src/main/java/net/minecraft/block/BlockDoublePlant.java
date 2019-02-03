@@ -23,7 +23,6 @@ public class BlockDoublePlant extends BlockBush implements IGrowable
     private IIcon[] doublePlantBottomIcons;
     private IIcon[] doublePlantTopIcons;
     public IIcon[] sunflowerIcons;
-    private static final String __OBFID = "CL_00000231";
 
     public BlockDoublePlant()
     {

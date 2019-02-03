@@ -8,7 +8,6 @@ public class GuiDownloadTerrain extends GuiScreen
 {
     private final NetHandlerPlayClient netHandlerPlayClient;
     private int progress;
-    private static final String __OBFID = "CL_00000708";
 
     public GuiDownloadTerrain(NetHandlerPlayClient p_i45023_1_)
     {

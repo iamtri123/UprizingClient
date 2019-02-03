@@ -94,7 +94,6 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
         this.clearResources();
         logger.info("Reloading ResourceManager: " + joinerResourcePacks.join(Iterables.transform(p_110541_1_, new Function()
         {
-            private static final String __OBFID = "CL_00001092";
             public String apply(IResourcePack p_apply_1_)
             {
                 return p_apply_1_.getPackName();

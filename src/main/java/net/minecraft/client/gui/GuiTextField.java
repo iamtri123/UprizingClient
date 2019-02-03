@@ -24,7 +24,6 @@ public class GuiTextField extends Gui
     private int enabledColor = 14737632;
     private int disabledColor = 7368816;
     private boolean visible = true;
-    private static final String __OBFID = "CL_00000670";
 
     public GuiTextField(FontRenderer p_i46392_1_, int p_i46392_2_, int p_i46392_3_, int p_i46392_4_, int p_i46392_5_)
     {

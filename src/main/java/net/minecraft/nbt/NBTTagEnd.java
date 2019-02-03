@@ -6,7 +6,6 @@ import java.io.IOException;
 
 public class NBTTagEnd extends NBTBase
 {
-    private static final String __OBFID = "CL_00001219";
 
     void read(DataInput input, int depth, NBTSizeTracker sizeTracker) throws IOException {}
 

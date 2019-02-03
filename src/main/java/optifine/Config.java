@@ -1793,7 +1793,7 @@ public class Config
         int renderersActive = minecraft.renderGlobal.getCountActiveRenderers();
         int entities = minecraft.renderGlobal.getCountEntitiesRendered();
         int tileEntities = minecraft.renderGlobal.getCountTileEntitiesRendered();
-        String fpsStr = fps + " fps, C: " + renderersActive + ", E: " + entities + "+" + tileEntities + ", U: " + updates;
+        String fpsStr = fps + " fps, C: " + renderersActive + ", Entities: " + entities + "+" + tileEntities + ", Updates: " + updates;
         minecraft.fontRenderer.drawString(fpsStr, 2, 2, -2039584);
     }
 

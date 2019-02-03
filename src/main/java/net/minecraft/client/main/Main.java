@@ -9,6 +9,7 @@ import java.io.File;
 import java.net.Proxy;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
@@ -17,6 +18,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 
 public class Main {
+
+    private static final Random random = new Random();
 
     public static void main(String[] args) {
         args = concat(new String[] { "--assetIndex", "1.7.10" }, args);
@@ -71,6 +74,11 @@ public class Main {
 
         Thread.currentThread().setName("Client thread");
         minecraft.run();
+    }
+
+    private static Session createFakeSession(String email, String password) {
+        final GameProfile profile = new GameProfile(UUID.randomUUID(), "Uprizing" + random.nextInt(999));
+        return new Session(profile.getName(), profile.getId().toString(), "");
     }
 
     private static Session createSession(String email, String password) {

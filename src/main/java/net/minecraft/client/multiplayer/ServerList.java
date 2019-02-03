@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uprizing.Constants;
+import uprizing.util.Constants;
 
 public class ServerList
 {
@@ -38,7 +38,7 @@ public class ServerList
 			NBTTagCompound var1 = CompressedStreamTools.read(new File(this.mc.mcDataDir, "servers.dat"));
 
 			if (var1 == null) {
-				this.servers.add(new ServerData(Constants.NAME, Constants.ADDRESS_WITH_PORT));
+				this.servers.add(new ServerData(Constants.SERVER_NAME, Constants.SERVER_ADDRESS_WITH_PORT));
 				return;
 			}
 
@@ -50,10 +50,10 @@ public class ServerList
 
 			final ServerData serverData = this.servers.get(0);
 
-			if (!serverData.serverIP.equals(Constants.ADDRESS_WITH_PORT)) {
-				this.servers.add(0, new ServerData(Constants.NAME, Constants.ADDRESS_WITH_PORT));
-			} else if (!serverData.serverName.equals(Constants.NAME)) {
-				serverData.serverName = Constants.NAME;
+			if (!serverData.serverIP.equals( Constants.SERVER_ADDRESS_WITH_PORT)) {
+				this.servers.add(0, new ServerData(Constants.SERVER_NAME,  Constants.SERVER_ADDRESS_WITH_PORT));
+			} else if (!serverData.serverName.equals(Constants.SERVER_NAME)) {
+				serverData.serverName = Constants.SERVER_NAME;
 			}
 		} catch (Exception var4) {
 			logger.error("Couldn\'t load server list", var4);

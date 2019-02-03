@@ -66,7 +66,7 @@ public class GuiConnecting extends GuiScreen
                     var1 = InetAddress.getByName(ip);
                     GuiConnecting.this.networkManager = NetworkManager.provideLanClient(var1, port);
                     GuiConnecting.this.networkManager.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.networkManager, GuiConnecting.this.mc, GuiConnecting.this.previousGuiScreen));
-                    GuiConnecting.this.networkManager.scheduleOutboundPacket(new C00Handshake(GuiConnecting.this.mc.uprizing.dance(var1), ip, port, EnumConnectionState.LOGIN));
+                    GuiConnecting.this.networkManager.scheduleOutboundPacket(new C00Handshake(GuiConnecting.this.mc.uprizing.onConnecting(var1), ip, port, EnumConnectionState.LOGIN));
                     GuiConnecting.this.networkManager.scheduleOutboundPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
                 }
                 catch (UnknownHostException var5)

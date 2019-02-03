@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
+import uprizing.keybinding.KeyBindings;
 
 public class GuiScreenDemo extends GuiScreen
 {
@@ -79,11 +80,11 @@ public class GuiScreenDemo extends GuiScreen
         int var5 = (this.height - 166) / 2 + 8;
         this.fontRendererObj.drawString(I18n.format("demo.help.title"), var4, var5, 2039583);
         var5 += 12;
-        GameSettings var6 = this.mc.gameSettings;
-        this.fontRendererObj.drawString(I18n.format("demo.help.movementShort", GameSettings.getKeyDisplayString(var6.keyBindForward.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindLeft.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindBack.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindRight.getKeyCode())), var4, var5, 5197647);
+        KeyBindings var6 = mc.keyBindings;
+        this.fontRendererObj.drawString(I18n.format("demo.help.movementShort", GameSettings.getKeyDisplayString(var6.forward.getKeyCode()), GameSettings.getKeyDisplayString(var6.left.getKeyCode()), GameSettings.getKeyDisplayString(var6.back.getKeyCode()), GameSettings.getKeyDisplayString(var6.right.getKeyCode())), var4, var5, 5197647);
         this.fontRendererObj.drawString(I18n.format("demo.help.movementMouse"), var4, var5 + 12, 5197647);
-        this.fontRendererObj.drawString(I18n.format("demo.help.jump", GameSettings.getKeyDisplayString(var6.keyBindJump.getKeyCode())), var4, var5 + 24, 5197647);
-        this.fontRendererObj.drawString(I18n.format("demo.help.inventory", GameSettings.getKeyDisplayString(var6.keyBindInventory.getKeyCode())), var4, var5 + 36, 5197647);
+        this.fontRendererObj.drawString(I18n.format("demo.help.jump", GameSettings.getKeyDisplayString(var6.jump.getKeyCode())), var4, var5 + 24, 5197647);
+        this.fontRendererObj.drawString(I18n.format("demo.help.inventory", GameSettings.getKeyDisplayString(var6.inventory.getKeyCode())), var4, var5 + 36, 5197647);
         this.fontRendererObj.drawSplitString(I18n.format("demo.help.fullWrapped"), var4, var5 + 68, 218, 2039583);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

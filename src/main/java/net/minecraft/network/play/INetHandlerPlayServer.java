@@ -22,7 +22,7 @@ import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C15PacketClientSettings;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
-import uprizing.protocol.C18PacketUprizing;
+import uprizing.network.C18PacketUprizing;
 
 public interface INetHandlerPlayServer extends INetHandler {
 

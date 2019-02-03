@@ -72,17 +72,21 @@ public class GuiOptionsRowList extends GuiListExtended
             this.field_148324_c = p_i45014_2_;
         }
 
-        public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
+        public boolean isMovable() {
+            return true;
+        }
+
+        public void drawEntry(int p_148279_1_, int x, int y, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
         {
             if (this.field_148323_b != null)
             {
-                this.field_148323_b.yPosition = p_148279_3_;
+                this.field_148323_b.yPosition = y;
                 this.field_148323_b.drawButton(this.field_148325_a, p_148279_7_, p_148279_8_);
             }
 
             if (this.field_148324_c != null)
             {
-                this.field_148324_c.yPosition = p_148279_3_;
+                this.field_148324_c.yPosition = y;
                 this.field_148324_c.drawButton(this.field_148325_a, p_148279_7_, p_148279_8_);
             }
         }

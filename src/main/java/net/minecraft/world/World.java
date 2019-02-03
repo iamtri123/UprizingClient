@@ -49,7 +49,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldInfo;
-import uprizing.dimensions.Dimension;
+import uprizing.setting.defaults.DimensionSetting;
 
 public abstract class World implements IBlockAccess
 {
@@ -188,9 +188,9 @@ public abstract class World implements IBlockAccess
         return this.provider.worldChunkMgr;
     }
 
-    public final Dimension dimension;
+    public final DimensionSetting dimension;
 
-    public World(Dimension dimension, ISaveHandler p_i45368_1_, String p_i45368_2_, WorldProvider p_i45368_3_, WorldSettings p_i45368_4_)
+    public World(DimensionSetting dimension, ISaveHandler p_i45368_1_, String p_i45368_2_, WorldProvider p_i45368_3_, WorldSettings p_i45368_4_)
     {
     	this.dimension = dimension;
         this.ambientTickCountdown = this.rand.nextInt(12000);
@@ -1718,12 +1718,12 @@ public abstract class World implements IBlockAccess
      */
     public float getCelestialAngle(float p_72826_1_)
     {
-        return this.provider.calculateCelestialAngle(this.worldInfo.getWorldTime(), p_72826_1_);
+        return this.provider.calculateCelestialAngle(this.worldInfo.getCustomWorldTime(), p_72826_1_);
     }
 
     public int getMoonPhase()
     {
-        return this.provider.getMoonPhase(this.worldInfo.getWorldTime());
+        return this.provider.getMoonPhase(this.worldInfo.getCustomWorldTime());
     }
 
     /**
@@ -1731,7 +1731,7 @@ public abstract class World implements IBlockAccess
      */
     public float getCurrentMoonPhaseFactor()
     {
-        return WorldProvider.moonPhaseFactors[this.provider.getMoonPhase(this.worldInfo.getWorldTime())];
+        return WorldProvider.moonPhaseFactors[this.provider.getMoonPhase(this.worldInfo.getCustomWorldTime())];
     }
 
     /**

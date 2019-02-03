@@ -126,11 +126,10 @@ public class GuiIngame extends Gui {
             this.drawTexturedModalRect(width / 2 - 91, height - 22, 0, 0, 182, 22);
             this.drawTexturedModalRect(width / 2 - 91 - 1 + var31.currentItem * 20, height - 22 - 1, 0, 22, 24, 22);
             this.mc.getTextureManager().bindTexture(icons);
-            final boolean fuck = !this.mc.uprizing.getMotionBlur().isEnabled();
             GL11.glEnable(GL11.GL_BLEND);
-            if (fuck) OpenGlHelper.glBlendFunc(775, 769, 1, 0);
+            OpenGlHelper.glBlendFunc(775, 769, 1, 0);
             this.drawTexturedModalRect(width / 2 - 7, height / 2 - 7, 0, 0, 16, 16);
-            if (fuck) OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+            OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             this.renderBossHealth();
 
             if (this.mc.playerController.shouldDrawHUD()) {
@@ -140,10 +139,12 @@ public class GuiIngame extends Gui {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.enableGUIStandardItemLighting();
 
+            final boolean itemAnimation = mc.uprizing.getProperties().itemAnimation;
+
             for (var11 = 0; var11 < 9; ++var11) {
                 var12 = width / 2 - 90 + var11 * 20 + 2;
                 var13 = height - 16 - 3;
-                this.renderInventorySlot(var11, var12, var13, p_73830_1_);
+                this.renderInventorySlot(var11, var12, var13, p_73830_1_, itemAnimation);
             }
 
             RenderHelper.disableStandardItemLighting();
@@ -266,7 +267,7 @@ public class GuiIngame extends Gui {
 
         if (mc.gameSettings.showDebugInfo) {
             GL11.glPushMatrix();
-            var8.drawStringWithShadow("UprizingClient v0.0.8 (" + this.mc.debug + ")", 2, 2, 16777215);
+            var8.drawStringWithShadow("UprizingClient v1.0.0 (" + this.mc.debug + ")", 2, 2, 16777215);
             var8.drawStringWithShadow(mc.debugInfoRenders(), 2, 12, 16777215);
             var8.drawStringWithShadow(mc.getEntityDebug(), 2, 22, 16777215);
             var8.drawStringWithShadow(mc.debugInfoEntities(), 2, 32, 16777215);
@@ -352,7 +353,7 @@ public class GuiIngame extends Gui {
         GL11.glPopMatrix();
         var37 = this.mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(0);
 
-        if (this.mc.gameSettings.keyBindPlayerList.getIsKeyPressed() && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.playerInfoList.size() > 1 || var37 != null)) {
+        if (mc.keyBindings.playerList.getIsKeyPressed() && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.playerInfoList.size() > 1 || var37 != null)) {
             NetHandlerPlayClient var40 = this.mc.thePlayer.sendQueue;
             List var42 = var40.playerInfoList;
             var15 = var40.currentServerMaxPlayers;
@@ -764,14 +765,13 @@ public class GuiIngame extends Gui {
     /**
      * Renders the specified item of the inventory slot at the specified location. Args: slot, x, y, partialTick
      */
-    private void renderInventorySlot(int p_73832_1_, int p_73832_2_, int p_73832_3_, float p_73832_4_) {
+    private void renderInventorySlot(int p_73832_1_, int p_73832_2_, int p_73832_3_, float p_73832_4_, boolean itemAnimation) {
         ItemStack var5 = this.mc.thePlayer.inventory.mainInventory[p_73832_1_];
 
         if (var5 != null) {
             float var6 = (float) var5.animationsToGo - p_73832_4_;
-            final boolean animation = mc.uprizing.currentServer != null && !mc.uprizing.currentServer.options.disableItemAnimation; // temporary
 
-            if (animation && var6 > 0.0F) {
+            if (itemAnimation && var6 > 0.0F) {
                 GL11.glPushMatrix();
                 float var7 = 1.0F + var6 / 5.0F;
                 GL11.glTranslatef((float) (p_73832_2_ + 8), (float) (p_73832_3_ + 12), 0.0F);
@@ -781,7 +781,7 @@ public class GuiIngame extends Gui {
 
             itemRenderer.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.getTextureManager(), var5, p_73832_2_, p_73832_3_);
 
-            if (animation && var6 > 0.0F) {
+            if (itemAnimation && var6 > 0.0F) {
                 GL11.glPopMatrix();
             }
 

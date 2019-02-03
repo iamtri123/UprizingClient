@@ -10,7 +10,7 @@ import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
-import uprizing.UprizingSettings;
+import uprizing.setting.Settings;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -58,7 +58,7 @@ public class GuiNewChat extends Gui
                 int var11;
                 int var14;
 
-                final boolean flag = mc.uprizing.getBoolean(UprizingSettings.CHAT_BACKGROUND);
+                final boolean chatBackground = mc.uprizing.getBoolean(Settings.CHAT_BACKGROUND);
 
                 for (var9 = 0; var9 + this.scrollPos < this.field_146253_i.size() && var9 < var2; ++var9)
                 {
@@ -99,8 +99,11 @@ public class GuiNewChat extends Gui
                             {
                                 byte var15 = 0;
                                 int var16 = -var9 * 9;
-                                if (flag)
+
+                                if (chatBackground) {
                                     drawRect(var15, var16 - 9, var15 + var8 + 4, var16, var14 / 2 << 24);
+                                }
+
                                 String var17 = var10.getChatComponent().getFormattedText();
                                 this.mc.fontRenderer.drawStringWithShadow(var17, var15, var16 - 8, 16777215 + (var14 << 24));
                                 GL11.glDisable(GL11.GL_ALPHA_TEST);

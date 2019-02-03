@@ -22,30 +22,34 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
         this.field_148317_a = Minecraft.getInstance();
     }
 
-    public void drawEntry(int p_148279_1_, int p_148279_2_, int p_148279_3_, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
+    public boolean isMovable() {
+        return true;
+    }
+
+    public void drawEntry(int p_148279_1_, int x, int y, int p_148279_4_, int p_148279_5_, Tessellator p_148279_6_, int p_148279_7_, int p_148279_8_, boolean p_148279_9_)
     {
         this.func_148313_c();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 32.0F, 32.0F);
+        Gui.drawModalRectWithCustomSizedTexture(x, y, 0.0F, 0.0F, 32, 32, 32.0F, 32.0F);
         int var11;
 
         if ((this.field_148317_a.gameSettings.touchscreen || p_148279_9_) && this.func_148310_d())
         {
             this.field_148317_a.getTextureManager().bindTexture(field_148316_c);
-            Gui.drawRect(p_148279_2_, p_148279_3_, p_148279_2_ + 32, p_148279_3_ + 32, -1601138544);
+            Gui.drawRect(x, y, x + 32, y + 32, -1601138544);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            int var10 = p_148279_7_ - p_148279_2_;
-            var11 = p_148279_8_ - p_148279_3_;
+            int var10 = p_148279_7_ - x;
+            var11 = p_148279_8_ - y;
 
             if (this.func_148309_e())
             {
                 if (var10 < 32)
                 {
-                    Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 0.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 0.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                 }
                 else
                 {
-                    Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 0.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 0.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                 }
             }
             else
@@ -54,11 +58,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
                 {
                     if (var10 < 16)
                     {
-                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 32.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(x, y, 32.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                     }
                     else
                     {
-                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 32.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(x, y, 32.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                     }
                 }
 
@@ -66,11 +70,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
                 {
                     if (var10 < 32 && var10 > 16 && var11 < 16)
                     {
-                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 96.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(x, y, 96.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                     }
                     else
                     {
-                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 96.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(x, y, 96.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                     }
                 }
 
@@ -78,11 +82,11 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
                 {
                     if (var10 < 32 && var10 > 16 && var11 > 16)
                     {
-                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 64.0F, 32.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(x, y, 64.0F, 32.0F, 32, 32, 256.0F, 256.0F);
                     }
                     else
                     {
-                        Gui.drawModalRectWithCustomSizedTexture(p_148279_2_, p_148279_3_, 64.0F, 0.0F, 32, 32, 256.0F, 256.0F);
+                        Gui.drawModalRectWithCustomSizedTexture(x, y, 64.0F, 0.0F, 32, 32, 256.0F, 256.0F);
                     }
                 }
             }
@@ -96,12 +100,12 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
             var14 = this.field_148317_a.fontRenderer.trimStringToWidth(var14, 157 - this.field_148317_a.fontRenderer.getStringWidth("...")) + "...";
         }
 
-        this.field_148317_a.fontRenderer.drawStringWithShadow(var14, p_148279_2_ + 32 + 2, p_148279_3_ + 1, 16777215);
+        this.field_148317_a.fontRenderer.drawStringWithShadow(var14, x + 32 + 2, y + 1, 16777215);
         List var12 = this.field_148317_a.fontRenderer.listFormattedStringToWidth(this.func_148311_a(), 157);
 
         for (int var13 = 0; var13 < 2 && var13 < var12.size(); ++var13)
         {
-            this.field_148317_a.fontRenderer.drawStringWithShadow((String)var12.get(var13), p_148279_2_ + 32 + 2, p_148279_3_ + 12 + 10 * var13, 8421504);
+            this.field_148317_a.fontRenderer.drawStringWithShadow((String)var12.get(var13), x + 32 + 2, y + 12 + 10 * var13, 8421504);
         }
     }
 

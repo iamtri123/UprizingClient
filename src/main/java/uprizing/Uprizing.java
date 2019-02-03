@@ -1,120 +1,130 @@
 package uprizing;
 
-import lombok.Getter;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import optifine.Config;
-import org.lwjgl.input.Keyboard;
-import uprizing.dimensions.Dimension;
-import uprizing.draggables.Draggables;
-import uprizing.gui.GuiMenu;
-import uprizing.settings.Setting;
-import uprizing.settings.SettingUtils;
-import uprizing.waypoints.WaypointsMod;
-
 import java.io.File;
 import java.net.InetAddress;
+import lombok.Getter;
+import net.minecraft.client.Minecraft;
+import optifine.Config;
+import uprizing.beerus.BeerusServer;
+import uprizing.beerus.BeerusServers;
+import uprizing.draggable.Draggables;
+import uprizing.draggable.defaults.ClicksPerSecond;
+import uprizing.draggable.defaults.FramesPerSecond;
+import uprizing.draw.Drawers;
+import uprizing.gui.GuiUprizingMenu;
+import uprizing.gui.waypoint.GuiWaypoint;
+import uprizing.gui.waypoint.GuiWaypointsMenu;
+import uprizing.setting.Setting;
+import uprizing.setting.SettingUtils;
+import uprizing.setting.Settings;
+import uprizing.setting.defaults.DimensionSetting;
+import uprizing.util.Constants;
+import uprizing.waypoint.Waypoints;
 
-@Getter
 public class Uprizing {
 
 	@Getter private static Uprizing instance;
-	private static final int DEFAULT_PROTOCOL = 5;
-	public static final int ALGERIAN_PROTOCOL = -213;
 
-	private final Minecraft minecraft;
+	@Getter private final Minecraft minecraft;
+
+	@Getter private final Settings settings;
 	private final File settingsFile;
-	private final BeerusServers servers = new BeerusServers();
 
-	private String serverHostAddress;
+	@Getter private final Draggables draggables = new Draggables();
+	@Getter private final ClicksPerSecond clicksPerSecond;
+	public final FramesPerSecond framesPerSecond;
+
+	@Getter private final Drawers drawers;
+	@Getter private final BeerusServers beerusServers;
+	@Getter private final SidebarDrawer sidebarDrawer = new SidebarDrawer(this);
+
+	private ClientProperties defaultProperties = ClientProperties.vanilla();
+	@Getter private ClientProperties properties;
+	@Getter private String serverHostAddress;
 	public BeerusServer currentServer;
 
-	@Getter private final ClicksPerSecond clicksPerSecond = new ClicksPerSecond();
-	private final WaypointsMod waypointsMod;
-	private final Draggables draggables;
-	private final UprizingSettings settings;
-
-	public final Dimension dimension = new Dimension();
-	private final MotionBlur motionBlur;
-	private final SidebarDrawer sidebarDrawer = new SidebarDrawer(this);
-	private final ToggleSprint toggleSprint = new ToggleSprint();
-
-	private final KeyBinding openMenuKeyBinding = UprizingUtils.keyBinding("Open Menu", Keyboard.KEY_G, "Uprizing Client");
+	@Getter private final ToggleSprint toggleSprint;
+	/*!*/@Getter private final Waypoints waypoints;
+	/*!*/@Getter public final DimensionSetting dimension;
 
 	public Uprizing(final Minecraft minecraft, final File mainDir) {
 		instance = this;
 
 		this.minecraft = minecraft;
-		this.settingsFile = new File(mainDir, "uprizing.txt");
-		this.draggables = new Draggables(clicksPerSecond, minecraft, toggleSprint);
-		this.motionBlur = new MotionBlur();
-		this.settings = new UprizingSettings(this);
-		SettingUtils.loadFromFile(settingsFile, settings);
-		this.waypointsMod = new WaypointsMod(this, mainDir);
 
-		this.initKeyBindings();
+		this.clicksPerSecond = new ClicksPerSecond();
+		this.framesPerSecond = new FramesPerSecond();
+
+		this.toggleSprint = new ToggleSprint();
+
+		this.settings = new Settings(this);
+		this.settingsFile = new File(mainDir, "settings.txt");
+		this.drawers = new Drawers(settings);
+		this.beerusServers = new BeerusServers();
+
+		this.properties = defaultProperties;
+
+		SettingUtils.loadFromFile(settingsFile, settings);
+
+		this.waypoints = new Waypoints(minecraft, mainDir);
+		this.dimension = getSetting(Settings.DIMENSION);
 
 		Config.initUprizing(this);
-		SettingUtils.saveToFile(settingsFile, settings);
 	}
 
-	public final String getServerHostAddress() { // TODO: CurrentServer, ClientProperties class
-		return serverHostAddress;
-	}
-
-	public final int dance(InetAddress address) { // TODO: dans Uprizing
-		serverHostAddress = address.getHostAddress();
-
-		for (BeerusServer server : servers.toArray()) {
-			if (server.isAllowed(serverHostAddress, minecraft.session)) {
-				currentServer = server;
-				return ALGERIAN_PROTOCOL;
-			}
-		}
-
-		return DEFAULT_PROTOCOL;
-	}
-
-	public final void reset() {
-		serverHostAddress = null;
-		currentServer = null;
-	}
-
-	public final void saveSettings() {
-		SettingUtils.saveToFile(settingsFile, settings);
-	}
-
-	@Deprecated
-	private void initKeyBindings() {
-		KeyBinding[] gameSettings = minecraft.gameSettings.keyBindings;
-		KeyBinding[] uprizing = waypointsMod.getKeyBindings();
-
-		KeyBinding[] keyBindings = new KeyBinding[gameSettings.length + uprizing.length + 1];
-		keyBindings[keyBindings.length - 1] = openMenuKeyBinding;
-
-		System.arraycopy(gameSettings, 0, keyBindings, 0, gameSettings.length);
-		System.arraycopy(uprizing, 0, keyBindings, gameSettings.length, uprizing.length);
-
-		minecraft.gameSettings.keyBindings = keyBindings;
-	}
-
-	public void runRenderTick() {
+	public void runRenderTick() { // TODO: fix tick
 		if (minecraft.currentScreen == null) {
-			if (openMenuKeyBinding.isPressed()) {
-				minecraft.displayGuiScreen(new GuiMenu(this));
+			if (minecraft.keyBindings.openMenu.isPressed()) {
+				minecraft.displayGuiScreen(new GuiUprizingMenu(this));
+			} else if (minecraft.keyBindings.addWaypoint.isPressed()) {
+				minecraft.displayGuiScreen(new GuiWaypoint(this));
+			} else if (minecraft.keyBindings.openWaypoints.isPressed()) {
+				minecraft.displayGuiScreen(new GuiWaypointsMenu(this));
 			} else if (!minecraft.gameSettings.showDebugInfo) { // && !minecraft.gameSettings.hideGUI
 				draggables.draw(minecraft.fontRenderer);
 			}
 		}
+	}
 
-		waypointsMod.onRenderTick();
+	public void onWorldLoading() {
+		waypoints.handleWorldLoading(minecraft);
+	}
+
+	public final int onConnecting(InetAddress address) { // TODO: dans Uprizing
+		serverHostAddress = address.getHostAddress();
+
+		for (BeerusServer beerusServer : beerusServers.getAsArray()) {
+			if (serverHostAddress.equals(beerusServer.hostAddress)) { // TODO: beerusServer isLocal
+				currentServer = beerusServer;
+				break;
+			}
+		}
+
+		int protocol = Constants.NOTCHIAN_PROTOCOL;
+
+		if (currentServer != null) {
+			properties = currentServer.getClientProperties();
+			protocol = Constants.ALGERIAN_PROTOCOL;
+		}
+
+		return protocol;
+	}
+
+	public final void reset() {
+		serverHostAddress = null;
+		properties = defaultProperties;
+		currentServer = null;
 	}
 
 	public final boolean getBoolean(int index) {
-		return settings.get(index).getAsBoolean();
+		return settings.getByIndex(index).getAsBoolean();
 	}
 
-	public final Setting getSetting(int index) {
-		return settings.get(index);
+	public final <T extends Setting> T  getSetting(int index) {
+		return (T) settings.getByIndex(index);
+	}
+
+	public final void saveSettings() {
+		SettingUtils.saveToFile(settingsFile, settings);
 	}
 }

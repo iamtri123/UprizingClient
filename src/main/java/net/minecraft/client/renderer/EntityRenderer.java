@@ -70,7 +70,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Project;
-import uprizing.dimensions.Dimension;
+import uprizing.setting.defaults.DimensionSetting;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -281,7 +281,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.theShaderGroup.deleteShaderGroup();
         }
 
-        this.mc.uprizing.getMotionBlur().reset();
         this.theShaderGroup = null;
         this.shaderIndex = shaderCount;
     }
@@ -297,7 +296,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     this.theShaderGroup.deleteShaderGroup();
                 }
 
-                this.mc.uprizing.getMotionBlur().reset();
                 this.shaderIndex = (this.shaderIndex + 1) % (shaderResourceLocations.length + 1);
 
                 if (this.shaderIndex != shaderCount)
@@ -334,7 +332,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.theShaderGroup.deleteShaderGroup();
         }
 
-        if (!this.mc.uprizing.getMotionBlur().reload() && this.shaderIndex != shaderCount) {
+        if (this.shaderIndex != shaderCount) {
             try {
                 this.theShaderGroup = new ShaderGroup(this.mc.getTextureManager(), par1ResourceManager, this.mc.getFramebuffer(), shaderResourceLocations[this.shaderIndex]);
                 this.theShaderGroup.createBindFramebuffers(this.mc.displayWidth, this.mc.displayHeight);
@@ -578,13 +576,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             if (this.mc.currentScreen == null)
             {
-                if (this.mc.gameSettings.ofKeyBindZoom.getKeyCode() < 0)
+                if (mc.keyBindings.zoom.getKeyCode() < 0)
                 {
-                    zoomActive = Mouse.isButtonDown(this.mc.gameSettings.ofKeyBindZoom.getKeyCode() + 100);
+                    zoomActive = Mouse.isButtonDown(mc.keyBindings.zoom.getKeyCode() + 100);
                 }
                 else
                 {
-                    zoomActive = Keyboard.isKeyDown(this.mc.gameSettings.ofKeyBindZoom.getKeyCode());
+                    zoomActive = Keyboard.isKeyDown(mc.keyBindings.zoom.getKeyCode());
                 }
             }
 
@@ -2009,7 +2007,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         float var4 = 0.25F + 0.75F * (float)this.mc.gameSettings.renderDistanceChunks / 16.0F;
         var4 = 1.0F - (float)Math.pow((double)var4, 0.25D);
         Vec3 var5 = var2.getSkyColor(this.mc.renderViewEntity, par1);
-        Dimension dimension = this.mc.uprizing.dimension;
+        DimensionSetting dimension = this.mc.uprizing.dimension;
         var5 = CustomColorizer.getWorldSkyColor(var5, dimension, this.mc.renderViewEntity, par1);
         float var6 = (float)var5.xCoord;
         float var7 = (float)var5.yCoord;

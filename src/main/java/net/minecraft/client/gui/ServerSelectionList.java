@@ -7,8 +7,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.network.LanServerDetector;
-import uprizing.BeerusServers;
-import uprizing.gui.BeerusServerListEntry;
+import uprizing.beerus.BeerusServer;
+import uprizing.beerus.BeerusServers;
+import uprizing.beerus.BeerusServerListEntry;
 
 public class ServerSelectionList extends GuiListExtended
 {
@@ -69,13 +70,14 @@ public class ServerSelectionList extends GuiListExtended
     public void func_148195_a(ServerList p_148195_1_) {
         this.field_148198_l.clear();
 
-        final BeerusServers servers = Minecraft.getInstance().uprizing.getServers();
+        final BeerusServers servers = Minecraft.getInstance().uprizing.getBeerusServers();
 
         for (int var2 = 0; var2 < p_148195_1_.countServers(); ++var2) {
             final ServerData serverData = p_148195_1_.getServerData(var2);
+            final BeerusServer beerusServer = servers.getByServerIp(serverData.serverIP);
 
-            if (servers.isBeerusServer(serverData.serverIP)) {
-                this.field_148198_l.add(new BeerusServerListEntry(this.owner, serverData));
+            if (beerusServer != null) {
+                this.field_148198_l.add(new BeerusServerListEntry(this.owner, serverData, beerusServer));
             } else {
                 this.field_148198_l.add(new ServerListEntryNormal(this.owner, serverData));
             }

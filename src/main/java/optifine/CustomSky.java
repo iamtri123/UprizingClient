@@ -1,16 +1,15 @@
 package optifine;
 
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import uprizing.dimensions.Dimension;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import uprizing.setting.defaults.DimensionSetting;
 
 public class CustomSky
 {
@@ -130,13 +129,13 @@ public class CustomSky
         }
     }
 
-    public static void renderSky(World world, Dimension dimension, TextureManager re, float celestialAngle, float rainBrightness)
+    public static void renderSky(World world, DimensionSetting dimension, TextureManager re, float celestialAngle, float rainBrightness)
     {
         if (worldSkyLayers != null)
         {
             if (Config.getGameSettings().renderDistanceChunks >= 8)
             {
-                int dimId = dimension.asSexyCopy();
+                int dimId = dimension.getId();
 
                 if (dimId >= 0 && dimId < worldSkyLayers.length)
                 {
@@ -164,7 +163,7 @@ public class CustomSky
         }
     }
 
-    public static boolean hasSkyLayers(Dimension dimension)
+    public static boolean hasSkyLayers(DimensionSetting dimension)
     {
         if (worldSkyLayers == null)
         {
@@ -176,7 +175,7 @@ public class CustomSky
         }
         else
         {
-            int dimId = dimension.asSexyCopy();
+            int dimId = dimension.getId();
 
             if (dimId >= 0 && dimId < worldSkyLayers.length)
             {

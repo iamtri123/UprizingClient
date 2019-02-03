@@ -1,42 +1,42 @@
 package net.minecraft.util;
 
-import net.minecraft.client.settings.GameSettings;
 import uprizing.ToggleSprint;
+import uprizing.keybinding.KeyBindings;
 
 public class MovementInputFromOptions extends MovementInput {
 
-	private final GameSettings gameSettings;
+	private final KeyBindings keyBindings;
 	private final ToggleSprint toggleSprint;
 	private boolean keyBindJumpPressed;
 	private boolean keyBindSneakPressed;
 
-	public MovementInputFromOptions(GameSettings p_i1237_1_, ToggleSprint toggleSprint) {
-		this.gameSettings = p_i1237_1_;
+	public MovementInputFromOptions(KeyBindings keyBindings, ToggleSprint toggleSprint) {
+		this.keyBindings = keyBindings;
 		this.toggleSprint = toggleSprint;
 	}
 
 	public void updatePlayerMoveState() {
-		this.moveStrafe = 0.0F;
-		this.moveForward = 0.0F;
+		moveStrafe = 0.0F;
+		moveForward = 0.0F;
 
-		if (this.gameSettings.keyBindForward.getIsKeyPressed()) {
-			++this.moveForward;
+		if (keyBindings.forward.getIsKeyPressed()) {
+			++moveForward;
 		}
 
-		if (this.gameSettings.keyBindBack.getIsKeyPressed()) {
-			--this.moveForward;
+		if (keyBindings.back.getIsKeyPressed()) {
+			--moveForward;
 		}
 
-		if (this.gameSettings.keyBindLeft.getIsKeyPressed()) {
-			++this.moveStrafe;
+		if (keyBindings.left.getIsKeyPressed()) {
+			++moveStrafe;
 		}
 
-		if (this.gameSettings.keyBindRight.getIsKeyPressed()) {
-			--this.moveStrafe;
+		if (keyBindings.right.getIsKeyPressed()) {
+			--moveStrafe;
 		}
 
-		if (gameSettings.keyBindJump.getIsKeyPressed()) {
-			if (toggleSprint.jumpEnabled) {
+		if (keyBindings.jump.getIsKeyPressed()) {
+			if (toggleSprint.alwaysJumping) {
 				if (!keyBindJumpPressed) {
 					jump = !jump;
 					keyBindJumpPressed = true;
@@ -44,7 +44,7 @@ public class MovementInputFromOptions extends MovementInput {
 			} else if (!jump) { // vanilla
 				jump = true;
 			}
-		} else if (toggleSprint.jumpEnabled) {
+		} else if (toggleSprint.alwaysJumping) {
 			if (keyBindJumpPressed) {
 				keyBindJumpPressed = false;
 			}
@@ -52,8 +52,8 @@ public class MovementInputFromOptions extends MovementInput {
 			jump = false;
 		}
 
-		if (gameSettings.keyBindSneak.getIsKeyPressed()) { // TODO: support fly, ride
-			if (toggleSprint.sneakEnabled) {
+		if (keyBindings.sneak.getIsKeyPressed()) { // TODO: support fly, ride
+			if (toggleSprint.alwaysSneaking) {
 				if (!keyBindSneakPressed) {
 					sneak = !sneak;
 					keyBindSneakPressed = true;
@@ -63,19 +63,19 @@ public class MovementInputFromOptions extends MovementInput {
 			}
 
 			toggleSprint.mode = ToggleSprint.SNEAKING_KEY_HELD;
-		} else if (toggleSprint.sneakEnabled) {
+		} else if (toggleSprint.alwaysSneaking) {
 			if (keyBindSneakPressed) {
 				keyBindSneakPressed = false;
 				toggleSprint.mode = sneak ? ToggleSprint.SNEAKING_TOGGLED : ToggleSprint.OFF;
 			}
-		} else if (sneak) { // vanilla
+		} else if (sneak) { // vanilla - sneak mais n'appuie plus sur la touche
 			sneak = false;
 			toggleSprint.mode = ToggleSprint.OFF;
 		}
 
-		if (this.sneak) {
-			this.moveStrafe = (float) ((double) this.moveStrafe * 0.3D);
-			this.moveForward = (float) ((double) this.moveForward * 0.3D);
+		if (sneak) {
+			moveStrafe = (float) ((double) moveStrafe * 0.3D);
+			moveForward = (float) ((double) moveForward * 0.3D);
 		}
 	}
 }

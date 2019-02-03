@@ -83,7 +83,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
      */
     protected void keyTyped(char typedChar, int keyCode)
     {
-        if (keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
+        if (keyCode == this.mc.keyBindings.inventory.getKeyCode())
         {
             this.mc.displayGuiScreen((GuiScreen)null);
             this.mc.setIngameFocus();

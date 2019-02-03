@@ -127,7 +127,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
             toggleSprint.mode = ToggleSprint.JUMPING_MAGIC;
         } else if (sprinting) {
             toggleSprint.mode = ToggleSprint.JUMPING_SPRINTING;
-        } else if (toggleSprint.jumpEnabled) {
+        } else if (toggleSprint.alwaysJumping) {
             toggleSprint.mode = ToggleSprint.JUMPING_TOGGLED;
         } else {
             toggleSprint.mode = ToggleSprint.JUMPING_VANILLA;
@@ -147,7 +147,13 @@ public class EntityPlayerSP extends AbstractClientPlayer {
         final ToggleSprint toggleSprint = mc.uprizing.getToggleSprint();
 
         if (test && onGround) {
-            toggleSprint.mode = this.isSprinting() ? toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA : ToggleSprint.OFF;
+            toggleSprint.mode =
+                this.isSprinting() ?
+                    toggleSprint.alwaysSprinting ?
+                        ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA :
+                movementInput.sneak ?
+                    toggleSprint.alwaysSneaking ? ToggleSprint.SNEAKING_TOGGLED : ToggleSprint.SNEAKING_KEY_HELD :
+                ToggleSprint.OFF;
             test = false;
         }
 
@@ -231,59 +237,61 @@ public class EntityPlayerSP extends AbstractClientPlayer {
             boolean var4 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
             final boolean var5 = this.movementInput.moveForward >= var2;
-            final boolean sprinting = this.isSprinting();
 
-            if (this.onGround && !var3 && var5 && !sprinting && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
-                if (toggleSprint.sprintEnabled) {
+            if (this.onGround && !var3 && var5 && !this.isSprinting() && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
+                if (!toggleSprint.doubleTapping) {
                     //System.out.println("5 (commence directement en courant grâce à ToggleSprint");
                     this.setSprinting(true);
                     toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
                 } else {
-                    if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
+                    if (this.sprintToggleTimer <= 0 && !mc.keyBindings.sprint.getIsKeyPressed()) {
                         //System.out.println("1 (commence en marchant)");
                         this.sprintToggleTimer = 7;
                         toggleSprint.mode = ToggleSprint.WALKING_VANILLA;
                     } else {
-                        //System.out.println("2 (commence en courant OU en double appuyant sur avancer avant que le premier timer soit à 0)");
+                        //System.out.println("2 (commence en courant OU en double appuyant sur avancer avant que le premier timer soit à 0)"); // TODO: mode 3 qui s'active après
                         this.setSprinting(true);
                         toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
                     }
                 }
             }
 
-            if (!toggleSprint.sprintEnabled) {
-                if (!sprinting && var5 && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.getIsKeyPressed()) {
+            if (toggleSprint.doubleTapping) {
+                if (!this.isSprinting() && var5 && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && mc.keyBindings.sprint.getIsKeyPressed()) {
                     //System.out.println("3 (active le sprint quand je marche)");
                     this.setSprinting(true);
                     toggleSprint.mode = toggleSprint.alwaysSprinting ? ToggleSprint.SPRINTING_TOGGLED : ToggleSprint.SPRINTING_VANILLA;
                 }
             }
 
-            if (sprinting) {
-                if (this.isCollidedHorizontally || !var4) {
-                    //System.out.println("4-1 (s'arrête [bouffe ou mur])");
+            if (this.isSprinting()) {
+                if (!var4 || (isCollidedHorizontally && !toggleSprint.alwaysSprinting)) {
+                    //System.out.println("4-1 (s'arrête: mur ou bouffe)");
                     this.setSprinting(false);
-                    toggleSprint.mode = ToggleSprint.OFF;
-                } else if (this.movementInput.moveForward < var2) {
-                    if (!toggleSprint.alwaysSprinting || this.movementInput.moveForward == 0) { // remove disabling when player get pushing back (hit, explosion, etc..)
-                        //System.out.println("4-2 (s'arrête)"); // var2 = 0.8
+                    toggleSprint.mode = ToggleSprint.WALKING_VANILLA;
+                } else if (movementInput.moveForward < var2) { // var2 = 0.8 (0.2: quand tu reçois un coup)
+                    if (!toggleSprint.alwaysSprinting || movementInput.moveForward == 0) { // remove disabling when player get pushing back (hit, explosion, etc..)
+                        //System.out.println("4-2 (s'arrête: sprint)");
                         this.setSprinting(false);
                         toggleSprint.mode = ToggleSprint.OFF;
                     }
                 }
+            } else if (movementInput.moveForward == 0 && toggleSprint.mode == ToggleSprint.WALKING_VANILLA) {
+                //System.out.println("4-3 (s'arrête: walk)");
+                toggleSprint.mode = ToggleSprint.OFF;
             }
 
             /* TODO: Added to the client soon (respect other server) */
             //if (this.capabilities.isCreativeMode && this.capabilities.isFlying && toggleSprint.flyingBoost != 0 && this.mc.gameSettings.keyBindSprint.isPressed()) {
-            //this.capabilities.setFlySpeed(0.05f * (float) toggleSprint.flyingBoost);
+                //this.capabilities.setFlySpeed(0.05f * (float) toggleSprint.flyingBoost);
 
-            //if (this.movementInput.sneak) {
-            //this.motionY -= 0.15 * toggleSprint.flyingBoost;
-            //} else if (this.movementInput.jump) {
-            //this.motionY += 0.15 * toggleSprint.flyingBoost;
-            //}
+                //if (this.movementInput.sneak) {
+                //this.motionY -= 0.15 * toggleSprint.flyingBoost;
+                //} else if (this.movementInput.jump) {
+                    //this.motionY += 0.15 * toggleSprint.flyingBoost;
+                //}
             //} else if (this.capabilities.getFlySpeed() == 0.05f) {
-            //this.capabilities.setFlySpeed(0.05f);
+                //this.capabilities.setFlySpeed(0.05f);
             //}
             /* TODO: Added to the client soon (respect other server) */
 

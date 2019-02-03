@@ -11,9 +11,7 @@ import net.minecraft.client.network.OldServerPinger;
 import net.minecraft.client.resources.I18n;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
-import uprizing.gui.BeerusServerListEntry;
 
 public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 {
@@ -265,7 +263,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                     {
                         if (var3 > 0 && var4 instanceof ServerListEntryNormal)
                         {
-                            if (this.serverListSelector.getListEntry(var3 - 1) instanceof BeerusServerListEntry){
+                            if (!this.serverListSelector.getListEntry(var3 - 1).isMovable()) {
                                 return;
                             }
 
@@ -302,7 +300,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
                 {
                     if (isShiftKeyDown())
                     {
-                        if (var3 < this.savedServerList.countServers() - 1 && !(var4 instanceof BeerusServerListEntry))
+                        if (var3 < this.savedServerList.countServers() - 1 && var4.isMovable())
                         {
                             this.savedServerList.swapServers(var3, var3 + 1);
                             this.selectServer(var3 + 1);
@@ -371,8 +369,6 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 
         if (var1 instanceof ServerListEntryNormal) {
             this.connectToServer(((ServerListEntryNormal) var1).getServerData());
-        } else if (var1 instanceof BeerusServerListEntry) {
-            this.connectToServer(((BeerusServerListEntry) var1).getServerData());
         } else if (var1 instanceof ServerListEntryLanDetected) {
             LanServerDetector.LanServer var2 = ((ServerListEntryLanDetected) var1).getLanServer();
             this.connectToServer(new ServerData(var2.getServerMotd(), var2.getServerIpPort(), true));
@@ -396,7 +392,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         {
             this.btnSelectServer.enabled = true;
 
-            if (var2 instanceof ServerListEntryNormal)
+            if (var2.isMovable())
             {
                 this.btnEditServer.enabled = true;
                 this.btnDeleteServer.enabled = true;

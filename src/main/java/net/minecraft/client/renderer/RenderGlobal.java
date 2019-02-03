@@ -640,7 +640,7 @@ public class RenderGlobal implements IWorldAccess
             this.mc.gameSettings.fancyGraphics = Config.isDroppedItemsFancy();
 
             if (!this.mc.gameSettings.hideGUI) {
-                this.mc.uprizing.getWaypointsMod().renderWaypoints(p_147589_2_);
+                this.mc.uprizing.getWaypoints().renderWaypoints(p_147589_2_);
             }
 
             for (var25 = 0; var25 < var24.size(); ++var25)

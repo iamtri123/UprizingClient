@@ -9,7 +9,9 @@ import java.util.UUID;
 @Getter
 public class Session {
 
-    private final String username, playerID, token;
+    private final String username;
+    private final String playerID;
+    private final String token;
     private final Session.Type sessionType;
 
     public Session(String p_i1098_1_, String p_i1098_2_, String p_i1098_3_) {

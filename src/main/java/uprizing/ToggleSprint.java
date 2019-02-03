@@ -3,9 +3,10 @@ package uprizing;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.FontRenderer;
-import uprizing.draggables.Draggable;
+import uprizing.draggable.Draggable;
+import uprizing.util.Constants;
+import uprizing.util.TextAndColor;
 
-@Getter
 public class ToggleSprint implements Draggable {
 
 	public static final int OFF = -1;
@@ -20,86 +21,58 @@ public class ToggleSprint implements Draggable {
 	public static final int SPRINTING_TOGGLED = 8;
 	public static final int WALKING_VANILLA = 9;
 
-	public boolean enabled = false;
-	private final String name = "ToggleSprint";
+	@Getter private final String name = "ToggleSprint";
 	private final int width = 100;
 	private final int height = 10;
-	@Setter private int posX;
-	@Setter private int posY;
-	private final String sexyText = "[Stawlker (Master)]";
-	public int mode = -1;
-	public final TextAndColor[] textAndColors = new TextAndColor[10];
+	@Getter @Setter private int posX;
+	@Getter @Setter private int posY;
+	public int mode = OFF;
+	@Getter public final TextAndColor[] textAndColors = new TextAndColor[10];
 	public boolean showText = false;
-	public boolean sneakEnabled = false;
-	public boolean jumpEnabled = false;
-	public boolean sprintEnabled = false; // TODO: public int sprintMode = Off, On, Double-Tapping.
+	public boolean alwaysSneaking = false;
+	public boolean alwaysJumping = false;
+	public boolean doubleTapping = true;
 	public boolean alwaysSprinting = false;
-	public double flyingBoost = 0;
-	private final double[] storage = { 1, 1, 0, 1, 1, 4 };
+
+	/**
+	 * TODO:
+	 * - Riding
+	 * - Flying, Flying (4x boost)
+	 * - Descending
+	 * - Dismounting
+	 * - Jumping
+	 *
+	 * EntityPlayer.onLivingUpdate:
+	 * - 1. début
+	 * - 2. movementInput.updatePlayerMoveState()
+	 * - 3. juste après le 2
+	 */
 
 	public ToggleSprint() {
-		textAndColors[SNEAKING_KEY_HELD] = new TextAndColor("Sneaking 1", "[Sneaking (Key Held)]", -1);
-		textAndColors[SNEAKING_TOGGLED] = new TextAndColor("Sneaking 2", "[Sneaking (Toggled)]", -1);
-		textAndColors[JUMPING_VANILLA] = new TextAndColor("Jumping 1", "[Jumping (Vanilla)]", -1);
-		textAndColors[JUMPING_SPRINTING] = new TextAndColor("Jumping 1", "[Jumping (Sprinting)]", -1);
-		textAndColors[JUMPING_MAGIC] = new TextAndColor("Jumping 2", "[Jumping (Magic)]", -1);
-		textAndColors[JUMPING_TOGGLED] = new TextAndColor("Jumping 3", "[Jumping (Toggled)]", -1);
-		textAndColors[SPRINTING_KEY_HELD] = new TextAndColor("Sprinting 1", "[Sprinting (Key Held)]", -1);
-		textAndColors[SPRINTING_VANILLA] = new TextAndColor("Sprinting 2", "[Sprinting (Vanilla)]", -1);
-		textAndColors[SPRINTING_TOGGLED] = new TextAndColor("Sprinting 3", "[Sprinting (Toggled)]", -1);
-		textAndColors[WALKING_VANILLA] = new TextAndColor("Walking 1", "[Walking (Vanilla)]", -1);
+		textAndColors[SNEAKING_KEY_HELD] = new TextAndColor("Sneaking 1", "[Sneaking (Key Held)]", Constants.sexyColor);
+		textAndColors[SNEAKING_TOGGLED] = new TextAndColor("Sneaking 2", "[Sneaking (Toggled)]", Constants.sexyColor);
+		textAndColors[JUMPING_VANILLA] = new TextAndColor("Jumping 1", "[Jumping (Vanilla)]", Constants.sexyColor);
+		textAndColors[JUMPING_SPRINTING] = new TextAndColor("Jumping 1", "[Jumping (Sprinting)]", Constants.sexyColor);
+		textAndColors[JUMPING_MAGIC] = new TextAndColor("Jumping 2", "[Jumping (Magic)]", Constants.sexyColor);
+		textAndColors[JUMPING_TOGGLED] = new TextAndColor("Jumping 3", "[Jumping (Toggled)]", Constants.sexyColor);
+		textAndColors[SPRINTING_KEY_HELD] = new TextAndColor("Sprinting 1", "[Sprinting (Key Held)]", Constants.sexyColor);
+		textAndColors[SPRINTING_VANILLA] = new TextAndColor("Sprinting 2", "[Sprinting (Vanilla)]", Constants.sexyColor);
+		textAndColors[SPRINTING_TOGGLED] = new TextAndColor("Sprinting 3", "[Sprinting (Toggled)]", Constants.sexyColor);
+		textAndColors[WALKING_VANILLA] = new TextAndColor("Walking 1", "[Walking (Vanilla)]", Constants.sexyColor);
 
-		/**
-		 * TODO:
-		 * - Riding
-		 * - Flying, Flying (4x boost)
-		 * - Descending
-		 * - Dismounting
-		 * - Jumping
-		 */
+		Uprizing.getInstance().getDraggables().addDraggable(this);
 	}
 
-	final TextAndColor[] getTextAndColors() {
-		return textAndColors;
-	}
 
-	public void enable() {
-		enabled = true;
-
-		showText = storage[0] == 1;
-		sneakEnabled = storage[1] == 1;
-		jumpEnabled = storage[2] == 1;
-		sprintEnabled = storage[3] == 1;
-		alwaysSprinting = storage[4] == 1;
-		flyingBoost = storage[5];
-	}
-
-	public void disable() {
-		storage[0] = showText ? 1 : 0;
-		storage[1] = sneakEnabled ? 1 : 0;
-		storage[2] = jumpEnabled ? 1 : 0;
-		storage[3] = sprintEnabled ? 1 : 0;
-		storage[4] = alwaysSprinting ? 1 : 0;
-		storage[5] = flyingBoost;
-
-		enabled = showText = sneakEnabled = jumpEnabled = sprintEnabled = alwaysSprinting = false;
-		flyingBoost = 0;
-	}
 
 	@Override
 	public final boolean isHovered(int mouseX, int mouseY) {
-		return enabled && mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
-	}
-
-	@Override
-	public final void move(int mouseX, int mouseY) {
-		posX += mouseX;
-		posY += mouseY;
+		return showText && mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
 	}
 
 	@Override
 	public final void draw(FontRenderer fontRenderer) {
-		if (!showText || mode == -1) return;
+		if (!showText || mode == OFF) return;
 
 		final TextAndColor textAndColor = textAndColors[mode];
 
@@ -107,9 +80,29 @@ public class ToggleSprint implements Draggable {
 	}
 
 	@Override
-	public final void drawSlut(FontRenderer fontRenderer) {
-		if (!enabled) return;
+	public void forceDraw(FontRenderer fontRenderer) {
+		if (!showText) return;
 
-		fontRenderer.drawStringWithShadow(sexyText, posX, posY, -1);
+		final TextAndColor textAndColor = textAndColors[SPRINTING_TOGGLED];
+
+		fontRenderer.drawStringWithShadow(textAndColor.getKey(), posX, posY, textAndColor.getValue());
+	}
+
+	@Override
+	public final void move(int mouseX, int mouseY, int width, int height) {
+		posX += mouseX;
+		posY += mouseY;
+
+		if (posX < 0) {
+			posX = 0;
+		} else if (posX > width - this.width) {
+			posX = width - this.width;
+		}
+
+		if (posY < 0) {
+			posY = 0;
+		} else if (posY > height - this.height) {
+			posY = height - this.height;
+		}
 	}
 }

@@ -34,12 +34,12 @@ import optifine.TextureUtils;
 import optifine.WrUpdaterSmooth;
 import optifine.WrUpdaterThreaded;
 import optifine.WrUpdates;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import uprizing.keybinding.KeyBinding;
 
 public class GameSettings {
     private static final Logger logger = LogManager.getLogger();
@@ -158,7 +158,6 @@ public class GameSettings {
     public static final int CL_SMOOTH = 1;
     public static final int CL_THREADED = 2;
     public static final String DEFAULT_STR = "Default";
-    public KeyBinding ofKeyBindZoom;
     private File optionsFileOF;
 
     /**
@@ -202,27 +201,6 @@ public class GameSettings {
     public int mipmapLevels;
     public int anisotropicFiltering;
     private final Map mapSoundLevels;
-    public KeyBinding keyBindForward;
-    public KeyBinding keyBindLeft;
-    public KeyBinding keyBindBack;
-    public KeyBinding keyBindRight;
-    public KeyBinding keyBindJump;
-    public KeyBinding keyBindSneak;
-    public KeyBinding keyBindInventory;
-    public KeyBinding keyBindUseItem;
-    public KeyBinding keyBindDrop;
-    public KeyBinding keyBindAttack;
-    public KeyBinding keyBindPickBlock;
-    public KeyBinding keyBindSprint;
-    public KeyBinding keyBindChat;
-    public KeyBinding keyBindPlayerList;
-    public KeyBinding keyBindCommand;
-    public KeyBinding keyBindScreenshot;
-    public KeyBinding keyBindTogglePerspective;
-    public KeyBinding keyBindSmoothCamera;
-    public KeyBinding keyBindFullscreen;
-    public KeyBinding[] keyBindsHotbar;
-    public KeyBinding[] keyBindings;
     protected Minecraft mc;
     private File optionsFile;
     public EnumDifficulty difficulty;
@@ -278,7 +256,6 @@ public class GameSettings {
      */
     public String language;
     public boolean forceUnicodeFont;
-    private static final String __OBFID = "CL_00000650";
 
     public GameSettings(Minecraft par1Minecraft, File par2File) {
         this.chatVisibility = EntityPlayer.EnumChatVisibility.FULL;
@@ -299,27 +276,6 @@ public class GameSettings {
         this.mipmapLevels = 4;
         this.anisotropicFiltering = 1;
         this.mapSoundLevels = Maps.newEnumMap(SoundCategory.class);
-        this.keyBindForward = new KeyBinding("key.forward", 17, "key.categories.movement");
-        this.keyBindLeft = new KeyBinding("key.left", 30, "key.categories.movement");
-        this.keyBindBack = new KeyBinding("key.back", 31, "key.categories.movement");
-        this.keyBindRight = new KeyBinding("key.right", 32, "key.categories.movement");
-        this.keyBindJump = new KeyBinding("key.jump", 57, "key.categories.movement");
-        this.keyBindSneak = new KeyBinding("key.sneak", 42, "key.categories.movement");
-        this.keyBindInventory = new KeyBinding("key.inventory", 18, "key.categories.inventory");
-        this.keyBindUseItem = new KeyBinding("key.use", -99, "key.categories.gameplay");
-        this.keyBindDrop = new KeyBinding("key.drop", 16, "key.categories.gameplay");
-        this.keyBindAttack = new KeyBinding("key.attack", -100, "key.categories.gameplay");
-        this.keyBindPickBlock = new KeyBinding("key.pickItem", -98, "key.categories.gameplay");
-        this.keyBindSprint = new KeyBinding("key.sprint", 29, "key.categories.gameplay");
-        this.keyBindChat = new KeyBinding("key.chat", 20, "key.categories.multiplayer");
-        this.keyBindPlayerList = new KeyBinding("key.playerlist", 15, "key.categories.multiplayer");
-        this.keyBindCommand = new KeyBinding("key.command", 53, "key.categories.multiplayer");
-        this.keyBindScreenshot = new KeyBinding("key.screenshot", 60, "key.categories.misc");
-        this.keyBindTogglePerspective = new KeyBinding("key.togglePerspective", 63, "key.categories.misc");
-        this.keyBindSmoothCamera = new KeyBinding("key.smoothCamera", 0, "key.categories.misc");
-        this.keyBindFullscreen = new KeyBinding("key.fullscreen", 87, "key.categories.misc");
-        this.keyBindsHotbar = new KeyBinding[]{new KeyBinding("key.hotbar.1", 2, "key.categories.inventory"), new KeyBinding("key.hotbar.2", 3, "key.categories.inventory"), new KeyBinding("key.hotbar.3", 4, "key.categories.inventory"), new KeyBinding("key.hotbar.4", 5, "key.categories.inventory"), new KeyBinding("key.hotbar.5", 6, "key.categories.inventory"), new KeyBinding("key.hotbar.6", 7, "key.categories.inventory"), new KeyBinding("key.hotbar.7", 8, "key.categories.inventory"), new KeyBinding("key.hotbar.8", 9, "key.categories.inventory"), new KeyBinding("key.hotbar.9", 10, "key.categories.inventory")};
-        this.keyBindings = (KeyBinding[]) ((KeyBinding[]) ArrayUtils.addAll(new KeyBinding[]{this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindSprint, this.keyBindFullscreen}, this.keyBindsHotbar));
         this.difficulty = EnumDifficulty.NORMAL;
         this.lastServer = "";
         this.noclipRate = 1.0F;
@@ -331,8 +287,6 @@ public class GameSettings {
         this.optionsFile = new File(par2File, "options.txt");
         this.optionsFileOF = new File(par2File, "optionsof.txt");
         this.limitFramerate = (int) GameSettings.Options.FRAMERATE_LIMIT.getValueMax();
-        this.ofKeyBindZoom = new KeyBinding("Zoom", 29, "key.categories.misc");
-        this.keyBindings = (KeyBinding[]) ((KeyBinding[]) ArrayUtils.add(this.keyBindings, this.ofKeyBindZoom));
         GameSettings.Options.RENDER_DISTANCE.setValueMax(32.0F);
         this.renderDistanceChunks = par1Minecraft.isJava64bit() ? 12 : 8;
         this.loadOptions();
@@ -358,27 +312,6 @@ public class GameSettings {
         this.mipmapLevels = 4;
         this.anisotropicFiltering = 1;
         this.mapSoundLevels = Maps.newEnumMap(SoundCategory.class);
-        this.keyBindForward = new KeyBinding("key.forward", 17, "key.categories.movement");
-        this.keyBindLeft = new KeyBinding("key.left", 30, "key.categories.movement");
-        this.keyBindBack = new KeyBinding("key.back", 31, "key.categories.movement");
-        this.keyBindRight = new KeyBinding("key.right", 32, "key.categories.movement");
-        this.keyBindJump = new KeyBinding("key.jump", 57, "key.categories.movement");
-        this.keyBindSneak = new KeyBinding("key.sneak", 42, "key.categories.movement");
-        this.keyBindInventory = new KeyBinding("key.inventory", 18, "key.categories.inventory");
-        this.keyBindUseItem = new KeyBinding("key.use", -99, "key.categories.gameplay");
-        this.keyBindDrop = new KeyBinding("key.drop", 16, "key.categories.gameplay");
-        this.keyBindAttack = new KeyBinding("key.attack", -100, "key.categories.gameplay");
-        this.keyBindPickBlock = new KeyBinding("key.pickItem", -98, "key.categories.gameplay");
-        this.keyBindSprint = new KeyBinding("key.sprint", 29, "key.categories.gameplay");
-        this.keyBindChat = new KeyBinding("key.chat", 20, "key.categories.multiplayer");
-        this.keyBindPlayerList = new KeyBinding("key.playerlist", 15, "key.categories.multiplayer");
-        this.keyBindCommand = new KeyBinding("key.command", 53, "key.categories.multiplayer");
-        this.keyBindScreenshot = new KeyBinding("key.screenshot", 60, "key.categories.misc");
-        this.keyBindTogglePerspective = new KeyBinding("key.togglePerspective", 63, "key.categories.misc");
-        this.keyBindSmoothCamera = new KeyBinding("key.smoothCamera", 0, "key.categories.misc");
-        this.keyBindFullscreen = new KeyBinding("key.fullscreen", 87, "key.categories.misc");
-        this.keyBindsHotbar = new KeyBinding[]{new KeyBinding("key.hotbar.1", 2, "key.categories.inventory"), new KeyBinding("key.hotbar.2", 3, "key.categories.inventory"), new KeyBinding("key.hotbar.3", 4, "key.categories.inventory"), new KeyBinding("key.hotbar.4", 5, "key.categories.inventory"), new KeyBinding("key.hotbar.5", 6, "key.categories.inventory"), new KeyBinding("key.hotbar.6", 7, "key.categories.inventory"), new KeyBinding("key.hotbar.7", 8, "key.categories.inventory"), new KeyBinding("key.hotbar.8", 9, "key.categories.inventory"), new KeyBinding("key.hotbar.9", 10, "key.categories.inventory")};
-        this.keyBindings = (KeyBinding[]) ((KeyBinding[]) ArrayUtils.addAll(new KeyBinding[]{this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindSprint, this.keyBindFullscreen}, this.keyBindsHotbar));
         this.difficulty = EnumDifficulty.NORMAL;
         this.lastServer = "";
         this.noclipRate = 1.0F;
@@ -387,8 +320,6 @@ public class GameSettings {
         this.language = "en_US";
         this.forceUnicodeFont = false;
         this.limitFramerate = (int) GameSettings.Options.FRAMERATE_LIMIT.getValueMax();
-        this.ofKeyBindZoom = new KeyBinding("Zoom", 29, "key.categories.misc");
-        this.keyBindings = (KeyBinding[]) ((KeyBinding[]) ArrayUtils.add(this.keyBindings, this.ofKeyBindZoom));
     }
 
     /**
@@ -1704,20 +1635,9 @@ public class GameSettings {
                         this.forceUnicodeFont = var8[1].equals("true");
                     }
 
-                    KeyBinding[] var4 = this.keyBindings;
-                    int var5 = var4.length;
-                    int var6;
-
-                    for (var6 = 0; var6 < var5; ++var6) {
-                        KeyBinding var10 = var4[var6];
-
-                        if (var8[0].equals("key_" + var10.getKeyDescription())) {
-                            var10.setKeyCode(Integer.parseInt(var8[1]));
-                        }
-                    }
-
                     SoundCategory[] var111 = SoundCategory.values();
-                    var5 = var111.length;
+                    int var5 = var111.length;
+                    int var6;
 
                     for (var6 = 0; var6 < var5; ++var6) {
                         SoundCategory var11 = var111[var6];
@@ -1732,7 +1652,7 @@ public class GameSettings {
                 }
             }
 
-            KeyBinding.resetKeyBindingArrayAndHash();
+            mc.keyBindings.resetKeyBindingArrayAndHash();
             var9.close();
         } catch (Exception var101) {
             logger.error("Failed to load options", var101);
@@ -1806,17 +1726,10 @@ public class GameSettings {
             var81.println("mipmapLevels:" + this.mipmapLevels);
             var81.println("anisotropicFiltering:" + this.anisotropicFiltering);
             var81.println("forceUnicodeFont:" + this.forceUnicodeFont);
-            KeyBinding[] var2 = this.keyBindings;
-            int var3 = var2.length;
-            int var4;
-
-            for (var4 = 0; var4 < var3; ++var4) {
-                KeyBinding var7 = var2[var4];
-                var81.println("key_" + var7.getKeyDescription() + ":" + var7.getKeyCode());
-            }
 
             SoundCategory[] var9 = SoundCategory.values();
-            var3 = var9.length;
+            int var3 = var9.length;
+            int var4;
 
             for (var4 = 0; var4 < var3; ++var4) {
                 SoundCategory var8 = var9[var4];
@@ -2178,7 +2091,7 @@ public class GameSettings {
                 }
             }
 
-            KeyBinding.resetKeyBindingArrayAndHash();
+            mc.keyBindings.resetKeyBindingArrayAndHash();
             bufferedreader.close();
         } catch (Exception var6) {
             Config.warn("Failed to load options");

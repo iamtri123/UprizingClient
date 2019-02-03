@@ -4,6 +4,16 @@ import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
@@ -181,17 +191,7 @@ import net.minecraft.world.storage.MapData;
 import net.minecraft.world.storage.MapStorage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
+import uprizing.keybinding.KeyBindings;
 
 public class NetHandlerPlayClient implements INetHandlerPlayClient
 {
@@ -926,8 +926,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
             if (var4)
             {
-                GameSettings var5 = this.gameController.gameSettings;
-                this.gameController.ingameGUI.setRecordPlaying(I18n.format("mount.onboard", GameSettings.getKeyDisplayString(var5.keyBindSneak.getKeyCode())), false);
+                KeyBindings var5 = this.gameController.keyBindings;
+                this.gameController.ingameGUI.setRecordPlaying(I18n.format("mount.onboard", GameSettings.getKeyDisplayString(var5.sneak.getKeyCode())), false);
             }
         }
         else if (packetIn.func_149404_c() == 1 && var2 != null && var2 instanceof EntityLiving)
@@ -1397,7 +1397,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         else if (var3 == 5)
         {
-            GameSettings var6 = this.gameController.gameSettings;
+            KeyBindings var6 = this.gameController.keyBindings;
 
             if (var4 == 0.0F)
             {
@@ -1405,15 +1405,15 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             }
             else if (var4 == 101.0F)
             {
-                this.gameController.ingameGUI.getChatGUI().printChatMessage(new ChatComponentTranslation("demo.help.movement", GameSettings.getKeyDisplayString(var6.keyBindForward.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindLeft.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindBack.getKeyCode()), GameSettings.getKeyDisplayString(var6.keyBindRight.getKeyCode())));
+                this.gameController.ingameGUI.getChatGUI().printChatMessage(new ChatComponentTranslation("demo.help.movement", GameSettings.getKeyDisplayString(var6.forward.getKeyCode()), GameSettings.getKeyDisplayString(var6.left.getKeyCode()), GameSettings.getKeyDisplayString(var6.back.getKeyCode()), GameSettings.getKeyDisplayString(var6.right.getKeyCode())));
             }
             else if (var4 == 102.0F)
             {
-                this.gameController.ingameGUI.getChatGUI().printChatMessage(new ChatComponentTranslation("demo.help.jump", GameSettings.getKeyDisplayString(var6.keyBindJump.getKeyCode())));
+                this.gameController.ingameGUI.getChatGUI().printChatMessage(new ChatComponentTranslation("demo.help.jump", GameSettings.getKeyDisplayString(var6.jump.getKeyCode())));
             }
             else if (var4 == 103.0F)
             {
-                this.gameController.ingameGUI.getChatGUI().printChatMessage(new ChatComponentTranslation("demo.help.inventory", GameSettings.getKeyDisplayString(var6.keyBindInventory.getKeyCode())));
+                this.gameController.ingameGUI.getChatGUI().printChatMessage(new ChatComponentTranslation("demo.help.inventory", GameSettings.getKeyDisplayString(var6.inventory.getKeyCode())));
             }
         }
         else if (var3 == 6)

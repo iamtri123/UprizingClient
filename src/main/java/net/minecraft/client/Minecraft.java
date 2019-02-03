@@ -87,7 +87,6 @@ import net.minecraft.client.resources.data.PackMetadataSectionSerializer;
 import net.minecraft.client.resources.data.TextureMetadataSection;
 import net.minecraft.client.resources.data.TextureMetadataSectionSerializer;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -154,7 +153,8 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import uprizing.Uprizing;
-import uprizing.counters.FPSCounter;
+import uprizing.keybinding.KeyBindings;
+import uprizing.network.C18PacketUprizing;
 
 public class Minecraft implements IPlayerUsage {
 
@@ -271,6 +271,7 @@ public class Minecraft implements IPlayerUsage {
      * I'm Gay
      */
     public Uprizing uprizing;
+    public KeyBindings keyBindings;
 
     /**
      * Mouse helper instance.
@@ -343,17 +344,6 @@ public class Minecraft implements IPlayerUsage {
      * Approximate time (in ms) of last update to debug string
      */
     long debugUpdateTime = getSystemTime();
-
-    /**
-     * holds the current fps
-     */
-    @Getter
-    final FPSCounter fpsCounter = new FPSCounter();
-
-    /**
-     * Profiler currently displayed in the debug screen pie chart
-     */
-    private String debugProfilerName = "root";
 
     public Minecraft(Session sessionIn, int displayWidth, int displayHeight, boolean fullscreen, boolean isDemo, File dataDir, File assetsDir, File resourcePackDir) {
         instance = this;
@@ -453,6 +443,7 @@ public class Minecraft implements IPlayerUsage {
      * Starts the game: initializes the canvas, the title, the settings, etcetera.
      */
     private void startGame() throws LWJGLException {
+        this.keyBindings = new KeyBindings(this.mcDataDir);
         this.gameSettings = new GameSettings(this, this.mcDataDir);
         this.uprizing = new Uprizing(this, this.mcDataDir);
 
@@ -478,7 +469,7 @@ public class Minecraft implements IPlayerUsage {
         }
 
         Display.setResizable(true);
-        Display.setTitle("UprizingClient v0.0.8");
+        Display.setTitle("UprizingClient v1.0.0");
         logger.info("LWJGL Version: " + Sys.getVersion());
         Util.EnumOS var1 = Util.getOSType();
 
@@ -555,7 +546,7 @@ public class Minecraft implements IPlayerUsage {
 
             public String formatString(String p_74535_1_) {
                 try {
-                    return String.format(p_74535_1_, GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindInventory.getKeyCode()));
+                    return String.format(p_74535_1_, GameSettings.getKeyDisplayString(Minecraft.this.keyBindings.inventory.getKeyCode()));
                 } catch (Exception var3) {
                     return "Error: " + var3.getLocalizedMessage();
                 }
@@ -969,14 +960,14 @@ public class Minecraft implements IPlayerUsage {
         this.resetSize();
         Thread.yield();
         this.checkGLError("Post render");
-        this.fpsCounter.increment();
+        uprizing.framesPerSecond.increment();
         this.isGamePaused = this.isSingleplayer() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame() && !this.theIntegratedServer.getPublic();
 
         while (getSystemTime() >= this.debugUpdateTime + 1000L) {
-            this.debug = this.fpsCounter.debug() + " fps, " + WorldRenderer.chunksUpdated + " chunk updates";
+            this.debug = uprizing.framesPerSecond.debug() + " fps, " + WorldRenderer.chunksUpdated + " chunk updates";
             WorldRenderer.chunksUpdated = 0;
             this.debugUpdateTime += 1000L;
-            this.fpsCounter.reset();
+            uprizing.framesPerSecond.reset();
             this.usageSnooper.addMemoryStatsToSnooper();
 
             if (!this.usageSnooper.isSnooperRunning()) {
@@ -1068,7 +1059,7 @@ public class Minecraft implements IPlayerUsage {
      */
     public void setIngameNotInFocus() {
         if (this.inGameHasFocus) {
-            KeyBinding.unPressAllKeys();
+            keyBindings.unPressAllKeys();
             this.inGameHasFocus = false;
             this.mouseHelper.ungrabMouseCursor();
         }
@@ -1116,7 +1107,7 @@ public class Minecraft implements IPlayerUsage {
         uprizing.getClicksPerSecond().add();
 
         if (uprizing.currentServer != null) {
-            thePlayer.dance(1);
+            thePlayer.uprizing(C18PacketUprizing.CLICK);
         }
 
         if (this.leftClickCounter <= 0) {
@@ -1329,8 +1320,6 @@ public class Minecraft implements IPlayerUsage {
                 var2 = CrashReport.makeCrashReport(var6, "Updating screen events");
                 var3 = var2.makeCategory("Affected screen");
                 var3.addCrashSectionCallable("Screen name", new Callable() {
-                    private static final String __OBFID = "CL_00000640";
-
                     public String call() {
                         return Minecraft.this.currentScreen.getClass().getCanonicalName();
                     }
@@ -1361,10 +1350,10 @@ public class Minecraft implements IPlayerUsage {
 
             while (Mouse.next()) {
                 var9 = Mouse.getEventButton();
-                KeyBinding.setKeyBindState(var9 - 100, Mouse.getEventButtonState());
+                keyBindings.setKeyBindState(var9 - 100, Mouse.getEventButtonState());
 
                 if (Mouse.getEventButtonState()) {
-                    KeyBinding.onTick(var9 - 100);
+                    keyBindings.onTick(var9 - 100);
                 }
 
                 long var11 = getSystemTime() - this.systemTime;
@@ -1405,10 +1394,10 @@ public class Minecraft implements IPlayerUsage {
             boolean var10;
 
             while (Keyboard.next()) {
-                KeyBinding.setKeyBindState(Keyboard.getEventKey(), Keyboard.getEventKeyState());
+                keyBindings.setKeyBindState(Keyboard.getEventKey(), Keyboard.getEventKeyState());
 
                 if (Keyboard.getEventKeyState()) {
-                    KeyBinding.onTick(Keyboard.getEventKey());
+                    keyBindings.onTick(Keyboard.getEventKey());
                 }
 
                 if (this.debugCrashKeyPressTime > 0L) {
@@ -1476,7 +1465,7 @@ public class Minecraft implements IPlayerUsage {
                             this.gameSettings.showDebugInfo = !this.gameSettings.showDebugInfo;
                         }
 
-                        if (this.gameSettings.keyBindTogglePerspective.isPressed()) {
+                        if (keyBindings.togglePerspective.isPressed()) {
                             ++this.gameSettings.thirdPersonView;
 
                             if (this.gameSettings.thirdPersonView > 2) {
@@ -1484,7 +1473,7 @@ public class Minecraft implements IPlayerUsage {
                             }
                         }
 
-                        if (this.gameSettings.keyBindSmoothCamera.isPressed()) {
+                        if (keyBindings.smoothCamera.isPressed()) {
                             this.gameSettings.smoothCamera = !this.gameSettings.smoothCamera;
                         }
                     }
@@ -1492,14 +1481,14 @@ public class Minecraft implements IPlayerUsage {
             }
 
             for (var9 = 0; var9 < 9; ++var9) {
-                if (this.gameSettings.keyBindsHotbar[var9].isPressed()) {
+                if (keyBindings.hotbar[var9].isPressed()) {
                     this.thePlayer.inventory.currentItem = var9;
                 }
             }
 
             var10 = this.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN;
 
-            while (this.gameSettings.keyBindInventory.isPressed()) {
+            while (this.keyBindings.inventory.isPressed()) {
                 if (this.playerController.isRidingHorse()) {
                     this.thePlayer.sendHorseInteraction();
                 } else {
@@ -1508,32 +1497,31 @@ public class Minecraft implements IPlayerUsage {
                 }
             }
 
-            while (this.gameSettings.keyBindDrop.isPressed()) {
+            while (keyBindings.drop.isPressed()) {
                 this.thePlayer.dropOneItem(GuiScreen.isCtrlKeyDown());
             }
 
-            while (this.gameSettings.keyBindChat.isPressed() && var10) {
+            while (keyBindings.chat.isPressed() && var10) {
                 this.displayGuiScreen(new GuiChat());
             }
 
-            if (this.currentScreen == null && this.gameSettings.keyBindCommand.isPressed() && var10) {
+            if (this.currentScreen == null && keyBindings.command.isPressed() && var10) {
                 this.displayGuiScreen(new GuiChat("/"));
             }
 
             if (this.thePlayer.isUsingItem()) {
-                if (!this.gameSettings.keyBindUseItem.getIsKeyPressed()) {
+                if (!keyBindings.useItem.getIsKeyPressed()) {
                     this.playerController.onStoppedUsingItem(this.thePlayer);
                 }
 
                 label391:
 
                 while (true) {
-                    if (!this.gameSettings.keyBindAttack.isPressed()) {
-                        while (this.gameSettings.keyBindUseItem.isPressed()) {
-                        }
+                    if (!keyBindings.attack.isPressed()) {
+                        while (keyBindings.useItem.isPressed()) {}
 
                         while (true) {
-                            if (this.gameSettings.keyBindPickBlock.isPressed()) {
+                            if (keyBindings.pickBlock.isPressed()) {
                                 continue;
                             }
 
@@ -1542,24 +1530,24 @@ public class Minecraft implements IPlayerUsage {
                     }
                 }
             } else {
-                while (this.gameSettings.keyBindAttack.isPressed()) {
+                while (keyBindings.attack.isPressed()) {
                     this.clickMouse();
                 }
 
-                while (this.gameSettings.keyBindUseItem.isPressed()) {
+                while (keyBindings.useItem.isPressed()) {
                     this.rightClickMouse();
                 }
 
-                while (this.gameSettings.keyBindPickBlock.isPressed()) {
+                while (keyBindings.pickBlock.isPressed()) {
                     this.middleClickMouse();
                 }
             }
 
-            if (this.gameSettings.keyBindUseItem.getIsKeyPressed() && this.rightClickDelayTimer == 0 && !this.thePlayer.isUsingItem()) {
+            if (keyBindings.useItem.getIsKeyPressed() && this.rightClickDelayTimer == 0 && !this.thePlayer.isUsingItem()) {
                 this.rightClickMouse();
             }
 
-            this.sendClickBlockToController(this.currentScreen == null && this.gameSettings.keyBindAttack.getIsKeyPressed() && this.inGameHasFocus);
+            this.sendClickBlockToController(this.currentScreen == null && keyBindings.attack.getIsKeyPressed() && this.inGameHasFocus);
         }
 
         if (this.theWorld != null) {
@@ -1747,10 +1735,10 @@ public class Minecraft implements IPlayerUsage {
                 this.playerController.flipPlayer(this.thePlayer);
             }
 
-            this.uprizing.getWaypointsMod().handleWorldLoading(this);
+            this.uprizing.onWorldLoading();
             this.thePlayer.preparePlayerToSpawn();
             worldClientIn.spawnEntityInWorld(this.thePlayer);
-            this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings, this.uprizing.getToggleSprint());
+            this.thePlayer.movementInput = new MovementInputFromOptions(this.keyBindings, this.uprizing.getToggleSprint());
             this.playerController.setPlayerCapabilities(this.thePlayer);
             this.renderViewEntity = this.thePlayer;
         } else {
@@ -1810,7 +1798,7 @@ public class Minecraft implements IPlayerUsage {
         this.thePlayer.setClientBrand(var3);
         this.theWorld.spawnEntityInWorld(this.thePlayer);
         this.playerController.flipPlayer(this.thePlayer);
-        this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings, this.uprizing.getToggleSprint());
+        this.thePlayer.movementInput = new MovementInputFromOptions(this.keyBindings, this.uprizing.getToggleSprint());
         this.thePlayer.setEntityId(var2);
         this.playerController.setPlayerCapabilities(this.thePlayer);
 
@@ -2035,7 +2023,7 @@ public class Minecraft implements IPlayerUsage {
     }
 
     public void addServerStatsToSnooper(PlayerUsageSnooper playerSnooper) {
-        playerSnooper.addClientStat("fps", fpsCounter.debug);
+        playerSnooper.addClientStat("fps", uprizing.framesPerSecond.debug);
         playerSnooper.addClientStat("vsync_enabled", Boolean.valueOf(this.gameSettings.enableVsync));
         playerSnooper.addClientStat("display_frequency", Integer.valueOf(Display.getDisplayMode().getFrequency()));
         playerSnooper.addClientStat("display_type", this.fullscreen ? "fullscreen" : "windowed");
@@ -2300,9 +2288,9 @@ public class Minecraft implements IPlayerUsage {
         if (var1 != 0 && !Keyboard.isRepeatEvent()) {
             if (!(this.currentScreen instanceof GuiControls) || ((GuiControls) this.currentScreen).time <= getSystemTime() - 20L) {
                 if (Keyboard.getEventKeyState()) {
-                    if (var1 == this.gameSettings.keyBindFullscreen.getKeyCode()) {
+                    if (var1 == keyBindings.fullscreen.getKeyCode()) {
                         this.toggleFullscreen();
-                    } else if (var1 == this.gameSettings.keyBindScreenshot.getKeyCode()) {
+                    } else if (var1 == keyBindings.screenshot.getKeyCode()) {
                         this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.mcFramebuffer));
                     }
                 }

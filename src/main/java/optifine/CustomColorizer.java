@@ -1,5 +1,16 @@
 package optifine;
 
+import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.Random;
+import java.util.Set;
+import javax.imageio.ImageIO;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.material.Material;
@@ -15,19 +26,7 @@ import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import uprizing.dimensions.Dimension;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Set;
+import uprizing.setting.defaults.DimensionSetting;
 
 public class CustomColorizer
 {
@@ -1001,7 +1000,7 @@ public class CustomColorizer
         }
     }
 
-    public static boolean updateLightmap(World world, Dimension dimension, float torchFlickerX, int[] lmColors, boolean nightvision)
+    public static boolean updateLightmap(World world, DimensionSetting dimension, float torchFlickerX, int[] lmColors, boolean nightvision)
     {
         if (world == null)
         {
@@ -1017,7 +1016,7 @@ public class CustomColorizer
         }
         else
         {
-            int worldType = dimension.asSexyCopy();
+            int worldType = dimension.getId();
 
             if (worldType >= -1 && worldType <= 1)
             {
@@ -1043,7 +1042,7 @@ public class CustomColorizer
                         if (width < 16)
                         {
                             Config.warn("Invalid lightmap width: " + width + " for: /environment/lightmap" + worldType + ".png");
-                            lightMapsColorsRgb[lightMapIndex] = (float[][])null;
+                            lightMapsColorsRgb[lightMapIndex] = null;
                             return false;
                         }
                         else
@@ -1147,9 +1146,9 @@ public class CustomColorizer
         }
     }
 
-    public static Vec3 getWorldFogColor(Vec3 fogVec, Dimension dimension, float partialTicks)
+    public static Vec3 getWorldFogColor(Vec3 fogVec, DimensionSetting dimension, float partialTicks)
     {
-        int worldType = dimension.asSexyCopy();
+        int worldType = dimension.getId();
 
         switch (worldType)
         {
@@ -1169,9 +1168,9 @@ public class CustomColorizer
         return fogVec;
     }
 
-    public static Vec3 getWorldSkyColor(Vec3 skyVec, Dimension dimension, EntityLivingBase renderViewEntity, float partialTicks)
+    public static Vec3 getWorldSkyColor(Vec3 skyVec, DimensionSetting dimension, EntityLivingBase renderViewEntity, float partialTicks)
     {
-        int worldType = dimension.asSexyCopy();
+        int worldType = dimension.getId();
 
         switch (worldType)
         {

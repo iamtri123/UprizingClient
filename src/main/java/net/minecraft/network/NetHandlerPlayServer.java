@@ -85,7 +85,7 @@ import net.minecraft.world.WorldServer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uprizing.protocol.C18PacketUprizing;
+import uprizing.network.C18PacketUprizing;
 
 public class NetHandlerPlayServer implements INetHandlerPlayServer
 {

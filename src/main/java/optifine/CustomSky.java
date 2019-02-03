@@ -143,7 +143,7 @@ public class CustomSky
 
                     if (sls != null)
                     {
-                        long time = world.getWorldTime();
+                        long time = world.getWorldInfo().getCustomWorldTime();
                         int timeOfDay = (int)(time % 24000L);
 
                         for (int i = 0; i < sls.length; ++i)

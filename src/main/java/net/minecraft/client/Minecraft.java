@@ -1736,7 +1736,7 @@ public class Minecraft implements IPlayerUsage {
             this.uprizing.onWorldLoading();
             this.thePlayer.preparePlayerToSpawn();
             worldClientIn.spawnEntityInWorld(this.thePlayer);
-            this.thePlayer.movementInput = new MovementInputFromOptions(this.keyBindings, this.uprizing.getToggleSprint());
+            this.thePlayer.movementInput = new MovementInputFromOptions(thePlayer, this.keyBindings, this.uprizing.getToggleSprint());
             this.playerController.setPlayerCapabilities(this.thePlayer);
             this.renderViewEntity = this.thePlayer;
         } else {
@@ -1796,7 +1796,7 @@ public class Minecraft implements IPlayerUsage {
         this.thePlayer.setClientBrand(var3);
         this.theWorld.spawnEntityInWorld(this.thePlayer);
         this.playerController.flipPlayer(this.thePlayer);
-        this.thePlayer.movementInput = new MovementInputFromOptions(this.keyBindings, this.uprizing.getToggleSprint());
+        this.thePlayer.movementInput = new MovementInputFromOptions(thePlayer, this.keyBindings, this.uprizing.getToggleSprint());
         this.thePlayer.setEntityId(var2);
         this.playerController.setPlayerCapabilities(this.thePlayer);
 

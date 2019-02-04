@@ -15,14 +15,15 @@ public class TextAndColorSetting extends Setting {
 	}
 
 	@Override
+	public final String serialize() {
+		return textAndColor.getKey() + SEPARATOR + textAndColor.getValue() + SEPARATOR + (textAndColor.isChroma() ? "1" : "0");
+	}
+
+	@Override
 	public final void deserialize(String configValue) {
 		final String[] strings = configValue.split(SEPARATOR);
 		textAndColor.setKey(strings[0]);
 		textAndColor.setValue(Integer.parseInt(strings[1]));
-	}
-
-	@Override
-	public final String serialize() {
-		return textAndColor.getKey() + SEPARATOR + textAndColor.getValue();
+		textAndColor.setChroma(strings[2].equals("1"));
 	}
 }

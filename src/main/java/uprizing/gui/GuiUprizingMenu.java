@@ -99,16 +99,16 @@ public class GuiUprizingMenu extends GuiScreen {
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		final Drawer drawer = uprizing.getDrawers().getByMouse(mouseX, mouseY, scrollbar);
-		if (drawer != null) {
-			drawer.handleMouseClick(mc, mouseX, mouseY, mouseButton);
-		} else {
-			final Draggable draggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
-			if (draggable != null) {
-				this.selectable = draggable;
+		final Draggable draggable = uprizing.getDraggables().getByMouse(mouseX, mouseY);
+		if (draggable != null) {
+			this.selectable = draggable;
 
-				lastMouseX = mouseX;
-				lastMouseY = mouseY;
+			lastMouseX = mouseX;
+			lastMouseY = mouseY;
+		} else {
+			final Drawer drawer = uprizing.getDrawers().getByMouse(mouseX, mouseY, scrollbar);
+			if (drawer != null) {
+				drawer.handleMouseClick(mc, mouseX, mouseY, mouseButton);
 			}
 		}
 	}

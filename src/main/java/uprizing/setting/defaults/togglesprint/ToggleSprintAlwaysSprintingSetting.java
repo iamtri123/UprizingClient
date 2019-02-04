@@ -35,6 +35,10 @@ public class ToggleSprintAlwaysSprintingSetting extends Setting {
 		super.handleMouseClick(minecraft, mouseButton);
 
 		toggleSprint.alwaysSprinting = !toggleSprint.alwaysSprinting;
+
+		if (!toggleSprint.alwaysSprinting) {
+			toggleSprint.wasSprintDisabled = true;
+		}
 	}
 
 	@Override

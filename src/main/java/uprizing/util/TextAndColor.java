@@ -10,6 +10,7 @@ public class TextAndColor {
 	private final String name;
 	private String key;
 	private int value;
+	private boolean chroma = true;
 
 	public TextAndColor(final String name, final String key, final int value) {
 		this.name = name;

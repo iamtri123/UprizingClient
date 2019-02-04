@@ -1285,10 +1285,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
                             targetEntity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)var3 * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)var3 * 0.5F));
                             this.motionX *= 0.6D;
                             this.motionZ *= 0.6D;
-
-                            if (!this.isSexy()) {
-								this.setSprinting(false);
-							}
+                            this.setSprinting(false);
                         }
 
                         if (var5)

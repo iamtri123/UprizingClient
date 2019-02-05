@@ -35,15 +35,15 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-public class NetworkManager extends SimpleChannelInboundHandler
-{
+public class NetworkManager extends SimpleChannelInboundHandler {
+
     private static final Logger logger = LogManager.getLogger();
     public static final Marker logMarkerNetwork = MarkerManager.getMarker("NETWORK");
     public static final Marker logMarkerPackets = MarkerManager.getMarker("NETWORK_PACKETS", logMarkerNetwork);
     public static final Marker logMarkerStat = MarkerManager.getMarker("NETWORK_STAT", logMarkerNetwork);
-    public static final AttributeKey attrKeyConnectionState = new AttributeKey("protocol");
-    public static final AttributeKey attrKeyReceivable = new AttributeKey("receivable_packets");
-    public static final AttributeKey attrKeySendable = new AttributeKey("sendable_packets");
+    public static final AttributeKey attrKeyConnectionState = AttributeKey.valueOf("protocol");
+    public static final AttributeKey attrKeyReceivable = AttributeKey.valueOf("receivable_packets");
+    public static final AttributeKey attrKeySendable = AttributeKey.valueOf("sendable_packets");
     public static final NioEventLoopGroup eventLoops = new NioEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Client IO #%d").setDaemon(true).build());
     public static final NetworkStatistics STATISTICS = new NetworkStatistics();
 
@@ -57,16 +57,24 @@ public class NetworkManager extends SimpleChannelInboundHandler
      */
     private final Queue receivedPacketsQueue = Queues.newConcurrentLinkedQueue();
 
-    /** The queue for packets that require transmission */
+    /**
+     * The queue for packets that require transmission
+     */
     private final Queue outboundPacketsQueue = Queues.newConcurrentLinkedQueue();
 
-    /** The active channel */
+    /**
+     * The active channel
+     */
     private Channel channel;
 
-    /** The address of the remote party */
+    /**
+     * The address of the remote party
+     */
     private SocketAddress socketAddress;
 
-    /** The INetHandler instance responsible for processing received packets */
+    /**
+     * The INetHandler instance responsible for processing received packets
+     */
     private INetHandler netHandler;
 
     /**
@@ -74,17 +82,17 @@ public class NetworkManager extends SimpleChannelInboundHandler
      */
     private EnumConnectionState connectionState;
 
-    /** A String indicating why the network has shutdown. */
+    /**
+     * A String indicating why the network has shutdown.
+     */
     private IChatComponent terminationReason;
     private boolean isEncrypted;
 
-    public NetworkManager(boolean isClient)
-    {
+    public NetworkManager(boolean isClient) {
         this.isClientSide = isClient;
     }
 
-    public void channelActive(ChannelHandlerContext p_channelActive_1_) throws Exception
-    {
+    public void channelActive(ChannelHandlerContext p_channelActive_1_) throws Exception {
         super.channelActive(p_channelActive_1_);
         this.channel = p_channelActive_1_.channel();
         this.socketAddress = this.channel.remoteAddress();
@@ -94,50 +102,39 @@ public class NetworkManager extends SimpleChannelInboundHandler
     /**
      * Sets the new connection state and registers which packets this channel may send and receive
      */
-    public void setConnectionState(EnumConnectionState newState)
-    {
-        this.connectionState = (EnumConnectionState)this.channel.attr(attrKeyConnectionState).getAndSet(newState);
+    public void setConnectionState(EnumConnectionState newState) {
+        this.connectionState = (EnumConnectionState) this.channel.attr(attrKeyConnectionState).getAndSet(newState);
         this.channel.attr(attrKeyReceivable).set(newState.func_150757_a(this.isClientSide));
         this.channel.attr(attrKeySendable).set(newState.func_150754_b(this.isClientSide));
         this.channel.config().setAutoRead(true);
         logger.debug("Enabled auto read");
     }
 
-    public void channelInactive(ChannelHandlerContext p_channelInactive_1_)
-    {
+    public void channelInactive(ChannelHandlerContext p_channelInactive_1_) {
         this.closeChannel(new ChatComponentTranslation("disconnect.endOfStream"));
     }
 
-    public void exceptionCaught(ChannelHandlerContext p_exceptionCaught_1_, Throwable p_exceptionCaught_2_)
-    {
+    public void exceptionCaught(ChannelHandlerContext p_exceptionCaught_1_, Throwable p_exceptionCaught_2_) {
         ChatComponentTranslation var3;
 
-        if (p_exceptionCaught_2_ instanceof TimeoutException)
-        {
+        if (p_exceptionCaught_2_ instanceof TimeoutException) {
             var3 = new ChatComponentTranslation("disconnect.timeout");
-        }
-        else
-        {
+        } else {
             var3 = new ChatComponentTranslation("disconnect.genericReason", "Internal Exception: " + p_exceptionCaught_2_);
         }
 
         this.closeChannel(var3);
     }
 
-    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_)
-    {
-        if (this.channel.isOpen())
-        {
-            if (p_channelRead0_2_.hasPriority())
-            {
-				//if (!(p_channelRead0_2_ instanceof S00PacketKeepAlive))
-                	//System.out.println("receivedPacket (priority=true): " + p_channelRead0_2_);
+    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) {
+        if (this.channel.isOpen()) {
+            if (p_channelRead0_2_.hasPriority()) {
+                //if (!(p_channelRead0_2_ instanceof S00PacketKeepAlive))
+                //System.out.println("receivedPacket (priority=true): " + p_channelRead0_2_);
                 p_channelRead0_2_.processPacket(this.netHandler);
-            }
-            else
-            {
-				//if (!(p_channelRead0_2_ instanceof S3BPacketScoreboardObjective || p_channelRead0_2_ instanceof S03PacketTimeUpdate || p_channelRead0_2_ instanceof S3EPacketTeams))
-                	//System.out.println("receivedPacket (priority=false): " + p_channelRead0_2_);
+            } else {
+                //if (!(p_channelRead0_2_ instanceof S3BPacketScoreboardObjective || p_channelRead0_2_ instanceof S03PacketTimeUpdate || p_channelRead0_2_ instanceof S3EPacketTeams))
+                //System.out.println("receivedPacket (priority=false): " + p_channelRead0_2_);
                 this.receivedPacketsQueue.add(p_channelRead0_2_);
             }
         }
@@ -147,8 +144,7 @@ public class NetworkManager extends SimpleChannelInboundHandler
      * Sets the NetHandler for this NetworkManager, no checks are made if this handler is suitable for the particular
      * connection state (protocol)
      */
-    public void setNetHandler(INetHandler handler)
-    {
+    public void setNetHandler(INetHandler handler) {
         Validate.notNull(handler, "packetListener");
         logger.debug("Set listener of {} to {}", this, handler);
         this.netHandler = handler;
@@ -158,18 +154,14 @@ public class NetworkManager extends SimpleChannelInboundHandler
      * Will flush the outbound queue and dispatch the supplied Packet if the channel is ready, otherwise it adds the
      * packet to the outbound queue and registers the GenericFutureListener to fire after transmission
      */
-    public void scheduleOutboundPacket(Packet inPacket, GenericFutureListener ... futureListeners)
-    {
-        if (this.channel != null && this.channel.isOpen())
-        {
+    public void scheduleOutboundPacket(Packet inPacket, GenericFutureListener... futureListeners) {
+        if (this.channel != null && this.channel.isOpen()) {
             //if (!(inPacket instanceof C03PacketPlayer || inPacket instanceof C00PacketKeepAlive))
-                //System.out.println("outboundPacket (priority=true): " + inPacket);
+            //System.out.println("outboundPacket (priority=true): " + inPacket);
             this.flushOutboundQueue();
             this.dispatchPacket(inPacket, futureListeners);
-        }
-        else
-        {
-			//System.out.println("outboundPacket (priority=false): " + inPacket);
+        } else {
+            //System.out.println("outboundPacket (priority=false): " + inPacket);
             this.outboundPacketsQueue.add(new NetworkManager.InboundHandlerTuplePacketListener(inPacket, futureListeners));
         }
     }
@@ -178,34 +170,25 @@ public class NetworkManager extends SimpleChannelInboundHandler
      * Will commit the packet to the channel. If the current thread 'owns' the channel it will write and flush the
      * packet, otherwise it will add a task for the channel eventloop thread to do that.
      */
-    private void dispatchPacket(final Packet inPacket, final GenericFutureListener[] futureListeners)
-    {
+    private void dispatchPacket(final Packet inPacket, final GenericFutureListener[] futureListeners) {
         final EnumConnectionState var3 = EnumConnectionState.getFromPacket(inPacket);
-        final EnumConnectionState var4 = (EnumConnectionState)this.channel.attr(attrKeyConnectionState).get();
+        final EnumConnectionState var4 = (EnumConnectionState) this.channel.attr(attrKeyConnectionState).get();
 
-        if (var4 != var3)
-        {
+        if (var4 != var3) {
             logger.debug("Disabled auto read");
             this.channel.config().setAutoRead(false);
         }
 
-        if (this.channel.eventLoop().inEventLoop())
-        {
-            if (var3 != var4)
-            {
+        if (this.channel.eventLoop().inEventLoop()) {
+            if (var3 != var4) {
                 this.setConnectionState(var3);
             }
 
             this.channel.writeAndFlush(inPacket).addListeners(futureListeners).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
-        }
-        else
-        {
-            this.channel.eventLoop().execute(new Runnable()
-            {
-                public void run()
-                {
-                    if (var3 != var4)
-                    {
+        } else {
+            this.channel.eventLoop().execute(new Runnable() {
+                public void run() {
+                    if (var3 != var4) {
                         NetworkManager.this.setConnectionState(var3);
                     }
 
@@ -218,13 +201,10 @@ public class NetworkManager extends SimpleChannelInboundHandler
     /**
      * Will iterate through the outboundPacketQueue and dispatch all Packets
      */
-    private void flushOutboundQueue()
-    {
-        if (this.channel != null && this.channel.isOpen())
-        {
-            while (!this.outboundPacketsQueue.isEmpty())
-            {
-                NetworkManager.InboundHandlerTuplePacketListener var1 = (NetworkManager.InboundHandlerTuplePacketListener)this.outboundPacketsQueue.poll();
+    private void flushOutboundQueue() {
+        if (this.channel != null && this.channel.isOpen()) {
+            while (!this.outboundPacketsQueue.isEmpty()) {
+                NetworkManager.InboundHandlerTuplePacketListener var1 = (NetworkManager.InboundHandlerTuplePacketListener) this.outboundPacketsQueue.poll();
                 this.dispatchPacket(var1.packet, var1.futureListeners);
             }
         }
@@ -233,26 +213,21 @@ public class NetworkManager extends SimpleChannelInboundHandler
     /**
      * Checks timeouts and processes all packets received
      */
-    public void processReceivedPackets()
-    {
+    public void processReceivedPackets() {
         this.flushOutboundQueue();
-        EnumConnectionState var1 = (EnumConnectionState)this.channel.attr(attrKeyConnectionState).get();
+        EnumConnectionState var1 = (EnumConnectionState) this.channel.attr(attrKeyConnectionState).get();
 
-        if (this.connectionState != var1)
-        {
-            if (this.connectionState != null)
-            {
+        if (this.connectionState != var1) {
+            if (this.connectionState != null) {
                 this.netHandler.onConnectionStateTransition(this.connectionState, var1);
             }
 
             this.connectionState = var1;
         }
 
-        if (this.netHandler != null)
-        {
-            for (int var2 = 1000; !this.receivedPacketsQueue.isEmpty() && var2 >= 0; --var2)
-            {
-                Packet var3 = (Packet)this.receivedPacketsQueue.poll();
+        if (this.netHandler != null) {
+            for (int var2 = 1000; !this.receivedPacketsQueue.isEmpty() && var2 >= 0; --var2) {
+                Packet var3 = (Packet) this.receivedPacketsQueue.poll();
                 var3.processPacket(this.netHandler);
             }
 
@@ -265,18 +240,15 @@ public class NetworkManager extends SimpleChannelInboundHandler
     /**
      * Return the InetSocketAddress of the remote endpoint
      */
-    public SocketAddress getSocketAddress()
-    {
+    public SocketAddress getSocketAddress() {
         return this.socketAddress;
     }
 
     /**
      * Closes the channel, the parameter can be used for an exit message (not certain how it gets sent)
      */
-    public void closeChannel(IChatComponent message)
-    {
-        if (this.channel.isOpen())
-        {
+    public void closeChannel(IChatComponent message) {
+        if (this.channel.isOpen()) {
             this.channel.close();
             this.terminationReason = message;
         }
@@ -286,8 +258,7 @@ public class NetworkManager extends SimpleChannelInboundHandler
      * True if this NetworkManager uses a memory connection (single player game). False may imply both an active TCP
      * connection or simply no active connection at all
      */
-    public boolean isLocalChannel()
-    {
+    public boolean isLocalChannel() {
         return this.channel instanceof LocalChannel || this.channel instanceof LocalServerChannel;
     }
 
@@ -295,27 +266,18 @@ public class NetworkManager extends SimpleChannelInboundHandler
      * Prepares a clientside NetworkManager: establishes a connection to the address and port supplied and configures
      * the channel pipeline. Returns the newly created instance.
      */
-    public static NetworkManager provideLanClient(InetAddress p_150726_0_, int p_150726_1_)
-    {
+    public static NetworkManager provideLanClient(InetAddress p_150726_0_, int p_150726_1_) {
         final NetworkManager var2 = new NetworkManager(true);
-        ((Bootstrap)((Bootstrap)((Bootstrap)(new Bootstrap()).group(eventLoops)).handler(new ChannelInitializer()
-        {
-            protected void initChannel(Channel p_initChannel_1_)
-            {
-                try
-                {
+        ((Bootstrap) ((Bootstrap) ((Bootstrap) (new Bootstrap()).group(eventLoops)).handler(new ChannelInitializer() {
+            protected void initChannel(Channel p_initChannel_1_) {
+                try {
                     p_initChannel_1_.config().setOption(ChannelOption.IP_TOS, Integer.valueOf(24));
-                }
-                catch (ChannelException var4)
-                {
+                } catch (ChannelException var4) {
                 }
 
-                try
-                {
+                try {
                     p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, Boolean.TRUE);
-                }
-                catch (ChannelException var3)
-                {
+                } catch (ChannelException var3) {
                 }
 
                 p_initChannel_1_.pipeline().addLast("timeout", new ReadTimeoutHandler(20)).addLast("splitter", new MessageDeserializer2()).addLast("decoder", new MessageDeserializer(NetworkManager.STATISTICS)).addLast("prepender", new MessageSerializer2()).addLast("encoder", new MessageSerializer(NetworkManager.STATISTICS)).addLast("packet_handler", var2);
@@ -328,13 +290,10 @@ public class NetworkManager extends SimpleChannelInboundHandler
      * Prepares a clientside NetworkManager: establishes a connection to the socket supplied and configures the channel
      * pipeline. Returns the newly created instance.
      */
-    public static NetworkManager provideLocalClient(SocketAddress p_150722_0_)
-    {
+    public static NetworkManager provideLocalClient(SocketAddress p_150722_0_) {
         final NetworkManager var1 = new NetworkManager(true);
-        ((Bootstrap)((Bootstrap)((Bootstrap)(new Bootstrap()).group(eventLoops)).handler(new ChannelInitializer()
-        {
-            protected void initChannel(Channel p_initChannel_1_)
-            {
+        ((Bootstrap) ((Bootstrap) ((Bootstrap) (new Bootstrap()).group(eventLoops)).handler(new ChannelInitializer() {
+            protected void initChannel(Channel p_initChannel_1_) {
                 p_initChannel_1_.pipeline().addLast("packet_handler", var1);
             }
         })).channel(LocalChannel.class)).connect(p_150722_0_).syncUninterruptibly();
@@ -344,8 +303,7 @@ public class NetworkManager extends SimpleChannelInboundHandler
     /**
      * Adds an encoder+decoder to the channel pipeline. The parameter is the secret key used for encrypted communication
      */
-    public void enableEncryption(SecretKey key)
-    {
+    public void enableEncryption(SecretKey key) {
         this.channel.pipeline().addBefore("splitter", "decrypt", new NettyEncryptingDecoder(CryptManager.func_151229_a(2, key)));
         this.channel.pipeline().addBefore("prepender", "encrypt", new NettyEncryptingEncoder(CryptManager.func_151229_a(1, key)));
         this.isEncrypted = true;
@@ -354,47 +312,40 @@ public class NetworkManager extends SimpleChannelInboundHandler
     /**
      * Returns true if this NetworkManager has an active channel, false otherwise
      */
-    public boolean isChannelOpen()
-    {
+    public boolean isChannelOpen() {
         return this.channel != null && this.channel.isOpen();
     }
 
     /**
      * Gets the current handler for processing packets
      */
-    public INetHandler getNetHandler()
-    {
+    public INetHandler getNetHandler() {
         return this.netHandler;
     }
 
     /**
      * If this channel is closed, returns the exit message, null otherwise.
      */
-    public IChatComponent getExitMessage()
-    {
+    public IChatComponent getExitMessage() {
         return this.terminationReason;
     }
 
     /**
      * Switches the channel to manual reading modus
      */
-    public void disableAutoRead()
-    {
+    public void disableAutoRead() {
         this.channel.config().setAutoRead(false);
     }
 
-    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Object p_channelRead0_2_)
-    {
-        this.channelRead0(p_channelRead0_1_, (Packet)p_channelRead0_2_);
+    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Object p_channelRead0_2_) {
+        this.channelRead0(p_channelRead0_1_, (Packet) p_channelRead0_2_);
     }
 
-    static class InboundHandlerTuplePacketListener
-    {
+    static class InboundHandlerTuplePacketListener {
         private final Packet packet;
         private final GenericFutureListener[] futureListeners;
 
-        public InboundHandlerTuplePacketListener(Packet inPacket, GenericFutureListener ... inFutureListeners)
-        {
+        public InboundHandlerTuplePacketListener(Packet inPacket, GenericFutureListener... inFutureListeners) {
             this.packet = inPacket;
             this.futureListeners = inFutureListeners;
         }

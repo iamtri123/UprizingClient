@@ -31,10 +31,10 @@ public class ToggleSprint implements Draggable {
 	private final Chroma chroma = new Chroma();
 	public int mode = OFF;
 	@Getter public final TextAndColor[] textAndColors = new TextAndColor[12];
-	public boolean showText = false;
+	public boolean showText = true;
 	public boolean alwaysJumping = false;
 
-	public boolean alwaysSprinting = false;
+	public boolean alwaysSprinting = true;
 	public boolean alwaysSneaking = false;
 	public boolean doubleTapping = true;
 	public boolean optionEnableFlyBoost = true;

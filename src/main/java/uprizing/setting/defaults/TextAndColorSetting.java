@@ -5,7 +5,7 @@ import uprizing.setting.Setting;
 
 public class TextAndColorSetting extends Setting {
 
-	private static final String SEPARATOR = "¤";
+	private static final String SEPARATOR = "~";
 
 	private final TextAndColor textAndColor;
 

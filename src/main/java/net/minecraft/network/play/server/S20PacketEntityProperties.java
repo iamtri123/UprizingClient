@@ -12,6 +12,7 @@ import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
+import uprizing.util.NameAndValue;
 
 public class S20PacketEntityProperties extends Packet
 {
@@ -132,5 +133,23 @@ public class S20PacketEntityProperties extends Packet
         {
             return this.field_151411_d;
         }
+    }
+
+    @Override
+    public NameAndValue[] sex() {
+        final ArrayList<NameAndValue> sex = new ArrayList<>();
+        sex.add(new NameAndValue("Entity Id", field_149445_a));
+        sex.add(new NameAndValue("Properties", ""));
+
+        for (Object object : field_149444_b) {
+            final Snapshot snapshot = (Snapshot) object; // Key, Value, Modifiers
+            sex.add(new NameAndValue("  " + snapshot.field_151412_b, snapshot.field_151413_c));
+
+            for (Object o : snapshot.field_151411_d) {
+                sex.add(new NameAndValue("    B", o.toString()));
+            }
+        }
+
+        return sex.toArray(new NameAndValue[0]);
     }
 }

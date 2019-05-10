@@ -17,7 +17,6 @@ public class GuiUprizingMenu extends GuiScreen {
 	private static final int backgroundColor = new Color(195, 255, 240, 255).getRGB();
 	public static final int sexyColor = new Color(154, 205, 190, 255).getRGB();
 	public static final int scrollbarBall = new Color(106, 146, 138, 255).getRGB();
-	public static final int test = new Color(195, 255, 240, 255).getRGB();
 	//public static final int test = new Color(255, 18, 18, 255).getRGB();
 
 	private final Uprizing uprizing;
@@ -80,13 +79,13 @@ public class GuiUprizingMenu extends GuiScreen {
 			height / 6 - 1,
 			width - (width / 6) - 1,
 			height / 6 + 1 + 2 + 1,
-			test);
+			backgroundColor);
 
 		drawRect(width / 6 + 1,
 			height - (height / 6) - 1 - 2 - 1,
 			width - (width / 6) - 1,
 			height - (height / 6) + 1,
-			test);
+			backgroundColor);
 	}
 
 	@Override

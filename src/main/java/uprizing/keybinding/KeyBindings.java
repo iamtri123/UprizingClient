@@ -15,6 +15,8 @@ public class KeyBindings {
     public final KeyBinding openMenu;
     public final KeyBinding addWaypoint;
     public final KeyBinding openWaypoints;
+    public final KeyBinding packetListener;
+    public final KeyBinding openStaffPanel;
     public final KeyBinding forward;
     public final KeyBinding left;
     public final KeyBinding back;
@@ -38,11 +40,19 @@ public class KeyBindings {
     public final KeyBinding[] hotbar = new KeyBinding[9];
 
     public KeyBindings(final File mainDir) {
-        /* -- Uprizing -- */
+        /* -- UprizingClient -- */
 
         openMenu = addKeyBinding(new KeyBinding("Open Menu", Keyboard.KEY_G, Categories.UPRIZING_CLIENT));
         addWaypoint = addKeyBinding(new KeyBinding("Add Waypoint", Keyboard.KEY_B, Categories.UPRIZING_CLIENT));
         openWaypoints = addKeyBinding(new KeyBinding("Open Waypoints Menu", Keyboard.KEY_M, Categories.UPRIZING_CLIENT));
+
+        /* -- Uprizing -- */
+
+        openStaffPanel = addKeyBinding(new KeyBinding("Open Staff Panel", Keyboard.KEY_H, Categories.UPRIZING_SERVER));
+
+        /* -- Developer -- */
+
+        packetListener = addKeyBinding(new KeyBinding("Packet Listener", Keyboard.KEY_X, Categories.DEVELOPER));
 
         /* -- Vanilla -- */
 
@@ -84,13 +94,15 @@ public class KeyBindings {
 
     public class Categories {
 
-        public static final int SIZE = 6;
+        public static final int SIZE = 8;
         static final String MOVEMENT = "key.categories.movement";
         static final String GAMEPLAY = "key.categories.gameplay";
         static final String MULTIPLAYER = "key.categories.multiplayer";
         static final String MISC = "key.categories.misc";
         static final String INVENTORY = "key.categories.inventory";
         static final String UPRIZING_CLIENT = "Uprizing Client";
+        static final String UPRIZING_SERVER = "Uprizing Server";
+        static final String DEVELOPER = "Developer";
     }
 
     /* -- System -- */

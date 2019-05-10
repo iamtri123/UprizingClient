@@ -24,6 +24,11 @@ public class ScorePlayerTeam extends Team
         this.teamNameSPT = p_i2308_2_;
     }
 
+    @Override
+    public String sex() {
+        return "§7Name: §r" + field_96675_b + "§7, TeamName: §r" + teamNameSPT + "§7, Prefix: §r" + namePrefixSPT + "§7, Suffix: §r" + colorSuffix;
+    }
+
     /**
      * Retrieve the name by which this team is registered in the scoreboard
      */

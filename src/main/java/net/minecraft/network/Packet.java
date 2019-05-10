@@ -5,23 +5,20 @@ import io.netty.buffer.ByteBuf;
 import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uprizing.util.NameAndValue;
 
-public abstract class Packet
-{
+public abstract class Packet {
+
     private static final Logger logger = LogManager.getLogger();
 
     /**
      * Returns a packet instance, given the params: BiMap<int, (Packet) Class> and (int) id
      */
-    public static Packet generatePacket(BiMap protocolMap, int packetId)
-    {
-        try
-        {
-            Class var2 = (Class)protocolMap.get(Integer.valueOf(packetId));
-            return var2 == null ? null : (Packet)var2.newInstance();
-        }
-        catch (Exception var3)
-        {
+    public static Packet generatePacket(BiMap protocolMap, int packetId) {
+        try {
+            Class var2 = (Class) protocolMap.get(Integer.valueOf(packetId));
+            return var2 == null ? null : (Packet) var2.newInstance();
+        } catch (Exception var3) {
             logger.error("Couldn\'t create packet " + packetId, var3);
             return null;
         }
@@ -31,8 +28,7 @@ public abstract class Packet
      * Will write a byte array to supplied ByteBuf as a separately defined structure by prefixing the byte array with
      * its length
      */
-    public static void writeBlob(ByteBuf buffer, byte[] blob)
-    {
+    public static void writeBlob(ByteBuf buffer, byte[] blob) {
         buffer.writeShort(blob.length);
         buffer.writeBytes(blob);
     }
@@ -41,16 +37,12 @@ public abstract class Packet
      * Will read a byte array from the supplied ByteBuf, the first short encountered will be interpreted as the size of
      * the byte array to read in
      */
-    public static byte[] readBlob(ByteBuf buffer) throws IOException
-    {
+    public static byte[] readBlob(ByteBuf buffer) throws IOException {
         short var1 = buffer.readShort();
 
-        if (var1 < 0)
-        {
+        if (var1 < 0) {
             throw new IOException("Key was smaller than nothing!  Weird key!");
-        }
-        else
-        {
+        } else {
             byte[] var2 = new byte[var1];
             buffer.readBytes(var2);
             return var2;
@@ -89,5 +81,9 @@ public abstract class Packet
     public String serialize()
     {
         return "";
+    }
+
+    public NameAndValue[] sex() {
+        return null;
     }
 }

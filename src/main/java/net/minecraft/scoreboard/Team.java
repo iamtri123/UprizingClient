@@ -1,13 +1,13 @@
 package net.minecraft.scoreboard;
 
-public abstract class Team
-{
+public abstract class Team {
+
+    public abstract String sex();
 
     /**
      * Same as ==
      */
-    public boolean isSameTeam(Team other)
-    {
+    public boolean isSameTeam(Team other) {
         return other != null && this == other;
     }
 

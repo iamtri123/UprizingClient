@@ -5,6 +5,7 @@ import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
+import uprizing.util.NameAndValue;
 
 public class S06PacketUpdateHealth extends Packet
 {
@@ -64,5 +65,14 @@ public class S06PacketUpdateHealth extends Packet
     public void processPacket(INetHandler handler)
     {
         this.processPacket((INetHandlerPlayClient)handler);
+    }
+
+    @Override
+    public NameAndValue[] sex() {
+        return new NameAndValue[] {
+            new NameAndValue("Health", health),
+            new NameAndValue("Food Level", foodLevel),
+            new NameAndValue("Saturation Level", saturationLevel)
+        };
     }
 }

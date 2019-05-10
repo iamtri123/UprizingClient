@@ -9,8 +9,8 @@ public class BeerusServers {
 
 	public BeerusServers() { // TODO: rest-api
 		addServer(new BeerusServer(Constants.SERVER_ADDRESS));
-		addServer(new BeerusServer("127.0.0.1"));
-		addServer(new BeerusServer("localhost"));
+		//addServer(new BeerusServer("127.0.0.1"));
+		//addServer(new BeerusServer("localhost"));
 	}
 
 	public final void addServer(BeerusServer server) {

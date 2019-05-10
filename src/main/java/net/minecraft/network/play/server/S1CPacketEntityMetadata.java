@@ -1,12 +1,14 @@
 package net.minecraft.network.play.server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.entity.DataWatcher;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
+import uprizing.util.NameAndValue;
 
 public class S1CPacketEntityMetadata extends Packet
 {
@@ -65,5 +67,19 @@ public class S1CPacketEntityMetadata extends Packet
     public void processPacket(INetHandler handler)
     {
         this.processPacket((INetHandlerPlayClient)handler);
+    }
+
+    @Override
+    public NameAndValue[] sex() {
+        final ArrayList<NameAndValue> sex = new ArrayList<>();
+        sex.add(new NameAndValue("Entity Id", field_149379_a));
+        sex.add(new NameAndValue("Metadata", ""));
+
+        for (Object object : field_149378_b) {
+            final DataWatcher.WatchableObject w = (DataWatcher.WatchableObject) object;
+            sex.add(new NameAndValue("  " + w.getDataValueId(), w.getObject() + " (" + w.getObjectType() + ")"));
+        }
+
+        return sex.toArray(new NameAndValue[0]);
     }
 }

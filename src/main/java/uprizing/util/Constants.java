@@ -9,7 +9,7 @@ public class Constants {
 
     /* -- Uprizing Server -- */
 
-    public static final String SERVER_NAME = "§1§lUpriz§f§ling Ne§4§ltwork §7- §c§lWhitelisted";
+    public static final String SERVER_NAME = "Notchian Server";
     public static final String SERVER_ADDRESS = "149.91.80.12";
     public static final String SERVER_ADDRESS_WITH_PORT = "149.91.80.12:25213";
     public static final int SERVER_PORT = 25213;

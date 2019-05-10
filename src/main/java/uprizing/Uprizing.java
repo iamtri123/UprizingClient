@@ -14,6 +14,7 @@ import uprizing.draw.Drawers;
 import uprizing.gui.GuiUprizingMenu;
 import uprizing.gui.waypoint.GuiWaypoint;
 import uprizing.gui.waypoint.GuiWaypointsMenu;
+import uprizing.network.PacketListener;
 import uprizing.setting.Setting;
 import uprizing.setting.SettingUtils;
 import uprizing.setting.Settings;
@@ -46,11 +47,13 @@ public class Uprizing {
 	@Getter private final ToggleSprint toggleSprint;
 	/*!*/@Getter private final Waypoints waypoints;
 	/*!*/@Getter public final DimensionSetting dimension;
+	/*!*/public final PacketListener packetListener;
 
 	public Uprizing(final Minecraft minecraft, final File mainDir) {
 		instance = this;
 
 		this.minecraft = minecraft;
+		this.packetListener = new PacketListener(minecraft);
 
 		this.clicksPerSecond = new ClicksPerSecond();
 		this.framesPerSecond = new FramesPerSecond();
@@ -74,7 +77,11 @@ public class Uprizing {
 
 	public void runRenderTick() { // TODO: fix tick
 		if (minecraft.currentScreen == null) {
-			if (minecraft.keyBindings.openMenu.isPressed()) {
+			if (minecraft.keyBindings.openStaffPanel.isPressed()) { // TODO: vérifier si le joueur est bien sur Uprizing + message de notification
+				minecraft.thePlayer.sendChatMessage("/s");
+			} else if (minecraft.keyBindings.packetListener.isPressed()) {
+				packetListener.toggle(minecraft.thePlayer);
+			} else if (minecraft.keyBindings.openMenu.isPressed()) {
 				minecraft.displayGuiScreen(new GuiUprizingMenu(this));
 			} else if (minecraft.keyBindings.addWaypoint.isPressed()) {
 				minecraft.displayGuiScreen(new GuiWaypoint(this));

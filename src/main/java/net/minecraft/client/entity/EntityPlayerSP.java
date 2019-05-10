@@ -139,7 +139,6 @@ public class EntityPlayerSP extends AbstractClientPlayer {
      */
     public void onLivingUpdate() {
         if (test && onGround) {
-            System.out.println("end jump");
             test = false;
         }
 

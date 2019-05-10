@@ -34,6 +34,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import uprizing.Uprizing;
+import uprizing.network.PacketListener;
 
 public class NetworkManager extends SimpleChannelInboundHandler {
 
@@ -88,6 +90,8 @@ public class NetworkManager extends SimpleChannelInboundHandler {
     private IChatComponent terminationReason;
     private boolean isEncrypted;
 
+    private final PacketListener zizi = Uprizing.getInstance().packetListener;
+
     public NetworkManager(boolean isClient) {
         this.isClientSide = isClient;
     }
@@ -129,12 +133,16 @@ public class NetworkManager extends SimpleChannelInboundHandler {
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) {
         if (this.channel.isOpen()) {
             if (p_channelRead0_2_.hasPriority()) {
-                //if (!(p_channelRead0_2_ instanceof S00PacketKeepAlive))
-                //System.out.println("receivedPacket (priority=true): " + p_channelRead0_2_);
+                if (zizi.isEnabled()) {
+                    zizi.print(p_channelRead0_2_, false, true);
+                }
+
                 p_channelRead0_2_.processPacket(this.netHandler);
             } else {
-                //if (!(p_channelRead0_2_ instanceof S3BPacketScoreboardObjective || p_channelRead0_2_ instanceof S03PacketTimeUpdate || p_channelRead0_2_ instanceof S3EPacketTeams))
-                //System.out.println("receivedPacket (priority=false): " + p_channelRead0_2_);
+                if (zizi.isEnabled()) {
+                    zizi.print(p_channelRead0_2_, false, false);
+                }
+
                 this.receivedPacketsQueue.add(p_channelRead0_2_);
             }
         }
@@ -156,12 +164,17 @@ public class NetworkManager extends SimpleChannelInboundHandler {
      */
     public void scheduleOutboundPacket(Packet inPacket, GenericFutureListener... futureListeners) {
         if (this.channel != null && this.channel.isOpen()) {
-            //if (!(inPacket instanceof C03PacketPlayer || inPacket instanceof C00PacketKeepAlive))
-            //System.out.println("outboundPacket (priority=true): " + inPacket);
+            if (zizi.isEnabled()) {
+                zizi.print(inPacket, true, true);
+            }
+
             this.flushOutboundQueue();
             this.dispatchPacket(inPacket, futureListeners);
         } else {
-            //System.out.println("outboundPacket (priority=false): " + inPacket);
+            if (zizi.isEnabled()) {
+                zizi.print(inPacket, true, false);
+            }
+
             this.outboundPacketsQueue.add(new NetworkManager.InboundHandlerTuplePacketListener(inPacket, futureListeners));
         }
     }

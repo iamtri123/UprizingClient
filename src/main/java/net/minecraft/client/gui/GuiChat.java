@@ -417,7 +417,11 @@ public class GuiChat extends GuiScreen implements GuiYesNoCallback
             }
             else if (var5.getAction() == HoverEvent.Action.SHOW_TEXT)
             {
-                this.drawHoveringText(Splitter.on("\n").splitToList(var5.getValue().getFormattedText()), mouseX, mouseY);
+                this.drawHoveringText(Splitter.on("\n")
+                        .splitToList(var5
+                                .getValue()
+                                .getFormattedText())
+                        , mouseX, mouseY);
             }
             else if (var5.getAction() == HoverEvent.Action.SHOW_ACHIEVEMENT)
             {

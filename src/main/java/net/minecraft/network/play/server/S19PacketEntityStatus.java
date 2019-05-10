@@ -7,6 +7,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.world.World;
+import uprizing.util.NameAndValue;
 
 public class S19PacketEntityStatus extends Packet
 {
@@ -57,5 +58,13 @@ public class S19PacketEntityStatus extends Packet
     public void processPacket(INetHandler handler)
     {
         this.processPacket((INetHandlerPlayClient)handler);
+    }
+
+    @Override
+    public NameAndValue[] sex() {
+        return new NameAndValue[] {
+            new NameAndValue("Entity Id", field_149164_a),
+            new NameAndValue("Status", field_149163_b)
+        };
     }
 }

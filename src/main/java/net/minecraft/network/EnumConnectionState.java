@@ -102,17 +102,18 @@ import net.minecraft.network.status.client.C01PacketPing;
 import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
 import org.apache.logging.log4j.LogManager;
+import uprizing.Uprizing;
 import uprizing.network.C18PacketUprizing;
 
 public enum EnumConnectionState
 {
-    HANDSHAKING("HANDSHAKING", 0, -1, null)
+    HANDSHAKING("Handshaking", -1)
     {
         {
             this.func_150751_a(0, C00Handshake.class);
         }
     },
-    PLAY("PLAY", 1, 0, null)
+    PLAY("Play", 0)
     {
         {
             this.func_150756_b(0, S00PacketKeepAlive.class);
@@ -207,7 +208,7 @@ public enum EnumConnectionState
             this.func_150751_a(24, C18PacketUprizing.class);
         }
     },
-    STATUS("STATUS", 2, 1, null)
+    STATUS("Status", 1)
     {
         {
             this.func_150751_a(0, C00PacketServerQuery.class);
@@ -216,7 +217,7 @@ public enum EnumConnectionState
             this.func_150756_b(1, S01PacketPong.class);
         }
     },
-    LOGIN("LOGIN", 3, 2, null)
+    LOGIN("Login", 2)
     {
         {
             this.func_150756_b(0, S00PacketDisconnect.class);
@@ -229,11 +230,13 @@ public enum EnumConnectionState
     private static final TIntObjectMap STATES_BY_ID = new TIntObjectHashMap();
     private static final Map STATES_BY_CLASS = Maps.newHashMap();
     private final int id;
+    private final String name;
     private final BiMap field_150769_h;
     private final BiMap field_150770_i;
 
-    EnumConnectionState(int protocolId)
+    EnumConnectionState(String name, int protocolId)
     {
+        this.name = name;
         this.field_150769_h = HashBiMap.create();
         this.field_150770_i = HashBiMap.create();
         this.id = protocolId;
@@ -242,6 +245,8 @@ public enum EnumConnectionState
     protected EnumConnectionState func_150751_a(int p_150751_1_, Class p_150751_2_)
     {
         String var3;
+
+        Uprizing.getInstance().packetListener.add(p_150751_1_, p_150751_2_, name, false);
 
         if (this.field_150769_h.containsKey(Integer.valueOf(p_150751_1_)))
         {
@@ -265,6 +270,8 @@ public enum EnumConnectionState
     protected EnumConnectionState func_150756_b(int p_150756_1_, Class p_150756_2_)
     {
         String var3;
+
+        Uprizing.getInstance().packetListener.add(p_150756_1_, p_150756_2_, name, true);
 
         if (this.field_150770_i.containsKey(Integer.valueOf(p_150756_1_)))
         {
@@ -318,11 +325,6 @@ public enum EnumConnectionState
     public static EnumConnectionState getFromPacket(Packet packetIn)
     {
         return (EnumConnectionState)STATES_BY_CLASS.get(packetIn.getClass());
-    }
-
-    EnumConnectionState(String ignore1, int ignore2, int p_i1197_3_, Object p_i1197_4_)
-    {
-        this(p_i1197_3_);
     }
 
     static {
